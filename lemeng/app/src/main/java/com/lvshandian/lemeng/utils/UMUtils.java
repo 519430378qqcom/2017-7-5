@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.widget.Toast;
 
+import com.lvshandian.lemeng.base.Constant;
 import com.lvshandian.lemeng.bean.AppUser;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
@@ -12,18 +13,23 @@ import com.umeng.message.UTrack;
 import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.UmengNotificationClickHandler;
 import com.umeng.message.entity.UMessage;
-import com.umeng.socialize.*;
 import com.umeng.socialize.Config;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 import com.umeng.socialize.utils.Log;
 
+import static com.umeng.socialize.bean.SHARE_MEDIA.FACEBOOK;
+import static com.umeng.socialize.bean.SHARE_MEDIA.GOOGLEPLUS;
 import static com.umeng.socialize.bean.SHARE_MEDIA.QQ;
 import static com.umeng.socialize.bean.SHARE_MEDIA.QZONE;
+import static com.umeng.socialize.bean.SHARE_MEDIA.TWITTER;
 import static com.umeng.socialize.bean.SHARE_MEDIA.WEIXIN;
 import static com.umeng.socialize.bean.SHARE_MEDIA.WEIXIN_CIRCLE;
-import com.lvshandian.lemeng.base.Constant;
 
 
 /**
@@ -37,8 +43,8 @@ public class UMUtils {
     private static Context mContext;
     private static Activity mActivity;
 
-    public static void init(Context Context){
-       mContext = Context;
+    public static void init(Context Context) {
+        mContext = Context;
         //初始化友盟推送
         PushAgent mPushAgent = PushAgent.getInstance(mContext);
         mPushAgent.register(new IUmengRegisterCallback() {
@@ -142,6 +148,7 @@ public class UMUtils {
         }
         Config.DEBUG = true;
         UMShareAPI.get(mContext);
+        PlatformConfig.setTwitter(Constant.TWITTER_APPID, Constant.TWITTER_SECRET);
         PlatformConfig.setWeixin(Constant.WX_APPID, Constant.WX_SECRET);
         PlatformConfig.setQQZone(Constant.QQ_APPID, Constant.QQ_SECRET);
 
@@ -159,12 +166,13 @@ public class UMUtils {
         web.setDescription(share_content);//描述
 
         new ShareAction(act).withText(share_title)
-                .setDisplayList(WEIXIN, QQ,WEIXIN_CIRCLE, QZONE)
+                .setDisplayList(FACEBOOK, TWITTER, GOOGLEPLUS, WEIXIN, QQ, WEIXIN_CIRCLE, QZONE)
                 .withMedia(web)
                 .setCallback(umShareListener).open();
 
     }
-    public static void umShareSingle(final Activity act, String nikeName, final String picUrl, String share_url,SHARE_MEDIA shareMedia) {
+
+    public static void umShareSingle(final Activity act, String nikeName, final String picUrl, String share_url, SHARE_MEDIA shareMedia) {
         mActivity = act;
         String share_content = "分享是真爱,你是我的菜!" + nikeName + "正在直播,快来一起看~";
         String share_title = "分享是真爱,你是我的菜\n";
@@ -187,9 +195,10 @@ public class UMUtils {
         public void onStart(SHARE_MEDIA platform) {
             //分享开始的回调
         }
+
         @Override
         public void onResult(SHARE_MEDIA platform) {
-            Log.d("plat","platform"+platform);
+            Log.d("plat", "platform" + platform);
 //            ToastUtils.showMessageDefault(mActivity,"分享成功");
 
         }
@@ -197,8 +206,8 @@ public class UMUtils {
         @Override
         public void onError(SHARE_MEDIA platform, Throwable t) {
 //            ToastUtils.showMessageDefault(mActivity,"分享失败");
-            if(t!=null){
-                Log.d("throw","throw:"+t.getMessage());
+            if (t != null) {
+                Log.d("throw", "throw:" + t.getMessage());
             }
         }
 

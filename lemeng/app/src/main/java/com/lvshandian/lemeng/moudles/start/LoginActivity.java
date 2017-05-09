@@ -8,8 +8,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +24,8 @@ import com.lvshandian.lemeng.bean.AppUser;
 import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.moudles.mine.bean.LoginFrom;
+import com.lvshandian.lemeng.moudles.mine.my.BaseTextActivity;
+import com.lvshandian.lemeng.moudles.mine.my.StateCodeActivity;
 import com.lvshandian.lemeng.utils.CacheUtils;
 import com.lvshandian.lemeng.utils.DESUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
@@ -41,6 +43,7 @@ import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.auth.AuthService;
 import com.netease.nimlib.sdk.auth.ClientType;
 import com.netease.nimlib.sdk.auth.LoginInfo;
+
 import java.util.concurrent.ConcurrentHashMap;
 
 import butterknife.Bind;
@@ -57,7 +60,13 @@ public class LoginActivity extends BaseActivity {
     @Bind(R.id.tv_forget_password)
     TextView tvForgetPassword;
     @Bind(R.id.btn_login)
-    Button btnLogin;
+    TextView btnLogin;
+    @Bind(R.id.ll_xieyi)
+    LinearLayout ll_xieyi;
+    @Bind(R.id.ll_quhao)
+    LinearLayout ll_quhao;
+    @Bind(R.id.tv_quhao)
+    TextView tv_quhao;
 
     private AbortableFuture<LoginInfo> loginRequest;
     private String account = null;
@@ -90,6 +99,8 @@ public class LoginActivity extends BaseActivity {
     protected void initListener() {
         tvForgetPassword.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
+        ll_xieyi.setOnClickListener(this);
+        ll_quhao.setOnClickListener(this);
     }
 
     @Override
@@ -123,6 +134,15 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.ll_quhao:
+                Intent intent = new Intent(mContext, StateCodeActivity.class);
+                startActivityForResult(intent, 200);
+                break;
+            case R.id.ll_xieyi:
+                Intent intent1 = new Intent(mContext, BaseTextActivity.class);
+                intent1.putExtra("type", "用户协议");
+                startActivity(intent1);
+                break;
             case R.id.tv_titlebar_left:
                 defaultFinish();
                 break;
@@ -264,5 +284,19 @@ public class LoginActivity extends BaseActivity {
         Preferences.saveUserToken(token);
         Preferences.saveAppLogin("1");
         Preferences.saveWyyxLogin("1");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 200:
+                if (data != null) {
+                    if (!TextUtils.isEmpty(data.getStringExtra("stateCode"))) {
+                        tv_quhao.setText(data.getStringExtra("stateCode"));
+                    }
+                }
+                break;
+        }
     }
 }

@@ -14,6 +14,7 @@ import com.lvshandian.lemeng.base.CustomStringCallBackOne;
 import com.lvshandian.lemeng.bean.AppUser;
 import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.moudles.mine.bean.LoginFrom;
+import com.lvshandian.lemeng.moudles.mine.my.BaseTextActivity;
 import com.lvshandian.lemeng.utils.CacheUtils;
 import com.lvshandian.lemeng.utils.DESUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
@@ -58,6 +59,8 @@ public class LoginSelectActivity extends BaseActivity {
     ImageView wchatLogin;
     @Bind(R.id.iv_moble_login)
     ImageView mobleLogin;
+    @Bind(R.id.iv_tiaokuan)
+    ImageView tiaokuan;
 
     private UMShareAPI mShareAPI;
     private LoadingDialog mLoading;
@@ -87,6 +90,7 @@ public class LoginSelectActivity extends BaseActivity {
         googleLogin.setOnClickListener(this);
         wchatLogin.setOnClickListener(this);
         mobleLogin.setOnClickListener(this);
+        tiaokuan.setOnClickListener(this);
 
     }
 
@@ -94,13 +98,13 @@ public class LoginSelectActivity extends BaseActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_facebook_login:
-
+                facebookLogin();
                 break;
             case R.id.iv_twitter_login:
-
+                twitterLogin();
                 break;
             case R.id.iv_google_login:
-
+                googleLogin();
                 break;
             case R.id.iv_wechat_login:
                 weChatLogin();
@@ -108,11 +112,37 @@ public class LoginSelectActivity extends BaseActivity {
             case R.id.iv_moble_login:
                 gotoActivity(LoginActivity.class, false);
                 break;
+            case R.id.iv_tiaokuan:
+                Intent intent = new Intent(mContext, BaseTextActivity.class);
+                intent.putExtra("type", "用户协议");
+                startActivity(intent);
+                break;
 
         }
 
     }
 
+
+    /**
+     * facebook登录
+     */
+    private void facebookLogin() {
+        thirdShouQuan(SHARE_MEDIA.FACEBOOK);
+    }
+
+    /**
+     * twitter登录
+     */
+    private void twitterLogin() {
+        thirdShouQuan(SHARE_MEDIA.TWITTER);
+    }
+
+    /**
+     * google登录
+     */
+    private void googleLogin() {
+        thirdShouQuan(SHARE_MEDIA.GOOGLEPLUS);
+    }
 
     /**
      * QQ登录

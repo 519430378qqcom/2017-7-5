@@ -6,8 +6,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -20,6 +20,7 @@ import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.moudles.mine.activity.SettingPerson;
 import com.lvshandian.lemeng.moudles.mine.my.BaseTextActivity;
+import com.lvshandian.lemeng.moudles.mine.my.StateCodeActivity;
 import com.lvshandian.lemeng.utils.CacheUtils;
 import com.lvshandian.lemeng.utils.TextPhoneNumber;
 
@@ -42,12 +43,14 @@ public class RegisterActivity extends BaseActivity {
     TextView tvSendCode;
     @Bind(R.id.ed_register_password)
     EditText edRegisterPassword;
-    @Bind(R.id.ed_register_recommend_code)
-    EditText edRegisterRecommendCode;
-    @Bind(R.id.tv_zctk)
-    TextView tv_zctk;
+    @Bind(R.id.ll_xieyi)
+    LinearLayout ll_xieyi;
+    @Bind(R.id.ll_quhao)
+    LinearLayout ll_quhao;
     @Bind(R.id.btn_register)
-    Button btnRegister;
+    TextView btnRegister;
+    @Bind(R.id.tv_quhao)
+    TextView tv_quhao;
 
     private int waitTime = 60;
     private String phone = "";//账号
@@ -94,7 +97,8 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     protected void initListener() {
-        tv_zctk.setOnClickListener(this);
+        ll_quhao.setOnClickListener(this);
+        ll_xieyi.setOnClickListener(this);
         tvSendCode.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
     }
@@ -105,11 +109,11 @@ public class RegisterActivity extends BaseActivity {
         type = getIntent().getStringExtra("type");
         if (type.equals("1")) {
             initTitle("", "注册", "");
-            tv_zctk.setVisibility(View.VISIBLE);
+            ll_xieyi.setVisibility(View.VISIBLE);
             btnRegister.setText("注册");
         } else {
             initTitle("", "找回密码", "");
-            tv_zctk.setVisibility(View.GONE);
+            ll_xieyi.setVisibility(View.GONE);
             btnRegister.setText("确认");
         }
     }
@@ -121,10 +125,14 @@ public class RegisterActivity extends BaseActivity {
             case R.id.tv_titlebar_left:
                 defaultFinish();
                 break;
-            case R.id.tv_zctk:
-                Intent intent = new Intent(mContext, BaseTextActivity.class);
-                intent.putExtra("type", "用户协议");
-                startActivity(intent);
+            case R.id.ll_quhao:
+                Intent intent = new Intent(mContext, StateCodeActivity.class);
+                startActivityForResult(intent, 200);
+                break;
+            case R.id.ll_xieyi:
+                Intent intent1 = new Intent(mContext, BaseTextActivity.class);
+                intent1.putExtra("type", "用户协议");
+                startActivity(intent1);
                 break;
             case R.id.tv_send_code:
                 sendCode();
@@ -186,9 +194,10 @@ public class RegisterActivity extends BaseActivity {
         phone = edRegisterPhone.getText().toString();
         if (!phone.equals("") && phone.length() == 11) {
             tvSendCode.setEnabled(false);
-            tvSendCode.setTextColor(getResources().getColor(R.color.black));
+//            tvSendCode.setTextColor(getResources().getColor(R.color.black));
+            tvSendCode.setTextColor(getContext().getResources().getColor(R.color.gray));
             tvSendCode.setText(waitTime + "s");
-            tvSendCode.setBackgroundColor(getContext().getResources().getColor(R.color.gray));
+//            tvSendCode.setBackgroundColor(getContext().getResources().getColor(R.color.gray));
             handler.postDelayed(runnable, 1000);
 
             ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
@@ -206,11 +215,13 @@ public class RegisterActivity extends BaseActivity {
         public void run() {
             waitTime--;
             tvSendCode.setText(waitTime + "s");
-            tvSendCode.setBackgroundColor(getContext().getResources().getColor(R.color.gray));
+//            tvSendCode.setBackgroundColor(getContext().getResources().getColor(R.color.gray));
+            tvSendCode.setTextColor(getContext().getResources().getColor(R.color.gray));
             if (waitTime == 0) {
                 handler.removeCallbacks(runnable);
-                tvSendCode.setText("发送");
-                tvSendCode.setBackgroundColor(getContext().getResources().getColor(R.color.btn_color));
+                tvSendCode.setText("发送验证码");
+//                tvSendCode.setBackgroundColor(getContext().getResources().getColor(R.color.btn_color));
+                tvSendCode.setTextColor(getContext().getResources().getColor(R.color.main));
                 tvSendCode.setEnabled(true);
                 waitTime = 60;
                 return;
@@ -228,4 +239,18 @@ public class RegisterActivity extends BaseActivity {
         }
     };
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 200:
+                if (data != null) {
+                    if (!TextUtils.isEmpty(data.getStringExtra("stateCode"))) {
+                        tv_quhao.setText(data.getStringExtra("stateCode"));
+                    }
+                }
+                break;
+        }
+    }
 }

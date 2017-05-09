@@ -48,9 +48,9 @@ android {
 
     signingConfigs {
         release {
-            storeFile file("E:/jks/haiyan.jks")
+            storeFile file("E:/jks/lemeng.jks")
             storePassword "123456"
-            keyAlias "haiyan"
+            keyAlias "lemeng"
             keyPassword "123456"
         }
     }
@@ -149,4 +149,7 @@ dependencies {
     compile files('src/main/jniLibs/umeng_social_shareboard.jar')
     compile 'com.github.castorflex.verticalviewpager:library:19.0.1'
     compile 'xiao.free.horizontalrefreshlayout:lib:v0.1.2'
+    compile files('src/main/jniLibs/SocialSDK_facebook.jar')
+    compile files('src/main/jniLibs/SocialSDK_twitter.jar')
+    compile files('src/main/jniLibs/umeng_social_shareview.jar')
 }

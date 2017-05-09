@@ -13,18 +13,25 @@
         android:layout_alignParentTop="true"
         android:background="#40000000" />
 
+    <ImageView
+        android:layout_width="350px"
+        android:layout_height="144px"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="720px"
+        android:src="@mipmap/icon_lemon" />
+
     <com.zhy.autolayout.AutoLinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="150px">
 
         <ImageView
             android:id="@+id/iv_facebook_login"
-            android:layout_width="80px"
-            android:layout_height="80px"
+            android:layout_width="100px"
+            android:layout_height="100px"
             android:layout_marginRight="30px"
-            android:layout_marginLeft="116px"
             android:padding="5px"
             android:scaleType="centerCrop"
             android:src="@mipmap/icon_def_facebook"
@@ -32,8 +39,8 @@
 
         <ImageView
             android:id="@+id/iv_twitter_login"
-            android:layout_width="80px"
-            android:layout_height="80px"
+            android:layout_width="100px"
+            android:layout_height="100px"
             android:layout_marginRight="30px"
             android:padding="5px"
             android:scaleType="centerCrop"
@@ -42,8 +49,8 @@
 
         <ImageView
             android:id="@+id/iv_google_login"
-            android:layout_width="80px"
-            android:layout_height="80px"
+            android:layout_width="100px"
+            android:layout_height="100px"
             android:layout_marginRight="30px"
             android:padding="5px"
             android:scaleType="centerCrop"
@@ -52,8 +59,8 @@
 
         <ImageView
             android:id="@+id/iv_wechat_login"
-            android:layout_width="80px"
-            android:layout_height="80px"
+            android:layout_width="100px"
+            android:layout_height="100px"
             android:layout_marginRight="30px"
             android:padding="5px"
             android:scaleType="centerCrop"
@@ -62,11 +69,21 @@
 
         <ImageView
             android:id="@+id/iv_moble_login"
-            android:layout_width="80px"
-            android:layout_height="80px"
+            android:layout_width="100px"
+            android:layout_height="100px"
             android:padding="5px"
             android:scaleType="centerCrop"
             android:src="@mipmap/icon_def_moble" />
     </com.zhy.autolayout.AutoLinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_tiaokuan"
+        android:layout_width="wrap_content"
+        android:layout_height="48px"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:padding="10px"
+        android:layout_marginBottom="65px"
+        android:src="@mipmap/icon_tiaokuan" />
 
 </com.zhy.autolayout.AutoRelativeLayout>

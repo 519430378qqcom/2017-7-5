@@ -7,6 +7,9 @@ import android.os.Environment;
  */
 
 public class Constant {
+    public static final String TWITTER_APPID = "ya5x9703zlnsjexnes0IxHbpQ";
+    public static final String TWITTER_SECRET = "EDnxF6yfwfZUuBKMTxOuC9gRDzRoKoEoZGnTHfHMKadMBdXk9T";
+
     public static final String WX_APPID = "wxb431cde8a8aa4794";
     public static final String WX_SECRET = "742754417d4c58e135c739d3932b139d";
 //    public static final String WX_SECRET = "7839f76cf22e47a51f0fd7731aecf3ee";

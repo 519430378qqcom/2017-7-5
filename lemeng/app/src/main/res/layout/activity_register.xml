@@ -2,182 +2,162 @@
 <com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
     <!--注册界面-->
     <include layout="@layout/title_bar" />
-    <!-- 登录输入框开头 -->
-    <com.zhy.autolayout.AutoLinearLayout
 
+    <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50px"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="75px"
+        android:layout_marginRight="75px"
         android:orientation="vertical">
 
         <com.zhy.autolayout.AutoLinearLayout
+            android:id="@+id/ll_quhao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="50px"
-            android:layout_marginTop="50px"
-            android:orientation="horizontal">
+            android:layout_marginTop="84px">
+
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="100px"
-                android:text="手机号:"
-                android:textColor="@color/tv_color3"
-                android:textSize="28px" />
+                android:id="@+id/tv_quhao"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="中国 +86"
+                android:textColor="@color/main"
+                android:textSize="36px" />
 
-            <EditText
-                android:id="@+id/ed_register_phone"
-                android:layout_width="match_parent"
-                android:layout_height="100px"
-                android:hint="@string/please_input_phone"
-                android:inputType="phone"
-                android:maxLines="1"
-                android:background="@null"
-                android:paddingLeft="40px"
-                android:textSize="26px" />
+            <!--<ImageView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:paddingLeft="20px"-->
+                <!--android:paddingTop="20px"-->
+                <!--android:src="@mipmap/donw_hui" />-->
+
         </com.zhy.autolayout.AutoLinearLayout>
 
-        <TextView
+        <View
             android:layout_width="match_parent"
             android:layout_height="1px"
+            android:layout_marginTop="20px"
+            android:background="@color/line" />
+
+
+        <EditText
+            android:id="@+id/ed_register_phone"
+            android:layout_width="match_parent"
+            android:layout_height="50px"
+            android:layout_marginTop="80px"
+            android:background="@null"
+            android:hint="@string/please_input_phone"
+            android:inputType="phone"
+            android:textColorHint="@color/line_cf"
+            android:textSize="36px" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="20px"
             android:background="@color/line" />
 
         <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100px"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="100px"
-                android:layout_marginLeft="50px"
-                android:text="验证码:"
-                android:textColor="@color/tv_color3"
-                android:textSize="28px" />
+            android:layout_height="wrap_content">
 
             <EditText
                 android:id="@+id/ed_register_code"
-                android:layout_width="500px"
-                android:layout_height="100px"
-                android:hint="@string/please_input_code"
-                android:inputType="number"
-                android:maxLength="6"
+                android:layout_width="0px"
+                android:layout_height="50px"
+                android:layout_marginTop="80px"
+                android:layout_weight="1"
                 android:background="@null"
-                android:maxLines="1"
-                android:paddingLeft="40px"
-                android:textSize="26px" />
+                android:hint="@string/please_input_code"
+                android:inputType="textPassword"
+                android:textColorHint="@color/line_cf"
+                android:textSize="36px" />
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="50px"
+                android:layout_gravity="bottom"
+                android:background="@color/line" />
 
             <TextView
                 android:id="@+id/tv_send_code"
                 android:layout_width="wrap_content"
                 android:layout_height="50px"
-                android:background="@drawable/yuanjiao_hui_bg"
+                android:layout_gravity="bottom"
                 android:gravity="center"
-                android:maxLength="16"
-                android:maxLines="1"
-                android:paddingBottom="10px"
+                android:paddingBottom="5px"
                 android:paddingLeft="30px"
-                android:paddingRight="30px"
-                android:paddingTop="10px"
-                android:text="发送"
-                android:textColor="@color/white"
-                android:textSize="20px" />
-
+                android:paddingTop="5px"
+                android:text="发送验证码"
+                android:textColor="@color/main"
+                android:textSize="30px" />
         </com.zhy.autolayout.AutoLinearLayout>
 
-        <TextView
+
+        <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/line" />
-
-        <com.zhy.autolayout.AutoLinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50px"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="100px"
-                android:text="密码:"
-                android:textColor="@color/tv_color3"
-                android:textSize="28px" />
-
-            <EditText
-                android:id="@+id/ed_register_password"
-                android:layout_width="match_parent"
-                android:layout_height="100px"
-                android:hint="@string/password_stand"
-                android:inputType="textPassword"
-                android:maxLength="16"
-                android:background="@null"
-                android:maxLines="1"
-                android:paddingLeft="68px"
-                android:textSize="26px" />
-        </com.zhy.autolayout.AutoLinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1px"
+            android:layout_marginTop="20px"
             android:background="@color/line" />
 
         <EditText
-            android:id="@+id/ed_register_recommend_code"
+            android:id="@+id/ed_register_password"
             android:layout_width="match_parent"
-            android:layout_height="100px"
-            android:hint="@string/recommend_code"
-            android:paddingLeft="40px"
-            android:textSize="26px"
-            android:visibility="gone" />
+            android:layout_height="50px"
+            android:layout_marginTop="80px"
+            android:background="@null"
+            android:hint="@string/password_stand"
+            android:inputType="textPassword"
+            android:textColorHint="@color/line_cf"
+            android:textSize="36px" />
 
-        <TextView
+        <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/line"
-            android:visibility="gone" />
-
-
-    </com.zhy.autolayout.AutoLinearLayout>
-    <!-- 登录输入框结尾 -->
-
-
-    <com.zhy.autolayout.AutoLinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
-        <!-- 登录按钮开始 -->
-        <Button
-            android:id="@+id/btn_register"
-            android:layout_width="match_parent"
-            android:layout_height="80px"
-            android:layout_marginLeft="50px"
-            android:layout_marginRight="50px"
             android:layout_marginTop="20px"
-            android:background="@drawable/selector_loginbtn"
-            android:text="@string/register"
-            android:textColor="@color/white"
-            android:textSize="30px" />
-        <!-- 登录按钮结束 -->
+            android:background="@color/line" />
 
-    </com.zhy.autolayout.AutoLinearLayout>
-
-    <com.zhy.autolayout.AutoLinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="50px">
 
         <TextView
-            android:id="@+id/tv_zctk"
+            android:id="@+id/btn_register"
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:layout_marginTop="144px"
+            android:background="@drawable/selector_loginbtn_circle"
+            android:gravity="center"
+            android:inputType="phone"
+            android:text="@string/register"
+            android:textColor="@android:color/white"
+            android:textSize="36px" />
+
+        <com.zhy.autolayout.AutoLinearLayout
+            android:id="@+id/ll_xieyi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20px"
-            android:padding="10px"
-            android:text="@string/agree_deal"
-            android:textSize="25px" />
+            android:layout_marginTop="30px"
+            android:padding="10px">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="同意乐檬"
+                android:textColor="@color/line_cf"
+                android:textSize="30px" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="用户协议"
+                android:textColor="@color/main"
+                android:textSize="30px" />
+        </com.zhy.autolayout.AutoLinearLayout>
 
     </com.zhy.autolayout.AutoLinearLayout>
 

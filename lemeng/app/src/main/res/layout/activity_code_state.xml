@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <!--国家代码-->
+    <include layout="@layout/title_bar" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/myRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</com.zhy.autolayout.AutoLinearLayout>

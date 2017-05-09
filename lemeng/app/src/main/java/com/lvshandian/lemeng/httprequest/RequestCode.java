@@ -13,6 +13,7 @@ public interface RequestCode {
     int REGISTER_TAG = 1001;     //注册
     int FORGETPSWD_TAG = 10011;     //忘记密码
     int USER_TAG = 1002; //修改用户信息
+    int GETSTATECODE = 1003; //获得国家代码
     int START_LIVE = 1004;  //开启直播
     int MY_PHOTO_LOAD = 1006; //请求阿里云id、key
     int ATTENTION_LIVE = 1007;//关注人的列表

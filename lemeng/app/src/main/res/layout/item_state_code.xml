@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_state_code"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="40px">
+
+        <TextView
+            android:id="@+id/tv_stateName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10px"
+            android:singleLine="true"
+            android:text="中国"
+            android:textColor="@color/tv_color6"
+            android:textSize="32px" />
+
+        <TextView
+            android:id="@+id/tv_stateCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10px"
+            android:singleLine="true"
+            android:text=" +86"
+            android:textColor="@color/tv_color6"
+            android:textSize="32px" />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="40px"
+        android:layout_marginRight="40px"
+        android:background="@color/line" />
+
+
+</com.zhy.autolayout.AutoLinearLayout>

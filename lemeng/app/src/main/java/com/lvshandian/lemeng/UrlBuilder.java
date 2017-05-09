@@ -13,8 +13,8 @@ import java.util.Map;
  */
 public class UrlBuilder {
     //乐檬服務器
-    public static final String serverUrl = "http://59.110.17.224:80/";// 服务器网址公网
-    public static final String chargeServerUrl = "http://59.110.17.224:80/admin/";// 充值端口
+    public static final String serverUrl = "http://60.205.114.36:80/";// 服务器网址公网
+    public static final String chargeServerUrl = "http://60.205.114.36:80/admin/";// 充值端口
     //本地
 //    public static final String serverUrl = "http://192.168.1.144:8080/";// 服务器网址公网
 //    public static final String chargeServerUrl = "http://192.168.1.144:8081/admin/";// 充值端口
@@ -61,6 +61,7 @@ public class UrlBuilder {
     public static final String BAIDU_SONG_PLAY = "http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.song.play&songid=%s";//得到下载的url
     public static final String getBanner = "/appCarouselFigure/carouselList";//得到banner图
     public static final String ChangeRooms = "/appRooms/getnewRoom";//切换房间
+    public static final String getStateCode = "/appusers/getcountry";//获得国家代码
 
 
     public static final String IF_ATTENTION = "/appusers/user/info";//请求别人信息
