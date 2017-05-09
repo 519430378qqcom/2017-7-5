@@ -1,0 +1,86 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/animation_person_rl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginTop="22dp"
+        android:background="@drawable/background_gift_item"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
+
+        <com.lvshandian.lemeng.widget.AvatarView
+            android:id="@+id/gift_userheader_iv"
+            android:layout_width="39dp"
+            android:layout_height="39dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="3dp"
+            android:src="@mipmap/head_default" />
+
+        <TextView
+            android:id="@+id/gift_usernickname_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="4dp"
+            android:layout_toRightOf="@id/gift_userheader_iv"
+            android:singleLine="true"
+            android:text="库日天"
+            android:textColor="@color/yellow"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/gift_usersign_tv"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/gift_usernickname_tv"
+            android:layout_below="@id/gift_usernickname_tv"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="送一个超级无敌"
+            android:textColor="@color/orange"
+            android:textSize="11sp" />
+
+        <com.lvshandian.lemeng.widget.AvatarView
+            android:id="@+id/animation_gift"
+            android:layout_width="39dp"
+            android:layout_height="39dp"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/gift_usersign_tv"
+            android:src="@mipmap/head_default" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/animation_light"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="120dp" />
+
+    <TextView
+        android:id="@+id/animation_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="22dp"
+        android:layout_toRightOf="@id/animation_person_rl"
+        android:text="x 1"
+        android:textStyle="bold"
+        android:textColor="@color/red"
+        android:textSize="18sp" />
+
+    <!--<com.lvshandian.haiyan.widget.StrokeTextView-->
+    <!--android:id="@+id/animation_num"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="185dp"-->
+    <!--android:layout_marginTop="12dp"-->
+    <!--android:text="x 1"-->
+    <!--android:textColor="#0076ff"-->
+    <!--android:textSize="22sp" />-->
+</RelativeLayout>

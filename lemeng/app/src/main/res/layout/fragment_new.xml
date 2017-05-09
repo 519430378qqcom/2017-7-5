@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout
+        android:id="@+id/mrl_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <com.lvshandian.lemeng.widget.MyRecyclerView
+                android:id="@+id/lv_live_room"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/banner"
+                android:divider="@null"
+                android:scrollbars="none" />
+        </ScrollView>
+    </com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout>
+
+    <ImageView
+        android:id="@+id/iv_empty"
+        android:layout_width="300px"
+        android:layout_height="300px"
+        android:layout_centerInParent="true"
+        android:src="@mipmap/icon_empty_img"
+        android:visibility="gone" />
+
+</com.zhy.autolayout.AutoRelativeLayout>

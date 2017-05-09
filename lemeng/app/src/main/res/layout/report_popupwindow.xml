@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#00000000"
+    android:orientation="vertical"
+    android:paddingBottom="30px"
+    android:paddingLeft="20px"
+    android:paddingRight="20px">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/ll_popup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_popupwindow_border"
+        android:orientation="vertical">
+
+
+        <Button
+            android:id="@+id/btn_dssq"
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:background="@null"
+            android:text="低俗色情"
+            android:textSize="35px" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#eeeeee" />
+
+
+        <Button
+            android:id="@+id/btn_ljgg"
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:background="@null"
+            android:text="垃圾广告"
+            android:textSize="35px" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#eeeeee" />
+
+
+        <Button
+            android:id="@+id/btn_wfxx"
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:background="@null"
+            android:text="违法信息"
+            android:textSize="35px" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#eeeeee" />
+
+
+        <Button
+            android:id="@+id/btn_qzpq"
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:background="@null"
+            android:text="欺诈骗钱"
+            android:textSize="35px" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#eeeeee" />
+
+
+        <Button
+            android:id="@+id/btn_other"
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:background="@null"
+            android:text="其它"
+            android:textSize="35px" />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:background="#00000000" />
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:background="@drawable/custom_popupwindow_border"
+        android:text="取消"
+        android:textSize="35px" />
+
+
+</com.zhy.autolayout.AutoLinearLayout>

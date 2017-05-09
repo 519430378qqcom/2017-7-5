@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.lvshandian.lemeng">
+
+    <!-- 使用权限 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_SINTERNETWIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 硬件特性 -->
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- 蓝牙分享所需的权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- 允许挂载和反挂载文件系统可移动存储 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <!-- 在SDCard中创建与删除文件权限 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+
+    <!-- 权限声明 -->
+    <!-- 访问网络状态 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 控制呼吸灯，振动器等，用于新消息提醒 -->
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 外置存储存取权限 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- SDK 权限申明, 第三方 APP 接入时，请将 com.netease.nim.demo 替换为自己的包名 -->
+    <!-- 和下面的 uses-permission 一起加入到你的 AndroidManifest 文件中。 -->
+    <permission
+        android:name="com.lvshandian.lemeng.permission.RECEIVE_MSG"
+        android:protectionLevel="signature" />
+    <!-- 接收 SDK 消息广播权限， 第三方 APP 接入时，请将 com.netease.nim.demo 替换为自己的包名 -->
+    <uses-permission android:name="com.lvshandian.partylive.permission.RECEIVE_MSG" />
+
+    <!-- 友盟分享权限 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.SET_DEBUG_APP" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+    <application
+        android:name=".MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_lang"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:replace="android:icon, android:theme">
+        <meta-data
+            android:name="design_width"
+            android:value="750" />
+        <meta-data
+            android:name="design_height"
+            android:value="1334" />
+
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+            <!--要想在别的App上能成功调起App，必须添加intent过滤器-->
+            <intent-filter>
+                <!--协议部分，随便设置-->
+                <data android:scheme="haiyan" />
+                <!--下面这几行也必须得设置-->
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".service.VoiceService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <!-- 开机引导页面 -->
+        <activity
+            android:name=".moudles.start.GuidActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!-- 开机启动页 -->
+
+        <activity
+            android:name=".moudles.start.StartActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!-- 登录选择页面 -->
+        <activity
+            android:name=".moudles.start.LoginSelectActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!-- 登录页面 -->
+        <activity
+            android:name=".moudles.start.LoginActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!-- 注册页面 -->
+        <activity
+            android:name=".moudles.start.RegisterActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!-- 编辑资料 -->
+        <activity
+            android:name=".moudles.mine.activity.SettingPerson"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!-- 地址列表 -->
+        <activity
+            android:name=".moudles.index.activity.AddressSelectActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!-- 地址 -->
+        <activity
+            android:name=".moudles.index.activity.CityListActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <!-- 所有照片 -->
+        <activity
+            android:name=".moudles.mine.my.AllPhoneActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!-- 所有小视频 -->
+        <activity
+            android:name=".moudles.mine.my.AllVideoActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!-- 更改昵称 -->
+        <activity
+            android:name=".moudles.mine.activity.PersonNameActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!-- 更改签名 -->
+        <activity
+            android:name=".moudles.mine.activity.UpdatePersonActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!-- 设置 -->
+        <activity
+            android:name=".moudles.mine.my.SettingActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!-- 关于海颜 -->
+        <activity
+            android:name=".moudles.mine.activity.AboutHaiyanActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!-- 修改密码 -->
+        <activity
+            android:name=".moudles.mine.my.ModifyPasswordActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!-- 我的颜票 -->
+        <activity
+            android:name=".moudles.mine.activity.MyCoinsActicity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!-- 公共webView界面 -->
+        <activity
+            android:name=".moudles.mine.activity.ExplainWebViewActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!-- 充值界面 -->
+        <activity
+            android:name=".moudles.mine.activity.ChargeCoinsActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!-- 搜索场控界面 -->
+        <activity
+            android:name=".moudles.mine.my.SearchControllerActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <!-- 我的等级 -->
+        <activity
+            android:name=".moudles.mine.activity.MyGradeActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!-- 黑名单 -->
+        <activity
+            android:name=".wangyiyunxin.contact.activity.BlackListActivity"
+            android:configChanges="orientation"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <!-- 关注列表用于创建高级群邀请用户 -->
+        <activity
+            android:name=".moudles.group.activity.FollowListForGroupActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <!-- 系统消息 -->
+        <activity
+            android:name=".moudles.mine.my.SystemMessageActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!-- 实名认证 -->
+        <activity
+            android:name=".moudles.mine.my.AuthenticationActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!-- 排行榜 -->
+        <activity
+            android:name=".moudles.mine.my.ContributionActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!-- 贡献榜 -->
+        <activity
+            android:name=".moudles.mine.my.MyContributionActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!-- 其他人主页 -->
+        <activity
+            android:name=".moudles.mine.my.OtherPersonHomePageActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!-- 显示文本的activity -->
+        <activity
+            android:name=".moudles.mine.my.BaseTextActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
+        <!-- 支付界面 -->
+        <activity
+            android:name=".moudles.mine.my.PayOrderActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
+        <!-- 图片放大 -->
+        <activity
+            android:name=".moudles.mine.activity.BigImageActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
+        <!-- 选择提现 -->
+        <activity
+            android:name=".moudles.mine.my.WithdrawActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
+        <!-- 支付宝提现 -->
+        <activity
+            android:name=".moudles.mine.my.DrawRedPackage"
+            android:exported="true"
+            android:launchMode="singleTop" />
+        <!-- 微信公众号提现提示 -->
+        <activity
+            android:name=".moudles.mine.activity.WeichatDraw"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!-- 我的场控 -->
+        <activity
+            android:name=".moudles.mine.my.MyControllerActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
+
+        <!-- 开启直播准备 -->
+        <activity
+            android:name=".moudles.index.live.PrapareVedioActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <!-- 粉丝列表 -->
+        <activity
+            android:name=".moudles.mine.my.FunseListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <!-- 关注列表 -->
+        <activity
+            android:name=".moudles.mine.my.FollowListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <!-- 观看直播 -->
+        <activity
+            android:name=".moudles.index.live.WatchLiveActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+
+        <!-- 开启直播 -->
+        <activity
+            android:name=".moudles.index.live.StartLiveActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <!-- 退出直播 -->
+        <!--android:theme="@android:style/Theme.Translucent.NoTitleBar"-->
+        <activity
+            android:name=".moudles.index.live.QuitLiveActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".moudles.index.live.WatchQuitLiveActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <!-- 搜索页面 -->
+        <activity
+            android:name=".moudles.index.activity.SearchActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <!-- 照片详情 -->
+        <activity
+            android:name=".moudles.mine.my.PhotoDetails"
+            android:clipToPadding="true"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+        <!-- 短视频详情 -->
+        <activity
+            android:name=".moudles.mine.my.Videotails"
+            android:clipToPadding="true"
+            android:fitsSystemWindows="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+        <!-- 消息中心 -->
+        <activity
+            android:name=".moudles.mine.my.MessageCenterActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!-- 点歌播放 -->
+        <activity
+            android:name=".moudles.index.live.AudioPlayerActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+
+        <!-- 第三方权限检验使用 -->
+        <activity
+            android:name=".lib.acp.AcpActivity"
+            android:launchMode="singleTask" />
+        <!-- 网易云信通知消息 -->
+        <activity
+            android:name=".wangyiyunxin.main.activity.WYYXSystemMessageActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <!-- 聊天室 -->
+        <activity
+            android:name=".wangyiyunxin.chatroom.activity.ChatRoomActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <!-- 消息历史查询界面 -->
+        <activity
+            android:name=".wangyiyunxin.session.activity.MessageHistoryActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".wangyiyunxin.session.activity.MessageInfoActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".moudles.mine.my.RealNameVertifyActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <!-- 消息会话列表 -->
+        <activity
+            android:name=".wangyiyunxin.main.activity.SessionListActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <!-- 消息历史搜索 -->
+        <activity
+            android:name=".wangyiyunxin.session.search.SearchMessageActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/global_search_bg"
+            android:windowSoftInputMode="adjustPan|stateUnspecified" />
+
+        <!-- 百度地图 -->
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="mIOGOPcyUfymPMhPUIq73AwdNFftp325" />
+
+        <!-- 友盟分享:开始 -->
+        <activity
+            android:name="com.umeng.socialize.view.ShareActivity"
+            android:configChanges="orientation|keyboard"
+            android:launchMode="singleTask"
+            android:noHistory="true"
+            android:theme="@style/Theme.UMDialog"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="58ddd915e88bad035e000e5e" />
+        <meta-data
+            android:name="UMENG_MESSAGE_SECRET"
+            android:value="a36f305eba75835dbdbce11810516dd5" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${UMENG_CHANNEL_VALUE}" />
+
+        <!-- 微信平台 -->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
+
+        <!-- 腾讯 -->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- <data android:scheme="tencent100424468" /> -->
+                <data android:scheme="tencent1105897461" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- 友盟分享:结束 -->
+
+
+        <!-- 网易云信配置开始 -->
+        <!-- APP key, 可以在这里设置，也可以在 SDKOptions 中提供。如果 SDKOptions 中提供了，取 SDKOptions 中的值。 -->
+        <meta-data
+            android:name="com.netease.nim.appKey"
+            android:value="2abe1e00c4e0e895ebad80646d48942b" />
+        <!-- 声明云信后台服务，如需保持后台推送，使用独立进程效果会更好。 -->
+        <service
+            android:name="com.netease.nimlib.service.NimService"
+            android:process=":core" />
+        <service
+            android:name="com.netease.nimlib.service.NimService$Aux"
+            android:process=":core" />
+        <!-- 云信SDK的监视系统启动和网络变化的广播接收器，用户开机自启动以及网络变化时候重新登录，保持和 NimService 同一进程 -->
+        <receiver
+            android:name="com.netease.nimlib.service.NimReceiver"
+            android:exported="false"
+            android:process=":core">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+        <!-- 云信进程间通信 Receiver -->
+        <receiver android:name="com.netease.nimlib.service.ResponseReceiver" />
+        <!-- 安卓保活配置 -->
+        <service
+            android:name="com.netease.cosine.core.CosineService"
+            android:process=":cosine" />
+
+        <receiver
+            android:name="com.netease.cosine.target.CosineReceiver"
+            android:exported="true"
+            android:process=":cosine" />
+
+        <meta-data
+            android:name="com.netease.cosine.target"
+            android:value="" />
+        <meta-data
+            android:name="com.netease.cosine.target.receiver"
+            android:value="com.netease.nimlib.service.NimReceiver" />
+        <!-- ATTENTION: This was auto-generated to add Google Play services to your project forApp Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <!-- 网易云信配置结束 -->
+
+    </application>
+
+</manifest>

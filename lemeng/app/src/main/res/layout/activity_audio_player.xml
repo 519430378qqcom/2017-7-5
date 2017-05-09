@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="30px"
+        android:background="@color/main" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main"
+        android:gravity="center"
+        android:paddingTop="20px"
+        android:text="点歌"
+        android:textColor="@color/white"
+        android:textSize="35px" />
+    <!-- 导航标题栏 -->
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/ll_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/global"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="12px"
+            android:src="@mipmap/img_back" />
+
+        <com.zhy.autolayout.AutoRelativeLayout
+            android:id="@+id/rl_edit"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="5px"
+            android:layout_toLeftOf="@+id/tv_search_btn"
+            android:layout_toRightOf="@id/iv_back"
+            android:background="@drawable/edit_background"
+            android:padding="5dp">
+
+            <ImageView
+                android:id="@+id/search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/icon_search_gray" />
+
+            <EditText
+                android:id="@+id/et_search_input"
+                android:layout_width="240dp"
+                android:layout_height="match_parent"
+                android:layout_toLeftOf="@+id/delete"
+                android:layout_toRightOf="@id/search"
+                android:background="@null"
+                android:hint="请输入歌曲名称"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="@color/main"
+                android:textColorHint="@color/material_yellow"
+                android:textSize="15dp" />
+
+        </com.zhy.autolayout.AutoRelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_search_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:padding="10px"
+            android:text="@string/search"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_15" />
+
+    </com.zhy.autolayout.AutoRelativeLayout>
+
+    <com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout
+        android:id="@+id/mrl_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/audioList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout>
+
+</com.zhy.autolayout.AutoLinearLayout>

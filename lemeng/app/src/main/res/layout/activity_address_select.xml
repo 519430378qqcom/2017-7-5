@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <!--地址选择-->
+    <include layout="@layout/title_bar" />
+
+
+    <RadioGroup
+        android:id="@+id/rg_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="15px"
+        android:paddingLeft="50px"
+        android:paddingRight="50px"
+        android:paddingTop="15px"
+        android:visibility="gone">
+
+        <RadioButton
+            android:id="@+id/rb_women"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawablePadding="5px"
+            android:drawableTop="@drawable/selector_choice_girl"
+            android:gravity="center"
+            android:text="看女神"
+            android:textColor="@color/gray7" />
+
+        <RadioButton
+            android:id="@+id/rb_all"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="true"
+            android:drawablePadding="5px"
+            android:drawableTop="@drawable/selector_choice_all"
+            android:gravity="center"
+            android:text="看全部"
+            android:textColor="@color/gray7" />
+
+        <RadioButton
+            android:id="@+id/rb_men"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawablePadding="5px"
+            android:drawableTop="@drawable/selector_choice_boy"
+            android:gravity="center"
+            android:text="看男神"
+            android:textColor="@color/gray7" />
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/line"
+        android:gravity="center"
+        android:paddingBottom="25px"
+        android:paddingTop="25px"
+        android:text="选择地区" />
+
+    <com.zhy.autolayout.AutoFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rlv_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.zhy.autolayout.AutoFrameLayout>
+
+</com.zhy.autolayout.AutoLinearLayout>

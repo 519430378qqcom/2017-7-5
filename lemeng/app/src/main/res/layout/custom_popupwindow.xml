@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="#00000000"
+              android:orientation="vertical">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/ll_popup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_popupwindow_border"
+        android:orientation="vertical">
+
+
+        <Button
+            android:id="@+id/btn_man"
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:text="男"
+            android:background="@null"
+            android:textColor="#0079FF"
+            android:textSize="35px"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#eeeeee"/>
+
+
+        <Button
+            android:id="@+id/btn_womanto"
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:text="女"
+            android:background="@null"
+            android:textColor="#0079FF"
+            android:textSize="35px"/>
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:background="#00000000"/>
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:background="@drawable/custom_popupwindow_border"
+        android:text="取消"
+        android:textColor="#0079FF"
+        android:textSize="35px"/>
+
+
+</com.zhy.autolayout.AutoLinearLayout>

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <!--实名认证-->
+    <include layout="@layout/title_bar" />
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30px"
+        android:background="@color/white"
+        android:paddingBottom="15px"
+        android:paddingLeft="20px"
+        android:paddingRight="30px"
+        android:paddingTop="15px">
+
+        <TextView
+            android:layout_width="180px"
+            android:layout_height="wrap_content"
+            android:text="真实姓名"
+            android:textColor="@color/backgeragd_head"
+            android:textSize="30px" />
+
+        <EditText
+            android:id="@+id/et_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="请输入真实姓名"
+            android:maxLines="1"
+            android:textSize="30px" />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line" />
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingBottom="15px"
+        android:paddingLeft="20px"
+        android:paddingRight="30px"
+        android:paddingTop="15px">
+
+        <TextView
+            android:layout_width="180px"
+            android:layout_height="wrap_content"
+            android:text="手机号码"
+            android:textColor="@color/backgeragd_head"
+            android:textSize="30px" />
+
+        <EditText
+            android:id="@+id/et_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="请输入手机号码"
+            android:inputType="number"
+            android:maxLines="1"
+            android:textSize="30px" />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line" />
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingBottom="10px"
+        android:paddingLeft="20px"
+        android:paddingRight="30px"
+        android:paddingTop="10px">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="180px"
+            android:layout_height="wrap_content"
+            android:text="验证码"
+            android:textColor="@color/backgeragd_head"
+            android:textSize="30px" />
+
+        <EditText
+            android:id="@+id/et_verify_code"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="请输入验证码"
+            android:inputType="number"
+            android:maxLines="1"
+            android:textSize="30px" />
+
+        <TextView
+            android:id="@+id/tv_get_verify_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_bg_btn"
+            android:gravity="center"
+            android:paddingBottom="5px"
+            android:paddingLeft="15px"
+            android:paddingRight="15px"
+            android:textColor="@color/white"
+            android:paddingTop="5px"
+            android:text="获取验证码"
+            android:textSize="25px" />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30px"
+        android:background="@color/white"
+        android:paddingBottom="15px"
+        android:paddingLeft="20px"
+        android:paddingRight="30px"
+        android:paddingTop="15px">
+
+        <TextView
+            android:layout_width="180px"
+            android:layout_height="wrap_content"
+            android:text="身份证号"
+            android:textColor="@color/backgeragd_head"
+            android:textSize="30px" />
+
+        <EditText
+            android:id="@+id/et_idcard_num"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="请输入身份证号码"
+            android:inputType="number"
+            android:maxLines="1"
+            android:textSize="30px" />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:drawableLeft="@mipmap/id_card"
+        android:drawablePadding="5px"
+        android:paddingBottom="15px"
+        android:paddingLeft="20px"
+        android:paddingTop="15px"
+        android:text="上传证件照片"
+        android:textColor="@color/backgeragd_head"
+        android:textSize="30px" />
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="280px"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/iv_id_card"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:padding="8px"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/add_id_card" />
+
+        <ImageView
+            android:id="@+id/iv_hand_card"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:padding="8px"
+            android:paddingBottom="15px"
+            android:paddingTop="15px"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/add_id_card" />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingBottom="15px"
+        android:paddingTop="15px">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="身份证正面照"
+            android:textColor="@color/backgeragd_head"
+            android:textSize="30px" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="手持身份证正面照"
+            android:textColor="@color/backgeragd_head"
+            android:textSize="30px" />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="80px"
+        android:layout_marginLeft="50px"
+        android:layout_marginRight="50px"
+        android:layout_marginTop="50px"
+        android:background="@drawable/shape_bg_btn"
+        android:text="提交认证"
+        android:textColor="@color/white"
+        android:textSize="30px" />
+
+</com.zhy.autolayout.AutoLinearLayout>

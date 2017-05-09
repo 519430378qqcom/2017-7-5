@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/status_bar"
+        android:layout_width="match_parent"
+        android:layout_height="30px"
+        android:background="@color/white" />
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@id/title"
+        android:layout_width="match_parent"
+        android:layout_height="88px"
+        android:layout_below="@id/status_bar"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="关注"
+            android:textColor="@color/tv_color6"
+            android:textIsSelectable="false"
+            android:textSize="34px" />
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@id/title"
+        android:background="@color/line" />
+
+    <com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout
+        android:id="@+id/mrl_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <com.zhy.autolayout.AutoRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.lvshandian.lemeng.widget.MyRecyclerView
+                    android:id="@+id/lv_live_room"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:divider="@null"
+                    android:scrollbars="none" />
+
+
+                <com.zhy.autolayout.AutoRelativeLayout
+                    android:id="@+id/rl_empty"
+                    android:layout_width="match_parent"
+                    android:layout_height="350px"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/ic_attention_bg" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@+id/tv_2"
+                        android:layout_centerHorizontal="true"
+                        android:text="你的好友静悄悄"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tv_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@+id/to_loke"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="40px"
+                        android:text="此时还没有直播"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/to_loke"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="60px"
+                        android:background="@drawable/empty_bg"
+                        android:paddingBottom="10px"
+                        android:paddingLeft="40px"
+                        android:paddingRight="40px"
+                        android:paddingTop="10px"
+                        android:text="去看看最新精彩直播"
+                        android:textColor="@color/white" />
+                </com.zhy.autolayout.AutoRelativeLayout>
+            </com.zhy.autolayout.AutoRelativeLayout>
+        </ScrollView>
+    </com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout>
+
+    <ImageView
+        android:id="@+id/iv_empty"
+        android:layout_width="300px"
+        android:layout_height="300px"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="200px"
+        android:src="@mipmap/icon_empty_img"
+        android:visibility="gone" />
+
+</com.zhy.autolayout.AutoRelativeLayout>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#00000000"
+    android:orientation="vertical"
+    android:paddingBottom="30px"
+    android:paddingLeft="20px"
+    android:paddingRight="20px">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/ll_popup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_popupwindow_border"
+        android:orientation="vertical">
+
+
+        <Button
+            android:id="@+id/btn_add_blacklist"
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:background="@null"
+            android:text="拉黑"
+            android:textSize="35px" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#eeeeee" />
+
+
+        <Button
+            android:id="@+id/btn_report"
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:background="@null"
+            android:text="举报"
+            android:textSize="35px" />
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:background="#00000000" />
+
+    <Button
+        android:id="@+id/btn_cancel_1"
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:background="@drawable/custom_popupwindow_border"
+        android:text="取消"
+        android:textSize="35px" />
+
+
+</com.zhy.autolayout.AutoLinearLayout>

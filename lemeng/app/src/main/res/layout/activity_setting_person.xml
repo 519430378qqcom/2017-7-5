@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <!--修改个人资料-->
+    <include layout="@layout/title_bar" />
+
+    <!-- 标题结束-->
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="130px"
+        android:layout_gravity="center_vertical"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="30px"
+        android:paddingRight="20px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="left"
+            android:text="头像"
+            android:textColor="@color/backgeragd_head"
+            android:textSize="30px" />
+
+        <com.lvshandian.lemeng.widget.AvatarView
+            android:id="@+id/iv_head"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="right"
+            android:src="@mipmap/head_default" />
+
+
+    </com.zhy.autolayout.AutoRelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="40px"
+        android:background="@color/line" />
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/rl_name"
+        android:layout_width="match_parent"
+        android:layout_height="110px"
+        android:layout_gravity="center_vertical"
+        android:background="@color/white"
+        android:padding="30px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="昵称"
+            android:textColor="@color/backgeragd_head"
+            android:textSize="30px" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="150px"
+            android:background="@null"
+            android:text=""
+            android:textSize="30px" />
+
+
+    </com.zhy.autolayout.AutoRelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="40px"
+        android:background="@color/line" />
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/rl_age"
+        android:layout_width="match_parent"
+        android:layout_height="110px"
+        android:layout_gravity="center_vertical"
+        android:background="@color/white"
+        android:padding="30px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="性别"
+            android:textColor="@color/backgeragd_head"
+            android:textSize="30px" />
+
+        <TextView
+            android:id="@+id/tv_sex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="150px"
+            android:background="@null"
+            android:text=""
+            android:textSize="30px" />
+
+
+    </com.zhy.autolayout.AutoRelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="40px"
+        android:background="@color/line" />
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/rl_xz"
+        android:layout_width="match_parent"
+        android:layout_height="110px"
+        android:layout_gravity="center_vertical"
+        android:background="@color/white"
+        android:padding="30px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="星座"
+            android:textColor="@color/backgeragd_head"
+            android:textSize="30px" />
+
+        <TextView
+            android:id="@+id/xz_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="150px"
+            android:background="@null"
+            android:text=""
+            android:textSize="30px" />
+
+
+    </com.zhy.autolayout.AutoRelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="40px"
+        android:background="@color/line" />
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/rl_address"
+        android:layout_width="match_parent"
+        android:layout_height="110px"
+        android:layout_gravity="center_vertical"
+        android:background="@color/white"
+        android:padding="30px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="所在地"
+            android:textColor="@color/backgeragd_head"
+            android:textSize="30px" />
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="150px"
+            android:background="@null"
+            android:text=""
+            android:textSize="30px" />
+
+
+    </com.zhy.autolayout.AutoRelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="40px"
+        android:background="@color/line" />
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/rl_qm"
+        android:layout_width="match_parent"
+        android:layout_height="110px"
+        android:layout_gravity="center_vertical"
+        android:background="@color/white"
+        android:padding="30px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="签名"
+            android:textColor="@color/backgeragd_head"
+            android:textSize="30px" />
+
+        <TextView
+            android:id="@+id/tv_qm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="150px"
+            android:background="@null"
+            android:text=""
+            android:textSize="30px" />
+
+
+    </com.zhy.autolayout.AutoRelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="40px"
+        android:background="@color/line" />
+
+</com.zhy.autolayout.AutoLinearLayout>

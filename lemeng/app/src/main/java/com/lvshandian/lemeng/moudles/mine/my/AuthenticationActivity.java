@@ -1,0 +1,616 @@
+package com.lvshandian.lemeng.moudles.mine.my;
+
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
+import android.provider.MediaStore;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.lvshandian.lemeng.R;
+import com.lvshandian.lemeng.UrlBuilder;
+import com.lvshandian.lemeng.base.BaseActivity;
+import com.lvshandian.lemeng.bean.lemeng.CustomStringCallBack;
+import com.lvshandian.lemeng.httprequest.HttpDatas;
+import com.lvshandian.lemeng.httprequest.RequestCode;
+import com.lvshandian.lemeng.interf.ResultListener;
+import com.lvshandian.lemeng.utils.AliYunImageUtils;
+import com.lvshandian.lemeng.utils.BitmpTools;
+import com.lvshandian.lemeng.utils.CacheUtils;
+import com.lvshandian.lemeng.utils.ImageCompressUtils;
+import com.lvshandian.lemeng.utils.LogUtils;
+import com.lvshandian.lemeng.utils.MiPictureHelper;
+import com.lvshandian.lemeng.utils.PermisionUtils;
+import com.lvshandian.lemeng.utils.PicassoUtil;
+import com.lvshandian.lemeng.utils.RegexUtils;
+import com.lvshandian.lemeng.utils.TextPhoneNumber;
+import com.lvshandian.lemeng.view.CustomPopWindow;
+import com.zhy.http.okhttp.OkHttpUtils;
+
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+import butterknife.Bind;
+
+/**
+ * 提交认证界面
+ * Created by gjj on 2016/11/21.
+ */
+
+public class AuthenticationActivity extends BaseActivity {
+
+    @Bind(R.id.et_name)
+    EditText etName;
+    @Bind(R.id.et_phone)
+    EditText etPhone;
+    @Bind(R.id.et_verify_code)
+    EditText etVerifyCode;
+    @Bind(R.id.tv_get_verify_code)
+    TextView tvGetVerifyCode;
+    @Bind(R.id.et_idcard_num)
+    EditText etIdcardNum;
+    @Bind(R.id.iv_id_card)
+    ImageView ivIdCard;
+    @Bind(R.id.iv_hand_card)
+    ImageView ivHandCard;
+    @Bind(R.id.btn_submit)
+    Button btnSubmit;
+
+    /**
+     * 验证码倒计时1分钟
+     */
+    private final long daoJiShi = 1000 * 60;
+
+    /**
+     * 倒计时单位 秒
+     */
+    private final long countDownInterval = 1000;
+
+    /**
+     * 计时器
+     */
+    private CountDownTimer mTimer;
+
+    /**
+     * popupWindow拍照按钮
+     */
+    private TextView tvCamera;
+
+    /**
+     * popupWindow取消按钮
+     */
+    private TextView tvCancel;
+
+    /**
+     * popupWindow选择图库图片按钮
+     */
+    private TextView tvPhonePicture;
+
+    /**
+     * popupWindow
+     */
+    private CustomPopWindow popupWindow;
+
+    /**
+     * 图片储存目录
+     */
+    public String SDPATH = Environment.getExternalStorageDirectory() + "/TangRen/";
+
+    /**
+     * 图片储存路径
+     */
+    private File mFile;
+    private final int TAKE_PICTURE = 1;
+    private final int LOCAL_PICTURE = TAKE_PICTURE + 1;
+    private PICTURE_FLAG mFlag = PICTURE_FLAG.NONE;
+
+    /**
+     * 上传图片的数量
+     */
+    private int uploadImageCount = 0;
+
+    /**
+     * 身份证正面照图片的本地路径
+     */
+    private String ID_IMAGE_PATH;
+
+    /**
+     * 手持身份证正面照图片的本地路径
+     */
+    private String HAND_ID_IMAGE_PATH;
+
+    /**
+     * 身份证正面照图片的网络路径
+     */
+    private String idImageNetPath;
+
+    /**
+     * 身份证正面照图片的网络路径
+     */
+    private String handIdImageNetPath;
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Bundle data = msg.getData();
+            String json = data.getString(HttpDatas.info);
+
+            switch (msg.what) {
+                //关注请求接收数据
+                case RequestCode.REAL_NAME_VERTIFY:
+                    appUser.setVerified("1");
+                    CacheUtils.saveObject(AuthenticationActivity.this, appUser, CacheUtils.USERINFO);
+                    showToast("上传成功");
+                    startActivity(new Intent(mContext, RealNameVertifyActivity.class));
+                    finish();
+                    break;
+            }
+        }
+    };
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_authentication;
+    }
+
+    @Override
+    protected void initListener() {
+        tvGetVerifyCode.setOnClickListener(this);
+        ivIdCard.setOnClickListener(this);
+        ivHandCard.setOnClickListener(this);
+        btnSubmit.setOnClickListener(this);
+    }
+
+    @Override
+    protected void initialized() {
+        initTitle("", "认证", null);
+        initCutDonwTime();
+        initPop();
+        File file = new File(SDPATH);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+
+    }
+
+    /**
+     * 选取图片pop
+     */
+    private void initPop() {
+        View popView = View.inflate(this, R.layout.pop_header_address, null);
+
+        tvCamera = (TextView) popView.findViewById(R.id.tv_camera);
+        tvCancel = (TextView) popView.findViewById(R.id.tv_cancel);
+        tvPhonePicture = (TextView) popView.findViewById(R.id.tv_phone_picture);
+        if (tvCamera != null) {
+            tvCamera.setOnClickListener(this);
+        }
+
+        if (tvPhonePicture != null) {
+            tvPhonePicture.setOnClickListener(this);
+        }
+        if (tvCancel != null) {
+            tvCancel.setOnClickListener(this);
+        }
+        int width = FrameLayout.LayoutParams.MATCH_PARENT;
+        int height = FrameLayout.LayoutParams.MATCH_PARENT;
+        popupWindow = new CustomPopWindow(popView, width, height, this);
+        popupWindow.setAnimationStyle(R.style.mypopwindow_anim_style);
+        popupWindow.setFocusable(true);
+    }
+
+    /**
+     * 初始倒计时
+     */
+    private void initCutDonwTime() {
+        mTimer = new CountDownTimer(daoJiShi, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                tvGetVerifyCode.setText(String.valueOf((int) (millisUntilFinished / countDownInterval)));
+            }
+
+            @Override
+            public void onFinish() {
+                tvGetVerifyCode.setText("获取验证码");
+                tvGetVerifyCode.setEnabled(true);
+            }
+        };
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_titlebar_left:
+                defaultFinish();
+                break;
+            case R.id.tv_get_verify_code:
+                getVerifyCode();
+                break;
+            case R.id.iv_id_card:
+                mFlag = PICTURE_FLAG.ID_CARD;
+                showPop(v);
+                break;
+            case R.id.iv_hand_card:
+                mFlag = PICTURE_FLAG.HAND_ID_CARD;
+                showPop(v);
+                break;
+            case R.id.tv_camera:
+                //拍照
+                camera();
+                popDismiss();
+                break;
+            case R.id.tv_phone_picture:
+                //手机图库
+                popDismiss();
+                takeLocalImage();
+                break;
+            case R.id.tv_cancel:
+                popDismiss();
+                break;
+            case R.id.btn_submit:
+                subRenZhengInfo();
+                break;
+        }
+    }
+
+    /**
+     * 获取验证
+     */
+    private void getVerifyCode() {
+        String phoneNum = etPhone.getText().toString().trim();
+        if (!TextPhoneNumber.isPhone(phoneNum)) {
+            showToast("请输入正确的手机号");
+            return;
+        }
+        OkHttpUtils.get().url(UrlBuilder.chargeServerUrl + UrlBuilder.getCode)
+                .addParams("mobile", phoneNum)
+                .build().execute(new CustomStringCallBack() {
+            @Override
+            public void onFaild() {
+                showToast("验证码发送失败,请重试");
+            }
+
+            @Override
+            public void onSucess(String data) {
+                showToast("验证码已经发送，请注意查收");
+                mTimer.start();
+                tvGetVerifyCode.setEnabled(false);
+            }
+        });
+    }
+
+
+    /**
+     * 提交认证信息
+     */
+    private void subRenZhengInfo() {
+        ConcurrentHashMap<String, String> params = new ConcurrentHashMap<>();
+
+        String id = appUser.getId();
+        params.put("Id", id);
+
+        String name = etName.getText().toString().trim();
+        params.put("realName", name);
+
+        String phone = etPhone.getText().toString().trim();
+        if (!TextPhoneNumber.isPhone(phone)) {
+            showToast("请输入正确的手机号");
+            return;
+        }
+        params.put("phoneNum", phone);
+
+
+        String verCode = etVerifyCode.getText().toString().trim();
+        if (android.text.TextUtils.isEmpty(verCode)) {
+            showToast("请输入验证码");
+            return;
+        }
+        params.put("verCode", verCode);
+
+        String idNo = etIdcardNum.getText().toString().trim();
+        if (!RegexUtils.isIDCard15(idNo) && !RegexUtils.isIDCard18(idNo)) {
+            showToast("请输入正确的身份证号");
+            return;
+        }
+        params.put("IDNo", idNo);
+
+        if (android.text.TextUtils.isEmpty(idImageNetPath)) {
+            showToast("请上传身份证正面图片");
+            return;
+        }
+        params.put("IDFrontPic", idImageNetPath);
+
+        if (android.text.TextUtils.isEmpty(handIdImageNetPath)) {
+            showToast("请上传手持身份证正面图片");
+            return;
+        }
+        params.put("IDbackPic", handIdImageNetPath);
+
+        httpDatas.getNewDataCharServer("上传认证信息", Request.Method.POST, UrlBuilder.Authentication, params, mHandler, RequestCode.REAL_NAME_VERTIFY);
+    }
+
+    /**
+     * 获取本地图片
+     */
+    private void takeLocalImage() {
+        PermisionUtils.newInstance().checkWriteStoragePermission(this, new PermisionUtils.OnPermissionGrantedLintener() {
+            @Override
+            public void permissionGranted() {
+                Intent intentFromGallery = new Intent();
+                // 设置文件类型
+                intentFromGallery.setType("image/*");
+                intentFromGallery.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(intentFromGallery, LOCAL_PICTURE);
+            }
+        });
+    }
+
+    /**
+     * 选取图片POP消失
+     */
+    private void popDismiss() {
+        if (popupWindow != null && popupWindow.isShowing()) {
+            popupWindow.dismiss();
+        }
+    }
+
+    /**
+     * 选取图片POP显示
+     *
+     * @param v
+     */
+    private void showPop(View v) {
+        if (popupWindow != null && !popupWindow.isShowing()) {
+            popupWindow.showAtLocation(v, Gravity.BOTTOM, 0, 0);
+        }
+    }
+
+
+    /**
+     * 拍照
+     */
+    private void camera() {
+        PermisionUtils.newInstance().checkCallPhonePermission(this, new PermisionUtils.OnPermissionGrantedLintener() {
+            @Override
+            public void permissionGranted() {
+                Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                String fileName = String.valueOf(System.currentTimeMillis());
+                mFile = new File(SDPATH, fileName + ".JPEG");
+                if (mFile.exists()) {
+                    mFile.delete();
+                }
+                Uri imageUri = Uri.fromFile(mFile);
+                //指定照片保存路径（SD卡），image.jpg为一个临时文件，每次拍照后这个图片都会被替换
+                openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                startActivityForResult(openCameraIntent, TAKE_PICTURE);
+            }
+        });
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case TAKE_PICTURE:
+                ImageCompressUtils.newInstance().compress(this, mFile, new ImageCompressUtils.CompressResultListener() {
+                    @Override
+                    public void onError() {
+                        showToast("压缩失败,请重试");
+                    }
+
+                    @Override
+                    public void onSuccess(File resultFile) {
+                        switch (mFlag) {
+                            case ID_CARD:
+                                ID_IMAGE_PATH = mFile.getPath();
+                                getAliyunIDImageUrl();
+
+                                break;
+                            case HAND_ID_CARD:
+                                HAND_ID_IMAGE_PATH = mFile.getPath();
+                                getAliyunHandIDImageUrl();
+
+                                break;
+                        }
+                        PicassoUtil.newInstance().onLocadThumbnail(mContext, resultFile.getPath(), 540, 360, mFlag == PICTURE_FLAG.ID_CARD ? ivIdCard : ivHandCard);
+                    }
+                });
+                break;
+            case LOCAL_PICTURE:
+                Uri uri = data.getData();
+                String path = MiPictureHelper.getPath(mContext, uri);
+//                    ContentResolver resolver = getContentResolver();
+                Bitmap photo = null;
+
+                if (uri == null) {
+                    Bundle bundle = data.getExtras();
+                    LogUtils.e("bundle: " + bundle);
+                    Set<String> strings = bundle.keySet();
+                    for (String key : strings) {
+                        LogUtils.e("key: " + key + " ,value: " + bundle.get(key));
+                    }
+                    if (bundle != null) {
+                        photo = (Bitmap) bundle.get("data"); //get bitmap
+                    } else {
+                        showToast("选取相册失败,请重试");
+                    }
+                } else {
+                    try {
+                        photo = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
+                    } catch (FileNotFoundException e) {
+                        showToast("选取相册失败,请重试");
+                    }
+                }
+
+                Bitmap bitmap = ThumbnailUtils.extractThumbnail(photo, 540, 360);
+
+                if (mFlag == PICTURE_FLAG.ID_CARD) {
+                    ivIdCard.setImageBitmap(bitmap);
+                } else {
+                    ivHandCard.setImageBitmap(bitmap);
+                }
+
+
+                switch (mFlag) {
+                    case ID_CARD:
+                        ID_IMAGE_PATH = path;
+                        getAliyunIDImageUrl();
+                        break;
+                    case HAND_ID_CARD:
+                        HAND_ID_IMAGE_PATH = path;
+                        getAliyunHandIDImageUrl();
+                        break;
+                }
+
+                break;
+        }
+    }
+    private void getAliyunHandIDImageUrl() {
+        File certifationFile = new File(HAND_ID_IMAGE_PATH);
+        Bitmap bitmap1 = null;
+        File file1 = null;
+        try {
+            bitmap1 = BitmpTools.revitionImageSize(certifationFile.getAbsolutePath());
+            file1 =compressImage(bitmap1);
+            String HandabsolutePath =  file1.getAbsolutePath();
+            AliYunImageUtils.newInstance().uploadImage(this, HandabsolutePath, new ResultListener() {
+                @Override
+                public void onSucess(String data) {
+                    LogUtils.e("手持身份证正面照: " + data);
+                    uploadImageCount++;
+                    handIdImageNetPath = data;
+                }
+
+                @Override
+                public void onFaild() {
+                    showToast("上传手持身份证正面照失败,请重试");
+                    uploadImageCount = 0;
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void getAliyunIDImageUrl() {
+
+        File idCardfile = new File(ID_IMAGE_PATH);
+        Bitmap bitmap1 = null;
+        File file1 = null;
+        try {
+            bitmap1 = BitmpTools.revitionImageSize(idCardfile.getAbsolutePath());
+            file1 =compressImage(bitmap1);
+            String IDImageabsolutePath = file1.getAbsolutePath();
+            AliYunImageUtils.newInstance().uploadImage(this,IDImageabsolutePath, new ResultListener() {
+                @Override
+                public void onSucess(String data) {
+                    LogUtils.e("身份证正面照地址: " + data);
+                    idImageNetPath = data;
+                    uploadImageCount++;
+
+                }
+
+                @Override
+                public void onFaild() {
+                    showToast("上传身份证正面照失败,请重试");
+                    uploadImageCount = 0;
+                }
+            });
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    private static File compressImage(Bitmap image) {
+        String filePath = Environment.getExternalStorageDirectory().toString();
+        String fileName = System.currentTimeMillis() + ".jpg";
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 70, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
+        return byte2File(baos.toByteArray(),filePath,fileName);
+
+    }
+
+    public static File byte2File(byte[] buf, String filePath, String fileName)
+    {
+        BufferedOutputStream bos = null;
+        FileOutputStream fos = null;
+        File file = null;
+        try {
+            File dir = new File(filePath);
+            if (!dir.exists() && dir.isDirectory())
+            {
+                dir.mkdirs();
+            }
+            file = new File(filePath + File.separator + fileName);
+            fos = new FileOutputStream(file);
+            bos = new BufferedOutputStream(fos);
+            bos.write(buf);
+
+            return file;
+        }catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }finally{
+            if (bos != null){
+                try{
+                    bos.close();
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+            if (fos != null){
+                try{
+                    fos.close();
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    /**
+     * 照片标记
+     * <p>
+     * NONE:未选择
+     * <p>
+     * ID_CARD：身份证照片
+     * <p>
+     * HAND_ID_CARD：手持身份证照片
+     */
+    enum PICTURE_FLAG {
+        NONE, ID_CARD, HAND_ID_CARD
+    }
+
+    @Override
+    protected void onDestroy() {
+        mTimer.cancel();
+        super.onDestroy();
+    }
+
+}

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.lvshandian.lemeng.widget.AvatarView
+        android:id="@+id/room_user_header"
+        android:layout_width="60px"
+        android:layout_height="60px"
+        android:layout_marginLeft="10px"
+        android:src="@mipmap/head_default"
+        app:border_color="@color/white"
+        app:border_width="1dip" />
+
+</com.zhy.autolayout.AutoLinearLayout>

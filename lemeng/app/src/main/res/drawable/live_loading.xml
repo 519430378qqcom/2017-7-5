@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+
+    <item
+        android:drawable="@drawable/loding02"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding03"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding04"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding05"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding06"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding07"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding08"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding09"
+        android:duration="10" />
+
+    <item
+        android:drawable="@drawable/loding09"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding010"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding11"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding12"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding13"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding14"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding15"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding16"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding17"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding18"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding19"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding20"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding21"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding22"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding23"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding24"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding25"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding26"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding27"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding28"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding29"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding30"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding31"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding32"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding33"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding34"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding35"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding36"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding37"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding38"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding39"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding40"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding41"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding42"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding43"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/loding44"
+        android:duration="10" />
+</animation-list>

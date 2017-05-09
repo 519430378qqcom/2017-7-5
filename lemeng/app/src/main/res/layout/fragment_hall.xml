@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout
+        android:id="@+id/mrl_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <com.zhy.autolayout.AutoRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/bg_f0">
+
+                <com.youth.banner.Banner
+                    android:id="@+id/banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="250px"
+                    android:background="@color/white"
+                    app:indicator_drawable_selected="@mipmap/dot_selected"
+                    app:indicator_drawable_unselected="@mipmap/dot_normal"
+                    app:indicator_margin="10px"
+                    app:scroll_time="1200"
+                    app:title_textcolor="#ffffff"
+                    app:title_textsize="30px" />
+
+                <com.zhy.autolayout.AutoLinearLayout
+                    android:id="@+id/ll_ranking_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="114px"
+                    android:layout_below="@id/banner"
+                    android:layout_marginTop="10px"
+                    android:background="@color/white">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/ic_ranking_list" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rankingList"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </com.zhy.autolayout.AutoLinearLayout>
+
+                <View
+                    android:id="@+id/line"
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:layout_below="@id/ll_ranking_list"
+                    android:background="@color/bg_f0" />
+
+                <com.lvshandian.lemeng.widget.MyRecyclerView
+                    android:id="@+id/lv_live_room"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/line"
+                    android:divider="@null"
+                    android:scrollbars="none" />
+
+            </com.zhy.autolayout.AutoRelativeLayout>
+        </ScrollView>
+    </com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout>
+
+    <ImageView
+        android:id="@+id/iv_empty"
+        android:layout_width="300px"
+        android:layout_height="300px"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="200px"
+        android:src="@mipmap/icon_empty_img"
+        android:visibility="gone" />
+</com.zhy.autolayout.AutoRelativeLayout>
