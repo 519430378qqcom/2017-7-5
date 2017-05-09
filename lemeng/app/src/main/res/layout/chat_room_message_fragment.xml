@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/input_content"
-        android:layout_width="50px"
-        android:layout_height="50px"
+        android:layout_width="60px"
+        android:layout_height="60px"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="25px"
         android:layout_marginLeft="19px"
@@ -17,8 +17,8 @@
 
     <ImageView
         android:id="@+id/iv_ranking"
-        android:layout_width="50px"
-        android:layout_height="50px"
+        android:layout_width="60px"
+        android:layout_height="60px"
         android:layout_alignLeft="@+id/input_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="25px"
