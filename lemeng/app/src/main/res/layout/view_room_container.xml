@@ -467,13 +467,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="5px" />
 
-                <!--<fragment-->
-                    <!--android:id="@+id/watch_room_message_fragment"-->
-                    <!--android:name="com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragment"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="300px"-->
-                    <!--android:layout_gravity="bottom"-->
-                    <!--android:background="@drawable/btn_ticket_labe" />-->
+                <fragment
+                    android:id="@+id/watch_room_message_fragment"
+                    android:name="com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="300px"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/btn_ticket_labe" />
 
                 <fragment
                     android:id="@+id/watch_room_message_fragment_gift"

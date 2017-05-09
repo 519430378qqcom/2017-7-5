@@ -100,6 +100,7 @@ import com.lvshandian.lemeng.moudles.mine.my.adapter.OnItemClickListener;
 import com.lvshandian.lemeng.moudles.mine.my.adapter.RoomUsersDataAdapter;
 import com.lvshandian.lemeng.service.VoiceService;
 import com.lvshandian.lemeng.utils.AnimationUtils;
+import com.lvshandian.lemeng.utils.BottomDialogUtils;
 import com.lvshandian.lemeng.utils.ChannelToLiveBean;
 import com.lvshandian.lemeng.utils.Config;
 import com.lvshandian.lemeng.utils.CountUtils;
@@ -291,7 +292,10 @@ public class StartLiveActivity extends BaseActivity implements
     RelativeLayout mSendGiftLian;
     @Bind(R.id.btn_timer)
     TextView btn_timer;
-
+    @Bind(R.id.game_more_btn)
+    ImageView game_more_btn;
+    @Bind(R.id.game)
+    ImageView game;
     public static LrcView mLrcView;
     private static final String TAG = "StartLiveActivity";
 
@@ -720,6 +724,8 @@ public class StartLiveActivity extends BaseActivity implements
         llTangpiao.setOnClickListener(this);
         liveHead.setOnClickListener(this);
         audio_player.setOnClickListener(this);
+        game.setOnClickListener(this);
+
 
         liveClose.setOnClickListener(this);
         ivLiveMei.setOnClickListener(this);
@@ -730,7 +736,7 @@ public class StartLiveActivity extends BaseActivity implements
         ivLiveGift.setOnClickListener(this);
         startRoomJaiZu.setOnClickListener(this);
         roomShowId.setOnClickListener(this);
-
+        game_more_btn.setOnClickListener(this);
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -756,10 +762,36 @@ public class StartLiveActivity extends BaseActivity implements
 //        });
 
     }
-
+    private boolean ismore = false;
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.game:  //游戏
+                BottomDialogUtils.showButtoDialog(mContext,v,R.layout.view_show_startlive_game);
+                BottomDialogUtils.showPopWindows();
+                BottomDialogUtils.popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+                        llBottomMenu.setVisibility(View.VISIBLE);
+                        messageFragment.showInputContent();
+                        messageFragment.showRanKing();
+                    }
+                });
+                llBottomMenu.setVisibility(View.GONE);
+                messageFragment.hideInputcontent();
+                messageFragment.hideRanking();
+                break;
+            case R.id.game_more_btn:
+                 if (ismore == false){
+                     ivLiveShare.setVisibility(View.VISIBLE);
+                     audio_player.setVisibility(View.VISIBLE);
+                     ismore = true;
+                 }else{
+                     ivLiveShare.setVisibility(View.GONE);
+                     audio_player.setVisibility(View.GONE);
+                     ismore = false;
+                 }
+                break;
 
             /**
              * 关闭拉流小窗口关闭拉流地址
@@ -1385,6 +1417,7 @@ public class StartLiveActivity extends BaseActivity implements
     private void initMessageFragment() {
         messageFragment = (ChatRoomMessageFragment) getSupportFragmentManager().findFragmentById
                 (R.id.watch_room_message_fragment);
+
         if (messageFragment != null) {
             messageFragment.init(wy_Id, room_Id);
         } else {

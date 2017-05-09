@@ -86,7 +86,20 @@ public class ChatRoomMessageFragment extends TFragment implements ModuleProxy {
         }
     };
 
+    public void hideInputcontent(){
+        inputType.setVisibility(View.GONE);
+    }
+    public void showInputContent(){
+        inputType.setVisibility(View.VISIBLE);
+    }
 
+     public void hideRanking(){
+         ivRanking.setVisibility(View.GONE);
+     }
+
+    public void showRanKing(){
+        ivRanking.setVisibility(View.VISIBLE);
+    }
     /**
      * 点击其他地方隐藏软键盘输入框
      *

@@ -205,10 +205,12 @@
             android:orientation="horizontal"
             android:layout_centerVertical="true"
             >
+
             <ImageView
+                android:id="@+id/iv_xy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_audio_open"
+                android:src="@mipmap/yx"
                 android:layout_marginLeft="20px"
                 />
 

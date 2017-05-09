@@ -22,7 +22,7 @@
         android:layout_alignLeft="@+id/input_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="25px"
-        android:layout_marginLeft="65px"
+        android:layout_marginLeft="90px"
         android:src="@mipmap/mg_room_btn_ranking" />
 
     <LinearLayout

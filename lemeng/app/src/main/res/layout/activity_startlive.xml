@@ -336,7 +336,6 @@
             android:layout_width="match_parent"
             android:layout_above="@+id/rl_share"
             android:layout_marginBottom="10px"
-            android:visibility="gone"
             android:layout_height="wrap_content">
 
             <ImageView
@@ -346,6 +345,7 @@
                 android:src="@mipmap/audio_player"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="15px"
+                android:visibility="gone"
                 />
 
         </com.zhy.autolayout.AutoRelativeLayout>
@@ -355,7 +355,6 @@
             android:layout_width="match_parent"
             android:layout_above="@+id/fl_bottom_menu"
             android:layout_marginBottom="10px"
-            android:visibility="gone"
             android:layout_height="wrap_content">
 
             <ImageView
@@ -364,6 +363,8 @@
                 android:layout_height="60px"
                 android:src="@mipmap/mg_room_btn_fen"
                 android:layout_alignParentRight="true"
+                android:visibility="gone"
+
                 android:layout_marginRight="15px"
                 />
 
@@ -379,6 +380,7 @@
             <com.zhy.autolayout.AutoRelativeLayout
                 android:id="@+id/ll_bottom_menu"
                 android:layout_width="fill_parent"
+                android:visibility="visible"
                 android:layout_height="wrap_content">
 
 
@@ -438,12 +440,11 @@
                         android:src="@mipmap/audio_player" />
 
                     <ImageView
+                        android:id="@+id/game"
                         android:layout_width="60px"
                         android:layout_height="60px"
                         android:contentDescription="@string/empty"
                         android:src="@mipmap/game" />
-
-
 
                     <com.zhy.autolayout.AutoRelativeLayout
                         android:layout_width="60px"
