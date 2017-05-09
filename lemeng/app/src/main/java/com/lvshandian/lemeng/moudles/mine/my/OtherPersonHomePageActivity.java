@@ -309,7 +309,7 @@ public class OtherPersonHomePageActivity extends BaseActivity {
             String online = mOtherBean.getOnline();
 
             tvName.setText(nickName + "[" + (online.endsWith("0") ? "离线" : "在线") + "]");
-            tvId.setText("海颜号:" + id);
+            tvId.setText("乐檬号:" + id);
             String gender = mOtherBean.getGender();
             ivSex.setImageResource(TextUtils.equals(gender, "1") ? R.mipmap.male : R.mipmap.female);
 

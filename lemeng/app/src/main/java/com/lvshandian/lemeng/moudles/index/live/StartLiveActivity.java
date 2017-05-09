@@ -431,7 +431,7 @@ public class StartLiveActivity extends BaseActivity implements
     private ViewPager mVpGiftView;
 
     /**
-     * 礼物列表中的颜票数量
+     * 礼物列表中的乐票数量
      */
     private TextView mUserCoin;
 
@@ -630,7 +630,7 @@ public class StartLiveActivity extends BaseActivity implements
                     String receivedGoldCoin = userZhubo.getReceivedGoldCoin();
                     SharedPreferenceUtils.saveZhuboGoldCoin(mContext, receivedGoldCoin);
                     receivedGoldCoin = CountUtils.getCount(Long.parseLong(receivedGoldCoin));
-                    liveJinpiao.setText(receivedGoldCoin); //显示主播颜票数量
+                    liveJinpiao.setText(receivedGoldCoin); //显示主播乐票数量
                     break;
             }
         }
@@ -690,7 +690,7 @@ public class StartLiveActivity extends BaseActivity implements
         liveOnLineNums = Integer.parseInt(creatReadyBean.getOnlineUserNum());
         liveNum.setText(liveOnLineNums + "");
 
-        liveId.setText("海颜号:" + creatReadyBean.getCreator().getId());
+        liveId.setText("乐檬号:" + creatReadyBean.getCreator().getId());
 //        roomShowId.setText("房间号:" + room_Id);
         initUser();
         SharedPreferenceUtils.put(this, "ZhuBoId", appUser.getId());
@@ -1727,7 +1727,7 @@ public class StartLiveActivity extends BaseActivity implements
                             Integer.parseInt(customGiftBean.getGift_coinnumber_index())))) + "";
             SharedPreferenceUtils.saveZhuboGoldCoin(mContext, receivedGoldCoin);
             receivedGoldCoin = CountUtils.getCount(Long.parseLong(receivedGoldCoin));
-            liveJinpiao.setText(receivedGoldCoin); //显示主播颜票数量
+            liveJinpiao.setText(receivedGoldCoin); //显示主播乐票数量
 
 
             SharedPreferenceUtils.saveGoldCoin(mContext, (Long.parseLong(SharedPreferenceUtils

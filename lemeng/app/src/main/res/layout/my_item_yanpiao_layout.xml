@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="30px"
-        android:text="颜票"
+        android:text="乐票"
         android:textColor="@color/tv_color6"
         android:textSize="15sp" />
 

@@ -58,7 +58,7 @@ public class ExplainWebViewActivity extends BaseActivity implements View.OnClick
 //        flag = getIntent().getExtras().getInt("flag");
 //        url = getIntent().getStringExtra("url");
 
-        tv_titlebar_title.setText("颜票充值");
+        tv_titlebar_title.setText("乐票充值");
         url = String.format(UrlBuilder.YINLIAN_PAY_WEB, appUser.getId());
         initView();
     }
@@ -66,7 +66,7 @@ public class ExplainWebViewActivity extends BaseActivity implements View.OnClick
     private void initView() {
 //        switch (flag) {
 //            case 1000:
-//                tv_titlebar_title.setText("颜票充值");
+//                tv_titlebar_title.setText("乐票充值");
 //                break;
 //        }
         WebSettings webSettings = webView.getSettings();

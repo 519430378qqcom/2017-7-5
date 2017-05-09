@@ -111,7 +111,7 @@
                     android:layout_marginLeft="30px"
                     android:layout_above="@+id/tv_sign"
                     android:layout_marginBottom="5px"
-                    android:text="海颜号："
+                    android:text="乐檬号："
                     android:textColor="@color/backgroudcolor"
                     android:textSize="30px" />
 
@@ -192,7 +192,7 @@
             android:layout_height="1px"
             android:layout_marginLeft="30px"
             android:background="@color/line" />
-        <!--我的颜票-->
+        <!--我的乐票-->
         <include layout="@layout/my_item_yanpiao_layout" />
 
         <!--我的回放-->

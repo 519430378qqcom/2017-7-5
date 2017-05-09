@@ -285,7 +285,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
 
     /**
-     * 海颜开始动画
+     * 乐檬开始动画
      */
     private FramesSequenceAnimation framesSequenceAnimation;
     public static LoadingDialog mLoading;//进入直播间loading
@@ -435,7 +435,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     private ViewPager mVpGiftView;
 
     /**
-     * 礼物面板中的颜票数量
+     * 礼物面板中的乐票数量
      */
     private TextView mUserCoin;
 
@@ -721,7 +721,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     String receivedGoldCoin = userZhubo.getReceivedGoldCoin();
                     SharedPreferenceUtils.saveZhuboGoldCoin(mContext, receivedGoldCoin);
                     receivedGoldCoin = CountUtils.getCount(Long.parseLong(receivedGoldCoin));
-                    liveJinpiao.setText(receivedGoldCoin); //显示主播颜票数量
+                    liveJinpiao.setText(receivedGoldCoin); //显示主播乐票数量
                     break;
                 case RequestCode.REQUEST_REPORT:
                     showToast("已成功举报该用户");
@@ -913,10 +913,10 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             liveName.setText(liveListBean.getNickName());
         }
 
-        liveId.setText("海颜号:" + liveListBean.getId());
+        liveId.setText("乐檬号:" + liveListBean.getId());
         roomShowId.setText("房间号:" + liveListBean.getRooms().getId());
 
-        //请求主播信息,得到主播颜票数量
+        //请求主播信息,得到主播乐票数量
         initUser();
         //请求主播信息并且附上金票显示隐藏关注按钮
         ifattention("请求主播信息", liveListBean.getId() + "", RequestCode.IF_ATTENTION);
@@ -1254,7 +1254,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
 
     /**
-     * 显示海颜的开始loading动画
+     * 显示乐檬的开始loading动画
      */
     private void startloading() {
         rlLoading.setVisibility(View.VISIBLE);
@@ -2044,7 +2044,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                             * Integer.parseInt(customGiftBean.getGift_coinnumber_index())))) + "";
             SharedPreferenceUtils.saveZhuboGoldCoin(mContext, receivedGoldCoin);
             receivedGoldCoin = CountUtils.getCount(Long.parseLong(receivedGoldCoin));
-            liveJinpiao.setText(receivedGoldCoin); //显示主播颜票数量
+            liveJinpiao.setText(receivedGoldCoin); //显示主播乐票数量
         }
 
         //如果中奖的是主播,界面上显示主播的金币数改变

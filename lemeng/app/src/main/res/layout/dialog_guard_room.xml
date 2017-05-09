@@ -91,7 +91,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20px"
-                    android:text="（无海颜票赠送）"
+                    android:text="（无海乐票赠送）"
                     android:textSize="17px" />
 
             </com.zhy.autolayout.AutoLinearLayout>
@@ -133,7 +133,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20px"
-                    android:text="（无海颜票赠送）"
+                    android:text="（无海乐票赠送）"
                     android:textSize="17px" />
             </com.zhy.autolayout.AutoLinearLayout>
 
@@ -174,7 +174,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20px"
-                    android:text="（无海颜票赠送）"
+                    android:text="（无海乐票赠送）"
                     android:textSize="17px" />
             </com.zhy.autolayout.AutoLinearLayout>
 

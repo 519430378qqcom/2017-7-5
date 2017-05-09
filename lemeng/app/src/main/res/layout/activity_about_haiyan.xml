@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/grayF1"
     android:orientation="vertical">
-    <!--关于海颜-->
+    <!--关于乐檬-->
     <include layout="@layout/title_bar" />
 
     <com.zhy.autolayout.AutoRelativeLayout
@@ -155,7 +155,7 @@
             android:layout_gravity="center_horizontal"
             android:paddingBottom="15px"
             android:paddingTop="30px"
-            android:text="海颜直播版权所有" />
+            android:text="乐檬直播版权所有" />
 
         <TextView
             android:layout_width="wrap_content"

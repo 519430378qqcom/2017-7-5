@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#C1E2F3"
+    android:background="@color/main_44"
     android:orientation="vertical">
     <View
         android:layout_width="match_parent"
@@ -237,7 +237,8 @@
                             android:paddingRight="20px"
                             android:paddingTop="10px"
                             android:text="上传照片"
-                            android:textColor="@color/main"
+                            android:textStyle="bold"
+                            android:textColor="@color/white"
                             android:textSize="25px"
                             app:layout_auto_basewidth="height" />
 

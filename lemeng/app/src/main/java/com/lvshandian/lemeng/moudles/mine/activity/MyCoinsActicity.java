@@ -25,7 +25,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import butterknife.Bind;
 
 /**
- * 我的颜票界面
+ * 我的乐票界面
  * Created by Administrator on 2017/1/17.
  */
 
@@ -77,7 +77,7 @@ public class MyCoinsActicity extends BaseActivity {
 
     @Override
     protected void initialized() {
-        initTitle("", "我的颜票", null);
+        initTitle("", "我的乐票", null);
         String myCoin = appUser.getGoldCoin();
         myCoin = CountUtils.getCount(Long.parseLong(myCoin));
         myCoins.setText(myCoin);

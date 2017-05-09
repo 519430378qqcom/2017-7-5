@@ -410,7 +410,7 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
 
             String idInfo = userInfo.getId();
             if (!com.lvshandian.lemeng.utils.TextUtils.isEmpty(idInfo))
-                id.setText("海颜号:" + idInfo);
+                id.setText("乐檬号:" + idInfo);
 
             String fansNum = userInfo.getFansNum();
             if (!com.lvshandian.lemeng.utils.TextUtils.isEmpty(fansNum)) {
@@ -541,7 +541,7 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ll_coin://我的颜票
+            case R.id.ll_coin://我的乐票
                 Intent intentCoins = new Intent(mContext, MyCoinsActicity.class);
                 startActivity(intentCoins);
                 break;

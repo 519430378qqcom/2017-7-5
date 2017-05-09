@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical">
-    <!--颜票充值-->
+    <!--乐票充值-->
     <include layout="@layout/title_bar" />
 
 
@@ -21,7 +21,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="40px"
             android:gravity="center"
-            android:text="颜票"
+            android:text="乐票"
             android:textColor="@color/black"
             android:textSize="36px" />
 
@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="300 颜票"
+                android:text="300 乐票"
                 android:textColor="@color/tv_color3"
                 android:textSize="28px"
                 android:id="@+id/textView3" />
@@ -100,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="1500 颜票"
+                android:text="1500 乐票"
                 android:textColor="@color/tv_color3"
                 android:textSize="28px" />
 
@@ -131,7 +131,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="4900 颜票"
+                android:text="4900 乐票"
                 android:textColor="@color/tv_color3"
                 android:textSize="28px" />
 
@@ -170,7 +170,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="14900 颜票"
+                android:text="14900 乐票"
                 android:textColor="@color/tv_color3"
                 android:textSize="28px" />
 
@@ -201,7 +201,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="29400 颜票"
+                android:text="29400 乐票"
                 android:textColor="@color/tv_color3"
                 android:textSize="28px" />
 
@@ -233,7 +233,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="79900 颜票"
+                android:text="79900 乐票"
                 android:textColor="@color/tv_color3"
                 android:textSize="28px" />
 

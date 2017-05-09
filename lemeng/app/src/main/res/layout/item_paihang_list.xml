@@ -116,7 +116,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" 颜票"
+                android:text=" 乐票"
                 android:textSize="24px"
                 android:textColor="@color/tv_color9"/>
         </com.zhy.autolayout.AutoLinearLayout>

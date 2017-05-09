@@ -14,7 +14,7 @@ import com.zhy.autolayout.AutoLinearLayout;
 import butterknife.Bind;
 
 /**
- * 颜票充值界面
+ * 乐票充值界面
  */
 public class ChargeCoinsActivity extends BaseActivity {
 
@@ -39,7 +39,7 @@ public class ChargeCoinsActivity extends BaseActivity {
      */
     private String money = "6";
     /**
-     * 颜票数量
+     * 乐票数量
      */
     private String yanpiao = "0";
 

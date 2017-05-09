@@ -364,7 +364,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="30px"
-                                android:text="颜票:"
+                                android:text="乐票:"
                                 android:textColor="@color/white"
                                 android:textSize="24px" />
 
@@ -387,7 +387,7 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="30px"
                             android:layout_marginRight="30px"
-                            android:text="海颜号:1234"
+                            android:text="乐檬号:1234"
                             android:textColor="@color/white"
                             android:textSize="24px" />
                     </com.zhy.autolayout.AutoRelativeLayout>

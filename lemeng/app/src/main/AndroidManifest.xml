@@ -207,7 +207,7 @@
             android:name=".moudles.mine.my.SettingActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!-- 关于海颜 -->
+        <!-- 关于乐檬 -->
         <activity
             android:name=".moudles.mine.activity.AboutHaiyanActivity"
             android:launchMode="singleTop"
@@ -217,7 +217,7 @@
             android:name=".moudles.mine.my.ModifyPasswordActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!-- 我的颜票 -->
+        <!-- 我的乐票 -->
         <activity
             android:name=".moudles.mine.activity.MyCoinsActicity"
             android:launchMode="singleTop"

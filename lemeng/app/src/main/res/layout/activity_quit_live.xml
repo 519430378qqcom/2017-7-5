@@ -207,7 +207,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10px"
-                    android:text="获得颜票"
+                    android:text="获得乐票"
                     android:textColor="#AEAEAE"
                     android:textSize="26px" />
             </com.zhy.autolayout.AutoLinearLayout>
@@ -232,7 +232,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10px"
-                    android:text="累计颜票"
+                    android:text="累计乐票"
                     android:textColor="#AEAEAE"
                     android:textSize="26px" />
             </com.zhy.autolayout.AutoLinearLayout>

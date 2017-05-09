@@ -40,7 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="海颜号"
+                    android:text="乐檬号"
                     android:textSize="30px" />
 
                 <TextView
@@ -318,7 +318,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="关于海颜"
+                    android:text="关于乐檬"
                     android:textSize="30px" />
 
                 <TextView

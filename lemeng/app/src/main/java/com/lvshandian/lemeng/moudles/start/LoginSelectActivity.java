@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.lvshandian.lemeng.MainActivity;
@@ -49,14 +48,16 @@ import butterknife.Bind;
  * 启动界面 on 2016/10/20.
  */
 public class LoginSelectActivity extends BaseActivity {
-
-
-    @Bind(R.id.iv_qqlogin)
-    ImageView ivQqlogin;
-    @Bind(R.id.iv_wxlogin)
-    ImageView ivWxlogin;
-    @Bind(R.id.tv_phone_login_or_register)
-    TextView tvPhoneLoginOrRegister;
+    @Bind(R.id.iv_facebook_login)
+    ImageView facebookLogin;
+    @Bind(R.id.iv_twitter_login)
+    ImageView twitterLogin;
+    @Bind(R.id.iv_google_login)
+    ImageView googleLogin;
+    @Bind(R.id.iv_wechat_login)
+    ImageView wchatLogin;
+    @Bind(R.id.iv_moble_login)
+    ImageView mobleLogin;
 
     private UMShareAPI mShareAPI;
     private LoadingDialog mLoading;
@@ -81,24 +82,33 @@ public class LoginSelectActivity extends BaseActivity {
 
     @Override
     protected void initListener() {
-        tvPhoneLoginOrRegister.setOnClickListener(this);
-        ivQqlogin.setOnClickListener(this);
-        ivWxlogin.setOnClickListener(this);
+        facebookLogin.setOnClickListener(this);
+        twitterLogin.setOnClickListener(this);
+        googleLogin.setOnClickListener(this);
+        wchatLogin.setOnClickListener(this);
+        mobleLogin.setOnClickListener(this);
 
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_phone_login_or_register:
-                gotoActivity(LoginActivity.class, false);
+            case R.id.iv_facebook_login:
+
                 break;
-            case R.id.iv_qqlogin:
-                qqLogin();
+            case R.id.iv_twitter_login:
+
                 break;
-            case R.id.iv_wxlogin:
+            case R.id.iv_google_login:
+
+                break;
+            case R.id.iv_wechat_login:
                 weChatLogin();
                 break;
+            case R.id.iv_moble_login:
+                gotoActivity(LoginActivity.class, false);
+                break;
+
         }
 
     }
@@ -138,10 +148,11 @@ public class LoginSelectActivity extends BaseActivity {
                 mLoading.setText("正在获取授权");
             }
         }
+
         @Override
         public void onComplete(SHARE_MEDIA platForm, int action, Map<String, String> map) {
 
-            if (map==null||map.size()==0){
+            if (map == null || map.size() == 0) {
                 if (mLoading != null && mLoading.isShowing()) {
                     mLoading.dismiss();
                 }

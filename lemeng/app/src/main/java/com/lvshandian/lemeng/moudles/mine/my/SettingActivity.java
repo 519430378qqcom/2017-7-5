@@ -143,7 +143,7 @@ public class SettingActivity extends BaseActivity {
                     mCacheDialog.show();
                 }
                 break;
-            case R.id.rl_about://关于海颜
+            case R.id.rl_about://关于乐檬
                 gotoActivity(AboutHaiyanActivity.class, false);
                 break;
             case R.id.btn_quit://退出登录

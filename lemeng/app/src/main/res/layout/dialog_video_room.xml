@@ -97,7 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:paddingTop="10px"
-            android:text="海颜号:10264"
+            android:text="乐檬号:10264"
             android:textColor="@color/black"
             android:textSize="28px" />
 
@@ -214,7 +214,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="颜票:"
+                    android:text="乐票:"
                     android:textColor="@color/tv_color6"
                     android:textSize="12sp" />
 

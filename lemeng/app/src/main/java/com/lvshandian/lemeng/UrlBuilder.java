@@ -12,13 +12,13 @@ import java.util.Map;
  * 创建网络管理类请求，网址管理类；
  */
 public class UrlBuilder {
-    //海颜服務器
+    //乐檬服務器
     public static final String serverUrl = "http://59.110.17.224:80/";// 服务器网址公网
     public static final String chargeServerUrl = "http://59.110.17.224:80/admin/";// 充值端口
     //本地
 //    public static final String serverUrl = "http://192.168.1.144:8080/";// 服务器网址公网
 //    public static final String chargeServerUrl = "http://192.168.1.144:8081/admin/";// 充值端口
-    /*海颜接口*/
+    /*乐檬接口*/
     public static final String LOGIN = "/api/v1/login";    //登录
     public static final String REGISTER = "/appusers/register"; //注册
     public static final String forgetPswd = "/appusers/forgetRegister"; //忘记密码

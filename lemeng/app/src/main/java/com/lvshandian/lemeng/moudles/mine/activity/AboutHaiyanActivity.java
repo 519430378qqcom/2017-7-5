@@ -13,7 +13,7 @@ import com.lvshandian.lemeng.utils.VersionUtils;
 import butterknife.Bind;
 
 /**
- * 关于海颜界面
+ * 关于乐檬界面
  * Created by Administrator on 2017/1/18.
  */
 
@@ -40,7 +40,7 @@ public class AboutHaiyanActivity extends BaseActivity {
 
     @Override
     protected void initialized() {
-        initTitle("", "关于海颜", null);
+        initTitle("", "关于乐檬", null);
         String versionName = VersionUtils.getVersionName(mContext);
         tvVersionName.setText("当前版本" + versionName);
     }
