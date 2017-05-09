@@ -23,6 +23,7 @@ import android.util.DisplayMetrics;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
@@ -722,7 +723,8 @@ public class PrapareVedioActivity extends BaseActivity {
 
             picHeight = screenWidth * previewSize.width / previewSize.height;
 
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(screenWidth, picHeight);
+//            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(screenWidth, picHeight);
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             //这里当然可以设置拍照位置 比如居中 我这里就置顶了
 //            params.gravity = Gravity.CENTER;
             surfaceView.setLayoutParams(params);
