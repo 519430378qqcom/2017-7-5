@@ -194,10 +194,8 @@ public class RegisterActivity extends BaseActivity {
         phone = edRegisterPhone.getText().toString();
         if (!phone.equals("") && phone.length() == 11) {
             tvSendCode.setEnabled(false);
-//            tvSendCode.setTextColor(getResources().getColor(R.color.black));
             tvSendCode.setTextColor(getContext().getResources().getColor(R.color.gray));
             tvSendCode.setText(waitTime + "s");
-//            tvSendCode.setBackgroundColor(getContext().getResources().getColor(R.color.gray));
             handler.postDelayed(runnable, 1000);
 
             ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
@@ -215,12 +213,10 @@ public class RegisterActivity extends BaseActivity {
         public void run() {
             waitTime--;
             tvSendCode.setText(waitTime + "s");
-//            tvSendCode.setBackgroundColor(getContext().getResources().getColor(R.color.gray));
             tvSendCode.setTextColor(getContext().getResources().getColor(R.color.gray));
             if (waitTime == 0) {
                 handler.removeCallbacks(runnable);
                 tvSendCode.setText("发送验证码");
-//                tvSendCode.setBackgroundColor(getContext().getResources().getColor(R.color.btn_color));
                 tvSendCode.setTextColor(getContext().getResources().getColor(R.color.main));
                 tvSendCode.setEnabled(true);
                 waitTime = 60;
