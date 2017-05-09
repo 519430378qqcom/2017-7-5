@@ -485,6 +485,9 @@ public class StartLiveActivity extends BaseActivity implements
      */
     private List<String> mSendGiftNumList = new ArrayList<>();
 
+
+
+
     /**
      * 连击的次数
      */
