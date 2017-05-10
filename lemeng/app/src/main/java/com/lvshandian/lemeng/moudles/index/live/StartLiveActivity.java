@@ -258,10 +258,6 @@ public class StartLiveActivity extends BaseActivity implements
     ImageView ivLiveSwitch;
     @Bind(R.id.iv_live_share)
     ImageView ivLiveShare;
-    @Bind(R.id.ll_bottom_menu)
-    AutoRelativeLayout llBottomMenu;
-    @Bind(R.id.fl_bottom_menu)
-    LinearLayout flBottomMenu;
     @Bind(R.id.watch_room_message)
     AutoFrameLayout watchRoomMessage;
     @Bind(R.id.rl_live_root)

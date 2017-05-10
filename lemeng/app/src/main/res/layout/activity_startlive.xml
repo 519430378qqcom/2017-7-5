@@ -369,7 +369,6 @@
         </com.zhy.autolayout.AutoRelativeLayout>
 
         <com.zhy.autolayout.AutoLinearLayout
-            android:id="@+id/fl_bottom_menu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -405,11 +404,10 @@
             </com.zhy.autolayout.AutoFrameLayout>
 
             <com.zhy.autolayout.AutoRelativeLayout
-                android:id="@+id/ll_bottom_menu"
                 android:layout_width="match_parent"
                 android:visibility="visible"
                 android:gravity="center_vertical"
-                android:layout_height="80px"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10px">
 
                 <ImageView

@@ -44,7 +44,6 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -242,7 +241,11 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     private boolean isHindRcView = false;
 
     RelativeLayout rlLoading;
+    RelativeLayout ll_buttom_mun;
+    LinearLayout ll_gameW;
     ImageView ivLoad;
+    ImageView ruanjianpanW;
+    ImageView zhoubangW;
     AvatarView liveHead;
     TextView liveName;
     TextView liveNum;
@@ -254,7 +257,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     ImageView ivLivePrivatechat;
     ImageView ivLiveGift;
     ImageView ivLiveShare;
-    FrameLayout flBottomMenu;
     GiftFrameLayout giftFrameLayout1;
     GiftFrameLayout giftFrameLayout2;
     ImageView liveClose;
@@ -746,7 +748,11 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         mRoomContainer = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.view_room_container, null);
 
         rlLoading = (RelativeLayout) mRoomContainer.findViewById(R.id.rl_loading);
+        ll_buttom_mun = (RelativeLayout) mRoomContainer.findViewById(R.id.ll_buttom_mun);
+        ll_gameW = (LinearLayout) mRoomContainer.findViewById(R.id.ll_gameW);
         ivLoad = (ImageView) mRoomContainer.findViewById(R.id.iv_load);
+        ruanjianpanW = (ImageView) mRoomContainer.findViewById(R.id.ruanjianpanW);
+        zhoubangW = (ImageView) mRoomContainer.findViewById(R.id.zhoubangW);
         liveHead = (AvatarView) mRoomContainer.findViewById(R.id.live_head);
         liveName = (TextView) mRoomContainer.findViewById(R.id.live_name);
         liveNum = (TextView) mRoomContainer.findViewById(R.id.live_num);
@@ -758,7 +764,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         ivLivePrivatechat = (ImageView) mRoomContainer.findViewById(R.id.iv_live_privatechat);
         ivLiveGift = (ImageView) mRoomContainer.findViewById(R.id.iv_live_gift);
         ivLiveShare = (ImageView) mRoomContainer.findViewById(R.id.iv_live_share);
-        flBottomMenu = (FrameLayout) mRoomContainer.findViewById(R.id.fl_bottom_menu);
         giftFrameLayout1 = (GiftFrameLayout) mRoomContainer.findViewById(R.id.gift_layout1);
         giftFrameLayout2 = (GiftFrameLayout) mRoomContainer.findViewById(R.id.gift_layout2);
         liveClose = (ImageView) mRoomContainer.findViewById(R.id.live_close);
@@ -993,11 +998,15 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         smallCreateColes.setOnClickListener(this);
         watchRoomJaizu.setOnClickListener(this);
         liveHeadImg.setOnClickListener(this);
+        ruanjianpanW.setOnClickListener(this);
+        zhoubangW.setOnClickListener(this);
+        ll_buttom_mun.setOnClickListener(this);
 
         //点赞
         mRoot.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                ll_gameW.setVisibility(View.GONE);
                 if (sessionListFragment != null) {
                     sessionListFragment.hide();
                 }
@@ -1079,11 +1088,11 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                                 }, 300);
 
                             }
-
                         }
                         break;
                 }
                 return true;
+
             }
         });
 
@@ -1095,12 +1104,26 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 ifattention("请求用户信息", bean.getUserId(), RequestCode.REQUEST_USER_INFO);
             }
         });
+
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
+            case R.id.ruanjianpanW:
+                ll_gameW.setVisibility(View.GONE);
+                messageFragment.inputTypeOnClick();
+                break;
+            case R.id.ll_buttom_mun://游戏
+                if (ll_gameW.getVisibility() == View.VISIBLE) {
+                    ll_gameW.setVisibility(View.GONE);
+                } else {
+                    ll_gameW.setVisibility(View.VISIBLE);
+                }
+                break;
+            case R.id.zhoubangW:
+                messageFragment.ivRankingOnClick();
+                break;
             /**
              * 关闭推流小窗口
              */
@@ -1118,6 +1141,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 break;
             //私信
             case R.id.iv_live_privatechat:
+                ll_gameW.setVisibility(View.GONE);
+
                 sessionListFragment = new ChatRoomSessionListFragment();
                 sessionListFragment.init(getSupportFragmentManager());
                 transaction = fragmentManager.beginTransaction();
@@ -1774,6 +1799,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             @Override
             public void run() {
                 mSendGiftLian.setVisibility(View.GONE);
+                ll_gameW.setVisibility(View.GONE);
             }
         }, 200);
 
@@ -1851,6 +1877,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 }
             }
         }
+
     }
 
 
