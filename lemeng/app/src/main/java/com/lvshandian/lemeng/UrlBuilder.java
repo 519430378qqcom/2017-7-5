@@ -80,9 +80,9 @@ public class UrlBuilder {
     public static final String roomExit = "/api/v1/room/exit";//退出直播间
 
     //阿里云
-    public static final String ALIYUN_IMG = "http://haiyan-news.oss-cn-beijing.aliyuncs.com/";//阿里云图片視頻生成地址
-    public static final String OSS_ENDPOINT = "http://oss-cn-beijing.aliyuncs.com";//阿里云OSS_ENDPOINT
-    public static final String BUCKET_NAME = "haiyan-news";// 阿里云BUCKET_NAME  OSS
+    public static final String ALIYUN_IMG = "http://lemeng.oss-ap-southeast-1.aliyuncs.com/";//阿里云图片視頻生成地址
+    public static final String OSS_ENDPOINT = "http://oss-ap-southeast-1.aliyuncs.com";//阿里云OSS_ENDPOINT
+    public static final String BUCKET_NAME = "lemeng";// 阿里云BUCKET_NAME  OSS
 
     public static final String cloesAnchor(String id) {//关闭直播
         return "/api/v1/room/" + id + "/leave";
