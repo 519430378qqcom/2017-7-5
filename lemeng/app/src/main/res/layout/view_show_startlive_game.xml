@@ -6,16 +6,16 @@
 
     <com.zhy.autolayout.AutoRelativeLayout
         android:layout_width="match_parent"
-        android:layout_marginBottom="10px"
-        android:visibility="gone"
         android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/audio_player"
-            android:layout_width="60px"
-            android:layout_height="60px"
+            android:layout_width="80px"
+            android:layout_height="80px"
             android:src="@mipmap/audio_player"
             android:layout_alignParentRight="true"
+            android:visibility="invisible"
+            android:clickable="false"
             android:layout_marginRight="15px"
             />
 
@@ -24,16 +24,16 @@
     <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/rl_share"
         android:layout_width="match_parent"
-        android:layout_marginBottom="10px"
-        android:visibility="gone"
         android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/iv_live_share"
-            android:layout_width="60px"
-            android:layout_height="60px"
+            android:layout_width="80px"
+            android:layout_height="80px"
             android:src="@mipmap/mg_room_btn_fen"
             android:layout_alignParentRight="true"
+            android:visibility="invisible"
+            android:clickable="false"
             android:layout_marginRight="15px"
             />
 
@@ -44,7 +44,17 @@
         android:layout_height="400px"
         android:background="@color/transparent_blank"
         >
-      <com.zhy.autolayout.AutoLinearLayout
+
+        <ImageView
+            android:id="@+id/yx"
+            android:layout_marginTop="10px"
+            android:layout_width="80px"
+            android:layout_height="80px"
+            android:contentDescription="@string/empty"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/game" />
+
+        <com.zhy.autolayout.AutoLinearLayout
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:orientation="horizontal"
@@ -53,15 +63,15 @@
 
           <ImageView
               android:id="@+id/input_content"
-              android:layout_width="60px"
-              android:layout_height="60px"
+              android:layout_width="80px"
+              android:layout_height="80px"
               android:layout_marginLeft="19px"
               android:src="@mipmap/mg_room_btn_xinxi" />
 
           <ImageView
               android:id="@+id/iv_ranking"
-              android:layout_width="60px"
-              android:layout_height="60px"
+              android:layout_width="80px"
+              android:layout_height="80px"
               android:layout_marginLeft="20px"
               android:src="@mipmap/mg_room_btn_ranking" />
       </com.zhy.autolayout.AutoLinearLayout>
@@ -121,23 +131,18 @@
                 android:visibility="gone"
                 android:src="@mipmap/audio_player" />
 
-            <ImageView
-                android:layout_width="60px"
-                android:layout_height="60px"
-                android:contentDescription="@string/empty"
-                android:src="@mipmap/game" />
 
 
 
             <com.zhy.autolayout.AutoRelativeLayout
-                android:layout_width="60px"
-                android:layout_height="60px"
+                android:layout_width="80px"
+                android:layout_height="80px"
                 android:layout_marginLeft="30px">
 
                 <ImageView
                     android:id="@+id/iv_live_privatechat"
-                    android:layout_width="60px"
-                    android:layout_height="60px"
+                    android:layout_width="80px"
+                    android:layout_height="80px"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:background="@mipmap/mg_room_btn_xin" />
@@ -163,9 +168,9 @@
             </com.zhy.autolayout.AutoRelativeLayout>
             <ImageView
                 android:id="@+id/iv_live_switch"
-                android:layout_width="60px"
-                android:layout_height="60px"
-                android:layout_marginLeft="30px"
+                android:layout_width="80px"
+                android:layout_height="80px"
+                android:layout_marginLeft="19px"
                 android:background="@mipmap/room_btn_switchcamera" />
             <ImageView
                 android:layout_width="50px"
@@ -184,10 +189,10 @@
                 android:background="@mipmap/mg_room_btn_fen" />
             <ImageView
                 android:id="@+id/game_more_btn"
-                android:layout_width="60px"
-                android:layout_height="60px"
+                android:layout_width="80px"
+                android:layout_height="80px"
                 android:layout_marginBottom="19px"
-                android:layout_marginLeft="30px"
+                android:layout_marginLeft="19px"
                 android:background="@mipmap/more_btn" />
             <ImageView
                 android:layout_width="50px"

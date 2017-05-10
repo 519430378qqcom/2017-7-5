@@ -145,18 +145,13 @@ public class ChatRoomMessageFragment extends TFragment implements ModuleProxy {
         inputType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (WatchLiveActivity.isJinyan) {
-                    ToastUtils.showMessageDefault(getActivity(), "您被禁言中,禁止发言");
-                } else {
-                    showEditText();
-                }
+                inputTypeOnClick();
             }
         });
         ivRanking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ContributionActivity.class);
-                startActivity(intent);
+                ivRankingOnClick();
             }
         });
 
@@ -166,6 +161,18 @@ public class ChatRoomMessageFragment extends TFragment implements ModuleProxy {
         return rootView;
     }
 
+     public void inputTypeOnClick(){
+         if (WatchLiveActivity.isJinyan) {
+             ToastUtils.showMessageDefault(getActivity(), "您被禁言中,禁止发言");
+         } else {
+             showEditText();
+         }
+     }
+
+    public void ivRankingOnClick(){
+        Intent intent = new Intent(getActivity(), ContributionActivity.class);
+        startActivity(intent);
+    }
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
