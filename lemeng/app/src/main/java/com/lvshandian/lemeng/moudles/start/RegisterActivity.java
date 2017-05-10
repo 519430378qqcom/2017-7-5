@@ -53,7 +53,6 @@ public class RegisterActivity extends BaseActivity {
     TextView tv_quhao;
 
     private int waitTime = 60;
-    private String phone = "";//账号
     /**
      * 根据type判断是注册界面还是忘记密码界面
      */
@@ -138,10 +137,13 @@ public class RegisterActivity extends BaseActivity {
                 sendCode();
                 break;
             case R.id.btn_register:
-                String phone = edRegisterPhone.getText().toString();
+                String str = tv_quhao.getText().toString();
+                str = str.substring(str.lastIndexOf("+") + 1, str.length());
+                String phone = str + edRegisterPhone.getText().toString();
+
                 String registerCode = edRegisterCode.getText().toString();
                 String pwd = edRegisterPassword.getText().toString();
-                if (TextUtils.isEmpty(phone) || phone.length() != 11 || !TextPhoneNumber.isPhone(phone)) {
+                if (TextUtils.isEmpty(edRegisterPhone.getText().toString()) || edRegisterPhone.getText().toString().length() != 11 || !TextPhoneNumber.isPhone(edRegisterPhone.getText().toString())) {
                     showToast("手机号不正确");
                     return;
                 }
@@ -191,12 +193,16 @@ public class RegisterActivity extends BaseActivity {
      */
     private void sendCode() {
         // 给request赋一个TAG，以便于取消时候使用
-        phone = edRegisterPhone.getText().toString();
-        if (!phone.equals("") && phone.length() == 11) {
+        String phone =  edRegisterPhone.getText().toString();
+        if (!phone.equals("") && phone.length() == 11 && TextPhoneNumber.isPhone(phone)) {
             tvSendCode.setEnabled(false);
             tvSendCode.setTextColor(getContext().getResources().getColor(R.color.gray));
             tvSendCode.setText(waitTime + "s");
             handler.postDelayed(runnable, 1000);
+
+            String str = tv_quhao.getText().toString();
+            str = str.substring(str.lastIndexOf("+") + 1, str.length());
+            phone = str + edRegisterPhone.getText().toString();
 
             ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
             map.put("mobile", phone);

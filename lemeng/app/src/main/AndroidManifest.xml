@@ -214,7 +214,7 @@
             android:screenOrientation="portrait" />
         <!-- 关于乐檬 -->
         <activity
-            android:name=".moudles.mine.activity.AboutHaiyanActivity"
+            android:name=".moudles.mine.activity.AboutLeMengActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 修改密码 -->
@@ -460,7 +460,7 @@
             android:process=":remote" />
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="mIOGOPcyUfymPMhPUIq73AwdNFftp325" />
+            android:value="6nA2WhechygPITw5pM01vb8zLTWvABgd" />
 
         <!-- 友盟分享:开始 -->
         <activity

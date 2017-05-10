@@ -59,11 +59,11 @@ public class AudioPlayerAdapter extends RecyclerView.Adapter<AudioPlayerAdapter
                 holder.go_player.setBackground(mContext.getResources().getDrawable(R.drawable.download_bg2));
             } else if (listBean.isPause()) {
                 holder.go_player.setText("继续");
-                holder.go_player.setTextColor(mContext.getResources().getColor(R.color.secret_blue));
+                holder.go_player.setTextColor(mContext.getResources().getColor(R.color.red));
                 holder.go_player.setBackground(mContext.getResources().getDrawable(R.drawable.download_bg3));
             } else {
                 holder.go_player.setText("播放");
-                holder.go_player.setTextColor(mContext.getResources().getColor(R.color.material_yellow));
+                holder.go_player.setTextColor(mContext.getResources().getColor(R.color.main_66));
                 holder.go_player.setBackground(mContext.getResources().getDrawable(R.drawable.download_bg));
             }
         } else {

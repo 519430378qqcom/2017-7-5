@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="main">#F6D42C</color><!--主色调 #F6D42C -->
-    <color name="main_44">#44F6D42C</color><!--主色调 #F6D42C -->
+    <color name="main_66">#66F6D42C</color><!--主色调 #F6D42C -->
     <color name="global">#F6D42C</color><!--主色调 #F6D42C-->
     <color name="btn_color">#F6D42C</color>
     <color name="line">#dfdfdf</color>

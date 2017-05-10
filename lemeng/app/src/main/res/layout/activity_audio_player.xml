@@ -65,7 +65,7 @@
                 android:singleLine="true"
                 android:text=""
                 android:textColor="@color/main"
-                android:textColorHint="@color/material_yellow"
+                android:textColorHint="@color/main_66"
                 android:textSize="15dp" />
 
         </com.zhy.autolayout.AutoRelativeLayout>

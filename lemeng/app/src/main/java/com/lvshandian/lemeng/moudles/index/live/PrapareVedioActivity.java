@@ -23,7 +23,6 @@ import android.util.DisplayMetrics;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
@@ -48,6 +47,7 @@ import com.lvshandian.lemeng.utils.BitmapUtils;
 import com.lvshandian.lemeng.utils.CameraUtil;
 import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
+import com.lvshandian.lemeng.utils.MyCamPara;
 import com.lvshandian.lemeng.utils.NetWorkUtil;
 import com.lvshandian.lemeng.utils.PermisionUtils;
 import com.lvshandian.lemeng.utils.UMUtils;
@@ -714,22 +714,22 @@ public class PrapareVedioActivity extends BaseActivity {
             }
 
             //这里第三个参数为最小尺寸 getPropPreviewSize方法会对从最小尺寸开始升序排列 取出所有支持尺寸的最小尺寸
-            Camera.Size previewSize = CameraUtil.getInstance().getPropPreviewSize(parameters.getSupportedPreviewSizes(), screenWidth);
+            Camera.Size previewSize = MyCamPara.getInstance().getPreviewSize(parameters.getSupportedPreviewSizes(), screenWidth);
             parameters.setPreviewSize(previewSize.width, previewSize.height);
 
-            Camera.Size pictrueSize = CameraUtil.getInstance().getPropPictureSize(parameters.getSupportedPictureSizes(), screenWidth);
+            Camera.Size pictrueSize = MyCamPara.getInstance().getPictureSize(parameters.getSupportedPictureSizes(), screenWidth);
             parameters.setPictureSize(pictrueSize.width, pictrueSize.height);
             camera.setParameters(parameters);
 
             picHeight = screenWidth * previewSize.width / previewSize.height;
 
-//            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(screenWidth, picHeight);
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(screenWidth, picHeight);
             //这里当然可以设置拍照位置 比如居中 我这里就置顶了
 //            params.gravity = Gravity.CENTER;
             surfaceView.setLayoutParams(params);
         }
     }
+
 
 
     @Override

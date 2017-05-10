@@ -17,7 +17,7 @@ import butterknife.Bind;
  * Created by Administrator on 2017/1/18.
  */
 
-public class AboutHaiyanActivity extends BaseActivity {
+public class AboutLeMengActivity extends BaseActivity {
     @Bind(R.id.tv_version_name)
     TextView tvVersionName;
     @Bind(R.id.ll_community)

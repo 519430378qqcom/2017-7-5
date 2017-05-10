@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.base.BaseActivity;
 import com.lvshandian.lemeng.bean.QuitLogin;
-import com.lvshandian.lemeng.moudles.mine.activity.AboutHaiyanActivity;
+import com.lvshandian.lemeng.moudles.mine.activity.AboutLeMengActivity;
 import com.lvshandian.lemeng.moudles.mine.activity.SettingPerson;
 import com.lvshandian.lemeng.moudles.start.LoginSelectActivity;
 import com.lvshandian.lemeng.moudles.start.LogoutHelper;
@@ -144,7 +144,7 @@ public class SettingActivity extends BaseActivity {
                 }
                 break;
             case R.id.rl_about://关于乐檬
-                gotoActivity(AboutHaiyanActivity.class, false);
+                gotoActivity(AboutLeMengActivity.class, false);
                 break;
             case R.id.btn_quit://退出登录
                 if (mQuitDialog != null && !mQuitDialog.isShowing()) {

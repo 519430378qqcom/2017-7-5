@@ -36,7 +36,7 @@
                 android:layout_weight="1"
                 android:singleLine="true"
                 android:gravity="center_vertical"
-                android:textColor="@color/material_yellow"
+                android:textColor="@color/main_66"
                 android:text="马丽"
                 android:textSize="30px" />
         </com.zhy.autolayout.AutoLinearLayout>

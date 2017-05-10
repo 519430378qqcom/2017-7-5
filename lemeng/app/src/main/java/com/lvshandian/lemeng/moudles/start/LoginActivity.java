@@ -126,7 +126,7 @@ public class LoginActivity extends BaseActivity {
         }
         //存储用户信息
         CacheUtils.saveObject(LoginActivity.this, appUser, CacheUtils.USERINFO);
-        SharedPreferenceUtils.saveGoldCoin(mContext,appUser.getGoldCoin());
+        SharedPreferenceUtils.saveGoldCoin(mContext, appUser.getGoldCoin());
         loginWangYi();
     }
 
@@ -158,7 +158,9 @@ public class LoginActivity extends BaseActivity {
                     showToast("密码不能为空");
                     return;
                 }
-                login(edLoginPhone.getText().toString(), edLoginPassword.getText().toString().trim());
+                String phone = tv_quhao.getText().toString();
+                phone = phone.substring(phone.lastIndexOf("+") + 1, phone.length()) + edLoginPhone.getText().toString();
+                login(phone, edLoginPassword.getText().toString().trim());
                 break;
             case R.id.tv_forget_password:
                 startActivity(new Intent(mContext, RegisterActivity.class).putExtra("type", "2"));
