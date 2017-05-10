@@ -1007,6 +1007,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 ll_gameW.setVisibility(View.GONE);
+                ll_buttom_mun.setVisibility(View.VISIBLE);
                 if (sessionListFragment != null) {
                     sessionListFragment.hide();
                 }
@@ -1142,9 +1143,10 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             //私信
             case R.id.iv_live_privatechat:
                 ll_gameW.setVisibility(View.GONE);
+                ll_buttom_mun.setVisibility(View.GONE);
 
                 sessionListFragment = new ChatRoomSessionListFragment();
-                sessionListFragment.init(getSupportFragmentManager());
+                sessionListFragment.init(getSupportFragmentManager(),ll_buttom_mun);
                 transaction = fragmentManager.beginTransaction();
                 transaction.replace(R.id.watch_room_message_fragment_parent, sessionListFragment);
                 transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);

@@ -296,6 +296,8 @@ public class StartLiveActivity extends BaseActivity implements
     ImageView zhoubang;
     @Bind(R.id.ll_game)
     LinearLayout ll_game;
+    @Bind(R.id.ll_buttom_mun)
+    RelativeLayout ll_buttom_mun;
     @Bind(R.id.watch_room_message_fragment_parent)
     AutoFrameLayout watch_room_message_fragment_parent;
     public static LrcView mLrcView;
@@ -814,9 +816,10 @@ public class StartLiveActivity extends BaseActivity implements
             //私信
             case R.id.iv_live_privatechat:
                 ll_game.setVisibility(View.GONE);
+                ll_buttom_mun.setVisibility(View.GONE);
 
                 sessionListFragment = new ChatRoomSessionListFragment();
-                sessionListFragment.init(getSupportFragmentManager());
+                sessionListFragment.init(getSupportFragmentManager(), ll_buttom_mun);
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.replace(R.id.watch_room_message_fragment_parent, sessionListFragment);
@@ -2143,6 +2146,7 @@ public class StartLiveActivity extends BaseActivity implements
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 ll_game.setVisibility(View.GONE);
+                ll_buttom_mun.setVisibility(View.VISIBLE);
                 if (sessionListFragment != null) {
                     sessionListFragment.hide();
                 }

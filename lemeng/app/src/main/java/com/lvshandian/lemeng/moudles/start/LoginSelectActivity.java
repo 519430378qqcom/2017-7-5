@@ -215,6 +215,17 @@ public class LoginSelectActivity extends BaseActivity {
                 } else {
                     params.put("gender", "0");
                 }
+            } else if (platForm == SHARE_MEDIA.TWITTER) {
+                params.put("unionId", map.get("uid").toString());
+                params.put("password", map.get("access_token").toString());
+                params.put("userName", map.get("usid").toString());
+                params.put("nickName", map.get("username").toString());
+                if (map.get("iconurl") == null) {
+                    params.put("picUrl", "http://lemeng.oss-ap-southeast-1.aliyuncs.com/lemengImg/1494425710551.png");
+                } else {
+                    params.put("picUrl", map.get("iconurl").toString());
+                }
+                params.put("gender", "1");
             }
             thirdLogin(params);
             if (mLoading != null && mLoading.isShowing()) {

@@ -449,12 +449,17 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
                 tvSign.setText("这个家伙很懒，什么都没留下");
             }
 
-            final String picUrl = userInfo.getPicUrl();
-            Picasso.with(mContext).load(picUrl).into(myHead);
+            String picUrl = userInfo.getPicUrl();
+            if (TextUtils.isEmpty(picUrl)){
+                picUrl = "http://lemeng.oss-ap-southeast-1.aliyuncs.com/lemengImg/1494425710551.png";
+            }
+            Picasso.with(mContext).load(picUrl).placeholder(R.mipmap.head_default)
+                    .error(R.mipmap.head_default).into(myHead);
+            final String finalPicUrl = picUrl;
             myHead.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(getActivity(), BigImageActivity.class).putExtra("imageStr", picUrl));
+                    startActivity(new Intent(getActivity(), BigImageActivity.class).putExtra("imageStr", finalPicUrl));
                 }
             });
 

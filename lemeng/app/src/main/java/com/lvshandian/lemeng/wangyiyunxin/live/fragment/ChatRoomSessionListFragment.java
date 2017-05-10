@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,12 +72,15 @@ public class ChatRoomSessionListFragment extends MainTabFragment {
     private FragmentManager fragmentManager;
     private LiveMessageFragment messageFragment;
 
+    private RelativeLayout ll_buttom_mun;
+
     public ChatRoomSessionListFragment() {
         this.setContainerId(0);
     }
 
-    public void init(FragmentManager fragmentManager) {
+    public void init(FragmentManager fragmentManager,RelativeLayout ll_buttom_mun) {
         this.fragmentManager = fragmentManager;
+        this.ll_buttom_mun = ll_buttom_mun;
     }
 
     /**
@@ -139,6 +143,9 @@ public class ChatRoomSessionListFragment extends MainTabFragment {
             @Override
             public void onClick(View view) {
                 fragmentManager.popBackStack();
+                if (fragmentManager.getBackStackEntryCount() == 1){
+                    ll_buttom_mun.setVisibility(View.VISIBLE);
+                }
             }
         });
     }
