@@ -86,20 +86,6 @@ public class ChatRoomMessageFragment extends TFragment implements ModuleProxy {
         }
     };
 
-    public void hideInputcontent(){
-        inputType.setVisibility(View.GONE);
-    }
-    public void showInputContent(){
-        inputType.setVisibility(View.VISIBLE);
-    }
-
-     public void hideRanking(){
-         ivRanking.setVisibility(View.GONE);
-     }
-
-    public void showRanKing(){
-        ivRanking.setVisibility(View.VISIBLE);
-    }
     /**
      * 点击其他地方隐藏软键盘输入框
      *
@@ -109,7 +95,7 @@ public class ChatRoomMessageFragment extends TFragment implements ModuleProxy {
     public void hideEditText() {
         if (messageInputLayout.getVisibility() == View.VISIBLE) {
             messageInputLayout.setVisibility(View.INVISIBLE);
-            inputType.setVisibility(View.VISIBLE);
+//            inputType.setVisibility(View.VISIBLE);
             KeyBoardUtils.closeKeybord(editText, MyApplication.mContext);
         }
     }
@@ -128,7 +114,7 @@ public class ChatRoomMessageFragment extends TFragment implements ModuleProxy {
             editText.requestFocus();
             editText.findFocus();
             KeyBoardUtils.openKeybord(editText, MyApplication.mContext);
-            inputType.setVisibility(View.INVISIBLE);
+//            inputType.setVisibility(View.INVISIBLE);
         }
     }
 

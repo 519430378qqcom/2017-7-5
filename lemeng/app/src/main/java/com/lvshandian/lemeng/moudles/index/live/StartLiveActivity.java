@@ -33,7 +33,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -42,12 +41,9 @@ import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -103,7 +99,6 @@ import com.lvshandian.lemeng.moudles.mine.my.adapter.OnItemClickListener;
 import com.lvshandian.lemeng.moudles.mine.my.adapter.RoomUsersDataAdapter;
 import com.lvshandian.lemeng.service.VoiceService;
 import com.lvshandian.lemeng.utils.AnimationUtils;
-import com.lvshandian.lemeng.utils.BottomDialogUtils;
 import com.lvshandian.lemeng.utils.ChannelToLiveBean;
 import com.lvshandian.lemeng.utils.Config;
 import com.lvshandian.lemeng.utils.CountUtils;
@@ -266,7 +261,7 @@ public class StartLiveActivity extends BaseActivity implements
     @Bind(R.id.ll_bottom_menu)
     AutoRelativeLayout llBottomMenu;
     @Bind(R.id.fl_bottom_menu)
-    FrameLayout flBottomMenu;
+    LinearLayout flBottomMenu;
     @Bind(R.id.watch_room_message)
     AutoFrameLayout watchRoomMessage;
     @Bind(R.id.rl_live_root)
@@ -299,6 +294,12 @@ public class StartLiveActivity extends BaseActivity implements
     ImageView game_more_btn;
     @Bind(R.id.game)
     ImageView game;
+    @Bind(R.id.input_content)
+    ImageView input_content;
+    @Bind(R.id.iv_ranking)
+    ImageView iv_ranking;
+    @Bind(R.id.ll_game)
+    LinearLayout ll_game;
     @Bind(R.id.watch_room_message_fragment_parent)
     AutoFrameLayout watch_room_message_fragment_parent;
     public static LrcView mLrcView;
@@ -495,8 +496,6 @@ public class StartLiveActivity extends BaseActivity implements
     private List<String> mSendGiftNumList = new ArrayList<>();
 
 
-
-
     /**
      * 连击的次数
      */
@@ -651,7 +650,6 @@ public class StartLiveActivity extends BaseActivity implements
     private GoogleApiClient client;
 
 
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_startlive;
@@ -731,7 +729,8 @@ public class StartLiveActivity extends BaseActivity implements
         liveHead.setOnClickListener(this);
         audio_player.setOnClickListener(this);
         game.setOnClickListener(this);
-
+        input_content.setOnClickListener(this);
+        iv_ranking.setOnClickListener(this);
 
         liveClose.setOnClickListener(this);
         ivLiveMei.setOnClickListener(this);
@@ -751,111 +750,38 @@ public class StartLiveActivity extends BaseActivity implements
             }
         });
 
-//        mRoot.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                showToast("点击了屏幕");
-//                if (sessionListFragment != null) {
-//                    sessionListFragment.hide();
-//                }
-//                if (liveMessageFragment != null)
-//                    liveMessageFragment.hide();
-//                if (messageFragment != null) {
-//                    messageFragment.hideEditText();
-//                }
-//                return false;
-//            }
-//        });
-
     }
+
     private boolean ismore = false;
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.input_content:
+                ll_game.setVisibility(View.GONE);
+                messageFragment.inputTypeOnClick();
+                break;
+
+            case R.id.iv_ranking:
+                messageFragment.ivRankingOnClick();
+                break;
             case R.id.game:  //游戏
-                DisplayMetrics dm = new DisplayMetrics();
-                getWindowManager().getDefaultDisplay().getMetrics(dm);
-                final int width = dm.widthPixels;
-
-                View view = BottomDialogUtils.showButtoDialog(mContext, v, R.layout.view_show_startlive_game);
-                BottomDialogUtils.showPopWindows();
-                BottomDialogUtils.popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                    @Override
-                    public void onDismiss() {
-                        llBottomMenu.setVisibility(View.VISIBLE);
-                        messageFragment.showInputContent();
-                        messageFragment.showRanKing();
-
-                        TranslateAnimation translateAnimation = new TranslateAnimation(0,0,0,width * 460 / 750);
-                        translateAnimation.setDuration(300);
-                        translateAnimation.setFillAfter(true);
-                        translateAnimation.setAnimationListener(new Animation.AnimationListener() {
-                            @Override
-                            public void onAnimationStart(Animation animation) {
-
-                             }
-
-                            @Override
-                            public void onAnimationEnd(Animation animation) {
-                                watch_room_message_fragment_parent.clearAnimation();
-                                RelativeLayout.LayoutParams ll = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,width * 505 / 750);
-                                ll.setMargins(0,width * 460 / 750,0,0);
-                                ll.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-                                watch_room_message_fragment_parent.setLayoutParams(ll);
-
-                            }
-
-                            @Override
-                            public void onAnimationRepeat(Animation animation) {
-
-                            }
-                        });
-                        watch_room_message_fragment_parent.startAnimation(translateAnimation);
-                    }
-                });
-                llBottomMenu.setVisibility(View.GONE);
-                messageFragment.hideInputcontent();
-                messageFragment.hideRanking();
-                findViewForCurrentView(view);
-
-                TranslateAnimation translateAnimation = new TranslateAnimation(0,0,0,-width * 460 / 750);
-                translateAnimation.setDuration(300);
-                translateAnimation.setFillAfter(true);
-                translateAnimation.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        watch_room_message_fragment_parent.clearAnimation();
-                        RelativeLayout.LayoutParams ll = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,width * 505 / 750);
-                        ll.setMargins(0,0,0,width * 460 / 750);
-                        ll.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-                        watch_room_message_fragment_parent.setLayoutParams(ll);
-                        messageFragment.hideInputcontent();
-                        messageFragment.hideRanking();
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-
-                    }
-                });
-                watch_room_message_fragment_parent.startAnimation(translateAnimation);
-
+                if (ll_game.getVisibility() == View.VISIBLE) {
+                    ll_game.setVisibility(View.GONE);
+                } else {
+                    ll_game.setVisibility(View.VISIBLE);
+                }
                 break;
             case R.id.game_more_btn:
-                 if (ismore == false){
-                     ivLiveShare.setVisibility(View.VISIBLE);
-                     audio_player.setVisibility(View.VISIBLE);
-                     ismore = true;
-                 }else{
-                     ivLiveShare.setVisibility(View.GONE);
-                     audio_player.setVisibility(View.GONE);
-                     ismore = false;
-                 }
+                if (ismore == false) {
+                    ivLiveShare.setVisibility(View.VISIBLE);
+                    audio_player.setVisibility(View.VISIBLE);
+                    ismore = true;
+                } else {
+                    ivLiveShare.setVisibility(View.GONE);
+                    audio_player.setVisibility(View.GONE);
+                    ismore = false;
+                }
                 break;
 
             /**
@@ -890,6 +816,8 @@ public class StartLiveActivity extends BaseActivity implements
                 break;
             //私信
             case R.id.iv_live_privatechat:
+                ll_game.setVisibility(View.GONE);
+
                 sessionListFragment = new ChatRoomSessionListFragment();
                 sessionListFragment.init(getSupportFragmentManager());
                 FragmentManager fragmentManager = getSupportFragmentManager();
@@ -933,83 +861,6 @@ public class StartLiveActivity extends BaseActivity implements
                 break;
 
         }
-    }
-    private boolean popIsMore = false;
-    private void findViewForCurrentView(View view) {
-
-        ImageView input_content = (ImageView) view.findViewById(R.id.input_content); //聊天
-        ImageView iv_ranking = (ImageView) view.findViewById(R.id.iv_ranking); //排行榜
-        ImageView yx = (ImageView) view.findViewById(R.id.yx); //游戏
-        ImageView iv_live_privatechat = (ImageView) view.findViewById(R.id.iv_live_privatechat); //私信
-        ImageView iv_live_switch = (ImageView) view.findViewById(R.id.iv_live_switch); //相机反转
-        ImageView game_more_btn = (ImageView) view.findViewById(R.id.game_more_btn); //更多
-        final ImageView audio_player = (ImageView) view.findViewById(R.id.audio_player); // 音乐
-        final ImageView iv_live_share = (ImageView) view.findViewById(R.id.iv_live_share); // 分享
-
-        iv_live_share.setOnClickListener(this);
-        audio_player.setOnClickListener(this);
-        iv_live_switch.setOnClickListener(this);
-        yx.setOnClickListener(new View.OnClickListener() {  //游戏
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        iv_live_privatechat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BottomDialogUtils.dismissPopWindow();
-                sessionListFragment = new ChatRoomSessionListFragment();
-                sessionListFragment.init(getSupportFragmentManager());
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.watch_room_message_fragment_parent, sessionListFragment);
-                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
-        });
-
-        input_content.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                   messageFragment.inputTypeOnClick();
-            }
-        });
-
-        iv_ranking.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                messageFragment.ivRankingOnClick();
-            }
-        });
-
-        yx.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               BottomDialogUtils.dismissPopWindow();
-                popIsMore = false;
-            }
-        });
-
-        game_more_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (popIsMore == false){
-                    audio_player.setVisibility(View.VISIBLE);
-                    iv_live_share.setVisibility(View.VISIBLE);
-                    audio_player.setClickable(true);
-                    iv_live_share.setClickable(true);
-                    popIsMore = true;
-                }else {
-                    audio_player.setVisibility(View.INVISIBLE);
-                    iv_live_share.setVisibility(View.INVISIBLE);
-                    audio_player.setClickable(false);
-                    iv_live_share.setClickable(false);
-                    popIsMore = false;
-                }
-            }
-        });
     }
 
     @Override
@@ -2294,6 +2145,7 @@ public class StartLiveActivity extends BaseActivity implements
         cameraPreviewFrameView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+
                 if (sessionListFragment != null) {
                     sessionListFragment.hide();
                 }
