@@ -294,10 +294,10 @@ public class StartLiveActivity extends BaseActivity implements
     ImageView game_more_btn;
     @Bind(R.id.game)
     ImageView game;
-    @Bind(R.id.input_content)
-    ImageView input_content;
-    @Bind(R.id.iv_ranking)
-    ImageView iv_ranking;
+    @Bind(R.id.ruanjianpan)
+    ImageView ruanjianpan;
+    @Bind(R.id.zhoubang)
+    ImageView zhoubang;
     @Bind(R.id.ll_game)
     LinearLayout ll_game;
     @Bind(R.id.watch_room_message_fragment_parent)
@@ -729,8 +729,9 @@ public class StartLiveActivity extends BaseActivity implements
         liveHead.setOnClickListener(this);
         audio_player.setOnClickListener(this);
         game.setOnClickListener(this);
-        input_content.setOnClickListener(this);
-        iv_ranking.setOnClickListener(this);
+        ruanjianpan.setOnClickListener(this);
+        zhoubang.setOnClickListener(this);
+        ll_game.setOnClickListener(this);
 
         liveClose.setOnClickListener(this);
         ivLiveMei.setOnClickListener(this);
@@ -757,12 +758,12 @@ public class StartLiveActivity extends BaseActivity implements
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.input_content:
+            case R.id.ruanjianpan:
                 ll_game.setVisibility(View.GONE);
                 messageFragment.inputTypeOnClick();
                 break;
 
-            case R.id.iv_ranking:
+            case R.id.zhoubang:
                 messageFragment.ivRankingOnClick();
                 break;
             case R.id.game:  //游戏
@@ -2145,7 +2146,7 @@ public class StartLiveActivity extends BaseActivity implements
         cameraPreviewFrameView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
+                ll_game.setVisibility(View.GONE);
                 if (sessionListFragment != null) {
                     sessionListFragment.hide();
                 }

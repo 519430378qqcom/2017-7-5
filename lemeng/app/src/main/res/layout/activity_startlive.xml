@@ -332,46 +332,45 @@
                 android:layout_marginTop="10px"
                 android:background="@mipmap/close" />
         </com.zhy.autolayout.AutoFrameLayout>
+
         <com.zhy.autolayout.AutoRelativeLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_above="@+id/rl_share"
-            android:layout_marginBottom="10px"
-            android:layout_height="wrap_content">
+            android:layout_marginBottom="10px">
 
             <ImageView
                 android:id="@+id/audio_player"
                 android:layout_width="80px"
                 android:layout_height="80px"
-                android:src="@mipmap/audio_player"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="15px"
-                android:visibility="gone"
-                />
+                android:src="@mipmap/audio_player"
+                android:visibility="gone" />
 
         </com.zhy.autolayout.AutoRelativeLayout>
 
         <com.zhy.autolayout.AutoRelativeLayout
             android:id="@+id/rl_share"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_above="@+id/fl_bottom_menu"
-            android:layout_marginBottom="10px"
-            android:layout_height="wrap_content">
+            android:layout_marginBottom="10px">
 
             <ImageView
                 android:id="@+id/iv_live_share"
                 android:layout_width="80px"
                 android:layout_height="80px"
-                android:src="@mipmap/mg_room_btn_fen"
                 android:layout_alignParentRight="true"
-                android:visibility="gone"
                 android:layout_marginRight="15px"
-                />
+                android:src="@mipmap/mg_room_btn_fen"
+                android:visibility="gone" />
 
         </com.zhy.autolayout.AutoRelativeLayout>
 
         <com.zhy.autolayout.AutoLinearLayout
             android:id="@+id/fl_bottom_menu"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
@@ -397,7 +396,6 @@
                     android:layout_height="5px" />
 
                 <fragment
-
                     android:id="@+id/watch_room_message_fragment"
                     android:name="com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragment"
                     android:layout_width="match_parent"
@@ -408,24 +406,24 @@
 
             <com.zhy.autolayout.AutoRelativeLayout
                 android:id="@+id/ll_bottom_menu"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:visibility="visible"
                 android:gravity="center_vertical"
-                android:layout_height="wrap_content"
+                android:layout_height="80px"
                 android:layout_marginTop="10px">
 
                 <ImageView
-                    android:id="@+id/input_content"
+                    android:id="@+id/ruanjianpan"
                     android:layout_width="80px"
                     android:layout_height="80px"
                     android:layout_marginLeft="19px"
                     android:background="@mipmap/mg_room_btn_xinxi"/>
 
                 <ImageView
-                    android:id="@+id/iv_ranking"
+                    android:id="@+id/zhoubang"
                     android:layout_width="80px"
                     android:layout_height="80px"
-                    android:layout_toRightOf="@id/input_content"
+                    android:layout_toRightOf="@id/ruanjianpan"
                     android:layout_marginLeft="19px"
                     android:background="@mipmap/mg_room_btn_ranking"/>
 
@@ -580,7 +578,7 @@
             <com.zhy.autolayout.AutoLinearLayout
                 android:id="@+id/ll_game"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="300px"
                 android:orientation="horizontal"
                 android:layout_centerVertical="true"
                 android:visibility="gone">
@@ -590,6 +588,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/yx"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginLeft="20px" />
 
             </com.zhy.autolayout.AutoLinearLayout>

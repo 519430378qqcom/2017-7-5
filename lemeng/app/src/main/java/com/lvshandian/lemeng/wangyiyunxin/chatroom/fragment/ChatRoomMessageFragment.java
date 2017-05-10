@@ -94,7 +94,8 @@ public class ChatRoomMessageFragment extends TFragment implements ModuleProxy {
      */
     public void hideEditText() {
         if (messageInputLayout.getVisibility() == View.VISIBLE) {
-            messageInputLayout.setVisibility(View.INVISIBLE);
+            messageInputLayout.setVisibility(View.GONE);
+//            messageInputLayout.setVisibility(View.INVISIBLE);
 //            inputType.setVisibility(View.VISIBLE);
             KeyBoardUtils.closeKeybord(editText, MyApplication.mContext);
         }
