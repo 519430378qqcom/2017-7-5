@@ -204,6 +204,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import fr.castorflex.android.verticalviewpager.VerticalViewPager;
 import xiao.free.horizontalrefreshlayout.HorizontalRefreshLayout;
@@ -242,7 +243,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
     RelativeLayout rlLoading;
     RelativeLayout ll_buttom_mun;
-    LinearLayout ll_gameW;
     ImageView ivLoad;
     ImageView ruanjianpanW;
     ImageView zhoubangW;
@@ -277,6 +277,29 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     TextView btn_timer;
     AvatarView liveHeadImg;
     SurfaceView mSurfaceView;
+
+    ImageView ivBig;
+    TextView tvBig;
+    ImageView ivSamll;
+    TextView tvSamll;
+    ImageView ivSinge;
+    TextView tvSinge;
+    ImageView ivDouble;
+    TextView tvDouble;
+    ImageView ivBigSigle;
+    TextView tvBigSigle;
+    ImageView ivSamllSinge;
+    TextView tvSamllSinge;
+    ImageView ivBigDouble;
+    TextView tvBigDouble;
+    ImageView ivSamllDouble;
+    TextView tvSamllDouble;
+    ImageView ivMoreBig;
+    TextView tvMoreBig;
+    ImageView ivMoreSamll;
+    TextView tvMoreSamll;
+
+    AutoLinearLayout live_game;
 
     private static final String TAG = "WatchLiveActivity";
 
@@ -749,7 +772,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
         rlLoading = (RelativeLayout) mRoomContainer.findViewById(R.id.rl_loading);
         ll_buttom_mun = (RelativeLayout) mRoomContainer.findViewById(R.id.ll_buttom_mun);
-        ll_gameW = (LinearLayout) mRoomContainer.findViewById(R.id.ll_gameW);
         ivLoad = (ImageView) mRoomContainer.findViewById(R.id.iv_load);
         ruanjianpanW = (ImageView) mRoomContainer.findViewById(R.id.ruanjianpanW);
         zhoubangW = (ImageView) mRoomContainer.findViewById(R.id.zhoubangW);
@@ -784,6 +806,30 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         btn_timer = (TextView) mRoomContainer.findViewById(R.id.btn_timer);
         liveHeadImg = (AvatarView) mRoomContainer.findViewById(R.id.live_head_img);
         mSurfaceView = (SurfaceView) mRoomContainer.findViewById(R.id.SurfaceView);
+
+
+         ivBig = (ImageView) mRoomContainer.findViewById(R.id.iv_big);
+         tvBig = (TextView) mRoomContainer.findViewById(R.id.tv_big);
+         ivSamll = (ImageView) mRoomContainer.findViewById(R.id.iv_samll);
+         tvSamll = (TextView) mRoomContainer.findViewById(R.id.tv_samll);
+         ivSinge = (ImageView) mRoomContainer.findViewById(R.id.iv_singe);
+         tvSinge = (TextView) mRoomContainer.findViewById(R.id.tv_sign);
+         ivDouble = (ImageView) mRoomContainer.findViewById(R.id.iv_double);
+         tvDouble = (TextView) mRoomContainer.findViewById(R.id.tv_double);
+         ivBigSigle = (ImageView) mRoomContainer.findViewById(R.id.iv_big_sigle);
+         tvBigSigle = (TextView) mRoomContainer.findViewById(R.id.tv_big_sigle);
+         ivSamllSinge = (ImageView) mRoomContainer.findViewById(R.id.iv_samll_singe);
+         tvSamllSinge = (TextView) mRoomContainer.findViewById(R.id.tv_samll_singe);
+         ivBigDouble = (ImageView) mRoomContainer.findViewById(R.id.iv_big_double);
+         tvBigDouble = (TextView) mRoomContainer.findViewById(R.id.tv_big_double);
+         ivSamllDouble = (ImageView) mRoomContainer.findViewById(R.id.iv_samll_double);
+         tvSamllDouble = (TextView) mRoomContainer.findViewById(R.id.tv_samll_double);
+         ivMoreBig = (ImageView) mRoomContainer.findViewById(R.id.iv_more_big);
+         tvMoreBig = (TextView) mRoomContainer.findViewById(R.id.tv_more_big);
+         ivMoreSamll = (ImageView) mRoomContainer.findViewById(R.id.iv_more_samll);
+         tvMoreSamll = (TextView) mRoomContainer.findViewById(R.id.tv_more_samll);
+         live_game = (AutoLinearLayout) mRoomContainer.findViewById(R.id.live_game);
+
 
         List<LiveListBean> list = (List<LiveListBean>) getIntent().getSerializableExtra("LIVELIST");
         position = getIntent().getIntExtra("position", 0);
@@ -866,6 +912,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         });
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.setCurrentItem(position);
+        initQuitDialog("确定离开");
+
     }
 
     private void loadVideoAndChatRoom(ViewGroup viewGroup, int currentItem) {
@@ -987,6 +1035,20 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
     @Override
     protected void initListener() {
+
+        live_game.setOnClickListener(this);
+        ivBig.setOnClickListener(this);
+        ivSamll.setOnClickListener(this);
+        ivSinge.setOnClickListener(this);
+        ivDouble.setOnClickListener(this);
+        ivBigSigle.setOnClickListener(this);
+        ivSamllSinge.setOnClickListener(this);
+        ivBigDouble.setOnClickListener(this);
+        ivSamllDouble.setOnClickListener(this);
+        ivMoreBig.setOnClickListener(this);
+        ivMoreSamll.setOnClickListener(this);
+
+
         mSendGiftLian.setOnClickListener(this);
         liveHead.setOnClickListener(this);
         ivLivePrivatechat.setOnClickListener(this);
@@ -1006,7 +1068,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         mRoot.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                ll_gameW.setVisibility(View.GONE);
+                live_game.setVisibility(View.GONE);
                 ll_buttom_mun.setVisibility(View.VISIBLE);
                 if (sessionListFragment != null) {
                     sessionListFragment.hide();
@@ -1108,18 +1170,74 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
     }
 
+    private void restStatus(){
+        ivBig.setImageResource(R.mipmap.icon_big_unselect);
+        ivSamll.setImageResource(R.mipmap.icon_small_unselect);
+        ivSinge.setImageResource(R.mipmap.icon_single_unselect);
+        ivDouble.setImageResource(R.mipmap.icon_double_unselect);
+        ivBigSigle.setImageResource(R.mipmap.icon_big_single_unselect);
+        ivSamllSinge.setImageResource(R.mipmap.icon_small_single_unselect);
+        ivBigDouble.setImageResource(R.mipmap.icon_big_double_unselect);
+        ivSamllDouble.setImageResource(R.mipmap.icon_small_double_unselect);
+        ivMoreBig.setImageResource(R.mipmap.icon_big_more_unselect);
+        ivMoreSamll.setImageResource(R.mipmap.icon_small_more_unselect);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
+            case R.id.iv_big: //大
+                restStatus();
+                ivBig.setImageResource(R.mipmap.icon_big_select);
+                break;
+            case R.id.iv_samll: //小
+                restStatus();
+                ivSamll.setImageResource(R.mipmap.icon_small_select);
+
+                break;
+            case R.id.iv_singe: //单
+                restStatus();
+                ivSinge.setImageResource(R.mipmap.icon_single_select);
+                break;
+            case R.id.iv_double: //双
+                restStatus();
+                ivDouble.setImageResource(R.mipmap.icon_double_select);
+                break;
+            case R.id.iv_big_sigle: //大单
+                restStatus();
+                ivBigSigle.setImageResource(R.mipmap.icon_big_single_select);
+                break;
+            case R.id.iv_samll_singe: //小单
+                restStatus();
+                ivSamllSinge.setImageResource(R.mipmap.icon_small_single_select);
+                break;
+            case R.id.iv_big_double: //大双
+                restStatus();
+                ivBigDouble.setImageResource(R.mipmap.icon_big_double_select);
+                break;
+            case R.id.iv_samll_double: //小双
+                restStatus();
+                ivSamllDouble.setImageResource(R.mipmap.icon_small_double_select);
+                break;
+            case R.id.iv_more_big: //更大
+                restStatus();
+                ivMoreBig.setImageResource(R.mipmap.icon_big_more_select);
+                break;
+            case R.id.iv_more_samll: //更小
+                restStatus();
+                ivMoreSamll.setImageResource(R.mipmap.icon_small_more_select);
+                break;
+
             case R.id.ruanjianpanW:
-                ll_gameW.setVisibility(View.GONE);
+                live_game.setVisibility(View.GONE);
                 messageFragment.inputTypeOnClick();
                 break;
             case R.id.ll_buttom_mun://游戏
-                if (ll_gameW.getVisibility() == View.VISIBLE) {
-                    ll_gameW.setVisibility(View.GONE);
+                if (live_game.getVisibility() == View.VISIBLE) {
+                    live_game.setVisibility(View.GONE);
                 } else {
-                    ll_gameW.setVisibility(View.VISIBLE);
+                    live_game.setVisibility(View.VISIBLE);
                 }
                 break;
             case R.id.zhoubangW:
@@ -1138,11 +1256,14 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 break;
 
             case R.id.live_close:
-                initQuitDialog("确定退出");
+                //退出登录
+                if (mQuitDialog != null && !mQuitDialog.isShowing()) {
+                    mQuitDialog.show();
+                }
                 break;
             //私信
             case R.id.iv_live_privatechat:
-                ll_gameW.setVisibility(View.GONE);
+                live_game.setVisibility(View.GONE);
                 ll_buttom_mun.setVisibility(View.GONE);
 
                 sessionListFragment = new ChatRoomSessionListFragment();
@@ -1386,9 +1507,11 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            initQuitDialog("确定离开");
+            //退出登录
+            if (mQuitDialog != null && !mQuitDialog.isShowing()) {
+                mQuitDialog.show();
+            }
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -1801,7 +1924,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             @Override
             public void run() {
                 mSendGiftLian.setVisibility(View.GONE);
-                ll_gameW.setVisibility(View.GONE);
+                live_game.setVisibility(View.GONE);
             }
         }, 200);
 
@@ -3363,7 +3486,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     private void initQuitDialog(String str) {
         View view = getLayoutInflater().inflate(R.layout.dialog_quit_login, null);
         mQuitDialog = new RoundDialog(this, view, R.style.dialog, 0.66f, 0.2f);
-        mQuitDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+//        mQuitDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
 
         mQuitDialog.setCanceledOnTouchOutside(false);
 
@@ -3389,7 +3512,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 videoPlayEnd();
             }
         });
-        mQuitDialog.show();
+//        mQuitDialog.show();
     }
 
 

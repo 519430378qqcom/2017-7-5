@@ -40,6 +40,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -256,8 +257,6 @@ public class StartLiveActivity extends BaseActivity implements
     ImageView ivLivePrivatechat;
     @Bind(R.id.iv_live_switch)
     ImageView ivLiveSwitch;
-    @Bind(R.id.iv_live_share)
-    ImageView ivLiveShare;
     @Bind(R.id.watch_room_message)
     AutoFrameLayout watchRoomMessage;
     @Bind(R.id.rl_live_root)
@@ -280,8 +279,6 @@ public class StartLiveActivity extends BaseActivity implements
     ImageView ivLiveGift;
     @Bind(R.id.start_room_jaiZu)
     ImageView startRoomJaiZu;
-    @Bind(R.id.audio_player)
-    ImageView audio_player;
     @Bind(R.id.iv_show_send_gift_lian)
     RelativeLayout mSendGiftLian;
     @Bind(R.id.btn_timer)
@@ -300,9 +297,71 @@ public class StartLiveActivity extends BaseActivity implements
     RelativeLayout ll_buttom_mun;
     @Bind(R.id.watch_room_message_fragment_parent)
     AutoFrameLayout watch_room_message_fragment_parent;
+    @Bind(R.id.iv_xy)
+    ImageView iv_xy;
+    @Bind(R.id.live_game)
+    AutoLinearLayout live_game;
     public static LrcView mLrcView;
     private static final String TAG = "StartLiveActivity";
-
+    @Bind(R.id.song_LrcView)
+    LrcView songLrcView;
+    @Bind(R.id.iv_big)
+    ImageView ivBig;
+    @Bind(R.id.tv_big)
+    TextView tvBig;
+    @Bind(R.id.iv_samll)
+    ImageView ivSamll;
+    @Bind(R.id.tv_samll)
+    TextView tvSamll;
+    @Bind(R.id.iv_singe)
+    ImageView ivSinge;
+    @Bind(R.id.tv_singe)
+    TextView tvSinge;
+    @Bind(R.id.iv_double)
+    ImageView ivDouble;
+    @Bind(R.id.tv_double)
+    TextView tvDouble;
+    @Bind(R.id.iv_big_sigle)
+    ImageView ivBigSigle;
+    @Bind(R.id.tv_big_sigle)
+    TextView tvBigSigle;
+    @Bind(R.id.iv_samll_singe)
+    ImageView ivSamllSinge;
+    @Bind(R.id.tv_samll_singe)
+    TextView tvSamllSinge;
+    @Bind(R.id.iv_big_double)
+    ImageView ivBigDouble;
+    @Bind(R.id.tv_big_double)
+    TextView tvBigDouble;
+    @Bind(R.id.iv_samll_double)
+    ImageView ivSamllDouble;
+    @Bind(R.id.tv_samll_double)
+    TextView tvSamllDouble;
+    @Bind(R.id.iv_more_big)
+    ImageView ivMoreBig;
+    @Bind(R.id.tv_more_big)
+    TextView tvMoreBig;
+    @Bind(R.id.iv_more_samll)
+    ImageView ivMoreSamll;
+    @Bind(R.id.tv_more_samll)
+    TextView tvMoreSamll;
+    @Bind(R.id.small_add)
+    ImageView smallAdd;
+    @Bind(R.id.samll_number)
+    TextView samllNumber;
+    @Bind(R.id.small_subtract)
+    ImageView smallSubtract;
+    @Bind(R.id.double_subtract)
+    ImageView doubleSubtract;
+    @Bind(R.id.double_number)
+    TextView doubleNumber;
+    @Bind(R.id.double_add)
+    ImageView doubleAdd;
+    @Bind(R.id.iv_touzhu)
+    ImageView ivTouzhu;
+    @Bind(R.id.tv_rule)
+    ImageView tv_rule;
+    private ArrayList<Integer> JbList = new ArrayList<>();
     /**
      * 分享的地址
      */
@@ -722,19 +781,40 @@ public class StartLiveActivity extends BaseActivity implements
 
     @Override
     protected void initListener() {
+
+        tv_rule.setOnClickListener(this);
+
+        smallAdd.setOnClickListener(this);
+        smallSubtract.setOnClickListener(this);
+        doubleSubtract.setOnClickListener(this);
+        doubleAdd.setOnClickListener(this);
+        ivTouzhu.setOnClickListener(this);
+
+
+
+        live_game.setOnClickListener(this);
+        ivBig.setOnClickListener(this);
+        ivSamll.setOnClickListener(this);
+        ivSinge.setOnClickListener(this);
+        ivDouble.setOnClickListener(this);
+        ivBigSigle.setOnClickListener(this);
+        ivSamllSinge.setOnClickListener(this);
+        ivBigDouble.setOnClickListener(this);
+        ivSamllDouble.setOnClickListener(this);
+        ivMoreBig.setOnClickListener(this);
+        ivMoreSamll.setOnClickListener(this);
+
         mSendGiftLian.setOnClickListener(this);
         llTangpiao.setOnClickListener(this);
         liveHead.setOnClickListener(this);
-        audio_player.setOnClickListener(this);
         game.setOnClickListener(this);
         ruanjianpan.setOnClickListener(this);
         zhoubang.setOnClickListener(this);
         ll_game.setOnClickListener(this);
-
+        iv_xy.setOnClickListener(this);
         liveClose.setOnClickListener(this);
         ivLiveMei.setOnClickListener(this);
         ivLiveSwitch.setOnClickListener(this);
-        ivLiveShare.setOnClickListener(this);
         ivLivePrivatechat.setOnClickListener(this);
         smallColes.setOnClickListener(this);
         ivLiveGift.setOnClickListener(this);
@@ -751,36 +831,151 @@ public class StartLiveActivity extends BaseActivity implements
 
     }
 
-    private boolean ismore = false;
+    private boolean gameIsStart = false;
+
+    private void restStatus() {
+        ivBig.setImageResource(R.mipmap.icon_big_unselect);
+        ivSamll.setImageResource(R.mipmap.icon_small_unselect);
+        ivSinge.setImageResource(R.mipmap.icon_single_unselect);
+        ivDouble.setImageResource(R.mipmap.icon_double_unselect);
+        ivBigSigle.setImageResource(R.mipmap.icon_big_single_unselect);
+        ivSamllSinge.setImageResource(R.mipmap.icon_small_single_unselect);
+        ivBigDouble.setImageResource(R.mipmap.icon_big_double_unselect);
+        ivSamllDouble.setImageResource(R.mipmap.icon_small_double_unselect);
+        ivMoreBig.setImageResource(R.mipmap.icon_big_more_unselect);
+        ivMoreSamll.setImageResource(R.mipmap.icon_small_more_unselect);
+    }
 
     @Override
     public void onClick(View v) {
+        smallAdd.setOnClickListener(this);
+        smallSubtract.setOnClickListener(this);
+        doubleSubtract.setOnClickListener(this);
+        doubleAdd.setOnClickListener(this);
+        ivTouzhu.setOnClickListener(this);
+
+
         switch (v.getId()) {
-            case R.id.ruanjianpan:
+            case R.id.tv_rule: //规则
+                getRulePopup();
+                break;
+            case R.id.small_add:  //最小投注加
+
+                break;
+            case R.id.small_subtract:  //最小投注减
+                break;
+            case R.id.double_add:  //加倍投注加
+                break;
+            case R.id.double_subtract: //加倍投注减
+                break;
+            case R.id.iv_touzhu:  //投注
+                break;
+
+            case R.id.iv_big: //大
+                restStatus();
+                ivBig.setImageResource(R.mipmap.icon_big_select);
+                break;
+            case R.id.iv_samll: //小
+                restStatus();
+                ivSamll.setImageResource(R.mipmap.icon_small_select);
+
+                break;
+            case R.id.iv_singe: //单
+                restStatus();
+                ivSinge.setImageResource(R.mipmap.icon_single_select);
+                break;
+            case R.id.iv_double: //双
+                restStatus();
+                ivDouble.setImageResource(R.mipmap.icon_double_select);
+                break;
+            case R.id.iv_big_sigle: //大单
+                restStatus();
+                ivBigSigle.setImageResource(R.mipmap.icon_big_single_select);
+                break;
+            case R.id.iv_samll_singe: //小单
+                restStatus();
+                ivSamllSinge.setImageResource(R.mipmap.icon_small_single_select);
+                break;
+            case R.id.iv_big_double: //大双
+                restStatus();
+                ivBigDouble.setImageResource(R.mipmap.icon_big_double_select);
+                break;
+            case R.id.iv_samll_double: //小双
+                restStatus();
+                ivSamllDouble.setImageResource(R.mipmap.icon_small_double_select);
+                break;
+            case R.id.iv_more_big: //更大
+                restStatus();
+                ivMoreBig.setImageResource(R.mipmap.icon_big_more_select);
+                break;
+            case R.id.iv_more_samll: //更小
+                restStatus();
+                ivMoreSamll.setImageResource(R.mipmap.icon_small_more_select);
+                break;
+
+            case R.id.iv_xy:
                 ll_game.setVisibility(View.GONE);
-                messageFragment.inputTypeOnClick();
+                live_game.setVisibility(View.VISIBLE);
+                gameIsStart = true;
+                break;
+
+            case R.id.ruanjianpan:
+                if (gameIsStart == false) {
+                    ll_game.setVisibility(View.GONE);
+                    messageFragment.inputTypeOnClick();
+                } else {
+                    live_game.setVisibility(View.GONE);
+                    messageFragment.inputTypeOnClick();
+
+                }
+
                 break;
 
             case R.id.zhoubang:
                 messageFragment.ivRankingOnClick();
                 break;
             case R.id.game:  //游戏
-                if (ll_game.getVisibility() == View.VISIBLE) {
-                    ll_game.setVisibility(View.GONE);
+                if (gameIsStart == false) {
+                    if (ll_game.getVisibility() == View.VISIBLE) {
+                        ll_game.setVisibility(View.GONE);
+                    } else {
+                        ll_game.setVisibility(View.VISIBLE);
+                    }
                 } else {
-                    ll_game.setVisibility(View.VISIBLE);
+                    if (live_game.getVisibility() == View.VISIBLE) {
+                        live_game.setVisibility(View.GONE);
+                    } else {
+                        live_game.setVisibility(View.VISIBLE);
+                    }
                 }
+
                 break;
             case R.id.game_more_btn:
-                if (ismore == false) {
-                    ivLiveShare.setVisibility(View.VISIBLE);
-                    audio_player.setVisibility(View.VISIBLE);
-                    ismore = true;
-                } else {
-                    ivLiveShare.setVisibility(View.GONE);
-                    audio_player.setVisibility(View.GONE);
-                    ismore = false;
-                }
+                View popupView = LayoutInflater.from(this).inflate(R.layout.view_more_button, null);
+                PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT, true);
+                popupWindow.setBackgroundDrawable(new BitmapDrawable());
+                popupView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+                int popupWidth = popupView.getMeasuredWidth();
+                int popupHeight = popupView.getMeasuredHeight();
+                int[] location = new int[2];
+                v.getLocationOnScreen(location);
+                popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, (location[0] + v.getWidth() / 2) - popupWidth / 2,
+                        location[1] - popupHeight);
+                popupView.findViewById(R.id.iv_live_share).setOnClickListener(new View.OnClickListener() {  //分享
+                    @Override
+                    public void onClick(View v) {
+                        UMUtils.umShare(StartLiveActivity.this, creatReadyBean.getCreator().getNickName(), creatReadyBean
+                                .getLivePicUrl(), share_url + "?userId=" + appUser.getId());
+                    }
+                });
+                popupView.findViewById(R.id.audio_player).setOnClickListener(new View.OnClickListener() { //音乐
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(mContext, AudioPlayerActivity.class));
+                    }
+                });
+
                 break;
 
             /**
@@ -815,6 +1010,11 @@ public class StartLiveActivity extends BaseActivity implements
                 break;
             //私信
             case R.id.iv_live_privatechat:
+                if (gameIsStart == false) {
+                    ll_game.setVisibility(View.GONE);
+                } else {
+                    live_game.setVisibility(View.GONE);
+                }
                 ll_game.setVisibility(View.GONE);
                 ll_buttom_mun.setVisibility(View.GONE);
 
@@ -2145,6 +2345,11 @@ public class StartLiveActivity extends BaseActivity implements
         cameraPreviewFrameView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                if (gameIsStart == false) {
+                    ll_game.setVisibility(View.GONE);
+                } else {
+                    live_game.setVisibility(View.GONE);
+                }
                 ll_game.setVisibility(View.GONE);
                 ll_buttom_mun.setVisibility(View.VISIBLE);
                 if (sessionListFragment != null) {
@@ -3458,6 +3663,70 @@ public class StartLiveActivity extends BaseActivity implements
             lrcHandler.postDelayed(this, 100);
         }
     };
+
+    /**
+     * 规则pop
+     */
+    public void getRulePopup() {
+        final PopupWindow  rulePop = new PopupWindow(this);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View view = inflater.inflate(R.layout.pop_rule, null);
+        rulePop.setContentView(view);
+        rulePop.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
+        rulePop.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        rulePop.setFocusable(true);
+        rulePop.setBackgroundDrawable(new BitmapDrawable());
+        rulePop.setOutsideTouchable(true);
+
+        backgroundAlpha(0.5f);
+
+        rulePop.showAtLocation(doubleAdd, Gravity.CENTER, 0, 0);
+        rulePop.update();
+//        rulePop.setOnDismissListener(new PopOnDismissListner());
+
+        view.findViewById(R.id.colse_rule).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rulePop.dismiss();
+            }
+        });
+        TextView tv_content = (TextView) view.findViewById(R.id.tv_content);
+        tv_content.setText("幸运28分为白天和夜场两种模式：\n" +
+                "\n" +
+                "白天采用北京快乐8数据（09：00-24：00）：\n" +
+                "\n" +
+                "北京快乐8开奖结果来源于国家福利彩票北京快乐8开奖号码，每五分钟一期，不停开奖。\n" +
+                "北京快乐8每期开奖共开出20个号码，并按照从小到大的时序一次排列。\n" +
+                "取其1-6位开奖号码并进行相加，和值的末位数作为幸运28开奖的第一位数值；\n" +
+                "取其7-12位开奖号码并进行相加，和值的末位数作为幸运28开奖的第二位数值；\n" +
+                "取其13-18位开奖号码并进行相加，和值的末位数作为幸运28开奖的第三位数值；\n" +
+                "将三位数相加，所得的结果即为幸运28的开奖结果。\n" +
+                "\n" +
+                "夜场采用的是加拿大28数据（00：00-9：00）：\n" +
+                "\n" +
+                "加拿大28开奖结果来源于加拿大福利彩票的加拿大幸运28开奖结果\n" +
+                "加拿大28每期开奖共开出20个号码，并按照从小到大的时序一次排列。\n" +
+                "取其2、5、8、11、14、17位数进行相加，和值的末位数作为幸运28开奖的第一位数值；\n" +
+                "取其3、6、9、12、15位数进行相加，和值的末位数作为幸运28开奖的第二位数值；\n" +
+                "取其4、7、10、13、16、19位数进行相加，和值的末位数作为幸运28开奖的第三位数值；\n" +
+                "将三位数相加，所得的结果即为幸运28的开奖结果。\n" +
+                "\n" +
+                "幸运28的玩法：\n" +
+                "\n" +
+                "28个号码，抽中即可获得奖励。玩法类型共有以下玩法：\n" +
+                "\n" +
+                "1、大、小、单、双\n" +
+                "\n" +
+                "2、小单、小双、大单、大双\n" +
+                "\n" +
+                "3、极小值（0-5）、极大值（22-27）\n" +
+                "\n" +
+                "4、28个号码定位\n" +
+                "\n" +
+                "5、红、绿、蓝、豹子");
+    }
+
+
 
 
 }

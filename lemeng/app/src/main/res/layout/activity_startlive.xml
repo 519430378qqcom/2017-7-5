@@ -3,6 +3,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <!--主播开直播界面-->
+
+    <RelativeLayout
+        android:id="@+id/iv_show_send_gift_lian"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
+        android:layout_marginBottom="50dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/background_show_send_gift"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="连击"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_12" />
+
+            <TextView
+                android:id="@+id/btn_timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="3s"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_12" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
     <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/rl_live_root"
         android:layout_width="match_parent"
@@ -333,40 +370,7 @@
                 android:background="@mipmap/close" />
         </com.zhy.autolayout.AutoFrameLayout>
 
-        <com.zhy.autolayout.AutoRelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/rl_share"
-            android:layout_marginBottom="10px">
 
-            <ImageView
-                android:id="@+id/audio_player"
-                android:layout_width="80px"
-                android:layout_height="80px"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="15px"
-                android:src="@mipmap/audio_player"
-                android:visibility="gone" />
-
-        </com.zhy.autolayout.AutoRelativeLayout>
-
-        <com.zhy.autolayout.AutoRelativeLayout
-            android:id="@+id/rl_share"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/fl_bottom_menu"
-            android:layout_marginBottom="10px">
-
-            <ImageView
-                android:id="@+id/iv_live_share"
-                android:layout_width="80px"
-                android:layout_height="80px"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="15px"
-                android:src="@mipmap/mg_room_btn_fen"
-                android:visibility="gone" />
-
-        </com.zhy.autolayout.AutoRelativeLayout>
 
         <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="match_parent"
@@ -591,6 +595,7 @@
                     android:layout_marginLeft="20px" />
 
             </com.zhy.autolayout.AutoLinearLayout>
+             <include layout="@layout/view_show_watchlive_game"/>
         </com.zhy.autolayout.AutoLinearLayout>
 
         <com.lvshandian.lemeng.view.BarrageView
@@ -731,41 +736,5 @@
             android:visibility="gone" />
 
     </com.zhy.autolayout.AutoRelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/iv_show_send_gift_lian"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right|bottom"
-        android:layout_marginBottom="50dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/background_show_send_gift"
-        android:visibility="gone">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="连击"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_12" />
-
-            <TextView
-                android:id="@+id/btn_timer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="3s"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_12" />
-
-        </LinearLayout>
-    </RelativeLayout>
 
 </com.zhy.autolayout.AutoFrameLayout>

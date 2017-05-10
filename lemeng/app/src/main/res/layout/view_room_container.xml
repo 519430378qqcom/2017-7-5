@@ -113,7 +113,10 @@
     <com.lvshandian.lemeng.view.ScrollRelativeLayout
         android:id="@+id/scrl"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <com.zhy.autolayout.AutoRelativeLayout
             android:id="@+id/rl_hv_view"
@@ -501,9 +504,8 @@
                 </com.zhy.autolayout.AutoRelativeLayout>
 
                 <include
-                    android:id="@+id/ll_gameW"
                     layout="@layout/view_show_watchlive_game"
-                    android:visibility="gone"/>
+                     />
             </com.zhy.autolayout.AutoLinearLayout>
 
 
