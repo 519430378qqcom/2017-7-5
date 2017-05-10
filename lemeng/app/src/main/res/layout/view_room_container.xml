@@ -81,7 +81,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/ll_show_gift_animator"
-        android:background="@mipmap/zhan_da"
+        android:background="@mipmap/zhan_live"
         android:visibility="visible">
         <!--加载背景图-->
         <ImageView
