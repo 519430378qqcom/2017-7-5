@@ -361,6 +361,8 @@ public class StartLiveActivity extends BaseActivity implements
     ImageView ivTouzhu;
     @Bind(R.id.tv_rule)
     ImageView tv_rule;
+    @Bind(R.id.iv_trend)
+    ImageView iv_trend;
     private ArrayList<Integer> JbList = new ArrayList<>();
     /**
      * 分享的地址
@@ -781,6 +783,8 @@ public class StartLiveActivity extends BaseActivity implements
 
     @Override
     protected void initListener() {
+        iv_trend.setOnClickListener(this);
+
 
         tv_rule.setOnClickListener(this);
 
@@ -856,6 +860,9 @@ public class StartLiveActivity extends BaseActivity implements
 
 
         switch (v.getId()) {
+            case R.id.iv_trend: //走势
+                break;
+
             case R.id.tv_rule: //规则
                 getRulePopup();
                 break;
@@ -863,12 +870,16 @@ public class StartLiveActivity extends BaseActivity implements
 
                 break;
             case R.id.small_subtract:  //最小投注减
+
                 break;
             case R.id.double_add:  //加倍投注加
+
                 break;
             case R.id.double_subtract: //加倍投注减
+
                 break;
             case R.id.iv_touzhu:  //投注
+                showTouZhuPop();
                 break;
 
             case R.id.iv_big: //大
@@ -1062,6 +1073,7 @@ public class StartLiveActivity extends BaseActivity implements
 
         }
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -3734,6 +3746,38 @@ public class StartLiveActivity extends BaseActivity implements
         public void onDismiss() {
             backgroundAlpha(1f);
         }
+    }
+
+
+    private void showTouZhuPop() {
+        final PopupWindow  rulePop = new PopupWindow(this);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View view = inflater.inflate(R.layout.pop_tou_zhu, null);
+        rulePop.setContentView(view);
+        rulePop.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
+        rulePop.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        rulePop.setFocusable(true);
+        rulePop.setBackgroundDrawable(new BitmapDrawable());
+        rulePop.setOutsideTouchable(true);
+
+        backgroundAlpha(0.5f);
+
+        rulePop.showAtLocation(doubleAdd, Gravity.CENTER, 0, 0);
+        rulePop.update();
+        rulePop.setOnDismissListener(new RulePopOnDismissListner());
+        TextView tv_tzqh = (TextView) view.findViewById(R.id.tv_tzqh);//投注期号
+        TextView tv_ds = (TextView) view.findViewById(R.id.tv_ds);  //大小单双
+        TextView tv_xzjf = (TextView) view.findViewById(R.id.tv_xzjf);  //下注积分
+        ImageView sure_tz = (ImageView) view.findViewById(R.id.sure_tz);  //确定投注
+        ImageView colse_rule = (ImageView) view.findViewById(R.id.colse_rule);  //关闭弹框
+        colse_rule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rulePop.dismiss();
+            }
+        });
+
+
     }
 
 

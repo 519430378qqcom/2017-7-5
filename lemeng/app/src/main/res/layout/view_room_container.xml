@@ -36,7 +36,14 @@
         </com.zhy.autolayout.AutoRelativeLayout>
 
     </com.zhy.autolayout.AutoFrameLayout>
-
+     <ImageView
+        android:id="@+id/iv_trend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/trend_img"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+         />
     <com.zhy.autolayout.AutoFrameLayout
         android:id="@+id/fl_plug"
         android:layout_width="300px"

@@ -341,7 +341,14 @@
             android:layout_height="150dp"
             android:layout_marginTop="100dp"
             android:visibility="gone" />
-
+        <ImageView
+            android:id="@+id/iv_trend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/trend_img"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            />
         <com.zhy.autolayout.AutoFrameLayout
             android:id="@+id/lm_fm"
             android:layout_width="220px"

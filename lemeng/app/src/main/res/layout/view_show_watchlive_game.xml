@@ -4,7 +4,7 @@
     android:layout_height="420px"
     android:id="@+id/live_game"
     android:background="@mipmap/game_backgourd"
-    android:visibility="visible"
+    android:visibility="gone"
     android:orientation="vertical">
 
     <com.zhy.autolayout.AutoLinearLayout
@@ -295,17 +295,17 @@
             android:text="1000万"
             android:textColor="@color/white" />
 
+
         <ImageView
-            android:id="@+id/small_add"
+            android:id="@+id/small_subtract"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10px"
-            android:src="@mipmap/samll_add" />
 
+            android:src="@mipmap/samll_subtract" />
         <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10px"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -325,12 +325,12 @@
                 android:textSize="10sp" />
         </com.zhy.autolayout.AutoLinearLayout>
 
+
         <ImageView
-            android:id="@+id/small_subtract"
+            android:id="@+id/small_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/samll_subtract" />
-
+            android:src="@mipmap/samll_add" />
         <ImageView
             android:id="@+id/double_subtract"
             android:layout_width="wrap_content"
@@ -341,7 +341,6 @@
         <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10px"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -372,7 +371,7 @@
             android:id="@+id/iv_touzhu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20px"
+            android:layout_marginLeft="10px"
             android:src="@mipmap/touzhu" />
     </com.zhy.autolayout.AutoLinearLayout>
 

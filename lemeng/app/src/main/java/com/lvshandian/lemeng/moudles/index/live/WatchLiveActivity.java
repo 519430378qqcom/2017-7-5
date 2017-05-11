@@ -204,6 +204,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import fr.castorflex.android.verticalviewpager.VerticalViewPager;
 import xiao.free.horizontalrefreshlayout.HorizontalRefreshLayout;
@@ -302,6 +303,15 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
     ImageView tv_rule;
 
+    ImageView smallAdd;
+    TextView samllNumber;
+    ImageView smallSubtract;
+    ImageView doubleSubtract;
+    TextView doubleNumber;
+    ImageView doubleAdd;
+    ImageView ivTouzhu;
+
+    ImageView iv_trend;
     private static final String TAG = "WatchLiveActivity";
 
     /**
@@ -757,6 +767,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     };
 
 
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_watchlive;
@@ -809,31 +820,39 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         mSurfaceView = (SurfaceView) mRoomContainer.findViewById(R.id.SurfaceView);
 
 
-         ivBig = (ImageView) mRoomContainer.findViewById(R.id.iv_big);
-         tvBig = (TextView) mRoomContainer.findViewById(R.id.tv_big);
-         ivSamll = (ImageView) mRoomContainer.findViewById(R.id.iv_samll);
-         tvSamll = (TextView) mRoomContainer.findViewById(R.id.tv_samll);
-         ivSinge = (ImageView) mRoomContainer.findViewById(R.id.iv_singe);
-         tvSinge = (TextView) mRoomContainer.findViewById(R.id.tv_sign);
-         ivDouble = (ImageView) mRoomContainer.findViewById(R.id.iv_double);
-         tvDouble = (TextView) mRoomContainer.findViewById(R.id.tv_double);
-         ivBigSigle = (ImageView) mRoomContainer.findViewById(R.id.iv_big_sigle);
-         tvBigSigle = (TextView) mRoomContainer.findViewById(R.id.tv_big_sigle);
-         ivSamllSinge = (ImageView) mRoomContainer.findViewById(R.id.iv_samll_singe);
-         tvSamllSinge = (TextView) mRoomContainer.findViewById(R.id.tv_samll_singe);
-         ivBigDouble = (ImageView) mRoomContainer.findViewById(R.id.iv_big_double);
-         tvBigDouble = (TextView) mRoomContainer.findViewById(R.id.tv_big_double);
-         ivSamllDouble = (ImageView) mRoomContainer.findViewById(R.id.iv_samll_double);
-         tvSamllDouble = (TextView) mRoomContainer.findViewById(R.id.tv_samll_double);
-         ivMoreBig = (ImageView) mRoomContainer.findViewById(R.id.iv_more_big);
-         tvMoreBig = (TextView) mRoomContainer.findViewById(R.id.tv_more_big);
-         ivMoreSamll = (ImageView) mRoomContainer.findViewById(R.id.iv_more_samll);
-         tvMoreSamll = (TextView) mRoomContainer.findViewById(R.id.tv_more_samll);
-         live_game = (AutoLinearLayout) mRoomContainer.findViewById(R.id.live_game);
+        ivBig = (ImageView) mRoomContainer.findViewById(R.id.iv_big);
+        tvBig = (TextView) mRoomContainer.findViewById(R.id.tv_big);
+        ivSamll = (ImageView) mRoomContainer.findViewById(R.id.iv_samll);
+        tvSamll = (TextView) mRoomContainer.findViewById(R.id.tv_samll);
+        ivSinge = (ImageView) mRoomContainer.findViewById(R.id.iv_singe);
+        tvSinge = (TextView) mRoomContainer.findViewById(R.id.tv_sign);
+        ivDouble = (ImageView) mRoomContainer.findViewById(R.id.iv_double);
+        tvDouble = (TextView) mRoomContainer.findViewById(R.id.tv_double);
+        ivBigSigle = (ImageView) mRoomContainer.findViewById(R.id.iv_big_sigle);
+        tvBigSigle = (TextView) mRoomContainer.findViewById(R.id.tv_big_sigle);
+        ivSamllSinge = (ImageView) mRoomContainer.findViewById(R.id.iv_samll_singe);
+        tvSamllSinge = (TextView) mRoomContainer.findViewById(R.id.tv_samll_singe);
+        ivBigDouble = (ImageView) mRoomContainer.findViewById(R.id.iv_big_double);
+        tvBigDouble = (TextView) mRoomContainer.findViewById(R.id.tv_big_double);
+        ivSamllDouble = (ImageView) mRoomContainer.findViewById(R.id.iv_samll_double);
+        tvSamllDouble = (TextView) mRoomContainer.findViewById(R.id.tv_samll_double);
+        ivMoreBig = (ImageView) mRoomContainer.findViewById(R.id.iv_more_big);
+        tvMoreBig = (TextView) mRoomContainer.findViewById(R.id.tv_more_big);
+        ivMoreSamll = (ImageView) mRoomContainer.findViewById(R.id.iv_more_samll);
+        tvMoreSamll = (TextView) mRoomContainer.findViewById(R.id.tv_more_samll);
+        live_game = (AutoLinearLayout) mRoomContainer.findViewById(R.id.live_game);
 
-        tv_rule= (ImageView) mRoomContainer.findViewById(R.id.tv_rule);
+        tv_rule = (ImageView) mRoomContainer.findViewById(R.id.tv_rule);
 
 
+        smallAdd = (ImageView) mRoomContainer.findViewById(R.id.small_add);
+        samllNumber = (TextView) mRoomContainer.findViewById(R.id.samll_number);
+        smallSubtract = (ImageView) mRoomContainer.findViewById(R.id.small_subtract);
+        doubleSubtract = (ImageView) mRoomContainer.findViewById(R.id.double_subtract);
+        doubleNumber = (TextView) mRoomContainer.findViewById(R.id.double_number);
+        doubleAdd = (ImageView) mRoomContainer.findViewById(R.id.double_add);
+        ivTouzhu = (ImageView) mRoomContainer.findViewById(R.id.iv_touzhu);
+        iv_trend = (ImageView) mRoomContainer.findViewById(R.id.iv_trend);
         List<LiveListBean> list = (List<LiveListBean>) getIntent().getSerializableExtra("LIVELIST");
         position = getIntent().getIntExtra("position", 0);
 
@@ -1038,8 +1057,16 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
     @Override
     protected void initListener() {
-
+        iv_trend.setOnClickListener(this);
         tv_rule.setOnClickListener(this);
+
+        smallAdd.setOnClickListener(this);
+        smallSubtract.setOnClickListener(this);
+        doubleSubtract.setOnClickListener(this);
+        doubleAdd.setOnClickListener(this);
+        ivTouzhu.setOnClickListener(this);
+
+
 
         live_game.setOnClickListener(this);
         ivBig.setOnClickListener(this);
@@ -1175,7 +1202,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
     }
 
-    private void restStatus(){
+    private void restStatus() {
         ivBig.setImageResource(R.mipmap.icon_big_unselect);
         ivSamll.setImageResource(R.mipmap.icon_small_unselect);
         ivSinge.setImageResource(R.mipmap.icon_single_unselect);
@@ -1191,9 +1218,26 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
+            case R.id.iv_trend: //走势
+                break;
             case R.id.tv_rule: //规则
                 getRulePopup();
+                break;
+
+            case R.id.small_add:  //最小投注加
+
+                break;
+            case R.id.small_subtract:  //最小投注减
+
+                break;
+            case R.id.double_add:  //加倍投注加
+
+                break;
+            case R.id.double_subtract: //加倍投注减
+
+                break;
+            case R.id.iv_touzhu:  //投注
+                showTouZhuPop();
                 break;
 
             case R.id.iv_big: //大
@@ -1276,7 +1320,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 ll_buttom_mun.setVisibility(View.GONE);
 
                 sessionListFragment = new ChatRoomSessionListFragment();
-                sessionListFragment.init(getSupportFragmentManager(),ll_buttom_mun);
+                sessionListFragment.init(getSupportFragmentManager(), ll_buttom_mun);
                 transaction = fragmentManager.beginTransaction();
                 transaction.replace(R.id.watch_room_message_fragment_parent, sessionListFragment);
                 transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
@@ -3567,7 +3611,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * 规则pop
      */
     public void getRulePopup() {
-        final PopupWindow  rulePop = new PopupWindow(this);
+        final PopupWindow rulePop = new PopupWindow(this);
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.pop_rule, null);
         rulePop.setContentView(view);
@@ -3633,6 +3677,39 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         public void onDismiss() {
             backgroundAlpha(1f);
         }
+    }
+
+
+
+    private void showTouZhuPop() {
+        final PopupWindow  rulePop = new PopupWindow(this);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View view = inflater.inflate(R.layout.pop_tou_zhu, null);
+        rulePop.setContentView(view);
+        rulePop.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
+        rulePop.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        rulePop.setFocusable(true);
+        rulePop.setBackgroundDrawable(new BitmapDrawable());
+        rulePop.setOutsideTouchable(true);
+
+        backgroundAlpha(0.5f);
+
+        rulePop.showAtLocation(doubleAdd, Gravity.CENTER, 0, 0);
+        rulePop.update();
+        rulePop.setOnDismissListener(new RulePopOnDismissListner());
+        TextView tv_tzqh = (TextView) view.findViewById(R.id.tv_tzqh);//投注期号
+        TextView tv_ds = (TextView) view.findViewById(R.id.tv_ds);  //大小单双
+        TextView tv_xzjf = (TextView) view.findViewById(R.id.tv_xzjf);  //下注积分
+        ImageView sure_tz = (ImageView) view.findViewById(R.id.sure_tz);  //确定投注
+        ImageView colse_rule = (ImageView) view.findViewById(R.id.colse_rule);  //关闭弹框
+        colse_rule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rulePop.dismiss();
+            }
+        });
+
+
     }
 
 }
