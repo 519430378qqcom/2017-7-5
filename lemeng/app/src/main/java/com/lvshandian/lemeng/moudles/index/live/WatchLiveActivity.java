@@ -800,7 +800,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             }
         }
     };
-
+    private String nper;
 
 
     @Override
@@ -3854,7 +3854,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
         tv_ds.setText("大小单双："+selectStatus);
         tv_xzjf.setText("下注积分："+String.valueOf(jbNumber*tzNumber)+"分");
-
+        tv_tzqh.setText("投注期号："+Integer.valueOf(nper)+1);
     }
 
 
@@ -3864,6 +3864,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     private void getTimenumber() {
         String url = UrlBuilder.chargeServerUrl + UrlBuilder.getTimenumber;
         OkHttpUtils.get().url(url).build().execute(new StringCallback() {
+            private String nper;
+
             @Override
             public void onError(com.squareup.okhttp.Request request, Exception e) {
                 showToast("网络错误");
@@ -3880,6 +3882,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         LogUtil.e("obj", obj);
                         LastAwardBean lastAwardBean = JsonUtil.json2Bean(obj, LastAwardBean.class);
                         if (lastAwardBean != null) {
+                            nper = lastAwardBean.getNper();
+
                             tv_periods.setText("第" + lastAwardBean.getNper() + "期");
                             frist_num.setText(lastAwardBean.getFirstNum() + "");
                             second_num.setText(lastAwardBean.getSecondNum() + "");
@@ -3896,6 +3900,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         LogUtil.e("obj", obj);
                         LastAwardBean lastAwardBean = JsonUtil.json2Bean(obj, LastAwardBean.class);
                         if (lastAwardBean != null) {
+                            nper = lastAwardBean.getNper();
                             tv_periods.setText("第" + lastAwardBean.getNper() + "期");
                             frist_num.setText(lastAwardBean.getFirstNum() + "");
                             second_num.setText(lastAwardBean.getSecondNum() + "");

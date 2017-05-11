@@ -752,6 +752,7 @@ public class StartLiveActivity extends BaseActivity implements
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
+    private String nper;
 
 
     @Override
@@ -3910,6 +3911,7 @@ public class StartLiveActivity extends BaseActivity implements
 
         tv_ds.setText("大小单双：" + selectStatus);
         tv_xzjf.setText("下注积分：" + String.valueOf(jbNumber * tzNumber) + "分");
+        tv_tzqh.setText("投注期号："+Integer.valueOf(nper)+1);
     }
 
     /**
@@ -3934,6 +3936,8 @@ public class StartLiveActivity extends BaseActivity implements
                         LogUtil.e("obj", obj);
                         LastAwardBean lastAwardBean = JsonUtil.json2Bean(obj, LastAwardBean.class);
                         if (lastAwardBean != null) {
+                            nper = lastAwardBean.getNper();
+
                             tv_periods.setText("第" + lastAwardBean.getNper() + "期");
                             frist_num.setText(lastAwardBean.getFirstNum() + "");
                             second_num.setText(lastAwardBean.getSecondNum() + "");
@@ -3950,6 +3954,7 @@ public class StartLiveActivity extends BaseActivity implements
                         LogUtil.e("obj", obj);
                         LastAwardBean lastAwardBean = JsonUtil.json2Bean(obj, LastAwardBean.class);
                         if (lastAwardBean != null) {
+                            nper = lastAwardBean.getNper();
                             tv_periods.setText("第" + lastAwardBean.getNper() + "期");
                             frist_num.setText(lastAwardBean.getFirstNum() + "");
                             second_num.setText(lastAwardBean.getSecondNum() + "");
