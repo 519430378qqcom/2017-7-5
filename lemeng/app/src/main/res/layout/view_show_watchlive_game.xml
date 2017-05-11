@@ -289,6 +289,7 @@
             android:src="@mipmap/niu_jinbi" />
 
         <TextView
+            android:id="@+id/all_lepiao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10px"

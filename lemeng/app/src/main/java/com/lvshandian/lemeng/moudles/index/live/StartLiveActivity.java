@@ -363,6 +363,8 @@ public class StartLiveActivity extends BaseActivity implements
     ImageView tv_rule;
     @Bind(R.id.iv_trend)
     ImageView iv_trend;
+    @Bind(R.id.all_lepiao)
+    TextView all_lepiao;
 
     private int tzNumber = 10;
     private int jbNumber = 1;
@@ -787,6 +789,13 @@ public class StartLiveActivity extends BaseActivity implements
         samllNumber.setText(String.valueOf(tzNumber));
         doubleNumber.setText(String.valueOf(jbNumber));
         initSelectStatus();
+
+        /**
+         * 设置游戏布局的金币数量
+         */
+        String myCoin = SharedPreferenceUtils.getGoldCoin(mContext);
+        myCoin = CountUtils.getCount(Long.parseLong(myCoin));
+        all_lepiao.setText(myCoin);
     }
 
     private void initSelectStatus() {

@@ -311,6 +311,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     ImageView ivTouzhu;
 
     ImageView iv_trend;
+
+    TextView all_lepiao;
     private static final String TAG = "WatchLiveActivity";
 
     /**
@@ -853,6 +855,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         doubleAdd = (ImageView) mRoomContainer.findViewById(R.id.double_add);
         ivTouzhu = (ImageView) mRoomContainer.findViewById(R.id.iv_touzhu);
         iv_trend = (ImageView) mRoomContainer.findViewById(R.id.iv_trend);
+
+        all_lepiao = (TextView) mRoomContainer.findViewById(R.id.all_lepiao);
+
         List<LiveListBean> list = (List<LiveListBean>) getIntent().getSerializableExtra("LIVELIST");
         position = getIntent().getIntExtra("position", 0);
 
@@ -939,6 +944,13 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         samllNumber.setText(String.valueOf(tzNumber));
         doubleNumber.setText(String.valueOf(jbNumber));
         initSelectStatus();
+
+        /**
+         * 设置游戏布局的金币数量
+         */
+        String myCoin = SharedPreferenceUtils.getGoldCoin(mContext);
+        myCoin = CountUtils.getCount(Long.parseLong(myCoin));
+        all_lepiao.setText(myCoin);
     }
     private void initSelectStatus() {
         restStatus();
