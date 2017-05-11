@@ -75,6 +75,7 @@ import com.lvshandian.lemeng.bean.CustomdateBean;
 import com.lvshandian.lemeng.bean.DianBoDateBean;
 import com.lvshandian.lemeng.bean.GiftBean;
 import com.lvshandian.lemeng.bean.IfAttentionBean;
+import com.lvshandian.lemeng.bean.LastAwardBean;
 import com.lvshandian.lemeng.bean.LianmaiBean;
 import com.lvshandian.lemeng.bean.LiveBean;
 import com.lvshandian.lemeng.bean.LiveEven;
@@ -101,6 +102,7 @@ import com.lvshandian.lemeng.utils.ChannelToLiveBean;
 import com.lvshandian.lemeng.utils.Config;
 import com.lvshandian.lemeng.utils.CountUtils;
 import com.lvshandian.lemeng.utils.DESUtil;
+import com.lvshandian.lemeng.utils.DateUtils;
 import com.lvshandian.lemeng.utils.FastBlur;
 import com.lvshandian.lemeng.utils.FramesSequenceAnimation;
 import com.lvshandian.lemeng.utils.GrademipmapUtils;
@@ -129,6 +131,7 @@ import com.lvshandian.lemeng.wangyiyunxin.main.reminder.ReminderItem;
 import com.lvshandian.lemeng.wangyiyunxin.main.reminder.ReminderManager;
 import com.lvshandian.lemeng.wangyiyunxin.main.reminder.ReminderSettings;
 import com.lvshandian.lemeng.widget.AvatarView;
+import com.lvshandian.lemeng.widget.TimeCountDownLayout;
 import com.lvshandian.lemeng.widget.myrecycler.RefreshRecyclerView;
 import com.lvshandian.lemeng.widget.myrecycler.manager.RecyclerMode;
 import com.lvshandian.lemeng.widget.myrecycler.manager.RecyclerViewManager;
@@ -315,6 +318,16 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     ImageView iv_trend;
 
     TextView all_lepiao;
+
+    TextView tv_periods;
+    TextView frist_num;
+    TextView second_num;
+    TextView third_num;
+    TextView all_num;
+    TextView tv_ds;
+    TimeCountDownLayout tv_game_next_open_time;
+    LinearLayout rl_kp;
+
     private static final String TAG = "WatchLiveActivity";
 
     /**
@@ -562,6 +575,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * 礼物连点计时器
      */
     private CountDownTimer giftTimer;
+
+    private long mCountDownTotalTime;
+
     private int tzNumber = 10;
     private int jbNumber = 1;
     private Handler myHandler = new Handler() {
@@ -766,6 +782,21 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 case RequestCode.REQUEST_REPORT:
                     showToast("已成功举报该用户");
                     break;
+                case 10000:
+                    LogUtil.e("mCountDownTotalTime","mCountDownTotalTime"+mCountDownTotalTime);
+                    mCountDownTotalTime = mCountDownTotalTime - 1000;
+                    String time = DateUtils.millisToDateString(mCountDownTotalTime, "mm:ss");
+                    if (tv_game_next_open_time != null) {
+                        tv_game_next_open_time.setText(time);
+                    }
+                    if (mCountDownTotalTime > 1000) {
+                        myHandler.sendEmptyMessageDelayed(10000, 1000);
+                    }  else {
+                        myHandler.removeMessages(10000);
+                        //获取近期开奖数据
+                        getTimenumber();
+                    }
+                    break;
             }
         }
     };
@@ -859,6 +890,15 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         iv_trend = (ImageView) mRoomContainer.findViewById(R.id.iv_trend);
 
         all_lepiao = (TextView) mRoomContainer.findViewById(R.id.all_lepiao);
+
+        tv_periods = (TextView) mRoomContainer.findViewById(R.id.tv_periods);
+        frist_num = (TextView) mRoomContainer.findViewById(R.id.frist_num);
+        second_num = (TextView) mRoomContainer.findViewById(R.id.second_num);
+        third_num = (TextView) mRoomContainer.findViewById(R.id.third_num);
+        all_num = (TextView) mRoomContainer.findViewById(R.id.all_num);
+        tv_ds = (TextView) mRoomContainer.findViewById(R.id.tv_ds);
+        tv_game_next_open_time = (TimeCountDownLayout) mRoomContainer.findViewById(R.id.tv_game_next_open_time);
+        rl_kp = (LinearLayout) mRoomContainer.findViewById(R.id.rl_kp);
 
         List<LiveListBean> list = (List<LiveListBean>) getIntent().getSerializableExtra("LIVELIST");
         position = getIntent().getIntExtra("position", 0);
@@ -1392,6 +1432,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 } else {
                     live_game.setVisibility(View.VISIBLE);
                 }
+
+                getTimenumber();
+                rl_kp.setVisibility(View.VISIBLE);
                 break;
             case R.id.zhoubangW:
                 messageFragment.ivRankingOnClick();
@@ -3814,4 +3857,65 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
     }
 
+
+    /**
+     * @dw 获取上期开奖数据
+     */
+    private void getTimenumber() {
+        String url = UrlBuilder.chargeServerUrl + UrlBuilder.getTimenumber;
+        OkHttpUtils.get().url(url).build().execute(new StringCallback() {
+            @Override
+            public void onError(com.squareup.okhttp.Request request, Exception e) {
+                showToast("网络错误");
+            }
+
+            @Override
+            public void onResponse(String response) {
+                LogUtils.e("response :" + response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String code = jsonObject.getString("code");
+                    if (code.equals("0")) {
+                        String obj = jsonObject.getString("obj");
+                        LogUtil.e("obj", obj);
+                        LastAwardBean lastAwardBean = JsonUtil.json2Bean(obj, LastAwardBean.class);
+                        if (lastAwardBean != null) {
+                            tv_periods.setText("第" + lastAwardBean.getNper() + "期");
+                            frist_num.setText(lastAwardBean.getFirstNum() + "");
+                            second_num.setText(lastAwardBean.getSecondNum() + "");
+                            third_num.setText(lastAwardBean.getThirdNum() + "");
+                            all_num.setText(lastAwardBean.getSum() + "");
+                            tv_ds.setText(lastAwardBean.getType());
+
+                            long now = System.currentTimeMillis();
+                            mCountDownTotalTime = Long.parseLong(lastAwardBean.getDateLine()) - now;
+                            myHandler.sendEmptyMessage(10000);
+                        }
+                    } else {
+                        String obj = jsonObject.getString("obj");
+                        LogUtil.e("obj", obj);
+                        LastAwardBean lastAwardBean = JsonUtil.json2Bean(obj, LastAwardBean.class);
+                        if (lastAwardBean != null) {
+                            tv_periods.setText("第" + lastAwardBean.getNper() + "期");
+                            frist_num.setText(lastAwardBean.getFirstNum() + "");
+                            second_num.setText(lastAwardBean.getSecondNum() + "");
+                            third_num.setText(lastAwardBean.getThirdNum() + "");
+                            all_num.setText(lastAwardBean.getSum() + "");
+                            tv_ds.setText(lastAwardBean.getType());
+                            tv_game_next_open_time.setText("0000");
+
+                            myHandler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    getTimenumber();
+                                }
+                            }, 10000);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 }

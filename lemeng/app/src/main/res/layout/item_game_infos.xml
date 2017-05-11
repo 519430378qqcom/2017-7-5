@@ -1,41 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-    android:layout_below="@+id/rl_live_id"
+    android:id="@+id/rl_kp"
     android:layout_width="220px"
     android:layout_height="260px"
+    android:layout_below="@+id/rl_live_id"
     android:layout_marginLeft="10px"
     android:layout_marginTop="20px"
-    android:id="@+id/rl_kp"
     android:background="@drawable/background_game_info"
-    android:visibility="visible"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:visibility="gone">
 
     <com.zhy.autolayout.AutoRelativeLayout
-        android:layout_marginTop="16px"
-        android:layout_marginLeft="10px"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10px"
+        android:layout_marginTop="16px">
 
         <ImageView
             android:id="@+id/tv_rule"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="规则"
             android:layout_alignParentRight="true"
             android:src="@mipmap/guize"
-            />
+            android:text="规则" />
 
         <TextView
+            android:id="@+id/tv_periods"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="12sp"
-            android:text="第5200期"
-            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:id="@+id/tv_periods" />
+            android:layout_alignParentTop="true"
+            android:text="第5200期"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
 
     </com.zhy.autolayout.AutoRelativeLayout>
 
@@ -43,85 +42,74 @@
         android:layout_width="100px"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10px"
-        android:orientation="horizontal"
         android:layout_marginTop="10px"
-        >
-       <TextView
-           android:id="@+id/frist_num"
-           android:layout_width="wrap_content"
-           android:layout_weight="1"
-           android:layout_height="wrap_content"
-           android:textColor="@color/lightgreen"
-           android:text="1"
-           />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/frist_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="1"
+            android:textColor="@color/lightgreen" />
+
         <TextView
             android:id="@+id/second_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-             android:gravity="center"
-            android:textColor="@color/lightgreen"
+            android:gravity="center"
             android:text="2"
-            />
+            android:textColor="@color/lightgreen" />
 
         <TextView
-
+            android:id="@+id/third_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="@color/lightgreen"
             android:text="3"
-            android:id="@+id/third_num" />
+            android:textColor="@color/lightgreen" />
 
         <TextView
             android:id="@+id/all_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/lbg"
-            android:gravity="center"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="6"
-            />
+            android:textColor="@color/lbg" />
     </com.zhy.autolayout.AutoLinearLayout>
+
     <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10px"
-        android:orientation="horizontal"
         android:layout_marginTop="10px"
-        >
-          <TextView
-              android:id="@+id/tv_size"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="小，"
-              android:textColor="@color/lbg"
-              />
+        android:orientation="horizontal">
+
         <TextView
             android:id="@+id/tv_ds"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="双"
-            android:textColor="@color/lbg"
-            />
+            android:text="小，双"
+            android:textColor="@color/lbg" />
     </com.zhy.autolayout.AutoLinearLayout>
-      <TextView
-          android:id="@+id/tv_distance"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="距离521期还有"
-          android:textSize="10sp"
-          android:gravity="center"
-          android:layout_marginTop="10px"
-          android:textColor="@color/white"
-          />
-       <com.lvshandian.lemeng.widget.TimeCountDownLayout
-           android:id="@+id/tv_game_next_open_time"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_marginLeft="5px"
-           android:layout_marginTop="5px"
-           android:textColor="@color/colorPrimary"
-           />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10px"
+        android:gravity="center"
+        android:text="距离下期还有"
+        android:textColor="@color/white"
+        android:textSize="10sp" />
+
+    <com.lvshandian.lemeng.widget.TimeCountDownLayout
+        android:id="@+id/tv_game_next_open_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5px"
+        android:layout_marginTop="5px"
+        android:textColor="@color/colorPrimary" />
 </com.zhy.autolayout.AutoLinearLayout>

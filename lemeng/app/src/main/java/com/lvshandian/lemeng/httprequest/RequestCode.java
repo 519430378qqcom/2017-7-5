@@ -37,7 +37,6 @@ public interface RequestCode {
     int MY_VIDEO_UPLOAD = 4004; //上传视频
     int MYCONTROLLER = 4005; //上传视频
 
-
     int HOME_BANNER = 2999;//banner图列表
     int MODIFY_PASSWORD = 3000;//修改密码
     int REAL_NAME_VERTIFY = MODIFY_PASSWORD + 1;//实名认证
@@ -56,5 +55,6 @@ public interface RequestCode {
     int ROOMLIVEEXIT = 2025;//客户退出连线
     int REQUEST_LIANMAI_LIVE_AAL = 2026;//观众同意连麦获取推拉流地址
     int BIND_WEICHAT = 2027;//绑定微信公众号
+
 
 }

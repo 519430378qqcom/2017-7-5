@@ -77,6 +77,7 @@ import com.lvshandian.lemeng.bean.CustomLianmaiBean;
 import com.lvshandian.lemeng.bean.CustomdateBean;
 import com.lvshandian.lemeng.bean.DianBoDateBean;
 import com.lvshandian.lemeng.bean.GiftBean;
+import com.lvshandian.lemeng.bean.LastAwardBean;
 import com.lvshandian.lemeng.bean.LianMaiDateBean;
 import com.lvshandian.lemeng.bean.LianTongzhiBean;
 import com.lvshandian.lemeng.bean.LiveEven;
@@ -105,6 +106,7 @@ import com.lvshandian.lemeng.utils.ChannelToLiveBean;
 import com.lvshandian.lemeng.utils.Config;
 import com.lvshandian.lemeng.utils.CountUtils;
 import com.lvshandian.lemeng.utils.DESUtil;
+import com.lvshandian.lemeng.utils.DateUtils;
 import com.lvshandian.lemeng.utils.GrademipmapUtils;
 import com.lvshandian.lemeng.utils.JavaBeanMapUtils;
 import com.lvshandian.lemeng.utils.JsonUtil;
@@ -128,6 +130,7 @@ import com.lvshandian.lemeng.wangyiyunxin.main.reminder.ReminderItem;
 import com.lvshandian.lemeng.wangyiyunxin.main.reminder.ReminderManager;
 import com.lvshandian.lemeng.wangyiyunxin.main.reminder.ReminderSettings;
 import com.lvshandian.lemeng.widget.AvatarView;
+import com.lvshandian.lemeng.widget.TimeCountDownLayout;
 import com.lvshandian.lemeng.widget.lrcview.LrcView;
 import com.lvshandian.lemeng.widget.myrecycler.RefreshRecyclerView;
 import com.lvshandian.lemeng.widget.myrecycler.manager.RecyclerMode;
@@ -368,6 +371,23 @@ public class StartLiveActivity extends BaseActivity implements
     @Bind(R.id.all_lepiao)
     TextView all_lepiao;
 
+    @Bind(R.id.tv_periods)
+    TextView tv_periods;
+    @Bind(R.id.frist_num)
+    TextView frist_num;
+    @Bind(R.id.second_num)
+    TextView second_num;
+    @Bind(R.id.third_num)
+    TextView third_num;
+    @Bind(R.id.all_num)
+    TextView all_num;
+    @Bind(R.id.tv_ds)
+    TextView tv_ds;
+    @Bind(R.id.tv_game_next_open_time)
+    TimeCountDownLayout tv_game_next_open_time;
+    @Bind(R.id.rl_kp)
+    LinearLayout rl_kp;
+
     private int tzNumber = 10;
     private int jbNumber = 1;
 
@@ -593,6 +613,8 @@ public class StartLiveActivity extends BaseActivity implements
      */
     private CountDownTimer giftTimer;
 
+    private long mCountDownTotalTime;
+
     private Handler myHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -707,6 +729,21 @@ public class StartLiveActivity extends BaseActivity implements
                     receivedGoldCoin = CountUtils.getCount(Long.parseLong(receivedGoldCoin));
                     liveJinpiao.setText(receivedGoldCoin); //显示主播乐票数量
                     break;
+                case 10000:
+                    LogUtil.e("mCountDownTotalTime", "mCountDownTotalTime" + mCountDownTotalTime);
+                    mCountDownTotalTime = mCountDownTotalTime - 1000;
+                    String time = DateUtils.millisToDateString(mCountDownTotalTime, "mm:ss");
+                    if (tv_game_next_open_time != null) {
+                        tv_game_next_open_time.setText(time);
+                    }
+                    if (mCountDownTotalTime > 1000) {
+                        myHandler.sendEmptyMessageDelayed(10000, 1000);
+                    } else {
+                        myHandler.removeMessages(10000);
+                        //获取近期开奖数据
+                        getTimenumber();
+                    }
+                    break;
             }
         }
     };
@@ -817,7 +854,6 @@ public class StartLiveActivity extends BaseActivity implements
         ivTouzhu.setOnClickListener(this);
 
 
-
         live_game.setOnClickListener(this);
         ivBig.setOnClickListener(this);
         ivSamll.setOnClickListener(this);
@@ -901,17 +937,17 @@ public class StartLiveActivity extends BaseActivity implements
                 String strNumber = samllNumber.getText().toString();
                 if (Integer.valueOf(strNumber) == 10) {
                     return;
-                }else {
-                    tzNumber = Integer.valueOf(strNumber)/2;
+                } else {
+                    tzNumber = Integer.valueOf(strNumber) / 2;
                     samllNumber.setText(String.valueOf(tzNumber));
                 }
 
                 break;
             case R.id.double_add:  //加倍投注加
-                if (jbNumber == 1000){
+                if (jbNumber == 1000) {
                     return;
                 }
-                jbNumber = jbNumber*10;
+                jbNumber = jbNumber * 10;
                 doubleNumber.setText(String.valueOf(jbNumber));
                 break;
             case R.id.double_subtract: //加倍投注减
@@ -919,13 +955,13 @@ public class StartLiveActivity extends BaseActivity implements
                 String strdouNumber = doubleNumber.getText().toString();
                 if (Integer.valueOf(strdouNumber) == 1) {
                     return;
-                }else {
-                    jbNumber = Integer.valueOf(strdouNumber)/10;
+                } else {
+                    jbNumber = Integer.valueOf(strdouNumber) / 10;
                     doubleNumber.setText(String.valueOf(jbNumber));
                 }
                 break;
             case R.id.iv_touzhu:  //投注
-                showTouZhuPop(selectStatus,jbNumber,tzNumber);
+                showTouZhuPop(selectStatus, jbNumber, tzNumber);
                 break;
 
             case R.id.iv_big: //大
@@ -981,7 +1017,6 @@ public class StartLiveActivity extends BaseActivity implements
 
             case R.id.iv_xy:
                 showXYGame();
-
                 break;
 
             case R.id.ruanjianpan:
@@ -1159,6 +1194,9 @@ public class StartLiveActivity extends BaseActivity implements
                         ll_game.setVisibility(View.GONE);
                         live_game.setVisibility(View.VISIBLE);
                         gameIsStart = true;
+
+                        getTimenumber();
+                        rl_kp.setVisibility(View.VISIBLE);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -3870,9 +3908,68 @@ public class StartLiveActivity extends BaseActivity implements
             }
         });
 
-        tv_ds.setText("大小单双："+selectStatus);
-        tv_xzjf.setText("下注积分："+String.valueOf(jbNumber*tzNumber)+"分");
+        tv_ds.setText("大小单双：" + selectStatus);
+        tv_xzjf.setText("下注积分：" + String.valueOf(jbNumber * tzNumber) + "分");
     }
 
+    /**
+     * @dw 获取上期开奖数据
+     */
+    private void getTimenumber() {
+        String url = UrlBuilder.chargeServerUrl + UrlBuilder.getTimenumber;
+        OkHttpUtils.get().url(url).build().execute(new StringCallback() {
+            @Override
+            public void onError(Request request, Exception e) {
+                showToast("网络错误");
+            }
 
+            @Override
+            public void onResponse(String response) {
+                LogUtils.e("response :" + response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String code = jsonObject.getString("code");
+                    if (code.equals("0")) {
+                        String obj = jsonObject.getString("obj");
+                        LogUtil.e("obj", obj);
+                        LastAwardBean lastAwardBean = JsonUtil.json2Bean(obj, LastAwardBean.class);
+                        if (lastAwardBean != null) {
+                            tv_periods.setText("第" + lastAwardBean.getNper() + "期");
+                            frist_num.setText(lastAwardBean.getFirstNum() + "");
+                            second_num.setText(lastAwardBean.getSecondNum() + "");
+                            third_num.setText(lastAwardBean.getThirdNum() + "");
+                            all_num.setText(lastAwardBean.getSum() + "");
+                            tv_ds.setText(lastAwardBean.getType());
+
+                            long now = System.currentTimeMillis();
+                            mCountDownTotalTime = Long.parseLong(lastAwardBean.getDateLine()) - now;
+                            myHandler.sendEmptyMessage(10000);
+                        }
+                    } else {
+                        String obj = jsonObject.getString("obj");
+                        LogUtil.e("obj", obj);
+                        LastAwardBean lastAwardBean = JsonUtil.json2Bean(obj, LastAwardBean.class);
+                        if (lastAwardBean != null) {
+                            tv_periods.setText("第" + lastAwardBean.getNper() + "期");
+                            frist_num.setText(lastAwardBean.getFirstNum() + "");
+                            second_num.setText(lastAwardBean.getSecondNum() + "");
+                            third_num.setText(lastAwardBean.getThirdNum() + "");
+                            all_num.setText(lastAwardBean.getSum() + "");
+                            tv_ds.setText(lastAwardBean.getType());
+                            tv_game_next_open_time.setText("0000");
+
+                            myHandler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    getTimenumber();
+                                }
+                            }, 10000);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 }

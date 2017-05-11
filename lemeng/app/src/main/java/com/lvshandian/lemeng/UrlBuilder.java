@@ -79,6 +79,8 @@ public class UrlBuilder {
     public static final String barrage = "/api/v1/barrage/";//发送弹幕消息扣金币
     public static final String roomExit = "/api/v1/room/exit";//退出直播间
 
+    public static final String getTimenumber = "/appusers/gettimenumber";//获取上期开奖数据
+
 
 
     public static final String getBl = "/admin/appusers/getCathecticRate";
