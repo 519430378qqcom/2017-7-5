@@ -732,14 +732,13 @@ public class StartLiveActivity extends BaseActivity implements
                 case 10000:
                     LogUtil.e("mCountDownTotalTime", "mCountDownTotalTime" + mCountDownTotalTime);
                     mCountDownTotalTime = mCountDownTotalTime - 1000;
-                    String time = DateUtils.millisToDateString(mCountDownTotalTime, "mm:ss");
+                    String time = DateUtils.millisToDateString(mCountDownTotalTime > 0 ? mCountDownTotalTime : 0, "mm:ss");
                     if (tv_game_next_open_time != null) {
                         tv_game_next_open_time.setText(time);
                     }
                     if (mCountDownTotalTime > 1000) {
                         myHandler.sendEmptyMessageDelayed(10000, 1000);
                     } else {
-                        myHandler.removeMessages(10000);
                         //获取近期开奖数据
                         getTimenumber();
                     }
@@ -910,6 +909,7 @@ public class StartLiveActivity extends BaseActivity implements
     }
 
     private String selectStatus;
+
     @Override
     public void onClick(View v) {
 
@@ -1165,9 +1165,9 @@ public class StartLiveActivity extends BaseActivity implements
     }
 
     private void showXYGame() {
-        String url = UrlBuilder.serverUrl+UrlBuilder.getBl;
+        String url = UrlBuilder.serverUrl + UrlBuilder.getBl;
 
-        OkHttpUtils.post().url(url).addParams("roomId",room_Id).addParams("type","1").build().execute(new StringCallback() {
+        OkHttpUtils.post().url(url).addParams("roomId", room_Id).addParams("type", "1").build().execute(new StringCallback() {
             @Override
             public void onError(Request request, Exception e) {
 
@@ -1175,23 +1175,23 @@ public class StartLiveActivity extends BaseActivity implements
 
             @Override
             public void onResponse(String response) {
-                   LogUtils.e("response :"+response);
+                LogUtils.e("response :" + response);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    if (jsonObject.getString("code").equals("1")){
+                    if (jsonObject.getString("code").equals("1")) {
                         String obj = jsonObject.getString("obj");
                         List<BlBean> blBeen = JsonUtil.json2BeanList(obj, BlBean.class);
                         BlBean blBean = blBeen.get(0);
-                        tvBig.setText("1:"+blBean.getBig());
-                        tvSamll.setText("1:"+blBean.getSmall());
-                        tvSinge.setText("1:"+blBean.getSingle());
-                        tvDouble.setText("1:"+blBean.getDoubles());
-                        tvBigSigle.setText("1:"+blBean.getBig_single());
-                        tvSamllSinge.setText("1:"+blBean.getSmall_single());
-                        tvBigDouble.setText("1:"+blBean.getBig_double());
-                        tvSamllDouble.setText("1:"+blBean.getSmall_double());
-                        tvMoreBig.setText("1:"+blBean.getMore_big());
-                        tvMoreSamll.setText("1:"+blBean.getMore_small());
+                        tvBig.setText("1:" + blBean.getBig());
+                        tvSamll.setText("1:" + blBean.getSmall());
+                        tvSinge.setText("1:" + blBean.getSingle());
+                        tvDouble.setText("1:" + blBean.getDoubles());
+                        tvBigSigle.setText("1:" + blBean.getBig_single());
+                        tvSamllSinge.setText("1:" + blBean.getSmall_single());
+                        tvBigDouble.setText("1:" + blBean.getBig_double());
+                        tvSamllDouble.setText("1:" + blBean.getSmall_double());
+                        tvMoreBig.setText("1:" + blBean.getMore_big());
+                        tvMoreSamll.setText("1:" + blBean.getMore_small());
                         ll_game.setVisibility(View.GONE);
                         live_game.setVisibility(View.VISIBLE);
                         gameIsStart = true;
@@ -3911,8 +3911,8 @@ public class StartLiveActivity extends BaseActivity implements
 
         tv_ds.setText("大小单双：" + selectStatus);
         tv_xzjf.setText("下注积分：" + String.valueOf(jbNumber * tzNumber) + "分");
-        int intQh = Integer.valueOf(nper)+1;
-        tv_tzqh.setText("投注期号："+intQh);
+        int intQh = Integer.valueOf(nper) + 1;
+        tv_tzqh.setText("投注期号：" + intQh);
     }
 
     /**
@@ -3948,7 +3948,19 @@ public class StartLiveActivity extends BaseActivity implements
 
                             long now = System.currentTimeMillis();
                             mCountDownTotalTime = Long.parseLong(lastAwardBean.getDateLine()) - now;
-                            myHandler.sendEmptyMessage(10000);
+
+                            if (mCountDownTotalTime < 0) {
+                                myHandler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        getTimenumber();
+                                    }
+                                }, 30000);
+                            } else {
+                                myHandler.sendEmptyMessage(10000);
+                            }
+
+
                         }
                     } else {
                         String obj = jsonObject.getString("obj");
@@ -3969,7 +3981,7 @@ public class StartLiveActivity extends BaseActivity implements
                                 public void run() {
                                     getTimenumber();
                                 }
-                            }, 10000);
+                            }, 30000);
                         }
                     }
                 } catch (JSONException e) {

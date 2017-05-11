@@ -783,16 +783,15 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     showToast("已成功举报该用户");
                     break;
                 case 10000:
-                    LogUtil.e("mCountDownTotalTime","mCountDownTotalTime"+mCountDownTotalTime);
+                    LogUtil.e("mCountDownTotalTime", "mCountDownTotalTime" + mCountDownTotalTime);
                     mCountDownTotalTime = mCountDownTotalTime - 1000;
-                    String time = DateUtils.millisToDateString(mCountDownTotalTime, "mm:ss");
+                    String time = DateUtils.millisToDateString(mCountDownTotalTime > 0 ? mCountDownTotalTime : 0, "mm:ss");
                     if (tv_game_next_open_time != null) {
                         tv_game_next_open_time.setText(time);
                     }
                     if (mCountDownTotalTime > 1000) {
                         myHandler.sendEmptyMessageDelayed(10000, 1000);
-                    }  else {
-                        myHandler.removeMessages(10000);
+                    } else {
                         //获取近期开奖数据
                         getTimenumber();
                     }
@@ -996,9 +995,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     }
 
     private void initBlInfos() {
-        String url = UrlBuilder.serverUrl+UrlBuilder.getBl;
-        LogUtils.e("roomId::"+liveListBean.getRooms().getId()+"");
-        OkHttpUtils.post().url(url).addParams("roomId",liveListBean.getRooms().getId()+"").addParams("type","0").build().execute(new StringCallback() {
+        String url = UrlBuilder.serverUrl + UrlBuilder.getBl;
+        LogUtils.e("roomId::" + liveListBean.getRooms().getId() + "");
+        OkHttpUtils.post().url(url).addParams("roomId", liveListBean.getRooms().getId() + "").addParams("type", "0").build().execute(new StringCallback() {
             @Override
             public void onError(com.squareup.okhttp.Request request, Exception e) {
 
@@ -1006,24 +1005,24 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
             @Override
             public void onResponse(String response) {
-                LogUtils.e("response :"+response);
+                LogUtils.e("response :" + response);
 
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    if (jsonObject.getString("code").equals("1")){
+                    if (jsonObject.getString("code").equals("1")) {
                         String obj = jsonObject.getString("obj");
                         List<BlBean> blBeen = JsonUtil.json2BeanList(obj, BlBean.class);
                         BlBean blBean = blBeen.get(0);
-                        tvBig.setText("1:"+blBean.getBig());
-                        tvSamll.setText("1:"+blBean.getSmall());
-                        tvSinge.setText("1:"+blBean.getSingle());
-                        tvDouble.setText("1:"+blBean.getDoubles());
-                        tvBigSigle.setText("1:"+blBean.getBig_single());
-                        tvSamllSinge.setText("1:"+blBean.getSmall_single());
-                        tvBigDouble.setText("1:"+blBean.getBig_double());
-                        tvSamllDouble.setText("1:"+blBean.getSmall_double());
-                        tvMoreBig.setText("1:"+blBean.getMore_big());
-                        tvMoreSamll.setText("1:"+blBean.getMore_small());
+                        tvBig.setText("1:" + blBean.getBig());
+                        tvSamll.setText("1:" + blBean.getSmall());
+                        tvSinge.setText("1:" + blBean.getSingle());
+                        tvDouble.setText("1:" + blBean.getDoubles());
+                        tvBigSigle.setText("1:" + blBean.getBig_single());
+                        tvSamllSinge.setText("1:" + blBean.getSmall_single());
+                        tvBigDouble.setText("1:" + blBean.getBig_double());
+                        tvSamllDouble.setText("1:" + blBean.getSmall_double());
+                        tvMoreBig.setText("1:" + blBean.getMore_big());
+                        tvMoreSamll.setText("1:" + blBean.getMore_small());
 
                     }
                 } catch (JSONException e) {
@@ -1166,7 +1165,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         doubleSubtract.setOnClickListener(this);
         doubleAdd.setOnClickListener(this);
         ivTouzhu.setOnClickListener(this);
-
 
 
         live_game.setOnClickListener(this);
@@ -1315,6 +1313,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         ivMoreBig.setImageResource(R.mipmap.icon_big_more_unselect);
         ivMoreSamll.setImageResource(R.mipmap.icon_small_more_unselect);
     }
+
     private String selectStatus;
 
     @Override
@@ -1337,30 +1336,30 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 String strNumber = samllNumber.getText().toString();
                 if (Integer.valueOf(strNumber) == 10) {
                     return;
-                }else {
-                    tzNumber = Integer.valueOf(strNumber)/2;
+                } else {
+                    tzNumber = Integer.valueOf(strNumber) / 2;
                     samllNumber.setText(String.valueOf(tzNumber));
                 }
 
                 break;
             case R.id.double_add:  //加倍投注加
-                if (jbNumber == 1000){
+                if (jbNumber == 1000) {
                     return;
                 }
-                jbNumber = jbNumber*10;
+                jbNumber = jbNumber * 10;
                 doubleNumber.setText(String.valueOf(jbNumber));
                 break;
             case R.id.double_subtract: //加倍投注减
                 String strdouNumber = doubleNumber.getText().toString();
                 if (Integer.valueOf(strdouNumber) == 1) {
                     return;
-                }else {
-                    jbNumber = Integer.valueOf(strdouNumber)/10;
+                } else {
+                    jbNumber = Integer.valueOf(strdouNumber) / 10;
                     doubleNumber.setText(String.valueOf(jbNumber));
                 }
                 break;
             case R.id.iv_touzhu:  //投注
-                showTouZhuPop(selectStatus,jbNumber,tzNumber);
+                showTouZhuPop(selectStatus, jbNumber, tzNumber);
                 break;
 
             case R.id.iv_big: //大
@@ -3823,9 +3822,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     }
 
 
-
     private void showTouZhuPop(String selectStatus, int jbNumber, int tzNumber) {
-        final PopupWindow  rulePop = new PopupWindow(this);
+        final PopupWindow rulePop = new PopupWindow(this);
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.pop_tou_zhu, null);
         rulePop.setContentView(view);
@@ -3852,10 +3850,10 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             }
         });
 
-        tv_ds.setText("大小单双："+selectStatus);
-        tv_xzjf.setText("下注积分："+String.valueOf(jbNumber*tzNumber)+"分");
-        int intQh = Integer.valueOf(nper)+1;
-        tv_tzqh.setText("投注期号："+intQh);
+        tv_ds.setText("大小单双：" + selectStatus);
+        tv_xzjf.setText("下注积分：" + String.valueOf(jbNumber * tzNumber) + "分");
+        int intQh = Integer.valueOf(nper) + 1;
+        tv_tzqh.setText("投注期号：" + intQh);
     }
 
 
@@ -3894,7 +3892,18 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
                             long now = System.currentTimeMillis();
                             mCountDownTotalTime = Long.parseLong(lastAwardBean.getDateLine()) - now;
-                            myHandler.sendEmptyMessage(10000);
+
+                            if (mCountDownTotalTime < 0) {
+                                myHandler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        getTimenumber();
+                                    }
+                                }, 30000);
+                            } else {
+                                myHandler.sendEmptyMessage(10000);
+                            }
+
                         }
                     } else {
                         String obj = jsonObject.getString("obj");
@@ -3915,7 +3924,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                                 public void run() {
                                     getTimenumber();
                                 }
-                            }, 10000);
+                            }, 30000);
                         }
                     }
                 } catch (JSONException e) {
