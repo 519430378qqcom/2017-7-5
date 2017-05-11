@@ -3854,7 +3854,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
         tv_ds.setText("大小单双："+selectStatus);
         tv_xzjf.setText("下注积分："+String.valueOf(jbNumber*tzNumber)+"分");
-        tv_tzqh.setText("投注期号："+Integer.valueOf(nper)+1);
+        int intQh = Integer.valueOf(nper)+1;
+        tv_tzqh.setText("投注期号："+intQh);
     }
 
 
