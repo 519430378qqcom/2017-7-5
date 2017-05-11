@@ -27,7 +27,7 @@
             />
 
         <TextView
-            android:layout_width="100px"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textSize="12sp"
@@ -117,12 +117,11 @@
           android:textColor="@color/white"
           />
        <com.lvshandian.lemeng.widget.TimeCountDownLayout
-           android:layout_marginTop="10px"
            android:id="@+id/tv_game_next_open_time"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
-           android:layout_gravity="center"
-           android:gravity="center"
+           android:layout_marginLeft="5px"
+           android:layout_marginTop="5px"
            android:textColor="@color/colorPrimary"
            />
 </com.zhy.autolayout.AutoLinearLayout>

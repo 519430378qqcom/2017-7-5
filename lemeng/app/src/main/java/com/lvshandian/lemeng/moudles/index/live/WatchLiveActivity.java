@@ -559,7 +559,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * 礼物连点计时器
      */
     private CountDownTimer giftTimer;
-
+    private int tzNumber = 10;
+    private int jbNumber = 1;
     private Handler myHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -936,6 +937,14 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         mViewPager.setCurrentItem(position);
         initQuitDialog("确定离开");
 
+        samllNumber.setText(String.valueOf(tzNumber));
+        doubleNumber.setText(String.valueOf(jbNumber));
+        initSelectStatus();
+    }
+    private void initSelectStatus() {
+        restStatus();
+        ivBig.setImageResource(R.mipmap.icon_big_select);
+        selectStatus = "大";
     }
 
     private void loadVideoAndChatRoom(ViewGroup viewGroup, int currentItem) {
@@ -1214,6 +1223,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         ivMoreBig.setImageResource(R.mipmap.icon_big_more_unselect);
         ivMoreSamll.setImageResource(R.mipmap.icon_small_more_unselect);
     }
+    private String selectStatus;
 
     @Override
     public void onClick(View v) {
@@ -1225,19 +1235,40 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 break;
 
             case R.id.small_add:  //最小投注加
-
+                if (tzNumber == 160) {  //达到最大的投注
+                    return;
+                }
+                tzNumber = tzNumber * 2;
+                samllNumber.setText(String.valueOf(tzNumber));
                 break;
             case R.id.small_subtract:  //最小投注减
+                String strNumber = samllNumber.getText().toString();
+                if (Integer.valueOf(strNumber) == 10) {
+                    return;
+                }else {
+                    tzNumber = Integer.valueOf(strNumber)/2;
+                    samllNumber.setText(String.valueOf(tzNumber));
+                }
 
                 break;
             case R.id.double_add:  //加倍投注加
-
+                if (jbNumber == 1000){
+                    return;
+                }
+                jbNumber = jbNumber*10;
+                doubleNumber.setText(String.valueOf(jbNumber));
                 break;
             case R.id.double_subtract: //加倍投注减
-
+                String strdouNumber = doubleNumber.getText().toString();
+                if (Integer.valueOf(strdouNumber) == 1) {
+                    return;
+                }else {
+                    jbNumber = Integer.valueOf(strdouNumber)/10;
+                    doubleNumber.setText(String.valueOf(jbNumber));
+                }
                 break;
             case R.id.iv_touzhu:  //投注
-                showTouZhuPop();
+                showTouZhuPop(selectStatus,jbNumber,tzNumber);
                 break;
 
             case R.id.iv_big: //大
@@ -3681,7 +3712,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
 
 
-    private void showTouZhuPop() {
+    private void showTouZhuPop(String selectStatus, int jbNumber, int tzNumber) {
         final PopupWindow  rulePop = new PopupWindow(this);
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.pop_tou_zhu, null);
@@ -3709,6 +3740,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             }
         });
 
+        tv_ds.setText("大小单双："+selectStatus);
+        tv_xzjf.setText("下注积分："+String.valueOf(jbNumber*tzNumber)+"分");
 
     }
 

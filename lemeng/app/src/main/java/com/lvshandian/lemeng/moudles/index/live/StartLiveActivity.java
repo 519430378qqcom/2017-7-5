@@ -363,6 +363,10 @@ public class StartLiveActivity extends BaseActivity implements
     ImageView tv_rule;
     @Bind(R.id.iv_trend)
     ImageView iv_trend;
+
+    private int tzNumber = 10;
+    private int jbNumber = 1;
+
     private ArrayList<Integer> JbList = new ArrayList<>();
     /**
      * 分享的地址
@@ -779,21 +783,27 @@ public class StartLiveActivity extends BaseActivity implements
 
         dialogForSelect = new Dialog(this, R.style.homedialog);
         initQuitDialog();
+
+        samllNumber.setText(String.valueOf(tzNumber));
+        doubleNumber.setText(String.valueOf(jbNumber));
+        initSelectStatus();
+    }
+
+    private void initSelectStatus() {
+        restStatus();
+        ivBig.setImageResource(R.mipmap.icon_big_select);
+        selectStatus = "大";
     }
 
     @Override
     protected void initListener() {
         iv_trend.setOnClickListener(this);
-
-
         tv_rule.setOnClickListener(this);
-
         smallAdd.setOnClickListener(this);
         smallSubtract.setOnClickListener(this);
         doubleSubtract.setOnClickListener(this);
         doubleAdd.setOnClickListener(this);
         ivTouzhu.setOnClickListener(this);
-
 
 
         live_game.setOnClickListener(this);
@@ -850,8 +860,10 @@ public class StartLiveActivity extends BaseActivity implements
         ivMoreSamll.setImageResource(R.mipmap.icon_small_more_unselect);
     }
 
+    private String selectStatus;
     @Override
     public void onClick(View v) {
+
         smallAdd.setOnClickListener(this);
         smallSubtract.setOnClickListener(this);
         doubleSubtract.setOnClickListener(this);
@@ -867,61 +879,92 @@ public class StartLiveActivity extends BaseActivity implements
                 getRulePopup();
                 break;
             case R.id.small_add:  //最小投注加
-
+                if (tzNumber == 160) {  //达到最大的投注
+                    return;
+                }
+                tzNumber = tzNumber * 2;
+                samllNumber.setText(String.valueOf(tzNumber));
                 break;
             case R.id.small_subtract:  //最小投注减
+                String strNumber = samllNumber.getText().toString();
+                if (Integer.valueOf(strNumber) == 10) {
+                    return;
+                }else {
+                    tzNumber = Integer.valueOf(strNumber)/2;
+                    samllNumber.setText(String.valueOf(tzNumber));
+                }
 
                 break;
             case R.id.double_add:  //加倍投注加
-
+                if (jbNumber == 1000){
+                    return;
+                }
+                jbNumber = jbNumber*10;
+                doubleNumber.setText(String.valueOf(jbNumber));
                 break;
             case R.id.double_subtract: //加倍投注减
 
+                String strdouNumber = doubleNumber.getText().toString();
+                if (Integer.valueOf(strdouNumber) == 1) {
+                    return;
+                }else {
+                    jbNumber = Integer.valueOf(strdouNumber)/10;
+                    doubleNumber.setText(String.valueOf(jbNumber));
+                }
                 break;
             case R.id.iv_touzhu:  //投注
-                showTouZhuPop();
+                showTouZhuPop(selectStatus,jbNumber,tzNumber);
                 break;
 
             case R.id.iv_big: //大
                 restStatus();
                 ivBig.setImageResource(R.mipmap.icon_big_select);
+                selectStatus = "大";
                 break;
             case R.id.iv_samll: //小
                 restStatus();
                 ivSamll.setImageResource(R.mipmap.icon_small_select);
-
+                selectStatus = "小";
                 break;
             case R.id.iv_singe: //单
                 restStatus();
                 ivSinge.setImageResource(R.mipmap.icon_single_select);
+                selectStatus = "单";
                 break;
             case R.id.iv_double: //双
                 restStatus();
                 ivDouble.setImageResource(R.mipmap.icon_double_select);
+                selectStatus = "双";
                 break;
             case R.id.iv_big_sigle: //大单
                 restStatus();
                 ivBigSigle.setImageResource(R.mipmap.icon_big_single_select);
+                selectStatus = "大单";
                 break;
             case R.id.iv_samll_singe: //小单
                 restStatus();
                 ivSamllSinge.setImageResource(R.mipmap.icon_small_single_select);
+                selectStatus = "小单";
                 break;
             case R.id.iv_big_double: //大双
                 restStatus();
                 ivBigDouble.setImageResource(R.mipmap.icon_big_double_select);
+                selectStatus = "大双";
                 break;
             case R.id.iv_samll_double: //小双
                 restStatus();
                 ivSamllDouble.setImageResource(R.mipmap.icon_small_double_select);
+                selectStatus = "小双";
                 break;
             case R.id.iv_more_big: //更大
                 restStatus();
                 ivMoreBig.setImageResource(R.mipmap.icon_big_more_select);
+                selectStatus = "极大";
                 break;
             case R.id.iv_more_samll: //更小
                 restStatus();
                 ivMoreSamll.setImageResource(R.mipmap.icon_small_more_select);
+                selectStatus = "极小";
                 break;
 
             case R.id.iv_xy:
@@ -3680,7 +3723,7 @@ public class StartLiveActivity extends BaseActivity implements
      * 规则pop
      */
     public void getRulePopup() {
-        final PopupWindow  rulePop = new PopupWindow(this);
+        final PopupWindow rulePop = new PopupWindow(this);
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.pop_rule, null);
         rulePop.setContentView(view);
@@ -3749,8 +3792,8 @@ public class StartLiveActivity extends BaseActivity implements
     }
 
 
-    private void showTouZhuPop() {
-        final PopupWindow  rulePop = new PopupWindow(this);
+    private void showTouZhuPop(String selectStatus, int jbNumber, int tzNumber) {
+        final PopupWindow rulePop = new PopupWindow(this);
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.pop_tou_zhu, null);
         rulePop.setContentView(view);
@@ -3777,7 +3820,8 @@ public class StartLiveActivity extends BaseActivity implements
             }
         });
 
-
+        tv_ds.setText("大小单双："+selectStatus);
+        tv_xzjf.setText("下注积分："+String.valueOf(jbNumber*tzNumber)+"分");
     }
 
 
