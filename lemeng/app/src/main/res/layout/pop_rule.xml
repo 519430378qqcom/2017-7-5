@@ -39,6 +39,7 @@
                         android:id="@+id/tv_content"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:textColor="@color/tv_color3"
                        />
                 </com.zhy.autolayout.AutoLinearLayout>
             </ScrollView>

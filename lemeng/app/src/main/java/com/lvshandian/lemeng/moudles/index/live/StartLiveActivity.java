@@ -3682,7 +3682,7 @@ public class StartLiveActivity extends BaseActivity implements
 
         rulePop.showAtLocation(doubleAdd, Gravity.CENTER, 0, 0);
         rulePop.update();
-//        rulePop.setOnDismissListener(new PopOnDismissListner());
+        rulePop.setOnDismissListener(new RulePopOnDismissListner());
 
         view.findViewById(R.id.colse_rule).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -3726,7 +3726,15 @@ public class StartLiveActivity extends BaseActivity implements
                 "5、红、绿、蓝、豹子");
     }
 
-
+    /**
+     * RulePopupWindow Dismiss监听
+     */
+    private class RulePopOnDismissListner implements PopupWindow.OnDismissListener {
+        @Override
+        public void onDismiss() {
+            backgroundAlpha(1f);
+        }
+    }
 
 
 }
