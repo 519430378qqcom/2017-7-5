@@ -2,8 +2,8 @@
 <com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
     android:layout_below="@+id/rl_live_id"
-    android:layout_width="206px"
-    android:layout_height="225px"
+    android:layout_width="220px"
+    android:layout_height="260px"
     android:layout_marginLeft="10px"
     android:layout_marginTop="20px"
     android:id="@+id/rl_kp"

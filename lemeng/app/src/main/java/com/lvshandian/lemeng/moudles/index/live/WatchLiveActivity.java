@@ -1285,43 +1285,60 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             case R.id.iv_big: //大
                 restStatus();
                 ivBig.setImageResource(R.mipmap.icon_big_select);
+                selectStatus = "大";
                 break;
             case R.id.iv_samll: //小
                 restStatus();
                 ivSamll.setImageResource(R.mipmap.icon_small_select);
+                selectStatus = "小";
 
                 break;
             case R.id.iv_singe: //单
                 restStatus();
                 ivSinge.setImageResource(R.mipmap.icon_single_select);
+                selectStatus = "单";
+
                 break;
             case R.id.iv_double: //双
                 restStatus();
                 ivDouble.setImageResource(R.mipmap.icon_double_select);
+                selectStatus = "双";
+
                 break;
             case R.id.iv_big_sigle: //大单
                 restStatus();
                 ivBigSigle.setImageResource(R.mipmap.icon_big_single_select);
+                selectStatus = "大单";
+
                 break;
             case R.id.iv_samll_singe: //小单
                 restStatus();
                 ivSamllSinge.setImageResource(R.mipmap.icon_small_single_select);
+                selectStatus = "小单";
+
                 break;
             case R.id.iv_big_double: //大双
                 restStatus();
                 ivBigDouble.setImageResource(R.mipmap.icon_big_double_select);
+                selectStatus = "大双";
+
                 break;
             case R.id.iv_samll_double: //小双
                 restStatus();
                 ivSamllDouble.setImageResource(R.mipmap.icon_small_double_select);
+                selectStatus = "小双";
+
                 break;
             case R.id.iv_more_big: //更大
                 restStatus();
                 ivMoreBig.setImageResource(R.mipmap.icon_big_more_select);
+                selectStatus = "极大";
+
                 break;
             case R.id.iv_more_samll: //更小
                 restStatus();
                 ivMoreSamll.setImageResource(R.mipmap.icon_small_more_select);
+                selectStatus = "极小";
                 break;
 
             case R.id.ruanjianpanW:
