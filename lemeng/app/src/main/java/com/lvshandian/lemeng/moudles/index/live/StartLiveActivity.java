@@ -69,6 +69,7 @@ import com.lvshandian.lemeng.base.BarrageDateBean;
 import com.lvshandian.lemeng.base.BaseActivity;
 import com.lvshandian.lemeng.base.CustomStringCallBack;
 import com.lvshandian.lemeng.bean.AppUser;
+import com.lvshandian.lemeng.bean.BlBean;
 import com.lvshandian.lemeng.bean.ControllerBean;
 import com.lvshandian.lemeng.bean.CreatReadyBean;
 import com.lvshandian.lemeng.bean.CustomGiftBean;
@@ -188,6 +189,7 @@ import com.zhy.autolayout.AutoRelativeLayout;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -978,9 +980,8 @@ public class StartLiveActivity extends BaseActivity implements
                 break;
 
             case R.id.iv_xy:
-                ll_game.setVisibility(View.GONE);
-                live_game.setVisibility(View.VISIBLE);
-                gameIsStart = true;
+                showXYGame();
+
                 break;
 
             case R.id.ruanjianpan:
@@ -1125,6 +1126,45 @@ public class StartLiveActivity extends BaseActivity implements
                 break;
 
         }
+    }
+
+    private void showXYGame() {
+        String url = UrlBuilder.serverUrl+UrlBuilder.getBl;
+
+        OkHttpUtils.post().url(url).addParams("roomId",room_Id).addParams("type","1").build().execute(new StringCallback() {
+            @Override
+            public void onError(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(String response) {
+                   LogUtils.e("response :"+response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (jsonObject.getString("code").equals("1")){
+                        String obj = jsonObject.getString("obj");
+                        List<BlBean> blBeen = JsonUtil.json2BeanList(obj, BlBean.class);
+                        BlBean blBean = blBeen.get(0);
+                        tvBig.setText("1:"+blBean.getBig());
+                        tvSamll.setText("1:"+blBean.getSmall());
+                        tvSinge.setText("1:"+blBean.getSingle());
+                        tvDouble.setText("1:"+blBean.getDoubles());
+                        tvBigSigle.setText("1:"+blBean.getBig_single());
+                        tvSamllSinge.setText("1:"+blBean.getSmall_single());
+                        tvBigDouble.setText("1:"+blBean.getBig_double());
+                        tvSamllDouble.setText("1:"+blBean.getSmall_double());
+                        tvMoreBig.setText("1:"+blBean.getMore_big());
+                        tvMoreSamll.setText("1:"+blBean.getMore_small());
+                        ll_game.setVisibility(View.GONE);
+                        live_game.setVisibility(View.VISIBLE);
+                        gameIsStart = true;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
 

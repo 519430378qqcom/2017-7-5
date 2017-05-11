@@ -79,6 +79,10 @@ public class UrlBuilder {
     public static final String barrage = "/api/v1/barrage/";//发送弹幕消息扣金币
     public static final String roomExit = "/api/v1/room/exit";//退出直播间
 
+
+
+    public static final String getBl = "/admin/appusers/getCathecticRate";
+
     //阿里云
     public static final String ALIYUN_IMG = "http://lemeng.oss-ap-southeast-1.aliyuncs.com/";//阿里云图片視頻生成地址
     public static final String OSS_ENDPOINT = "http://oss-ap-southeast-1.aliyuncs.com";//阿里云OSS_ENDPOINT

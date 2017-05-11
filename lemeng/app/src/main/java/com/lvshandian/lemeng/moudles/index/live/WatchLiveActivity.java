@@ -68,6 +68,7 @@ import com.lvshandian.lemeng.base.BarrageDateBean;
 import com.lvshandian.lemeng.base.BaseActivity;
 import com.lvshandian.lemeng.base.CustomStringCallBack;
 import com.lvshandian.lemeng.bean.AppUser;
+import com.lvshandian.lemeng.bean.BlBean;
 import com.lvshandian.lemeng.bean.CustomGiftBean;
 import com.lvshandian.lemeng.bean.CustomLianmaiBean;
 import com.lvshandian.lemeng.bean.CustomdateBean;
@@ -189,6 +190,7 @@ import com.zhy.autolayout.AutoRelativeLayout;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -827,7 +829,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         ivSamll = (ImageView) mRoomContainer.findViewById(R.id.iv_samll);
         tvSamll = (TextView) mRoomContainer.findViewById(R.id.tv_samll);
         ivSinge = (ImageView) mRoomContainer.findViewById(R.id.iv_singe);
-        tvSinge = (TextView) mRoomContainer.findViewById(R.id.tv_sign);
+        tvSinge = (TextView) mRoomContainer.findViewById(R.id.tv_singe);
         ivDouble = (ImageView) mRoomContainer.findViewById(R.id.iv_double);
         tvDouble = (TextView) mRoomContainer.findViewById(R.id.tv_double);
         ivBigSigle = (ImageView) mRoomContainer.findViewById(R.id.iv_big_sigle);
@@ -944,7 +946,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         samllNumber.setText(String.valueOf(tzNumber));
         doubleNumber.setText(String.valueOf(jbNumber));
         initSelectStatus();
-
+        initBlInfos();
         /**
          * 设置游戏布局的金币数量
          */
@@ -952,6 +954,45 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         myCoin = CountUtils.getCount(Long.parseLong(myCoin));
         all_lepiao.setText(myCoin);
     }
+
+    private void initBlInfos() {
+        String url = UrlBuilder.serverUrl+UrlBuilder.getBl;
+        LogUtils.e("roomId::"+liveListBean.getRooms().getId()+"");
+        OkHttpUtils.post().url(url).addParams("roomId",liveListBean.getRooms().getId()+"").addParams("type","0").build().execute(new StringCallback() {
+            @Override
+            public void onError(com.squareup.okhttp.Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(String response) {
+                LogUtils.e("response :"+response);
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (jsonObject.getString("code").equals("1")){
+                        String obj = jsonObject.getString("obj");
+                        List<BlBean> blBeen = JsonUtil.json2BeanList(obj, BlBean.class);
+                        BlBean blBean = blBeen.get(0);
+                        tvBig.setText("1:"+blBean.getBig());
+                        tvSamll.setText("1:"+blBean.getSmall());
+                        tvSinge.setText("1:"+blBean.getSingle());
+                        tvDouble.setText("1:"+blBean.getDoubles());
+                        tvBigSigle.setText("1:"+blBean.getBig_single());
+                        tvSamllSinge.setText("1:"+blBean.getSmall_single());
+                        tvBigDouble.setText("1:"+blBean.getBig_double());
+                        tvSamllDouble.setText("1:"+blBean.getSmall_double());
+                        tvMoreBig.setText("1:"+blBean.getMore_big());
+                        tvMoreSamll.setText("1:"+blBean.getMore_small());
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
     private void initSelectStatus() {
         restStatus();
         ivBig.setImageResource(R.mipmap.icon_big_select);
