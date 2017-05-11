@@ -76,7 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="550px">
 
-            <com.lvshandian.lemeng.widget.LoadUrlImageView
+            <ImageView
                 android:id="@+id/iv_live_user_pic"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -90,6 +90,15 @@
                 android:layout_marginRight="30px"
                 android:layout_marginTop="25px"
                 android:src="@mipmap/liveing" />
+
+            <ImageView
+                android:id="@+id/iv_is_liveing"
+                android:layout_width="300px"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/icon_isstartlive"
+                android:visibility="gone"/>
         </com.zhy.autolayout.AutoRelativeLayout>
 
     </com.zhy.autolayout.AutoLinearLayout>

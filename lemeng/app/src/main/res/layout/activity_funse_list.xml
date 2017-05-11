@@ -10,8 +10,8 @@
     <com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout
         android:id="@+id/mrl_layout"
         android:layout_width="match_parent"
-        android:layout_below="@id/title"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title">
 
         <ListView
             android:id="@+id/lv_list"
@@ -21,16 +21,19 @@
 
     <ImageView
         android:id="@+id/iv_empty"
-        android:layout_width="300px"
-        android:layout_height="300px"
-        android:layout_centerInParent="true"
+        android:layout_width="350px"
+        android:layout_height="350px"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="250px"
         android:src="@mipmap/icon_empty_fans"
         android:visibility="gone" />
+
     <ImageView
         android:id="@+id/iv_empty_1"
-        android:layout_width="300px"
-        android:layout_height="300px"
-        android:layout_centerInParent="true"
+        android:layout_width="350px"
+        android:layout_height="350px"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="250px"
         android:src="@mipmap/icon_empty_follow"
         android:visibility="gone" />
 

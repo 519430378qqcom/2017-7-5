@@ -36,14 +36,7 @@
         </com.zhy.autolayout.AutoRelativeLayout>
 
     </com.zhy.autolayout.AutoFrameLayout>
-     <ImageView
-        android:id="@+id/iv_trend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/trend_img"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-         />
+
     <com.zhy.autolayout.AutoFrameLayout
         android:id="@+id/fl_plug"
         android:layout_width="300px"
@@ -121,9 +114,9 @@
         android:id="@+id/scrl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
 
         <com.zhy.autolayout.AutoRelativeLayout
             android:id="@+id/rl_hv_view"
@@ -215,27 +208,18 @@
 
                         </com.zhy.autolayout.AutoLinearLayout>
 
-                        <Button
+                        <ImageView
                             android:id="@+id/btn_attention"
                             android:layout_width="70px"
                             android:layout_height="40px"
                             android:layout_gravity="center_vertical"
-                            android:background="@drawable/bg_attention_shape"
+                            android:layout_marginRight="10px"
+                            android:src="@mipmap/ic_live_follow"
                             android:text="关注"
-                            android:textColor="@color/white"
-                            android:textSize="24px"
-                            android:visibility="gone" />
-
+                            android:visibility="visible" />
 
                     </com.zhy.autolayout.AutoLinearLayout>
 
-                    <!--<com.lvshandian.partylive.lib.cjj.MaterialRefreshLayout-->
-                    <!--android:id="@+id/mrl_layout_live_audiences"-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_weight="3"-->
-                    <!--app:overlay="true"-->
-                    <!--app:wave_show="false">-->
                     <xiao.free.horizontalrefreshlayout.HorizontalRefreshLayout
                         android:id="@+id/horizontalRefreshLayout"
                         android:layout_width="0px"
@@ -249,7 +233,6 @@
                             android:orientation="horizontal" />
                     </xiao.free.horizontalrefreshlayout.HorizontalRefreshLayout>
 
-                    <!--</com.lvshandian.partylive.lib.cjj.MaterialRefreshLayout>-->
 
                     <ImageView
                         android:id="@+id/live_close"
@@ -510,9 +493,7 @@
 
                 </com.zhy.autolayout.AutoRelativeLayout>
 
-                <include
-                    layout="@layout/view_show_watchlive_game"
-                     />
+                <include layout="@layout/view_show_watchlive_game" />
             </com.zhy.autolayout.AutoLinearLayout>
 
 
@@ -562,6 +543,13 @@
 
             </RelativeLayout>
 
+            <ImageView
+                android:id="@+id/iv_trend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/trend_img" />
         </com.zhy.autolayout.AutoRelativeLayout>
 
 

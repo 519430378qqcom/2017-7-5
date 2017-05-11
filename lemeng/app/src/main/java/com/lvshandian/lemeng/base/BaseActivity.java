@@ -873,6 +873,7 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
         creatorBean.setOnlineUserNum(Integer.parseInt(liveBean.getOnlineUserNum().trim()));
         creatorBean.setUserId(Integer.parseInt(liveBean.getCreator().getId()));
         creatorBean.setRoomId(Integer.parseInt(liveBean.getRoomId()));
+        creatorBean.setRoomsType(liveBean.getRoomsType());
 
         try {
             creatorBean.setBroadcastUrl(DESUtil.decrypt(liveBean.getBroadcastUrl()));

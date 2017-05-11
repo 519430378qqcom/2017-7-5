@@ -837,6 +837,15 @@ public class LiveListBean implements Serializable {
         private Object rankTime;
         private Object users;
         private Object publishUrlTitle;
+        private int roomsType;//0为直播,1为游戏
+
+        public int getRoomsType() {
+            return roomsType;
+        }
+
+        public void setRoomsType(int roomsType) {
+            this.roomsType = roomsType;
+        }
 
         public int getId() {
             return id;

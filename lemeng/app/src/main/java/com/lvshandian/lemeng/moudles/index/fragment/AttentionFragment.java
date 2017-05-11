@@ -6,11 +6,8 @@ import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.android.volley.Request;
-import com.lvshandian.lemeng.MainActivity;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.UrlBuilder;
 import com.lvshandian.lemeng.base.BaseFragment;
@@ -43,10 +40,6 @@ import butterknife.Bind;
 public class AttentionFragment extends BaseFragment implements View.OnClickListener, SwipeRefresh.OnRefreshListener, SwipeRefreshLayout.OnPullUpRefreshListener {
     @Bind(R.id.lv_live_room)
     MyRecyclerView attentionRecyclerView;
-    @Bind(R.id.rl_empty)
-    RelativeLayout rl_empty;
-    @Bind(R.id.to_loke)
-    TextView to_loke;
     @Bind(R.id.iv_empty)
     ImageView iv_empty;
     @Bind(R.id.mrl_layout)
@@ -102,11 +95,6 @@ public class AttentionFragment extends BaseFragment implements View.OnClickListe
                                     attentionListAadapter.notifyDataSetChanged();
                                 }
                             }
-                            if (mUserList.size() == 0) {
-                                rl_empty.setVisibility(View.VISIBLE);
-                            } else {
-                                rl_empty.setVisibility(View.GONE);
-                            }
                         }
 
                     } catch (JSONException e) {
@@ -126,7 +114,6 @@ public class AttentionFragment extends BaseFragment implements View.OnClickListe
     @Override
     protected void initListener() {
         initList();
-        to_loke.setOnClickListener(this);
     }
 
     @Override
@@ -180,12 +167,12 @@ public class AttentionFragment extends BaseFragment implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.to_loke:
-                MainActivity mainActivity = (MainActivity) getActivity();
-                mainActivity.intentIndexPager();
-                break;
-        }
+//        switch (v.getId()) {
+//            case to_loke:
+//                MainActivity mainActivity = (MainActivity) getActivity();
+//                mainActivity.intentIndexPager();
+//                break;
+//        }
     }
 
     @Override

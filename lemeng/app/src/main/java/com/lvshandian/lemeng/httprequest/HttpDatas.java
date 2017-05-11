@@ -152,6 +152,14 @@ public class HttpDatas {
                     handler.sendMessage(message);
                 } else if (response.getCode().equals(SERVERS_CODE)) {
                     LogUtils.i("服务器内部错误:" + response.getMessage());
+                    refreshLayout.setRefreshing(false);
+                    refreshLayout.setPullUpRefreshing(false);
+                    ToastUtils.showMessageDefault(context,"查询失败");
+                }else {
+                    refreshLayout.setRefreshing(false);
+                    refreshLayout.setPullUpRefreshing(false);
+                    ToastUtils.showMessageDefault(context,"查询失败");
+
                 }
             }
         }, new Response.ErrorListener() {
@@ -503,6 +511,9 @@ public class HttpDatas {
 //                    ToastUtils.showMessageDefault(context, response.getMsg());
                     LogUtils.i("服务器内部错误:" + response.getMsg());
                     LogUtils.i("服务器内部错误:" + response.toString());
+                    refreshLayout.setRefreshing(false);
+                    refreshLayout.setPullUpRefreshing(false);
+                    ToastUtils.showMessageDefault(context,"查询失败");
                 }
             }
         }, new Response.ErrorListener() {

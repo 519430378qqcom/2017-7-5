@@ -50,74 +50,23 @@
             android:layout_height="match_parent"
             android:scrollbars="none">
 
-            <com.zhy.autolayout.AutoRelativeLayout
+
+            <com.lvshandian.lemeng.widget.MyRecyclerView
+                android:id="@+id/lv_live_room"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:divider="@null"
+                android:scrollbars="none" />
 
-                <com.lvshandian.lemeng.widget.MyRecyclerView
-                    android:id="@+id/lv_live_room"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:divider="@null"
-                    android:scrollbars="none" />
-
-
-                <com.zhy.autolayout.AutoRelativeLayout
-                    android:id="@+id/rl_empty"
-                    android:layout_width="match_parent"
-                    android:layout_height="350px"
-                    android:visibility="gone">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
-                        android:src="@mipmap/ic_attention_bg" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_above="@+id/tv_2"
-                        android:layout_centerHorizontal="true"
-                        android:text="你的好友静悄悄"
-                        android:textColor="@color/white" />
-
-                    <TextView
-                        android:id="@+id/tv_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_above="@+id/to_loke"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginBottom="40px"
-                        android:text="此时还没有直播"
-                        android:textColor="@color/white" />
-
-                    <TextView
-                        android:id="@+id/to_loke"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginBottom="60px"
-                        android:background="@drawable/empty_bg"
-                        android:paddingBottom="10px"
-                        android:paddingLeft="40px"
-                        android:paddingRight="40px"
-                        android:paddingTop="10px"
-                        android:text="去看看最新精彩直播"
-                        android:textColor="@color/white" />
-                </com.zhy.autolayout.AutoRelativeLayout>
-            </com.zhy.autolayout.AutoRelativeLayout>
         </ScrollView>
     </com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout>
 
     <ImageView
         android:id="@+id/iv_empty"
-        android:layout_width="300px"
-        android:layout_height="300px"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="200px"
+        android:layout_width="350px"
+        android:layout_height="350px"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="350px"
         android:src="@mipmap/icon_empty_img"
         android:visibility="gone" />
 

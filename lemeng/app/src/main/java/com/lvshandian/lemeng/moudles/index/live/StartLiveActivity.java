@@ -806,6 +806,7 @@ public class StartLiveActivity extends BaseActivity implements
         ivTouzhu.setOnClickListener(this);
 
 
+
         live_game.setOnClickListener(this);
         ivBig.setOnClickListener(this);
         ivSamll.setOnClickListener(this);

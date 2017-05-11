@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.bean.LiveListBean;
 import com.lvshandian.lemeng.widget.AvatarView;
-import com.lvshandian.lemeng.widget.LoadUrlImageView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,10 +49,18 @@ public class HotListAadapter extends RecyclerView.Adapter<HotListAadapter.HotVie
             } else {
                 holder.vip.setVisibility(View.GONE);
             }
+
+            if (user.getRooms().getRoomsType() == 1) {
+                holder.iv_is_liveing.setVisibility(View.VISIBLE);
+            } else {
+                holder.iv_is_liveing.setVisibility(View.GONE);
+            }
+
             holder.mUserNick.setText(user.getNickName());
-            holder.mUserPic.setImageLoadUrl(user.getRooms().getLivePicUrl());
+            Picasso.with(context).load(user.getRooms().getLivePicUrl()).placeholder(R.mipmap.zhan_da)
+                    .error(R.mipmap.zhan_da).into(holder.mUserPic);
             holder.mUserHead.setAvatarUrl(user.getPicUrl());
-            holder.mUserNums.setText(String.valueOf(user.getRooms().getOnlineUserNum())+" 在看");
+            holder.mUserNums.setText(String.valueOf(user.getRooms().getOnlineUserNum()) + " 在看");
             holder.mLinerLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -69,19 +77,21 @@ public class HotListAadapter extends RecyclerView.Adapter<HotListAadapter.HotVie
 
     class HotViewHolder extends RecyclerView.ViewHolder {
         TextView mUserNick, mUserNums;
-        LoadUrlImageView mUserPic;
+        ImageView mUserPic;
         AvatarView mUserHead;
         LinearLayout mLinerLayout;
         ImageView vip;
+        ImageView iv_is_liveing;
 
         public HotViewHolder(View itemView) {
             super(itemView);
             mUserNick = (TextView) itemView.findViewById(R.id.tv_live_nick);
             mUserNums = (TextView) itemView.findViewById(R.id.tv_live_usernum);
             mUserHead = (AvatarView) itemView.findViewById(R.id.iv_live_user_head);
-            mUserPic = (LoadUrlImageView) itemView.findViewById(R.id.iv_live_user_pic);
+            mUserPic = (ImageView) itemView.findViewById(R.id.iv_live_user_pic);
             mLinerLayout = (LinearLayout) itemView.findViewById(R.id.parent_layout);
             vip = (ImageView) itemView.findViewById(R.id.vip);
+            iv_is_liveing = (ImageView) itemView.findViewById(R.id.iv_is_liveing);
         }
     }
 

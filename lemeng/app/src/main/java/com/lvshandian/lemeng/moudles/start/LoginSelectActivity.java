@@ -221,7 +221,7 @@ public class LoginSelectActivity extends BaseActivity {
                 params.put("userName", map.get("usid").toString());
                 params.put("nickName", map.get("username").toString());
                 if (map.get("iconurl") == null) {
-                    params.put("picUrl", "http://lemeng.oss-ap-southeast-1.aliyuncs.com/lemengImg/1494425710551.png");
+                    params.put("picUrl", "http://lemeng.oss-ap-southeast-1.aliyuncs.com/lemengImg/1494471272058.png");
                 } else {
                     params.put("picUrl", map.get("iconurl").toString());
                 }

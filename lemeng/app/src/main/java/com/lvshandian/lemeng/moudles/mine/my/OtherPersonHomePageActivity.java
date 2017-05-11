@@ -306,7 +306,8 @@ public class OtherPersonHomePageActivity extends BaseActivity {
         if (mOtherBean != null) {
             final String picUrl = mOtherBean.getPicUrl();
 //            PicassoUtil.newInstance().onRoundnessImage(mContext, picUrl, avHeader);
-            Picasso.with(mContext).load(picUrl).into(avHeader);
+            Picasso.with(mContext).load(picUrl).placeholder(R.mipmap.zhan_da)
+                    .error(R.mipmap.zhan_da).into(avHeader);
 
             String nickName = mOtherBean.getNickName();
             String id = mOtherBean.getId();

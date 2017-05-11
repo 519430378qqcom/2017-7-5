@@ -154,9 +154,10 @@
 
     <ImageView
         android:id="@+id/iv_empty"
-        android:layout_width="300px"
-        android:layout_height="300px"
-        android:layout_centerInParent="true"
+        android:layout_width="350px"
+        android:layout_height="350px"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="250px"
         android:src="@mipmap/icon_empty_img"
         android:visibility="gone" />
 </com.zhy.autolayout.AutoRelativeLayout>

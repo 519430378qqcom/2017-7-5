@@ -204,7 +204,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 import fr.castorflex.android.verticalviewpager.VerticalViewPager;
 import xiao.free.horizontalrefreshlayout.HorizontalRefreshLayout;
@@ -253,7 +252,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     TextView liveJinpiao;
     TextView liveId;
     TextView roomShowId;
-    Button btnAttention;
+    ImageView btnAttention;
     ImageView ivLivePrivatechat;
     ImageView ivLiveGift;
     ImageView ivLiveShare;
@@ -795,7 +794,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         liveJinpiao = (TextView) mRoomContainer.findViewById(R.id.live_jinpiao);
         liveId = (TextView) mRoomContainer.findViewById(R.id.live_id);
         roomShowId = (TextView) mRoomContainer.findViewById(R.id.room_id);
-        btnAttention = (Button) mRoomContainer.findViewById(R.id.btn_attention);
+        btnAttention = (ImageView) mRoomContainer.findViewById(R.id.btn_attention);
         ivLivePrivatechat = (ImageView) mRoomContainer.findViewById(R.id.iv_live_privatechat);
         ivLiveGift = (ImageView) mRoomContainer.findViewById(R.id.iv_live_gift);
         ivLiveShare = (ImageView) mRoomContainer.findViewById(R.id.iv_live_share);

@@ -454,10 +454,10 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
 
             String picUrl = userInfo.getPicUrl();
             if (TextUtils.isEmpty(picUrl)) {
-                picUrl = "http://lemeng.oss-ap-southeast-1.aliyuncs.com/lemengImg/1494425710551.png";
+                picUrl = "http://lemeng.oss-ap-southeast-1.aliyuncs.com/lemengImg/1494471272058.png";
             }
-            Picasso.with(mContext).load(picUrl).placeholder(R.mipmap.head_default)
-                    .error(R.mipmap.head_default).into(myHead);
+            Picasso.with(mContext).load(picUrl).placeholder(R.mipmap.zhan_da)
+                    .error(R.mipmap.zhan_da).into(myHead);
             final String finalPicUrl = picUrl;
             myHead.setOnClickListener(new View.OnClickListener() {
                 @Override

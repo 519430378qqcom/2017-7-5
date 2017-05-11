@@ -12,7 +12,6 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -129,7 +128,7 @@ public class RecentContactsFragment extends TFragment implements TAdapterDelegat
         adapter.notifyDataSetChanged();
         boolean empty = items.isEmpty() && msgLoaded;
         emptyBg.setVisibility(empty ? View.VISIBLE : View.GONE);
-        emptyHint.setHint("还没有会话，在通讯录中找个人聊聊吧！");
+//        emptyHint.setHint("还没有会话，在通讯录中找个人聊聊吧！");
     }
 
     @Override
@@ -189,8 +188,8 @@ public class RecentContactsFragment extends TFragment implements TAdapterDelegat
                 SwipeMenuItem openItem = new SwipeMenuItem(
                         getActivity());
                 // set item background
-                openItem.setBackground(new ColorDrawable(Color.rgb(0x44, 0xc1,
-                        0xfe)));
+                openItem.setBackground(new ColorDrawable(Color.rgb(0xf6, 0xd4,
+                        0x2c)));
                 // set item width
                 openItem.setWidth(200);
                 // set item title
