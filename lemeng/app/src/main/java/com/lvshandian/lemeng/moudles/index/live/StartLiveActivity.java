@@ -752,6 +752,9 @@ public class StartLiveActivity extends BaseActivity implements
      */
     private GoogleApiClient client;
     private String nper;
+    private int intQh;
+    private String countryType;
+    private String strJinBi;
 
 
     @Override
@@ -909,7 +912,6 @@ public class StartLiveActivity extends BaseActivity implements
     }
 
     private String selectStatus;
-
     @Override
     public void onClick(View v) {
 
@@ -3908,11 +3910,63 @@ public class StartLiveActivity extends BaseActivity implements
                 rulePop.dismiss();
             }
         });
-
+        sure_tz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sureTz(rulePop);
+            }
+        });
         tv_ds.setText("大小单双：" + selectStatus);
-        tv_xzjf.setText("下注积分：" + String.valueOf(jbNumber * tzNumber) + "分");
-        int intQh = Integer.valueOf(nper) + 1;
-        tv_tzqh.setText("投注期号：" + intQh);
+        strJinBi = String.valueOf(jbNumber * tzNumber);
+        tv_xzjf.setText("下注积分：" + strJinBi+ "分");
+        intQh = Integer.valueOf(nper)+1;
+        tv_tzqh.setText("投注期号："+intQh);
+    }
+
+    private void sureTz(final PopupWindow rulePop) {
+        String url = UrlBuilder.chargeServerUrl+UrlBuilder.reciveAmount;
+        OkHttpUtils.get().url(url)
+                .addParams("userId",appUser.getId())
+                .addParams("roomId",room_Id)
+                .addParams("periods",intQh+"")
+                .addParams("amount",tzNumber+"")
+                .addParams("acountTimes",jbNumber+"")
+                .addParams("gameType","1")
+                .addParams("buyType",selectStatus)
+                .addParams("countryType",countryType).build().execute(new StringCallback() {
+            @Override
+            public void onError(com.squareup.okhttp.Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(String response) {
+                LogUtils.e("response :"+response);
+                if (response!=null){
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        String code = jsonObject.getString("code");
+                        if (code.equals("1")){
+                            showToast("投注成功");
+                            /**
+                             * 设置游戏布局的金币数量
+                             */
+                            String myCoin = SharedPreferenceUtils.getGoldCoin(mContext);
+                            myCoin = String.valueOf(Long.parseLong(myCoin) - Long.parseLong(strJinBi));
+                            SharedPreferenceUtils.saveGoldCoin(mContext,myCoin);
+                            myCoin = CountUtils.getCount(Long.parseLong(myCoin));
+                            all_lepiao.setText(myCoin);
+                            rulePop.dismiss();
+                        }else {
+                            showToast("投注失败");
+                            rulePop.dismiss();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
     /**
@@ -3968,6 +4022,7 @@ public class StartLiveActivity extends BaseActivity implements
                         LastAwardBean lastAwardBean = JsonUtil.json2Bean(obj, LastAwardBean.class);
                         if (lastAwardBean != null) {
                             nper = lastAwardBean.getNper();
+                            countryType = lastAwardBean.getCountryType();
                             tv_periods.setText("第" + lastAwardBean.getNper() + "期");
                             frist_num.setText(lastAwardBean.getFirstNum() + "");
                             second_num.setText(lastAwardBean.getSecondNum() + "");

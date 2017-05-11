@@ -29,6 +29,16 @@ public class LastAwardBean implements Serializable {
     private int thirdNum;
     private int firstNum;
 
+    public String getCountryType() {
+        return countryType;
+    }
+
+    public void setCountryType(String countryType) {
+        this.countryType = countryType;
+    }
+
+    private String countryType;
+
     public String getNumber() {
         return number;
     }

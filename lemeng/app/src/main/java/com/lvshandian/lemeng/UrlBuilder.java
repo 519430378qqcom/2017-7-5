@@ -81,7 +81,7 @@ public class UrlBuilder {
 
     public static final String getTimenumber = "/appusers/gettimenumber";//获取上期开奖数据
 
-
+    public static final String reciveAmount = "/appRooms/reciveAmount";//投注
 
     public static final String getBl = "/admin/appusers/getCathecticRate";
 
