@@ -216,6 +216,8 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
                             }
                         }
                     });
+
+                    parent_scrollView.smoothScrollTo(0, 0);
                     break;
                 case RequestCode.MY_VIDEO_LOAD://视频请求列表
                     List<VideoBean> listAdds = JsonUtil.json2BeanList(json.toString(), VideoBean.class);
@@ -255,6 +257,8 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
 
                         }
                     });
+
+                    parent_scrollView.smoothScrollTo(0, 0);
                     break;
                 //贡献榜
                 case RequestCode.REQUEST_RANK:
@@ -311,7 +315,7 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
                                 AutoRelativeLayout.LayoutParams lp1 = new AutoRelativeLayout.LayoutParams(width, height);
                                 myHead.setLayoutParams(lp1);
                             }
-                        },400);
+                        }, 400);
 
                         break;
                 }
@@ -327,7 +331,6 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
         adaptervideo = new VideoAdapter(mContext, listvideo, "isShow");
         mygrid_samll_video.setAdapter(adaptervideo);
         initUserInfo(appUser);
-        parent_scrollView.smoothScrollTo(0, 0);
 
         EventBus.getDefault().register(this);
     }
@@ -450,7 +453,7 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
             }
 
             String picUrl = userInfo.getPicUrl();
-            if (TextUtils.isEmpty(picUrl)){
+            if (TextUtils.isEmpty(picUrl)) {
                 picUrl = "http://lemeng.oss-ap-southeast-1.aliyuncs.com/lemengImg/1494425710551.png";
             }
             Picasso.with(mContext).load(picUrl).placeholder(R.mipmap.head_default)

@@ -30,13 +30,11 @@
                 android:textColor="@color/main"
                 android:textSize="36px" />
 
-            <!--<ImageView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:paddingLeft="20px"-->
-                <!--android:paddingTop="20px"-->
-                <!--android:src="@mipmap/donw_hui" />-->
+            <ImageView
+                android:layout_width="33px"
+                android:layout_height="33px"
+                android:src="@mipmap/donw_hui"
+                android:layout_marginRight="10px"/>
         </com.zhy.autolayout.AutoLinearLayout>
 
         <View

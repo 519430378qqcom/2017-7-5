@@ -34,7 +34,7 @@ import butterknife.Bind;
 public class FollowListActivity extends BaseActivity implements SwipeRefresh.OnRefreshListener, SwipeRefreshLayout.OnPullUpRefreshListener {
     @Bind(R.id.lv_list)
     ListView lvList;
-    @Bind(R.id.iv_empty)
+    @Bind(R.id.iv_empty_1)
     ImageView iv_empty;
     @Bind(R.id.mrl_layout)
     SwipeRefreshLayout mrlLayout;

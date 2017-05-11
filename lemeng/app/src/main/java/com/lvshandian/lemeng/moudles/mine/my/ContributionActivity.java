@@ -57,6 +57,8 @@ public class ContributionActivity extends BaseActivity {
     SwipeRefreshLayout refreshLayout;
     @Bind(R.id.scrollView)
     ScrollView scrollView;
+    @Bind(R.id.iv_empty)
+    ImageView iv_empty;
 
     private List<ContributionBeanBack> mDatas = new ArrayList<>();
     private ContributionListAdapter listAdapter;
@@ -186,10 +188,10 @@ public class ContributionActivity extends BaseActivity {
 
         if (mDatas.size() > 0) {
             parentLayout.setVisibility(View.VISIBLE);
-//            tv_empty.setVisibility(View.GONE);
+            iv_empty.setVisibility(View.GONE);
         } else {
             parentLayout.setVisibility(View.GONE);
-//            tv_empty.setVisibility(View.VISIBLE);
+            iv_empty.setVisibility(View.VISIBLE);
         }
     }
 

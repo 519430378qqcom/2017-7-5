@@ -190,6 +190,8 @@ public class OtherPersonHomePageActivity extends BaseActivity {
                             startActivity(new Intent(mContext, BigImageActivity.class).putStringArrayListExtra("imageList", (ArrayList<String>) imgList).putExtra("clickPosition",position));
                         }
                     });
+
+                    parent_scrollView.smoothScrollTo(0, 0);
                     break;
                 case RequestCode.MY_VIDEO_LOAD://视频请求列表
                     final List<VideoBean> listAdds = JsonUtil.json2BeanList(json.toString(), VideoBean.class);
@@ -209,6 +211,8 @@ public class OtherPersonHomePageActivity extends BaseActivity {
                             startActivity(intent);
                         }
                     });
+
+                    parent_scrollView.smoothScrollTo(0, 0);
                     break;
             }
         }
@@ -288,7 +292,7 @@ public class OtherPersonHomePageActivity extends BaseActivity {
         requestVisitorInfo();
         requestPhoto();
         requestVideo();
-        parent_scrollView.smoothScrollTo(0, 0);
+
     }
 
     public static void start(Context context, String userId) {
