@@ -52,6 +52,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -3849,9 +3850,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 "\n" +
                 "3、极小值（0-5）、极大值（22-27）\n" +
                 "\n" +
-                "4、28个号码定位\n" +
-                "\n" +
-                "5、红、绿、蓝、豹子");
+                "4、28个号码定位");
     }
 
     /**
@@ -3864,24 +3863,21 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         }
     }
 
+
     private void showTrendPop() {
-        final PopupWindow rulePop = new PopupWindow(this);
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View view = inflater.inflate(R.layout.pop_trend, null);
-        rulePop.setContentView(view);
-        rulePop.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
-        rulePop.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-        rulePop.setFocusable(true);
-        rulePop.setBackgroundDrawable(new BitmapDrawable());
-        rulePop.setOutsideTouchable(true);
-
-        backgroundAlpha(0.5f);
-
-        rulePop.showAtLocation(doubleAdd, Gravity.CENTER, 0, 0);
-        rulePop.update();
-        rulePop.setOnDismissListener(new RulePopOnDismissListner());
-
+        View view = getLayoutInflater().inflate(R.layout.pop_trend, null);
+        dialogForSelect.setCanceledOnTouchOutside(true);
+        dialogForSelect.setContentView(view);
+        dialogForSelect.show();
+        ImageView colse_trend = (ImageView) view.findViewById(R.id.colse_trend);
+        colse_trend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogForSelect.dismiss();
+            }
+        });
         final WebView webView = (WebView) view.findViewById(R.id.webView);
+        final ProgressBar iv_include_loading = (ProgressBar) view.findViewById(R.id.iv_include_loading);
         WebSettings webSettings = webView.getSettings();
         webSetting(webSettings);
         webView.loadUrl("http://60.205.114.36:8080/lucky/trend.html");
@@ -3894,19 +3890,12 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
             @Override
             public void onPageFinished(WebView view, String url) {
-                //加载完成
-                webView.setVisibility(View.VISIBLE);
-//                if (mLoading != null && mLoading.isShowing()) {
-//                    mLoading.dismiss();
-//                }
+                iv_include_loading.setVisibility(View.GONE);
             }
 
             @Override
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                webView.setVisibility(View.GONE);
-//                if (mLoading != null && mLoading.isShowing()) {
-//                    mLoading.dismiss();
-//                }
+                iv_include_loading.setVisibility(View.GONE);
             }
 
             @Override

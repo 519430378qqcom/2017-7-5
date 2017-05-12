@@ -45,6 +45,7 @@ import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -53,6 +54,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -121,6 +123,7 @@ import com.lvshandian.lemeng.utils.ThreadManager;
 import com.lvshandian.lemeng.utils.ToastUtils;
 import com.lvshandian.lemeng.utils.UMUtils;
 import com.lvshandian.lemeng.view.BarrageView;
+import com.lvshandian.lemeng.view.LoadingDialog;
 import com.lvshandian.lemeng.view.RotateLayout;
 import com.lvshandian.lemeng.view.RoundDialog;
 import com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragment;
@@ -3887,9 +3890,7 @@ public class StartLiveActivity extends BaseActivity implements
                 "\n" +
                 "3、极小值（0-5）、极大值（22-27）\n" +
                 "\n" +
-                "4、28个号码定位\n" +
-                "\n" +
-                "5、红、绿、蓝、豹子");
+                "4、28个号码定位");
     }
 
     /**
@@ -3902,41 +3903,55 @@ public class StartLiveActivity extends BaseActivity implements
         }
     }
 
+
     private void showTrendPop() {
-        final PopupWindow rulePop = new PopupWindow(this);
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View view = inflater.inflate(R.layout.pop_trend, null);
-        rulePop.setContentView(view);
-        rulePop.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
-        rulePop.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-        rulePop.setFocusable(true);
-        rulePop.setBackgroundDrawable(new BitmapDrawable());
-        rulePop.setOutsideTouchable(true);
-
-        backgroundAlpha(0.5f);
-
-        rulePop.showAtLocation(doubleAdd, Gravity.CENTER, 0, 0);
-        rulePop.update();
-        rulePop.setOnDismissListener(new RulePopOnDismissListner());
+        View view = getLayoutInflater().inflate(R.layout.pop_trend, null);
+        dialogForSelect.setCanceledOnTouchOutside(true);
+        dialogForSelect.setContentView(view);
+        dialogForSelect.show();
+        ImageView colse_trend = (ImageView) view.findViewById(R.id.colse_trend);
+        colse_trend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogForSelect.dismiss();
+            }
+        });
 
         final WebView webView = (WebView) view.findViewById(R.id.webView);
+        final ProgressBar iv_include_loading = (ProgressBar) view.findViewById(R.id.iv_include_loading);
         WebSettings webSettings = webView.getSettings();
         webSetting(webSettings);
         webView.loadUrl("http://60.205.114.36:8080/lucky/trend.html");
         webView.setWebChromeClient(new WebChromeClient());
-        webView.setOnLongClickListener(new View.OnLongClickListener() {
+        webView.setWebViewClient(new WebViewClient() {
+
             @Override
-            public boolean onLongClick(View v) {
-                return true;
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                iv_include_loading.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                iv_include_loading.setVisibility(View.GONE);
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                LogUtil.e("shouldOverrideUrlLoading", "url = " + url);
+                return super.shouldOverrideUrlLoading(view, url);
             }
         });
     }
 
     private void webSetting(WebSettings webSettings) {
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);// 设置js可以直接打开窗口，如window.open()，默认为false
-//        webSettings.setJavaScriptEnabled(true);// 是否允许执行js，默认为false。设置true时，会提醒可能造成XSS漏洞
+        webSettings.setJavaScriptEnabled(true);// 是否允许执行js，默认为false。设置true时，会提醒可能造成XSS漏洞
         webSettings.setSupportZoom(true);// 是否可以缩放，默认true
-//        webSettings.setBuiltInZoomControls(true);// 是否显示缩放按钮，默认false
+        webSettings.setBuiltInZoomControls(true);// 是否显示缩放按钮，默认false
         webSettings.setUseWideViewPort(true);// 设置此属性，可任意比例缩放。大视图模式
         webSettings.setLoadWithOverviewMode(true);// 和setUseWideViewPort(true)一起解决网页自适应问题
         webSettings.setAppCacheEnabled(true);// 是否使用缓存

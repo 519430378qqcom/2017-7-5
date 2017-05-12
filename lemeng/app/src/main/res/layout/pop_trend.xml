@@ -25,6 +25,15 @@
             android:layout_marginTop="70px"
             android:scrollbars="none"/>
 
+
+        <ProgressBar
+            android:id="@+id/iv_include_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            style="@android:style/Widget.ProgressBar.Inverse"
+            android:layout_gravity="center" />
     </com.zhy.autolayout.AutoRelativeLayout>
 
     <ImageView
