@@ -13,8 +13,8 @@ import com.lvshandian.lemeng.base.BaseActivity;
 import com.lvshandian.lemeng.base.CustomStringCallBackOne;
 import com.lvshandian.lemeng.bean.AppUser;
 import com.lvshandian.lemeng.httprequest.HttpDatas;
+import com.lvshandian.lemeng.moudles.mine.activity.ExplainWebViewActivity;
 import com.lvshandian.lemeng.moudles.mine.bean.LoginFrom;
-import com.lvshandian.lemeng.moudles.mine.my.BaseTextActivity;
 import com.lvshandian.lemeng.utils.CacheUtils;
 import com.lvshandian.lemeng.utils.DESUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
@@ -113,8 +113,8 @@ public class LoginSelectActivity extends BaseActivity {
                 gotoActivity(LoginActivity.class, false);
                 break;
             case R.id.iv_tiaokuan:
-                Intent intent = new Intent(mContext, BaseTextActivity.class);
-                intent.putExtra("type", "用户协议");
+                Intent intent = new Intent(mContext, ExplainWebViewActivity.class);
+                intent.putExtra("flag", 2000);
                 startActivity(intent);
                 break;
 

@@ -55,20 +55,22 @@ public class ExplainWebViewActivity extends BaseActivity implements View.OnClick
     protected void initialized() {
         mLoading = new LoadingDialog(mContext);
         mLoading.show();
-//        flag = getIntent().getExtras().getInt("flag");
-//        url = getIntent().getStringExtra("url");
+        flag = getIntent().getExtras().getInt("flag");
+        if (flag == 1000) {
+            tv_titlebar_title.setText("乐票充值");
+            url = String.format(UrlBuilder.YINLIAN_PAY_WEB, appUser.getId());
+        }else if(flag == 2000){
+            tv_titlebar_title.setText("用户协议");
+            url = "http://60.205.114.36:8080/protocol/private.html";
+        }else if(flag == 3000){
+            tv_titlebar_title.setText("关于我们");
+            url = "http://60.205.114.36:8080/protocol/about.html";
+        }
 
-        tv_titlebar_title.setText("乐票充值");
-        url = String.format(UrlBuilder.YINLIAN_PAY_WEB, appUser.getId());
         initView();
     }
 
     private void initView() {
-//        switch (flag) {
-//            case 1000:
-//                tv_titlebar_title.setText("乐票充值");
-//                break;
-//        }
         WebSettings webSettings = webView.getSettings();
         webSetting(webSettings);
         LogUtil.e("支付地址", url);

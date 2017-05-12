@@ -54,7 +54,6 @@ public class PayOrderActivity extends BaseActivity {
                 String url = String.format(UrlBuilder.YINLIAN_PAY_WEB, appUser.getId());
                 Intent intent = new Intent(mContext, ExplainWebViewActivity.class);
                 intent.putExtra("flag", 1000);
-                intent.putExtra("url", url);
                 startActivity(intent);
                 break;
             case R.id.tv_titlebar_left:

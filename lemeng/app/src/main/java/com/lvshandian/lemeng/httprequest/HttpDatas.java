@@ -154,11 +154,11 @@ public class HttpDatas {
                     LogUtils.i("服务器内部错误:" + response.getMessage());
                     refreshLayout.setRefreshing(false);
                     refreshLayout.setPullUpRefreshing(false);
-                    ToastUtils.showMessageDefault(context,"查询失败");
-                }else {
+                    ToastUtils.showMessageDefault(context, "查询失败");
+                } else {
                     refreshLayout.setRefreshing(false);
                     refreshLayout.setPullUpRefreshing(false);
-                    ToastUtils.showMessageDefault(context,"查询失败");
+                    ToastUtils.showMessageDefault(context, "查询失败");
 
                 }
             }
@@ -167,7 +167,7 @@ public class HttpDatas {
             public void onErrorResponse(VolleyError error) {
                 refreshLayout.setRefreshing(false);
                 refreshLayout.setPullUpRefreshing(false);
-                ToastUtils.showMessageDefault(context,"网络错误");
+                ToastUtils.showMessageDefault(context, "网络错误");
             }
         });
         addRequestQueue();
@@ -268,7 +268,9 @@ public class HttpDatas {
                             //账户余额不足,跳转到充值页面
 //                            context.startActivity(new Intent(context, ChargeCoinsActivity.class));
 //                            context.startActivity(new Intent(context, PayOrderActivity.class));
-                            context.startActivity(new Intent(context, ExplainWebViewActivity.class));
+                            Intent intent = new Intent(context, ExplainWebViewActivity.class);
+                            intent.putExtra("flag", 1000);
+                            context.startActivity(intent);
                         } else {
                         }
                         if (mDialog.isShowing()) {
@@ -513,7 +515,7 @@ public class HttpDatas {
                     LogUtils.i("服务器内部错误:" + response.toString());
                     refreshLayout.setRefreshing(false);
                     refreshLayout.setPullUpRefreshing(false);
-                    ToastUtils.showMessageDefault(context,"查询失败");
+                    ToastUtils.showMessageDefault(context, "查询失败");
                 }
             }
         }, new Response.ErrorListener() {
@@ -521,7 +523,7 @@ public class HttpDatas {
             public void onErrorResponse(VolleyError error) {
                 refreshLayout.setRefreshing(false);
                 refreshLayout.setPullUpRefreshing(false);
-                ToastUtils.showMessageDefault(context,"网络错误");
+                ToastUtils.showMessageDefault(context, "网络错误");
             }
         });
         newaddRequestQueue();

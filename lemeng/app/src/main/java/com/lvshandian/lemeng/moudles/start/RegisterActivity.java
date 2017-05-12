@@ -18,8 +18,8 @@ import com.lvshandian.lemeng.base.BaseActivity;
 import com.lvshandian.lemeng.bean.AppUser;
 import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.httprequest.RequestCode;
+import com.lvshandian.lemeng.moudles.mine.activity.ExplainWebViewActivity;
 import com.lvshandian.lemeng.moudles.mine.activity.SettingPerson;
-import com.lvshandian.lemeng.moudles.mine.my.BaseTextActivity;
 import com.lvshandian.lemeng.moudles.mine.my.StateCodeActivity;
 import com.lvshandian.lemeng.utils.CacheUtils;
 import com.lvshandian.lemeng.utils.TextPhoneNumber;
@@ -129,8 +129,8 @@ public class RegisterActivity extends BaseActivity {
                 startActivityForResult(intent, 200);
                 break;
             case R.id.ll_xieyi:
-                Intent intent1 = new Intent(mContext, BaseTextActivity.class);
-                intent1.putExtra("type", "用户协议");
+                Intent intent1 = new Intent(mContext, ExplainWebViewActivity.class);
+                intent1.putExtra("flag", 2000);
                 startActivity(intent1);
                 break;
             case R.id.tv_send_code:

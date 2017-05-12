@@ -241,7 +241,6 @@
                                 5、红、绿、蓝、豹子</string>
 
 
-
     <!-- 自定义通知 -->
     <string name="custom_notification">自定义通知</string>
     <string name="select_custom_notification_target">选择发送对象</string>

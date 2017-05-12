@@ -118,13 +118,17 @@
             android:name=".MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
-            <!--要想在别的App上能成功调起App，必须添加intent过滤器-->
+
+            <!-- 要想在别的App上能成功调起App，必须添加intent过滤器 -->
             <intent-filter>
-                <!--协议部分，随便设置-->
+
+                <!-- 协议部分，随便设置 -->
                 <data android:scheme="haiyan" />
-                <!--下面这几行也必须得设置-->
+                <!-- 下面这几行也必须得设置 -->
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
         </activity>
@@ -132,7 +136,7 @@
         <service
             android:name=".service.VoiceService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
         <!-- 开机引导页面 -->
         <activity
@@ -357,7 +361,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <!-- 退出直播 -->
-        <!--android:theme="@android:style/Theme.Translucent.NoTitleBar"-->
+        <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar" -->
         <activity
             android:name=".moudles.index.live.QuitLiveActivity"
             android:launchMode="singleTop"
@@ -458,6 +462,7 @@
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" />
+
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="6nA2WhechygPITw5pM01vb8zLTWvABgd" />
@@ -513,7 +518,7 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-        <!--Facebook-->
+        <!-- Facebook -->
         <activity
             android:name="com.umeng.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -529,7 +534,7 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="487692214752558" />
 
-       <!-- Twitter-->
+        <!-- Twitter -->
         <activity
             android:name="com.umeng.socialize.handler.TwitterWebActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"

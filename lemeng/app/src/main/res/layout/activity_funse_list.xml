@@ -33,7 +33,7 @@
         android:layout_width="350px"
         android:layout_height="350px"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="250px"
+        android:layout_marginTop="380px"
         android:src="@mipmap/icon_empty_follow"
         android:visibility="gone" />
 

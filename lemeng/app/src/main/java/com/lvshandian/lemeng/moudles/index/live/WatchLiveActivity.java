@@ -1333,6 +1333,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_trend: //走势
+
                 break;
             case R.id.tv_rule: //规则
                 getRulePopup();
@@ -2181,7 +2182,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 //                startActivity(new Intent(mContext, ChargeCoinsActivity.class).putExtra("yanpiao",
 //                        SharedPreferenceUtils.getGoldCoin(mContext)));
 //                startActivity(new Intent(mContext, PayOrderActivity.class));
-                startActivity(new Intent(mContext, ExplainWebViewActivity.class));
+                Intent intent = new Intent(mContext, ExplainWebViewActivity.class);
+                intent.putExtra("flag", 1000);
+                startActivity(intent);
             }
         });
 

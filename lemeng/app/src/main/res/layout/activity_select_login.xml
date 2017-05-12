@@ -35,7 +35,7 @@
             android:padding="5px"
             android:scaleType="centerCrop"
             android:src="@mipmap/icon_def_facebook"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/iv_twitter_login"
@@ -55,7 +55,7 @@
             android:padding="5px"
             android:scaleType="centerCrop"
             android:src="@mipmap/icon_def_google"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/iv_wechat_login"
@@ -65,7 +65,7 @@
             android:padding="5px"
             android:scaleType="centerCrop"
             android:src="@mipmap/icon_def_wechat"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/iv_moble_login"

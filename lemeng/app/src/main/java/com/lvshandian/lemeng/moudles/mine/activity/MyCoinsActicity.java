@@ -115,7 +115,9 @@ public class MyCoinsActicity extends BaseActivity {
 //                intent.putExtra("url", url);
 //                startActivity(intent);
 
-                startActivity(new Intent(mContext,ExplainWebViewActivity.class));
+                Intent intent = new Intent(mContext, ExplainWebViewActivity.class);
+                intent.putExtra("flag", 1000);
+                startActivity(intent);
                 break;
             case R.id.tv_titlebar_left:
                 defaultFinish();

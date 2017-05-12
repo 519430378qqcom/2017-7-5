@@ -83,7 +83,8 @@ public class UrlBuilder {
 
     public static final String reciveAmount = "/appRooms/reciveAmount";//投注
 
-    public static final String getBl = "/admin/appusers/getCathecticRate";
+    public static final String getBl = "/admin/appusers/getCathecticRate";//开游戏、查询投注比例
+
 
     //阿里云
     public static final String ALIYUN_IMG = "http://lemeng.oss-ap-southeast-1.aliyuncs.com/";//阿里云图片視頻生成地址
