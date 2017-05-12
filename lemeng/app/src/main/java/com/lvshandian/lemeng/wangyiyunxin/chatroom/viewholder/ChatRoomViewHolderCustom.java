@@ -18,6 +18,7 @@ import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.utils.TextUtils;
 import com.netease.nim.uikit.NimUIKit;
+import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.netease.nim.uikit.common.util.sys.ScreenUtil;
 import com.netease.nim.uikit.session.emoji.MoonUtil;
 import com.netease.nim.uikit.session.viewholder.MsgViewHolderBase;
@@ -102,13 +103,16 @@ public class ChatRoomViewHolderCustom extends MsgViewHolderBase {
         TextView bodyLightView = findViewById(com.netease.nim.uikit.R.id
                 .nim_message_item_light_body);
 
+        LogUtil.e("网易云信发的信息",message.getRemoteExtension().toString());
+
         if (message.getRemoteExtension() != null) {
             Map<String, Object> remote0 = message.getRemoteExtension();
             CustomdateBean customdate = null;
             if (((String) remote0.get("type")).equals("107") || ((String) remote0.get("type"))
                     .equals("109") || ((String) remote0.get("type")).equals("114") ||
                     ((String) remote0.get("type")).equals("112") || ((String) remote0.get("type")).equals("113")
-                    || ((String) remote0.get("type")).equals("199")) {
+                    || ((String) remote0.get("type")).equals("199")|| ((String) remote0.get("type")).equals("2828")
+                    || ((String) remote0.get("type")).equals("1818")) {
                 customdate = JavaBeanMapUtils.mapToBean((Map) message.getRemoteExtension(),
                         CustomdateBean.class);
             } else {
@@ -165,6 +169,8 @@ public class ChatRoomViewHolderCustom extends MsgViewHolderBase {
                  113 //主播切换到后台
                  114 //禁言
                  199 //关注
+                 2828 //主播开游戏
+                 1818 //观众投注
                  */
                 switch (type) {
                     case 102:
@@ -257,6 +263,14 @@ public class ChatRoomViewHolderCustom extends MsgViewHolderBase {
                     case 114://禁言消息
                         bodyTextView.setTextColor(context.getResources().getColor(R.color.red));
                         text = (String) remote.get("jinyan");
+                        break;
+                    case 2828://主播开游戏
+                        bodyTextView.setTextColor(context.getResources().getColor(R.color.red));
+                        text = (String) remote.get("palyMsg");
+                        break;
+                    case 1818://有人投注
+                        bodyTextView.setTextColor(context.getResources().getColor(R.color.aquamarine));
+                        text = (String) remote.get("inputMsg");
                         break;
                     default:
                         //默认不显示任何东西

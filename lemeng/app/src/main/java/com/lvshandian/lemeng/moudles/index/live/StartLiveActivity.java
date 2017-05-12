@@ -912,6 +912,7 @@ public class StartLiveActivity extends BaseActivity implements
     }
 
     private String selectStatus;
+
     @Override
     public void onClick(View v) {
 
@@ -1027,9 +1028,8 @@ public class StartLiveActivity extends BaseActivity implements
                     ll_game.setVisibility(View.GONE);
                     messageFragment.inputTypeOnClick();
                 } else {
-                    live_game.setVisibility(View.GONE);
+                    hidePlayView();
                     messageFragment.inputTypeOnClick();
-
                 }
 
                 break;
@@ -1046,9 +1046,9 @@ public class StartLiveActivity extends BaseActivity implements
                     }
                 } else {
                     if (live_game.getVisibility() == View.VISIBLE) {
-                        live_game.setVisibility(View.GONE);
+                        hidePlayView();
                     } else {
-                        live_game.setVisibility(View.VISIBLE);
+                        showPlayView();
                     }
                 }
 
@@ -1113,12 +1113,8 @@ public class StartLiveActivity extends BaseActivity implements
                 break;
             //私信
             case R.id.iv_live_privatechat:
-                if (gameIsStart == false) {
-                    ll_game.setVisibility(View.GONE);
-                } else {
-                    live_game.setVisibility(View.GONE);
-                }
                 ll_game.setVisibility(View.GONE);
+                hidePlayView();
                 ll_buttom_mun.setVisibility(View.GONE);
 
                 sessionListFragment = new ChatRoomSessionListFragment();
@@ -1166,6 +1162,18 @@ public class StartLiveActivity extends BaseActivity implements
         }
     }
 
+    private void showPlayView(){
+        live_game.setVisibility(View.VISIBLE);
+        rl_kp.setVisibility(View.VISIBLE);
+        iv_trend.setVisibility(View.VISIBLE);
+    }
+
+    private void hidePlayView(){
+        live_game.setVisibility(View.GONE);
+        rl_kp.setVisibility(View.GONE);
+        iv_trend.setVisibility(View.GONE);
+    }
+
     private void showXYGame() {
         String url = UrlBuilder.serverUrl + UrlBuilder.getBl;
 
@@ -1195,11 +1203,18 @@ public class StartLiveActivity extends BaseActivity implements
                         tvMoreBig.setText("1:" + blBean.getMore_big());
                         tvMoreSamll.setText("1:" + blBean.getMore_small());
                         ll_game.setVisibility(View.GONE);
-                        live_game.setVisibility(View.VISIBLE);
+
+                        showPlayView();
                         gameIsStart = true;
 
                         getTimenumber();
-                        rl_kp.setVisibility(View.VISIBLE);
+
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("vip", appUser.getVip());
+                        map.put("userId", appUser.getId());
+                        map.put("level", appUser.getLevel());
+                        map.put("palyMsg", "主播开启幸运8游戏");
+                        SendRoomMessageUtils.onCustomMessagePlay("2828", messageFragment, wy_Id, map);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -1434,6 +1449,8 @@ public class StartLiveActivity extends BaseActivity implements
         Intent intent = new Intent(mContext, VoiceService.class);
         stopService(intent);
 
+        myHandler.removeMessages(10000);
+        myHandler.removeCallbacks(timenNumber);
     }
 
     @Override
@@ -1804,6 +1821,7 @@ public class StartLiveActivity extends BaseActivity implements
             @Override
             public void run() {
                 mSendGiftLian.setVisibility(View.GONE);
+                hidePlayView();
             }
         }, 200);
 
@@ -2491,12 +2509,8 @@ public class StartLiveActivity extends BaseActivity implements
         cameraPreviewFrameView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (gameIsStart == false) {
-                    ll_game.setVisibility(View.GONE);
-                } else {
-                    live_game.setVisibility(View.GONE);
-                }
                 ll_game.setVisibility(View.GONE);
+                hidePlayView();
                 ll_buttom_mun.setVisibility(View.VISIBLE);
                 if (sessionListFragment != null) {
                     sessionListFragment.hide();
@@ -3918,22 +3932,22 @@ public class StartLiveActivity extends BaseActivity implements
         });
         tv_ds.setText("大小单双：" + selectStatus);
         strJinBi = String.valueOf(jbNumber * tzNumber);
-        tv_xzjf.setText("下注积分：" + strJinBi+ "分");
-        intQh = Integer.valueOf(nper)+1;
-        tv_tzqh.setText("投注期号："+intQh);
+        tv_xzjf.setText("下注积分：" + strJinBi + "分");
+        intQh = Integer.valueOf(nper) + 1;
+        tv_tzqh.setText("投注期号：" + intQh);
     }
 
     private void sureTz(final PopupWindow rulePop) {
-        String url = UrlBuilder.chargeServerUrl+UrlBuilder.reciveAmount;
+        String url = UrlBuilder.chargeServerUrl + UrlBuilder.reciveAmount;
         OkHttpUtils.get().url(url)
-                .addParams("userId",appUser.getId())
-                .addParams("roomId",room_Id)
-                .addParams("periods",intQh+"")
-                .addParams("amount",tzNumber+"")
-                .addParams("acountTimes",jbNumber+"")
-                .addParams("gameType","1")
-                .addParams("buyType",selectStatus)
-                .addParams("countryType",countryType).build().execute(new StringCallback() {
+                .addParams("userId", appUser.getId())
+                .addParams("roomId", room_Id)
+                .addParams("periods", intQh + "")
+                .addParams("amount", tzNumber + "")
+                .addParams("acountTimes", jbNumber + "")
+                .addParams("gameType", "1")
+                .addParams("buyType", selectStatus)
+                .addParams("countryType", countryType).build().execute(new StringCallback() {
             @Override
             public void onError(com.squareup.okhttp.Request request, Exception e) {
 
@@ -3941,23 +3955,30 @@ public class StartLiveActivity extends BaseActivity implements
 
             @Override
             public void onResponse(String response) {
-                LogUtils.e("response :"+response);
-                if (response!=null){
+                LogUtils.e("response :" + response);
+                if (response != null) {
                     try {
                         JSONObject jsonObject = new JSONObject(response);
                         String code = jsonObject.getString("code");
-                        if (code.equals("1")){
+                        if (code.equals("1")) {
                             showToast("投注成功");
                             /**
                              * 设置游戏布局的金币数量
                              */
                             String myCoin = SharedPreferenceUtils.getGoldCoin(mContext);
                             myCoin = String.valueOf(Long.parseLong(myCoin) - Long.parseLong(strJinBi));
-                            SharedPreferenceUtils.saveGoldCoin(mContext,myCoin);
+                            SharedPreferenceUtils.saveGoldCoin(mContext, myCoin);
                             myCoin = CountUtils.getCount(Long.parseLong(myCoin));
                             all_lepiao.setText(myCoin);
                             rulePop.dismiss();
-                        }else {
+
+                            Map<String, Object> map = new HashMap<>();
+                            map.put("vip", appUser.getVip());
+                            map.put("userId", appUser.getId());
+                            map.put("level", appUser.getLevel());
+                            map.put("inputMsg", intQh + "期 " + selectStatus + " 投注" + strJinBi + "元");
+                            SendRoomMessageUtils.onCustomMessagePlay("1818", messageFragment, wy_Id, map);
+                        } else {
                             showToast("投注失败");
                             rulePop.dismiss();
                         }
@@ -4004,12 +4025,7 @@ public class StartLiveActivity extends BaseActivity implements
                             mCountDownTotalTime = Long.parseLong(lastAwardBean.getDateLine()) - now;
 
                             if (mCountDownTotalTime < 0) {
-                                myHandler.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        getTimenumber();
-                                    }
-                                }, 30000);
+                                myHandler.postDelayed(timenNumber, 30000);
                             } else {
                                 myHandler.sendEmptyMessage(10000);
                             }
@@ -4031,12 +4047,7 @@ public class StartLiveActivity extends BaseActivity implements
                             tv_ds.setText(lastAwardBean.getType());
                             tv_game_next_open_time.setText("0000");
 
-                            myHandler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    getTimenumber();
-                                }
-                            }, 30000);
+                            myHandler.postDelayed(timenNumber, 30000);
                         }
                     }
                 } catch (JSONException e) {
@@ -4045,4 +4056,11 @@ public class StartLiveActivity extends BaseActivity implements
             }
         });
     }
+
+    Runnable timenNumber = new Runnable() {
+        @Override
+        public void run() {
+            getTimenumber();
+        }
+    };
 }

@@ -200,6 +200,31 @@ public class SendRoomMessageUtils {
     }
 
     /**
+     * 开游戏
+     *
+     * @param fragment
+     * @param container
+     * @param date
+     */
+    public static void onCustomMessagePlay(String type, ChatRoomMessageFragment fragment, String container, Map<String, Object> date) {
+        ChatRoomMessage msg = ChatRoomMessageBuilder.createChatRoomCustomMessage(container, new MsgAttachment() {
+            @Override
+            public String toJson(boolean b) {
+                return "这是Custom消息，扩展消息";
+            }
+        });
+        Map<String, Object> data = new HashMap<>();
+        data.put("type", type);
+        data.putAll(date);
+        msg.setRemoteExtension(data); // 设置服务器扩展字段
+        Log.i("WangYi", "container.account" + container);
+        if (null != fragment) {
+            fragment.sendMessage(msg);
+        }
+
+    }
+
+    /**
      * 发送本地消息，只在自己room聊天列表中展示
      *
      * @author sll

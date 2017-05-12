@@ -122,6 +122,29 @@ public class CustomdateBean implements Serializable {
     private String isJinyan;
     private String jinyanId;
 
+    /**
+     * 开游戏
+     * @return
+     */
+    private String palyMsg;//开游戏信息
+    private String inputMsg;//游戏投注信息
+
+    public String getInputMsg() {
+        return inputMsg;
+    }
+
+    public void setInputMsg(String inputMsg) {
+        this.inputMsg = inputMsg;
+    }
+
+    public String getPalyMsg() {
+        return palyMsg;
+    }
+
+    public void setPalyMsg(String palyMsg) {
+        this.palyMsg = palyMsg;
+    }
+
     public String getAddress() {
         return address;
     }

@@ -61,6 +61,8 @@ public class ChatRoomMsgViewHolderFactory {
                     case 114:
                     case 199:
                     case 200:
+                    case 2828:
+                    case 1818:
                         return ChatRoomViewHolderCustom.class;
                     default:
                         return ChatRoomMsgViewHolderNotification.class;

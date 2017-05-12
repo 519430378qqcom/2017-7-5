@@ -580,6 +580,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
     private int tzNumber = 10;
     private int jbNumber = 1;
+
+    private boolean isPlayerRoom;
+
     private Handler myHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -1129,6 +1132,13 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
         join();
         startloading();
+
+        if (liveListBean.getRooms().getRoomsType().equals("1")) {
+            isPlayerRoom = true;
+            getTimenumber();
+        } else {
+            isPlayerRoom = false;
+        }
     }
 
 
@@ -1170,7 +1180,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         ivTouzhu.setOnClickListener(this);
 
 
-
         live_game.setOnClickListener(this);
         ivBig.setOnClickListener(this);
         ivSamll.setOnClickListener(this);
@@ -1203,7 +1212,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         mRoot.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                live_game.setVisibility(View.GONE);
+                hidePlayView();
                 ll_buttom_mun.setVisibility(View.VISIBLE);
                 if (sessionListFragment != null) {
                     sessionListFragment.hide();
@@ -1317,6 +1326,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         ivMoreBig.setImageResource(R.mipmap.icon_big_more_unselect);
         ivMoreSamll.setImageResource(R.mipmap.icon_small_more_unselect);
     }
+
     private String selectStatus;
 
     @Override
@@ -1425,18 +1435,21 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 break;
 
             case R.id.ruanjianpanW:
-                live_game.setVisibility(View.GONE);
+                hidePlayView();
                 messageFragment.inputTypeOnClick();
                 break;
             case R.id.ll_buttom_mun://游戏
-                if (live_game.getVisibility() == View.VISIBLE) {
-                    live_game.setVisibility(View.GONE);
+                if (isPlayerRoom) {
+                    if (live_game.getVisibility() == View.VISIBLE) {
+                        hidePlayView();
+                    } else {
+                        showPlayView();
+                    }
+
                 } else {
-                    live_game.setVisibility(View.VISIBLE);
+                    showToast("主播未开启游戏");
                 }
 
-                getTimenumber();
-                rl_kp.setVisibility(View.VISIBLE);
                 break;
             case R.id.zhoubangW:
                 messageFragment.ivRankingOnClick();
@@ -1461,7 +1474,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 break;
             //私信
             case R.id.iv_live_privatechat:
-                live_game.setVisibility(View.GONE);
+                hidePlayView();
                 ll_buttom_mun.setVisibility(View.GONE);
 
                 sessionListFragment = new ChatRoomSessionListFragment();
@@ -1514,6 +1527,18 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 break;
 
         }
+    }
+
+    private void showPlayView() {
+        live_game.setVisibility(View.VISIBLE);
+        rl_kp.setVisibility(View.VISIBLE);
+        iv_trend.setVisibility(View.VISIBLE);
+    }
+
+    private void hidePlayView() {
+        live_game.setVisibility(View.GONE);
+        rl_kp.setVisibility(View.GONE);
+        iv_trend.setVisibility(View.GONE);
     }
 
     @Override
@@ -1701,6 +1726,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         registerSystemMessageObservers(false);
         unregisterReceiver(broadcastReceiver);
         barrageview.setSentenceList(new ArrayList<BarrageDateBean>());
+
+        myHandler.removeMessages(10000);
+        myHandler.removeCallbacks(timenNumber);
     }
 
     @Override
@@ -1879,6 +1907,10 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         break;
                     case 113:
 
+                        break;
+                    case 2828:
+                        isPlayerRoom = true;
+                        getTimenumber();
                         break;
                     default:
                         break;
@@ -2122,7 +2154,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             @Override
             public void run() {
                 mSendGiftLian.setVisibility(View.GONE);
-                live_game.setVisibility(View.GONE);
+                hidePlayView();
             }
         }, 200);
 
@@ -3858,25 +3890,25 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 sureTz(rulePop);
             }
         });
-        tv_ds.setText("大小单双："+selectStatus);
+        tv_ds.setText("大小单双：" + selectStatus);
         strJinBi = String.valueOf(jbNumber * tzNumber);
-        tv_xzjf.setText("下注积分："+strJinBi+"分");
-        intQh = Integer.valueOf(nper)+1;
-        tv_tzqh.setText("投注期号："+ intQh);
+        tv_xzjf.setText("下注积分：" + strJinBi + "分");
+        intQh = Integer.valueOf(nper) + 1;
+        tv_tzqh.setText("投注期号：" + intQh);
     }
 
     private void sureTz(final PopupWindow rulePop) {
-        String url = UrlBuilder.chargeServerUrl+UrlBuilder.reciveAmount;
+        String url = UrlBuilder.chargeServerUrl + UrlBuilder.reciveAmount;
 
         OkHttpUtils.get().url(url)
-                .addParams("userId",appUser.getId())
-                .addParams("roomId",liveListBean.getRooms().getId()+"")
-                .addParams("periods",intQh+"")
-                .addParams("amount",tzNumber+"")
-                .addParams("acountTimes",jbNumber+"")
-                .addParams("gameType","1")
-                .addParams("buyType",selectStatus)
-                .addParams("countryType",countryType).build().execute(new StringCallback() {
+                .addParams("userId", appUser.getId())
+                .addParams("roomId", liveListBean.getRooms().getId() + "")
+                .addParams("periods", intQh + "")
+                .addParams("amount", tzNumber + "")
+                .addParams("acountTimes", jbNumber + "")
+                .addParams("gameType", "1")
+                .addParams("buyType", selectStatus)
+                .addParams("countryType", countryType).build().execute(new StringCallback() {
             @Override
             public void onError(com.squareup.okhttp.Request request, Exception e) {
 
@@ -3884,23 +3916,31 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
             @Override
             public void onResponse(String response) {
-                LogUtils.e("response :"+response);
-                if (response!=null){
+                LogUtils.e("response :" + response);
+                if (response != null) {
                     try {
                         JSONObject jsonObject = new JSONObject(response);
                         String code = jsonObject.getString("code");
-                        if (code.equals("1")){
+                        if (code.equals("1")) {
                             showToast("投注成功");
                             /**
                              * 设置游戏布局的金币数量
                              */
                             String myCoin = SharedPreferenceUtils.getGoldCoin(mContext);
                             myCoin = String.valueOf(Long.parseLong(myCoin) - Long.parseLong(strJinBi));
-                            SharedPreferenceUtils.saveGoldCoin(mContext,myCoin);
+                            SharedPreferenceUtils.saveGoldCoin(mContext, myCoin);
                             myCoin = CountUtils.getCount(Long.parseLong(myCoin));
                             all_lepiao.setText(myCoin);
                             rulePop.dismiss();
-                        }else {
+
+                            Map<String, Object> map = new HashMap<>();
+                            map.put("vip", appUser.getVip());
+                            map.put("userId", appUser.getId());
+                            map.put("level", appUser.getLevel());
+                            map.put("inputMsg", intQh + "期 " + selectStatus + " 投注" + strJinBi + "元");
+                            SendRoomMessageUtils.onCustomMessagePlay("1818", messageFragment, liveListBean.getRooms()
+                                    .getRoomId() + "", map);
+                        } else {
                             showToast("投注失败");
                             rulePop.dismiss();
                         }
@@ -3911,6 +3951,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             }
         });
     }
+
     /**
      * @dw 获取上期开奖数据
      */
@@ -3948,12 +3989,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                             mCountDownTotalTime = Long.parseLong(lastAwardBean.getDateLine()) - now;
 
                             if (mCountDownTotalTime < 0) {
-                                myHandler.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        getTimenumber();
-                                    }
-                                }, 30000);
+                                myHandler.postDelayed(timenNumber, 30000);
                             } else {
                                 myHandler.sendEmptyMessage(10000);
                             }
@@ -3974,12 +4010,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                             tv_ds.setText(lastAwardBean.getType());
                             tv_game_next_open_time.setText("0000");
 
-                            myHandler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    getTimenumber();
-                                }
-                            }, 30000);
+                            myHandler.postDelayed(timenNumber, 30000);
                         }
                     }
                 } catch (JSONException e) {
@@ -3988,4 +4019,11 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             }
         });
     }
+
+    Runnable timenNumber = new Runnable() {
+        @Override
+        public void run() {
+            getTimenumber();
+        }
+    };
 }

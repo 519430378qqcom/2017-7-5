@@ -305,14 +305,16 @@
             android:layout_height="150dp"
             android:layout_marginTop="100dp"
             android:visibility="gone" />
+
         <ImageView
             android:id="@+id/iv_trend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/trend_img"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            />
+            android:src="@mipmap/trend_img"
+            android:visibility="gone" />
+
         <com.zhy.autolayout.AutoFrameLayout
             android:id="@+id/lm_fm"
             android:layout_width="220px"
@@ -340,7 +342,6 @@
                 android:layout_marginTop="10px"
                 android:background="@mipmap/close" />
         </com.zhy.autolayout.AutoFrameLayout>
-
 
 
         <com.zhy.autolayout.AutoLinearLayout
@@ -381,34 +382,33 @@
             <com.zhy.autolayout.AutoRelativeLayout
                 android:id="@+id/ll_buttom_mun"
                 android:layout_width="match_parent"
-                android:visibility="visible"
-                android:gravity="center_vertical"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10px">
+                android:layout_marginTop="10px"
+                android:gravity="center_vertical"
+                android:visibility="visible">
 
                 <ImageView
                     android:id="@+id/ruanjianpan"
                     android:layout_width="80px"
                     android:layout_height="80px"
                     android:layout_marginLeft="19px"
-                    android:background="@mipmap/mg_room_btn_xinxi"/>
+                    android:background="@mipmap/mg_room_btn_xinxi" />
 
                 <ImageView
                     android:id="@+id/zhoubang"
                     android:layout_width="80px"
                     android:layout_height="80px"
-                    android:layout_toRightOf="@id/ruanjianpan"
                     android:layout_marginLeft="19px"
-                    android:background="@mipmap/mg_room_btn_ranking"/>
-
+                    android:layout_toRightOf="@id/ruanjianpan"
+                    android:background="@mipmap/mg_room_btn_ranking" />
 
 
                 <ImageView
                     android:id="@+id/game"
                     android:layout_width="80px"
                     android:layout_height="80px"
-                    android:contentDescription="@string/empty"
                     android:layout_centerHorizontal="true"
+                    android:contentDescription="@string/empty"
                     android:src="@mipmap/game" />
 
                 <com.zhy.autolayout.AutoLinearLayout
@@ -463,8 +463,8 @@
                         android:layout_width="50px"
                         android:layout_height="50px"
                         android:contentDescription="@string/empty"
-                        android:visibility="gone"
-                        android:src="@mipmap/audio_player" />
+                        android:src="@mipmap/audio_player"
+                        android:visibility="gone" />
 
 
                     <com.zhy.autolayout.AutoRelativeLayout
@@ -500,12 +500,14 @@
                             android:textSize="10sp"
                             android:visibility="gone" />
                     </com.zhy.autolayout.AutoRelativeLayout>
+
                     <ImageView
                         android:id="@+id/iv_live_switch"
                         android:layout_width="80px"
                         android:layout_height="80px"
                         android:layout_marginLeft="19px"
                         android:background="@mipmap/room_btn_switchcamera" />
+
                     <ImageView
                         android:layout_width="50px"
                         android:layout_height="50px"
@@ -519,8 +521,9 @@
                         android:layout_height="60px"
                         android:layout_marginBottom="19px"
                         android:layout_marginLeft="15px"
-                        android:visibility="gone"
-                        android:background="@mipmap/mg_room_btn_fen" />
+                        android:background="@mipmap/mg_room_btn_fen"
+                        android:visibility="gone" />
+
                     <ImageView
                         android:id="@+id/game_more_btn"
                         android:layout_width="80px"
@@ -528,13 +531,14 @@
                         android:layout_marginBottom="19px"
                         android:layout_marginLeft="19px"
                         android:background="@mipmap/more_btn" />
+
                     <ImageView
                         android:layout_width="50px"
                         android:layout_height="50px"
                         android:layout_marginBottom="19px"
                         android:layout_marginLeft="15px"
-                        android:visibility="gone"
-                        android:src="@mipmap/close_white" />
+                        android:src="@mipmap/close_white"
+                        android:visibility="gone" />
 
                 </com.zhy.autolayout.AutoLinearLayout>
 
@@ -553,20 +557,21 @@
                 android:id="@+id/ll_game"
                 android:layout_width="match_parent"
                 android:layout_height="300px"
-                android:orientation="horizontal"
                 android:layout_centerVertical="true"
+                android:orientation="horizontal"
                 android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/iv_xy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/yx"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="20px" />
+                    android:layout_marginLeft="20px"
+                    android:src="@mipmap/yx" />
 
             </com.zhy.autolayout.AutoLinearLayout>
-             <include layout="@layout/view_show_watchlive_game"/>
+
+            <include layout="@layout/view_show_watchlive_game" />
         </com.zhy.autolayout.AutoLinearLayout>
 
         <com.lvshandian.lemeng.view.BarrageView
@@ -589,33 +594,33 @@
             android:visibility="gone" />
 
         <!--<com.zhy.autolayout.AutoFrameLayout-->
-            <!--android:id="@+id/watch_room_message_fragment_parent"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="505px"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:background="@color/transparent"-->
-            <!--android:layout_marginBottom="110px"-->
-            <!--android:orientation="vertical">-->
+        <!--android:id="@+id/watch_room_message_fragment_parent"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="505px"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:background="@color/transparent"-->
+        <!--android:layout_marginBottom="110px"-->
+        <!--android:orientation="vertical">-->
 
-            <!--<fragment-->
-                <!--android:id="@+id/watch_room_message_fragment_gift"-->
-                <!--android:name="com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragmentGift"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="200px"-->
-                <!--android:background="@drawable/btn_ticket_labe" />-->
+        <!--<fragment-->
+        <!--android:id="@+id/watch_room_message_fragment_gift"-->
+        <!--android:name="com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragmentGift"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="200px"-->
+        <!--android:background="@drawable/btn_ticket_labe" />-->
 
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="5px" />-->
+        <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="5px" />-->
 
-            <!--<fragment-->
+        <!--<fragment-->
 
-                <!--android:id="@+id/watch_room_message_fragment"-->
-                <!--android:name="com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragment"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="300px"-->
-                <!--android:layout_gravity="bottom"-->
-                <!--android:background="@drawable/btn_ticket_labe" />-->
+        <!--android:id="@+id/watch_room_message_fragment"-->
+        <!--android:name="com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragment"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="300px"-->
+        <!--android:layout_gravity="bottom"-->
+        <!--android:background="@drawable/btn_ticket_labe" />-->
         <!--</com.zhy.autolayout.AutoFrameLayout>-->
 
         <com.zhy.autolayout.AutoRelativeLayout
@@ -670,7 +675,7 @@
 
         </com.zhy.autolayout.AutoRelativeLayout>
 
-        <include layout="@layout/item_game_infos"/>
+        <include layout="@layout/item_game_infos" />
 
         <!--场控按钮-->
         <TextView

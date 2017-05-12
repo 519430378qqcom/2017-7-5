@@ -57,13 +57,13 @@ public class LiveBean implements Serializable {
     private String roomLocation;
     private String roomDistance;
     private String publishUrl;
-    private int roomsType;//0为直播,1为游戏
+    private String roomsType;//0为直播,1为游戏
 
-    public int getRoomsType() {
+    public String getRoomsType() {
         return roomsType;
     }
 
-    public void setRoomsType(int roomsType) {
+    public void setRoomsType(String roomsType) {
         this.roomsType = roomsType;
     }
 

@@ -44,7 +44,7 @@ public class AttentionListAadapter extends RecyclerView.Adapter<AttentionListAad
         if (mData.size() > 0) {
             LiveBean user = mData.get(position);
 
-            if (user.getRoomsType() == 1) {
+            if (user.getRoomsType().equals("1")) {
                 holder.iv_is_liveing.setVisibility(View.VISIBLE);
             } else {
                 holder.iv_is_liveing.setVisibility(View.GONE);

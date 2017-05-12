@@ -50,7 +50,7 @@ public class HotListAadapter extends RecyclerView.Adapter<HotListAadapter.HotVie
                 holder.vip.setVisibility(View.GONE);
             }
 
-            if (user.getRooms().getRoomsType() == 1) {
+            if (user.getRooms().getRoomsType().equals("1")) {
                 holder.iv_is_liveing.setVisibility(View.VISIBLE);
             } else {
                 holder.iv_is_liveing.setVisibility(View.GONE);
