@@ -8,13 +8,12 @@
 
     <com.zhy.autolayout.AutoRelativeLayout
         android:layout_width="600px"
-        android:layout_height="760px"
-       >
+        android:layout_height="760px">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@mipmap/rule_frame" />
+            android:src="@mipmap/trend_frame" />
 
         <WebView
             android:id="@+id/webView"
@@ -23,7 +22,8 @@
             android:layout_marginBottom="70px"
             android:layout_marginLeft="40px"
             android:layout_marginRight="40px"
-            android:layout_marginTop="70px" />
+            android:layout_marginTop="70px"
+            android:scrollbars="none"/>
 
     </com.zhy.autolayout.AutoRelativeLayout>
 

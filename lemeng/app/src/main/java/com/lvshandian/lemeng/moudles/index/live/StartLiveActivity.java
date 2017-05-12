@@ -43,10 +43,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -1168,13 +1166,13 @@ public class StartLiveActivity extends BaseActivity implements
         }
     }
 
-    private void showPlayView(){
+    private void showPlayView() {
         live_game.setVisibility(View.VISIBLE);
         rl_kp.setVisibility(View.VISIBLE);
         iv_trend.setVisibility(View.VISIBLE);
     }
 
-    private void hidePlayView(){
+    private void hidePlayView() {
         live_game.setVisibility(View.GONE);
         rl_kp.setVisibility(View.GONE);
         iv_trend.setVisibility(View.GONE);
@@ -3926,49 +3924,24 @@ public class StartLiveActivity extends BaseActivity implements
         webSetting(webSettings);
         webView.loadUrl("http://60.205.114.36:8080/lucky/trend.html");
         webView.setWebChromeClient(new WebChromeClient());
-        webView.setWebViewClient(new WebViewClient() {
-
+        webView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            }
-
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                //加载完成
-                webView.setVisibility(View.VISIBLE);
-//                if (mLoading != null && mLoading.isShowing()) {
-//                    mLoading.dismiss();
-//                }
-            }
-
-            @Override
-            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                webView.setVisibility(View.GONE);
-//                if (mLoading != null && mLoading.isShowing()) {
-//                    mLoading.dismiss();
-//                }
-            }
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                LogUtil.e("shouldOverrideUrlLoading", "url = " + url);
-                return super.shouldOverrideUrlLoading(view, url);
+            public boolean onLongClick(View v) {
+                return true;
             }
         });
     }
 
     private void webSetting(WebSettings webSettings) {
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);// 设置js可以直接打开窗口，如window.open()，默认为false
-        webSettings.setJavaScriptEnabled(true);// 是否允许执行js，默认为false。设置true时，会提醒可能造成XSS漏洞
+//        webSettings.setJavaScriptEnabled(true);// 是否允许执行js，默认为false。设置true时，会提醒可能造成XSS漏洞
         webSettings.setSupportZoom(true);// 是否可以缩放，默认true
-        webSettings.setBuiltInZoomControls(true);// 是否显示缩放按钮，默认false
+//        webSettings.setBuiltInZoomControls(true);// 是否显示缩放按钮，默认false
         webSettings.setUseWideViewPort(true);// 设置此属性，可任意比例缩放。大视图模式
         webSettings.setLoadWithOverviewMode(true);// 和setUseWideViewPort(true)一起解决网页自适应问题
         webSettings.setAppCacheEnabled(true);// 是否使用缓存
         webSettings.setDomStorageEnabled(true);// DOM Storage
     }
-
-
 
 
     private void showTouZhuPop(String selectStatus, int jbNumber, int tzNumber) {
@@ -4010,9 +3983,6 @@ public class StartLiveActivity extends BaseActivity implements
         intQh = Integer.valueOf(nper) + 1;
         tv_tzqh.setText("投注期号：" + intQh);
     }
-
-
-
 
 
     private void sureTz(final PopupWindow rulePop) {
