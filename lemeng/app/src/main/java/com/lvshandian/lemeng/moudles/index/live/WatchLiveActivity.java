@@ -1023,12 +1023,12 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         tvSamll.setText("1:" + blBean.getSmall());
                         tvSinge.setText("1:" + blBean.getSingle());
                         tvDouble.setText("1:" + blBean.getDoubles());
-                        tvBigSigle.setText("1:" + blBean.getBig_single());
-                        tvSamllSinge.setText("1:" + blBean.getSmall_single());
-                        tvBigDouble.setText("1:" + blBean.getBig_double());
-                        tvSamllDouble.setText("1:" + blBean.getSmall_double());
-                        tvMoreBig.setText("1:" + blBean.getMore_big());
-                        tvMoreSamll.setText("1:" + blBean.getMore_small());
+                        tvBigSigle.setText("1:" + blBean.getBigSingle());
+                        tvSamllSinge.setText("1:" + blBean.getSmallSingle());
+                        tvBigDouble.setText("1:" + blBean.getBigDouble());
+                        tvSamllDouble.setText("1:" + blBean.getSmallDouble());
+                        tvMoreBig.setText("1:" + blBean.getMoreBig());
+                        tvMoreSamll.setText("1:" + blBean.getMoreSmall());
 
                     }
                 } catch (JSONException e) {
