@@ -1072,13 +1072,13 @@ public class StartLiveActivity extends BaseActivity implements
                 v.getLocationOnScreen(location);
                 popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, (location[0] + v.getWidth() / 2) - popupWidth / 2,
                         location[1] - popupHeight);
-                popupView.findViewById(R.id.iv_live_share).setOnClickListener(new View.OnClickListener() {  //分享
-                    @Override
-                    public void onClick(View v) {
-                        UMUtils.umShare(StartLiveActivity.this, creatReadyBean.getCreator().getNickName(), creatReadyBean
-                                .getLivePicUrl(), share_url + "?userId=" + appUser.getId());
-                    }
-                });
+//                popupView.findViewById(R.id.iv_live_share).setOnClickListener(new View.OnClickListener() {  //分享
+//                    @Override
+//                    public void onClick(View v) {
+//                        UMUtils.umShare(StartLiveActivity.this, creatReadyBean.getCreator().getNickName(), creatReadyBean
+//                                .getLivePicUrl(), share_url + "?userId=" + appUser.getId());
+//                    }
+//                });
                 popupView.findViewById(R.id.audio_player).setOnClickListener(new View.OnClickListener() { //音乐
                     @Override
                     public void onClick(View v) {
@@ -1857,9 +1857,10 @@ public class StartLiveActivity extends BaseActivity implements
 //                startActivity(new Intent(mContext, ChargeCoinsActivity.class).putExtra("yanpiao",
 //                        SharedPreferenceUtils.getGoldCoin(mContext)));
 //                startActivity(new Intent(mContext, PayOrderActivity.class));
-                Intent intent = new Intent(mContext, ExplainWebViewActivity.class);
-                intent.putExtra("flag", 1000);
-                startActivity(intent);
+//                Intent intent = new Intent(mContext, ExplainWebViewActivity.class);
+//                intent.putExtra("flag", 1000);
+//                startActivity(intent);
+                showToast("暂时不支持充值");
             }
         });
         String myCoin = SharedPreferenceUtils.getGoldCoin(mContext);
@@ -4002,6 +4003,7 @@ public class StartLiveActivity extends BaseActivity implements
 
     private void sureTz(final PopupWindow rulePop) {
         String url = UrlBuilder.chargeServerUrl + UrlBuilder.reciveAmount;
+        LogUtils.e("countryType :"+countryType);
         OkHttpUtils.get().url(url)
                 .addParams("userId", appUser.getId())
                 .addParams("roomId", room_Id)
@@ -4076,7 +4078,7 @@ public class StartLiveActivity extends BaseActivity implements
                         LastAwardBean lastAwardBean = JsonUtil.json2Bean(obj, LastAwardBean.class);
                         if (lastAwardBean != null) {
                             nper = lastAwardBean.getNper();
-
+                            countryType = lastAwardBean.getCountryType();
                             tv_periods.setText("第" + lastAwardBean.getNper() + "期");
                             frist_num.setText(lastAwardBean.getFirstNum() + "");
                             second_num.setText(lastAwardBean.getSecondNum() + "");

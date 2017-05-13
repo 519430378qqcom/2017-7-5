@@ -265,7 +265,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     ImageView btnAttention;
     ImageView ivLivePrivatechat;
     ImageView ivLiveGift;
-    ImageView ivLiveShare;
+    //    ImageView ivLiveShare;
     GiftFrameLayout giftFrameLayout1;
     GiftFrameLayout giftFrameLayout2;
     ImageView liveClose;
@@ -811,6 +811,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     private int intQh;
     private String countryType;
     private String strJinBi;
+    private ImageView iv_game;
 
 
     @Override
@@ -842,7 +843,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         btnAttention = (ImageView) mRoomContainer.findViewById(R.id.btn_attention);
         ivLivePrivatechat = (ImageView) mRoomContainer.findViewById(R.id.iv_live_privatechat);
         ivLiveGift = (ImageView) mRoomContainer.findViewById(R.id.iv_live_gift);
-        ivLiveShare = (ImageView) mRoomContainer.findViewById(R.id.iv_live_share);
+//        ivLiveShare = (ImageView) mRoomContainer.findViewById(R.id.iv_live_share);
+        iv_game = (ImageView) mRoomContainer.findViewById(R.id.iv_game);
         giftFrameLayout1 = (GiftFrameLayout) mRoomContainer.findViewById(R.id.gift_layout1);
         giftFrameLayout2 = (GiftFrameLayout) mRoomContainer.findViewById(R.id.gift_layout2);
         liveClose = (ImageView) mRoomContainer.findViewById(R.id.live_close);
@@ -1141,8 +1143,10 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         if (liveListBean.getRooms().getRoomsType().equals("1")) {
             isPlayerRoom = true;
             getTimenumber();
+            showPlayView();
         } else {
             isPlayerRoom = false;
+            hidePlayView();
         }
     }
 
@@ -1177,7 +1181,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     protected void initListener() {
         iv_trend.setOnClickListener(this);
         tv_rule.setOnClickListener(this);
-
+        iv_game.setOnClickListener(this);
         smallAdd.setOnClickListener(this);
         smallSubtract.setOnClickListener(this);
         doubleSubtract.setOnClickListener(this);
@@ -1202,7 +1206,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         liveHead.setOnClickListener(this);
         ivLivePrivatechat.setOnClickListener(this);
         ivLiveGift.setOnClickListener(this);
-        ivLiveShare.setOnClickListener(this);
+//        ivLiveShare.setOnClickListener(this);
         llTangpiao.setOnClickListener(this);
         liveClose.setOnClickListener(this);
         btnAttention.setOnClickListener(this);
@@ -1455,8 +1459,20 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 } else {
                     showToast("主播未开启游戏");
                 }
-
                 break;
+            case R.id.iv_game:
+                if (isPlayerRoom) {
+                    if (live_game.getVisibility() == View.VISIBLE) {
+                        hidePlayView();
+                    } else {
+                        showPlayView();
+                    }
+
+                } else {
+                    showToast("主播未开启游戏");
+                }
+                break;
+
             case R.id.zhoubangW:
                 messageFragment.ivRankingOnClick();
                 break;
@@ -1497,11 +1513,11 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 toUserName = liveListBean.getNickName();
                 getGiftPopup();
                 break;
-            //分享
-            case R.id.iv_live_share:
-                UMUtils.umShare(this, liveListBean.getNickName(), liveListBean.getLivePicUrl(),
-                        share_url + "?userId=" + liveListBean.getId());
-                break;
+//            //分享
+//            case R.id.iv_live_share:
+//                UMUtils.umShare(this, liveListBean.getNickName(), liveListBean.getLivePicUrl(),
+//                        share_url + "?userId=" + liveListBean.getId());
+//                break;
             //跳转到排行榜
             case R.id.ll_tp_labe:
                 Intent intent = new Intent(this, ContributionActivity.class);
@@ -2188,9 +2204,10 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 //                startActivity(new Intent(mContext, ChargeCoinsActivity.class).putExtra("yanpiao",
 //                        SharedPreferenceUtils.getGoldCoin(mContext)));
 //                startActivity(new Intent(mContext, PayOrderActivity.class));
-                Intent intent = new Intent(mContext, ExplainWebViewActivity.class);
+             /*   Intent intent = new Intent(mContext, ExplainWebViewActivity.class);
                 intent.putExtra("flag", 1000);
-                startActivity(intent);
+                startActivity(intent);*/
+                showToast("暂时不支持充值");
             }
         });
 

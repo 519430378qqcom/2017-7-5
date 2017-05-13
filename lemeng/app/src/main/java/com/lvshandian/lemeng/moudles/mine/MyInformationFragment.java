@@ -88,10 +88,10 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
     TextView tvSign;
     @Bind(R.id.setting)
     TextView setting;
-    @Bind(R.id.tv_coin)
-    TextView tvCoin;
-    @Bind(R.id.ll_coin)
-    AutoRelativeLayout llCoin;
+//    @Bind(R.id.tv_coin)
+//    TextView tvCoin;
+//    @Bind(R.id.ll_coin)
+//    AutoRelativeLayout llCoin;
     @Bind(R.id.ll_contribution)
     AutoRelativeLayout llContribution;
     @Bind(R.id.ll_myLevel)
@@ -278,7 +278,7 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
 
     @Override
     protected void initListener() {
-        llCoin.setOnClickListener(this);
+//        llCoin.setOnClickListener(this);
         llEarnest.setOnClickListener(this);
         llContribution.setOnClickListener(this);
         llMylevel.setOnClickListener(this);
@@ -405,7 +405,7 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
     private void initUserInfo(AppUser userInfo) {
         if (userInfo != null) {
             if (name == null || id == null || fanse == null || attention == null || sex == null || ivLevel == null
-                    || tvSign == null || myHead == null || tvCoin == null || my_level == null || tvVerified == null)
+                    || tvSign == null || myHead == null || my_level == null || tvVerified == null)
                 return;
             String nickName = userInfo.getNickName();
             if (!com.lvshandian.lemeng.utils.TextUtils.isEmpty(nickName))
@@ -470,7 +470,7 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
             if (com.lvshandian.lemeng.utils.TextUtils.isEmpty(goldCoin))
                 goldCoin = "0";
             goldCoin = CountUtils.getCount(Long.parseLong(goldCoin));
-            tvCoin.setText(goldCoin);
+//            tvCoin.setText(goldCoin);
 
             String level = userInfo.getLevel();
             if (com.lvshandian.lemeng.utils.TextUtils.isEmpty(level))

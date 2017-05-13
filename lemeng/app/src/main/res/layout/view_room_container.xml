@@ -471,13 +471,21 @@
                             android:background="@mipmap/mg_room_btn_xin"
                             android:visibility="gone" />
 
+                        <!--<ImageView-->
+                            <!--android:id="@+id/iv_live_share"-->
+                            <!--android:layout_width="80px"-->
+                            <!--android:layout_height="80px"-->
+                            <!--android:layout_marginBottom="19px"-->
+                            <!--android:layout_marginLeft="19px"-->
+                            <!--android:background="@mipmap/mg_room_btn_fen" />-->
+
                         <ImageView
-                            android:id="@+id/iv_live_share"
-                            android:layout_width="80px"
-                            android:layout_height="80px"
-                            android:layout_marginBottom="19px"
-                            android:layout_marginLeft="19px"
-                            android:background="@mipmap/mg_room_btn_fen" />
+                        android:id="@+id/iv_game"
+                        android:layout_width="80px"
+                        android:layout_height="80px"
+                        android:layout_marginBottom="19px"
+                        android:layout_marginLeft="19px"
+                        android:background="@mipmap/game" />
 
                         <ImageView
                             android:layout_width="60px"

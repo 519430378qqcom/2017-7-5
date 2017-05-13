@@ -193,7 +193,7 @@
             android:layout_marginLeft="30px"
             android:background="@color/line" />
         <!--我的乐票-->
-        <include layout="@layout/my_item_yanpiao_layout" />
+        <!--<include layout="@layout/my_item_yanpiao_layout" />-->
 
         <!--我的回放-->
         <!--<include layout="@layout/my_item_huifang_layout" />-->
