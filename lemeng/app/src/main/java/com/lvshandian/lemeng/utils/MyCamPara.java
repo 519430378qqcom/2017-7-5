@@ -41,7 +41,9 @@ public class MyCamPara {
             }
             i++;
         }
-
+         if (i == list.size()){
+             i = list.size()-1;
+         }
         return list.get(i);
     }
     public Size getPictureSize(List<Camera.Size> list, int th){
