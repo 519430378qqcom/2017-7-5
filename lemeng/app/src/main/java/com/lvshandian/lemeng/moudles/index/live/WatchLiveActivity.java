@@ -97,7 +97,6 @@ import com.lvshandian.lemeng.moudles.index.live.gift.GiftFrameLayout;
 import com.lvshandian.lemeng.moudles.index.live.gift.GiftSendModel;
 import com.lvshandian.lemeng.moudles.index.live.utils.AnchorVideo;
 import com.lvshandian.lemeng.moudles.index.live.utils.LiveVideo;
-import com.lvshandian.lemeng.moudles.mine.activity.ExplainWebViewActivity;
 import com.lvshandian.lemeng.moudles.mine.my.ContributionActivity;
 import com.lvshandian.lemeng.moudles.mine.my.OtherPersonHomePageActivity;
 import com.lvshandian.lemeng.moudles.mine.my.adapter.OnItemClickListener;
@@ -119,7 +118,6 @@ import com.lvshandian.lemeng.utils.SendRoomMessageUtils;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.utils.ThreadManager;
 import com.lvshandian.lemeng.utils.ToastUtils;
-import com.lvshandian.lemeng.utils.UMUtils;
 import com.lvshandian.lemeng.view.BarrageView;
 import com.lvshandian.lemeng.view.CameraLivePreviewFrameView;
 import com.lvshandian.lemeng.view.LoadingDialog;
@@ -811,6 +809,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     private int intQh;
     private String countryType;
     private String strJinBi;
+    private boolean isTouZhu;//是否可以投注
     private ImageView iv_game;
 
 
@@ -1382,7 +1381,11 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 }
                 break;
             case R.id.iv_touzhu:  //投注
-                showTouZhuPop(selectStatus, jbNumber, tzNumber);
+                if (isTouZhu) {
+                    showTouZhuPop(selectStatus, jbNumber, tzNumber);
+                }else {
+                    showToast("没有开奖信息,请稍候再试");
+                }
                 break;
 
             case R.id.iv_big: //大
@@ -3865,9 +3868,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 "\n" +
                 "2、小单、小双、大单、大双\n" +
                 "\n" +
-                "3、极小值（0-5）、极大值（22-27）\n" +
-                "\n" +
-                "4、28个号码定位");
+                "3、极小值（0-5）、极大值（22-27）\n");
     }
 
     /**
@@ -3929,7 +3930,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         webSettings.setSupportZoom(true);// 是否可以缩放，默认true
 //        webSettings.setBuiltInZoomControls(true);// 是否显示缩放按钮，默认false
         webSettings.setUseWideViewPort(true);// 设置此属性，可任意比例缩放。大视图模式
-        webSettings.setLoadWithOverviewMode(true);// 和setUseWideViewPort(true)一起解决网页自适应问题
+//        webSettings.setLoadWithOverviewMode(true);// 和setUseWideViewPort(true)一起解决网页自适应问题
         webSettings.setAppCacheEnabled(true);// 是否使用缓存
         webSettings.setDomStorageEnabled(true);// DOM Storage
     }
@@ -3970,7 +3971,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         });
         tv_ds.setText("大小单双：" + selectStatus);
         strJinBi = String.valueOf(jbNumber * tzNumber);
-        tv_xzjf.setText("下注积分：" + strJinBi + "分");
+        tv_xzjf.setText("投注乐票：" + strJinBi);
         intQh = Integer.valueOf(nper) + 1;
         tv_tzqh.setText("投注期号：" + intQh);
     }
@@ -4015,7 +4016,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                             map.put("vip", appUser.getVip());
                             map.put("userId", appUser.getId());
                             map.put("level", appUser.getLevel());
-                            map.put("inputMsg", intQh + "期 " + selectStatus + " 投注" + strJinBi + "元");
+                            map.put("inputMsg", intQh + "期 " + selectStatus + " 投注" + strJinBi + "乐票");
                             SendRoomMessageUtils.onCustomMessagePlay("1818", messageFragment, liveListBean.getRooms()
                                     .getRoomId() + "", map);
                         } else {
@@ -4034,7 +4035,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * @dw 获取上期开奖数据
      */
     private void getTimenumber() {
-        String url = UrlBuilder.chargeServerUrl + UrlBuilder.getTimenumber;
+        String url = UrlBuilder.chargeServerUrl + UrlBuilder.getTimenumber + "?userId=" + appUser.getId();
         OkHttpUtils.get().url(url).build().execute(new StringCallback() {
 
 
@@ -4054,6 +4055,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         LogUtil.e("obj", obj);
                         LastAwardBean lastAwardBean = JsonUtil.json2Bean(obj, LastAwardBean.class);
                         if (lastAwardBean != null) {
+                            isTouZhu = true;
                             nper = lastAwardBean.getNper();
                             countryType = lastAwardBean.getCountryType();
                             tv_periods.setText("第" + lastAwardBean.getNper() + "期");
@@ -4072,8 +4074,22 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                                 myHandler.sendEmptyMessage(10000);
                             }
 
+                            if (lastAwardBean.getWinStatus().equals("1")) {
+                                getZhonaJiangTZ(lastAwardBean.getNper(), lastAwardBean.getWinAmountAll());
+
+                                /**
+                                 * 设置游戏布局的金币数量
+                                 */
+                                String myCoin = SharedPreferenceUtils.getGoldCoin(mContext);
+                                myCoin = String.valueOf(Long.parseLong(myCoin) + Long.parseLong(lastAwardBean.getWinAmountAll()));
+                                SharedPreferenceUtils.saveGoldCoin(mContext, myCoin);
+                                myCoin = CountUtils.getCount(Long.parseLong(myCoin));
+                                all_lepiao.setText(myCoin);
+                            }
+
                         }
-                    } else {
+                    } else if (code.equals("1")){
+                        isTouZhu = false;
                         String obj = jsonObject.getString("obj");
                         LogUtil.e("obj", obj);
                         LastAwardBean lastAwardBean = JsonUtil.json2Bean(obj, LastAwardBean.class);
@@ -4090,6 +4106,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
                             myHandler.postDelayed(timenNumber, 30000);
                         }
+                    }else {
+                        isTouZhu = false;
+                        myHandler.postDelayed(timenNumber, 30000);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -4104,4 +4123,18 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             getTimenumber();
         }
     };
+
+    private void getZhonaJiangTZ(String nper, String winAmountAll) {
+        initDialog();
+        String content = "提示" +"\n"+"\n"+"您在" + nper + "期中,获得乐票" + winAmountAll ;
+        baseDialogTitle.setText(content);
+        baseDialogLeft.setVisibility(View.GONE);
+        baseDialogLine.setVisibility(View.GONE);
+        baseDialogRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                baseDialog.dismiss();
+            }
+        });
+    }
 }

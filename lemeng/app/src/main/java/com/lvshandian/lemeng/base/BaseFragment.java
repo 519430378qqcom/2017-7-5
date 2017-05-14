@@ -23,7 +23,6 @@ import com.lvshandian.lemeng.bean.LiveBean;
 import com.lvshandian.lemeng.bean.LiveListBean;
 import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.moudles.index.live.WatchLiveActivity;
-import com.lvshandian.lemeng.moudles.mine.activity.ExplainWebViewActivity;
 import com.lvshandian.lemeng.utils.CacheUtils;
 import com.lvshandian.lemeng.utils.DESUtil;
 import com.lvshandian.lemeng.utils.JsonUtil;
@@ -260,9 +259,10 @@ public abstract class BaseFragment extends Fragment {
                             showToast("账户余额不足");
 //                            gotoActivity(ChargeCoinsActivity.class, false);
 //                            startActivity(new Intent(mContext, PayOrderActivity.class));
-                            Intent intent = new Intent(mContext, ExplainWebViewActivity.class);
-                            intent.putExtra("flag", 1000);
-                            startActivity(intent);
+
+//                            Intent intent = new Intent(mContext, ExplainWebViewActivity.class);
+//                            intent.putExtra("flag", 1000);
+//                            startActivity(intent);
                         }
                     }
                 });

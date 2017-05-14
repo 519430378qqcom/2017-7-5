@@ -38,7 +38,6 @@ import com.lvshandian.lemeng.bean.QuitApp;
 import com.lvshandian.lemeng.bean.QuitLogin;
 import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.moudles.index.live.WatchLiveActivity;
-import com.lvshandian.lemeng.moudles.mine.activity.ExplainWebViewActivity;
 import com.lvshandian.lemeng.moudles.start.LoginActivity;
 import com.lvshandian.lemeng.moudles.start.LogoutHelper;
 import com.lvshandian.lemeng.utils.CacheUtils;
@@ -768,9 +767,10 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
                             showToast("账户余额不足");
 //                            gotoActivity(ChargeCoinsActivity.class, false);
 //                            startActivity(new Intent(mContext, PayOrderActivity.class));
-                            Intent intent = new Intent(mContext, ExplainWebViewActivity.class);
-                            intent.putExtra("flag", 1000);
-                            startActivity(intent);
+
+//                            Intent intent = new Intent(mContext, ExplainWebViewActivity.class);
+//                            intent.putExtra("flag", 1000);
+//                            startActivity(intent);
                         }
                     }
                 });
@@ -902,6 +902,7 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
 
     public TextView baseDialogTitle, baseDialogLeft, baseDialogRight;
     public Dialog baseDialog;
+    public View baseDialogLine;
 
     /**
      * 自定义dialog
@@ -925,5 +926,6 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
         baseDialogTitle = (TextView) view.findViewById(R.id.tvTitle);
         baseDialogLeft = (TextView) view.findViewById(R.id.btnLeft);
         baseDialogRight = (TextView) view.findViewById(R.id.btnRight);
+        baseDialogLine = view.findViewById(R.id.line);
     }
 }

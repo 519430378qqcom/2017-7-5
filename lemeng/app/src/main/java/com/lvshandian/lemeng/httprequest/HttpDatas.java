@@ -1,7 +1,6 @@
 package com.lvshandian.lemeng.httprequest;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,7 +11,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.lvshandian.lemeng.MyApplication;
 import com.lvshandian.lemeng.UrlBuilder;
-import com.lvshandian.lemeng.moudles.mine.activity.ExplainWebViewActivity;
 import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.ToastUtils;
 import com.lvshandian.lemeng.view.LoadingDialog;
@@ -268,9 +266,11 @@ public class HttpDatas {
                             //账户余额不足,跳转到充值页面
 //                            context.startActivity(new Intent(context, ChargeCoinsActivity.class));
 //                            context.startActivity(new Intent(context, PayOrderActivity.class));
-                            Intent intent = new Intent(context, ExplainWebViewActivity.class);
-                            intent.putExtra("flag", 1000);
-                            context.startActivity(intent);
+
+                            ToastUtils.showMessageDefault(context,"账户余额不足");
+//                            Intent intent = new Intent(context, ExplainWebViewActivity.class);
+//                            intent.putExtra("flag", 1000);
+//                            context.startActivity(intent);
                         } else {
                         }
                         if (mDialog.isShowing()) {

@@ -2,10 +2,12 @@
 <com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:background="@drawable/bg_round_dialog"
     android:orientation="vertical">
 
     <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="wrap_content"
+        android:background="@drawable/bg_round_dialog"
         android:layout_height="300px"
         android:orientation="vertical">
 
@@ -17,6 +19,7 @@
             android:background="@color/white"
             android:gravity="center"
             android:padding="10px"
+            android:textColor="@color/tv_color3"
             android:text="描述"
             android:textSize="35px" />
 
@@ -28,7 +31,7 @@
         <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="550px"
             android:layout_height="0dp"
-            android:layout_weight="1.5">
+            android:layout_weight="1">
 
             <TextView
                 android:id="@+id/btnLeft"
@@ -41,6 +44,7 @@
                 android:textSize="35px" />
 
             <View
+                android:id="@+id/line"
                 android:layout_width="1px"
                 android:layout_height="match_parent"
                 android:background="@color/line" />

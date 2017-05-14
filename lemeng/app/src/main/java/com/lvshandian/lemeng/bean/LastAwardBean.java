@@ -28,6 +28,24 @@ public class LastAwardBean implements Serializable {
     private String type;
     private int thirdNum;
     private int firstNum;
+    private String winAmountAll; //中奖金额
+    private String winStatus;//1中奖 0未中奖
+
+    public String getWinAmountAll() {
+        return winAmountAll;
+    }
+
+    public void setWinAmountAll(String winAmountAll) {
+        this.winAmountAll = winAmountAll;
+    }
+
+    public String getWinStatus() {
+        return winStatus;
+    }
+
+    public void setWinStatus(String winStatus) {
+        this.winStatus = winStatus;
+    }
 
     public String getCountryType() {
         return countryType;

@@ -41,9 +41,9 @@ public class MyCamPara {
             }
             i++;
         }
-         if (i == list.size()){
-             i = list.size()-1;
-         }
+        if (i == list.size()) {
+            i = list.size() - 1;//如果没找到，就选最大的size
+        }
         return list.get(i);
     }
     public Size getPictureSize(List<Camera.Size> list, int th){
