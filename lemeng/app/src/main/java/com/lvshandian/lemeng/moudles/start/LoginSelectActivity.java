@@ -2,10 +2,18 @@ package com.lvshandian.lemeng.moudles.start;
 
 import android.Manifest;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.alibaba.fastjson.JSON;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.lvshandian.lemeng.MainActivity;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.UrlBuilder;
@@ -25,6 +33,7 @@ import com.lvshandian.lemeng.wangyiyunxin.config.preference.Preferences;
 import com.lvshandian.lemeng.wangyiyunxin.config.preference.UserPreferences;
 import com.netease.nim.uikit.cache.DataCacheManager;
 import com.netease.nim.uikit.common.ui.dialog.EasyAlertDialogHelper;
+import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.netease.nimlib.sdk.AbortableFuture;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
@@ -48,7 +57,7 @@ import butterknife.Bind;
 /**
  * 启动界面 on 2016/10/20.
  */
-public class LoginSelectActivity extends BaseActivity {
+public class LoginSelectActivity extends BaseActivity implements GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener{
     @Bind(R.id.iv_facebook_login)
     ImageView facebookLogin;
     @Bind(R.id.iv_twitter_login)
@@ -69,6 +78,9 @@ public class LoginSelectActivity extends BaseActivity {
     private String token = null;
     public static final String KICK_OUT = "KICK_OUT";
 
+    private static int RC_SIGN_IN=10001;
+    private GoogleApiClient mGoogleApiClient;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_select_login;
@@ -81,6 +93,19 @@ public class LoginSelectActivity extends BaseActivity {
         onParseIntent();
 
         mShareAPI = UMShareAPI.get(mContext);
+//
+//        GoogleSignInOptions gso = new GoogleSignInOptions
+//                .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                .requestEmail()
+//                .requestId()
+//                .build();
+//
+//        mGoogleApiClient = new GoogleApiClient.Builder(this)
+//                .addConnectionCallbacks(this)
+//                .addOnConnectionFailedListener(this)
+//                .enableAutoManage(this,this)
+//                .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
+//                .build();
     }
 
     @Override
@@ -104,7 +129,7 @@ public class LoginSelectActivity extends BaseActivity {
                 twitterLogin();
                 break;
             case R.id.iv_google_login:
-                googleLogin();
+                signIn();
                 break;
             case R.id.iv_wechat_login:
                 weChatLogin();
@@ -254,6 +279,10 @@ public class LoginSelectActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+        if(requestCode==RC_SIGN_IN){
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleSignInResult(result);
+        }
     }
 
     /**
@@ -403,4 +432,57 @@ public class LoginSelectActivity extends BaseActivity {
         Preferences.saveAppLogin("1");
         Preferences.saveWyyxLogin("1");
     }
+
+    private void signIn() {
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+
+    private void handleSignInResult(GoogleSignInResult result){
+        LogUtil.e("robin", "handleSignInResult:" + result.isSuccess());
+        if(result.isSuccess()){
+            LogUtil.e("robin", "成功");
+            GoogleSignInAccount acct = result.getSignInAccount();
+            if(acct!=null){
+                LogUtil.e("robin", "用户名是:" + acct.getDisplayName());
+                LogUtil.e("robin", "用户email是:" + acct.getEmail());
+                LogUtil.e("robin", "用户头像是:" + acct.getPhotoUrl());
+                LogUtil.e("robin", "用户Id是:" + acct.getId());//之后就可以更新UI了
+                LogUtil.e("robin", "用户IdToken是:" + acct.getIdToken());
+            }
+        }else{
+            LogUtil.e("robin", "没有成功"+result.getStatus());
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+//        mGoogleApiClient.connect();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+//        if (mGoogleApiClient.isConnected()) {
+//            mGoogleApiClient.disconnect();
+//        }
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        LogUtil.e("robin","google登录-->onConnected,bundle=="+bundle);
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        LogUtil.e("robin","google登录-->onConnectionSuspended,i=="+i);
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        LogUtil.e("robin","google登录-->onConnectionFailed,connectionResult=="+connectionResult);
+    }
+
 }
