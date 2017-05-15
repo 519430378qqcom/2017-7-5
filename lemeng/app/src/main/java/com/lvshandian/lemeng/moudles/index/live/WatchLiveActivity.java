@@ -3817,58 +3817,46 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * 规则pop
      */
     public void getRulePopup() {
-        final PopupWindow rulePop = new PopupWindow(this);
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View view = inflater.inflate(R.layout.pop_rule, null);
-        rulePop.setContentView(view);
-        rulePop.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
-        rulePop.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-        rulePop.setFocusable(true);
-        rulePop.setBackgroundDrawable(new BitmapDrawable());
-        rulePop.setOutsideTouchable(true);
-
-        backgroundAlpha(0.5f);
-
-        rulePop.showAtLocation(ivBig, Gravity.CENTER, 0, 0);
-        rulePop.update();
-        rulePop.setOnDismissListener(new RulePopOnDismissListner());
-
-        view.findViewById(R.id.colse_rule).setOnClickListener(new View.OnClickListener() {
+        View view = getLayoutInflater().inflate(R.layout.pop_rule_web, null);
+        dialogForSelect.setCanceledOnTouchOutside(true);
+        dialogForSelect.setContentView(view);
+        dialogForSelect.show();
+        ImageView colse_trend = (ImageView) view.findViewById(R.id.colse_trend);
+        colse_trend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rulePop.dismiss();
+                dialogForSelect.dismiss();
             }
         });
-        TextView tv_content = (TextView) view.findViewById(R.id.tv_content);
-        tv_content.setText("幸运28分为白天和夜场两种模式：\n" +
-                "\n" +
-                "白天采用北京快乐8数据（09：00-24：00）：\n" +
-                "\n" +
-                "北京快乐8开奖结果来源于国家福利彩票北京快乐8开奖号码，每五分钟一期，不停开奖。\n" +
-                "北京快乐8每期开奖共开出20个号码，并按照从小到大的时序一次排列。\n" +
-                "取其1-6位开奖号码并进行相加，和值的末位数作为幸运28开奖的第一位数值；\n" +
-                "取其7-12位开奖号码并进行相加，和值的末位数作为幸运28开奖的第二位数值；\n" +
-                "取其13-18位开奖号码并进行相加，和值的末位数作为幸运28开奖的第三位数值；\n" +
-                "将三位数相加，所得的结果即为幸运28的开奖结果。\n" +
-                "\n" +
-                "夜场采用的是加拿大28数据（00：00-9：00）：\n" +
-                "\n" +
-                "加拿大28开奖结果来源于加拿大福利彩票的加拿大幸运28开奖结果\n" +
-                "加拿大28每期开奖共开出20个号码，并按照从小到大的时序一次排列。\n" +
-                "取其2、5、8、11、14、17位数进行相加，和值的末位数作为幸运28开奖的第一位数值；\n" +
-                "取其3、6、9、12、15位数进行相加，和值的末位数作为幸运28开奖的第二位数值；\n" +
-                "取其4、7、10、13、16、19位数进行相加，和值的末位数作为幸运28开奖的第三位数值；\n" +
-                "将三位数相加，所得的结果即为幸运28的开奖结果。\n" +
-                "\n" +
-                "幸运28的玩法：\n" +
-                "\n" +
-                "28个号码，抽中即可获得奖励。玩法类型共有以下玩法：\n" +
-                "\n" +
-                "1、大、小、单、双\n" +
-                "\n" +
-                "2、小单、小双、大单、大双\n" +
-                "\n" +
-                "3、极小值（0-5）、极大值（22-27）\n");
+
+        final WebView webView = (WebView) view.findViewById(R.id.webView);
+        final ProgressBar iv_include_loading = (ProgressBar) view.findViewById(R.id.iv_include_loading);
+        WebSettings webSettings = webView.getSettings();
+        webSetting(webSettings);
+        webView.loadUrl("http://60.205.114.36:8080/protocol/rule.html");
+        webView.setWebChromeClient(new WebChromeClient());
+        webView.setWebViewClient(new WebViewClient() {
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                iv_include_loading.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                iv_include_loading.setVisibility(View.GONE);
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                LogUtil.e("shouldOverrideUrlLoading", "url = " + url);
+                return super.shouldOverrideUrlLoading(view, url);
+            }
+        });
     }
 
     /**
