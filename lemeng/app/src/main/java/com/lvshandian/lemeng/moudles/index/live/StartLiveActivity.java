@@ -738,7 +738,7 @@ public class StartLiveActivity extends BaseActivity implements
                     mCountDownTotalTime = mCountDownTotalTime - 1000;
                     String time = DateUtils.millisToDateString(mCountDownTotalTime > 0 ? mCountDownTotalTime : 0, "mm:ss");
                     if (tv_game_next_open_time != null) {
-                        tv_game_next_open_time.setText(time);
+                        tv_game_next_open_time.setText("00:" + time);
                     }
                     if (mCountDownTotalTime > 1000) {
                         myHandler.sendEmptyMessageDelayed(10000, 1000);
@@ -4080,6 +4080,7 @@ public class StartLiveActivity extends BaseActivity implements
                             mCountDownTotalTime = Long.parseLong(lastAwardBean.getDateLine()) - now;
 
                             if (mCountDownTotalTime < 0) {
+                                tv_game_next_open_time.setText("等待:开奖:中.");
                                 myHandler.postDelayed(timenNumber, 30000);
                             } else {
                                 myHandler.sendEmptyMessage(10000);
@@ -4112,12 +4113,13 @@ public class StartLiveActivity extends BaseActivity implements
                             third_num.setText(lastAwardBean.getThirdNum() + "");
                             all_num.setText(lastAwardBean.getSum() + "");
                             tv_ds.setText(lastAwardBean.getType());
-                            tv_game_next_open_time.setText("0000");
+                            tv_game_next_open_time.setText("等待:开奖:中.");
 
                             myHandler.postDelayed(timenNumber, 30000);
                         }
                     } else {
                         isTouZhu = false;
+                        tv_game_next_open_time.setText("等待:开奖:中.");
                         myHandler.postDelayed(timenNumber, 30000);
                     }
                 } catch (JSONException e) {

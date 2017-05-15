@@ -16,7 +16,10 @@ import butterknife.Bind;
  */
 public class TimeCountDownLayout extends LinearLayout {
 
-
+    @Bind(R.id.tv_hour_one)
+    TextView mTvHourOne;
+    @Bind(R.id.tv_hour_two)
+    TextView mTvHourTwo;
     @Bind(R.id.tv_minute_one)
     TextView mTvMinuteOne;
     @Bind(R.id.tv_minute_two)
@@ -25,6 +28,7 @@ public class TimeCountDownLayout extends LinearLayout {
     TextView mTvSecondOne;
     @Bind(R.id.tv_second_two)
     TextView mTvSecondTwo;
+
 
     public TimeCountDownLayout(Context context) {
         this(context, null);
@@ -42,10 +46,13 @@ public class TimeCountDownLayout extends LinearLayout {
     private void init(Context context) {
         View view =
                 LayoutInflater.from(context).inflate(R.layout.item_game_time_layout, this, true);
+        mTvHourOne = (TextView) view.findViewById(R.id.tv_hour_one);
+        mTvHourTwo = (TextView) view.findViewById(R.id.tv_hour_two);
         mTvMinuteOne = (TextView) view.findViewById(R.id.tv_minute_one);
         mTvMinuteTwo = (TextView) view.findViewById(R.id.tv_minute_two);
         mTvSecondOne = (TextView) view.findViewById(R.id.tv_second_one);
         mTvSecondTwo = (TextView) view.findViewById(R.id.tv_second_two);
+
     }
 
     public void setText(String time){
@@ -55,15 +62,21 @@ public class TimeCountDownLayout extends LinearLayout {
         for (int i=0;i<time.length();i++){
             String s = time.charAt(i)+"";
             if (i==0){
-                mTvMinuteOne.setText(s);
+                mTvHourOne.setText(s);
             }
             if (i==1){
-                mTvMinuteTwo.setText(s);
+                mTvHourTwo.setText(s);
             }
             if (i==3){
-                mTvSecondOne.setText(s);
+                mTvMinuteOne.setText(s);
             }
             if (i==4){
+                mTvMinuteTwo.setText(s);
+            }
+            if (i==6){
+                mTvSecondOne.setText(s);
+            }
+            if (i==7){
                 mTvSecondTwo.setText(s);
             }
         }

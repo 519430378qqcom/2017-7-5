@@ -793,7 +793,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     mCountDownTotalTime = mCountDownTotalTime - 1000;
                     String time = DateUtils.millisToDateString(mCountDownTotalTime > 0 ? mCountDownTotalTime : 0, "mm:ss");
                     if (tv_game_next_open_time != null) {
-                        tv_game_next_open_time.setText(time);
+                        tv_game_next_open_time.setText("00:" + time);
                     }
                     if (mCountDownTotalTime > 1000) {
                         myHandler.sendEmptyMessageDelayed(10000, 1000);
@@ -1383,7 +1383,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             case R.id.iv_touzhu:  //投注
                 if (isTouZhu) {
                     showTouZhuPop(selectStatus, jbNumber, tzNumber);
-                }else {
+                } else {
                     showToast("没有开奖信息,请稍候再试");
                 }
                 break;
@@ -4057,6 +4057,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                             mCountDownTotalTime = Long.parseLong(lastAwardBean.getDateLine()) - now;
 
                             if (mCountDownTotalTime < 0) {
+                                tv_game_next_open_time.setText("等待:开奖:中.");
                                 myHandler.postDelayed(timenNumber, 30000);
                             } else {
                                 myHandler.sendEmptyMessage(10000);
@@ -4076,7 +4077,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                             }
 
                         }
-                    } else if (code.equals("1")){
+                    } else if (code.equals("1")) {
                         isTouZhu = false;
                         String obj = jsonObject.getString("obj");
                         LogUtil.e("obj", obj);
@@ -4090,12 +4091,13 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                             third_num.setText(lastAwardBean.getThirdNum() + "");
                             all_num.setText(lastAwardBean.getSum() + "");
                             tv_ds.setText(lastAwardBean.getType());
-                            tv_game_next_open_time.setText("0000");
+                            tv_game_next_open_time.setText("等待:开奖:中.");
 
                             myHandler.postDelayed(timenNumber, 30000);
                         }
-                    }else {
+                    } else {
                         isTouZhu = false;
+                        tv_game_next_open_time.setText("等待:开奖:中.");
                         myHandler.postDelayed(timenNumber, 30000);
                     }
                 } catch (JSONException e) {
@@ -4114,7 +4116,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
     private void getZhonaJiangTZ(String nper, String winAmountAll) {
         initDialog();
-        String content = "提示" +"\n"+"\n"+"您在" + nper + "期中,获得乐票" + winAmountAll ;
+        String content = "提示" + "\n" + "\n" + "您在" + nper + "期中,获得乐票" + winAmountAll;
         baseDialogTitle.setText(content);
         baseDialogLeft.setVisibility(View.GONE);
         baseDialogLine.setVisibility(View.GONE);
