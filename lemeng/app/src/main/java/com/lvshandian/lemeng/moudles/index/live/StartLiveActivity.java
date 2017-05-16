@@ -1089,6 +1089,13 @@ public class StartLiveActivity extends BaseActivity implements
                     }
                 });
 
+                popupView.findViewById(R.id.iv_live_meiyan).setOnClickListener(new View.OnClickListener() { //美颜
+                    @Override
+                    public void onClick(View v) {
+                        showToast("点击了美颜");
+                    }
+                });
+
                 break;
 
             /**
