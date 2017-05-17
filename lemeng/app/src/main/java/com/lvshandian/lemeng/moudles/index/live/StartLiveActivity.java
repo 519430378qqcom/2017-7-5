@@ -239,7 +239,8 @@ public class StartLiveActivity extends BaseActivity implements
         CameraPreviewFrameView.Listener,
         StreamingSessionListener,
         StreamingStateChangedListener, com.lvshandian.lemeng.view.CameraPreviewFrameView
-        .Listener, MediaPlayer.OnCompletionListener{
+        .Listener, MediaPlayer.OnCompletionListener
+        , SeekBar.OnSeekBarChangeListener {
     @Bind(R.id.live_head)
     AvatarView liveHead;
     @Bind(R.id.live_name)
@@ -1093,12 +1094,8 @@ public class StartLiveActivity extends BaseActivity implements
                 popupView.findViewById(R.id.iv_live_meiyan).setOnClickListener(new View.OnClickListener() { //美颜
                     @Override
                     public void onClick(View v) {
-//                        if (rl_meiyan.getVisibility() == View.VISIBLE) {
-//                            rl_meiyan.setVisibility(View.GONE);
-//                        } else {
-//                            rl_meiyan.setVisibility(View.VISIBLE);
-//                        }
-                        showToast("暂未开通美颜效果");
+                        getMeiyanPopup();
+//                        showToast("暂未开通美颜效果");
                     }
                 });
 
@@ -2509,7 +2506,7 @@ public class StartLiveActivity extends BaseActivity implements
                 .setCameraPrvSizeRatio(CameraStreamingSetting.PREVIEW_SIZE_RATIO.RATIO_16_9)
                 .setBuiltInFaceBeautyEnabled(true)
                 .setFaceBeautySetting(new CameraStreamingSetting.
-                        FaceBeautySetting(1.0f, 1.0f, 0.8f))
+                        FaceBeautySetting(0.5f, 0.5f, 0.5f))
                 .setVideoFilter(CameraStreamingSetting.VIDEO_FILTER_TYPE.VIDEO_FILTER_BEAUTY);
 
         mIsNeedFB = true;
@@ -4102,7 +4099,7 @@ public class StartLiveActivity extends BaseActivity implements
                             }
 
                             if (lastAwardBean.getWinStatus().equals("1")) {
-                                getZhonaJiangTZ(lastAwardBean.getNper(), lastAwardBean.getWinAmountAll(),"1");
+                                getZhonaJiangTZ(lastAwardBean.getNper(), lastAwardBean.getWinAmountAll(), "1");
 
                                 /**
                                  * 设置游戏布局的金币数量
@@ -4112,8 +4109,8 @@ public class StartLiveActivity extends BaseActivity implements
                                 SharedPreferenceUtils.saveGoldCoin(mContext, myCoin);
                                 myCoin = CountUtils.getCount(Long.parseLong(myCoin));
                                 all_lepiao.setText(myCoin);
-                            }else if (lastAwardBean.getWinStatus().equals("0")){
-                                getZhonaJiangTZ(lastAwardBean.getNper(), lastAwardBean.getWinAmountAll(),"0");
+                            } else if (lastAwardBean.getWinStatus().equals("0")) {
+                                getZhonaJiangTZ(lastAwardBean.getNper(), lastAwardBean.getWinAmountAll(), "0");
                             }
                         }
                     } else if (code.equals("1")) {
@@ -4153,12 +4150,12 @@ public class StartLiveActivity extends BaseActivity implements
         }
     };
 
-    private void getZhonaJiangTZ(String nper, String winAmountAll,String type) {
+    private void getZhonaJiangTZ(String nper, String winAmountAll, String type) {
         initDialog();
         String content = "";
-        if (type.equals("1")){
+        if (type.equals("1")) {
             content = "提示" + "\n" + "\n" + "您在" + nper + "期中,获得乐票" + winAmountAll;
-        }else {
+        } else {
             content = "提示" + "\n" + "\n" + "您在" + nper + "期中未中奖";
         }
         baseDialogTitle.setText(content);
@@ -4172,4 +4169,110 @@ public class StartLiveActivity extends BaseActivity implements
         });
     }
 
+
+    private float mPinkValue = 0.5f;
+    private float mWhitenValue = 0.5f;
+    private float mReddenValue = 0.5f;
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        switch (seekBar.getId()) {
+            case R.id.seek_pink: {
+                if (fromUser) {
+                    mPinkValue = progress / 100f;
+
+                    CameraStreamingSetting.FaceBeautySetting fbSetting = mCameraStreamingSetting.getFaceBeautySetting();
+                    fbSetting.beautyLevel = mPinkValue;
+                    fbSetting.whiten = mWhitenValue;
+                    fbSetting.redden = mReddenValue;
+
+                    mMediaStreamingManager.updateFaceBeautySetting(fbSetting);
+                }
+            }
+            break;
+            case R.id.seek_whiten: {
+                if (fromUser) {
+                    mWhitenValue = progress / 100f;
+
+                    CameraStreamingSetting.FaceBeautySetting fbSetting = mCameraStreamingSetting.getFaceBeautySetting();
+                    fbSetting.beautyLevel = mPinkValue;
+                    fbSetting.whiten = mWhitenValue;
+                    fbSetting.redden = mReddenValue;
+
+                    mMediaStreamingManager.updateFaceBeautySetting(fbSetting);
+                }
+            }
+            break;
+            case R.id.seek_redden: {
+                if (fromUser) {
+                    mReddenValue = progress / 100f;
+
+                    CameraStreamingSetting.FaceBeautySetting fbSetting = mCameraStreamingSetting.getFaceBeautySetting();
+                    fbSetting.beautyLevel = mPinkValue;
+                    fbSetting.whiten = mWhitenValue;
+                    fbSetting.redden = mReddenValue;
+
+                    mMediaStreamingManager.updateFaceBeautySetting(fbSetting);
+                }
+            }
+            break;
+            case R.id.seek_soften: {
+                if (fromUser) {
+//                    mPinkValue = progress / 100f;
+
+                    CameraStreamingSetting.FaceBeautySetting fbSetting = mCameraStreamingSetting.getFaceBeautySetting();
+                    fbSetting.beautyLevel = mPinkValue;
+                    fbSetting.whiten = mWhitenValue;
+                    fbSetting.redden = mReddenValue;
+
+                    mMediaStreamingManager.updateFaceBeautySetting(fbSetting);
+                }
+            }
+            break;
+        }
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    /**
+     * 打开美颜界面
+     */
+    public void getMeiyanPopup() {
+        PopupWindow meiyanPopup = new PopupWindow(this);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View view = inflater.inflate(R.layout.layout_meiyan, null);
+        meiyanPopup.setContentView(view);
+        meiyanPopup.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
+        meiyanPopup.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        meiyanPopup.setFocusable(true);
+        meiyanPopup.setBackgroundDrawable(new BitmapDrawable());
+        meiyanPopup.setOutsideTouchable(true);
+        meiyanPopup.setAnimationStyle(R.style.mypopwindow_anim_style);
+        meiyanPopup.showAtLocation(rlvListLiveAudiences, Gravity.BOTTOM, 0, 0);
+        meiyanPopup.update();
+
+        SeekBar m_Seekpink = (SeekBar) view.findViewById(R.id.seek_pink);
+        m_Seekpink.setOnSeekBarChangeListener(this);
+        m_Seekpink.setProgress((int) (mPinkValue * 100));
+
+        SeekBar m_Seekwhiten = (SeekBar) view.findViewById(R.id.seek_whiten);
+        m_Seekwhiten.setOnSeekBarChangeListener(this);
+        m_Seekwhiten.setProgress((int) (mWhitenValue * 100));
+
+        SeekBar m_Seekredden = (SeekBar) view.findViewById(R.id.seek_redden);
+        m_Seekredden.setOnSeekBarChangeListener(this);
+        m_Seekredden.setProgress((int) (mReddenValue * 100));
+
+        SeekBar m_Seeksoften = (SeekBar) view.findViewById(R.id.seek_soften);
+        m_Seeksoften.setOnSeekBarChangeListener(this);
+        m_Seeksoften.setProgress((int) (mPinkValue * 100));
+    }
 }
