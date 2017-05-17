@@ -29,7 +29,7 @@ public class LastAwardBean implements Serializable {
     private int thirdNum;
     private int firstNum;
     private String winAmountAll; //中奖金额
-    private String winStatus;//1中奖 0未中奖
+    private String winStatus;//1中奖 0未中奖  2未投注
 
     public String getWinAmountAll() {
         return winAmountAll;

@@ -7,6 +7,8 @@
     <color name="line">#dfdfdf</color>
     <color name="line_cf">#CFCFCF</color>
     <color name="chose">#F6D42C</color>
+    <color name="color_normalitem">#FF0000</color><!--美颜 -->
+    <color name="color_selectedlitem">#303F9F</color><!--美颜 -->
     <color name="tv_color3">#333333</color>
     <color name="tv_color6">#666666</color>
     <color name="tv_color9">#999999</color>

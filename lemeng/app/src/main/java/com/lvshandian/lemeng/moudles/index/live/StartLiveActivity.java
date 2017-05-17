@@ -239,7 +239,7 @@ public class StartLiveActivity extends BaseActivity implements
         CameraPreviewFrameView.Listener,
         StreamingSessionListener,
         StreamingStateChangedListener, com.lvshandian.lemeng.view.CameraPreviewFrameView
-        .Listener, MediaPlayer.OnCompletionListener {
+        .Listener, MediaPlayer.OnCompletionListener{
     @Bind(R.id.live_head)
     AvatarView liveHead;
     @Bind(R.id.live_name)
@@ -843,6 +843,7 @@ public class StartLiveActivity extends BaseActivity implements
         String myCoin = SharedPreferenceUtils.getGoldCoin(mContext);
         myCoin = CountUtils.getCount(Long.parseLong(myCoin));
         all_lepiao.setText(myCoin);
+
     }
 
     private void initSelectStatus() {
@@ -1092,7 +1093,12 @@ public class StartLiveActivity extends BaseActivity implements
                 popupView.findViewById(R.id.iv_live_meiyan).setOnClickListener(new View.OnClickListener() { //美颜
                     @Override
                     public void onClick(View v) {
-                        showToast("点击了美颜");
+//                        if (rl_meiyan.getVisibility() == View.VISIBLE) {
+//                            rl_meiyan.setVisibility(View.GONE);
+//                        } else {
+//                            rl_meiyan.setVisibility(View.VISIBLE);
+//                        }
+                        showToast("暂未开通美颜效果");
                     }
                 });
 
@@ -1442,6 +1448,7 @@ public class StartLiveActivity extends BaseActivity implements
         map.put("level", creatReadyBean.getCreator().getLevel());
         SendRoomMessageUtils.onCustomMessageQiehuan("113", messageFragment, wy_Id + "",
                 map);
+
     }
 
     @Override
@@ -2518,6 +2525,7 @@ public class StartLiveActivity extends BaseActivity implements
         mHandler.removeCallbacks(mSwitcher);
         mHandler.postDelayed(mSwitcher, 100);
     }
+
 
     private void initPaly() {
         AspectFrameLayout afl = (AspectFrameLayout) findViewById(R.id.cameraPreview_afl);
@@ -4094,7 +4102,7 @@ public class StartLiveActivity extends BaseActivity implements
                             }
 
                             if (lastAwardBean.getWinStatus().equals("1")) {
-                                getZhonaJiangTZ(lastAwardBean.getNper(), lastAwardBean.getWinAmountAll());
+                                getZhonaJiangTZ(lastAwardBean.getNper(), lastAwardBean.getWinAmountAll(),"1");
 
                                 /**
                                  * 设置游戏布局的金币数量
@@ -4104,6 +4112,8 @@ public class StartLiveActivity extends BaseActivity implements
                                 SharedPreferenceUtils.saveGoldCoin(mContext, myCoin);
                                 myCoin = CountUtils.getCount(Long.parseLong(myCoin));
                                 all_lepiao.setText(myCoin);
+                            }else if (lastAwardBean.getWinStatus().equals("0")){
+                                getZhonaJiangTZ(lastAwardBean.getNper(), lastAwardBean.getWinAmountAll(),"0");
                             }
                         }
                     } else if (code.equals("1")) {
@@ -4143,9 +4153,14 @@ public class StartLiveActivity extends BaseActivity implements
         }
     };
 
-    private void getZhonaJiangTZ(String nper, String winAmountAll) {
+    private void getZhonaJiangTZ(String nper, String winAmountAll,String type) {
         initDialog();
-        String content = "提示" + "\n" + "\n" + "您在" + nper + "期中,获得乐票" + winAmountAll;
+        String content = "";
+        if (type.equals("1")){
+            content = "提示" + "\n" + "\n" + "您在" + nper + "期中,获得乐票" + winAmountAll;
+        }else {
+            content = "提示" + "\n" + "\n" + "您在" + nper + "期中未中奖";
+        }
         baseDialogTitle.setText(content);
         baseDialogLeft.setVisibility(View.GONE);
         baseDialogLine.setVisibility(View.GONE);
@@ -4156,4 +4171,5 @@ public class StartLiveActivity extends BaseActivity implements
             }
         });
     }
+
 }

@@ -4064,7 +4064,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                             }
 
                             if (lastAwardBean.getWinStatus().equals("1")) {
-                                getZhonaJiangTZ(lastAwardBean.getNper(), lastAwardBean.getWinAmountAll());
+                                getZhonaJiangTZ(lastAwardBean.getNper(), lastAwardBean.getWinAmountAll(), "1");
 
                                 /**
                                  * 设置游戏布局的金币数量
@@ -4074,6 +4074,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                                 SharedPreferenceUtils.saveGoldCoin(mContext, myCoin);
                                 myCoin = CountUtils.getCount(Long.parseLong(myCoin));
                                 all_lepiao.setText(myCoin);
+                            } else if (lastAwardBean.getWinStatus().equals("0")) {
+                                getZhonaJiangTZ(lastAwardBean.getNper(), lastAwardBean.getWinAmountAll(), "0");
                             }
 
                         }
@@ -4114,9 +4116,14 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         }
     };
 
-    private void getZhonaJiangTZ(String nper, String winAmountAll) {
+    private void getZhonaJiangTZ(String nper, String winAmountAll, String type) {
         initDialog();
-        String content = "提示" + "\n" + "\n" + "您在" + nper + "期中,获得乐票" + winAmountAll;
+        String content = "";
+        if (type.equals("1")) {
+            content = "提示" + "\n" + "\n" + "您在" + nper + "期中,获得乐票" + winAmountAll;
+        } else {
+            content = "提示" + "\n" + "\n" + "您在" + nper + "期中未中奖";
+        }
         baseDialogTitle.setText(content);
         baseDialogLeft.setVisibility(View.GONE);
         baseDialogLine.setVisibility(View.GONE);

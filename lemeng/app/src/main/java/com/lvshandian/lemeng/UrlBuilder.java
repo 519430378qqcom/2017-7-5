@@ -13,8 +13,8 @@ import java.util.Map;
  */
 public class UrlBuilder {
     //乐檬服務器
-    public static final String serverUrl = "http://60.205.114.36:80/";// 服务器网址公网
-    public static final String chargeServerUrl = "http://60.205.114.36:80/admin/";// 充值端口
+    public static final String serverUrl = "http://47.88.229.22:80/";// 服务器网址公网
+    public static final String chargeServerUrl = "http://47.88.229.22:80/admin/";// 充值端口
     //本地
 //    public static final String serverUrl = "http://192.168.1.144:8080/";// 服务器网址公网
 //    public static final String chargeServerUrl = "http://192.168.1.144:8081/admin/";// 充值端口
