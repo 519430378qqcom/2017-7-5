@@ -3872,7 +3872,7 @@ public class StartLiveActivity extends BaseActivity implements
         final ProgressBar iv_include_loading = (ProgressBar) view.findViewById(R.id.iv_include_loading);
         WebSettings webSettings = webView.getSettings();
         webSetting(webSettings);
-        webView.loadUrl("http://60.205.114.36:8080/protocol/rule.html");
+        webView.loadUrl("http://47.88.229.22:8080/protocol/rule.html");
         webView.setWebChromeClient(new WebChromeClient());
         webView.setWebViewClient(new WebViewClient() {
 
@@ -3926,7 +3926,7 @@ public class StartLiveActivity extends BaseActivity implements
         final ProgressBar iv_include_loading = (ProgressBar) view.findViewById(R.id.iv_include_loading);
         WebSettings webSettings = webView.getSettings();
         webSetting(webSettings);
-        webView.loadUrl("http://60.205.114.36:8080/lucky/trend.html");
+        webView.loadUrl("http://47.88.229.22:8080/lucky/trend.html");
         webView.setWebChromeClient(new WebChromeClient());
         webView.setWebViewClient(new WebViewClient() {
 

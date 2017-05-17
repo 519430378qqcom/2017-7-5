@@ -61,10 +61,10 @@ public class ExplainWebViewActivity extends BaseActivity implements View.OnClick
             url = String.format(UrlBuilder.YINLIAN_PAY_WEB, appUser.getId());
         }else if(flag == 2000){
             tv_titlebar_title.setText("用户协议");
-            url = "http://60.205.114.36:8080/protocol/private.html";
+            url = "http://47.88.229.22:8080/protocol/private.html";
         }else if(flag == 3000){
             tv_titlebar_title.setText("关于我们");
-            url = "http://60.205.114.36:8080/protocol/about.html";
+            url = "http://47.88.229.22:8080/protocol/about.html";
         }
 
         initView();
