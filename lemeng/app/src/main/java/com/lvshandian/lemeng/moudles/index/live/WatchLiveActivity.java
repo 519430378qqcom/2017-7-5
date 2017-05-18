@@ -638,8 +638,15 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         SendRoomMessageUtils.onCustomMessageSendGift(messageFragmentGift,
                                 liveListBean.getRooms().getRoomId() + "", map);
 
-                        SharedPreferenceUtils.saveGoldCoin(mContext, (Long.parseLong
-                                (SharedPreferenceUtils.getGoldCoin(mContext)) - Long.parseLong(mSendGiftItem.getMemberConsume())) + "");
+//                        SharedPreferenceUtils.saveGoldCoin(mContext, (Long.parseLong
+//                                (SharedPreferenceUtils.getGoldCoin(mContext)) - Long.parseLong(mSendGiftItem.getMemberConsume())) + "");
+
+                        String myCoin = SharedPreferenceUtils.getGoldCoin(mContext);
+                        myCoin = String.valueOf(Long.parseLong(myCoin) - Long.parseLong(mSendGiftItem.getMemberConsume()));
+                        SharedPreferenceUtils.saveGoldCoin(mContext, myCoin);
+                        myCoin = CountUtils.getCount(Long.parseLong(myCoin));
+                        all_lepiao.setText(myCoin);
+
                     }
                     break;
                 //获取主播的信息,是否关注主播
@@ -1937,6 +1944,16 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     case 2828:
                         isPlayerRoom = true;
                         getTimenumber();
+                        break;
+                    case 10009:
+                        LogUtil.e("升级", message.getRemoteExtension().toString());
+                        AppUser mAppUser = JavaBeanMapUtils.mapToBean((Map) message.getRemoteExtension().get("data"),
+                                AppUser.class);
+                        if (mAppUser.getId().equals(appUser.getId())) {
+                            appUser.setLevel(mAppUser.getLevel());
+                            SharedPreferenceUtils.saveUserInfo(mContext, appUser);
+                            appUser = SharedPreferenceUtils.getUserInfo(mContext);
+                        }
                         break;
                     default:
                         break;
@@ -3945,6 +3962,13 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         TextView tv_xzjf = (TextView) view.findViewById(R.id.tv_xzjf);  //下注积分
         ImageView sure_tz = (ImageView) view.findViewById(R.id.sure_tz);  //确定投注
         ImageView colse_rule = (ImageView) view.findViewById(R.id.colse_rule);  //关闭弹框
+
+        tv_ds.setText("大小单双：" + selectStatus);
+        strJinBi = String.valueOf(jbNumber * tzNumber);
+        tv_xzjf.setText("投注乐票：" + strJinBi);
+        intQh = Integer.valueOf(nper) + 1;
+        tv_tzqh.setText("投注期号：" + intQh);
+
         colse_rule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -3954,14 +3978,14 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         sure_tz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sureTz(rulePop);
+                if (Long.parseLong(SharedPreferenceUtils.getGoldCoin(mContext)) < Long.parseLong(strJinBi)) {
+                    showToast("您的乐票不足,请充值");
+                    rulePop.dismiss();
+                } else {
+                    sureTz(rulePop);
+                }
             }
         });
-        tv_ds.setText("大小单双：" + selectStatus);
-        strJinBi = String.valueOf(jbNumber * tzNumber);
-        tv_xzjf.setText("投注乐票：" + strJinBi);
-        intQh = Integer.valueOf(nper) + 1;
-        tv_tzqh.setText("投注期号：" + intQh);
     }
 
     private void sureTz(final PopupWindow rulePop) {

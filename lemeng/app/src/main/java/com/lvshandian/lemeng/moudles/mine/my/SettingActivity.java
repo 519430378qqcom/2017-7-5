@@ -9,13 +9,15 @@ import android.widget.TextView;
 
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.base.BaseActivity;
+import com.lvshandian.lemeng.bean.AppUser;
 import com.lvshandian.lemeng.bean.QuitLogin;
 import com.lvshandian.lemeng.moudles.mine.activity.ExplainWebViewActivity;
 import com.lvshandian.lemeng.moudles.mine.activity.SettingPerson;
+import com.lvshandian.lemeng.moudles.mine.bean.LoginFrom;
 import com.lvshandian.lemeng.moudles.start.LoginSelectActivity;
 import com.lvshandian.lemeng.moudles.start.LogoutHelper;
-import com.lvshandian.lemeng.utils.CacheUtils;
 import com.lvshandian.lemeng.utils.FileCacheUtils;
+import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.view.RoundDialog;
 import com.lvshandian.lemeng.view.ToggleView;
 import com.lvshandian.lemeng.wangyiyunxin.config.preference.Preferences;
@@ -163,8 +165,13 @@ public class SettingActivity extends BaseActivity {
     private void quitLogin() {
         logout();
         //清空已保存的用户信息
-        CacheUtils.saveObject(this, null, CacheUtils.PASSWORD);
-        CacheUtils.saveObject(mContext, null, CacheUtils.USERINFO);
+//        CacheUtils.saveObject(this, null, CacheUtils.PASSWORD);
+//        CacheUtils.saveObject(mContext, null, CacheUtils.USERINFO);
+        AppUser appUser = new AppUser();
+        LoginFrom loginFrom = new LoginFrom();
+        SharedPreferenceUtils.saveUserInfo(mContext,appUser);
+        SharedPreferenceUtils.saveLoginFrom(mContext,loginFrom);
+
         //发送到MainActivity，关闭页面
         EventBus.getDefault().post(new QuitLogin());
         //开启登录页面

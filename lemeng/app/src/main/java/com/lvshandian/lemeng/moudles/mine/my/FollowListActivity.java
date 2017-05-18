@@ -14,9 +14,9 @@ import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.moudles.mine.bean.Funse;
 import com.lvshandian.lemeng.moudles.mine.bean.FunseBean;
 import com.lvshandian.lemeng.moudles.mine.my.adapter.FunseListAdapter;
-import com.lvshandian.lemeng.utils.CacheUtils;
 import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
+import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefresh;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -139,7 +139,8 @@ public class FollowListActivity extends BaseActivity implements SwipeRefresh.OnR
             totalPages = funse.getTotalPages();
             List<FunseBean> result = funse.getResult();
             appUser.setFollowNum(String.valueOf(result.size()));
-            CacheUtils.saveObject(FollowListActivity.this, appUser, CacheUtils.USERINFO);
+//            CacheUtils.saveObject(FollowListActivity.this, appUser, CacheUtils.USERINFO);
+            SharedPreferenceUtils.saveUserInfo(mContext,appUser);
             if (isRefresh) {
                 mDatas.clear();
             } else {

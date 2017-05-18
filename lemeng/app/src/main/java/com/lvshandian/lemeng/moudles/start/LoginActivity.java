@@ -26,7 +26,6 @@ import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.moudles.mine.activity.ExplainWebViewActivity;
 import com.lvshandian.lemeng.moudles.mine.bean.LoginFrom;
 import com.lvshandian.lemeng.moudles.mine.my.StateCodeActivity;
-import com.lvshandian.lemeng.utils.CacheUtils;
 import com.lvshandian.lemeng.utils.DESUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.MD5Utils;
@@ -118,14 +117,15 @@ public class LoginActivity extends BaseActivity {
      * @param json
      */
     private void loginSucess(String json) {
-        appUser = JSON.parseObject(json, AppUser.class);
+       AppUser appUser = JSON.parseObject(json, AppUser.class);
         String passWord = edLoginPassword.getText().toString().trim();
         if (!TextUtils.isEmpty(passWord)) {
             passWord = MD5Utils.md5(passWord);
             appUser.setPassword(passWord);
         }
         //存储用户信息
-        CacheUtils.saveObject(LoginActivity.this, appUser, CacheUtils.USERINFO);
+//        CacheUtils.saveObject(LoginActivity.this, appUser, CacheUtils.USERINFO);
+        SharedPreferenceUtils.saveUserInfo(mContext,appUser);
         SharedPreferenceUtils.saveGoldCoin(mContext, appUser.getGoldCoin());
         loginWangYi();
     }
@@ -179,7 +179,8 @@ public class LoginActivity extends BaseActivity {
         LoginFrom loginFrom = new LoginFrom();
         loginFrom.setThirdLogin(false);
         loginFrom.setPassword(pass);
-        CacheUtils.saveObject(mContext, loginFrom, CacheUtils.PASSWORD);
+//        CacheUtils.saveObject(mContext, loginFrom, CacheUtils.PASSWORD);
+        SharedPreferenceUtils.saveLoginFrom(mContext,loginFrom);
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("userName", name);
         map.put("password", pass);
@@ -223,6 +224,7 @@ public class LoginActivity extends BaseActivity {
         // 这里为了简便起见，demo就直接使用了密码的md5作为token。
         // 如果开发者直接使用这个demo，只更改appkey，然后就登入自己的账户体系的话，需要传入同步到云信服务器的token，而不是用户密码。
         try {
+            AppUser appUser = SharedPreferenceUtils.getUserInfo(mContext);
             account = DESUtil.decrypt(appUser.getNeteaseAccount());//
             token = DESUtil.decrypt(appUser.getNeteaseToken());
             LogUtils.i("WangYi", "account:" + account + "\ntoken:" + token);

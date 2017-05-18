@@ -16,8 +16,8 @@ import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.moudles.mine.bean.LoginFrom;
 import com.lvshandian.lemeng.moudles.start.LoginActivity;
-import com.lvshandian.lemeng.utils.CacheUtils;
 import com.lvshandian.lemeng.utils.LogUtils;
+import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.utils.TextUtils;
 import com.lvshandian.lemeng.wangyiyunxin.config.preference.Preferences;
 
@@ -76,7 +76,9 @@ public class ModifyPasswordActivity extends BaseActivity {
      */
     private void quitLogin() {
         //清空已保存的用户信息
-        CacheUtils.saveObject(mContext, null, CacheUtils.USERINFO);
+//        CacheUtils.saveObject(mContext, null, CacheUtils.USERINFO);
+        AppUser appUser = new AppUser();
+        SharedPreferenceUtils.saveUserInfo(mContext, appUser);
         //发送到MainActivity，关闭页面
         EventBus.getDefault().post(new QuitLogin());
         Preferences.saveAppLogin("0");
@@ -117,7 +119,8 @@ public class ModifyPasswordActivity extends BaseActivity {
      * @return
      */
     private boolean checkInfo() {
-        AppUser userInfo = (AppUser) CacheUtils.readObject(mContext, CacheUtils.USERINFO);
+//        AppUser userInfo = (AppUser) CacheUtils.readObject(mContext, CacheUtils.USERINFO);
+        AppUser userInfo = SharedPreferenceUtils.getUserInfo(mContext);
         if (userInfo != null) {
 
 
@@ -126,7 +129,8 @@ public class ModifyPasswordActivity extends BaseActivity {
                 showToast("请输入旧密码");
                 return false;
             }
-            LoginFrom from = (LoginFrom) CacheUtils.readObject(this, CacheUtils.PASSWORD);
+//            LoginFrom from = (LoginFrom) CacheUtils.readObject(this, CacheUtils.PASSWORD);
+            LoginFrom from = SharedPreferenceUtils.getLoginFrom(this);
             if (from != null) {
                 boolean thirdLogin = from.isThirdLogin();
                 if (!thirdLogin) {
@@ -139,7 +143,6 @@ public class ModifyPasswordActivity extends BaseActivity {
                     }
                 }
             }
-
 
 
             String newPass = etNewPassword.getText().toString().trim();

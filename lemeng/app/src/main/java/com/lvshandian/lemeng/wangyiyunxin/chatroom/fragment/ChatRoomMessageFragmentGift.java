@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.bean.AppUser;
-import com.lvshandian.lemeng.utils.CacheUtils;
+import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.wangyiyunxin.chatroom.module.ChatRoomMsgListPanelGift;
 import com.netease.nim.uikit.common.fragment.TFragment;
 import com.netease.nim.uikit.session.module.Container;
@@ -79,7 +79,8 @@ public class ChatRoomMessageFragmentGift extends TFragment implements ModuleProx
     AppUser appUser;
 
     private void findViews() {
-        appUser = (AppUser) CacheUtils.readObject(getContext(), CacheUtils.USERINFO);
+//        appUser = (AppUser) CacheUtils.readObject(getContext(), CacheUtils.USERINFO);
+        appUser = SharedPreferenceUtils.getUserInfo(getContext());
         Container container = new Container(getActivity(), roomId, SessionTypeEnum.ChatRoom, this);
         if (messageListPanel == null) {
             messageListPanel = new ChatRoomMsgListPanelGift(container, rootView);

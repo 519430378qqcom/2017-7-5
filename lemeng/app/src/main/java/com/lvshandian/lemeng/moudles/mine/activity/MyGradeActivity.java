@@ -16,8 +16,8 @@ import com.lvshandian.lemeng.base.BaseActivity;
 import com.lvshandian.lemeng.bean.AppUser;
 import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.httprequest.RequestCode;
-import com.lvshandian.lemeng.utils.CacheUtils;
 import com.lvshandian.lemeng.utils.PicassoUtil;
+import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,8 +59,9 @@ public class MyGradeActivity extends BaseActivity {
 
             switch (msg.what) {
                 case RequestCode.SELECT_USER:
-                    appUser = JSON.parseObject(json, AppUser.class);
-                    CacheUtils.saveObject(MyGradeActivity.this, appUser, CacheUtils.USERINFO);
+                    AppUser appUser = JSON.parseObject(json, AppUser.class);
+//                    CacheUtils.saveObject(MyGradeActivity.this, appUser, CacheUtils.USERINFO);
+                    SharedPreferenceUtils.saveUserInfo(mContext, appUser);
                     startPoints = appUser.getPoints();
                     level = appUser.getLevel();
                     queryLevel();
@@ -80,7 +81,7 @@ public class MyGradeActivity extends BaseActivity {
 
     private void upDateView() {
         tvLevelStart.setText("Lv." + level);
-        tvLevelEnd.setText("Lv." + (Integer.valueOf(level)+1));
+        tvLevelEnd.setText("Lv." + (Integer.valueOf(level) + 1));
         tvStart.setText("我的经验值:" + startPoints);
         tvEnd.setText("升级还需经验值:" + (Integer.valueOf(endPoints) - Integer.valueOf(startPoints)));
         tvLevel.setText("Lv." + level);

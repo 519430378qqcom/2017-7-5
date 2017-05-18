@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.bean.AppUser;
 import com.lvshandian.lemeng.moudles.mine.my.OtherPersonHomePageActivity;
-import com.lvshandian.lemeng.utils.CacheUtils;
+import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.wangyiyunxin.config.DemoCache;
 import com.lvshandian.lemeng.wangyiyunxin.session.action.FileAction;
 import com.lvshandian.lemeng.wangyiyunxin.session.action.GuessAction;
@@ -289,7 +289,8 @@ public class SessionHelper {
             SessionCustomization.OptionsButton infoButton = new SessionCustomization.OptionsButton() {
                 @Override
                 public void onClick(Context context, View view, String sessionId) {
-                    AppUser appUser = (AppUser) CacheUtils.readObject(context, CacheUtils.USERINFO);
+//                    AppUser appUser = (AppUser) CacheUtils.readObject(context, CacheUtils.USERINFO);
+                    AppUser appUser= SharedPreferenceUtils.getUserInfo(context);
 
                     Team team = TeamDataCache.getInstance().getTeamById(sessionId);
                     if (team != null && team.isMyTeam()) {

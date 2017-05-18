@@ -15,8 +15,8 @@ import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.moudles.mine.bean.Funse;
 import com.lvshandian.lemeng.moudles.mine.bean.FunseBean;
 import com.lvshandian.lemeng.moudles.mine.my.adapter.FunseListAdapter;
-import com.lvshandian.lemeng.utils.CacheUtils;
 import com.lvshandian.lemeng.utils.JsonUtil;
+import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefresh;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout;
 import com.squareup.okhttp.MediaType;
@@ -113,12 +113,12 @@ public class FunseListActivity extends BaseActivity implements SwipeRefresh.OnRe
             @Override
             public void onItemFollowClick(int position, ImageView view) {
                 FunseBean bean = mDatas.get(position);
-                if (bean.getFollow().equals("1")){
+                if (bean.getFollow().equals("1")) {
                     String userId = bean.getUserId();
                     Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
                     intent.putExtra(getString(R.string.visiti_person), userId);
                     startActivity(intent);
-                }else {
+                } else {
                     changeFollow(bean);
                 }
             }
@@ -199,8 +199,8 @@ public class FunseListActivity extends BaseActivity implements SwipeRefresh.OnRe
             totalPages = funse.getTotalPages();
             List<FunseBean> result = funse.getResult();
             appUser.setFansNum(String.valueOf(result.size()));
-            CacheUtils.saveObject(FunseListActivity.this, appUser, CacheUtils.USERINFO);
-
+//            CacheUtils.saveObject(FunseListActivity.this, appUser, CacheUtils.USERINFO);
+            SharedPreferenceUtils.saveUserInfo(mContext, appUser);
             if (isRefresh) {
                 mDatas.clear();
             } else {

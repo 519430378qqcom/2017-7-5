@@ -38,7 +38,6 @@ import com.lvshandian.lemeng.moudles.mine.my.MyContributionActivity;
 import com.lvshandian.lemeng.moudles.mine.my.RealNameVertifyActivity;
 import com.lvshandian.lemeng.moudles.mine.my.SettingActivity;
 import com.lvshandian.lemeng.moudles.mine.my.Videotails;
-import com.lvshandian.lemeng.utils.CacheUtils;
 import com.lvshandian.lemeng.utils.CountUtils;
 import com.lvshandian.lemeng.utils.GrademipmapUtils;
 import com.lvshandian.lemeng.utils.JsonUtil;
@@ -158,7 +157,8 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
             switch (msg.what) {
                 case RequestCode.SELECT_USER:
                     AppUser appUser = JsonUtil.json2Bean(json, AppUser.class);
-                    CacheUtils.saveObject(getActivity(), appUser, CacheUtils.USERINFO);
+//                    CacheUtils.saveObject(getActivity(), appUser, CacheUtils.USERINFO);
+                    SharedPreferenceUtils.saveUserInfo(mContext,appUser);
                     initUserInfo(appUser);
                     break;
                 case RequestCode.MY_PHOTO_LOAD://图片请求列表
@@ -554,7 +554,8 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
                 startActivity(intentCoins);
                 break;
             case R.id.ll_earnest://认证
-                AppUser userInfo = (AppUser) CacheUtils.readObject(mContext, CacheUtils.USERINFO);
+//                AppUser userInfo = (AppUser) CacheUtils.readObject(mContext, CacheUtils.USERINFO);
+                AppUser userInfo =  SharedPreferenceUtils.getUserInfo(mContext);
                 String verified = userInfo.getVerified();
                 if (TextUtils.equals(verified, "1")) {
                     //已提交认证

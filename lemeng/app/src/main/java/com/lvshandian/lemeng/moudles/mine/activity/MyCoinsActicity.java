@@ -15,11 +15,11 @@ import com.lvshandian.lemeng.bean.AppUser;
 import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.moudles.mine.my.WithdrawActivity;
-import com.lvshandian.lemeng.utils.CacheUtils;
 import com.lvshandian.lemeng.utils.CountUtils;
 import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
+
 import java.util.concurrent.ConcurrentHashMap;
 
 import butterknife.Bind;
@@ -52,7 +52,8 @@ public class MyCoinsActicity extends BaseActivity {
                 case RequestCode.SELECT_USER:
                     LogUtils.e("查询个人信息返回json: " + json);
                     AppUser mAppUser = JsonUtil.json2Bean(json, AppUser.class);
-                    CacheUtils.saveObject(mContext, mAppUser, CacheUtils.USERINFO);
+//                    CacheUtils.saveObject(mContext, mAppUser, CacheUtils.USERINFO);
+                    SharedPreferenceUtils.saveUserInfo(mContext,mAppUser);
                     String myCoin = mAppUser.getGoldCoin();
                     SharedPreferenceUtils.saveGoldCoin(mContext,myCoin);
                     myCoin = CountUtils.getCount(Long.parseLong(myCoin));

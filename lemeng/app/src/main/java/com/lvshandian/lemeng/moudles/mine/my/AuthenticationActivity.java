@@ -29,13 +29,13 @@ import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.interf.ResultListener;
 import com.lvshandian.lemeng.utils.AliYunImageUtils;
 import com.lvshandian.lemeng.utils.BitmpTools;
-import com.lvshandian.lemeng.utils.CacheUtils;
 import com.lvshandian.lemeng.utils.ImageCompressUtils;
 import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.MiPictureHelper;
 import com.lvshandian.lemeng.utils.PermisionUtils;
 import com.lvshandian.lemeng.utils.PicassoUtil;
 import com.lvshandian.lemeng.utils.RegexUtils;
+import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.utils.TextPhoneNumber;
 import com.lvshandian.lemeng.view.CustomPopWindow;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -158,8 +158,9 @@ public class AuthenticationActivity extends BaseActivity {
             switch (msg.what) {
                 //关注请求接收数据
                 case RequestCode.REAL_NAME_VERTIFY:
-                    appUser.setVerified("1");
-                    CacheUtils.saveObject(AuthenticationActivity.this, appUser, CacheUtils.USERINFO);
+//                    appUser.setVerified("1");
+//                    CacheUtils.saveObject(AuthenticationActivity.this, appUser, CacheUtils.USERINFO);
+                    SharedPreferenceUtils.put(mContext,"verified","1");
                     showToast("上传成功");
                     startActivity(new Intent(mContext, RealNameVertifyActivity.class));
                     finish();

@@ -15,7 +15,6 @@ import com.lvshandian.lemeng.bean.AppUser;
 import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.moudles.mine.activity.WeichatDraw;
-import com.lvshandian.lemeng.utils.CacheUtils;
 import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
@@ -72,7 +71,8 @@ public class WithdrawActivity extends BaseActivity {
                 case RequestCode.SELECT_USER:
                     LogUtils.e("查询个人信息返回json: " + json);
                     AppUser mAppUser = JsonUtil.json2Bean(json, AppUser.class);
-                    CacheUtils.saveObject(mContext, mAppUser, CacheUtils.USERINFO);
+//                    CacheUtils.saveObject(mContext, mAppUser, CacheUtils.USERINFO);
+                    SharedPreferenceUtils.saveUserInfo(mContext,mAppUser);
                     SharedPreferenceUtils.saveGoldCoin(mContext, mAppUser.getGoldCoin());
                     exchangeStatus = mAppUser.getExchangeStatus();
                     break;

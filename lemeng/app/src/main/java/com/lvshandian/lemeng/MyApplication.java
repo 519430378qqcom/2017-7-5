@@ -93,9 +93,10 @@ public class MyApplication extends LitePalApplication {
 
     @Override
     public void onCreate() {
-
         super.onCreate();
         mContext = this;
+        //初始化sp
+        SharedPreferenceUtils.getInstance().init(mContext);
         UMUtils.init(mContext);
         //初始化百度定位
         mLocationClient = new LocationClient(mContext);     //声明LocationClient类
@@ -106,12 +107,8 @@ public class MyApplication extends LitePalApplication {
         mLocationClient.start();
 
 
-
-
         //初始化litepal数据库
         Connector.getDatabase();
-        //初始化sp
-        SharedPreferenceUtils.getInstance().init(mContext);
         //初始化七牛云
         StreamingEnv.init(getApplicationContext());
         //初始化AutoLayout

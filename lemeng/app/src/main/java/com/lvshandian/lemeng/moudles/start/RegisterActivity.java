@@ -21,7 +21,7 @@ import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.moudles.mine.activity.ExplainWebViewActivity;
 import com.lvshandian.lemeng.moudles.mine.activity.SettingPerson;
 import com.lvshandian.lemeng.moudles.mine.my.StateCodeActivity;
-import com.lvshandian.lemeng.utils.CacheUtils;
+import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.utils.TextPhoneNumber;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -70,14 +70,16 @@ public class RegisterActivity extends BaseActivity {
                     showToast("注册成功");
                     AppUser appUser = JSON.parseObject(json, AppUser.class);
                     //存储用户信息
-                    CacheUtils.saveObject(RegisterActivity.this, appUser, CacheUtils.USERINFO);
+//                    CacheUtils.saveObject(RegisterActivity.this, appUser, CacheUtils.USERINFO);
+                    SharedPreferenceUtils.saveUserInfo(mContext,appUser);
                     startActivity(new Intent(RegisterActivity.this, SettingPerson.class).putExtra("isRegister", "register"));
                     break;
                 case RequestCode.FORGETPSWD_TAG:
                     showToast("修改成功,请重新登录");
                     AppUser appUser1 = JSON.parseObject(json, AppUser.class);
                     //存储用户信息
-                    CacheUtils.saveObject(RegisterActivity.this, appUser1, CacheUtils.USERINFO);
+//                    CacheUtils.saveObject(RegisterActivity.this, appUser1, CacheUtils.USERINFO);
+                    SharedPreferenceUtils.saveUserInfo(mContext,appUser1);
                     finish();
                     break;
 

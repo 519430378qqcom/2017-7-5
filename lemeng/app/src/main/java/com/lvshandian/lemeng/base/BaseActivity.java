@@ -38,13 +38,14 @@ import com.lvshandian.lemeng.bean.QuitApp;
 import com.lvshandian.lemeng.bean.QuitLogin;
 import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.moudles.index.live.WatchLiveActivity;
+import com.lvshandian.lemeng.moudles.mine.bean.LoginFrom;
 import com.lvshandian.lemeng.moudles.start.LoginActivity;
 import com.lvshandian.lemeng.moudles.start.LogoutHelper;
-import com.lvshandian.lemeng.utils.CacheUtils;
 import com.lvshandian.lemeng.utils.DESUtil;
 import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.NetWorkUtil;
+import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.view.ShowPop;
 import com.lvshandian.lemeng.wangyiyunxin.config.preference.Preferences;
 import com.netease.nimlib.sdk.NIMClient;
@@ -116,7 +117,8 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
             // 删除窗口背景
             ButterKnife.bind(this);
         }
-        appUser = (AppUser) CacheUtils.readObject(this, CacheUtils.USERINFO);
+//        appUser = (AppUser) CacheUtils.readObject(this, CacheUtils.USERINFO);
+        appUser = SharedPreferenceUtils.getUserInfo(mContext);
         mContext = this;
         snackView = getWindow().getDecorView().getRootView();
         httpDatas = new HttpDatas(this, snackView);
@@ -131,7 +133,8 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
         MobclickAgent.onResume(this);
         registerReceiveCustom(true);
         super.onResume();
-        appUser = (AppUser) CacheUtils.readObject(this, CacheUtils.USERINFO);
+//        appUser = (AppUser) CacheUtils.readObject(this, CacheUtils.USERINFO);
+        appUser = SharedPreferenceUtils.getUserInfo(mContext);
         /**
          * 废除用户：根据姓名和发送的消息进行废除用户强制退出；
          */
@@ -169,8 +172,14 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
     private void quitLogin() {
         logout();
         //清空已保存的用户信息
-        CacheUtils.saveObject(this, null, CacheUtils.PASSWORD);
-        CacheUtils.saveObject(mContext, null, CacheUtils.USERINFO);
+//        CacheUtils.saveObject(this, null, CacheUtils.PASSWORD);
+//        CacheUtils.saveObject(mContext, null, CacheUtils.USERINFO);
+
+        AppUser appUser = new AppUser();
+        LoginFrom loginFrom = new LoginFrom();
+        SharedPreferenceUtils.saveUserInfo(mContext,appUser);
+        SharedPreferenceUtils.saveLoginFrom(mContext,loginFrom);
+
         //发送到MainActivity，关闭页面
         EventBus.getDefault().post(new QuitLogin());
         //开启登录页面
@@ -308,7 +317,8 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
     public boolean userState() {
         boolean isState = false;
         if (appUser == null) {
-            appUser = (AppUser) CacheUtils.readObject(this, CacheUtils.USERINFO);
+//            appUser = (AppUser) CacheUtils.readObject(this, CacheUtils.USERINFO);
+            appUser = SharedPreferenceUtils.getUserInfo(mContext);
             if (appUser == null) {
                 gotoActivity(LoginActivity.class, true);
                 isState = false;

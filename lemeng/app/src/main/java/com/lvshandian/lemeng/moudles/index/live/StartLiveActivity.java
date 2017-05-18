@@ -685,14 +685,18 @@ public class StartLiveActivity extends BaseActivity implements
                         map.put("gift_giftCoinNumber", mSendGiftItem.getMemberConsume());
                         map.put("receveUserId", toUserId);
                         map.put("gift_Type1", mSendGiftItem.getWinFlag());
-                        map.put("level", creatReadyBean.getCreator().getLevel());
+                        map.put("level", appUser.getLevel());
                         map.put("RepeatGiftNumber", num);
                         SendRoomMessageUtils.onCustomMessageSendGift(messageFragmentGift, wy_Id + "",
                                 map);
 
-                        SharedPreferenceUtils.saveGoldCoin(mContext, (Long.parseLong
-                                (SharedPreferenceUtils.getGoldCoin(mContext)) - Integer.valueOf
-                                (mSendGiftItem.getGiftConsume())) + "");
+
+                        String myCoin = SharedPreferenceUtils.getGoldCoin(mContext);
+                        LogUtil.e("自己金币数",myCoin);
+                        myCoin = String.valueOf(Long.parseLong(myCoin) - Long.parseLong(mSendGiftItem.getMemberConsume()));
+                        SharedPreferenceUtils.saveGoldCoin(mContext, myCoin);
+                        myCoin = CountUtils.getCount(Long.parseLong(myCoin));
+                        all_lepiao.setText(myCoin);
 
                     }
                     break;
@@ -1424,7 +1428,7 @@ public class StartLiveActivity extends BaseActivity implements
 
         if (!isFirstJoin) {
             Map<String, Object> map = new HashMap<>();
-            map.put("level", creatReadyBean.getCreator().getLevel());
+            map.put("level", appUser.getLevel());
             SendRoomMessageUtils.onCustomMessageQiehuan("112", messageFragment, wy_Id + "",
                     map);
         }
@@ -1442,7 +1446,7 @@ public class StartLiveActivity extends BaseActivity implements
         mMediaStreamingManager.pause();
 
         Map<String, Object> map = new HashMap<>();
-        map.put("level", creatReadyBean.getCreator().getLevel());
+        map.put("level", appUser.getLevel());
         SendRoomMessageUtils.onCustomMessageQiehuan("113", messageFragment, wy_Id + "",
                 map);
 
@@ -1628,6 +1632,16 @@ public class StartLiveActivity extends BaseActivity implements
                         LogUtil.e("观众断开连麦", message.getRemoteExtension().toString());
                         showToast("观众断开连麦");
                         hindSmallVideo();
+                        break;
+                    case 10009:
+                        LogUtil.e("升级", message.getRemoteExtension().toString());
+                        AppUser mAppUser = JavaBeanMapUtils.mapToBean((Map) message.getRemoteExtension().get("data"),
+                                AppUser.class);
+                        if (mAppUser.getId().equals(appUser.getId())) {
+                            appUser.setLevel(mAppUser.getLevel());
+                            SharedPreferenceUtils.saveUserInfo(mContext, appUser);
+                            appUser = SharedPreferenceUtils.getUserInfo(mContext);
+                        }
                         break;
                     default:
                         break;
@@ -3982,23 +3996,32 @@ public class StartLiveActivity extends BaseActivity implements
         TextView tv_xzjf = (TextView) view.findViewById(R.id.tv_xzjf);  //下注积分
         ImageView sure_tz = (ImageView) view.findViewById(R.id.sure_tz);  //确定投注
         ImageView colse_rule = (ImageView) view.findViewById(R.id.colse_rule);  //关闭弹框
+
+        tv_ds.setText("大小单双：" + selectStatus);
+        strJinBi = String.valueOf(jbNumber * tzNumber);
+        tv_xzjf.setText("投注乐票：" + strJinBi);
+        intQh = Integer.valueOf(nper) + 1;
+        tv_tzqh.setText("投注期号：" + intQh);
+
+        sure_tz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Long.parseLong(SharedPreferenceUtils.getGoldCoin(mContext)) < Long.parseLong(strJinBi)) {
+                    showToast("您的乐票不足,请充值");
+                    rulePop.dismiss();
+                } else {
+                    sureTz(rulePop);
+                }
+            }
+        });
+
         colse_rule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 rulePop.dismiss();
             }
         });
-        sure_tz.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sureTz(rulePop);
-            }
-        });
-        tv_ds.setText("大小单双：" + selectStatus);
-        strJinBi = String.valueOf(jbNumber * tzNumber);
-        tv_xzjf.setText("投注乐票：" + strJinBi);
-        intQh = Integer.valueOf(nper) + 1;
-        tv_tzqh.setText("投注期号：" + intQh);
+
     }
 
 

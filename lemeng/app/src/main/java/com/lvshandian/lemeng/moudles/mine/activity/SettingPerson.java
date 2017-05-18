@@ -39,8 +39,8 @@ import com.lvshandian.lemeng.moudles.index.activity.AddressSelectActivity;
 import com.lvshandian.lemeng.tripartite.OptionPicker;
 import com.lvshandian.lemeng.tripartite.WheelView;
 import com.lvshandian.lemeng.utils.AliYunImageUtils;
-import com.lvshandian.lemeng.utils.CacheUtils;
 import com.lvshandian.lemeng.utils.LogUtils;
+import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.utils.UpdateImagerUtils;
 import com.lvshandian.lemeng.wangyiyunxin.config.DemoCache;
 import com.lvshandian.lemeng.wangyiyunxin.config.preference.Preferences;
@@ -173,7 +173,8 @@ public class SettingPerson extends BaseActivity {
                         e.printStackTrace();
                     }
 
-                    CacheUtils.saveObject(SettingPerson.this, appUser, CacheUtils.USERINFO);
+//                    CacheUtils.saveObject(SettingPerson.this, appUser, CacheUtils.USERINFO);
+                    SharedPreferenceUtils.saveUserInfo(mContext,appUser);
                     if (isRegister.equals("register")) {
                         showToast("编辑资料成功");
                         loginWangYi();

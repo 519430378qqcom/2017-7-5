@@ -23,7 +23,6 @@ import com.lvshandian.lemeng.bean.AppUser;
 import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.moudles.mine.activity.ExplainWebViewActivity;
 import com.lvshandian.lemeng.moudles.mine.bean.LoginFrom;
-import com.lvshandian.lemeng.utils.CacheUtils;
 import com.lvshandian.lemeng.utils.DESUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
@@ -57,7 +56,7 @@ import butterknife.Bind;
 /**
  * 启动界面 on 2016/10/20.
  */
-public class LoginSelectActivity extends BaseActivity implements GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener{
+public class LoginSelectActivity extends BaseActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     @Bind(R.id.iv_facebook_login)
     ImageView facebookLogin;
     @Bind(R.id.iv_twitter_login)
@@ -78,7 +77,7 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
     private String token = null;
     public static final String KICK_OUT = "KICK_OUT";
 
-    private static int RC_SIGN_IN=10001;
+    private static int RC_SIGN_IN = 10001;
     private GoogleApiClient mGoogleApiClient;
 
     @Override
@@ -279,7 +278,7 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
-        if(requestCode==RC_SIGN_IN){
+        if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
         }
@@ -314,7 +313,8 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
                             LoginFrom loginFrom = new LoginFrom();
                             loginFrom.setThirdLogin(true);
                             loginFrom.setPassword("");
-                            CacheUtils.saveObject(mContext, loginFrom, CacheUtils.PASSWORD);
+//                            CacheUtils.saveObject(mContext, loginFrom, CacheUtils.PASSWORD);
+                            SharedPreferenceUtils.saveLoginFrom(mContext, loginFrom);
                         }
                     });
         }
@@ -350,9 +350,10 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
      * @param json
      */
     private void loginSucess(String json) {
-        appUser = JSON.parseObject(json, AppUser.class);
+        AppUser appUser = JSON.parseObject(json, AppUser.class);
         //存储用户信息
-        CacheUtils.saveObject(mContext, appUser, CacheUtils.USERINFO);
+//        CacheUtils.saveObject(mContext, appUser, CacheUtils.USERINFO);
+        SharedPreferenceUtils.saveUserInfo(mContext, appUser);
         SharedPreferenceUtils.saveGoldCoin(mContext, appUser.getGoldCoin());
         loginWangYi();
     }
@@ -439,20 +440,20 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
     }
 
 
-    private void handleSignInResult(GoogleSignInResult result){
+    private void handleSignInResult(GoogleSignInResult result) {
         LogUtil.e("robin", "handleSignInResult:" + result.isSuccess());
-        if(result.isSuccess()){
+        if (result.isSuccess()) {
             LogUtil.e("robin", "成功");
             GoogleSignInAccount acct = result.getSignInAccount();
-            if(acct!=null){
+            if (acct != null) {
                 LogUtil.e("robin", "用户名是:" + acct.getDisplayName());
                 LogUtil.e("robin", "用户email是:" + acct.getEmail());
                 LogUtil.e("robin", "用户头像是:" + acct.getPhotoUrl());
                 LogUtil.e("robin", "用户Id是:" + acct.getId());//之后就可以更新UI了
                 LogUtil.e("robin", "用户IdToken是:" + acct.getIdToken());
             }
-        }else{
-            LogUtil.e("robin", "没有成功"+result.getStatus());
+        } else {
+            LogUtil.e("robin", "没有成功" + result.getStatus());
         }
     }
 
@@ -472,17 +473,17 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        LogUtil.e("robin","google登录-->onConnected,bundle=="+bundle);
+        LogUtil.e("robin", "google登录-->onConnected,bundle==" + bundle);
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-        LogUtil.e("robin","google登录-->onConnectionSuspended,i=="+i);
+        LogUtil.e("robin", "google登录-->onConnectionSuspended,i==" + i);
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        LogUtil.e("robin","google登录-->onConnectionFailed,connectionResult=="+connectionResult);
+        LogUtil.e("robin", "google登录-->onConnectionFailed,connectionResult==" + connectionResult);
     }
 
 }

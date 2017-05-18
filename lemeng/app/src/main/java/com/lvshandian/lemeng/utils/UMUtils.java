@@ -136,7 +136,8 @@ public class UMUtils {
         };
         mPushAgent.setNotificationClickHandler(notificationClickHandler);
 
-        AppUser appUser = (AppUser) CacheUtils.readObject(mContext, CacheUtils.USERINFO);
+//        AppUser appUser = (AppUser) CacheUtils.readObject(mContext, CacheUtils.USERINFO);
+        AppUser appUser = SharedPreferenceUtils.getUserInfo(mContext);
         if (appUser != null) {
             mPushAgent.addExclusiveAlias("miu_" + appUser.getId(), "IM",
                     new UTrack.ICallBack() {

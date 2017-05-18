@@ -21,10 +21,10 @@ import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.moudles.index.live.WatchLiveActivity;
 import com.lvshandian.lemeng.moudles.mine.my.ContributionActivity;
-import com.lvshandian.lemeng.utils.CacheUtils;
 import com.lvshandian.lemeng.utils.JavaBeanMapUtils;
 import com.lvshandian.lemeng.utils.KeyBoardUtils;
 import com.lvshandian.lemeng.utils.LogUtils;
+import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.utils.ToastUtils;
 import com.lvshandian.lemeng.wangyiyunxin.chatroom.helper.ChatRoomMemberCache;
 import com.lvshandian.lemeng.wangyiyunxin.chatroom.module.ChatRoomMsgListPanel;
@@ -220,7 +220,8 @@ public class ChatRoomMessageFragment extends TFragment implements ModuleProxy {
     AppUser appUser;
 
     private void findViews() {
-        appUser = (AppUser) CacheUtils.readObject(getContext(), CacheUtils.USERINFO);
+//        appUser = (AppUser) CacheUtils.readObject(getContext(), CacheUtils.USERINFO);
+        appUser = SharedPreferenceUtils.getUserInfo(getContext());
         Map<String, Object> date = JavaBeanMapUtils.beanToMap(appUser);
         date.put("userId", appUser.getId());
 
@@ -294,7 +295,7 @@ public class ChatRoomMessageFragment extends TFragment implements ModuleProxy {
             ext.put("userId", appUser.getId());
             ext.put("vip", appUser.getVip());
             ext.put("danmu", inputPanel.getToggleState() + "");
-            ext.put("level", appUser.getLevel() + "");
+            ext.put("level", SharedPreferenceUtils.getLevel(getContext()));
 
             ChatRoomMember chatRoomMember = ChatRoomMemberCache.getInstance().getChatRoomMember(roomId, DemoCache.getAccount());
             LogUtils.i("WangYi", "Account:" + DemoCache.getAccount());
