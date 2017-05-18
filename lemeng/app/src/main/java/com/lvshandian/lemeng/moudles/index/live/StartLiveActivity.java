@@ -188,6 +188,7 @@ import com.qiniu.pili.droid.streaming.WatermarkSetting;
 import com.qiniu.pili.droid.streaming.widget.AspectFrameLayout;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.Request;
+import com.squareup.picasso.Picasso;
 import com.tandong.bottomview.view.BottomView;
 import com.umeng.socialize.UMShareAPI;
 import com.zhy.autolayout.AutoFrameLayout;
@@ -3446,7 +3447,9 @@ public class StartLiveActivity extends BaseActivity implements
 
         tvID.setText("ID:" + customdateBean.getId());
 
-        civ_image.setAvatarUrl(customdateBean.getPicUrl());
+//        civ_image.setAvatarUrl(customdateBean.getPicUrl());
+        Picasso.with(mContext).load(customdateBean.getPicUrl()).placeholder(R.mipmap.head_default)
+                .error(R.mipmap.head_default).resize(50, 50).into(civ_image);
         civ_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
