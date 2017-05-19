@@ -32,12 +32,6 @@
 
             </com.qiniu.pili.droid.streaming.widget.AspectFrameLayout>
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:visibility="gone" />
-
             <Button
                 android:id="@+id/camera_switch_btn"
                 android:layout_width="wrap_content"
@@ -233,12 +227,6 @@
             </com.zhy.autolayout.AutoLinearLayout>
 
 
-            <!--<com.lvshandian.partylive.widget.HorizontalListView-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="3">-->
-
-            <!--</com.lvshandian.partylive.widget.HorizontalListView>-->
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rlv_list_live_audiences"
                 android:layout_width="0dp"
@@ -254,32 +242,6 @@
                 android:src="@mipmap/close"
                 android:visibility="visible" />
         </com.zhy.autolayout.AutoLinearLayout>
-
-
-        <!--映票labe-->
-        <com.zhy.autolayout.AutoLinearLayout
-
-            android:id="@+id/autoLinearLayout2"
-            android:layout_width="wrap_content"
-            android:layout_height="40px"
-            android:layout_marginLeft="-20px"
-            android:layout_marginTop="175px"
-            android:background="@drawable/btn_ticket_labe"
-            android:paddingRight="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="30px"
-                android:text="id号:6666"
-                android:textColor="@color/tv_main"
-                android:textSize="24px"
-                android:visibility="gone" />
-
-
-        </com.zhy.autolayout.AutoLinearLayout>
-        <!--映票labe end-->
 
 
         <com.lvshandian.lemeng.moudles.index.live.gift.GiftFrameLayout
@@ -418,55 +380,6 @@
                     android:layout_marginRight="16px"
                     android:orientation="horizontal">
 
-                    <ImageView
-                        android:id="@+id/iv_live_mei"
-                        android:layout_width="60px"
-                        android:layout_height="60px"
-                        android:layout_marginBottom="19px"
-                        android:background="@mipmap/room_btn_meiyan_h"
-                        android:visibility="gone" />
-
-                    <com.zhy.autolayout.AutoRelativeLayout
-                        android:layout_width="60px"
-                        android:layout_height="60px"
-                        android:layout_marginBottom="19px"
-                        android:layout_marginLeft="10px"
-                        android:visibility="gone">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:background="@mipmap/mg_room_btn_xin"
-                            android:visibility="gone" />
-
-                        <ImageView
-                            android:layout_width="20px"
-                            android:layout_height="20px"
-                            android:contentDescription="@string/empty"
-                            android:src="@drawable/nim_main_tab_new_message_notify"
-                            android:visibility="gone" />
-
-                        <com.netease.nim.uikit.common.ui.drop.DropFake
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="30px"
-                            android:layout_marginRight="30px"
-                            android:singleLine="true"
-                            android:textColor="@android:color/white"
-                            android:textSize="10sp"
-                            android:visibility="gone" />
-                    </com.zhy.autolayout.AutoRelativeLayout>
-
-                    <ImageView
-                        android:layout_width="50px"
-                        android:layout_height="50px"
-                        android:contentDescription="@string/empty"
-                        android:src="@mipmap/audio_player"
-                        android:visibility="gone" />
-
-
                     <com.zhy.autolayout.AutoRelativeLayout
                         android:layout_width="80px"
                         android:layout_height="80px"
@@ -509,22 +422,6 @@
                         android:background="@mipmap/room_btn_switchcamera" />
 
                     <ImageView
-                        android:layout_width="50px"
-                        android:layout_height="50px"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:src="@mipmap/mg_room_btn_xin"
-                        android:visibility="gone" />
-
-                    <ImageView
-                        android:layout_width="60px"
-                        android:layout_height="60px"
-                        android:layout_marginBottom="19px"
-                        android:layout_marginLeft="15px"
-                        android:background="@mipmap/mg_room_btn_fen"
-                        android:visibility="gone" />
-
-                    <ImageView
                         android:id="@+id/game_more_btn"
                         android:layout_width="80px"
                         android:layout_height="80px"
@@ -532,24 +429,7 @@
                         android:layout_marginLeft="19px"
                         android:background="@mipmap/more_btn" />
 
-                    <ImageView
-                        android:layout_width="50px"
-                        android:layout_height="50px"
-                        android:layout_marginBottom="19px"
-                        android:layout_marginLeft="15px"
-                        android:src="@mipmap/close_white"
-                        android:visibility="gone" />
-
                 </com.zhy.autolayout.AutoLinearLayout>
-
-                <ImageView
-                    android:id="@+id/iv_live_gift"
-                    android:layout_width="50px"
-                    android:layout_height="50px"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:background="@mipmap/mg_room_btn_li"
-                    android:visibility="gone" />
 
             </com.zhy.autolayout.AutoRelativeLayout>
 
@@ -581,47 +461,6 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="550px" />
 
-        <!--网易云信 直播室-->
-        <com.zhy.autolayout.AutoFrameLayout
-            android:id="@+id/watch_room_message"
-            android:layout_width="match_parent"
-            android:layout_height="300px"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="55px"
-            android:layout_marginLeft="10px"
-            android:background="@drawable/btn_ticket_labe"
-            android:paddingRight="100dp"
-            android:visibility="gone" />
-
-        <!--<com.zhy.autolayout.AutoFrameLayout-->
-        <!--android:id="@+id/watch_room_message_fragment_parent"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="505px"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:background="@color/transparent"-->
-        <!--android:layout_marginBottom="110px"-->
-        <!--android:orientation="vertical">-->
-
-        <!--<fragment-->
-        <!--android:id="@+id/watch_room_message_fragment_gift"-->
-        <!--android:name="com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragmentGift"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="200px"-->
-        <!--android:background="@drawable/btn_ticket_labe" />-->
-
-        <!--<View-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="5px" />-->
-
-        <!--<fragment-->
-
-        <!--android:id="@+id/watch_room_message_fragment"-->
-        <!--android:name="com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragment"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="300px"-->
-        <!--android:layout_gravity="bottom"-->
-        <!--android:background="@drawable/btn_ticket_labe" />-->
-        <!--</com.zhy.autolayout.AutoFrameLayout>-->
 
         <com.zhy.autolayout.AutoRelativeLayout
             android:id="@+id/rl_live_id"
@@ -712,41 +551,5 @@
             android:visibility="gone" />
 
     </com.zhy.autolayout.AutoRelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/iv_show_send_gift_lian"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right|bottom"
-        android:layout_marginBottom="50dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/background_show_send_gift"
-        android:visibility="gone">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="连击"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_12" />
-
-            <TextView
-                android:id="@+id/btn_timer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="3s"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_12" />
-
-        </LinearLayout>
-    </RelativeLayout>
 
 </com.zhy.autolayout.AutoFrameLayout>

@@ -9,6 +9,7 @@ package com.lvshandian.lemeng.httprequest;
 public interface RequestCode {
 
     int SELECT_USER = 999;     //查询用户信息
+    int SELECT_USER_MY = 9990;     //查询用户信息
     int LOGIN_TAG = 1000;     //登录
     int REGISTER_TAG = 1001;     //注册
     int FORGETPSWD_TAG = 10011;     //忘记密码

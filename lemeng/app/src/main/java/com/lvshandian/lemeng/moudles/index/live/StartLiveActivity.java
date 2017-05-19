@@ -19,7 +19,6 @@ import android.hardware.Camera;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
@@ -28,7 +27,6 @@ import android.os.PowerManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -46,10 +44,8 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -68,8 +64,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.UrlBuilder;
 import com.lvshandian.lemeng.adapter.FamilyMemberAdapter;
-import com.lvshandian.lemeng.adapter.GridViewAdapter;
-import com.lvshandian.lemeng.adapter.ViewPageGridViewAdapter;
 import com.lvshandian.lemeng.base.BarrageDateBean;
 import com.lvshandian.lemeng.base.BaseActivity;
 import com.lvshandian.lemeng.base.CustomStringCallBack;
@@ -120,7 +114,6 @@ import com.lvshandian.lemeng.utils.SendRoomMessageUtils;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.utils.ThreadManager;
 import com.lvshandian.lemeng.utils.ToastUtils;
-import com.lvshandian.lemeng.utils.UMUtils;
 import com.lvshandian.lemeng.view.BarrageView;
 import com.lvshandian.lemeng.view.RotateLayout;
 import com.lvshandian.lemeng.view.RoundDialog;
@@ -262,14 +255,10 @@ public class StartLiveActivity extends BaseActivity implements
     GiftFrameLayout giftFrameLayout1;
     @Bind(R.id.gift_layout2)
     GiftFrameLayout giftFrameLayout2;
-    @Bind(R.id.iv_live_mei)
-    ImageView ivLiveMei;
     @Bind(R.id.iv_live_privatechat)
     ImageView ivLivePrivatechat;
     @Bind(R.id.iv_live_switch)
     ImageView ivLiveSwitch;
-    @Bind(R.id.watch_room_message)
-    AutoFrameLayout watchRoomMessage;
     @Bind(R.id.rl_live_root)
     AutoRelativeLayout mRoot;
     @Bind(R.id.rlv_list_live_audiences)
@@ -286,14 +275,8 @@ public class StartLiveActivity extends BaseActivity implements
     ImageView smallColes;
     @Bind(R.id.barrageview)
     BarrageView barrageview;
-    @Bind(R.id.iv_live_gift)
-    ImageView ivLiveGift;
     @Bind(R.id.start_room_jaiZu)
     ImageView startRoomJaiZu;
-    @Bind(R.id.iv_show_send_gift_lian)
-    RelativeLayout mSendGiftLian;
-    @Bind(R.id.btn_timer)
-    TextView btn_timer;
     @Bind(R.id.game_more_btn)
     ImageView game_more_btn;
     @Bind(R.id.game)
@@ -525,33 +508,6 @@ public class StartLiveActivity extends BaseActivity implements
      */
     private String lianName = "";
 
-    /**
-     * ************************* 以下注释关于礼物 ********************************
-     * <p>
-     * /**
-     * 界面用于显示礼物的ViewPager
-     */
-    private ViewPager mVpGiftView;
-
-    /**
-     * 礼物列表中的乐票数量
-     */
-    private TextView mUserCoin;
-
-    /**
-     * 礼物列表viewPager
-     */
-    private ViewPageGridViewAdapter mVpGiftAdapter;
-
-    /**
-     * 礼物服务端返回数据
-     */
-    private String mGiftResStr;
-
-    /**
-     * 显示礼物的PopupWindow
-     */
-    private PopupWindow popupWindow;
 
     /**
      * 获取到礼物面板的集合
@@ -559,65 +515,25 @@ public class StartLiveActivity extends BaseActivity implements
     private List<GiftBean> mGiftList = new ArrayList<>();
 
     /**
-     * 每一页的礼物集合
-     */
-    private List<GridView> mGiftViews = new ArrayList<>();
-
-    /**
-     * 礼物面板上显示金币的布局
-     */
-    private LinearLayout ll_user_coin;
-
-    /**
-     * 点击发送后的礼物
-     */
-    private GiftBean mSendGiftItem;
-
-    /**
-     * 发送礼物的按钮
-     */
-    private Button mSendGiftBtn;
-
-    /**
-     * 发送礼物的集合
-     */
-    private List<GiftBean> mSendGiftList = new ArrayList<>();
-
-    /**
-     * 发送礼物连击次数的集合
-     */
-    private List<String> mSendGiftNumList = new ArrayList<>();
-
-
-    /**
-     * 连击的次数
-     */
-    private int SEND_NUM;
-
-    /**
-     * 接收礼物人的Id
-     */
-    private String toUserId = "";
-
-    /**
-     * 接收礼物人的名字
-     */
-    private String toUserName = "";
-
-    /**
      * 发送礼物时，礼物的图片地址
      */
     private String staticIcon;
 
     /**
-     * 礼物动画列表
+     * 左上角主播收到金币数
      */
-    private List<GiftSendModel> giftSendModelList = new ArrayList<GiftSendModel>();
+    private Long zhuboReceve;
 
     /**
-     * 礼物连点计时器
+     * 自己金币数
      */
-    private CountDownTimer giftTimer;
+    private Long myGoldCoin;
+
+    /**
+     * 礼物动画列表
+     */
+    private List<GiftSendModel> giftSendModelList = new ArrayList<>();
+
 
     private long mCountDownTotalTime;
 
@@ -631,10 +547,7 @@ public class StartLiveActivity extends BaseActivity implements
             switch (msg.what) {
                 //礼物列表
                 case RequestCode.GET_GIFT:
-                    mGiftResStr = json;
-                    mGiftList = JsonUtil.json2BeanList(mGiftResStr, GiftBean.class);
-                    LogUtils.e("礼物列表长度=" + mGiftList.size() + "");
-                    LogUtils.LogAll("礼物列表", mGiftList.toString());
+                    mGiftList = JsonUtil.json2BeanList(json, GiftBean.class);
                     break;
                 case RequestCode.REQUEST_USER_INFO:
                     //请求用户信息
@@ -660,46 +573,6 @@ public class StartLiveActivity extends BaseActivity implements
                     LogUtils.i("主播隔一段时间刷新状态");
                     httpDatas.getDataDialog("主播隔一段时间刷新状态", false, urlBuilder.TimerLive(room_Id),
                             myHandler, RequestCode.TIMERLIVE);
-                    break;
-                //赠送礼物
-                case RequestCode.SEND_GIFT:
-                    if (!data.getString(HttpDatas.error).equals(getString(R.string.pay_success))) {
-                        showToast("支付失败");
-                        return;
-                    }
-                    if (mSendGiftList.size() > 0) {
-                        GiftBean mSendGiftItem = mSendGiftList.get(0);
-                        mSendGiftList.remove(0);
-                        String num = mSendGiftNumList.get(0);
-                        mSendGiftNumList.remove(0);
-
-                        Map<String, Object> map = new HashMap<>();
-                        map.put("gift_item_index", mSendGiftItem.getId());
-                        map.put("gift_item_number", "1");
-                        map.put("gift_coinnumber_index", mSendGiftItem.getAnchorReceive());
-                        map.put("gift_item_message", "赠送了" + "1个" + mSendGiftItem.getName()
-                                + "给" + toUserName);
-                        map.put("vip", appUser.getVip());
-                        map.put("userId", appUser.getId());
-                        map.put("gift_Grand_Prix_number", null);
-                        map.put("gift_Grand_Prix", null);
-                        map.put("gift_giftCoinNumber", mSendGiftItem.getMemberConsume());
-                        map.put("receveUserId", toUserId);
-                        map.put("gift_Type1", mSendGiftItem.getWinFlag());
-                        map.put("level", appUser.getLevel());
-                        map.put("RepeatGiftNumber", num);
-                        SendRoomMessageUtils.onCustomMessageSendGift(messageFragmentGift, wy_Id + "",
-                                map);
-
-
-                        String myCoin = SharedPreferenceUtils.getGoldCoin(mContext);
-                        LogUtil.e("自己金币数",myCoin);
-                        myCoin = String.valueOf(Long.parseLong(myCoin) - Long.parseLong(mSendGiftItem.getMemberConsume()));
-                        SharedPreferenceUtils.saveGoldCoin(mContext, myCoin);
-                        myCoin = CountUtils.getCount(Long.parseLong(myCoin));
-                        all_lepiao.setText(myCoin);
-
-                    }
                     break;
                 //获取连麦人的Id
                 case RequestCode.REQUEST_LIANMAI_ID:
@@ -733,11 +606,15 @@ public class StartLiveActivity extends BaseActivity implements
                 case RequestCode.SELECT_USER:
                     LogUtils.e("查询个人信息返回json: " + json);
                     AppUser userZhubo = JsonUtil.json2Bean(json, AppUser.class);
-
                     String receivedGoldCoin = userZhubo.getReceivedGoldCoin();
-                    SharedPreferenceUtils.saveZhuboGoldCoin(mContext, receivedGoldCoin);
+                    String goldCoin = userZhubo.getGoldCoin();
+
+                    zhuboReceve = Long.parseLong(receivedGoldCoin);
+                    myGoldCoin = Long.parseLong(goldCoin);
                     receivedGoldCoin = CountUtils.getCount(Long.parseLong(receivedGoldCoin));
-                    liveJinpiao.setText(receivedGoldCoin); //显示主播乐票数量
+                    goldCoin = CountUtils.getCount(Long.parseLong(goldCoin));
+                    liveJinpiao.setText(receivedGoldCoin); //显示左上角主播收到乐票数量
+                    all_lepiao.setText(goldCoin);
                     break;
                 case 10000:
                     LogUtil.e("mCountDownTotalTime", "mCountDownTotalTime" + mCountDownTotalTime);
@@ -790,7 +667,6 @@ public class StartLiveActivity extends BaseActivity implements
             }
         }, 30000, 30000);
 
-        //获取礼物列表
         getGiftList();
         //进入房间
 //        requestNet();
@@ -842,14 +718,6 @@ public class StartLiveActivity extends BaseActivity implements
         samllNumber.setText(String.valueOf(tzNumber));
         doubleNumber.setText(String.valueOf(jbNumber));
         initSelectStatus();
-
-        /**
-         * 设置游戏布局的金币数量
-         */
-        String myCoin = SharedPreferenceUtils.getGoldCoin(mContext);
-        myCoin = CountUtils.getCount(Long.parseLong(myCoin));
-        all_lepiao.setText(myCoin);
-
     }
 
     private void initSelectStatus() {
@@ -881,7 +749,6 @@ public class StartLiveActivity extends BaseActivity implements
         ivMoreBig.setOnClickListener(this);
         ivMoreSamll.setOnClickListener(this);
 
-        mSendGiftLian.setOnClickListener(this);
         llTangpiao.setOnClickListener(this);
         liveHead.setOnClickListener(this);
         game.setOnClickListener(this);
@@ -890,11 +757,9 @@ public class StartLiveActivity extends BaseActivity implements
         ll_game.setOnClickListener(this);
         iv_xy.setOnClickListener(this);
         liveClose.setOnClickListener(this);
-        ivLiveMei.setOnClickListener(this);
         ivLiveSwitch.setOnClickListener(this);
         ivLivePrivatechat.setOnClickListener(this);
         smallColes.setOnClickListener(this);
-        ivLiveGift.setOnClickListener(this);
         startRoomJaiZu.setOnClickListener(this);
         roomShowId.setOnClickListener(this);
         game_more_btn.setOnClickListener(this);
@@ -1129,13 +994,6 @@ public class StartLiveActivity extends BaseActivity implements
                     mQuitDialog.show();
                 }
                 break;
-
-            //美颜
-            case R.id.iv_live_mei:
-                if (!mHandler.hasMessages(MSG_FB)) {
-                    mHandler.sendEmptyMessage(MSG_FB);
-                }
-                break;
             //私信
             case R.id.iv_live_privatechat:
                 ll_game.setVisibility(View.GONE);
@@ -1156,14 +1014,6 @@ public class StartLiveActivity extends BaseActivity implements
                 mHandler.removeCallbacks(mSwitcher);
                 mHandler.postDelayed(mSwitcher, 100);
                 break;
-            //分享
-            case R.id.iv_live_share:
-                UMUtils.umShare(this, creatReadyBean.getCreator().getNickName(), creatReadyBean
-                        .getLivePicUrl(), share_url + "?userId=" + appUser.getId());
-                break;
-            case R.id.iv_live_gift://点击给自己送礼按钮
-                getGiftPopup(appUser.getNickName(), appUser.getId());
-                break;
             case R.id.live_head:
                 ifattention("请求用户信息", appUser.getId(), RequestCode.REQUEST_USER_INFO);
                 break;
@@ -1175,15 +1025,6 @@ public class StartLiveActivity extends BaseActivity implements
             case R.id.room_id:
                 request();
                 break;
-            //播放音乐
-            case R.id.audio_player:
-                startActivity(new Intent(mContext, AudioPlayerActivity.class));
-                break;
-            case R.id.iv_show_send_gift_lian:
-                SEND_NUM++;
-                onClickSendGift();
-                break;
-
         }
     }
 
@@ -1325,7 +1166,6 @@ public class StartLiveActivity extends BaseActivity implements
     /**
      * 请求场控列表
      */
-
 
     private void request() {
         RequestParams params = new RequestParams(UrlBuilder.chargeServerUrl + UrlBuilder
@@ -1664,8 +1504,9 @@ public class StartLiveActivity extends BaseActivity implements
                 barrageDateBean.setPicUrl(url);
                 barrageview.addSentence(barrageDateBean);
                 if (message.getFromAccount().equals("miu_" + appUser.getId())) {
-                    SharedPreferenceUtils.saveGoldCoin(mContext, (Long.parseLong
-                            (SharedPreferenceUtils.getGoldCoin(mContext)) - 1) + "");
+                    myGoldCoin = myGoldCoin - 1;
+                    String myCoin = CountUtils.getCount(myGoldCoin);
+                    all_lepiao.setText(myCoin);
                 }
             } else if (userId != null && userId.indexOf("miu_") != -1) {
                 userId = userId.substring(4);
@@ -1848,88 +1689,6 @@ public class StartLiveActivity extends BaseActivity implements
     // ***************************** 礼物相关开始 **************************************//
 
     /**
-     * 打开礼物界面
-     * type 1.自己赠送礼物，2.游客赠送礼物
-     */
-    public void getGiftPopup(String name, String id) {
-        //隐藏连送按钮
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mSendGiftLian.setVisibility(View.GONE);
-                hidePlayView();
-            }
-        }, 200);
-
-        popupWindow = new PopupWindow(this);
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View view = inflater.inflate(R.layout.view_show_viewpager, null);
-        popupWindow.setContentView(view);
-        popupWindow.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
-        popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-        popupWindow.setFocusable(true);
-        popupWindow.setBackgroundDrawable(new BitmapDrawable());
-        popupWindow.setOutsideTouchable(true);
-        backgroundAlpha(0.5f);
-        popupWindow.setAnimationStyle(R.style.mypopwindow_anim_style);
-        popupWindow.showAtLocation(rlvListLiveAudiences, Gravity.BOTTOM, 0, 0);
-        popupWindow.update();
-        popupWindow.setOnDismissListener(new PopOnDismissListner());
-        mUserCoin = (TextView) view.findViewById(R.id.tv_show_select_user_coin);
-        ll_user_coin = (LinearLayout) view.findViewById(R.id.gift_coin_ll);
-        /**
-         *礼物列表点点击充值，跳转进行金币的充值
-         */
-        ll_user_coin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                startActivity(new Intent(mContext, ChargeCoinsActivity.class).putExtra("yanpiao",
-//                        SharedPreferenceUtils.getGoldCoin(mContext)));
-//                startActivity(new Intent(mContext, PayOrderActivity.class));
-//                Intent intent = new Intent(mContext, ExplainWebViewActivity.class);
-//                intent.putExtra("flag", 1000);
-//                startActivity(intent);
-                showToast("暂时不支持充值");
-            }
-        });
-        String myCoin = SharedPreferenceUtils.getGoldCoin(mContext);
-        myCoin = CountUtils.getCount(Long.parseLong(myCoin));
-        mUserCoin.setText(myCoin);
-
-        mVpGiftView = (ViewPager) view.findViewById(R.id.vp_gift_page);
-        toUserId = id;
-        toUserName = name;
-        mSendGiftBtn = (Button) view.findViewById(R.id.btn_show_send_gift);
-        /**
-         * 赠送礼物按钮进行礼物的赠送
-         */
-        mSendGiftBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SEND_NUM = 1;
-                onClickSendGift();
-                popupWindow.dismiss();
-            }
-        });
-        //表示已经请求过数据不再向下执行
-        if (mGiftViews != null) {
-            fillGift();
-            return;
-        }
-    }
-
-    /**
-     * 设置activity背景
-     *
-     * @param alpha
-     */
-    private void backgroundAlpha(float alpha) {
-        WindowManager.LayoutParams params = this.getWindow().getAttributes();
-        params.alpha = alpha;
-        this.getWindow().setAttributes(params);
-    }
-
-    /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
@@ -1963,146 +1722,6 @@ public class StartLiveActivity extends BaseActivity implements
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         AppIndex.AppIndexApi.end(client, getIndexApiAction());
         client.disconnect();
-    }
-
-    /**
-     * PopupWindow Dismiss监听
-     */
-    private class PopOnDismissListner implements PopupWindow.OnDismissListener {
-        @Override
-        public void onDismiss() {
-            backgroundAlpha(1f);
-            changeSendGiftBtnStatue(false);
-            for (int i = 0; i < mGiftViews.size(); i++) {
-                for (int j = 0; j < mGiftViews.get(i).getChildCount(); j++) {
-                    mGiftViews.get(i).getChildAt(j).findViewById(R.id.rl_bg)
-                            .setBackgroundResource(0);
-                }
-            }
-        }
-    }
-
-    /**
-     * @dw 点击赠送礼物按钮
-     */
-    private void onClickSendGift() {
-        if (Long.valueOf(SharedPreferenceUtils.getGoldCoin(mContext)) < Long.valueOf(mSendGiftItem
-                .getMemberConsume())) {
-            showToast("金币不足，请充值");
-            return;
-        }
-        sendGift();
-
-        if (giftTimer != null) {
-            giftTimer.cancel();
-        }
-
-        mSendGiftLian.setVisibility(View.VISIBLE);
-
-        giftTimer = new CountDownTimer(3500, 1000) {//连送礼物
-            @Override
-            public void onTick(long millisUntilFinished) {
-                btn_timer.setText(millisUntilFinished / 1000 + "s");
-            }
-
-            @Override
-            public void onFinish() {
-                recoverySendGiftBtnLayout();
-                giftTimer.cancel();
-            }
-        };
-        giftTimer.start();
-    }
-
-    private void sendGift() {
-        mSendGiftList.add(mSendGiftItem);
-        mSendGiftNumList.add(SEND_NUM + "");
-        ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
-        map.put("userId", appUser.getId());
-        map.put("roomId", room_Id);
-        map.put("amount", mSendGiftItem.getMemberConsume());
-        map.put("giftId", mSendGiftItem.getId());
-        map.put("toUserId", toUserId);
-        httpDatas.DataNoloadingAdmin("赠送礼物", com.android.volley.Request.Method.POST,
-                UrlBuilder.SEND_GIFT, map, myHandler, RequestCode.SEND_GIFT);
-    }
-
-    /**
-     * @dw 礼物列表填充
-     */
-    private void fillGift() {
-        if (null == mVpGiftAdapter && null != mGiftResStr) {
-            //礼物item填充
-            List<View> mGiftViewList = new ArrayList<>();
-            int index = 0;
-            int g = mGiftList.size() % 8 == 0 ? mGiftList.size() / 8 : mGiftList.size() / 8 + 1;
-            for (int i = 0; i < g; i++) {
-                View v = getLayoutInflater().inflate(R.layout.view_show_gifts_gv, null);
-                mGiftViewList.add(v);
-                List<GiftBean> l = new ArrayList<>();
-                for (int j = 0; j < 8; j++) {
-                    if (index >= mGiftList.size()) {
-                        break;
-                    }
-                    l.add(mGiftList.get(index));
-                    index++;
-                }
-                mGiftViews.add((GridView) v.findViewById(R.id.gv_gift_list));
-                mGiftViews.get(i).setAdapter(new GridViewAdapter(l, getContext()));
-                mGiftViews.get(i).setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long
-                            id) {
-                        giftItemClick(parent, view, position);
-                    }
-                });
-            }
-            mVpGiftAdapter = new ViewPageGridViewAdapter(mGiftViewList);
-        }
-        mVpGiftView.setAdapter(mVpGiftAdapter);
-    }
-
-    /**
-     * @dw 赠送礼物单项被选中
-     */
-    private void giftItemClick(AdapterView<?> parent, View view, int position) {
-        mSendGiftItem = (GiftBean) parent.getItemAtPosition(position);
-        //点击其他礼物
-        changeSendGiftBtnStatue(true);
-        /**
-         * 判断是否是连送礼物界面
-         */
-        for (int i = 0; i < mGiftViews.size(); i++) {
-            for (int j = 0; j < mGiftViews.get(i).getChildCount(); j++) {
-                mGiftViews.get(i).getChildAt(j).findViewById(R.id.rl_bg)
-                        .setBackgroundResource(0);
-
-            }
-        }
-        /**
-         * 送礼物界面的点击效果
-         */
-        view.findViewById(R.id.rl_bg).setBackgroundResource(R.drawable.gift_tv_bg1);
-    }
-
-
-    //连送按钮隐藏
-    private void recoverySendGiftBtnLayout() {
-        mSendGiftLian.setVisibility(View.GONE);
-    }
-
-    /**
-     * @param statue 开启or关闭
-     * @dw 赠送礼物按钮状态修改
-     */
-    private void changeSendGiftBtnStatue(boolean statue) {
-        if (statue) {
-            mSendGiftBtn.setBackgroundColor(getResources().getColor(R.color.crimson));
-            mSendGiftBtn.setEnabled(true);
-        } else {
-            mSendGiftBtn.setBackgroundColor(getResources().getColor(R.color.light_gray2));
-            mSendGiftBtn.setEnabled(false);
-        }
     }
 
     public String frame1ShowUserId = "";//跑道1正在显示动画送礼物人的id
@@ -2150,42 +1769,10 @@ public class StartLiveActivity extends BaseActivity implements
      */
     private void changeJinpiao(CustomGiftBean customGiftBean) {
         //如果收礼物是自己，金币数要增加
-        if (customGiftBean.getReceveUserId() != null && customGiftBean.getReceveUserId().equals(appUser.getId())) {
-            String receivedGoldCoin = (Long.parseLong(SharedPreferenceUtils.getZhuboGoldCoin(mContext)) +
-                    ((Integer.parseInt(customGiftBean.getGift_item_number()) *
-                            Integer.parseInt(customGiftBean.getGift_coinnumber_index())))) + "";
-            SharedPreferenceUtils.saveZhuboGoldCoin(mContext, receivedGoldCoin);
-            receivedGoldCoin = CountUtils.getCount(Long.parseLong(receivedGoldCoin));
-            liveJinpiao.setText(receivedGoldCoin); //显示主播乐票数量
-
-
-            SharedPreferenceUtils.saveGoldCoin(mContext, (Long.parseLong(SharedPreferenceUtils
-                    .getGoldCoin(mContext)) + ((Integer.parseInt(customGiftBean.getGift_item_number()) *
-                    Integer.parseInt(customGiftBean.getGift_coinnumber_index())))) + "");
-        }
-
-        //如果中奖的是自己,金币数要增加
-        if (customGiftBean.getUserId() != null && customGiftBean.getGift_Grand_Prix() != null
-                && customGiftBean.getUserId().equals(appUser.getId())) {
-            String[] Gift_prix = customGiftBean.getGift_Grand_Prix();
-            if (Gift_prix.length > 0) {
-                long num = Long.parseLong(SharedPreferenceUtils.getZhuboGoldCoin(mContext));
-                long num1 = Long.parseLong(SharedPreferenceUtils.getGoldCoin(mContext));
-                for (int i = 0, j = Gift_prix.length; i < j; i++) {
-                    num += Integer.valueOf(Gift_prix[i]) * Integer.valueOf(customGiftBean
-                            .getGift_coinnumber_index());
-                    num1 += Integer.valueOf(Gift_prix[i]) * Integer.valueOf(customGiftBean
-                            .getGift_coinnumber_index());
-                }
-
-                String receivedGoldCoin = num + "";
-                SharedPreferenceUtils.saveZhuboGoldCoin(mContext, receivedGoldCoin);
-                receivedGoldCoin = CountUtils.getCount(Long.parseLong(receivedGoldCoin));
-                liveJinpiao.setText(receivedGoldCoin);
-
-                SharedPreferenceUtils.saveGoldCoin(mContext, num1 + "");
-            }
-        }
+        zhuboReceve = zhuboReceve + (Integer.parseInt(customGiftBean.getGift_item_number())
+                * Integer.parseInt(customGiftBean.getGift_coinnumber_index()));
+        String receivedGoldCoin = CountUtils.getCount(zhuboReceve);
+        liveJinpiao.setText(receivedGoldCoin); //显示主播乐票数量
     }
 
     // ***************************** 礼物相关结束 **************************************//
@@ -3375,7 +2962,6 @@ public class StartLiveActivity extends BaseActivity implements
                 UrlBuilder.GET_GIFT, null, myHandler, RequestCode.GET_GIFT);
     }
 
-
     /**
      * 请求主播信息
      */
@@ -3565,7 +3151,7 @@ public class StartLiveActivity extends BaseActivity implements
             public void onClick(View view) {
 
                 dialogForSelect.dismiss();
-                getGiftPopup(customdateBean.getNickName(), customdateBean.getId());
+                showToast("不能送礼");
             }
         });
 
@@ -4057,10 +3643,8 @@ public class StartLiveActivity extends BaseActivity implements
                             /**
                              * 设置游戏布局的金币数量
                              */
-                            String myCoin = SharedPreferenceUtils.getGoldCoin(mContext);
-                            myCoin = String.valueOf(Long.parseLong(myCoin) - Long.parseLong(strJinBi));
-                            SharedPreferenceUtils.saveGoldCoin(mContext, myCoin);
-                            myCoin = CountUtils.getCount(Long.parseLong(myCoin));
+                            myGoldCoin = myGoldCoin - Long.parseLong(strJinBi);
+                            String myCoin = CountUtils.getCount(myGoldCoin);
                             all_lepiao.setText(myCoin);
                             rulePop.dismiss();
 
@@ -4130,10 +3714,8 @@ public class StartLiveActivity extends BaseActivity implements
                                 /**
                                  * 设置游戏布局的金币数量
                                  */
-                                String myCoin = SharedPreferenceUtils.getGoldCoin(mContext);
-                                myCoin = String.valueOf(Long.parseLong(myCoin) + Long.parseLong(lastAwardBean.getWinAmountAll()));
-                                SharedPreferenceUtils.saveGoldCoin(mContext, myCoin);
-                                myCoin = CountUtils.getCount(Long.parseLong(myCoin));
+                                myGoldCoin = myGoldCoin + Long.parseLong(lastAwardBean.getWinAmountAll());
+                                String myCoin = CountUtils.getCount(myGoldCoin);
                                 all_lepiao.setText(myCoin);
                             } else if (lastAwardBean.getWinStatus().equals("0")) {
                                 getZhonaJiangTZ(lastAwardBean.getNper(), lastAwardBean.getWinAmountAll(), "0");
@@ -4300,5 +3882,16 @@ public class StartLiveActivity extends BaseActivity implements
         SeekBar m_Seeksoften = (SeekBar) view.findViewById(R.id.seek_soften);
         m_Seeksoften.setOnSeekBarChangeListener(this);
         m_Seeksoften.setProgress((int) (mPinkValue * 100));
+    }
+
+    /**
+     * 设置activity背景
+     *
+     * @param alpha
+     */
+    private void backgroundAlpha(float alpha) {
+        WindowManager.LayoutParams params = this.getWindow().getAttributes();
+        params.alpha = alpha;
+        this.getWindow().setAttributes(params);
     }
 }

@@ -168,6 +168,7 @@ public class CustomGiftBean implements Serializable {
                 ", gift_Type1='" + gift_Type1 + '\'' +
                 ", level='" + level + '\'' +
                 ", gift_giftCoinNumber='" + gift_giftCoinNumber + '\'' +
+                ", RepeatGiftNumber='" + RepeatGiftNumber + '\'' +
                 '}';
     }
 }

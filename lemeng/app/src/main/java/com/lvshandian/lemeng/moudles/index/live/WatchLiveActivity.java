@@ -580,6 +580,16 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      */
     private CountDownTimer giftTimer;
 
+    /**
+     * 左上角主播收到金币数
+     */
+    private Long zhuboReceve;
+
+    /**
+     * 自己金币数
+     */
+    private Long myGoldCoin;
+
     private long mCountDownTotalTime;
 
     private int tzNumber = 10;
@@ -639,13 +649,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         SendRoomMessageUtils.onCustomMessageSendGift(messageFragmentGift,
                                 liveListBean.getRooms().getRoomId() + "", map);
 
-//                        SharedPreferenceUtils.saveGoldCoin(mContext, (Long.parseLong
-//                                (SharedPreferenceUtils.getGoldCoin(mContext)) - Long.parseLong(mSendGiftItem.getMemberConsume())) + "");
-
-                        String myCoin = SharedPreferenceUtils.getGoldCoin(mContext);
-                        myCoin = String.valueOf(Long.parseLong(myCoin) - Long.parseLong(mSendGiftItem.getMemberConsume()));
-                        SharedPreferenceUtils.saveGoldCoin(mContext, myCoin);
-                        myCoin = CountUtils.getCount(Long.parseLong(myCoin));
+                        myGoldCoin = myGoldCoin - Long.parseLong(mSendGiftItem.getMemberConsume());
+                        String myCoin = CountUtils.getCount(myGoldCoin);
                         all_lepiao.setText(myCoin);
 
                     }
@@ -789,9 +794,21 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     LogUtils.e("查询个人信息返回json: " + json);
                     AppUser userZhubo = JsonUtil.json2Bean(json, AppUser.class);
                     String receivedGoldCoin = userZhubo.getReceivedGoldCoin();
-                    SharedPreferenceUtils.saveZhuboGoldCoin(mContext, receivedGoldCoin);
+
+                    zhuboReceve = Long.parseLong(receivedGoldCoin);
                     receivedGoldCoin = CountUtils.getCount(Long.parseLong(receivedGoldCoin));
-                    liveJinpiao.setText(receivedGoldCoin); //显示主播乐票数量
+                    liveJinpiao.setText(receivedGoldCoin); //显示左上角主播收到乐票数量
+                    break;
+                case RequestCode.SELECT_USER_MY:
+                    LogUtils.e("查询个人信息返回json: " + json);
+                    AppUser userMy = JsonUtil.json2Bean(json, AppUser.class);
+                    SharedPreferenceUtils.saveUserInfo(mContext, userMy);
+                    appUser = SharedPreferenceUtils.getUserInfo(mContext);
+
+                    String myCoin = appUser.getGoldCoin();
+                    myGoldCoin = Long.parseLong(myCoin);
+                    myCoin = CountUtils.getCount(Long.parseLong(myCoin));
+                    all_lepiao.setText(myCoin);
                     break;
                 case RequestCode.REQUEST_REPORT:
                     showToast("已成功举报该用户");
@@ -1006,12 +1023,11 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         doubleNumber.setText(String.valueOf(jbNumber));
         initSelectStatus();
         initBlInfos();
+
         /**
-         * 设置游戏布局的金币数量
+         * 请求个人信息
          */
-        String myCoin = SharedPreferenceUtils.getGoldCoin(mContext);
-        myCoin = CountUtils.getCount(Long.parseLong(myCoin));
-        all_lepiao.setText(myCoin);
+        initMyInfo();
     }
 
     private void initBlInfos() {
@@ -1978,8 +1994,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 //                data.add(barrageDateBean);
                 barrageview.addSentence(barrageDateBean);
                 if (message.getFromAccount().equals("miu_" + appUser.getId())) {
-                    SharedPreferenceUtils.saveGoldCoin(mContext, (Long.parseLong
-                            (SharedPreferenceUtils.getGoldCoin(mContext)) - 1) + "");
+                    myGoldCoin = myGoldCoin - 1;
+                    String myCoin = CountUtils.getCount(myGoldCoin);
+                    all_lepiao.setText(myCoin);
                 }
             } else if (userId != null && userId.indexOf("miu_") != -1) {
                 userId = userId.substring(4);
@@ -2232,8 +2249,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             }
         });
 
-        String myCoin = SharedPreferenceUtils.getGoldCoin(mContext);
-        myCoin = CountUtils.getCount(Long.parseLong(myCoin));
+        String myCoin = CountUtils.getCount(myGoldCoin);
         mUserCoin.setText(myCoin);
 
         mVpGiftView = (ViewPager) view.findViewById(R.id.vp_gift_page);
@@ -2444,54 +2460,11 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * @param customGiftBean
      */
     private void changeJinpiao(CustomGiftBean customGiftBean) {
-        //如果收礼物是自己，金币数要增加
-        if (customGiftBean.getReceveUserId() != null && customGiftBean.getReceveUserId().equals(appUser.getId())) {
-            String num = ((Long.parseLong(SharedPreferenceUtils.getGoldCoin(mContext))) +
-                    (Integer.parseInt(customGiftBean.getGift_item_number())
-                            * Integer.parseInt(customGiftBean.getGift_coinnumber_index())) + "");
-            SharedPreferenceUtils.saveGoldCoin(mContext, num);
-        }
-
-        //如果中奖的是自己,金币数要增加
-        if (customGiftBean.getUserId() != null && customGiftBean.getGift_Grand_Prix() != null
-                && customGiftBean.getUserId().equals(appUser.getId())) {
-            String[] Gift_prix = customGiftBean.getGift_Grand_Prix();
-            if (Gift_prix.length > 0) {
-                long num = Long.parseLong(SharedPreferenceUtils.getGoldCoin(mContext));
-                for (int i = 0, j = Gift_prix.length; i < j; i++) {
-                    num += Integer.valueOf(Gift_prix[i]) * Integer.valueOf(customGiftBean
-                            .getGift_coinnumber_index());
-                }
-                SharedPreferenceUtils.saveGoldCoin(mContext, num + "");
-            }
-        }
-
         //如果收礼物的是主播,界面上显示主播的金币数改变
-        if (customGiftBean.getReceveUserId() != null && customGiftBean.getReceveUserId().equals(liveListBean.getId() + "")) {
-            String receivedGoldCoin = (Long.parseLong(SharedPreferenceUtils.getZhuboGoldCoin(mContext)) +
-                    ((Integer.parseInt(customGiftBean.getGift_item_number())
-                            * Integer.parseInt(customGiftBean.getGift_coinnumber_index())))) + "";
-            SharedPreferenceUtils.saveZhuboGoldCoin(mContext, receivedGoldCoin);
-            receivedGoldCoin = CountUtils.getCount(Long.parseLong(receivedGoldCoin));
-            liveJinpiao.setText(receivedGoldCoin); //显示主播乐票数量
-        }
-
-        //如果中奖的是主播,界面上显示主播的金币数改变
-        if (customGiftBean.getUserId() != null && customGiftBean.getGift_Grand_Prix() != null
-                && customGiftBean.getUserId().equals(liveListBean.getId() + "")) {
-            String[] Gift_prix = customGiftBean.getGift_Grand_Prix();
-            if (Gift_prix.length > 0) {
-                long num = Long.parseLong(SharedPreferenceUtils.getZhuboGoldCoin(mContext));
-                for (int i = 0, j = Gift_prix.length; i < j; i++) {
-                    num += Integer.valueOf(Gift_prix[i]) * Integer.valueOf(customGiftBean
-                            .getGift_coinnumber_index());
-                }
-                String receivedGoldCoin = num + "";
-                SharedPreferenceUtils.saveZhuboGoldCoin(mContext, receivedGoldCoin);
-                receivedGoldCoin = CountUtils.getCount(Long.parseLong(receivedGoldCoin));
-                liveJinpiao.setText(receivedGoldCoin);
-            }
-        }
+        zhuboReceve = zhuboReceve + (Integer.parseInt(customGiftBean.getGift_item_number())
+                * Integer.parseInt(customGiftBean.getGift_coinnumber_index()));
+        String receivedGoldCoin = CountUtils.getCount(zhuboReceve);
+        liveJinpiao.setText(receivedGoldCoin); //显示主播乐票数量
     }
 
     // ***************************** 礼物相关结束 **************************************//
@@ -3283,6 +3256,16 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     }
 
     /**
+     * 请求主播信息
+     */
+    private void initMyInfo() {
+        ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
+        map.put("id", appUser.getId() + "");
+        httpDatas.getNewDataCharServerCodeNoLoading("查询用户信息", Request.Method
+                .POST, UrlBuilder.selectUserInfo, map, myHandler, RequestCode.SELECT_USER_MY);
+    }
+
+    /**
      * 获取用户信息
      *
      * @param details     打印接口信息
@@ -3516,10 +3499,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         view.findViewById(R.id.tv_give).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toUserId = customdateBean.getId();
-                toUserName = customdateBean.getNickName();
                 dialogForSelect.dismiss();
-                getGiftPopup();
+                showToast("不能送礼");
             }
         });
 
@@ -4020,10 +4001,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                             /**
                              * 设置游戏布局的金币数量
                              */
-                            String myCoin = SharedPreferenceUtils.getGoldCoin(mContext);
-                            myCoin = String.valueOf(Long.parseLong(myCoin) - Long.parseLong(strJinBi));
-                            SharedPreferenceUtils.saveGoldCoin(mContext, myCoin);
-                            myCoin = CountUtils.getCount(Long.parseLong(myCoin));
+                            myGoldCoin = myGoldCoin - Long.parseLong(strJinBi);
+                            String myCoin = CountUtils.getCount(myGoldCoin);
                             all_lepiao.setText(myCoin);
                             rulePop.dismiss();
 
@@ -4096,10 +4075,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                                 /**
                                  * 设置游戏布局的金币数量
                                  */
-                                String myCoin = SharedPreferenceUtils.getGoldCoin(mContext);
-                                myCoin = String.valueOf(Long.parseLong(myCoin) + Long.parseLong(lastAwardBean.getWinAmountAll()));
-                                SharedPreferenceUtils.saveGoldCoin(mContext, myCoin);
-                                myCoin = CountUtils.getCount(Long.parseLong(myCoin));
+                                myGoldCoin = myGoldCoin + Long.parseLong(lastAwardBean.getWinAmountAll());
+                                String myCoin = CountUtils.getCount(myGoldCoin);
                                 all_lepiao.setText(myCoin);
                             } else if (lastAwardBean.getWinStatus().equals("0")) {
                                 getZhonaJiangTZ(lastAwardBean.getNper(), lastAwardBean.getWinAmountAll(), "0");

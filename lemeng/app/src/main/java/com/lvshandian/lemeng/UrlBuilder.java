@@ -114,6 +114,7 @@ public class UrlBuilder {
      * 获取用户申请信息
      * 服务器接口地址：http://miulive.cc:8080/api/v1/room/{roomId}/{userId}/live get请求 其中roomId为直播间id，不是roomid 参数字段，userId为用户id 举例
      *
+     *
      * @author sll
      * @time 2016/12/16 11:08
      */
