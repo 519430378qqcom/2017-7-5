@@ -108,7 +108,6 @@ public class ExplainWebViewActivity extends BaseActivity implements View.OnClick
             }
         });
     }
-
     private void webSetting(WebSettings webSettings) {
 //        webSettings.setJavaScriptEnabled(true);
 //        webSettings.setSupportZoom(true);

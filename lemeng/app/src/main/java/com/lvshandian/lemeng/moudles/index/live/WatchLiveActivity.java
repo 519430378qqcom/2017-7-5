@@ -213,6 +213,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import fr.castorflex.android.verticalviewpager.VerticalViewPager;
 import xiao.free.horizontalrefreshlayout.HorizontalRefreshLayout;
@@ -836,6 +837,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     private String strJinBi;
     private boolean isTouZhu;//是否可以投注
     private ImageView iv_game;
+    private TextView tv_hz;
 
 
     @Override
@@ -935,6 +937,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         tv_ds = (TextView) mRoomContainer.findViewById(R.id.tv_ds);
         tv_game_next_open_time = (TimeCountDownLayout) mRoomContainer.findViewById(R.id.tv_game_next_open_time);
         rl_kp = (LinearLayout) mRoomContainer.findViewById(R.id.rl_kp);
+        tv_hz = (TextView) mRoomContainer.findViewById(R.id.tv_hz);
 
         List<LiveListBean> list = (List<LiveListBean>) getIntent().getSerializableExtra("LIVELIST");
         position = getIntent().getIntExtra("position", 0);
@@ -1072,6 +1075,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         restStatus();
         ivBig.setImageResource(R.mipmap.icon_big_select);
         selectStatus = "大";
+        tv_hz.setText("和值大于13即中奖");
+
     }
 
     private void loadVideoAndChatRoom(ViewGroup viewGroup, int currentItem) {
@@ -1416,59 +1421,69 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 restStatus();
                 ivBig.setImageResource(R.mipmap.icon_big_select);
                 selectStatus = "大";
+                tv_hz.setText("和值大于13即中奖");
                 break;
             case R.id.iv_samll: //小
                 restStatus();
                 ivSamll.setImageResource(R.mipmap.icon_small_select);
                 selectStatus = "小";
+                tv_hz.setText("和值小于14即中奖");
 
                 break;
             case R.id.iv_singe: //单
                 restStatus();
                 ivSinge.setImageResource(R.mipmap.icon_single_select);
                 selectStatus = "单";
+                tv_hz.setText("和值为1,3,5,7,9,11,13,15,17,19,21,23,25,27即中奖");
 
                 break;
             case R.id.iv_double: //双
                 restStatus();
                 ivDouble.setImageResource(R.mipmap.icon_double_select);
                 selectStatus = "双";
+                tv_hz.setText("和值为0,2,4,6,8,10,12,14,16,18,20,22,24,26即中奖");
 
                 break;
             case R.id.iv_big_sigle: //大单
                 restStatus();
                 ivBigSigle.setImageResource(R.mipmap.icon_big_single_select);
                 selectStatus = "大单";
+                tv_hz.setText("和值为15,17,19,21,23,25,27即中奖");
 
                 break;
             case R.id.iv_samll_singe: //小单
                 restStatus();
                 ivSamllSinge.setImageResource(R.mipmap.icon_small_single_select);
                 selectStatus = "小单";
+                tv_hz.setText("和值为1,3,5,7,9,11,13即中奖即中奖");
 
                 break;
             case R.id.iv_big_double: //大双
                 restStatus();
                 ivBigDouble.setImageResource(R.mipmap.icon_big_double_select);
                 selectStatus = "大双";
+                tv_hz.setText("和值为14,16,18,20,22,24,26即中奖");
 
                 break;
             case R.id.iv_samll_double: //小双
                 restStatus();
                 ivSamllDouble.setImageResource(R.mipmap.icon_small_double_select);
                 selectStatus = "小双";
+                tv_hz.setText("和值为0,2,4,6,8,10,12即中奖");
 
                 break;
             case R.id.iv_more_big: //更大
                 restStatus();
                 ivMoreBig.setImageResource(R.mipmap.icon_big_more_select);
                 selectStatus = "极大";
+                tv_hz.setText("和值大于21即中奖");
 
                 break;
             case R.id.iv_more_samll: //更小
                 restStatus();
                 ivMoreSamll.setImageResource(R.mipmap.icon_small_more_select);
                 selectStatus = "极小";
+                tv_hz.setText("和值小于6即中奖");
                 break;
 
             case R.id.ruanjianpanW:
