@@ -43,7 +43,7 @@
         android:layout_height="1px"
         android:layout_marginLeft="30px"
         android:layout_marginTop="30px"
-        android:background="@color/line" />
+        android:background="@color/line_df" />
        <TextView
            android:id="@+id/tv_watch_all_video"
            android:layout_width="match_parent"

@@ -217,7 +217,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="666"
+                        android:text="0"
                         android:textColor="@color/white"
                         android:textSize="23px" />
 
@@ -357,12 +357,12 @@
                     android:background="@mipmap/mg_room_btn_xinxi" />
 
                 <ImageView
-                    android:id="@+id/zhoubang"
+                    android:id="@+id/room_lianmai"
                     android:layout_width="80px"
                     android:layout_height="80px"
                     android:layout_marginLeft="19px"
                     android:layout_toRightOf="@id/ruanjianpan"
-                    android:background="@mipmap/mg_room_btn_ranking" />
+                    android:background="@mipmap/room_lianmai" />
 
 
                 <ImageView
@@ -465,24 +465,21 @@
         <com.zhy.autolayout.AutoRelativeLayout
             android:id="@+id/rl_live_id"
             android:layout_width="match_parent"
-            android:layout_height="45px"
+            android:layout_height="60px"
             android:layout_below="@+id/autoLinearLayout">
 
             <com.zhy.autolayout.AutoLinearLayout
                 android:id="@+id/ll_tp_labe"
                 android:layout_width="wrap_content"
-                android:layout_height="45px"
-                android:layout_alignLeft="@+id/autoLinearLayout2"
-                android:layout_alignStart="@+id/autoLinearLayout2"
-                android:layout_marginLeft="10px"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="30px"
                 android:background="@drawable/btn_ticket_labe"
-                android:paddingRight="10dp">
+                android:gravity="center_vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="30px"
+                    android:layout_marginLeft="22px"
                     android:text="乐票:"
                     android:textColor="@color/white"
                     android:textSize="24px" />
@@ -492,25 +489,30 @@
                     android:id="@+id/live_jinpiao"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="20px"
+                    android:layout_marginLeft="10px"
+                    android:layout_marginRight="12px"
                     android:text="0"
                     android:textColor="@color/white"
                     android:textSize="24px" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="22px"
+                    android:src="@mipmap/icon_right" />
 
             </com.zhy.autolayout.AutoLinearLayout>
 
             <TextView
                 android:id="@+id/live_id"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="30px"
                 android:layout_marginRight="30px"
-                android:text="乐檬号:6666"
+                android:gravity="center_vertical"
+                android:text="乐檬号: 100000"
                 android:textColor="@color/white"
-                android:textSize="24px" />
+                android:textSize="28px" />
 
         </com.zhy.autolayout.AutoRelativeLayout>
 
@@ -541,7 +543,7 @@
 
         <!--家族按钮图-->
         <ImageView
-            android:id="@+id/start_room_jaiZu"
+            android:id="@+id/start_room_jiaZu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

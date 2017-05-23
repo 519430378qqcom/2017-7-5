@@ -213,7 +213,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 import fr.castorflex.android.verticalviewpager.VerticalViewPager;
 import xiao.free.horizontalrefreshlayout.HorizontalRefreshLayout;
@@ -261,7 +260,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     AutoLinearLayout llTangpiao;
     TextView liveJinpiao;
     TextView liveId;
-    TextView roomShowId;
     ImageView btnAttention;
     ImageView ivLivePrivatechat;
     ImageView ivLiveGift;
@@ -865,7 +863,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         llTangpiao = (AutoLinearLayout) mRoomContainer.findViewById(R.id.ll_tp_labe);
         liveJinpiao = (TextView) mRoomContainer.findViewById(R.id.live_jinpiao);
         liveId = (TextView) mRoomContainer.findViewById(R.id.live_id);
-        roomShowId = (TextView) mRoomContainer.findViewById(R.id.room_id);
         btnAttention = (ImageView) mRoomContainer.findViewById(R.id.btn_attention);
         ivLivePrivatechat = (ImageView) mRoomContainer.findViewById(R.id.iv_live_privatechat);
         ivLiveGift = (ImageView) mRoomContainer.findViewById(R.id.iv_live_gift);
@@ -884,7 +881,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         flPull = (AutoFrameLayout) mRoomContainer.findViewById(R.id.fl_pull);
         flPlug = (AutoFrameLayout) mRoomContainer.findViewById(R.id.fl_plug);
         smallCreateColes = (ImageView) mRoomContainer.findViewById(R.id.small_create_coles);
-        watchRoomJaizu = (ImageView) mRoomContainer.findViewById(R.id.watch_room_jaizu);
+        watchRoomJaizu = (ImageView) mRoomContainer.findViewById(R.id.watch_room_jiaZu);
         mSendGiftLian = (RelativeLayout) mRoomContainer.findViewById(R.id.iv_show_send_gift_lian);
         scrl = (ScrollRelativeLayout) mRoomContainer.findViewById(R.id.scrl);
         rlHvView = (RelativeLayout) mRoomContainer.findViewById(R.id.rl_hv_view);
@@ -1130,7 +1127,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         }
 
         liveId.setText("乐檬号:" + liveListBean.getId());
-        roomShowId.setText("房间号:" + liveListBean.getRooms().getId());
 
         //请求主播信息,得到主播乐票数量
         initUser();
@@ -1434,14 +1430,14 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 restStatus();
                 ivSinge.setImageResource(R.mipmap.icon_single_select);
                 selectStatus = "单";
-                tv_hz.setText("和值为1,3,5,7,9,11,13,15,17,19,21,23,25,27即中奖");
+                tv_hz.setText("和值为奇数即中奖");
 
                 break;
             case R.id.iv_double: //双
                 restStatus();
                 ivDouble.setImageResource(R.mipmap.icon_double_select);
                 selectStatus = "双";
-                tv_hz.setText("和值为0,2,4,6,8,10,12,14,16,18,20,22,24,26即中奖");
+                tv_hz.setText("和值为偶数即中奖");
 
                 break;
             case R.id.iv_big_sigle: //大单
@@ -1578,7 +1574,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         .ATTENTION_USER, map1, myHandler, RequestCode.ATTENTION_USER);
                 break;
             //家族
-            case R.id.watch_room_jaizu:
+            case R.id.watch_room_jiaZu:
                 getFamilyMember();
                 break;
             //守护
@@ -1881,12 +1877,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         }
 
                         changeJinpiao(customGiftBean);
-
-                        if (message.getChatRoomMessageExtension() == null) {
-                            name = appUser.getNickName();
-                        } else {
-                            name = message.getChatRoomMessageExtension().getSenderNick();
-                        }
 
                         if (message.getChatRoomMessageExtension() == null) {
                             name = appUser.getNickName();
@@ -3295,6 +3285,181 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 map, myHandler, handlerCode);
     }
 
+
+    /**
+     * 展示游客详情
+     * @param customdateBean
+     */
+    public void showDialogForCallOther(final CustomdateBean customdateBean) {
+        final PopupWindow otherPop = new PopupWindow(this);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View view = inflater.inflate(R.layout.dialog_video_room, null);
+        otherPop.setContentView(view);
+        otherPop.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
+        otherPop.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        otherPop.setFocusable(true);
+        otherPop.setBackgroundDrawable(new BitmapDrawable());
+        otherPop.setOutsideTouchable(true);
+        backgroundAlpha(0.5f);
+        otherPop.showAtLocation(doubleAdd, Gravity.BOTTOM, 0, 0);
+        otherPop.update();
+        otherPop.setOnDismissListener(new RulePopOnDismissListner());
+
+        AvatarView civ_image = (AvatarView) view.findViewById(R.id.civ_image);
+        LinearLayout buttom_layout = (LinearLayout) view.findViewById(R.id.buttom_layout);
+        TextView mySelf = (TextView) view.findViewById(R.id.mySelf);
+        final ImageView iv_sex = (ImageView) view.findViewById(R.id.iv_sex);
+        ImageView iv_grade = (ImageView) view.findViewById(R.id.iv_grade);
+        TextView tvID = (TextView) view.findViewById(R.id.tv_id);
+        TextView tv_name = (TextView) view.findViewById(R.id.tv_name);
+        TextView tv_sign = (TextView) view.findViewById(R.id.tv_sign);
+        TextView tv_focus_num = (TextView) view.findViewById(R.id.tv_focus_num);
+        TextView tv_funs_num = (TextView) view.findViewById(R.id.tv_funs_num);
+        TextView tv_send_num = (TextView) view.findViewById(R.id.tv_send_num);
+        TextView tv_gold_coin = (TextView) view.findViewById(R.id.tv_gold_coin);
+        TextView tv_changkong = (TextView) view.findViewById(R.id.tv_changkong);
+        TextView tv_reply = (TextView) view.findViewById(R.id.tv_reply);
+        LinearLayout ll_report = (LinearLayout) view.findViewById(R.id.ll_report);
+        LinearLayout ll_banned = (LinearLayout) view.findViewById(R.id.ll_banned);
+        View line = view.findViewById(R.id.line);
+
+        if (!TextUtils.isEmpty(customdateBean.getId()) && customdateBean.getId().equals(appUser
+                .getId())) {
+            buttom_layout.setVisibility(View.GONE);
+            ll_banned.setVisibility(View.INVISIBLE);
+            ll_report.setVisibility(View.INVISIBLE);
+            mySelf.setVisibility(View.VISIBLE);
+        } else {
+            buttom_layout.setVisibility(View.VISIBLE);
+            ll_banned.setVisibility(View.INVISIBLE);
+            ll_report.setVisibility(View.VISIBLE);
+            tv_changkong.setVisibility(View.GONE);
+            line.setVisibility(View.GONE);
+            mySelf.setVisibility(View.GONE);
+        }
+
+
+        if (customdateBean.getGender().equals("0")) {
+            iv_sex.setImageResource(R.mipmap.female);
+        } else {
+            iv_sex.setImageResource(R.mipmap.male);
+        }
+
+        tvID.setText("乐檬号:" + customdateBean.getId());
+
+        Picasso.with(mContext).load(customdateBean.getPicUrl()).placeholder(R.mipmap.head_default)
+                .error(R.mipmap.head_default).resize(50, 50).into(civ_image);
+        civ_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
+                intent.putExtra(getString(R.string.visiti_person), customdateBean.getId());
+                startActivity(intent);
+                otherPop.dismiss();
+            }
+        });
+
+        iv_grade.setImageResource(GrademipmapUtils.LevelImg[Integer.valueOf(customdateBean
+                .getLevel()) - 1]);
+        tv_name.setText(customdateBean.getNickName());
+
+        //签名
+        if (TextUtils.isEmpty(customdateBean.getSignature())){
+            tv_sign.setText("这个家伙很懒，什么都没留下");
+        }else {
+            tv_sign.setText(customdateBean.getSignature());
+        }
+
+        tv_focus_num.setText(customdateBean.getFollowNum());
+        tv_funs_num.setText(customdateBean.getFansNum());
+
+        String spendGoldCoin = customdateBean.getSpendGoldCoin();
+        spendGoldCoin = CountUtils.getCount(Long.parseLong(spendGoldCoin));
+        tv_send_num.setText(spendGoldCoin);
+
+        String receivedGoldCoin = customdateBean.getReceivedGoldCoin();
+        receivedGoldCoin = CountUtils.getCount(Long.parseLong(receivedGoldCoin));
+        tv_gold_coin.setText(receivedGoldCoin);
+
+
+        focus((TextView) view.findViewById(R.id.tv_foucs), customdateBean);
+        //关注
+        view.findViewById(R.id.tv_foucs).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeFollow((TextView) view.findViewById(R.id.tv_foucs), customdateBean);
+            }
+        });
+
+        //私信
+        view.findViewById(R.id.tv_chat).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hidePlayView();
+                ll_buttom_mun.setVisibility(View.GONE);
+                Intent intent = new Intent();
+                intent.putExtra(Extras.EXTRA_ACCOUNT, "miu_" + customdateBean.getId());
+                intent.putExtra("SESSION_NAME", customdateBean.getNickName());
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                Bundle arguments = intent.getExtras();
+                arguments.putSerializable(Extras.EXTRA_TYPE, SessionTypeEnum.P2P);
+                liveMessageFragment = new LiveMessageFragment();
+                liveMessageFragment.init(getSupportFragmentManager(), ll_buttom_mun);
+                liveMessageFragment.setArguments(arguments);
+                getSupportFragmentManager().beginTransaction().replace(R.id
+                        .watch_room_message_fragment_parent, liveMessageFragment).setTransition
+                        (FragmentTransaction.TRANSIT_FRAGMENT_OPEN).addToBackStack(null).commit();
+                otherPop.dismiss();
+            }
+
+        });
+
+        //回复
+        tv_reply.setText("@TA");
+        tv_reply.findViewById(R.id.tv_reply).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                messageFragment.showEditText();
+                EditText editContent = (EditText) findViewById(com.netease.nim.uikit.R.id
+                        .editTextMessage);
+                String str = "回复" + customdateBean.getNickName() + ":";
+                editContent.setText(str);
+                editContent.setSelection(str.length());
+                otherPop.dismiss();
+            }
+        });
+
+        //举报
+        ll_report.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                otherPop.dismiss();
+                reportDialog(customdateBean.getId());
+            }
+        });
+
+        //我的主页
+        mySelf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
+                intent.putExtra(getString(R.string.visiti_person), customdateBean.getId());
+                startActivity(intent);
+                otherPop.dismiss();
+            }
+        });
+
+        //我的场控
+        tv_changkong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showToast("暂缓开通");
+                otherPop.dismiss();
+            }
+        });
+    }
+
+
     /**
      * 展示守护信息
      *
@@ -3349,180 +3514,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         dialogForSelect.show();
     }
 
-
-    /**
-     * 展示游客详情
-     *
-     * @param customdateBean 用户信息
-     * @author sll
-     * @time 2016/11/25 9:40
-     */
-    public void showDialogForCallOther(final CustomdateBean customdateBean) {
-        final View view = View.inflate(this, R.layout.dialog_video_room, null);
-        AvatarView civ_image = (AvatarView) view.findViewById(R.id.civ_image);
-        LinearLayout buttom_layout = (LinearLayout) view.findViewById(R.id.buttom_layout);
-        final ImageView iv_sex = (ImageView) view.findViewById(R.id.iv_sex);
-        ImageView iv_grade = (ImageView) view.findViewById(R.id.iv_grade);
-        TextView tvID = (TextView) view.findViewById(R.id.tv_id);
-        TextView tv_name = (TextView) view.findViewById(R.id.tv_name);
-        TextView tv_renzheng = (TextView) view.findViewById(R.id.tv_renzheng);
-        TextView tv_sign = (TextView) view.findViewById(R.id.tv_sign);
-        TextView tv_focus_num = (TextView) view.findViewById(R.id.tv_focus_num);
-        TextView tv_funs_num = (TextView) view.findViewById(R.id.tv_funs_num);
-        TextView tv_send_num = (TextView) view.findViewById(R.id.tv_send_num);
-        TextView tv_gold_coin = (TextView) view.findViewById(R.id.tv_gold_coin);
-        TextView tv_banned = (TextView) view.findViewById(R.id.tv_banned);
-        TextView tv_report = (TextView) view.findViewById(R.id.tv_report);
-        TextView tv_lianmai = (TextView) view.findViewById(R.id.tv_lianmai);
-
-        if (!TextUtils.isEmpty(customdateBean.getId()) && customdateBean.getId().equals(appUser
-                .getId())) {
-            buttom_layout.setVisibility(View.GONE);
-            tv_banned.setVisibility(View.GONE);
-            tv_report.setVisibility(View.GONE);
-        } else {
-            buttom_layout.setVisibility(View.VISIBLE);
-            tv_report.setVisibility(View.VISIBLE);
-            tv_lianmai.setVisibility(View.GONE);
-            tv_banned.setVisibility(View.GONE);
-        }
-
-        if (!TextUtils.isEmpty(customdateBean.getId()) && customdateBean.getId().equals
-                (liveListBean.getId() + "")) {
-            buttom_layout.setVisibility(View.VISIBLE);
-            tv_report.setVisibility(View.VISIBLE);
-            tv_lianmai.setVisibility(View.VISIBLE);
-            tv_banned.setVisibility(View.GONE);
-        }
-
-        //认证
-        String verified = customdateBean.getVerified();
-        if (verified.equals("2")) {
-            tv_renzheng.setText("已认证");
-        } else {
-            tv_renzheng.setText("未认证");
-        }
-
-        if (customdateBean.getGender().equals("0")) {
-            iv_sex.setImageResource(R.mipmap.female);
-        } else {
-            iv_sex.setImageResource(R.mipmap.male);
-        }
-        tvID.setText("ID:" + customdateBean.getId());
-
-//        civ_image.setAvatarUrl(customdateBean.getPicUrl());
-        Picasso.with(mContext).load(customdateBean.getPicUrl()).placeholder(R.mipmap.head_default)
-                .error(R.mipmap.head_default).resize(50, 50).into(civ_image);
-        civ_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
-                intent.putExtra(getString(R.string.visiti_person), customdateBean.getId());
-                startActivity(intent);
-                dialogForSelect.dismiss();
-            }
-        });
-
-        iv_grade.setImageResource(GrademipmapUtils.LevelImg[Integer.valueOf(customdateBean
-                .getLevel()) - 1]);
-        tv_name.setText(customdateBean.getNickName());
-        //签名
-        tv_sign.setText(customdateBean.getSignature());
-        tv_focus_num.setText(customdateBean.getFollowNum());
-        tv_funs_num.setText(customdateBean.getFansNum());
-
-        String spendGoldCoin = customdateBean.getSpendGoldCoin();
-        spendGoldCoin = CountUtils.getCount(Long.parseLong(spendGoldCoin));
-        tv_send_num.setText(spendGoldCoin);
-
-        String myCoin = customdateBean.getGoldCoin();
-        myCoin = CountUtils.getCount(Long.parseLong(myCoin));
-        tv_gold_coin.setText(myCoin);
-
-        //关闭
-        view.findViewById(R.id.iv_x).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialogForSelect.dismiss();
-            }
-        });
-
-        //举报
-        tv_report.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialogForSelect.dismiss();
-                reportDialog(customdateBean.getId());
-            }
-        });
-
-        focus((TextView) view.findViewById(R.id.tv_foucs), customdateBean);
-        //关注
-        view.findViewById(R.id.tv_foucs).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeFollow((TextView) view.findViewById(R.id.tv_foucs), customdateBean);
-            }
-        });
-
-        //私聊
-        view.findViewById(R.id.tv_chat).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.putExtra(Extras.EXTRA_ACCOUNT, "miu_" + customdateBean.getId());
-                intent.putExtra("SESSION_NAME", customdateBean.getNickName());
-                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                Bundle arguments = intent.getExtras();
-                arguments.putSerializable(Extras.EXTRA_TYPE, SessionTypeEnum.P2P);
-                liveMessageFragment = new LiveMessageFragment();
-                liveMessageFragment.setArguments(arguments);
-                getSupportFragmentManager().beginTransaction().replace(R.id
-                        .watch_room_message_fragment_parent, liveMessageFragment).setTransition
-                        (FragmentTransaction.TRANSIT_FRAGMENT_OPEN).addToBackStack(null).commit();
-                dialogForSelect.dismiss();
-            }
-
-        });
-        //回复
-        view.findViewById(R.id.tv_reply).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                messageFragment.showEditText();
-                EditText editContent = (EditText) findViewById(com.netease.nim.uikit.R.id
-                        .editTextMessage);
-                String str = "回复" + customdateBean.getNickName() + ":";
-                editContent.setText(str);
-                editContent.setSelection(str.length());
-                dialogForSelect.dismiss();
-            }
-        });
-
-        //连麦
-        tv_lianmai.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialogForSelect.dismiss();
-                changeStatus();
-//                sendCustomNotificationForLive("miu_" + liveListBean.getId(), appUser.getId(),
-//                        appUser.getNickName(), appUser.getPicUrl(), appUser.getVip(), "请求与主播连麦",
-//                        "2", CustomNotificationType.IM_P2P_TYPE_SUBLIVE_PUBLIC, "1");
-            }
-        });
-
-        //送礼
-        view.findViewById(R.id.tv_give).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialogForSelect.dismiss();
-                showToast("不能送礼");
-            }
-        });
-
-        dialogForSelect.setCanceledOnTouchOutside(true);
-        dialogForSelect.setContentView(view);
-        dialogForSelect.show();
-    }
 
 
     /**
@@ -3640,9 +3631,11 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     private void focus(TextView tvFouce, CustomdateBean bean) {
         String follow = bean.getFollow();
         if (TextUtils.equals("0", follow)) {
-            tvFouce.setText("未关注");
+            tvFouce.setText("+ 关注");
+            tvFouce.setTextColor(getResources().getColor(R.color.main));
         } else if (TextUtils.equals("1", follow)) {
             tvFouce.setText("已关注");
+            tvFouce.setTextColor(getResources().getColor(R.color.line_bf));
         }
     }
 

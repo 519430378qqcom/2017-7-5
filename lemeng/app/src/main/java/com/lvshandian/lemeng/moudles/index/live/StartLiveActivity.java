@@ -90,9 +90,12 @@ import com.lvshandian.lemeng.httprequest.NewSdkHttpResult;
 import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.httprequest.SdkHttpResultSuccess;
 import com.lvshandian.lemeng.moudles.index.CustomNotificationType;
+import com.lvshandian.lemeng.moudles.index.adapter.LianmaiListAadapter;
 import com.lvshandian.lemeng.moudles.index.live.gift.GiftFrameLayout;
 import com.lvshandian.lemeng.moudles.index.live.gift.GiftSendModel;
 import com.lvshandian.lemeng.moudles.index.live.utils.AnchorVideoOne;
+import com.lvshandian.lemeng.moudles.mine.bean.Funse;
+import com.lvshandian.lemeng.moudles.mine.bean.FunseBean;
 import com.lvshandian.lemeng.moudles.mine.my.ContributionActivity;
 import com.lvshandian.lemeng.moudles.mine.my.OtherPersonHomePageActivity;
 import com.lvshandian.lemeng.moudles.mine.my.adapter.ControllerBaseAdapter;
@@ -108,6 +111,7 @@ import com.lvshandian.lemeng.utils.DateUtils;
 import com.lvshandian.lemeng.utils.GrademipmapUtils;
 import com.lvshandian.lemeng.utils.JavaBeanMapUtils;
 import com.lvshandian.lemeng.utils.JsonUtil;
+import com.lvshandian.lemeng.utils.KeyBoardUtils;
 import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.QosThread;
 import com.lvshandian.lemeng.utils.SendRoomMessageUtils;
@@ -132,6 +136,8 @@ import com.lvshandian.lemeng.widget.lrcview.LrcView;
 import com.lvshandian.lemeng.widget.myrecycler.RefreshRecyclerView;
 import com.lvshandian.lemeng.widget.myrecycler.manager.RecyclerMode;
 import com.lvshandian.lemeng.widget.myrecycler.manager.RecyclerViewManager;
+import com.lvshandian.lemeng.widget.refresh.SwipeRefresh;
+import com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout;
 import com.netease.nim.uikit.NimUIKit;
 import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
 import com.netease.nim.uikit.common.ui.drop.DropFake;
@@ -275,7 +281,7 @@ public class StartLiveActivity extends BaseActivity implements
     ImageView smallColes;
     @Bind(R.id.barrageview)
     BarrageView barrageview;
-    @Bind(R.id.start_room_jaiZu)
+    @Bind(R.id.start_room_jiaZu)
     ImageView startRoomJaiZu;
     @Bind(R.id.game_more_btn)
     ImageView game_more_btn;
@@ -283,8 +289,8 @@ public class StartLiveActivity extends BaseActivity implements
     ImageView game;
     @Bind(R.id.ruanjianpan)
     ImageView ruanjianpan;
-    @Bind(R.id.zhoubang)
-    ImageView zhoubang;
+    @Bind(R.id.room_lianmai)
+    ImageView room_lianmai;
     @Bind(R.id.ll_game)
     LinearLayout ll_game;
     @Bind(R.id.ll_buttom_mun)
@@ -693,7 +699,7 @@ public class StartLiveActivity extends BaseActivity implements
         liveOnLineNums = Integer.parseInt(creatReadyBean.getOnlineUserNum());
         liveNum.setText(liveOnLineNums + "");
 
-        liveId.setText("乐檬号:" + creatReadyBean.getCreator().getId());
+        liveId.setText("乐檬号: " + creatReadyBean.getCreator().getId());
 //        roomShowId.setText("房间号:" + room_Id);
         initUser();
         SharedPreferenceUtils.put(this, "ZhuBoId", appUser.getId());
@@ -755,7 +761,7 @@ public class StartLiveActivity extends BaseActivity implements
         liveHead.setOnClickListener(this);
         game.setOnClickListener(this);
         ruanjianpan.setOnClickListener(this);
-        zhoubang.setOnClickListener(this);
+        room_lianmai.setOnClickListener(this);
         ll_game.setOnClickListener(this);
         iv_xy.setOnClickListener(this);
         liveClose.setOnClickListener(this);
@@ -869,13 +875,13 @@ public class StartLiveActivity extends BaseActivity implements
                 restStatus();
                 ivSinge.setImageResource(R.mipmap.icon_single_select);
                 selectStatus = "单";
-                tv_hz.setText("和值为1,3,5,7,9,11,13,15,17,19,21,23,25,27即中奖");
+                tv_hz.setText("和值为奇数即中奖");
                 break;
             case R.id.iv_double: //双
                 restStatus();
                 ivDouble.setImageResource(R.mipmap.icon_double_select);
                 selectStatus = "双";
-                tv_hz.setText("和值为0,2,4,6,8,10,12,14,16,18,20,22,24,26即中奖");
+                tv_hz.setText("和值为偶数即中奖");
 
                 break;
             case R.id.iv_big_sigle: //大单
@@ -935,8 +941,8 @@ public class StartLiveActivity extends BaseActivity implements
 
                 break;
 
-            case R.id.zhoubang:
-                messageFragment.ivRankingOnClick();
+            case R.id.room_lianmai:
+                showLianmaiPop();
                 break;
             case R.id.game:  //游戏
                 if (gameIsStart == false) {
@@ -1037,7 +1043,7 @@ public class StartLiveActivity extends BaseActivity implements
                 ifattention("请求用户信息", appUser.getId(), RequestCode.REQUEST_USER_INFO);
                 break;
             //家族
-            case R.id.start_room_jaiZu:
+            case R.id.start_room_jiaZu:
                 getFamilyMember();
                 break;
             //場控
@@ -1428,13 +1434,6 @@ public class StartLiveActivity extends BaseActivity implements
                         }
 
                         changeJinpiao(customGiftBean);
-
-                        if (message.getChatRoomMessageExtension() == null) {
-                            name = appUser.getNickName();
-                        } else {
-                            name = message.getChatRoomMessageExtension().getSenderNick();
-                        }
-
 
                         if (message.getChatRoomMessageExtension() == null) {
                             name = appUser.getNickName();
@@ -2992,50 +2991,194 @@ public class StartLiveActivity extends BaseActivity implements
     }
 
 
+    private int funsePage = 1;
+    private int funseTotalPages = 1;
+    private boolean funseIsRefresh = true;
+    private LianmaiListAadapter lianmaiListAadapter;
+    private List<FunseBean> funseBeanList = new ArrayList<>();
+
+    /**
+     * 展示连麦pop
+     */
+    public void showLianmaiPop() {
+        funsePage = 1;
+        funseIsRefresh = true;
+        final PopupWindow lianmai_search = new PopupWindow(this);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View view = inflater.inflate(R.layout.lianmai_search, null);
+        lianmai_search.setContentView(view);
+        lianmai_search.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
+        lianmai_search.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        lianmai_search.setFocusable(true);
+        lianmai_search.setBackgroundDrawable(new BitmapDrawable());
+        lianmai_search.setOutsideTouchable(true);
+        backgroundAlpha(0.5f);
+        lianmai_search.showAtLocation(doubleAdd, Gravity.BOTTOM, 0, 0);
+        lianmai_search.update();
+        lianmai_search.setOnDismissListener(new RulePopOnDismissListner());
+
+        final EditText et_search_input = (EditText) view.findViewById(R.id.et_search_input);
+        ImageView iv_search = (ImageView) view.findViewById(R.id.iv_search);
+        RecyclerView lianmai_recycler = (RecyclerView) view.findViewById(R.id.lianmai_recycler);
+        TextView tv_invite = (TextView) view.findViewById(R.id.tv_invite);
+        final SwipeRefreshLayout lianmai_refresh = (SwipeRefreshLayout) view.findViewById(R.id.lianmai_refresh);
+
+        lianmaiListAadapter = new LianmaiListAadapter(mContext, funseBeanList);
+        lianmai_recycler.setAdapter(lianmaiListAadapter);
+        requestFunse(lianmai_refresh);
+
+        //设置刷新逻辑
+        lianmai_refresh.setMode(SwipeRefreshLayout.Mode.BOTH);
+        lianmai_refresh.setColorSchemeColors(getResources().getColor(R.color.main));
+        lianmai_refresh.setOnRefreshListener(new SwipeRefresh.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                funseIsRefresh = true;
+                requestFunse(lianmai_refresh);
+            }
+        });
+
+        lianmai_refresh.setOnPullUpRefreshListener(new SwipeRefreshLayout.OnPullUpRefreshListener() {
+            @Override
+            public void onPullUpRefresh() {
+                funseIsRefresh = false;
+                if (funsePage < funseTotalPages) {
+                    requestFunse(lianmai_refresh);
+                } else {
+                    lianmai_refresh.setRefreshing(false);
+                    lianmai_refresh.setPullUpRefreshing(false);
+                    showToast("没有更多了!");
+                }
+            }
+        });
+
+
+        iv_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.isEmpty(et_search_input.getText().toString().trim())) {
+                    showToast("请输入有效ID或者昵称");
+                } else {
+
+                }
+            }
+        });
+
+        lianmaiListAadapter.setOnRecyclerClickListener(new LianmaiListAadapter.OnRecyclerClickListener() {
+            @Override
+            public void onRecyclerClick(int position) {
+                for (int i = 0, j = funseBeanList.size(); i < j; i++) {
+                    funseBeanList.get(position).setChecked(false);
+                }
+                funseBeanList.get(position).setChecked(true);
+                lianmaiListAadapter.notifyDataSetChanged();
+            }
+        });
+
+    }
+
+
+    /**
+     * 请求粉丝列表
+     */
+    private void requestFunse(final SwipeRefreshLayout refresh) {
+        funsePage = funseIsRefresh ? 1 : ++funsePage;
+        String url = UrlBuilder.serverUrl + UrlBuilder.funseAndFollow;
+        url += appUser.getId();
+        url += "/fans?pageNum=" + funsePage;
+        OkHttpUtils.get().url(url).build().execute(new CustomStringCallBack(this, HttpDatas.KEY_CODE) {
+            @Override
+            public void onFaild() {
+                refresh.setRefreshing(false);
+                refresh.setPullUpRefreshing(false);
+                showToast("网络错误");
+            }
+
+            @Override
+            public void onSucess(String data) {
+                LogUtil.e("请求连麦的粉丝列表",data);
+                refresh.setRefreshing(false);
+                refresh.setPullUpRefreshing(false);
+                handlerJson(data);
+            }
+        });
+    }
+
+    /**
+     * 获取数据
+     *
+     * @param data
+     */
+    private void handlerJson(String data) {
+        Funse funse = JsonUtil.json2Bean(data, Funse.class);
+        if (funse != null) {
+            funseTotalPages = funse.getTotalPages();
+            List<FunseBean> result = funse.getResult();
+            if (funseIsRefresh) {
+                funseBeanList.clear();
+            } else {
+                if (result == null && result.size() == 0) {
+                    funsePage--;
+                }
+            }
+            funseBeanList.addAll(result);
+            LogUtil.e("请求连麦的粉丝列表1","------------------"+funseBeanList.size());
+            lianmaiListAadapter.notifyDataSetChanged();
+        }
+    }
+
+
     /**
      * 展示游客详情
      *
-     * @param customdateBean 用户信息
-     * @author sll
-     * @time 2016/11/25 9:40
+     * @param customdateBean
      */
     public void showDialogForCallOther(final CustomdateBean customdateBean) {
-        final View view = View.inflate(this, R.layout.dialog_video_room, null);
+        final PopupWindow otherPop = new PopupWindow(this);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View view = inflater.inflate(R.layout.dialog_video_room, null);
+        otherPop.setContentView(view);
+        otherPop.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
+        otherPop.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        otherPop.setFocusable(true);
+        otherPop.setBackgroundDrawable(new BitmapDrawable());
+        otherPop.setOutsideTouchable(true);
+        backgroundAlpha(0.5f);
+        otherPop.showAtLocation(doubleAdd, Gravity.BOTTOM, 0, 0);
+        otherPop.update();
+        otherPop.setOnDismissListener(new RulePopOnDismissListner());
+
         AvatarView civ_image = (AvatarView) view.findViewById(R.id.civ_image);
         LinearLayout buttom_layout = (LinearLayout) view.findViewById(R.id.buttom_layout);
+        TextView mySelf = (TextView) view.findViewById(R.id.mySelf);
         final ImageView iv_sex = (ImageView) view.findViewById(R.id.iv_sex);
         ImageView iv_grade = (ImageView) view.findViewById(R.id.iv_grade);
         TextView tvID = (TextView) view.findViewById(R.id.tv_id);
         TextView tv_name = (TextView) view.findViewById(R.id.tv_name);
-        TextView tv_renzheng = (TextView) view.findViewById(R.id.tv_renzheng);
         TextView tv_sign = (TextView) view.findViewById(R.id.tv_sign);
         TextView tv_focus_num = (TextView) view.findViewById(R.id.tv_focus_num);
         TextView tv_funs_num = (TextView) view.findViewById(R.id.tv_funs_num);
         TextView tv_send_num = (TextView) view.findViewById(R.id.tv_send_num);
         TextView tv_gold_coin = (TextView) view.findViewById(R.id.tv_gold_coin);
         TextView tv_banned = (TextView) view.findViewById(R.id.tv_banned);
-        TextView tv_report = (TextView) view.findViewById(R.id.tv_report);
-        TextView tv_lianmai = (TextView) view.findViewById(R.id.tv_lianmai);
+        TextView tv_changkong = (TextView) view.findViewById(R.id.tv_changkong);
+        TextView tv_reply = (TextView) view.findViewById(R.id.tv_reply);
+        LinearLayout ll_report = (LinearLayout) view.findViewById(R.id.ll_report);
+        LinearLayout ll_banned = (LinearLayout) view.findViewById(R.id.ll_banned);
 
         if (!TextUtils.isEmpty(customdateBean.getId()) && customdateBean.getId().equals(appUser
                 .getId())) {
             buttom_layout.setVisibility(View.GONE);
-            tv_banned.setVisibility(View.GONE);
-            tv_report.setVisibility(View.GONE);
+            ll_banned.setVisibility(View.INVISIBLE);
+            ll_report.setVisibility(View.INVISIBLE);
+            mySelf.setVisibility(View.VISIBLE);
         } else {
             buttom_layout.setVisibility(View.VISIBLE);
-            tv_lianmai.setVisibility(View.VISIBLE);
-            tv_banned.setVisibility(View.VISIBLE);
-            tv_report.setVisibility(View.GONE);
+            ll_banned.setVisibility(View.VISIBLE);
+            ll_report.setVisibility(View.VISIBLE);
+            mySelf.setVisibility(View.GONE);
         }
 
-        //认证
-        String verified = customdateBean.getVerified();
-        if (verified.equals("2")) {
-            tv_renzheng.setText("已认证");
-        } else {
-            tv_renzheng.setText("未认证");
-        }
 
         //显示界面提示是禁言还是解除禁言
         for (int i = 0, j = mutedList.size(); i < j; i++) {
@@ -3050,9 +3193,8 @@ public class StartLiveActivity extends BaseActivity implements
             iv_sex.setImageResource(R.mipmap.male);
         }
 
-        tvID.setText("ID:" + customdateBean.getId());
+        tvID.setText("乐檬号:" + customdateBean.getId());
 
-//        civ_image.setAvatarUrl(customdateBean.getPicUrl());
         Picasso.with(mContext).load(customdateBean.getPicUrl()).placeholder(R.mipmap.head_default)
                 .error(R.mipmap.head_default).resize(50, 50).into(civ_image);
         civ_image.setOnClickListener(new View.OnClickListener() {
@@ -3061,15 +3203,21 @@ public class StartLiveActivity extends BaseActivity implements
                 Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
                 intent.putExtra(getString(R.string.visiti_person), customdateBean.getId());
                 startActivity(intent);
-                dialogForSelect.dismiss();
+                otherPop.dismiss();
             }
         });
 
         iv_grade.setImageResource(GrademipmapUtils.LevelImg[Integer.valueOf(customdateBean
                 .getLevel()) - 1]);
         tv_name.setText(customdateBean.getNickName());
+
         //签名
-        tv_sign.setText(customdateBean.getSignature());
+        if (TextUtils.isEmpty(customdateBean.getSignature())) {
+            tv_sign.setText("这个家伙很懒，什么都没留下");
+        } else {
+            tv_sign.setText(customdateBean.getSignature());
+        }
+
         tv_focus_num.setText(customdateBean.getFollowNum());
         tv_funs_num.setText(customdateBean.getFansNum());
 
@@ -3077,25 +3225,18 @@ public class StartLiveActivity extends BaseActivity implements
         spendGoldCoin = CountUtils.getCount(Long.parseLong(spendGoldCoin));
         tv_send_num.setText(spendGoldCoin);
 
-        String myCoin = customdateBean.getGoldCoin();
-        myCoin = CountUtils.getCount(Long.parseLong(myCoin));
-        tv_gold_coin.setText(myCoin);
+        String receivedGoldCoin = customdateBean.getReceivedGoldCoin();
+        receivedGoldCoin = CountUtils.getCount(Long.parseLong(receivedGoldCoin));
+        tv_gold_coin.setText(receivedGoldCoin);
 
         //禁言
-        view.findViewById(R.id.tv_banned).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.ll_banned).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 banned(customdateBean.getId(), customdateBean.getNickName());
-                dialogForSelect.dismiss();
+                otherPop.dismiss();
             }
 
-        });
-        //关闭
-        view.findViewById(R.id.iv_x).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialogForSelect.dismiss();
-            }
         });
 
         focus((TextView) view.findViewById(R.id.tv_foucs), customdateBean);
@@ -3107,10 +3248,14 @@ public class StartLiveActivity extends BaseActivity implements
             }
         });
 
-        //私聊
+        //私信
         view.findViewById(R.id.tv_chat).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ll_game.setVisibility(View.GONE);
+                hidePlayView();
+                ll_buttom_mun.setVisibility(View.GONE);
+
                 Intent intent = new Intent();
                 intent.putExtra(Extras.EXTRA_ACCOUNT, "miu_" + customdateBean.getId());
                 intent.putExtra("SESSION_NAME", customdateBean.getNickName());
@@ -3118,17 +3263,19 @@ public class StartLiveActivity extends BaseActivity implements
                 Bundle arguments = intent.getExtras();
                 arguments.putSerializable(Extras.EXTRA_TYPE, SessionTypeEnum.P2P);
                 liveMessageFragment = new LiveMessageFragment();
+                liveMessageFragment.init(getSupportFragmentManager(), ll_buttom_mun);
                 liveMessageFragment.setArguments(arguments);
                 getSupportFragmentManager().beginTransaction().replace(R.id
                         .watch_room_message_fragment_parent, liveMessageFragment).setTransition
                         (FragmentTransaction.TRANSIT_FRAGMENT_OPEN).addToBackStack(null).commit();
-                dialogForSelect.dismiss();
+                otherPop.dismiss();
             }
 
         });
 
         //回复
-        view.findViewById(R.id.tv_reply).setOnClickListener(new View.OnClickListener() {
+        tv_reply.setText("@TA");
+        tv_reply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 messageFragment.showEditText();
@@ -3137,46 +3284,97 @@ public class StartLiveActivity extends BaseActivity implements
                 String str = "回复" + customdateBean.getNickName() + ":";
                 editContent.setText(str);
                 editContent.setSelection(str.length());
-                dialogForSelect.dismiss();
+                otherPop.dismiss();
             }
         });
 
-        //连麦
-        tv_lianmai.setOnClickListener(new View.OnClickListener() {
+        //举报
+        ll_report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-//                if (com.lvshandian.haiyan.utils.TextUtils.isEmpty(appUser.getLevel()) || Integer
-//                        .parseInt(appUser.getLevel()) < 50) {
-//                    ToastUtils.showMessageCenter(mContext, "主播的等级不得低于50级");
-//                    return;
-//                }
-//                if (com.lvshandian.haiyan.utils.TextUtils.isEmpty(customdateBean.getLevel()) ||
-//                        Integer.parseInt(customdateBean.getLevel()) < 70) {
-//                    ToastUtils.showMessageCenter(mContext, "观众的等级不得低于70级");
-//                    return;
-//                }
-                lianId = "miu_" + customdateBean.getId();
-                sendCustomNotificationForLive("miu_" + customdateBean.getId(), appUser.getId(),
-                        appUser.getNickName(), appUser.getPicUrl(), appUser.getVip(), "主播请求与您连麦", "2",
-                        CustomNotificationType.IM_P2P_TYPE_SUBLIVE_PUBLIC, "1");
-                dialogForSelect.dismiss();
+                otherPop.dismiss();
+                reportDialog(customdateBean.getId());
             }
         });
 
-        //送礼
-        view.findViewById(R.id.tv_give).setOnClickListener(new View.OnClickListener() {
+        //我的主页
+        mySelf.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
-                dialogForSelect.dismiss();
-                showToast("不能送礼");
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
+                intent.putExtra(getString(R.string.visiti_person), customdateBean.getId());
+                startActivity(intent);
+                otherPop.dismiss();
             }
         });
 
-        dialogForSelect.setCanceledOnTouchOutside(true);
-        dialogForSelect.setContentView(view);
-        dialogForSelect.show();
+        //我的场控
+        tv_changkong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showToast("暂缓开通");
+                otherPop.dismiss();
+            }
+        });
+    }
+
+
+    /**
+     * 举报
+     *
+     * @author sll
+     * @time 2016/12/24 16:01
+     */
+    private void reportDialog(final String userId) {
+        final Dialog dialog = new Dialog(this, R.style.homedialog);
+        final View view = View.inflate(this, R.layout.dialog_join_secret_pwd, null);
+        final EditText pwdEdit = (EditText) view.findViewById(R.id.join_secret_pwd_edit);
+        final TextView promptText = (TextView) view.findViewById(R.id.dialog_prompt_text);
+        promptText.setVisibility(View.GONE);
+        pwdEdit.setHint("请输入举报内容");
+        //取消
+        view.findViewById(R.id.join_secret_pwd_cancel).setOnClickListener(new View
+                .OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                KeyBoardUtils.closeKeybord(pwdEdit, mContext);
+                dialog.dismiss();
+            }
+        });
+        //确定
+        view.findViewById(R.id.join_secret_pwd_sure).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.isEmpty(pwdEdit.getText().toString())) {
+                    showToast("请输入举报内容");
+                }
+                report(userId, pwdEdit.getText().toString());
+                KeyBoardUtils.closeKeybord(pwdEdit, mContext);
+                dialog.dismiss();
+            }
+        });
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setContentView(view);
+        dialog.show();
+    }
+
+    /**
+     * 举报
+     * reportUserId 自己的id
+     * userId 被举报人的id
+     * content 举报内容
+     *
+     * @author sll
+     * @time 2016/12/24 15:54
+     */
+    private void report(String userId, String content) {
+        ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
+        map.put("reportUserId", appUser.getId());
+        map.put("userId", userId);
+        map.put("content", content);
+        httpDatas.getDataForJsoNoloading("举报", com.android.volley.Request.Method.POST, UrlBuilder.report, map,
+                myHandler, RequestCode.REQUEST_REPORT);
+
     }
 
 
@@ -3295,9 +3493,11 @@ public class StartLiveActivity extends BaseActivity implements
     private void focus(TextView tvFouce, CustomdateBean bean) {
         String follow = bean.getFollow();
         if (TextUtils.equals("0", follow)) {
-            tvFouce.setText("未关注");
+            tvFouce.setText("+ 关注");
+            tvFouce.setTextColor(getResources().getColor(R.color.main));
         } else if (TextUtils.equals("1", follow)) {
             tvFouce.setText("已关注");
+            tvFouce.setTextColor(getResources().getColor(R.color.line_bf));
         }
     }
 

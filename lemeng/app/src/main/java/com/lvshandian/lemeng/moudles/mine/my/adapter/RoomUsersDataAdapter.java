@@ -2,6 +2,7 @@ package com.lvshandian.lemeng.moudles.mine.my.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,8 +40,13 @@ public class RoomUsersDataAdapter extends RecyclerView.Adapter<RoomUsersDataAdap
     public void onBindViewHolder(RoomUserHolder holder, final int position) {
         RoomUserBean bean = mDatas.get(position);
 //        ImageLoader.getInstance().displayImage(bean.getPicUrl(), holder.ivHeader);
-        Picasso.with(context).load(bean.getPicUrl()).placeholder(R.mipmap.head_default)
-                .error(R.mipmap.head_default).resize(50, 50).into(holder.ivHeader);
+        if (TextUtils.isEmpty(bean.getPicUrl())){
+
+        }else {
+            Picasso.with(context).load(bean.getPicUrl()).placeholder(R.mipmap.head_default)
+                    .error(R.mipmap.head_default).resize(50, 50).into(holder.ivHeader);
+        }
+
 
         holder.ivHeader.setOnClickListener(new View.OnClickListener() {
             @Override

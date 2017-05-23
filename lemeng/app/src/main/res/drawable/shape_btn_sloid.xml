@@ -4,6 +4,6 @@
     <corners android:radius="8px" />
     <stroke
         android:width="1px"
-        android:color="@color/line" />
+        android:color="@color/line_df" />
     <solid android:color="@color/btn_color" />
 </shape>

@@ -3,10 +3,12 @@ package com.lvshandian.lemeng.wangyiyunxin.live.fragment;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lvshandian.lemeng.R;
@@ -60,6 +62,10 @@ public class LiveMessageFragment extends TFragment implements ModuleProxy {
 
     protected SessionTypeEnum sessionType;
 
+    private FragmentManager fragmentManager;
+
+    private RelativeLayout ll_buttom_mun;
+
     // modules
     protected InputPanel inputPanel;
     protected MessageListPanel messageListPanel;
@@ -79,6 +85,11 @@ public class LiveMessageFragment extends TFragment implements ModuleProxy {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         parseIntent();
+    }
+
+    public void init(FragmentManager fragmentManager, RelativeLayout ll_buttom_mun) {
+        this.fragmentManager = fragmentManager;
+        this.ll_buttom_mun = ll_buttom_mun;
     }
 
     @Override
@@ -166,7 +177,10 @@ public class LiveMessageFragment extends TFragment implements ModuleProxy {
             @Override
             public void onClick(View view) {
                 LogUtils.i("WangYi", "XXXX");
-                getActivity().getSupportFragmentManager().popBackStack();
+                fragmentManager.popBackStack();
+                if (fragmentManager.getBackStackEntryCount() == 1){
+                    ll_buttom_mun.setVisibility(View.VISIBLE);
+                }
             }
         });
         liveUserName.setText(sessionName);

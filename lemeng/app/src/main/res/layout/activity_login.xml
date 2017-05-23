@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_marginTop="20px"
-            android:background="@color/line" />
+            android:background="@color/line_df" />
 
 
         <EditText
@@ -59,7 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_marginTop="20px"
-            android:background="@color/line" />
+            android:background="@color/line_df" />
 
         <EditText
             android:id="@+id/ed_login_password"
@@ -76,7 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_marginTop="20px"
-            android:background="@color/line" />
+            android:background="@color/line_df" />
 
         <TextView
             android:id="@+id/tv_forget_password"

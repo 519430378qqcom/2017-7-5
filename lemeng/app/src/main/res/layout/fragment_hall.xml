@@ -76,7 +76,7 @@
         android:layout_height="350px"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="250px"
+        android:layout_marginBottom="220px"
         android:src="@mipmap/icon_empty_img"
-        android:visibility="visible" />
+        android:visibility="gone" />
 </com.zhy.autolayout.AutoRelativeLayout>

@@ -211,15 +211,6 @@ public class SharedPreferenceUtils {
         return sp.getString("level","");
     }
 
-    public static void saveZhuboGoldCoin(Context context, String goldCoin) {
-        editor.putString("zhuboGoldCoin", goldCoin);
-        editor.commit();
-    }
-
-    public static String getZhuboGoldCoin(Context context) {
-        return sp.getString("zhuboGoldCoin", "0");
-    }
-
     /**
      * 移除某个key值已经对应的值
      *

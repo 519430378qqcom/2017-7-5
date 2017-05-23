@@ -56,6 +56,6 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/line" />
+            android:background="@color/line_df" />
     </com.zhy.autolayout.AutoLinearLayout>
 </merge>

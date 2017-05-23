@@ -61,6 +61,6 @@
         android:layout_height="1px"
         android:layout_marginLeft="20px"
         android:layout_marginRight="20px"
-        android:background="@color/line" />
+        android:background="@color/line_df" />
 
 </com.zhy.autolayout.AutoLinearLayout>

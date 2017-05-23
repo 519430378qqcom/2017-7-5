@@ -59,7 +59,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/line"
+        android:background="@color/line_df"
         android:gravity="center"
         android:paddingBottom="25px"
         android:paddingTop="25px"

@@ -69,9 +69,9 @@ public class ChatRoomSessionListFragment extends MainTabFragment {
     private View multiportBar;
 
     private RecentContactsFragment fragment;
-    private FragmentManager fragmentManager;
     private LiveMessageFragment messageFragment;
 
+    private FragmentManager fragmentManager;
     private RelativeLayout ll_buttom_mun;
 
     public ChatRoomSessionListFragment() {

@@ -124,7 +124,7 @@
             android:layout_height="match_parent">
             <!--家族按钮图-->
             <ImageView
-                android:id="@+id/watch_room_jaizu"
+                android:id="@+id/watch_room_jiaZu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -231,72 +231,55 @@
                 </com.zhy.autolayout.AutoLinearLayout>
 
 
-                <com.zhy.autolayout.AutoLinearLayout
-                    android:id="@+id/rl_live_id"
+                <com.zhy.autolayout.AutoRelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/all_layout"
-                    android:orientation="vertical">
+                    android:layout_height="60px"
+                    android:layout_below="@+id/all_layout">
 
-                    <com.zhy.autolayout.AutoRelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="45px"
-                        android:layout_marginLeft="10px">
-
-                        <com.zhy.autolayout.AutoLinearLayout
-                            android:id="@+id/ll_tp_labe"
-                            android:layout_width="wrap_content"
-                            android:layout_height="45px"
-                            android:layout_marginLeft="-20px"
-                            android:background="@drawable/btn_ticket_labe"
-                            android:paddingRight="10dp">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="30px"
-                                android:text="乐票:"
-                                android:textColor="@color/white"
-                                android:textSize="24px" />
-
-                            <TextView
-                                android:id="@+id/live_jinpiao"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:text="0"
-                                android:textColor="@color/white"
-                                android:textSize="24px" />
-
-                        </com.zhy.autolayout.AutoLinearLayout>
+                    <com.zhy.autolayout.AutoLinearLayout
+                        android:id="@+id/ll_tp_labe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="30px"
+                        android:background="@drawable/btn_ticket_labe"
+                        android:gravity="center_vertical">
 
                         <TextView
-                            android:id="@+id/live_id"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="30px"
-                            android:layout_marginRight="30px"
-                            android:text="乐檬号:1234"
+                            android:layout_marginLeft="22px"
+                            android:text="乐票:"
                             android:textColor="@color/white"
                             android:textSize="24px" />
-                    </com.zhy.autolayout.AutoRelativeLayout>
+
+                        <TextView
+                            android:id="@+id/live_jinpiao"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10px"
+                            android:layout_marginRight="12px"
+                            android:text="0"
+                            android:textColor="@color/white"
+                            android:textSize="24px" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="22px"
+                            android:src="@mipmap/icon_right" />
+
+                    </com.zhy.autolayout.AutoLinearLayout>
 
                     <TextView
-                        android:id="@+id/room_id"
+                        android:id="@+id/live_id"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical|right"
-                        android:layout_marginBottom="5px"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:gravity="center_vertical"
                         android:layout_marginRight="30px"
-                        android:layout_marginTop="5px"
-                        android:text="房间号:1234"
+                        android:text="乐檬号:1000000"
                         android:textColor="@color/white"
-                        android:textSize="24px"
-                        android:visibility="gone" />
-
+                        android:textSize="28px" />
 
                     <com.zhy.autolayout.AutoRelativeLayout
                         android:layout_width="match_parent"
@@ -312,7 +295,7 @@
                             android:src="@mipmap/head_default" />
                     </com.zhy.autolayout.AutoRelativeLayout>
 
-                </com.zhy.autolayout.AutoLinearLayout>
+                </com.zhy.autolayout.AutoRelativeLayout>
 
             </com.zhy.autolayout.AutoRelativeLayout>
 
@@ -373,7 +356,8 @@
                         android:layout_height="80px"
                         android:layout_marginLeft="19px"
                         android:layout_toRightOf="@id/ruanjianpanW"
-                        android:background="@mipmap/mg_room_btn_ranking" />
+                        android:background="@mipmap/mg_room_btn_ranking"
+                        android:visibility="gone"/>
 
                     <ImageView
                         android:id="@+id/iv_live_gift"

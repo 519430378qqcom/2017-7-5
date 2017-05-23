@@ -73,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:layout_marginLeft="40px"
-                android:background="@color/line" />
+                android:background="@color/line_df" />
 
             <com.zhy.autolayout.AutoRelativeLayout
                 android:id="@+id/rl_edit"
@@ -103,7 +103,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:layout_marginLeft="40px"
-                android:background="@color/line" />
+                android:background="@color/line_df" />
 
             <com.zhy.autolayout.AutoLinearLayout
                 android:id="@+id/ll_account_safety"
@@ -140,7 +140,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:layout_marginLeft="40px"
-                    android:background="@color/line" />
+                    android:background="@color/line_df" />
             </com.zhy.autolayout.AutoLinearLayout>
 
 
@@ -172,7 +172,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:layout_marginLeft="40px"
-                android:background="@color/line" />
+                android:background="@color/line_df" />
 
             <com.zhy.autolayout.AutoRelativeLayout
                 android:id="@+id/rl_changkong"
@@ -241,7 +241,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:layout_marginLeft="40px"
-                android:background="@color/line" />
+                android:background="@color/line_df" />
 
             <com.zhy.autolayout.AutoRelativeLayout
                 android:id="@+id/all_clear_cache"
@@ -273,7 +273,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:layout_marginLeft="40px"
-                android:background="@color/line" />
+                android:background="@color/line_df" />
 
             <com.zhy.autolayout.AutoRelativeLayout
                 android:id="@+id/rl_feedback"
@@ -303,7 +303,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:layout_marginLeft="40px"
-                android:background="@color/line" />
+                android:background="@color/line_df" />
 
             <com.zhy.autolayout.AutoRelativeLayout
                 android:id="@+id/rl_about"
@@ -333,7 +333,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:layout_marginLeft="40px"
-                android:background="@color/line" />
+                android:background="@color/line_df" />
 
             <Button
                 android:id="@+id/btn_quit"

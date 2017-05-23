@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <com.lvshandian.lemeng.widget.AvatarView
+            android:id="@+id/iv_head"
+            android:layout_width="70px"
+            android:layout_height="70px"
+            android:layout_marginBottom="20px"
+            android:layout_marginLeft="37px"
+            android:layout_marginTop="20px"
+            android:src="@mipmap/head_default" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="40px"
+            android:text="得天独厚"
+            android:textColor="@color/tv_color6"
+            android:textSize="30px" />
+
+        <CheckBox
+            android:id="@+id/cb_checkBox"
+            android:layout_width="34px"
+            android:layout_height="34px"
+            android:button="@drawable/checkbox_selector"
+            android:layout_marginRight="34px"
+            android:checked="false"/>
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="36px"
+        android:layout_marginRight="36px"
+        android:background="@color/line_df" />
+</com.zhy.autolayout.AutoLinearLayout>
