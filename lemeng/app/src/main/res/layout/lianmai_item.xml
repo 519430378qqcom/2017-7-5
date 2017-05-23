@@ -30,8 +30,8 @@
 
         <CheckBox
             android:id="@+id/cb_checkBox"
-            android:layout_width="34px"
-            android:layout_height="34px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:button="@drawable/checkbox_selector"
             android:layout_marginRight="34px"
             android:checked="false"/>

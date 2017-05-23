@@ -10,15 +10,11 @@ public class Constant {
     public static final String TWITTER_APPID = "ya5x9703zlnsjexnes0IxHbpQ";
     public static final String TWITTER_SECRET = "EDnxF6yfwfZUuBKMTxOuC9gRDzRoKoEoZGnTHfHMKadMBdXk9T";
 
-    public static final String WX_APPID = "wxb431cde8a8aa4794";
-    public static final String WX_SECRET = "742754417d4c58e135c739d3932b139d";
-//    public static final String WX_SECRET = "7839f76cf22e47a51f0fd7731aecf3ee";
-
-    public static final String WX_PARTNERID = "17234188";
+    public static final String WX_APPID = "wxe61dc77fc858f0a7";
+    public static final String WX_SECRET = "3fa0cd0209d77c405d4c9f945182f6ec";
 
     public static final String QQ_APPID = "1105897461";
     public static final String QQ_SECRET = "04y61MXtoLOwUYM4";
-//    public static final String QQ_APPID = "1106000014";
-//    public static final String QQ_SECRET = "3wXhBH7Jy8iKw2pD";
-public static final String APP_PATH = Environment.getExternalStorageDirectory() + "/haiyan/";
+
+    public static final String APP_PATH = Environment.getExternalStorageDirectory() + "/lemeng/";
 }

@@ -31,13 +31,11 @@ import com.lvshandian.lemeng.wangyiyunxin.config.DemoCache;
 import com.lvshandian.lemeng.wangyiyunxin.config.preference.Preferences;
 import com.lvshandian.lemeng.wangyiyunxin.config.preference.UserPreferences;
 import com.netease.nim.uikit.cache.DataCacheManager;
-import com.netease.nim.uikit.common.ui.dialog.EasyAlertDialogHelper;
 import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.netease.nimlib.sdk.AbortableFuture;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.auth.AuthService;
-import com.netease.nimlib.sdk.auth.ClientType;
 import com.netease.nimlib.sdk.auth.LoginInfo;
 import com.squareup.okhttp.MediaType;
 import com.umeng.socialize.UMAuthListener;
@@ -89,8 +87,6 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
     protected void initialized() {
         requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
         mLoading = new LoadingDialog(this);
-        onParseIntent();
-
         mShareAPI = UMShareAPI.get(mContext);
 //
 //        GoogleSignInOptions gso = new GoogleSignInOptions
@@ -260,6 +256,7 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
         @Override
         public void onError(SHARE_MEDIA platform, int action, Throwable t) {
             LogUtils.e("微信登录", "is onError()");
+            LogUtils.e("微信登录", "is onError()" + "----action=" + action + "----t=" + t.toString());
             if (mLoading != null && mLoading.isShowing()) {
                 mLoading.dismiss();
             }
@@ -320,29 +317,6 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
         }
     }
 
-
-    private void onParseIntent() {
-        if (getIntent().getBooleanExtra(KICK_OUT, false)) {
-            int type = NIMClient.getService(AuthService.class).getKickedClientType();
-            String client;
-            switch (type) {
-                case ClientType.Web:
-                    client = "网页端";
-                    break;
-                case ClientType.Windows:
-                    client = "电脑端";
-                    break;
-                case ClientType.REST:
-                    client = "服务端";
-                    break;
-                default:
-                    client = "移动端";
-                    break;
-            }
-            EasyAlertDialogHelper.showOneButtonDiolag(mContext, getString(R.string.kickout_notify),
-                    String.format(getString(R.string.kickout_content), client), getString(R.string.ok), true, null);
-        }
-    }
 
     /**
      * 登录成功

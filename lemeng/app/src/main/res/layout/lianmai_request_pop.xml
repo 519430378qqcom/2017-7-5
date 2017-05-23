@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent">
+
+    <!--直播间用户信息弹框-->
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="500px"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="100px"
+        android:background="@color/line_fa"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="117px"
+            android:gravity="center"
+            android:text="小尚"
+            android:textColor="@color/tv_color6"
+            android:textSize="30px" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35px"
+            android:gravity="center"
+            android:text="邀请连麦"
+            android:textColor="@color/tv_color6"
+            android:textSize="36px" />
+
+        <com.zhy.autolayout.AutoRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_accept"
+                android:layout_width="310px"
+                android:layout_height="100px"
+                android:layout_marginLeft="40px"
+                android:background="@drawable/selector_loginbtn_circle"
+                android:gravity="center"
+                android:inputType="phone"
+                android:text="接受"
+                android:textColor="@color/white"
+                android:textSize="36px" />
+
+            <TextView
+                android:id="@+id/tv_refuse"
+                android:layout_width="310px"
+                android:layout_height="100px"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="40px"
+                android:background="@drawable/selector_loginbtn_circle_gray"
+                android:gravity="center"
+                android:text="拒绝"
+                android:textColor="@color/white"
+                android:textSize="36px" />
+        </com.zhy.autolayout.AutoRelativeLayout>
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+
+    <com.lvshandian.lemeng.widget.AvatarView
+        android:id="@+id/civ_image"
+        android:layout_width="160px"
+        android:layout_height="160px"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10px"
+        android:src="@mipmap/head_default" />
+
+    <com.lvshandian.lemeng.widget.AvatarView
+        android:layout_width="180px"
+        android:layout_height="180px"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/icon_head_bg_dialog_lianmai" />
+</com.zhy.autolayout.AutoRelativeLayout>
+

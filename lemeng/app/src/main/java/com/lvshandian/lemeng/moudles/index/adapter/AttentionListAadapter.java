@@ -14,7 +14,6 @@ import com.lvshandian.lemeng.bean.LiveBean;
 import com.lvshandian.lemeng.widget.AvatarView;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,7 +22,7 @@ import java.util.List;
 
 public class AttentionListAadapter extends RecyclerView.Adapter<AttentionListAadapter.HotViewHolder> {
 
-    private List<LiveBean> mData = new ArrayList<>();
+    private List<LiveBean> mData ;
     private Context context;
     private OnRecyclerClickListener onRecyclerClickListener;
 

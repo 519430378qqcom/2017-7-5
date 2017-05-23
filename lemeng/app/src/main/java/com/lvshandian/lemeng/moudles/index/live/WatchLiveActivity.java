@@ -81,7 +81,6 @@ import com.lvshandian.lemeng.bean.DianBoDateBean;
 import com.lvshandian.lemeng.bean.GiftBean;
 import com.lvshandian.lemeng.bean.IfAttentionBean;
 import com.lvshandian.lemeng.bean.LastAwardBean;
-import com.lvshandian.lemeng.bean.LianmaiBean;
 import com.lvshandian.lemeng.bean.LiveBean;
 import com.lvshandian.lemeng.bean.LiveEven;
 import com.lvshandian.lemeng.bean.LiveFamilyMemberBean;
@@ -254,7 +253,11 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     ImageView ivLoad;
     ImageView ruanjianpanW;
     ImageView zhoubangW;
+    TextView tv_lianmai;
     AvatarView liveHead;
+    AvatarView liveLianmaiHead;
+    AvatarView liveLianmaiHeadBg1;
+    AvatarView liveLianmaiHeadBg2;
     TextView liveName;
     TextView liveNum;
     AutoLinearLayout llTangpiao;
@@ -276,7 +279,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     BarrageView barrageview;
     AutoFrameLayout flPull;
     AutoFrameLayout flPlug;
-    ImageView smallCreateColes;
     ImageView watchRoomJaizu;
     RelativeLayout mSendGiftLian;
     ScrollRelativeLayout scrl;
@@ -591,6 +593,12 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
     private long mCountDownTotalTime;
 
+    /**
+     * 连麦人信息
+     */
+    private CustomLianmaiBean customLianmaiBean;
+
+
     private int tzNumber = 10;
     private int jbNumber = 1;
 
@@ -715,6 +723,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                             map1.put("watch_private_flag", "0");
                             map1.put("userId", liveEven.getUserId());
                             map1.put("vip", "0");
+                            map1.put("picUrl", liveEven.getUserAvatar());
                             String video = "";
                             try {
                                 video = DESUtil.decrypt(liveEven.getBroadcastUrl());
@@ -724,65 +733,31 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                             }
                             SendRoomMessageUtils.onCustomMessageLianmai(SendRoomMessageUtils.MESSAGE_WATCHER_CONNECT,
                                     messageFragment, liveListBean.getRooms().getRoomId() + "", map1);
+
+                            showLianmaiView();
+                            tv_lianmai.setVisibility(View.VISIBLE);
+
+                            if (!TextUtils.isEmpty(appUser.getPicUrl())) {
+                                Picasso.with(mContext).load(appUser.getPicUrl()).placeholder(R.mipmap.head_default)
+                                        .error(R.mipmap.head_default).resize(50, 50).into(liveLianmaiHead);
+                            }
                         }
                     }
 
                     break;
-                //观众向主播发起连麦时，将状态变成未连麦状态
-                case RequestCode.REQUEST_LIANMAI_ID1:
-                    LogUtils.i("将我的状态变成未连麦状态" + json.toString());
-                    sendCustomNotificationForLive("miu_" + liveListBean.getId(), appUser.getId(),
-                            appUser.getNickName(), appUser.getPicUrl(), appUser.getVip(), "请求与主播连麦",
-                            "2", CustomNotificationType.IM_P2P_TYPE_SUBLIVE_PUBLIC, "1");
-                    break;
-                //主播同意连麦后，生成推拉流地址，并向所有人发送推拉流
-                case RequestCode.REQUEST_LIANMAI_LIVE_AAL:
-                    LogUtils.i("向观众发送连麦信息成功" + json.toString());
-                    //请求连麦数据
-                    if (!TextUtils.isEmpty(json.toString())) {
-                        if (json.toString().length() > 4) {
-                            List<LiveEven> liveEven = JsonUtil.json2BeanList(json.toString(), LiveEven.class);
-
-                            try {
-                                LogUtils.e("地址地址推流地址" + DESUtil.decrypt(liveEven.get(0).getPublishUrl()));
-                                LogUtils.e("地址地址拉流地址" + DESUtil.decrypt(liveEven.get(0).getBroadcastUrl()));
-                                startLive(DESUtil.decrypt(liveEven.get(0).getPublishUrl()));
-
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            initPaly();
-                            mWl.acquire();
-                            if (null != mWl) {
-//                                mWl.acquire();
-                                mMediaStreamingManager.resume();
-                            }
-                            Toast.makeText(mContext, "连麦成功", Toast.LENGTH_SHORT).show();
-
-                            //发通知别人获取连麦推拉流
-                            Map<String, Object> map1 = new HashMap<>();
-                            map1.put("watch_private_flag", "0");
-                            map1.put("userId", liveEven.get(0).getUserId());
-                            map1.put("vip", "0");
-                            String video = "";
-                            try {
-                                video = DESUtil.decrypt(liveEven.get(0).getBroadcastUrl());
-                                map1.put("broadcastUrl", video);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            SendRoomMessageUtils.onCustomMessageLianmai(SendRoomMessageUtils.MESSAGE_WATCHER_CONNECT,
-                                    messageFragment, liveListBean.getRooms().getRoomId() + "", map1);
-                        }
-                    }
-                    break;
-
                 //观众进入房间时，查询是否有被连麦人
                 case RequestCode.IS_REQUEST_LIANMAI_LIVE:
-                    List<LianmaiBean> lianmaiBeanList = JsonUtil.json2BeanList(json.toString(), LianmaiBean.class);
+                    LogUtil.e("正在连麦中",json.toString());
+                    List<CustomLianmaiBean> lianmaiBeanList = JsonUtil.json2BeanList(json.toString(), CustomLianmaiBean.class);
                     if (lianmaiBeanList != null && lianmaiBeanList.size() > 0) {
                         try {
-                            String video = DESUtil.decrypt(lianmaiBeanList.get(0).getBroadcastUrl());
+                            customLianmaiBean = lianmaiBeanList.get(0);
+                            String video = DESUtil.decrypt(customLianmaiBean.getBroadcastUrl());
+                            if (!TextUtils.isEmpty(customLianmaiBean.getUserAvatar())) {
+                                Picasso.with(mContext).load(customLianmaiBean.getUserAvatar()).placeholder(R.mipmap.head_default)
+                                        .error(R.mipmap.head_default).resize(50, 50).into(liveLianmaiHead);
+                            }
+                            showLianmaiView();
                             WatchLive(video);
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -857,7 +832,11 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         ivLoad = (ImageView) mRoomContainer.findViewById(R.id.iv_load);
         ruanjianpanW = (ImageView) mRoomContainer.findViewById(R.id.ruanjianpanW);
         zhoubangW = (ImageView) mRoomContainer.findViewById(R.id.zhoubangW);
+        tv_lianmai = (TextView) mRoomContainer.findViewById(R.id.tv_lianmai);
         liveHead = (AvatarView) mRoomContainer.findViewById(R.id.live_head);
+        liveLianmaiHead = (AvatarView) mRoomContainer.findViewById(R.id.live_lianmai_head);
+        liveLianmaiHeadBg1 = (AvatarView) mRoomContainer.findViewById(R.id.live_lianmai_head_bg1);
+        liveLianmaiHeadBg2 = (AvatarView) mRoomContainer.findViewById(R.id.live_lianmai_head_bg2);
         liveName = (TextView) mRoomContainer.findViewById(R.id.live_name);
         liveNum = (TextView) mRoomContainer.findViewById(R.id.live_num);
         llTangpiao = (AutoLinearLayout) mRoomContainer.findViewById(R.id.ll_tp_labe);
@@ -880,7 +859,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         barrageview = (BarrageView) mRoomContainer.findViewById(R.id.barrageview);
         flPull = (AutoFrameLayout) mRoomContainer.findViewById(R.id.fl_pull);
         flPlug = (AutoFrameLayout) mRoomContainer.findViewById(R.id.fl_plug);
-        smallCreateColes = (ImageView) mRoomContainer.findViewById(R.id.small_create_coles);
         watchRoomJaizu = (ImageView) mRoomContainer.findViewById(R.id.watch_room_jiaZu);
         mSendGiftLian = (RelativeLayout) mRoomContainer.findViewById(R.id.iv_show_send_gift_lian);
         scrl = (ScrollRelativeLayout) mRoomContainer.findViewById(R.id.scrl);
@@ -1228,17 +1206,20 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
         mSendGiftLian.setOnClickListener(this);
         liveHead.setOnClickListener(this);
+        liveLianmaiHead.setOnClickListener(this);
+        liveLianmaiHeadBg1.setOnClickListener(this);
+        liveLianmaiHeadBg2.setOnClickListener(this);
         ivLivePrivatechat.setOnClickListener(this);
         ivLiveGift.setOnClickListener(this);
 //        ivLiveShare.setOnClickListener(this);
         llTangpiao.setOnClickListener(this);
         liveClose.setOnClickListener(this);
         btnAttention.setOnClickListener(this);
-        smallCreateColes.setOnClickListener(this);
         watchRoomJaizu.setOnClickListener(this);
         liveHeadImg.setOnClickListener(this);
         ruanjianpanW.setOnClickListener(this);
         zhoubangW.setOnClickListener(this);
+        tv_lianmai.setOnClickListener(this);
         ll_buttom_mun.setOnClickListener(this);
 
         //点赞
@@ -1517,7 +1498,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             /**
              * 关闭推流小窗口
              */
-            case R.id.small_create_coles:
+            case R.id.tv_lianmai://结束连麦按钮
                 Map<String, Object> map = new HashMap<>();
                 map.put("watch_private_flag", "0");
                 map.put("vip", "0");
@@ -1525,7 +1506,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         messageFragment, liveListBean.getRooms().getRoomId() + "", map);
                 roomLiveExit();
                 break;
-
             case R.id.live_close:
                 //退出登录
                 if (mQuitDialog != null && !mQuitDialog.isShowing()) {
@@ -1564,6 +1544,26 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             //请求主播信息
             case R.id.live_head:
                 ifattention("请求主播信息", liveListBean.getId() + "", RequestCode.REQUEST_USER_INFO);
+                break;
+            //请求主播信息
+            case R.id.live_lianmai_head_bg1:
+                ifattention("请求主播信息", liveListBean.getId() + "", RequestCode.REQUEST_USER_INFO);
+                break;
+            case R.id.live_lianmai_head://连麦人的头像
+                if (customLianmaiBean == null){
+                    ifattention("请求用户信息", appUser.getId(), RequestCode.REQUEST_USER_INFO);
+                }else {
+                    ifattention("请求用户信息", customLianmaiBean.getUserId(), RequestCode.REQUEST_USER_INFO);
+                }
+
+                break;
+            case R.id.live_lianmai_head_bg2://连麦人的头像
+                if (customLianmaiBean == null){
+                    ifattention("请求用户信息", appUser.getId(), RequestCode.REQUEST_USER_INFO);
+                }else {
+                    ifattention("请求用户信息", customLianmaiBean.getUserId(), RequestCode.REQUEST_USER_INFO);
+                }
+
                 break;
             //关注主播
             case R.id.btn_attention:
@@ -1935,11 +1935,17 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         break;
                     case 110:
                         LogUtil.e("主播连麦成功", message.getRemoteExtension().toString());
-                        CustomLianmaiBean customLianmaiBean = JavaBeanMapUtils.mapToBean(remote,
+                        showLianmaiView();
+                        customLianmaiBean = JavaBeanMapUtils.mapToBean(remote,
                                 CustomLianmaiBean.class);
                         if (!customLianmaiBean.getUserId().equals(appUser.getId())) {
                             String video = customLianmaiBean.getBroadcastUrl();
                             WatchLive(video);
+                        }
+
+                        if (!TextUtils.isEmpty(customLianmaiBean.getPicUrl())) {
+                            Picasso.with(mContext).load(customLianmaiBean.getPicUrl()).placeholder(R.mipmap.head_default)
+                                    .error(R.mipmap.head_default).resize(50, 50).into(liveLianmaiHead);
                         }
                         break;
                     case 111:
@@ -2531,13 +2537,11 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 if (type != null) {
                     if (type.equals(CustomNotificationType.IM_P2P_TYPE_SUBLIVE_PUBLIC)) {
                         //主播请求连麦和观众连麦
-                        showLianDalog(message.getApnsText(), "2");
-                    } else if (type.equals("0")) {
-                        //主播同意和观众连麦
-                        showLianDalog(message.getApnsText(), "0");
-                    } else if (type.equals(CustomNotificationType.IM_P2P_TYPE_ORDERSHOW)) {
-                        //主播拒绝连麦请求
-                        showToast(message.getApnsText());
+                        shouLianmaiPop();
+                    } else {
+                        if (lianmai_request_pop.isShowing()) {
+                            lianmai_request_pop.dismiss();
+                        }
                     }
                 }
             }
@@ -2709,6 +2713,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * 关闭了连麦，隐藏拉流小窗口
      */
     private void hindSmallVideo() {
+        hideLianmaiView();
         if (liveVideo != null) {
             liveVideo.release();
 //            videoLian.getHolder().getSurface().release();
@@ -3116,44 +3121,58 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         }
     }
 
+
+    private PopupWindow lianmai_request_pop;
+
     /**
-     * 主播发起连麦请求
-     *
-     * @param content
+     * 展示游客详情
      */
-    public void showLianDalog(String content, final String type) {
-        final Dialog dialogForOrdershowAck = new Dialog(this, R.style.homedialog);
-        final View view = View.inflate(this, R.layout.dialog_video_room_show_ack, null);
-        TextView showAckText = (TextView) view.findViewById(R.id.dialog_show_ack_text);
-        showAckText.setText(content);
-        view.findViewById(R.id.dialog_show_ack_x).setOnClickListener(new View.OnClickListener() {
+    public void shouLianmaiPop() {
+        lianmai_request_pop = new PopupWindow(this);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View view = inflater.inflate(R.layout.lianmai_request_pop, null);
+        lianmai_request_pop.setContentView(view);
+        lianmai_request_pop.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
+        lianmai_request_pop.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        lianmai_request_pop.setFocusable(true);
+        lianmai_request_pop.setBackgroundDrawable(new BitmapDrawable());
+        lianmai_request_pop.setOutsideTouchable(true);
+        backgroundAlpha(0.5f);
+        lianmai_request_pop.showAtLocation(doubleAdd, Gravity.BOTTOM, 0, 0);
+        lianmai_request_pop.update();
+        lianmai_request_pop.setOnDismissListener(new RulePopOnDismissListner());
+
+        AvatarView civ_image = (AvatarView) view.findViewById(R.id.civ_image);
+        TextView tv_name = (TextView) view.findViewById(R.id.tv_name);
+        TextView tv_accept = (TextView) view.findViewById(R.id.tv_accept);
+        TextView tv_refuse = (TextView) view.findViewById(R.id.tv_refuse);
+
+        if (!TextUtils.isEmpty(liveListBean.getPicUrl())) {
+            Picasso.with(mContext).load(liveListBean.getPicUrl()).placeholder(R.mipmap.head_default)
+                    .error(R.mipmap.head_default).resize(50, 50).into(civ_image);
+        }
+
+        tv_name.setText(liveListBean.getNickName());
+
+        tv_accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requstLianPush();
+                lianmai_request_pop.dismiss();
+            }
+        });
+
+        tv_refuse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sendCustomNotificationForLive("miu_" + liveListBean.getId(), appUser.getId(),
                         appUser.getNickName(), appUser.getPicUrl(), appUser.getVip(), "观众拒绝了你的连麦请求", "2",
                         CustomNotificationType.IM_P2P_TYPE_SUBLIVE_PUBLIC, "2");
-                dialogForOrdershowAck.dismiss();
-            }
-
-
-        });
-        view.findViewById(R.id.dialog_show_ack_sure).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (type.equals("2")) {
-                    requstLianPush();
-                } else {
-                    requstLiveValid();
-                }
-
-                dialogForOrdershowAck.dismiss();
+                lianmai_request_pop.dismiss();
             }
         });
-        dialogForOrdershowAck.setCanceledOnTouchOutside(false);
-        dialogForOrdershowAck.setCancelable(false);
-        dialogForOrdershowAck.setContentView(view);
-        dialogForOrdershowAck.show();
     }
+
 
     /**
      * 可以同主播连麦请求推拉流信息
@@ -3169,22 +3188,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
 
     /**
-     * 将我的状态变成未连麦状态
-     *
-     * @param
-     */
-    private void changeStatus() {
-        ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
-        map.put("userId", appUser.getId());
-        map.put("roomId", liveListBean.getRooms().getId() + "");
-        map.put("type", "2");
-        map.put("amount", "0");
-        httpDatas.getDataForJsoNoloading("将我的状态变成未连麦状态", Request.Method.POST, UrlBuilder
-                        .CHAGE_LIANMAI_STATUS, map, myHandler,
-                RequestCode.REQUEST_LIANMAI_ID1);
-    }
-
-    /**
      * 获取连麦的内容
      *
      * @param
@@ -3196,16 +3199,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 .IS_REQUEST_LIANMAI_LIVE);
     }
 
-    /**
-     * 获取推拉流并通知其他人获取拉流地址
-     *
-     * @param
-     */
-    private void requstLiveValid() {
-        ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
-        httpDatas.getDataForJsoNoloading("通知其他人获取拉流地址", Request.Method.GET, UrlBuilder.roomLiveValid(liveListBean.getRooms().getId() + ""), map, myHandler, RequestCode.REQUEST_LIANMAI_LIVE_AAL);
-    }
-
 
     /**
      * 主播退出连线，关闭推流窗口
@@ -3213,6 +3206,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * @param
      */
     private void roomLiveExit() {
+        tv_lianmai.setVisibility(View.GONE);
+        hideLianmaiView();
         if (mWl != null) {
             try {
                 mWl.release();
@@ -3288,6 +3283,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
     /**
      * 展示游客详情
+     *
      * @param customdateBean
      */
     public void showDialogForCallOther(final CustomdateBean customdateBean) {
@@ -3347,8 +3343,10 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
         tvID.setText("乐檬号:" + customdateBean.getId());
 
-        Picasso.with(mContext).load(customdateBean.getPicUrl()).placeholder(R.mipmap.head_default)
-                .error(R.mipmap.head_default).resize(50, 50).into(civ_image);
+        if (!TextUtils.isEmpty(customdateBean.getPicUrl())) {
+            Picasso.with(mContext).load(customdateBean.getPicUrl()).placeholder(R.mipmap.head_default)
+                    .error(R.mipmap.head_default).resize(50, 50).into(civ_image);
+        }
         civ_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -3364,9 +3362,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         tv_name.setText(customdateBean.getNickName());
 
         //签名
-        if (TextUtils.isEmpty(customdateBean.getSignature())){
+        if (TextUtils.isEmpty(customdateBean.getSignature())) {
             tv_sign.setText("这个家伙很懒，什么都没留下");
-        }else {
+        } else {
             tv_sign.setText(customdateBean.getSignature());
         }
 
@@ -3513,7 +3511,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         dialogForSelect.setContentView(view);
         dialogForSelect.show();
     }
-
 
 
     /**
@@ -4145,5 +4142,18 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 baseDialog.dismiss();
             }
         });
+    }
+
+    private void showLianmaiView(){
+        liveLianmaiHead.setVisibility(View.VISIBLE);
+        liveLianmaiHeadBg1.setVisibility(View.VISIBLE);
+        liveLianmaiHeadBg2.setVisibility(View.VISIBLE);
+    }
+
+    private void hideLianmaiView(){
+        liveLianmaiHead.setVisibility(View.GONE);
+        liveLianmaiHeadBg1.setVisibility(View.GONE);
+        liveLianmaiHeadBg2.setVisibility(View.GONE);
+        customLianmaiBean = null;
     }
 }

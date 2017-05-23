@@ -2,6 +2,7 @@ package com.lvshandian.lemeng.moudles.index.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,6 @@ import android.widget.TextView;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.moudles.mine.bean.FunseBean;
 import com.lvshandian.lemeng.widget.AvatarView;
-import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -29,7 +29,6 @@ public class LianmaiListAadapter extends RecyclerView.Adapter<LianmaiListAadapte
     public LianmaiListAadapter(Context context, List<FunseBean> funseBeen) {
         this.funseList = funseBeen;
         this.context = context;
-        LogUtil.e("请求连麦的粉丝列表","------------------"+funseList.size());
     }
 
     @Override
@@ -40,22 +39,21 @@ public class LianmaiListAadapter extends RecyclerView.Adapter<LianmaiListAadapte
     }
 
     @Override
-    public void onBindViewHolder(LianmaiViewHolder holder, final int position) {
-        FunseBean funseBean = funseList.get(position);
-        Picasso.with(context).load(funseBean.getPicUrl()).placeholder(R.mipmap.head_default)
-                .error(R.mipmap.head_default).into(holder.iv_head);
-        holder.tv_name.setText(funseBean.getNickName());
-        if (funseBean.isChecked()) {
-            holder.cb_checkBox.setChecked(true);
-        } else {
-            holder.cb_checkBox.setChecked(false);
+    public void onBindViewHolder(final LianmaiViewHolder holder, final int position) {
+        final FunseBean funseBean = funseList.get(position);
+        if (!TextUtils.isEmpty(funseBean.getPicUrl())) {
+            Picasso.with(context).load(funseBean.getPicUrl()).placeholder(R.mipmap.head_default)
+                    .error(R.mipmap.head_default).into(holder.iv_head);
         }
-       holder.cb_checkBox.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               onRecyclerClickListener.onRecyclerClick(position);
-           }
-       });
+
+        holder.tv_name.setText(funseBean.getNickName());
+        holder.cb_checkBox.setChecked(funseBean.isChecked());
+        holder.cb_checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRecyclerClickListener.onRecyclerClick(position);
+            }
+        });
     }
 
 

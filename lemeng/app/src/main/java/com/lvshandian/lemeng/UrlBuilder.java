@@ -62,6 +62,7 @@ public class UrlBuilder {
     public static final String getBanner = "/appCarouselFigure/carouselList";//得到banner图
     public static final String ChangeRooms = "/appRooms/getnewRoom";//切换房间
     public static final String getStateCode = "/appusers/getcountry";//获得国家代码
+    public static final String room_funse = "/appRooms/findFansOnline";//直播间的粉丝列表
 
 
     public static final String IF_ATTENTION = "/appusers/user/info";//请求别人信息

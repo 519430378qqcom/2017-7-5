@@ -65,7 +65,7 @@
             android:padding="5px"
             android:scaleType="centerCrop"
             android:src="@mipmap/icon_def_wechat"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <ImageView
             android:id="@+id/iv_moble_login"
