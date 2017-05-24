@@ -47,7 +47,12 @@ public class LianmaiListAadapter extends RecyclerView.Adapter<LianmaiListAadapte
         }
 
         holder.tv_name.setText(funseBean.getNickName());
-        holder.cb_checkBox.setChecked(funseBean.isChecked());
+//        holder.cb_checkBox.setChecked(funseBean.isChecked());
+        if (funseBean.isChecked()){
+            holder.cb_checkBox.setBackgroundResource(R.drawable.lianmai_selecte);
+        }else {
+            holder.cb_checkBox.setBackgroundResource(R.drawable.lianmai_unselecte);
+        }
         holder.cb_checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

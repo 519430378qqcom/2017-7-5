@@ -30,10 +30,12 @@
 
         <CheckBox
             android:id="@+id/cb_checkBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@drawable/checkbox_selector"
+            android:layout_width="50px"
+            android:layout_height="50px"
+            android:background="@drawable/lianmai_unselecte"
+            android:button="@null"
             android:layout_marginRight="34px"
+            android:padding="10px"
             android:checked="false"/>
 
     </com.zhy.autolayout.AutoLinearLayout>
