@@ -47,6 +47,7 @@ import com.lvshandian.lemeng.moudles.start.LogoutHelper;
 import com.lvshandian.lemeng.utils.AliYunImageUtils;
 import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
+import com.lvshandian.lemeng.utils.NetWorkUtil;
 import com.lvshandian.lemeng.utils.PermisionUtils;
 import com.lvshandian.lemeng.view.LoadingDialog;
 import com.lvshandian.lemeng.wangyiyunxin.config.preference.Preferences;
@@ -420,7 +421,7 @@ public class MainActivity extends BaseActivity implements
         });
     }
 
-//    private static final String PATH = Environment.getExternalStorageDirectory() + "/lemeng/" + "image/head.jpeg";
+    //    private static final String PATH = Environment.getExternalStorageDirectory() + "/lemeng/" + "image/head.jpeg";
 //    private Uri mOutputUri = Uri.fromFile(new File(PATH));
     private Uri mOutputUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory().getAbsolutePath(), String.valueOf(System.currentTimeMillis()).substring(8) + ".png"));
 
@@ -770,7 +771,31 @@ public class MainActivity extends BaseActivity implements
         iv_prapare_live.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startLive();
+                if (NetWorkUtil.getConnectedType(mContext) == 0) {
+                    initDialog();
+                    baseDialogTitle.setText("当前为移动网络,是否开启直播");
+                    baseDialogLeft.setText("取消直播");
+                    baseDialogRight.setText("继续直播");
+                    baseDialogLeft.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (baseDialog != null && baseDialog.isShowing()) {
+                                baseDialog.dismiss();
+                            }
+                        }
+                    });
+                    baseDialogRight.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (baseDialog != null && baseDialog.isShowing()) {
+                                baseDialog.dismiss();
+                            }
+                            startLive();
+                        }
+                    });
+                } else {
+                    startLive();
+                }
                 praparePop.dismiss();
             }
         });

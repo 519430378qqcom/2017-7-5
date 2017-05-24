@@ -329,7 +329,7 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
 //        CacheUtils.saveObject(mContext, appUser, CacheUtils.USERINFO);
         SharedPreferenceUtils.saveUserInfo(mContext, appUser);
         SharedPreferenceUtils.saveGoldCoin(mContext, appUser.getGoldCoin());
-        loginWangYi();
+        loginWangYi(appUser);
     }
 
 
@@ -339,7 +339,7 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
      * @author sll
      * @time 2016/11/16 13:39
      */
-    private void loginWangYi() {
+    private void loginWangYi(AppUser appUser) {
         // 云信只提供消息通道，并不包含用户资料逻辑。开发者需要在管理后台或通过服务器接口将用户帐号和token同步到云信服务器。
         // 在这里直接使用同步到云信服务器的帐号和token登录。
         // 这里为了简便起见，demo就直接使用了密码的md5作为token。
@@ -391,6 +391,7 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
 
             @Override
             public void onException(Throwable exception) {
+                LogUtil.e("网易云信无效输入",exception.toString());
                 showToast(R.string.login_exception);
                 onLoginDone();
             }
