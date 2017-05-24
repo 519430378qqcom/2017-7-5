@@ -3,6 +3,7 @@ package com.lvshandian.lemeng;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,17 +13,23 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
 
 import com.android.volley.Request;
 import com.lvshandian.lemeng.base.BaseActivity;
+import com.lvshandian.lemeng.bean.CreatReadyBean;
 import com.lvshandian.lemeng.bean.QuitApp;
 import com.lvshandian.lemeng.bean.QuitLogin;
 import com.lvshandian.lemeng.httprequest.HttpDatas;
@@ -30,7 +37,7 @@ import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.interf.ResultListener;
 import com.lvshandian.lemeng.moudles.index.IndexPagerFragment;
 import com.lvshandian.lemeng.moudles.index.fragment.AttentionFragment;
-import com.lvshandian.lemeng.moudles.index.live.PrapareVedioActivity;
+import com.lvshandian.lemeng.moudles.index.live.StartLiveActivity;
 import com.lvshandian.lemeng.moudles.mine.HomeChatFragment;
 import com.lvshandian.lemeng.moudles.mine.MyInformationFragment;
 import com.lvshandian.lemeng.moudles.mine.bean.PhotoBean;
@@ -38,7 +45,10 @@ import com.lvshandian.lemeng.moudles.mine.bean.VideoBean;
 import com.lvshandian.lemeng.moudles.start.LoginActivity;
 import com.lvshandian.lemeng.moudles.start.LogoutHelper;
 import com.lvshandian.lemeng.utils.AliYunImageUtils;
+import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
+import com.lvshandian.lemeng.utils.PermisionUtils;
+import com.lvshandian.lemeng.view.LoadingDialog;
 import com.lvshandian.lemeng.wangyiyunxin.config.preference.Preferences;
 import com.lvshandian.lemeng.wangyiyunxin.main.helper.SystemMessageUnreadManager;
 import com.lvshandian.lemeng.wangyiyunxin.main.reminder.ReminderItem;
@@ -78,7 +88,7 @@ import butterknife.Bind;
  */
 public class MainActivity extends BaseActivity implements
         TabHost.OnTabChangeListener,
-        View.OnTouchListener ,ReminderManager.UnreadNumChangedCallback{
+        View.OnTouchListener, ReminderManager.UnreadNumChangedCallback {
 
     @Bind(R.id.realtabcontent)
     FrameLayout realtabcontent;
@@ -140,6 +150,12 @@ public class MainActivity extends BaseActivity implements
      */
     private long dowableClick = 1000 * 2;
 
+    private String address = "火星";
+    /**
+     * 请求Loading
+     */
+    private LoadingDialog mLoading;
+
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -163,7 +179,20 @@ public class MainActivity extends BaseActivity implements
                     VideoBean videoBean = new VideoBean();
                     videoBean.setId("yes");
                     EventBus.getDefault().post(videoBean);
+                    intentMyInformationFragment();
                     showToast("上传视频成功");
+                    break;
+                case RequestCode.START_LIVE:
+                    if (mLoading != null && mLoading.isShowing()) {
+                        mLoading.dismiss();
+                    }
+                    CreatReadyBean creatReadyBean = JsonUtil.json2Bean(json, CreatReadyBean.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("START", creatReadyBean);
+                    LogUtils.e("START: " + creatReadyBean.toString());
+                    Intent intent = new Intent(mContext, StartLiveActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                     break;
             }
         }
@@ -194,8 +223,6 @@ public class MainActivity extends BaseActivity implements
         requestSystemMessageUnreadCount();
         initUnreadCover();
 
-        String path = Environment.getExternalStorageDirectory() + "/haiyan/" + "image";
-        new File(path);
     }
 
     private void initFragments() {
@@ -220,7 +247,18 @@ public class MainActivity extends BaseActivity implements
                 break;
             case R.id.ll_startLive:
                 index = 2;
-                startActivity(new Intent(mContext, PrapareVedioActivity.class));
+//                startActivity(new Intent(mContext, PrapareVedioActivity.class));
+                PermisionUtils.newInstance().checkLocationPermission(this, new PermisionUtils.OnPermissionGrantedLintener() {
+                    @Override
+                    public void permissionGranted() {
+                        if (TextUtils.isEmpty(MyApplication.city)) {
+                            address = "火星";
+                        } else {
+                            address = MyApplication.city;
+                        }
+                        quickStartLivePop();
+                    }
+                });
                 return;
             case R.id.ll_chat:
                 index = 3;
@@ -272,14 +310,14 @@ public class MainActivity extends BaseActivity implements
     }
 
     /**
-     * 跳到IndexPagerFragment
+     * 跳到MyInformationFragment
      */
-    public void intentIndexPager() {
+    public void intentMyInformationFragment() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        IndexPagerFragment indexPagerFragment = new IndexPagerFragment();
-        ft.replace(R.id.realtabcontent, indexPagerFragment);
+        MyInformationFragment myInformationFragment = new MyInformationFragment();
+        ft.replace(R.id.realtabcontent, myInformationFragment);
         ft.commit();
-        updateBottom(0);
+        updateBottom(4);
     }
 
     @Override
@@ -324,6 +362,8 @@ public class MainActivity extends BaseActivity implements
 
         if (RESULT_OK == resultCode) {
             if (requestCode == REQ_CODE) {
+                mLoading = new LoadingDialog(mContext);
+                mLoading.show();
                 final String videoPath = data.getStringExtra(WechatRecoderActivity.VIDEO_PATH);
                 MediaMetadataRetriever media = new MediaMetadataRetriever();
                 media.setDataSource(videoPath);
@@ -338,6 +378,9 @@ public class MainActivity extends BaseActivity implements
 
                     @Override
                     public void onFaild() {
+                        if (mLoading != null && mLoading.isShowing()) {
+                            mLoading.dismiss();
+                        }
                     }
                 });
             }
@@ -356,24 +399,30 @@ public class MainActivity extends BaseActivity implements
         AliYunImageUtils.newInstance().uploadVideo(mContext, videopath, new ResultListener() {
             @Override
             public void onSucess(String data) {
+                if (mLoading != null && mLoading.isShowing()) {
+                    mLoading.dismiss();
+                }
                 LogUtils.e("videoPath--data" + data);
 
                 ConcurrentHashMap map = new ConcurrentHashMap<>();
                 map.put("userId", appUser.getId());
                 map.put("thumbnailUrl", photo);//视频封面
                 map.put("url", data);//视频路径
-                httpDatas.getDataForJson("上传视频", Request.Method.POST, UrlBuilder.MY_VIDEO_UPLOAD, map, mHandler, RequestCode.MY_VIDEO_UPLOAD);
+                httpDatas.getDataForJsoNoloading("上传视频", Request.Method.POST, UrlBuilder.MY_VIDEO_UPLOAD, map, mHandler, RequestCode.MY_VIDEO_UPLOAD);
             }
 
             @Override
             public void onFaild() {
-
+                if (mLoading != null && mLoading.isShowing()) {
+                    mLoading.dismiss();
+                }
             }
         });
     }
 
-    private static final String PATH = Environment.getExternalStorageDirectory() + "/haiyan/" + "image/head.jpeg";
-    private Uri mOutputUri = Uri.fromFile(new File(PATH));
+//    private static final String PATH = Environment.getExternalStorageDirectory() + "/lemeng/" + "image/head.jpeg";
+//    private Uri mOutputUri = Uri.fromFile(new File(PATH));
+    private Uri mOutputUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory().getAbsolutePath(), String.valueOf(System.currentTimeMillis()).substring(8) + ".png"));
 
     /**
      * 开始对图片进行裁剪处理
@@ -447,9 +496,9 @@ public class MainActivity extends BaseActivity implements
     }
 
     @SuppressLint("SdCardPath")
-    /**
-     * 保存图片
-     */
+/**
+ * 保存图片
+ */
     public String savePicture(Bitmap bitmap) {
         String pictureName = "/mnt/sdcard/" + "partylive" + ".jpg";
         File file = new File(pictureName);
@@ -694,5 +743,84 @@ public class MainActivity extends BaseActivity implements
             showToast("再按一次退出应用");
             firstPressed = now;
         }
+    }
+
+    /**
+     * 一键开播
+     */
+    public void quickStartLivePop() {
+        final PopupWindow praparePop = new PopupWindow(this);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View view = inflater.inflate(R.layout.start_prapare_pop, null);
+        praparePop.setContentView(view);
+        praparePop.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
+        praparePop.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        praparePop.setFocusable(true);
+        praparePop.setBackgroundDrawable(new BitmapDrawable());
+        praparePop.setOutsideTouchable(true);
+        backgroundAlpha(0.5f);
+        praparePop.showAtLocation(ll_myself, Gravity.BOTTOM, 0, 0);
+        praparePop.update();
+        praparePop.setOnDismissListener(new PopOnDismissListner());
+
+        ImageView iv_prapare_live = (ImageView) view.findViewById(R.id.iv_prapare_live);
+        ImageView iv_prapare_video = (ImageView) view.findViewById(R.id.iv_prapare_video);
+        ImageView iv_prapare_delete = (ImageView) view.findViewById(R.id.iv_prapare_delete);
+
+        iv_prapare_live.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startLive();
+                praparePop.dismiss();
+            }
+        });
+        iv_prapare_video.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WechatRecoderActivity.launchActivity(mContext, REQ_CODE);
+                praparePop.dismiss();
+            }
+        });
+        iv_prapare_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                praparePop.dismiss();
+            }
+        });
+    }
+
+    /**
+     * 设置activity背景
+     *
+     * @param alpha
+     */
+    private void backgroundAlpha(float alpha) {
+        WindowManager.LayoutParams params = this.getWindow().getAttributes();
+        params.alpha = alpha;
+        this.getWindow().setAttributes(params);
+    }
+
+    /**
+     * Dismiss监听
+     */
+    private class PopOnDismissListner implements PopupWindow.OnDismissListener {
+        @Override
+        public void onDismiss() {
+            backgroundAlpha(1f);
+        }
+
+    }
+
+    private void startLive() {
+        mLoading = new LoadingDialog(mContext);
+        mLoading.show();
+        ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
+        map.put("name", appUser.getNickName());
+        map.put("city", address);
+        map.put("userId", appUser.getId());
+        map.put("privateChat", "1");
+        map.put("payForChat", appUser.getPayForVideoChat());
+        map.put("livePicUrl", appUser.getPicUrl());
+        httpDatas.getDataForJson("开启直播", Request.Method.POST, UrlBuilder.START, map, mHandler, RequestCode.START_LIVE);
     }
 }

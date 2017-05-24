@@ -209,7 +209,6 @@ public class PrapareVedioActivity extends BaseActivity {
             Bundle data = msg.getData();
             String json = data.getString(HttpDatas.info);
             switch (msg.what) {
-                //关注请求接收数据
                 case RequestCode.START_LIVE:
                     if (mLoading != null && mLoading.isShowing()) {
                         mLoading.dismiss();
@@ -261,7 +260,7 @@ public class PrapareVedioActivity extends BaseActivity {
 
     @Override
     protected void initialized() {
-        String path = Environment.getExternalStorageDirectory() + "/haiyan/" + "image";
+        String path = Environment.getExternalStorageDirectory() + "/lemeng/" + "image";
         new File(path);
 
         initAima();
@@ -506,19 +505,19 @@ public class PrapareVedioActivity extends BaseActivity {
                 break;
             case R.id.wechat:
                 UMUtils.umShareSingle(this, appUser.getNickName(), appUser.getPicUrl(),
-                        "http://app.haiyanlive.com/video/share.html?userId=" + appUser.getId(), SHARE_MEDIA.WEIXIN);
+                        "http://app.lemenglive.com/video/share.html?userId=" + appUser.getId(), SHARE_MEDIA.WEIXIN);
                 break;
             case R.id.qq:
                 UMUtils.umShareSingle(this, appUser.getNickName(), appUser.getPicUrl(),
-                        "http://app.haiyanlive.com/video/share.html?userId=" + appUser.getId(), SHARE_MEDIA.QQ);
+                        "http://app.lemenglive.com/video/share.html?userId=" + appUser.getId(), SHARE_MEDIA.QQ);
                 break;
             case R.id.qq_zone:
                 UMUtils.umShareSingle(this, appUser.getNickName(), appUser.getPicUrl(),
-                        "http://app.haiyanlive.com/video/share.html?userId=" + appUser.getId(), SHARE_MEDIA.QZONE);
+                        "http://app.lemenglive.com/video/share.html?userId=" + appUser.getId(), SHARE_MEDIA.QZONE);
                 break;
             case R.id.wechat_circle:
                 UMUtils.umShareSingle(this, appUser.getNickName(), appUser.getPicUrl(),
-                        "http://app.haiyanlive.com/video/share.html?userId=" + appUser.getId(), SHARE_MEDIA.WEIXIN_CIRCLE);
+                        "http://app.lemenglive.com/video/share.html?userId=" + appUser.getId(), SHARE_MEDIA.WEIXIN_CIRCLE);
                 break;
         }
     }
@@ -636,7 +635,7 @@ public class PrapareVedioActivity extends BaseActivity {
     }
 
     //    private final String PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "a.jpeg";
-    private static final String PATH = Environment.getExternalStorageDirectory() + "/haiyan/" + "image/head.jpeg";
+    private static final String PATH = Environment.getExternalStorageDirectory() + "/lemeng/" + "image/head.jpeg";
     private Uri mOutputUri = Uri.fromFile(new File(PATH));
 
     /**

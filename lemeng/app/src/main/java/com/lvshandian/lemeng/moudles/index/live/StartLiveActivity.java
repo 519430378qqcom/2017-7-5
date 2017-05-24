@@ -397,7 +397,7 @@ public class StartLiveActivity extends BaseActivity implements
     /**
      * 分享的地址
      */
-    private final String share_url = "http://app.haiyanlive.com/video/share.html";
+    private final String share_url = "http://app.lemenglive.com/video/share.html";
 
     /**
      * 直播开启时间

@@ -11,7 +11,7 @@ public class BannerBean implements Serializable {
 
     /**
      * id : 57
-     * picUrl : http://haiyan-news.oss-cn-beijing.aliyuncs.com/haiyanImg/1492154955667.png
+     * picUrl : http://lemeng-news.oss-cn-beijing.aliyuncs.com/lemengImg/1492154955667.png
      * pointUrl :
      * creatTime : 2017-04-14 14:04:48
      * status : 1

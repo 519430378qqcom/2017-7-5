@@ -11,7 +11,7 @@ public class ContributionBeanBack implements Serializable {
 
 
     /**
-     * picUrl : http://haiyan-news.oss-cn-beijing.aliyuncs.com/29077.png
+     * picUrl : http://lemeng-news.oss-cn-beijing.aliyuncs.com/29077.png
      * level : 77
      * nickName : 哈哈
      * sumAmount : 343380

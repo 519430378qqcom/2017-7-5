@@ -293,7 +293,7 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
             LogUtils.e("json: " + json);
             OkHttpUtils.postString()
                     .url(UrlBuilder.chargeServerUrl + UrlBuilder.openRegister)
-                    .addHeader("udid", "haiyan")
+                    .addHeader("udid", "lemeng")
                     .mediaType(MediaType.parse("application/json;charset=UTF-8"))
                     .content(json)
                     .build().

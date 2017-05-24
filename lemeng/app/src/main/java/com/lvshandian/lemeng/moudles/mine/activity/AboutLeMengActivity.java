@@ -28,7 +28,7 @@ public class AboutLeMengActivity extends BaseActivity {
     LinearLayout llService;
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_about_haiyan;
+        return R.layout.activity_about_lemeng;
     }
 
     @Override

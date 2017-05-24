@@ -74,7 +74,7 @@
         android:textColor="@color/red"
         android:textSize="18sp" />
 
-    <!--<com.lvshandian.haiyan.widget.StrokeTextView-->
+    <!--<com.lvshandian.lemeng.widget.StrokeTextView-->
     <!--android:id="@+id/animation_num"-->
     <!--android:layout_width="wrap_content"-->
     <!--android:layout_height="wrap_content"-->

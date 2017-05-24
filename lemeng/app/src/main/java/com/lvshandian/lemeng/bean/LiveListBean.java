@@ -16,7 +16,7 @@ public class LiveListBean implements Serializable {
      * address : 北京市
      * age : null
      * nickName : llllll啊啦啦啦
-     * picUrl : http://haiyan-news.oss-cn-beijing.aliyuncs.com/avatar/1000000/objectKey-17600330098-headerpic-1491532351.png
+     * picUrl : http://lemeng-news.oss-cn-beijing.aliyuncs.com/avatar/1000000/objectKey-17600330098-headerpic-1491532351.png
      * signature : 啦啦队
      * gender : 1
      * phoneNum : 17600330098
@@ -34,7 +34,7 @@ public class LiveListBean implements Serializable {
      * status : 1
      * goldCoin : 5671544
      * autoUpdateTime : 2017-04-10 12:10:03
-     * livePicUrl : http://haiyan-news.oss-cn-beijing.aliyuncs.com/live/1000000/liveshowpic-1491880985.png
+     * livePicUrl : http://lemeng-news.oss-cn-beijing.aliyuncs.com/live/1000000/liveshowpic-1491880985.png
      * vip : 0
      * deviceToken : A3127569-B248-4402-8A88-DD49F19476B6
      * fansNum : 9
@@ -83,7 +83,7 @@ public class LiveListBean implements Serializable {
      * rewardDetails : null
      * userContribution : null
      * goodNum : null
-     * rooms : {"id":6236,"userId":1000000,"name":"","city":"北京市","roomId":8411693,"livePicUrl":"http://haiyan-news.oss-cn-beijing.aliyuncs.com/live/1000000/liveshowpic-1491880985.png","pubStat":0,"publishUrl":"rtmp://pili-publish.haiyanlive.com/haiyanzhibo/haiyanzhibo1491880988433A?e=1491884588&token=_8EgPhKIHK6v4Y58ZDAGZDmCdwyAF7yOf76RQqUf:WO_e_QXwoQnyhcsA2bdWfTDBiE4=","broadcastUrl":"http://pili-live-hdl.haiyanlive.com/haiyanzhibo/haiyanzhibo1491880988433A.flv","shareUrl":"http://miulive.cc/s/6236","payForChat":0,"privateChat":1,"timeStamp":1491880988601,"onlineUserNum":161,"status":1,"likeNum":0,"hotNum":0,"refreshTime":1491882399788,"privateFlag":null,"roomPw":null,"roomPay":null,"rankNum":0,"rankTime":null,"users":null,"publishUrlTitle":null}
+     * rooms : {"id":6236,"userId":1000000,"name":"","city":"北京市","roomId":8411693,"livePicUrl":"http://lemeng-news.oss-cn-beijing.aliyuncs.com/live/1000000/liveshowpic-1491880985.png","pubStat":0,"publishUrl":"rtmp://pili-publish.lemenglive.com/lemengzhibo/lemengzhibo1491880988433A?e=1491884588&token=_8EgPhKIHK6v4Y58ZDAGZDmCdwyAF7yOf76RQqUf:WO_e_QXwoQnyhcsA2bdWfTDBiE4=","broadcastUrl":"http://pili-live-hdl.lemenglive.com/lemengzhibo/lemengzhibo1491880988433A.flv","shareUrl":"http://miulive.cc/s/6236","payForChat":0,"privateChat":1,"timeStamp":1491880988601,"onlineUserNum":161,"status":1,"likeNum":0,"hotNum":0,"refreshTime":1491882399788,"privateFlag":null,"roomPw":null,"roomPay":null,"rankNum":0,"rankTime":null,"users":null,"publishUrlTitle":null}
      * idno : null
      * idfrontPic : null
      * idbackPic : null
@@ -790,10 +790,10 @@ public class LiveListBean implements Serializable {
          * name :
          * city : 北京市
          * roomId : 8411693
-         * livePicUrl : http://haiyan-news.oss-cn-beijing.aliyuncs.com/live/1000000/liveshowpic-1491880985.png
+         * livePicUrl : http://lemeng-news.oss-cn-beijing.aliyuncs.com/live/1000000/liveshowpic-1491880985.png
          * pubStat : 0
-         * publishUrl : rtmp://pili-publish.haiyanlive.com/haiyanzhibo/haiyanzhibo1491880988433A?e=1491884588&token=_8EgPhKIHK6v4Y58ZDAGZDmCdwyAF7yOf76RQqUf:WO_e_QXwoQnyhcsA2bdWfTDBiE4=
-         * broadcastUrl : http://pili-live-hdl.haiyanlive.com/haiyanzhibo/haiyanzhibo1491880988433A.flv
+         * publishUrl : rtmp://pili-publish.lemenglive.com/lemengzhibo/lemengzhibo1491880988433A?e=1491884588&token=_8EgPhKIHK6v4Y58ZDAGZDmCdwyAF7yOf76RQqUf:WO_e_QXwoQnyhcsA2bdWfTDBiE4=
+         * broadcastUrl : http://pili-live-hdl.lemenglive.com/lemengzhibo/lemengzhibo1491880988433A.flv
          * shareUrl : http://miulive.cc/s/6236
          * payForChat : 0
          * privateChat : 1

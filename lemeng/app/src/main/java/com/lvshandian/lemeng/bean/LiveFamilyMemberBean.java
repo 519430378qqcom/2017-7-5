@@ -13,7 +13,7 @@ public class LiveFamilyMemberBean implements Serializable {
      * success : true
      * code : 1
      * msg : 查询成功
-     * obj : [{"id":1000005,"userName":"15200124042","password":"e10adc3949ba59abbe56e057f20f883e","address":"邯郸","age":null,"nickName":"悦琴","picUrl":"http://haiyan-news.oss-cn-beijing.aliyuncs.com/11765.png","signature":"海边散步的大虾","gender":"0","phoneNum":"15200124042","level":6,"location":null,"points":379054,"veriInfo":null,"verified":0,"neteaseAccount":"miu_1000005","neteaseToken":"eedfde7410fb8b6abbe217a497d5b779","regTime":"2017-03-10 16:14:10","live":1,"online":0,"refreshTime":1489147665155,"status":1,"goldCoin":718072,"autoUpdateTime":"2017-03-10 20:18:00","livePicUrl":"http://haiyan-news.oss-cn-beijing.aliyuncs.com/65969.png","vip":0,"deviceToken":null,"fansNum":2,"followNum":1,"lockedGoldCoin":0,"receivedGoldCoin":9912,"spendGoldCoin":379040,"shareCode":"DB7YVRX9","introducerId":0,"gradePleased":0,"gradeUnsatisfy":0,"gradeSatisfied":0,"servicePleased":0,"serviceUnsatisfy":0,"serviceSatisfied":0,"payForVideoChat":0,"unionId":null,"exchangeGoldCoin":null,"exchangeCash":0,"exchangeStatus":0,"roomId":4831,"robot":0,"consortiaId":0,"vipTime":null,"channelId":0,"familyId":1,"familyLeaderFlag":0,"constellation":"摩羯座","realName":null,"liveTime":5181241,"winType":0,"fanAddNum":null,"goldAddNum":null,"liveAddTime":null,"identityCode":null,"ishot":0,"followFlag":null,"follow":null,"controllFlag":null,"sumAmount":null,"niceNum":null,"channel":null,"family":{"familyId":null,"familyName":"才艺家族","familyDesc":null,"createtime":null,"updatetime":null,"createUserId":null,"updateUserId":null},"userControl":null,"rewardDetails":null,"userContribution":null,"goodNum":null,"rooms":{"id":4831,"userId":1000005,"name":"悦琴","city":"火星","roomId":7778402,"livePicUrl":"http://haiyan-news.oss-cn-beijing.aliyuncs.com/65969.png","pubStat":0,"publishUrl":"rtmp://pili-publish.tangrenlive.com/tangrenlive/tangrenlive1489370665702A?e=1489374265&token=WigBgDzxiI8k6GYTpXE2D-EeTWmojJXcvinHb9hj:vJWg-SStqPZye2lqBExy0Bs0DmI=","broadcastUrl":"http://pili-live-hdl.tangrenlive.com/tangrenlive/tangrenlive1489370665702A.flv","shareUrl":"http://miulive.cc/s/4831","payForChat":0,"privateChat":1,"timeStamp":1489370665863,"onlineUserNum":6,"status":1,"likeNum":0,"hotNum":0,"refreshTime":1489370697012,"privateFlag":null,"roomPw":null,"roomPay":null,"rankNum":0,"rankTime":null,"users":null},"idno":null,"idfrontPic":null,"idbackPic":null}]
+     * obj : [{"id":1000005,"userName":"15200124042","password":"e10adc3949ba59abbe56e057f20f883e","address":"邯郸","age":null,"nickName":"悦琴","picUrl":"http://lemeng-news.oss-cn-beijing.aliyuncs.com/11765.png","signature":"海边散步的大虾","gender":"0","phoneNum":"15200124042","level":6,"location":null,"points":379054,"veriInfo":null,"verified":0,"neteaseAccount":"miu_1000005","neteaseToken":"eedfde7410fb8b6abbe217a497d5b779","regTime":"2017-03-10 16:14:10","live":1,"online":0,"refreshTime":1489147665155,"status":1,"goldCoin":718072,"autoUpdateTime":"2017-03-10 20:18:00","livePicUrl":"http://lemeng-news.oss-cn-beijing.aliyuncs.com/65969.png","vip":0,"deviceToken":null,"fansNum":2,"followNum":1,"lockedGoldCoin":0,"receivedGoldCoin":9912,"spendGoldCoin":379040,"shareCode":"DB7YVRX9","introducerId":0,"gradePleased":0,"gradeUnsatisfy":0,"gradeSatisfied":0,"servicePleased":0,"serviceUnsatisfy":0,"serviceSatisfied":0,"payForVideoChat":0,"unionId":null,"exchangeGoldCoin":null,"exchangeCash":0,"exchangeStatus":0,"roomId":4831,"robot":0,"consortiaId":0,"vipTime":null,"channelId":0,"familyId":1,"familyLeaderFlag":0,"constellation":"摩羯座","realName":null,"liveTime":5181241,"winType":0,"fanAddNum":null,"goldAddNum":null,"liveAddTime":null,"identityCode":null,"ishot":0,"followFlag":null,"follow":null,"controllFlag":null,"sumAmount":null,"niceNum":null,"channel":null,"family":{"familyId":null,"familyName":"才艺家族","familyDesc":null,"createtime":null,"updatetime":null,"createUserId":null,"updateUserId":null},"userControl":null,"rewardDetails":null,"userContribution":null,"goodNum":null,"rooms":{"id":4831,"userId":1000005,"name":"悦琴","city":"火星","roomId":7778402,"livePicUrl":"http://lemeng-news.oss-cn-beijing.aliyuncs.com/65969.png","pubStat":0,"publishUrl":"rtmp://pili-publish.tangrenlive.com/tangrenlive/tangrenlive1489370665702A?e=1489374265&token=WigBgDzxiI8k6GYTpXE2D-EeTWmojJXcvinHb9hj:vJWg-SStqPZye2lqBExy0Bs0DmI=","broadcastUrl":"http://pili-live-hdl.tangrenlive.com/tangrenlive/tangrenlive1489370665702A.flv","shareUrl":"http://miulive.cc/s/4831","payForChat":0,"privateChat":1,"timeStamp":1489370665863,"onlineUserNum":6,"status":1,"likeNum":0,"hotNum":0,"refreshTime":1489370697012,"privateFlag":null,"roomPw":null,"roomPay":null,"rankNum":0,"rankTime":null,"users":null},"idno":null,"idfrontPic":null,"idbackPic":null}]
      */
 
     private boolean success;
@@ -61,7 +61,7 @@ public class LiveFamilyMemberBean implements Serializable {
          * address : 邯郸
          * age : null
          * nickName : 悦琴
-         * picUrl : http://haiyan-news.oss-cn-beijing.aliyuncs.com/11765.png
+         * picUrl : http://lemeng-news.oss-cn-beijing.aliyuncs.com/11765.png
          * signature : 海边散步的大虾
          * gender : 0
          * phoneNum : 15200124042
@@ -79,7 +79,7 @@ public class LiveFamilyMemberBean implements Serializable {
          * status : 1
          * goldCoin : 718072
          * autoUpdateTime : 2017-03-10 20:18:00
-         * livePicUrl : http://haiyan-news.oss-cn-beijing.aliyuncs.com/65969.png
+         * livePicUrl : http://lemeng-news.oss-cn-beijing.aliyuncs.com/65969.png
          * vip : 0
          * deviceToken : null
          * fansNum : 2
@@ -127,7 +127,7 @@ public class LiveFamilyMemberBean implements Serializable {
          * rewardDetails : null
          * userContribution : null
          * goodNum : null
-         * rooms : {"id":4831,"userId":1000005,"name":"悦琴","city":"火星","roomId":7778402,"livePicUrl":"http://haiyan-news.oss-cn-beijing.aliyuncs.com/65969.png","pubStat":0,"publishUrl":"rtmp://pili-publish.tangrenlive.com/tangrenlive/tangrenlive1489370665702A?e=1489374265&token=WigBgDzxiI8k6GYTpXE2D-EeTWmojJXcvinHb9hj:vJWg-SStqPZye2lqBExy0Bs0DmI=","broadcastUrl":"http://pili-live-hdl.tangrenlive.com/tangrenlive/tangrenlive1489370665702A.flv","shareUrl":"http://miulive.cc/s/4831","payForChat":0,"privateChat":1,"timeStamp":1489370665863,"onlineUserNum":6,"status":1,"likeNum":0,"hotNum":0,"refreshTime":1489370697012,"privateFlag":null,"roomPw":null,"roomPay":null,"rankNum":0,"rankTime":null,"users":null}
+         * rooms : {"id":4831,"userId":1000005,"name":"悦琴","city":"火星","roomId":7778402,"livePicUrl":"http://lemeng-news.oss-cn-beijing.aliyuncs.com/65969.png","pubStat":0,"publishUrl":"rtmp://pili-publish.tangrenlive.com/tangrenlive/tangrenlive1489370665702A?e=1489374265&token=WigBgDzxiI8k6GYTpXE2D-EeTWmojJXcvinHb9hj:vJWg-SStqPZye2lqBExy0Bs0DmI=","broadcastUrl":"http://pili-live-hdl.tangrenlive.com/tangrenlive/tangrenlive1489370665702A.flv","shareUrl":"http://miulive.cc/s/4831","payForChat":0,"privateChat":1,"timeStamp":1489370665863,"onlineUserNum":6,"status":1,"likeNum":0,"hotNum":0,"refreshTime":1489370697012,"privateFlag":null,"roomPw":null,"roomPay":null,"rankNum":0,"rankTime":null,"users":null}
          * idno : null
          * idfrontPic : null
          * idbackPic : null
@@ -901,7 +901,7 @@ public class LiveFamilyMemberBean implements Serializable {
              * name : 悦琴
              * city : 火星
              * roomId : 7778402
-             * livePicUrl : http://haiyan-news.oss-cn-beijing.aliyuncs.com/65969.png
+             * livePicUrl : http://lemeng-news.oss-cn-beijing.aliyuncs.com/65969.png
              * pubStat : 0
              * publishUrl : rtmp://pili-publish.tangrenlive.com/tangrenlive/tangrenlive1489370665702A?e=1489374265&token=WigBgDzxiI8k6GYTpXE2D-EeTWmojJXcvinHb9hj:vJWg-SStqPZye2lqBExy0Bs0DmI=
              * broadcastUrl : http://pili-live-hdl.tangrenlive.com/tangrenlive/tangrenlive1489370665702A.flv

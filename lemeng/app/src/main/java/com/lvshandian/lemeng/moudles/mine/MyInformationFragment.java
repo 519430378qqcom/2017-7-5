@@ -308,12 +308,14 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
                         mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                DisplayMetrics dm = new DisplayMetrics();
-                                getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-                                int width = dm.widthPixels;
-                                int height = width * 520 / 750;
-                                AutoRelativeLayout.LayoutParams lp1 = new AutoRelativeLayout.LayoutParams(width, height);
-                                myHead.setLayoutParams(lp1);
+                                if (getActivity().getWindowManager()!= null) {
+                                    DisplayMetrics dm = new DisplayMetrics();
+                                    getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+                                    int width = dm.widthPixels;
+                                    int height = width * 520 / 750;
+                                    AutoRelativeLayout.LayoutParams lp1 = new AutoRelativeLayout.LayoutParams(width, height);
+                                    myHead.setLayoutParams(lp1);
+                                }
                             }
                         }, 400);
 

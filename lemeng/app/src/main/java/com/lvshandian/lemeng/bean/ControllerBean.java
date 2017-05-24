@@ -30,7 +30,7 @@ public class ControllerBean implements Serializable {
      * ishot : 0
      * level : 9
      * live : 0
-     * livePicUrl : http://haiyan-news.oss-cn-beijing.aliyuncs.com/85803.png
+     * livePicUrl : http://lemeng-news.oss-cn-beijing.aliyuncs.com/85803.png
      * liveTime : 2609414
      * location : 40.00359,116.40324
      * lockedGoldCoin : 0
@@ -41,7 +41,7 @@ public class ControllerBean implements Serializable {
      * password : e10adc3949ba59abbe56e057f20f883e
      * payForVideoChat : 0
      * phoneNum : 18513884422
-     * picUrl : http://haiyan-news.oss-cn-beijing.aliyuncs.com/avatar/1000008/objectKey-18513884422-headerpic-1489141129.png
+     * picUrl : http://lemeng-news.oss-cn-beijing.aliyuncs.com/avatar/1000008/objectKey-18513884422-headerpic-1489141129.png
      * points : 857200
      * receivedGoldCoin : 0
      * refreshTime : 1489396914176

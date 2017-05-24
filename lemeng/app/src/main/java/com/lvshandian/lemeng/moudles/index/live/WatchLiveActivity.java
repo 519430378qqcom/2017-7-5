@@ -338,7 +338,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     /**
      * 分享的地址
      */
-    private final String share_url = "http://app.haiyanlive.com/video/share.html";
+    private final String share_url = "http://app.lemenglive.com/video/share.html";
 
 
     /**

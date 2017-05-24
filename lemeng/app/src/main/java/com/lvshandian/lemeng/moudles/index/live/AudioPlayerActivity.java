@@ -148,7 +148,7 @@ public class AudioPlayerActivity extends BaseActivity implements SwipeRefresh.On
             @Override
             public void OnAudioItemClick(int position, String str) {
                 if (str.equals("播放")||str.equals("继续")) {
-                    String sdpath = Environment.getExternalStorageDirectory() + "/haiyan/";
+                    String sdpath = Environment.getExternalStorageDirectory() + "/lemeng/";
                     String fileUrl = sdpath + "download/";
                     String uri = fileUrl + songList.get(position).getSongid() + ".mp3";
                     String lrc = fileUrl + songList.get(position).getSongid() + ".lrc";
@@ -163,7 +163,7 @@ public class AudioPlayerActivity extends BaseActivity implements SwipeRefresh.On
                     songList.get(position).setPlaying(true);
                     audioPlayerAdapter.notifyDataSetChanged();
                 } else if (str.equals("暂停")) {
-                    String sdpath = Environment.getExternalStorageDirectory() + "/haiyan/";
+                    String sdpath = Environment.getExternalStorageDirectory() + "/lemeng/";
                     String fileUrl = sdpath + "download/";
                     String uri = fileUrl + songList.get(position).getSongid() + ".mp3";
                     String lrc = fileUrl + songList.get(position).getSongid() + ".lrc";
@@ -197,7 +197,7 @@ public class AudioPlayerActivity extends BaseActivity implements SwipeRefresh.On
                                     DataSupport.deleteAll(Audios.class, "songid = ?", songList
                                             .get(position).getSongid());
                                     String sdpath = Environment.getExternalStorageDirectory() +
-                                            "/haiyan/";
+                                            "/lemeng/";
                                     String fileUrl = sdpath + "download/";
                                     String uri = fileUrl + songList.get(position).getSongid() + "" +
                                             ".mp3";
@@ -437,7 +437,7 @@ public class AudioPlayerActivity extends BaseActivity implements SwipeRefresh.On
                 // 判断SD卡是否存在，并且是否具有读写权限
                 if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                     // 获得存储卡的路径
-                    String sdpath = Environment.getExternalStorageDirectory() + "/haiyan/";
+                    String sdpath = Environment.getExternalStorageDirectory() + "/lemeng/";
                     String mSavePath = sdpath + "download";
                     URL url = new URL(playInfo.getBitrate().getShow_link());
                     // 创建连接

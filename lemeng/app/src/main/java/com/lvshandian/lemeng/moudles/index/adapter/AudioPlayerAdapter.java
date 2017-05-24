@@ -48,7 +48,7 @@ public class AudioPlayerAdapter extends RecyclerView.Adapter<AudioPlayerAdapter
         Audios listBean = songList.get(position);
         List<Audios> listBean1 = DataSupport.where("songid = ?", listBean.getSongid()).find
                 (Audios.class);
-        String sdpath = Environment.getExternalStorageDirectory() + "/haiyan/";
+        String sdpath = Environment.getExternalStorageDirectory() + "/lemeng/";
         String fileUrl = sdpath + "download/";
         String uri = fileUrl + listBean.getSongid() + ".mp3";
         File file = new File(uri);

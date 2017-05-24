@@ -184,7 +184,7 @@ public class HeaderGridView extends GridView {
     }
     /**
      * ListAdapter used when a HeaderGridView has header views. This ListAdapter
-     * wraps another one and also keeps com.lvshandian.haiyan.moudles.index.live.track of the header views and their
+     * wraps another one and also keeps com.lvshandian.lemeng.moudles.index.live.track of the header views and their
      * associated data objects.
      *<p>This is intended as a base class; you will probably not need to
      * use this class directly in your own code.

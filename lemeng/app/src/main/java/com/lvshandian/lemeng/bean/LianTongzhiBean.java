@@ -14,7 +14,7 @@ public class LianTongzhiBean implements Serializable {
      * id : 2
      * result : 1
      * type : 2
-     * userAvatar : http://haiyan-news.oss-cn-beijing.aliyuncs.com/29077.png
+     * userAvatar : http://lemeng-news.oss-cn-beijing.aliyuncs.com/29077.png
      * userId : 1000004
      * userName : 奔波儿灞
      * vip : 0
