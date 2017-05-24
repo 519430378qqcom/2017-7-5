@@ -456,7 +456,7 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
 
             String picUrl = userInfo.getPicUrl();
             if (TextUtils.isEmpty(picUrl)) {
-                picUrl = "http://lemeng.oss-ap-southeast-1.aliyuncs.com/lemengImg/1494471272058.png";
+                picUrl = "http://lemeng.oss-ap-southeast-1.aliyuncs.com/lemengImg/1495594583610.png";
             }
             Picasso.with(mContext).load(picUrl).placeholder(R.mipmap.zhan_da)
                     .error(R.mipmap.zhan_da).into(myHead);

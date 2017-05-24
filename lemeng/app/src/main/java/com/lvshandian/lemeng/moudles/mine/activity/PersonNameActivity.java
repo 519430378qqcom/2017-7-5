@@ -60,8 +60,13 @@ public class PersonNameActivity extends BaseActivity {
     @Override
     protected void initialized() {
         initTitle("", "昵称", "保存");
-        etName.setText(getIntent().getStringExtra("nickName"));
-        etName.setSelection(getIntent().getStringExtra("nickName").length());
+        String nickName = getIntent().getStringExtra("nickName");
+        etName.setText(nickName);
+        if (nickName.length() > 10) {
+            etName.setSelection(10);
+        } else {
+            etName.setSelection(getIntent().getStringExtra("nickName").length());
+        }
         if (getIntent().getStringExtra("nickName").length() > 0)
             ivDelete.setVisibility(View.VISIBLE);
         new Handler().postDelayed(new Runnable() {

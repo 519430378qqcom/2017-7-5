@@ -3186,7 +3186,7 @@ public class StartLiveActivity extends BaseActivity implements
 
         if (!TextUtils.isEmpty(customdateBean.getPicUrl())) {
             Picasso.with(mContext).load(customdateBean.getPicUrl()).placeholder(R.mipmap.head_default)
-                    .error(R.mipmap.head_default).resize(50, 50).into(civ_image);
+                    .error(R.mipmap.head_default).into(civ_image);
         }
         civ_image.setOnClickListener(new View.OnClickListener() {
             @Override

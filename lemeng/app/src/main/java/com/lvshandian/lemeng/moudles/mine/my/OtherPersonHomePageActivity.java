@@ -57,6 +57,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import butterknife.Bind;
 
+import static com.lvshandian.lemeng.R.id.fanse;
+
 /**
  * Created by gjj on 2016/11/23.
  */
@@ -304,8 +306,10 @@ public class OtherPersonHomePageActivity extends BaseActivity {
 
     private void initInfo() {
         if (mOtherBean != null) {
-            final String picUrl = mOtherBean.getPicUrl();
-//            PicassoUtil.newInstance().onRoundnessImage(mContext, picUrl, avHeader);
+            String picUrl = mOtherBean.getPicUrl();
+            if (TextUtils.isEmpty(picUrl)) {
+                picUrl = "http://lemeng.oss-ap-southeast-1.aliyuncs.com/lemengImg/1495594583610.png";
+            }
             Picasso.with(mContext).load(picUrl).placeholder(R.mipmap.zhan_da)
                     .error(R.mipmap.zhan_da).into(avHeader);
 
@@ -322,20 +326,34 @@ public class OtherPersonHomePageActivity extends BaseActivity {
             int i = Integer.parseInt(gradeSatisfied);
             ivGrade.setImageResource(GrademipmapUtils.LevelImg[i]);
 
+
             String signature = mOtherBean.getSignature();
-            tvSign.setText(signature);
+            if (!com.lvshandian.lemeng.utils.TextUtils.isEmpty(signature)) {
+                tvSign.setText(signature);
+            } else {
+                tvSign.setText("这个家伙很懒，什么都没留下");
+            }
 
             String fansNum = mOtherBean.getFansNum();
-            tvFanse.setText(fansNum);
+            if (!com.lvshandian.lemeng.utils.TextUtils.isEmpty(fansNum)) {
+                tvFanse.setText(fansNum);
+            } else {
+                tvFanse.setText(String.valueOf(0));
+            }
 
             String followNum = mOtherBean.getFollowNum();
-            tvFoucs.setText(followNum);
+            if (!com.lvshandian.lemeng.utils.TextUtils.isEmpty(followNum)) {
+                tvFoucs.setText(followNum);
+            } else {
+                tvFoucs.setText(String.valueOf(0));
+            }
 
             focus();
+            final String finalPicUrl = picUrl;
             avHeader.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(mContext, BigImageActivity.class).putExtra("imageStr", picUrl));
+                    startActivity(new Intent(mContext, BigImageActivity.class).putExtra("imageStr", finalPicUrl));
                 }
             });
 

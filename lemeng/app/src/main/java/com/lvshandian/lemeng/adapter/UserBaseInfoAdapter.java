@@ -130,7 +130,7 @@ public class UserBaseInfoAdapter extends BaseAdapter {
                     @Override
                     public void onResponse(JSONObject obj) {
                         SdkHttpResult response = JSON.parseObject(obj.toString(), SdkHttpResult.class);
-                        Toast.makeText(context, "关注成功", 1).show();
+                        Toast.makeText(context, "关注成功", Toast.LENGTH_LONG).show();
                         LogUtils.i(response.toString());
                     }
                 }, errorListener);

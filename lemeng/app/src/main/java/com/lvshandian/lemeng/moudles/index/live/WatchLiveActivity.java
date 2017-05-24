@@ -3149,7 +3149,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
         if (!TextUtils.isEmpty(liveListBean.getPicUrl())) {
             Picasso.with(mContext).load(liveListBean.getPicUrl()).placeholder(R.mipmap.head_default)
-                    .error(R.mipmap.head_default).resize(50, 50).into(civ_image);
+                    .error(R.mipmap.head_default).into(civ_image);
         }
 
         tv_name.setText(liveListBean.getNickName());
@@ -3345,7 +3345,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
         if (!TextUtils.isEmpty(customdateBean.getPicUrl())) {
             Picasso.with(mContext).load(customdateBean.getPicUrl()).placeholder(R.mipmap.head_default)
-                    .error(R.mipmap.head_default).resize(50, 50).into(civ_image);
+                    .error(R.mipmap.head_default).into(civ_image);
         }
         civ_image.setOnClickListener(new View.OnClickListener() {
             @Override

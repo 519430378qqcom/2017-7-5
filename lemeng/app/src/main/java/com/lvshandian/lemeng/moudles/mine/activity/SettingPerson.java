@@ -23,14 +23,13 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.android.volley.Request;
-import com.lvshandian.lemeng.MainActivity;
-import com.lvshandian.lemeng.MyApplication;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.UrlBuilder;
 import com.lvshandian.lemeng.base.BaseActivity;
+import com.lvshandian.lemeng.bean.AppUser;
 import com.lvshandian.lemeng.bean.lemeng.Args;
 import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.httprequest.RequestCode;
@@ -42,18 +41,10 @@ import com.lvshandian.lemeng.utils.AliYunImageUtils;
 import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.utils.UpdateImagerUtils;
-import com.lvshandian.lemeng.wangyiyunxin.config.DemoCache;
-import com.lvshandian.lemeng.wangyiyunxin.config.preference.Preferences;
-import com.lvshandian.lemeng.wangyiyunxin.config.preference.UserPreferences;
 import com.lvshandian.lemeng.widget.AvatarView;
-import com.netease.nim.uikit.cache.DataCacheManager;
-import com.netease.nimlib.sdk.AbortableFuture;
 import com.netease.nimlib.sdk.NIMClient;
-import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.RequestCallbackWrapper;
 import com.netease.nimlib.sdk.ResponseCode;
-import com.netease.nimlib.sdk.auth.AuthService;
-import com.netease.nimlib.sdk.auth.LoginInfo;
 import com.netease.nimlib.sdk.uinfo.UserService;
 import com.netease.nimlib.sdk.uinfo.constant.UserInfoFieldEnum;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -62,8 +53,6 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.zhy.autolayout.AutoRelativeLayout;
 
 import org.greenrobot.eventbus.Subscribe;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.util.HashMap;
@@ -129,11 +118,6 @@ public class SettingPerson extends BaseActivity {
     protected Uri destUri = null;
 
     /**
-     * 判断是否从注册界面跳转过来的
-     */
-    private String isRegister;
-
-    /**
      * 选择性别的popupWindow
      */
     private PopupWindow popupWindow;
@@ -144,9 +128,6 @@ public class SettingPerson extends BaseActivity {
     private static final int CROP_SMALL_PICTURE = 123;
     private static final int CHANGE_PERSON_NAME = 124;
 
-    private AbortableFuture<LoginInfo> loginRequest;
-    private String account = null;
-    private String token = null;
 
     private Handler mHandler = new Handler() {
         @Override
@@ -159,32 +140,12 @@ public class SettingPerson extends BaseActivity {
                 //关注请求接收数据
                 case RequestCode.USER_TAG:
                     LogUtils.e("修改个人信息: " + json);
+                    AppUser appUser = JSON.parseObject(json, AppUser.class);
                     //存储用户信息
-                    try {
-                        JSONObject obj = new JSONObject(json);
-                        appUser.setAddress(obj.getString("address"));
-                        appUser.setConstellation(obj.getString("constellation"));
-                        appUser.setGender(obj.getString("gender"));
-                        appUser.setId(obj.getString("id"));
-                        appUser.setNickName(obj.getString("nickName"));
-                        appUser.setPicUrl(obj.getString("picUrl"));
-                        appUser.setSignature(obj.getString("signature"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-//                    CacheUtils.saveObject(SettingPerson.this, appUser, CacheUtils.USERINFO);
-                    SharedPreferenceUtils.saveUserInfo(mContext,appUser);
-                    if (isRegister.equals("register")) {
-                        showToast("编辑资料成功");
-                        loginWangYi();
-                        MyApplication.finishActivity();
-                        startActivity(new Intent(mContext, MainActivity.class));
-                    } else {
-                        showToast("修改成功");
-                        finish();
-                    }
-                    sendUserToWangYi();
+                    SharedPreferenceUtils.saveUserInfo(mContext, appUser);
+                    sendUserToWangYi(appUser);
+                    showToast("修改成功");
+                    finish();
                     break;
             }
         }
@@ -208,11 +169,8 @@ public class SettingPerson extends BaseActivity {
 
     @Override
     protected void initialized() {
-        isRegister = getIntent().getStringExtra("isRegister");
         initTitle("", "编辑资料", "保存");
-        if (isRegister.equals("unRegister")) {
-            initappUser();
-        }
+        initappUser();
     }
 
 
@@ -284,19 +242,14 @@ public class SettingPerson extends BaseActivity {
                 String address = tvAddress.getText().toString();
                 String signature = tvQm.getText().toString();
                 if (com.lvshandian.lemeng.utils.TextUtils.isEmpty(headUrl)) {
-                    if (isRegister.equals("unRegister")) {
-                        headUrl = appUser.getPicUrl();
-                    } else {
-                        showToast("请上传头像");
-                        return;
-                    }
+                    headUrl = appUser.getPicUrl();
                 }
                 if (com.lvshandian.lemeng.utils.TextUtils.isEmpty(nick)) {
                     showToast("请填写昵称");
                     return;
                 }
                 if (com.lvshandian.lemeng.utils.TextUtils.isEmpty(gender) || !(gender.equals("男") || gender.equals("女"))) {
-                    showToast("请填写男或女");
+                    showToast("请填写性别");
                     return;
                 }
                 if (com.lvshandian.lemeng.utils.TextUtils.isEmpty(xz)) {
@@ -606,7 +559,7 @@ public class SettingPerson extends BaseActivity {
     /**
      * 发送修改后的信息给网易云信
      */
-    private void sendUserToWangYi() {
+    private void sendUserToWangYi(AppUser appUser) {
         Map<UserInfoFieldEnum, Object> fields = new HashMap<>(1);
         fields.put(UserInfoFieldEnum.Name, appUser.getNickName());
         fields.put(UserInfoFieldEnum.AVATAR, appUser.getPicUrl());
@@ -624,68 +577,6 @@ public class SettingPerson extends BaseActivity {
                 });
     }
 
-    /**
-     * 登录网易云信
-     *
-     * @author sll
-     * @time 2016/11/16 13:39
-     */
-    private void loginWangYi() {
-        // 云信只提供消息通道，并不包含用户资料逻辑。开发者需要在管理后台或通过服务器接口将用户帐号和token同步到云信服务器。
-        // 在这里直接使用同步到云信服务器的帐号和token登录。
-        // 这里为了简便起见，demo就直接使用了密码的md5作为token。
-        // 如果开发者直接使用这个demo，只更改appkey，然后就登入自己的账户体系的话，需要传入同步到云信服务器的token，而不是用户密码。
-        account = appUser.getNeteaseAccount();
-        token = appUser.getNeteaseToken();
-        // 登录
-        loginRequest = NIMClient.getService(AuthService.class).login(new LoginInfo(account, token));
-        loginRequest.setCallback(new RequestCallback<LoginInfo>() {
-            @Override
-            public void onSuccess(LoginInfo param) {
-                onLoginDone();
-                DemoCache.setAccount(account);
-                saveLoginInfo(account, token);
-                // 初始化消息提醒
-                NIMClient.toggleNotification(UserPreferences.getNotificationToggle());
-                // 初始化免打扰
-                if (UserPreferences.getStatusConfig() == null) {
-                    UserPreferences.setStatusConfig(DemoCache.getNotificationConfig());
-                }
-                NIMClient.updateStatusBarNotificationConfig(UserPreferences.getStatusConfig());
-                // 构建缓存
-                DataCacheManager.buildDataCacheAsync();
-                // 进入主界面
-                gotoActivity(MainActivity.class, true);
-            }
-
-            @Override
-            public void onFailed(int code) {
-                onLoginDone();
-                if (code == 302 || code == 404) {
-                    Toast.makeText(SettingPerson.this, R.string.login_failed, Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(SettingPerson.this, "登录失败: " + code, Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onException(Throwable exception) {
-                Toast.makeText(SettingPerson.this, R.string.login_exception, Toast.LENGTH_LONG).show();
-                onLoginDone();
-            }
-        });
-    }
-
-    private void onLoginDone() {
-        loginRequest = null;
-    }
-
-    private void saveLoginInfo(final String account, final String token) {
-        Preferences.saveUserAccount(account);
-        Preferences.saveUserToken(token);
-        Preferences.saveAppLogin("1");
-        Preferences.saveWyyxLogin("1");
-    }
 
     @Subscribe //注册一个在后台线程执行的方法,用于接收事件
     public void onEventMainThread(Args args) {

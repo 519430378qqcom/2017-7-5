@@ -27,7 +27,7 @@ public class UpdatePersonActivity extends BaseActivity {
     EditText content;
     @Bind(R.id.tv_num)
     TextView tv_num;
-    private int numbers = 18;
+    private int numbers = 30;
 
     @Override
     protected int getLayoutId() {
@@ -42,8 +42,13 @@ public class UpdatePersonActivity extends BaseActivity {
     @Override
     protected void initialized() {
         initTitle("", "签名", "完成");
-        content.setText(getIntent().getStringExtra("name"));
-        content.setSelection(getIntent().getStringExtra("name").length());
+        String qianming = getIntent().getStringExtra("name");
+        content.setText(qianming);
+        if (qianming.length() > 30) {
+            content.setSelection(30);
+        } else {
+            content.setSelection(getIntent().getStringExtra("name").length());
+        }
         int textnum = numbers - getIntent().getStringExtra("name").length();
         tv_num.setText("(" + textnum + ")");
         content.addTextChangedListener(textWatcher);

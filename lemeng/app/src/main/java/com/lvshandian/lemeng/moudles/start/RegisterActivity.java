@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.android.volley.Request;
+import com.lvshandian.lemeng.MainActivity;
+import com.lvshandian.lemeng.MyApplication;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.UrlBuilder;
 import com.lvshandian.lemeng.base.BaseActivity;
@@ -19,11 +21,26 @@ import com.lvshandian.lemeng.bean.AppUser;
 import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.moudles.mine.activity.ExplainWebViewActivity;
-import com.lvshandian.lemeng.moudles.mine.activity.SettingPerson;
 import com.lvshandian.lemeng.moudles.mine.my.StateCodeActivity;
+import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.utils.TextPhoneNumber;
+import com.lvshandian.lemeng.wangyiyunxin.config.DemoCache;
+import com.lvshandian.lemeng.wangyiyunxin.config.preference.Preferences;
+import com.lvshandian.lemeng.wangyiyunxin.config.preference.UserPreferences;
+import com.netease.nim.uikit.cache.DataCacheManager;
+import com.netease.nimlib.sdk.AbortableFuture;
+import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.RequestCallback;
+import com.netease.nimlib.sdk.RequestCallbackWrapper;
+import com.netease.nimlib.sdk.ResponseCode;
+import com.netease.nimlib.sdk.auth.AuthService;
+import com.netease.nimlib.sdk.auth.LoginInfo;
+import com.netease.nimlib.sdk.uinfo.UserService;
+import com.netease.nimlib.sdk.uinfo.constant.UserInfoFieldEnum;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import butterknife.Bind;
@@ -72,7 +89,9 @@ public class RegisterActivity extends BaseActivity {
                     //存储用户信息
 //                    CacheUtils.saveObject(RegisterActivity.this, appUser, CacheUtils.USERINFO);
                     SharedPreferenceUtils.saveUserInfo(mContext,appUser);
-                    startActivity(new Intent(RegisterActivity.this, SettingPerson.class).putExtra("isRegister", "register"));
+                    loginWangYi(appUser);
+
+//                    startActivity(new Intent(RegisterActivity.this, SettingPerson.class).putExtra("isRegister", "register"));
                     break;
                 case RequestCode.FORGETPSWD_TAG:
                     showToast("修改成功,请重新登录");
@@ -256,5 +275,95 @@ public class RegisterActivity extends BaseActivity {
                 }
                 break;
         }
+    }
+
+
+    private AbortableFuture<LoginInfo> loginRequest;
+    private String account = null;
+    private String token = null;
+    /**
+     * 登录网易云信
+     *
+     * @author sll
+     * @time 2016/11/16 13:39
+     */
+    private void loginWangYi(final AppUser appUser) {
+        // 云信只提供消息通道，并不包含用户资料逻辑。开发者需要在管理后台或通过服务器接口将用户帐号和token同步到云信服务器。
+        // 在这里直接使用同步到云信服务器的帐号和token登录。
+        // 这里为了简便起见，demo就直接使用了密码的md5作为token。
+        // 如果开发者直接使用这个demo，只更改appkey，然后就登入自己的账户体系的话，需要传入同步到云信服务器的token，而不是用户密码。
+        account = appUser.getNeteaseAccount();
+        token = appUser.getNeteaseToken();
+        // 登录
+        loginRequest = NIMClient.getService(AuthService.class).login(new LoginInfo(account, token));
+        loginRequest.setCallback(new RequestCallback<LoginInfo>() {
+            @Override
+            public void onSuccess(LoginInfo param) {
+                onLoginDone();
+                DemoCache.setAccount(account);
+                saveLoginInfo(account, token);
+                // 初始化消息提醒
+                NIMClient.toggleNotification(UserPreferences.getNotificationToggle());
+                // 初始化免打扰
+                if (UserPreferences.getStatusConfig() == null) {
+                    UserPreferences.setStatusConfig(DemoCache.getNotificationConfig());
+                }
+                NIMClient.updateStatusBarNotificationConfig(UserPreferences.getStatusConfig());
+                // 构建缓存
+                DataCacheManager.buildDataCacheAsync();
+                // 进入主界面
+                MyApplication.finishActivity();
+                gotoActivity(MainActivity.class, true);
+                sendUserToWangYi(appUser);
+            }
+
+            @Override
+            public void onFailed(int code) {
+                onLoginDone();
+                if (code == 302 || code == 404) {
+                    showToast(R.string.login_failed);
+                } else {
+                    showToast("登录失败:" + code);
+                }
+            }
+
+            @Override
+            public void onException(Throwable exception) {
+                showToast(R.string.login_exception);
+                onLoginDone();
+            }
+        });
+    }
+
+    private void onLoginDone() {
+        loginRequest = null;
+    }
+
+    private void saveLoginInfo(final String account, final String token) {
+        Preferences.saveUserAccount(account);
+        Preferences.saveUserToken(token);
+        Preferences.saveAppLogin("1");
+        Preferences.saveWyyxLogin("1");
+    }
+
+    /**
+     * 发送修改后的信息给网易云信
+     */
+    private void sendUserToWangYi(AppUser appUser) {
+        Map<UserInfoFieldEnum, Object> fields = new HashMap<>(1);
+        fields.put(UserInfoFieldEnum.Name, appUser.getNickName());
+        fields.put(UserInfoFieldEnum.AVATAR, appUser.getPicUrl());
+        NIMClient.getService(UserService.class).updateUserInfo(fields)
+                .setCallback(new RequestCallbackWrapper<Void>() {
+
+                    @Override
+                    public void onResult(int code, Void aVoid, Throwable throwable) {
+                        if (code == ResponseCode.RES_SUCCESS) {
+                            LogUtils.i("WangYi", "上传昵称头像成功");
+                        } else {
+                            LogUtils.i("WangYi", "上传昵称头像失败");
+                        }
+                    }
+                });
     }
 }
