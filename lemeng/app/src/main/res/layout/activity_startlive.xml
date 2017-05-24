@@ -338,7 +338,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
             android:orientation="vertical">
 
             <com.zhy.autolayout.AutoFrameLayout
@@ -491,9 +490,24 @@
                     android:layout_marginLeft="20px"
                     android:src="@mipmap/yx" />
 
+                <ImageView
+                    android:id="@+id/iv_bullfight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="20px"
+                    android:src="@mipmap/icon_bullfight" />
             </com.zhy.autolayout.AutoLinearLayout>
 
-            <include layout="@layout/view_show_watchlive_game" />
+            <com.zhy.autolayout.AutoRelativeLayout
+                android:id="@+id/rl_game_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <include layout="@layout/view_show_bullfight_game" />
+                <include layout="@layout/view_show_watchlive_game" />
+
+            </com.zhy.autolayout.AutoRelativeLayout>
         </com.zhy.autolayout.AutoLinearLayout>
 
         <com.lvshandian.lemeng.view.BarrageView
@@ -558,8 +572,17 @@
 
         </com.zhy.autolayout.AutoRelativeLayout>
 
-        <include layout="@layout/item_game_infos" />
+        <com.zhy.autolayout.AutoRelativeLayout
+            android:id="@+id/rl_game_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10px"
+            android:layout_marginTop="200px">
 
+            <include layout="@layout/item_game_infos" />
+
+            <include layout="@layout/item_game_bullfight_banker" />
+        </com.zhy.autolayout.AutoRelativeLayout>
         <!--场控按钮-->
         <TextView
             android:id="@+id/room_id"

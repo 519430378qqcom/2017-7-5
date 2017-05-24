@@ -477,6 +477,7 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
     @Override
     protected void onDestroy() {
         EventBus.getDefault().unregister(this);
+        MyApplication.removeListActivity(this);
         super.onDestroy();
     }
 

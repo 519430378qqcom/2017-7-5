@@ -3,8 +3,6 @@
     android:id="@+id/rl_kp"
     android:layout_width="220px"
     android:layout_height="260px"
-    android:layout_marginLeft="10px"
-    android:layout_marginTop="200px"
     android:background="@drawable/background_game_info"
     android:orientation="vertical"
     android:visibility="gone">

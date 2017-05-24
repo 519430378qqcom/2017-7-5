@@ -27,7 +27,6 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSONObject;
 import com.netease.nim.uikit.NimUIKit;
 import com.netease.nim.uikit.R;
-import com.netease.nim.uikit.cache.DataCacheManager;
 import com.netease.nim.uikit.common.ui.dialog.EasyAlertDialogHelper;
 import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.netease.nim.uikit.common.util.string.StringUtil;
@@ -51,9 +50,7 @@ import com.netease.nimlib.sdk.msg.model.CustomNotificationConfig;
 import com.netease.nimlib.sdk.msg.model.IMMessage;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 底部文本编辑，语音等模块
@@ -72,7 +69,7 @@ public class InputPanel implements IEmoticonSelectedListener, IAudioRecordCallba
     protected View actionPanelBottomLayout; // 更多布局
     protected LinearLayout messageActivityBottomLayout;
     protected EditText messageEditText;// 文本消息编辑框
-    protected Button audioRecordBtn; // 录音按钮
+    protected Button audioRecordBtn; // 录音按钮,,,,,,,,
     protected View audioAnimLayout; // 录音动画布局
     protected FrameLayout textAudioSwitchLayout; // 切换文本，语音按钮布局
     protected FrameLayout toggleButtonLayout; // 弹幕开关布局

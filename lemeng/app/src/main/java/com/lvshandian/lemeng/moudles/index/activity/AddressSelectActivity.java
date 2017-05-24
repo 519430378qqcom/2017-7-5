@@ -34,7 +34,7 @@ import butterknife.Bind;
  * Created by gjj on 2016/12/20.
  */
 
-public class AddressSelectActivity extends BaseActivity {
+public class  AddressSelectActivity extends BaseActivity {
 
     @Bind(R.id.rlv_recycler)
     RecyclerView rlvRecycler;

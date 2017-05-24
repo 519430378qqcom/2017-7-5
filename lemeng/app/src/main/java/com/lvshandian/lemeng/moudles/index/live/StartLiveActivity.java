@@ -221,6 +221,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.lvshandian.lemeng.UrlBuilder.room;
 import static com.lvshandian.lemeng.service.VoiceService.mediaPlayer;
@@ -390,6 +392,116 @@ public class StartLiveActivity extends BaseActivity implements
     LinearLayout rl_kp;
     @Bind(R.id.tv_hz)
     TextView tv_hz;
+    //<start------------斗牛游戏部分-------------->
+    @Bind(R.id.rl_game_container)
+    RelativeLayout rl_game_container;
+    @Bind(R.id.iv_bullfight)
+    ImageView iv_bullfight;
+    @Bind(R.id.live_game_bullfight)
+    AutoLinearLayout live_game_bullfight;
+    @Bind(R.id.rl_game_info)
+    RelativeLayout rl_game_info;
+    @Bind(R.id.rl_bullfight_banker)
+    AutoRelativeLayout rl_bullfight_banker;
+    @Bind(R.id.iv_bullfight_banker_head)
+    CircleImageView ivBullfightBankerHead;
+    @Bind(R.id.tv_bullfight_bankername)
+    TextView tvBullfightBankername;
+    @Bind(R.id.tv_bullfight_banker_money)
+    TextView tvBullfightBankerMoney;
+    @Bind(R.id.iv_poker_banker1)
+    ImageView ivPokerBanker1;
+    @Bind(R.id.iv_poker_banker2)
+    ImageView ivPokerBanker2;
+    @Bind(R.id.iv_poker_banker3)
+    ImageView ivPokerBanker3;
+    @Bind(R.id.iv_poker_banker4)
+    ImageView ivPokerBanker4;
+    @Bind(R.id.iv_poker_banker5)
+    ImageView ivPokerBanker5;
+    @Bind(R.id.tv_bullfight_totlanum1)
+    TextView tv_bullfight_totlanum1;
+    @Bind(R.id.tv_bullfight_minenum1)
+    TextView tv_bullfight_minenum1;
+    @Bind(R.id.rl_bullfight_betting_container1)
+    AutoRelativeLayout rl_bullfight_betting_container1;
+    @Bind(R.id.iv_poker_palyer11)
+    ImageView iv_poker_palyer11;
+    @Bind(R.id.iv_poker_palyer12)
+    ImageView iv_poker_palyer12;
+    @Bind(R.id.iv_poker_palyer13)
+    ImageView iv_poker_palyer13;
+    @Bind(R.id.iv_poker_palyer14)
+    ImageView iv_poker_palyer14;
+    @Bind(R.id.iv_poker_palyer15)
+    ImageView ivpokerpalyer15;
+    @Bind(R.id.rl_bullfight1)
+    AutoRelativeLayout rl_bullfight1;
+    @Bind(R.id.tv_bullfight_totlanum2)
+    TextView tv_bullfight_totlanum2;
+    @Bind(R.id.tv_bullfight_minenum2)
+    TextView tv_bullfight_minenum2;
+    @Bind(R.id.rl_bullfight_betting_container2)
+    AutoRelativeLayout rl_bullfight_betting_container2;
+    @Bind(R.id.iv_poker_palyer21)
+    ImageView iv_poker_palyer21;
+    @Bind(R.id.iv_poker_palyer22)
+    ImageView iv_poker_palyer22;
+    @Bind(R.id.iv_poker_palyer23)
+    ImageView iv_poker_palyer23;
+    @Bind(R.id.iv_poker_palyer24)
+    ImageView iv_poker_palyer24;
+    @Bind(R.id.iv_poker_palyer25)
+    ImageView iv_poker_palyer25;
+    @Bind(R.id.rl_bullfight2)
+    AutoRelativeLayout rl_bullfight2;
+    @Bind(R.id.tv_bullfight_totlanum3)
+    TextView tv_bull_fight_totlanum3;
+    @Bind(R.id.tv_bullfight_minenum3)
+    TextView tv_bull_fight_minenum3;
+    @Bind(R.id.rl_bullfight_betting_container3)
+    AutoRelativeLayout rl_bullfight_betting_container3;
+    @Bind(R.id.iv_poker_palyer31)
+    ImageView iv_poker_palyer31;
+    @Bind(R.id.iv_poker_palyer32)
+    ImageView iv_poker_palyer32;
+    @Bind(R.id.iv_poker_palyer33)
+    ImageView iv_poker_palyer33;
+    @Bind(R.id.iv_poker_palyer34)
+    ImageView ivPokerPalyer34;
+    @Bind(R.id.iv_poker_palyer35)
+    ImageView iv_poker_palyer35;
+    @Bind(R.id.rl_bullfight3)
+    AutoRelativeLayout rl_bullfight3;
+    @Bind(R.id.tv_timing)
+    TextView tv_timing;
+    @Bind(R.id.tv_bullfight_result1)
+    TextView tv_bullfight_result1;
+    @Bind(R.id.tv_bullfight_result2)
+    TextView tv_bullfight_result2;
+    @Bind(R.id.tv_bullfight_result3)
+    TextView tv_bullfight_result3;
+    @Bind(R.id.ll_bullfight_result)
+    AutoLinearLayout ll_bullfight_result;
+    @Bind(R.id.tv_bullfight_lepiao)
+    TextView tv_bullfight_lepiao;
+    @Bind(R.id.tv_bullfight_top_up)
+    TextView tv_bullfight_top_up;
+    @Bind(R.id.iv_100)
+    ImageView iv_100;
+    @Bind(R.id.iv_1000)
+    ImageView iv_1000;
+    @Bind(R.id.iv_1w)
+    ImageView iv_1w;
+    @Bind(R.id.iv_10w)
+    ImageView iv_10w;
+    @Bind(R.id.iv_100w)
+    ImageView iv_100w;
+    /**
+     * 标识直播间当前开启的游戏类型；1（彩票）;2（斗牛）
+     */
+    private int gameType;
+    //<end------------斗牛游戏部分-------------->
     private int tzNumber = 10;
     private int jbNumber = 1;
 
@@ -791,7 +903,14 @@ public class StartLiveActivity extends BaseActivity implements
 
         switch (v.getId()) {
             case R.id.iv_trend: //走势
-                showTrendPop();
+                switch (gameType){
+                    case 1://彩票走势
+                        showTrendPop();
+                        break;
+                    case 2://斗牛记录
+                        showBullfightRecord();
+                        break;
+                }
                 break;
 
             case R.id.tv_rule: //规则
@@ -910,13 +1029,14 @@ public class StartLiveActivity extends BaseActivity implements
             case R.id.iv_xy:
                 showXYGame();
                 break;
-
+            case R.id.iv_bullfight:
+                break;
             case R.id.ruanjianpan:
                 if (gameIsStart == false) {
                     ll_game.setVisibility(View.GONE);
                     messageFragment.inputTypeOnClick();
                 } else {
-                    hidePlayView();
+                    hidePlayView(1);
                     messageFragment.inputTypeOnClick();
                 }
 
@@ -946,10 +1066,10 @@ public class StartLiveActivity extends BaseActivity implements
                         ll_game.setVisibility(View.VISIBLE);
                     }
                 } else {
-                    if (live_game.getVisibility() == View.VISIBLE) {
-                        hidePlayView();
+                    if (rl_game_container.getVisibility() == View.VISIBLE) {
+                        hidePlayView(gameType);
                     } else {
-                        showPlayView();
+                        showPlayView(gameType);
                     }
                 }
 
@@ -1004,7 +1124,7 @@ public class StartLiveActivity extends BaseActivity implements
             //私信
             case R.id.iv_live_privatechat:
                 ll_game.setVisibility(View.GONE);
-                hidePlayView();
+                hidePlayView(gameType);
                 ll_buttom_mun.setVisibility(View.GONE);
 
                 sessionListFragment = new ChatRoomSessionListFragment();
@@ -1044,16 +1164,108 @@ public class StartLiveActivity extends BaseActivity implements
         }
     }
 
-    private void showPlayView() {
-        live_game.setVisibility(View.VISIBLE);
-        rl_kp.setVisibility(View.VISIBLE);
-        iv_trend.setVisibility(View.VISIBLE);
+    /**
+     * 牛牛点击事件
+     */
+    @OnClick({R.id.iv_bullfight,R.id.rl_bullfight1,R.id.rl_bullfight2,R.id.rl_bullfight3,
+            R.id.ll_bullfight_result, R.id.tv_bullfight_result1, R.id.tv_bullfight_result2, R.id.tv_bullfight_result3,
+            R.id.tv_bullfight_lepiao, R.id.tv_bullfight_top_up, R.id.iv_100, R.id.iv_1000, R.id.iv_1w, R.id.iv_10w, R.id.iv_100w})
+    public void onViewClicked(View view) {
+        switch (view.getId()){
+            case R.id.iv_bullfight:
+                startBullfightGame();
+                break;
+            case R.id.rl_bullfight1:
+                break;
+            case R.id.rl_bullfight2:
+                break;
+            case R.id.rl_bullfight3:
+                break;
+            case R.id.ll_bullfight_result:
+                break;
+            case R.id.tv_bullfight_result1:
+                break;
+            case R.id.tv_bullfight_result2:
+                break;
+            case R.id.tv_bullfight_result3:
+                break;
+            case R.id.tv_bullfight_lepiao:
+                break;
+            case R.id.tv_bullfight_top_up:
+                break;
+            case R.id.iv_100:
+                break;
+            case R.id.iv_1000:
+                break;
+            case R.id.iv_1w:
+                break;
+            case R.id.iv_10w:
+                break;
+            case R.id.iv_100w:
+                break;
+        }
     }
 
-    private void hidePlayView() {
-        live_game.setVisibility(View.GONE);
-        rl_kp.setVisibility(View.GONE);
+    /**
+     * 开启斗牛游戏
+     */
+    private void startBullfightGame() {
+        ll_game.setVisibility(View.GONE);
+        live_game_bullfight.setVisibility(View.VISIBLE);
+        showPlayView(2);
+        gameIsStart = true;
+    }
+
+    /**
+     * 显示游戏界面
+     * @param gameType 1（彩票）;2（斗牛）
+     */
+    private void showPlayView(int gameType) {
+        this.gameType = gameType;
+        //游戏内容视图
+        rl_game_container.setVisibility(View.VISIBLE);
+        //游戏左上角视图
+        rl_game_info.setVisibility(View.VISIBLE);
+        //走势图标
+        iv_trend.setVisibility(View.VISIBLE);
+        switch (gameType){
+            case 1://彩票
+                rl_kp.setVisibility(View.VISIBLE);
+                rl_bullfight_banker.setVisibility(View.GONE);
+                live_game.setVisibility(View.VISIBLE);
+                live_game_bullfight.setVisibility(View.GONE);
+                iv_trend.setImageResource(R.mipmap.trend_img);
+                break;
+            case 2://斗牛
+                rl_bullfight_banker.setVisibility(View.VISIBLE);
+                rl_kp.setVisibility(View.GONE);
+                live_game_bullfight.setVisibility(View.VISIBLE);
+                live_game.setVisibility(View.GONE);
+                iv_trend.setImageResource(R.mipmap.ic_bullfight_record);
+                break;
+        }
+    }
+    /**
+     * 影藏游戏界面
+     * @param gameType 1（彩票）;2（斗牛）
+     */
+    private void hidePlayView(int gameType) {
+        //游戏内容视图
+        rl_game_container.setVisibility(View.GONE);
+        //游戏左上角视图
+        rl_game_info.setVisibility(View.GONE);
+        //走势图标
         iv_trend.setVisibility(View.GONE);
+        switch (gameType){
+            case 1://彩票
+                rl_kp.setVisibility(View.GONE);
+                live_game.setVisibility(View.GONE);
+                break;
+            case 2://斗牛
+                rl_bullfight_banker.setVisibility(View.GONE);
+                live_game_bullfight.setVisibility(View.GONE);
+                break;
+        }
     }
 
     private void showXYGame() {
@@ -1084,9 +1296,8 @@ public class StartLiveActivity extends BaseActivity implements
                         tvSamllDouble.setText("1:" + blBean.getSmallDouble());
                         tvMoreBig.setText("1:" + blBean.getMoreBig());
                         tvMoreSamll.setText("1:" + blBean.getMoreSmall());
-                        ll_game.setVisibility(View.GONE);
 
-                        showPlayView();
+                        showPlayView(1);
                         gameIsStart = true;
 
                         getTimenumber();
@@ -1387,6 +1598,7 @@ public class StartLiveActivity extends BaseActivity implements
             }
             if (message != null && remote != null && !TextUtils.isEmpty((String) remote.get
                     ("type"))) {
+
                 int type = Integer.parseInt((String) remote.get("type"));
                 switch (type) {
                     case 105://进入房间
@@ -2150,7 +2362,7 @@ public class StartLiveActivity extends BaseActivity implements
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 ll_game.setVisibility(View.GONE);
-                hidePlayView();
+                hidePlayView(gameType);
                 ll_buttom_mun.setVisibility(View.VISIBLE);
                 if (sessionListFragment != null) {
                     sessionListFragment.hide();
@@ -3244,7 +3456,7 @@ public class StartLiveActivity extends BaseActivity implements
             @Override
             public void onClick(View view) {
                 ll_game.setVisibility(View.GONE);
-                hidePlayView();
+                hidePlayView(gameType);
                 ll_buttom_mun.setVisibility(View.GONE);
 
                 Intent intent = new Intent();
@@ -3718,7 +3930,9 @@ public class StartLiveActivity extends BaseActivity implements
         }
     }
 
-
+    /**
+     * 显示彩票走势
+     */
     private void showTrendPop() {
         View view = getLayoutInflater().inflate(R.layout.pop_trend, null);
         dialogForSelect.setCanceledOnTouchOutside(true);
@@ -3762,6 +3976,12 @@ public class StartLiveActivity extends BaseActivity implements
         });
     }
 
+    /**
+     * 显示斗牛记录
+     */
+    private void showBullfightRecord() {
+
+    }
     private void webSetting(WebSettings webSettings) {
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);// 设置js可以直接打开窗口，如window.open()，默认为false
         webSettings.setJavaScriptEnabled(true);// 是否允许执行js，默认为false。设置true时，会提醒可能造成XSS漏洞

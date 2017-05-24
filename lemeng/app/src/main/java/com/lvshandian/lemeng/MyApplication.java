@@ -170,7 +170,6 @@ public class MyApplication extends LitePalApplication {
         VCamera.setDebugMode(true);
         // 初始化拍摄SDK，必须
         VCamera.initialize(this);
-
     }
 
     public class MyLocationListener implements BDLocationListener {
@@ -368,7 +367,9 @@ public class MyApplication extends LitePalApplication {
     public static void setListActivity(Activity activity) {
         listActivity.add(activity);
     }
-
+    public static void removeListActivity(Activity activity) {
+        listActivity.remove(activity);
+    }
     public static void finishActivity() {
         for (Activity activity : listActivity) {
             activity.finish();

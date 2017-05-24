@@ -46,22 +46,22 @@ android {
         flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
     }
 
-    signingConfigs {
-        release {
-            storeFile file("E:/jks/lemeng.jks")
-            storePassword "123456"
-            keyAlias "lemeng"
-            keyPassword "123456"
-        }
-    }
-    buildTypes {
-        debug {
-            signingConfig signingConfigs.release
-        }
-        release {
-            signingConfig signingConfigs.release
-        }
-    }
+//    signingConfigs {
+//        release {
+//            storeFile file("E:/jks/lemeng.jks")
+//            storePassword "123456"
+//            keyAlias "lemeng"
+//            keyPassword "123456"
+//        }
+//    }
+//    buildTypes {
+//        debug {
+//            signingConfig signingConfigs.release
+//        }
+//        release {
+//            signingConfig signingConfigs.release
+//        }
+//    }
 
 //    sourceSets {
 //        main {
@@ -153,4 +153,5 @@ dependencies {
     compile files('src/main/jniLibs/SocialSDK_twitter.jar')
     compile files('src/main/jniLibs/umeng_social_shareview.jar')
     compile 'com.google.android.gms:play-services:10.2.0'
+    compile 'de.hdodenhof:circleimageview:2.1.0'
 }
