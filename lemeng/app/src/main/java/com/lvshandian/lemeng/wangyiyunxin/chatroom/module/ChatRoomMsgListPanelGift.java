@@ -103,20 +103,23 @@ public class ChatRoomMsgListPanelGift implements TAdapterDelegate {
         }
         //如果是礼物消息，发送广播给直播室
         if (addedListItems != null && addedListItems.size() > 0) {
-            ChatRoomMessage newMessage = addedListItems.get(addedListItems.size() - 1);
-            Map<String, Object> remote = null;
-            if (newMessage != null) {
-                remote = newMessage.getRemoteExtension();
+            for (int i = 0, j = addedListItems.size(); i < j; i++) {
+                ChatRoomMessage newMessage = addedListItems.get(i);
+                Map<String, Object> remote = null;
+                if (newMessage != null) {
+                    remote = newMessage.getRemoteExtension();
+                }
+                if (newMessage != null && remote != null && !TextUtils.isEmpty((String) remote.get("type")) && (remote.get("type").equals("109") || remote.get("type").equals("107") || remote.get("type").equals("108") || remote.get("type").equals("105") || remote.get("type").equals("101") || remote.get("type").equals("103") || remote.get("type").equals("104") || remote.get("type").equals("202"))) {
+                    //收到 109 礼物消息 发送广播
+                    LogUtil.i("WangYi_gift", "发礼物广播");
+                    container.activity.sendBroadcast(new Intent().setAction("WatchLiveActivity").putExtra("ChatRoomMessage", newMessage));
+                } else if (newMessage != null && remote != null && !TextUtils.isEmpty((String) remote.get("danmu")) && remote.get("danmu").equals("true")) {
+                    //发送弹幕消息
+                    LogUtil.i("WangYi_gift", "发弹幕消息广播");
+                    container.activity.sendBroadcast(new Intent().setAction("WatchLiveActivity").putExtra("ChatRoomMessage", newMessage));
+                }
             }
-            if (newMessage != null && remote != null && !TextUtils.isEmpty((String) remote.get("type")) && (remote.get("type").equals("109") || remote.get("type").equals("107") || remote.get("type").equals("108") || remote.get("type").equals("105") || remote.get("type").equals("101") || remote.get("type").equals("103") || remote.get("type").equals("104") || remote.get("type").equals("202"))) {
-                //收到 109 礼物消息 发送广播
-                LogUtil.i("WangYi_gift", "发礼物广播");
-                container.activity.sendBroadcast(new Intent().setAction("WatchLiveActivity").putExtra("ChatRoomMessage", newMessage));
-            } else if (newMessage != null && remote != null && !TextUtils.isEmpty((String) remote.get("danmu")) && remote.get("danmu").equals("true")) {
-                //发送弹幕消息
-                LogUtil.i("WangYi_gift", "发弹幕消息广播");
-                container.activity.sendBroadcast(new Intent().setAction("WatchLiveActivity").putExtra("ChatRoomMessage", newMessage));
-            }
+
         }
         if (needRefresh) {
             adapter.notifyDataSetChanged();

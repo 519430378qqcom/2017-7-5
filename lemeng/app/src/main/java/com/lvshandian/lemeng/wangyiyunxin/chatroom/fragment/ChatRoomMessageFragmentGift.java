@@ -125,7 +125,6 @@ public class ChatRoomMessageFragmentGift extends TFragment implements ModuleProx
             if (messages == null || messages.isEmpty()) {
                 return;
             }
-            LogUtil.i("收到观众送的礼物11111111111", "发礼物广播");
             messageListPanel.onIncomingMessage(messages);
         }
     };
