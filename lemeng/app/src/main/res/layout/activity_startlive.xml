@@ -315,20 +315,21 @@
 
         <com.zhy.autolayout.AutoFrameLayout
             android:id="@+id/lm_fm"
-            android:layout_width="220px"
+            android:layout_width="240px"
             android:layout_height="380px"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="250px">
+            android:layout_marginRight="30px"
+            android:layout_marginBottom="200px">
 
             <com.zhy.autolayout.AutoRelativeLayout
-                android:layout_width="match_parent"
+                android:layout_width="240px"
                 android:layout_height="380px">
 
                 <SurfaceView
                     android:id="@+id/video_lian"
-                    android:layout_width="220px"
-                    android:layout_height="380px" />
+                    android:layout_width="240px"
+                    android:layout_height="380px"/>
             </com.zhy.autolayout.AutoRelativeLayout>
 
         </com.zhy.autolayout.AutoFrameLayout>

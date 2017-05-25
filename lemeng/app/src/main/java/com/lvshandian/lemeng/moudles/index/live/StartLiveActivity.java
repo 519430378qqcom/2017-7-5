@@ -212,6 +212,7 @@ import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -574,7 +575,7 @@ public class StartLiveActivity extends BaseActivity implements
     /**
      * 头像数据内容
      */
-    private List<RoomUserBean> mDatas = new ArrayList<>();
+    private List<RoomUserBean> mDatas = new LinkedList<>();
 
     /**
      * 头像列表适配器
@@ -688,9 +689,9 @@ public class StartLiveActivity extends BaseActivity implements
                     break;
                 case RequestCode.REQUEST_ROOM_CLOES:
                     LogUtils.i("主播关闭直播间" + json.toString());
-                    finish();
-                    startActivity(new Intent(StartLiveActivity.this, QuitLiveActivity.class).putExtra
-                            ("roomId", room_Id).putExtra("startTime", startTime));
+//                    finish();
+//                    startActivity(new Intent(StartLiveActivity.this, QuitLiveActivity.class).putExtra
+//                            ("roomId", room_Id).putExtra("startTime", startTime));
                     break;
                 case RequestCode.TIMERLIVE:
                     LogUtils.i("主播隔一段时间刷新状态" + json.toString());
@@ -1084,6 +1085,7 @@ public class StartLiveActivity extends BaseActivity implements
                 int popupHeight = popupView.getMeasuredHeight();
                 int[] location = new int[2];
                 v.getLocationOnScreen(location);
+                popupWindow.setAnimationStyle(R.style.mypopwindow_anim_style);
                 popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, (location[0] + v.getWidth() / 2) - popupWidth / 2,
                         location[1] - popupHeight);
 //                popupView.findViewById(R.id.iv_live_share).setOnClickListener(new View.OnClickListener() {  //分享
@@ -1603,13 +1605,22 @@ public class StartLiveActivity extends BaseActivity implements
                 switch (type) {
                     case 105://进入房间
 //                        requestNet();
-                        RoomUserBean roomUserBean = JavaBeanMapUtils.mapToBean((Map) message.
+                        LogUtil.e("有人进入直播间", message.getRemoteExtension().get("data").toString());
+                        RoomUserBean enterRoom = JavaBeanMapUtils.mapToBean((Map) message.
                                 getRemoteExtension().get("data"), RoomUserBean.class);
-                        if (roomUserBean != null && !roomUserBean.getUserId().equals(appUser.getId())) {
+                        if (enterRoom != null && !enterRoom.getUserId().equals(appUser.getId())) {
                             liveNum.setText(++liveOnLineNums + "");
-                            mDatas.add(roomUserBean);
+                            mDatas.add(enterRoom);
                             mAdapter.notifyDataSetChanged();
                         }
+                        break;
+                    case 106://离开房间
+                        LogUtil.e("有人离开直播间", message.getRemoteExtension().get("data").toString());
+                        RoomUserBean leaveRoom = JavaBeanMapUtils.mapToBean((Map) message.
+                                getRemoteExtension().get("data"), RoomUserBean.class);
+                        liveNum.setText(--liveOnLineNums + "");
+                        mDatas.remove(leaveRoom);
+                        mAdapter.notifyDataSetChanged();
                         break;
                     case 107:
                         //点亮
@@ -2276,10 +2287,11 @@ public class StartLiveActivity extends BaseActivity implements
 
         if (liveVideo != null) {
             liveVideo.release();
-//            mVideoSurfaceView.getHolder().getSurface().release();
+            mVideoSurfaceView.getHolder().getSurface().release();
             mVideoSurfaceView.setVisibility(View.INVISIBLE);
             lmFm.setVisibility(View.GONE);
             liveVideo = null;
+            LogUtil.e("关闭连麦测试", "liveVideo=" + liveVideo);
         }
 
     }
@@ -3164,6 +3176,7 @@ public class StartLiveActivity extends BaseActivity implements
         lianmai_search.setBackgroundDrawable(new BitmapDrawable());
         lianmai_search.setOutsideTouchable(true);
         backgroundAlpha(0.5f);
+        lianmai_search.setAnimationStyle(R.style.mypopwindow_anim_style);
         lianmai_search.showAtLocation(doubleAdd, Gravity.BOTTOM, 0, 0);
         lianmai_search.update();
         lianmai_search.setOnDismissListener(new RulePopOnDismissListner());
@@ -3171,7 +3184,7 @@ public class StartLiveActivity extends BaseActivity implements
         final EditText et_search_input = (EditText) view.findViewById(R.id.et_search_input);
         ImageView iv_search = (ImageView) view.findViewById(R.id.iv_search);
         RecyclerView lianmai_recycler = (RecyclerView) view.findViewById(R.id.lianmai_recycler);
-        TextView tv_invite = (TextView) view.findViewById(R.id.tv_invite);
+        final TextView tv_invite = (TextView) view.findViewById(R.id.tv_invite);
         final SwipeRefreshLayout lianmai_refresh = (SwipeRefreshLayout) view.findViewById(R.id.lianmai_refresh);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
@@ -3224,10 +3237,19 @@ public class StartLiveActivity extends BaseActivity implements
             @Override
             public void onRecyclerClick(int position) {
                 for (int i = 0, j = funseBeanList.size(); i < j; i++) {
-                    funseBeanList.get(i).setChecked(false);
+                    if (i != position) {
+                        funseBeanList.get(i).setChecked(false);
+                    }
                 }
-                funseBeanList.get(position).setChecked(true);
-                inviteFunse = funseBeanList.get(position);
+                if (funseBeanList.get(position).isChecked()) {
+                    funseBeanList.get(position).setChecked(false);
+                    tv_invite.setTextColor(getResources().getColor(R.color.tv_color9));
+                    inviteFunse = null;
+                } else {
+                    funseBeanList.get(position).setChecked(true);
+                    tv_invite.setTextColor(getResources().getColor(R.color.tv_color3));
+                    inviteFunse = funseBeanList.get(position);
+                }
                 lianmaiListAadapter.notifyDataSetChanged();
             }
         });
@@ -3255,7 +3277,7 @@ public class StartLiveActivity extends BaseActivity implements
                         public void onFinish() {
                             room_lianmai.setVisibility(View.VISIBLE);
                             tv_lianmai.setVisibility(View.GONE);
-                            showToast(inviteFunse.getNickName()+"没有接受您的连麦请求");
+                            showToast(inviteFunse.getNickName() + "没有接受您的连麦请求");
                             sendCustomNotificationForLive(lianId, appUser.getId(),
                                     appUser.getNickName(), appUser.getPicUrl(), appUser.getVip(), "主播断开与您连麦", "2",
                                     CustomNotificationType.IM_P2P_TYPE_ORDERSHOW, "1");
@@ -3345,6 +3367,7 @@ public class StartLiveActivity extends BaseActivity implements
         otherPop.setBackgroundDrawable(new BitmapDrawable());
         otherPop.setOutsideTouchable(true);
         backgroundAlpha(0.5f);
+        otherPop.setAnimationStyle(R.style.mypopwindow_anim_style);
         otherPop.showAtLocation(doubleAdd, Gravity.BOTTOM, 0, 0);
         otherPop.update();
         otherPop.setOnDismissListener(new RulePopOnDismissListner());
@@ -3810,6 +3833,9 @@ public class StartLiveActivity extends BaseActivity implements
                 }
                 httpDatas.getDataDialog("关闭直播间", false, urlBuilder.cloesAnchor(room_Id), myHandler,
                         RequestCode.REQUEST_ROOM_CLOES);
+                finish();
+                startActivity(new Intent(StartLiveActivity.this, QuitLiveActivity.class).putExtra
+                        ("roomId", room_Id).putExtra("startTime", startTime));
             }
         });
     }
@@ -4325,7 +4351,7 @@ public class StartLiveActivity extends BaseActivity implements
         this.getWindow().setAttributes(params);
     }
 
-    private void showLianmaiView(){
+    private void showLianmaiView() {
         room_lianmai.setVisibility(View.GONE);
         liveLianmaiHead.setVisibility(View.VISIBLE);
         liveLianmaiHeadBg1.setVisibility(View.VISIBLE);
@@ -4333,7 +4359,7 @@ public class StartLiveActivity extends BaseActivity implements
         tv_lianmai.setVisibility(View.VISIBLE);
     }
 
-    private void hideLianmaiView(){
+    private void hideLianmaiView() {
         room_lianmai.setVisibility(View.VISIBLE);
         liveLianmaiHead.setVisibility(View.GONE);
         liveLianmaiHeadBg1.setVisibility(View.GONE);

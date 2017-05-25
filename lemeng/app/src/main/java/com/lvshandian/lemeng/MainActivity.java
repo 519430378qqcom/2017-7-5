@@ -760,6 +760,7 @@ public class MainActivity extends BaseActivity implements
         praparePop.setBackgroundDrawable(new BitmapDrawable());
         praparePop.setOutsideTouchable(true);
         backgroundAlpha(0.5f);
+        praparePop.setAnimationStyle(R.style.mypopwindow_anim_style);
         praparePop.showAtLocation(ll_myself, Gravity.BOTTOM, 0, 0);
         praparePop.update();
         praparePop.setOnDismissListener(new PopOnDismissListner());

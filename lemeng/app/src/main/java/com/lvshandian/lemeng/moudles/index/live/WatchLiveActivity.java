@@ -205,6 +205,7 @@ import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -461,7 +462,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     /**
      * 头像数据内容
      */
-    private List<RoomUserBean> mDatas = new ArrayList<>();
+    private List<RoomUserBean> mDatas = new LinkedList<>();
 
     /**
      * 头像列表适配器
@@ -1771,7 +1772,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         }
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("userId", appUser.getId());
-        map.put("roomId", liveListBean.getRooms().getUserId() + "");
+        map.put("roomId", liveListBean.getRooms().getId() + "");
         httpDatas.getDataForJsoNoloading("退出直播间", Request.Method.POST, UrlBuilder.roomExit, map,
                 myHandler, RequestCode.REQUEST_ROOM_EXIT);
 
@@ -1848,6 +1849,14 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                             mDatas.add(roomUserBean);
                             mAdapter.notifyDataSetChanged();
                         }
+                        break;
+                    case 106://离开房间
+                        LogUtil.e("有人离开直播间", message.getRemoteExtension().get("data").toString());
+                        RoomUserBean leaveRoom = JavaBeanMapUtils.mapToBean((Map) message.
+                                getRemoteExtension().get("data"), RoomUserBean.class);
+                        liveNum.setText(--liveOnLineNums + "");
+                        mDatas.remove(leaveRoom);
+                        mAdapter.notifyDataSetChanged();
                         break;
                     case 107:
                         //点亮
@@ -2716,7 +2725,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         hideLianmaiView();
         if (liveVideo != null) {
             liveVideo.release();
-//            videoLian.getHolder().getSurface().release();
+            videoLian.getHolder().getSurface().release();
             videoLian.setVisibility(View.INVISIBLE);
             flPull.setVisibility(View.GONE);
             liveVideo = null;
@@ -3138,6 +3147,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         lianmai_request_pop.setBackgroundDrawable(new BitmapDrawable());
         lianmai_request_pop.setOutsideTouchable(true);
         backgroundAlpha(0.5f);
+        lianmai_request_pop.setAnimationStyle(R.style.mypopwindow_anim_style);
         lianmai_request_pop.showAtLocation(doubleAdd, Gravity.BOTTOM, 0, 0);
         lianmai_request_pop.update();
         lianmai_request_pop.setOnDismissListener(new RulePopOnDismissListner());
@@ -3297,6 +3307,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         otherPop.setBackgroundDrawable(new BitmapDrawable());
         otherPop.setOutsideTouchable(true);
         backgroundAlpha(0.5f);
+        otherPop.setAnimationStyle(R.style.mypopwindow_anim_style);
         otherPop.showAtLocation(doubleAdd, Gravity.BOTTOM, 0, 0);
         otherPop.update();
         otherPop.setOnDismissListener(new RulePopOnDismissListner());

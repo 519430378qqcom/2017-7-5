@@ -10,6 +10,7 @@ import com.lvshandian.lemeng.bean.AppUser;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.wangyiyunxin.chatroom.module.ChatRoomMsgListPanelGift;
 import com.netease.nim.uikit.common.fragment.TFragment;
+import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.netease.nim.uikit.session.module.Container;
 import com.netease.nim.uikit.session.module.ModuleProxy;
 import com.netease.nimlib.sdk.NIMClient;
@@ -99,15 +100,19 @@ public class ChatRoomMessageFragmentGift extends TFragment implements ModuleProx
     RequestCallback requestCallback = new RequestCallback<Void>() {
         @Override
         public void onSuccess(Void param) {
+            LogUtil.i("发送礼物", "--onSuccess");
         }
 
         @Override
         public void onFailed(int code) {
+            LogUtil.i("发送礼物", "--onFailed");
         }
 
         @Override
         public void onException(Throwable exception) {
+            LogUtil.i("发送礼物", "--onException");
         }
+
     };
 
     private void registerObservers(boolean register) {
@@ -120,6 +125,7 @@ public class ChatRoomMessageFragmentGift extends TFragment implements ModuleProx
             if (messages == null || messages.isEmpty()) {
                 return;
             }
+            LogUtil.i("收到观众送的礼物11111111111", "发礼物广播");
             messageListPanel.onIncomingMessage(messages);
         }
     };

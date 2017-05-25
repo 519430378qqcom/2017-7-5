@@ -113,4 +113,21 @@ public class RoomUserBean implements Serializable {
                 ", verified='" + verified + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof RoomUserBean)) {
+            return false;
+        }
+        final RoomUserBean person = (RoomUserBean) obj;
+        if (this.getUserId().equals(person.getUserId())) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
 }

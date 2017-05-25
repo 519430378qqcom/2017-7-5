@@ -18,20 +18,21 @@
 
     <com.zhy.autolayout.AutoFrameLayout
         android:id="@+id/fl_pull"
-        android:layout_width="220px"
+        android:layout_width="240px"
         android:layout_height="380px"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="250px"
+        android:layout_marginRight="30px"
+        android:layout_marginBottom="200px"
         android:visibility="gone">
 
         <com.zhy.autolayout.AutoRelativeLayout
-            android:layout_width="250px"
+            android:layout_width="240px"
             android:layout_height="380px">
 
             <SurfaceView
                 android:id="@+id/video_lian"
-                android:layout_width="220px"
+                android:layout_width="240px"
                 android:layout_height="380px" />
         </com.zhy.autolayout.AutoRelativeLayout>
 
@@ -43,7 +44,8 @@
         android:layout_height="450px"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="250px">
+        android:layout_marginRight="30px"
+        android:layout_marginBottom="200px">
 
         <com.qiniu.pili.droid.streaming.widget.AspectFrameLayout
             android:id="@+id/cameraPreview_afl"

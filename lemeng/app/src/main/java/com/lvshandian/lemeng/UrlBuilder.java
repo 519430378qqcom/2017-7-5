@@ -12,9 +12,12 @@ import java.util.Map;
  * 创建网络管理类请求，网址管理类；
  */
 public class UrlBuilder {
-    //乐檬服務器
-    public static final String serverUrl = "http://47.88.229.22:80/";// 服务器网址公网
-    public static final String chargeServerUrl = "http://47.88.229.22:80/admin/";// 充值端口
+    //乐檬线上服務器
+//    public static final String serverUrl = "http://47.88.229.22:80/";// 服务器网址公网
+//    public static final String chargeServerUrl = "http://47.88.229.22:80/admin/";// 充值端口
+    //乐檬测试服務器
+    public static final String serverUrl = "http://60.205.114.36:80/";// 服务器网址公网
+    public static final String chargeServerUrl = "http://60.205.114.36:80/admin/";// 充值端口
     //本地
 //    public static final String serverUrl = "http://10.11.1.119:8080/";// 服务器网址公网
 //    public static final String chargeServerUrl = "http://10.11.1.119:8081/admin/";// 充值端口

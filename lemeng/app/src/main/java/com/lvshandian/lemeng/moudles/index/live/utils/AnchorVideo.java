@@ -214,7 +214,7 @@ public class AnchorVideo {
     };
 
     private void sendReconnectMessage() {
-        showToastTips("正在重连...");
+//        showToastTips("正在重连...");
 //        mLoadingView.setVisibility(View.VISIBLE);
         mHandler.removeCallbacksAndMessages(null);
         mHandler.sendMessageDelayed(mHandler.obtainMessage(MESSAGE_ID_RECONNECTING), 500);
