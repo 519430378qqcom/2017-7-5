@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rl_live_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -22,7 +23,7 @@
         android:layout_height="380px"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="30px"
+        android:layout_marginRight="20px"
         android:layout_marginBottom="200px"
         android:visibility="gone">
 
@@ -44,8 +45,8 @@
         android:layout_height="450px"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="30px"
-        android:layout_marginBottom="200px">
+        android:layout_marginRight="20px"
+        android:layout_marginBottom="120px">
 
         <com.qiniu.pili.droid.streaming.widget.AspectFrameLayout
             android:id="@+id/cameraPreview_afl"
@@ -141,16 +142,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="70px"
                     android:layout_marginBottom="20px"
-                    android:layout_marginLeft="10px"
+                    android:layout_marginLeft="20px"
                     android:layout_marginTop="50px"
                     android:orientation="horizontal">
 
                     <com.zhy.autolayout.AutoLinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:background="@drawable/bg_gray_shape"
-                        android:paddingLeft="10px"
-                        android:paddingRight="10px">
+                        android:background="@color/transparent">
 
                         <com.zhy.autolayout.AutoRelativeLayout
                             android:layout_width="wrap_content"
@@ -159,13 +158,17 @@
                             <com.lvshandian.lemeng.widget.AvatarView
                                 android:id="@+id/live_head"
                                 android:layout_width="70px"
-                                android:layout_height="match_parent"
+                                android:layout_height="70px"
+                                app:border_color="@color/white"
+                                app:border_width="1dip"
+                                android:layout_centerInParent="true"
                                 android:src="@mipmap/head_default" />
 
                             <com.lvshandian.lemeng.widget.AvatarView
                                 android:id="@+id/live_lianmai_head_bg1"
                                 android:layout_width="70px"
-                                android:layout_height="match_parent"
+                                android:layout_height="70px"
+                                android:layout_centerInParent="true"
                                 android:src="@mipmap/lianmai_head_bg"
                                 android:visibility="gone" />
                         </com.zhy.autolayout.AutoRelativeLayout>
@@ -182,12 +185,11 @@
                                 android:id="@+id/live_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
                                 android:layout_marginTop="10px"
                                 android:ellipsize="end"
                                 android:maxEms="10"
                                 android:singleLine="true"
-                                android:text="奥特曼"
+                                android:text="得天独厚"
                                 android:textColor="@color/white"
                                 android:textSize="24px" />
 
@@ -196,8 +198,7 @@
                                 android:id="@+id/live_num"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:text="666"
+                                android:text="0"
                                 android:textColor="@color/white"
                                 android:textSize="23px" />
 
@@ -220,14 +221,16 @@
                             <com.lvshandian.lemeng.widget.AvatarView
                                 android:id="@+id/live_lianmai_head"
                                 android:layout_width="70px"
-                                android:layout_height="match_parent"
+                                android:layout_height="70px"
+                                android:layout_centerInParent="true"
                                 android:src="@mipmap/head_default"
                                 android:visibility="gone" />
 
                             <com.lvshandian.lemeng.widget.AvatarView
                                 android:id="@+id/live_lianmai_head_bg2"
                                 android:layout_width="70px"
-                                android:layout_height="match_parent"
+                                android:layout_height="70px"
+                                android:layout_centerInParent="true"
                                 android:src="@mipmap/lianmai_head_bg"
                                 android:visibility="gone" />
                         </com.zhy.autolayout.AutoRelativeLayout>
@@ -268,7 +271,7 @@
                         android:id="@+id/ll_tp_labe"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="30px"
+                        android:layout_marginLeft="20px"
                         android:background="@drawable/btn_ticket_labe"
                         android:gravity="center_vertical">
 

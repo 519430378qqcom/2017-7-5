@@ -284,6 +284,51 @@ public class HttpDatas {
 
 
     /**
+     * 拼接json字符串作为参数上传
+     *
+     * @param details     接口名
+     * @param method      请求方式
+     * @param url         接口地址
+     * @param map         参数
+     * @param handler
+     * @param handlerCode
+     */
+    public void DataJsonAdmin(final String details, int method, String url, Map<String, String> map, final Handler handler, final int handlerCode) {
+        LogUtils.i(details + ":" + url);
+        if (!mDialog.isShowing()) {
+            mDialog.show();
+        }
+        JSONObject params = new JSONObject(map);
+        LogUtils.i("JSONObject:" + params.toString());
+        //第二个参数我们传了user=zhangqi。则请求方法就为post
+        BaseJsonRequest objRequest = new BaseJsonRequest(method, UrlBuilder.chargeServerUrl + url, params,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject obj) {
+                        NewSdkHttpResult response = JSON.parseObject(obj.toString(), NewSdkHttpResult.class);
+                        LogUtils.i(details + ":" + response.toString());
+
+                        if (response.getCode() == KEY_CODE_SUCCESS) {
+                            Message message = new Message();
+                            Bundle data = new Bundle();
+                            data.putString(info, response.getObj());
+                            data.putString(error, response.getMsg());
+                            message.setData(data);
+                            message.what = handlerCode;
+                            handler.sendMessage(message);
+                        } else {
+                            ToastUtils.showMessageDefault(context, "修改失败");
+                        }
+                        if (mDialog.isShowing()) {
+                            mDialog.dismiss();
+                        }
+                    }
+                }, errorListener);
+        // 将这个request加入到requestQueue中，就可以执行了
+        MyApplication.requestQueueiInstance().add(objRequest);
+    }
+
+    /**
      * 拼接json字符串作为参数上传  noloading
      *
      * @param details     接口名

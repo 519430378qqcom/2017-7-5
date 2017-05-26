@@ -22,7 +22,7 @@
               android:id="@+id/tv_phone_num"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text="1张照片"
+              android:text="0张照片"
               android:textColor="@color/black"
               android:layout_alignParentRight="true"
               android:paddingTop="20px"

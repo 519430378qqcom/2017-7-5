@@ -1841,7 +1841,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 int type = Integer.parseInt((String) remote.get("type"));
                 switch (type) {
                     case 105://进入房间
-//                        requestNet();
                         RoomUserBean roomUserBean = JavaBeanMapUtils.mapToBean((Map) message.
                                 getRemoteExtension().get("data"), RoomUserBean.class);
                         liveNum.setText(++liveOnLineNums + "");
@@ -2115,13 +2114,18 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * @param visitor
      */
     private void hanlderVisitors(RoomUserDataBean visitor) {
-//        liveNum.setText(liveOnLineNums++ + "");
         if (visitor != null) {
             List<RoomUserBean> result = visitor.getResult();
             if (result != null) {
                 if (isRefresh) {
                     //下拉刷新需要清除数据
                     mDatas.clear();
+                }
+                for (int i = 0 ,j = result.size(); i < j; i++) {
+                    if (result.get(i).getUserId().equals(liveListBean.getId()+"")){
+                        result.remove(i);
+                        liveNum.setText(--liveOnLineNums + "");
+                    }
                 }
                 mDatas.addAll(result);
                 mAdapter.notifyDataSetChanged();

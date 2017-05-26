@@ -87,7 +87,7 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
     TextView tvSign;
     @Bind(R.id.setting)
     TextView setting;
-//    @Bind(R.id.tv_coin)
+    //    @Bind(R.id.tv_coin)
 //    TextView tvCoin;
 //    @Bind(R.id.ll_coin)
 //    AutoRelativeLayout llCoin;
@@ -158,7 +158,7 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
                 case RequestCode.SELECT_USER:
                     AppUser appUser = JsonUtil.json2Bean(json, AppUser.class);
 //                    CacheUtils.saveObject(getActivity(), appUser, CacheUtils.USERINFO);
-                    SharedPreferenceUtils.saveUserInfo(mContext,appUser);
+                    SharedPreferenceUtils.saveUserInfo(mContext, appUser);
                     initUserInfo(appUser);
                     break;
                 case RequestCode.MY_PHOTO_LOAD://图片请求列表
@@ -308,14 +308,16 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
                         mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                if (getActivity().getWindowManager()!= null) {
-                                    DisplayMetrics dm = new DisplayMetrics();
-                                    getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-                                    int width = dm.widthPixels;
-                                    int height = width * 520 / 750;
-                                    AutoRelativeLayout.LayoutParams lp1 = new AutoRelativeLayout.LayoutParams(width, height);
-                                    myHead.setLayoutParams(lp1);
-                                }
+                                if (getActivity() == null)
+                                    return;
+                                if (getActivity().getWindowManager() == null)
+                                    return;
+                                DisplayMetrics dm = new DisplayMetrics();
+                                getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+                                int width = dm.widthPixels;
+                                int height = width * 520 / 750;
+                                AutoRelativeLayout.LayoutParams lp1 = new AutoRelativeLayout.LayoutParams(width, height);
+                                myHead.setLayoutParams(lp1);
                             }
                         }, 400);
 
@@ -456,7 +458,7 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
 
             String picUrl = userInfo.getPicUrl();
             if (TextUtils.isEmpty(picUrl)) {
-                picUrl = "http://lemeng.oss-ap-southeast-1.aliyuncs.com/lemengImg/1495594583610.png";
+                picUrl =  UrlBuilder.HEAD_DEFAULT;
             }
             Picasso.with(mContext).load(picUrl).placeholder(R.mipmap.zhan_da)
                     .error(R.mipmap.zhan_da).into(myHead);
@@ -506,25 +508,25 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
         if (iv_1 == null || iv_2 == null || iv_3 == null)
             return;
         if (listBean.size() == 0) {
-            iv_1.setVisibility(View.GONE);
-            iv_2.setVisibility(View.GONE);
-            iv_3.setVisibility(View.GONE);
+//            iv_1.setVisibility(View.GONE);
+//            iv_2.setVisibility(View.GONE);
+//            iv_3.setVisibility(View.GONE);
         } else if (listBean.size() == 1) {
-            iv_1.setVisibility(View.GONE);
-            iv_2.setVisibility(View.GONE);
-            iv_3.setVisibility(View.VISIBLE);
-            ImageLoader.getInstance().displayImage(listBean.get(0).getPicUrl(), iv_3);
+//            iv_1.setVisibility(View.GONE);
+//            iv_2.setVisibility(View.GONE);
+//            iv_3.setVisibility(View.VISIBLE);
+            ImageLoader.getInstance().displayImage(listBean.get(0).getPicUrl(), iv_1);
         } else if (listBean.size() == 2) {
-            iv_1.setVisibility(View.GONE);
-            iv_2.setVisibility(View.VISIBLE);
-            iv_3.setVisibility(View.VISIBLE);
+//            iv_1.setVisibility(View.GONE);
+//            iv_2.setVisibility(View.VISIBLE);
+//            iv_3.setVisibility(View.VISIBLE);
             ImageLoader instance = ImageLoader.getInstance();
-            instance.displayImage(listBean.get(0).getPicUrl(), iv_2);
-            instance.displayImage(listBean.get(1).getPicUrl(), iv_3);
+            instance.displayImage(listBean.get(0).getPicUrl(), iv_1);
+            instance.displayImage(listBean.get(1).getPicUrl(), iv_2);
         } else if (listBean.size() >= 3) {
-            iv_1.setVisibility(View.VISIBLE);
-            iv_2.setVisibility(View.VISIBLE);
-            iv_3.setVisibility(View.VISIBLE);
+//            iv_1.setVisibility(View.VISIBLE);
+//            iv_2.setVisibility(View.VISIBLE);
+//            iv_3.setVisibility(View.VISIBLE);
             ImageLoader instance = ImageLoader.getInstance();
             instance.displayImage(listBean.get(0).getPicUrl(), iv_1);
             instance.displayImage(listBean.get(1).getPicUrl(), iv_2);
@@ -557,7 +559,7 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
                 break;
             case R.id.ll_earnest://认证
 //                AppUser userInfo = (AppUser) CacheUtils.readObject(mContext, CacheUtils.USERINFO);
-                AppUser userInfo =  SharedPreferenceUtils.getUserInfo(mContext);
+                AppUser userInfo = SharedPreferenceUtils.getUserInfo(mContext);
                 String verified = userInfo.getVerified();
                 if (TextUtils.equals(verified, "1")) {
                     //已提交认证

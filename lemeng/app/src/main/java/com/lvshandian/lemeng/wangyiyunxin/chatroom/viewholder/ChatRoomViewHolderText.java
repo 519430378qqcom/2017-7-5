@@ -62,9 +62,9 @@ public class ChatRoomViewHolderText extends MsgViewHolderText {
         nameTextView.setVisibility(View.GONE);
         avatarLeft.setVisibility(View.INVISIBLE);
         ViewGroup.LayoutParams layoutParams = avatarLeft.getLayoutParams();
-        Drawable drawable = context.getResources().getDrawable(R.mipmap.rank_109);
+        Drawable drawable = context.getResources().getDrawable(R.mipmap.rank_1);
         layoutParams.height = drawable.getMinimumHeight();
-        layoutParams.width = drawable.getIntrinsicWidth();
+//        layoutParams.width = drawable.getIntrinsicWidth();
         avatarLeft.setLayoutParams(layoutParams);
         levelLeft.setLayoutParams(layoutParams);
         levelLeft.setVisibility(View.VISIBLE);

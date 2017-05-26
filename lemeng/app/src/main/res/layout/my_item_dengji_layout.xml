@@ -30,7 +30,7 @@
          android:layout_centerVertical="true"
          android:layout_marginRight="60px"
          android:textColor="@color/black"
-         android:text="0"
+         android:text="1"
          />
 
 </com.zhy.autolayout.AutoRelativeLayout>

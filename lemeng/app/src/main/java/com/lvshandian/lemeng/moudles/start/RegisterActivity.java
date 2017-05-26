@@ -205,7 +205,7 @@ public class RegisterActivity extends BaseActivity {
         map.put("userName", name);
         map.put("password", pass);
         map.put("identityCode", code);
-        httpDatas.getNewDataCharServer("修改密码", Request.Method.POST, UrlBuilder.forgetPswd, map, mHandler2, RequestCode.FORGETPSWD_TAG);
+        httpDatas.DataJsonAdmin("修改密码", Request.Method.POST, UrlBuilder.forgetPswd, map, mHandler2, RequestCode.FORGETPSWD_TAG);
     }
 
 

@@ -90,9 +90,9 @@ public class ChatRoomViewHolderCustom extends MsgViewHolderBase {
         nameTextView.setVisibility(View.GONE);
         avatarLeft.setVisibility(View.INVISIBLE);
         ViewGroup.LayoutParams layoutParams = avatarLeft.getLayoutParams();
-        Drawable drawable = context.getResources().getDrawable(R.mipmap.rank_109);
+        Drawable drawable = context.getResources().getDrawable(R.mipmap.rank_1);
         layoutParams.height = drawable.getMinimumHeight();
-        layoutParams.width = drawable.getIntrinsicWidth();
+//        layoutParams.width = drawable.getIntrinsicWidth();
         avatarLeft.setLayoutParams(layoutParams);
         levelLeft.setLayoutParams(layoutParams);
         levelLeft.setVisibility(View.VISIBLE);
@@ -103,7 +103,7 @@ public class ChatRoomViewHolderCustom extends MsgViewHolderBase {
         TextView bodyLightView = findViewById(com.netease.nim.uikit.R.id
                 .nim_message_item_light_body);
 
-        LogUtil.e("网易云信发的信息",message.getRemoteExtension().toString());
+        LogUtil.e("网易云信发的信息", message.getRemoteExtension().toString());
 
         if (message.getRemoteExtension() != null) {
             Map<String, Object> remote0 = message.getRemoteExtension();
@@ -111,7 +111,7 @@ public class ChatRoomViewHolderCustom extends MsgViewHolderBase {
             if (((String) remote0.get("type")).equals("107") || ((String) remote0.get("type"))
                     .equals("109") || ((String) remote0.get("type")).equals("114") ||
                     ((String) remote0.get("type")).equals("112") || ((String) remote0.get("type")).equals("113")
-                    || ((String) remote0.get("type")).equals("199")|| ((String) remote0.get("type")).equals("2828")
+                    || ((String) remote0.get("type")).equals("199") || ((String) remote0.get("type")).equals("2828")
                     || ((String) remote0.get("type")).equals("1818")) {
                 customdate = JavaBeanMapUtils.mapToBean((Map) message.getRemoteExtension(),
                         CustomdateBean.class);

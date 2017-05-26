@@ -102,18 +102,14 @@
 
                     <ImageView
                         android:id="@+id/iv_sex"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/SexImageStyle"
                         android:layout_marginLeft="10px"
-                        android:src="@mipmap/nan" />
+                        android:src="@mipmap/male" />
 
                     <ImageView
                         android:id="@+id/iv_grade"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/LevelImageStyle"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10px"
-                        android:scaleType="centerCrop"
                         android:src="@mipmap/rank_1" />
 
                 </com.zhy.autolayout.AutoLinearLayout>
@@ -127,7 +123,7 @@
                     android:layout_marginBottom="5px"
                     android:text="乐檬号："
                     android:textColor="@color/backgroudcolor"
-                    android:textSize="30px" />
+                    android:textSize="24px" />
 
                 <TextView
                     android:id="@+id/tv_sign"
@@ -138,7 +134,7 @@
                     android:layout_marginLeft="30px"
                     android:text="签名哦"
                     android:textColor="@color/backgroudcolor"
-                    android:textSize="30px" />
+                    android:textSize="24px" />
 
             </com.zhy.autolayout.AutoRelativeLayout>
 

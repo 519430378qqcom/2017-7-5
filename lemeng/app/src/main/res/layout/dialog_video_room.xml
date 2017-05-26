@@ -85,19 +85,14 @@
 
             <ImageView
                 android:id="@+id/iv_sex"
-                android:layout_width="36px"
-                android:layout_height="36px"
+                style="@style/SexImageStyle"
                 android:layout_marginLeft="15px"
                 android:src="@mipmap/female" />
 
             <ImageView
                 android:id="@+id/iv_grade"
-                android:layout_width="88px"
-                android:layout_height="36px"
+                style="@style/LevelImageStyle"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10px"
-                android:padding="10px"
-                android:scaleType="centerCrop"
                 android:src="@mipmap/rank_3" />
         </com.zhy.autolayout.AutoLinearLayout>
 

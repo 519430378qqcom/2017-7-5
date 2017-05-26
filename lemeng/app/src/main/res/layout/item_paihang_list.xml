@@ -66,18 +66,14 @@
 
             <ImageView
                 android:id="@+id/iv_gender"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/SexImageStyle"
                 android:layout_gravity="center_vertical"
-                android:layout_marginRight="10px"
-                android:src="@mipmap/nan" />
+                android:src="@mipmap/male" />
 
             <ImageView
                 android:id="@+id/iv_level"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/LevelImageStyle"
                 android:layout_gravity="center_vertical"
-                android:layout_marginRight="10px"
                 android:src="@mipmap/rank_1" />
 
             <TextView
@@ -85,6 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10px"
                 android:text="陈奕迅"
                 android:textSize="28px"
                 android:textColor="@color/tv_color3" />

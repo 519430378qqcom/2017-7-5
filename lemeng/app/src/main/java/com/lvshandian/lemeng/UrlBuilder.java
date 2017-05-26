@@ -22,6 +22,7 @@ public class UrlBuilder {
 //    public static final String serverUrl = "http://10.11.1.119:8080/";// 服务器网址公网
 //    public static final String chargeServerUrl = "http://10.11.1.119:8081/admin/";// 充值端口
     /*乐檬接口*/
+    public static final String HEAD_DEFAULT = "http://lemeng.oss-ap-southeast-1.aliyuncs.com/lemengImg/1495594583610.png";    //当有空头像的时候
     public static final String LOGIN = "/api/v1/login";    //登录
     public static final String REGISTER = "/appusers/register"; //注册
     public static final String forgetPswd = "/appusers/forgetRegister"; //忘记密码

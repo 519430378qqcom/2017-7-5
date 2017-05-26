@@ -37,8 +37,7 @@
         android:layout_height="@dimen/avatar_size_in_contact"
         android:layout_alignParentLeft="true"
         android:layout_below="@id/message_item_time"
-        android:layout_marginRight="@dimen/bubble_head_margin_horizontal"
-        android:src="@drawable/app_icon"
+        android:src="@mipmap/rank_1"
         android:visibility="gone" />
 
     <com.netease.nim.uikit.common.ui.imageview.HeadImageView

@@ -3816,7 +3816,7 @@ public class StartLiveActivity extends BaseActivity implements
         TextView tvTitle = (TextView) view.findViewById(R.id.tv_title);
         TextView tvCancel = (TextView) view.findViewById(R.id.tv_cancel);
         TextView tvSure = (TextView) view.findViewById(R.id.tv_sure);
-        tvTitle.setText("确定离开");
+        tvTitle.setText("是否关闭直播");
         tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

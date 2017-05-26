@@ -57,8 +57,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import butterknife.Bind;
 
-import static com.lvshandian.lemeng.R.id.fanse;
-
 /**
  * Created by gjj on 2016/11/23.
  */
@@ -308,7 +306,7 @@ public class OtherPersonHomePageActivity extends BaseActivity {
         if (mOtherBean != null) {
             String picUrl = mOtherBean.getPicUrl();
             if (TextUtils.isEmpty(picUrl)) {
-                picUrl = "http://lemeng.oss-ap-southeast-1.aliyuncs.com/lemengImg/1495594583610.png";
+                picUrl = UrlBuilder.HEAD_DEFAULT;
             }
             Picasso.with(mContext).load(picUrl).placeholder(R.mipmap.zhan_da)
                     .error(R.mipmap.zhan_da).into(avHeader);

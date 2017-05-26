@@ -84,7 +84,7 @@ public class UserBaseInfoAdapter extends BaseAdapter {
         final UserBean u = users.get(position);
         Core.getKJBitmap().display(viewHolder.mUHead, u.getPicUrl());
 
-        viewHolder.mUSex.setImageResource(Integer.parseInt(u.getGender()) == 1 ? R.mipmap.nan : R.mipmap.nv);
+        viewHolder.mUSex.setImageResource(Integer.parseInt(u.getGender()) == 1 ? R.mipmap.male : R.mipmap.female);
         viewHolder.mIsFollow.setImageResource(Integer.parseInt(u.getFollow()) == 1 ? R.mipmap.me_following : R.mipmap.me_follow);
         viewHolder.mULevel.setImageResource(GrademipmapUtils.LevelImg[Integer.parseInt(u.getLevel()) - 1]);
         viewHolder.mUNice.setText(u.getNickName());

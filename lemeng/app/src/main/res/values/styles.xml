@@ -23,12 +23,15 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:background">@android:color/transparent</item>
     </style>
-     //进度条
+    //进度条
+
     <style name="StyleProgressBarMini" parent="@android:style/Widget.ProgressBar.Horizontal">
         <item name="android:maxHeight">50dip</item>
         <item name="android:minHeight">10dip</item>
         <item name="android:indeterminateOnly">false</item>
-        <item name="android:indeterminateDrawable">@android:drawable/progress_indeterminate_horizontal</item>
+        <item name="android:indeterminateDrawable">
+            @android:drawable/progress_indeterminate_horizontal
+        </item>
         <item name="android:progressDrawable">@drawable/shape_progressbar_mini</item>
     </style>
 
@@ -138,5 +141,20 @@
         <item name="android:background">@drawable/custom_dialog</item><!--dialog背景样式-->
         <item name="android:windowBackground">@android:color/transparent</item><!-- 背景透明 -->
         <item name="android:backgroundDimEnabled">true</item><!--模糊-->
+    </style>
+
+    <style name="SexImageStyle">
+        <item name="android:layout_width">36px</item>
+        <item name="android:layout_height">36px</item>
+        <item name="android:padding">2px</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <style name="LevelImageStyle">
+        <item name="android:layout_width">88px</item>
+        <item name="android:layout_height">36px</item>
+        <item name="android:padding">5px</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:layout_marginLeft">5px</item>
     </style>
 </resources>

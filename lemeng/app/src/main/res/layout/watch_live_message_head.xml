@@ -44,7 +44,7 @@
             android:gravity="center_vertical"
             android:maxWidth="160dip"
             android:singleLine="true"
-            android:text=" 系统消息"
+            android:text="系统消息"
             android:textColor="@color/main"
             android:textSize="15sp" />
 

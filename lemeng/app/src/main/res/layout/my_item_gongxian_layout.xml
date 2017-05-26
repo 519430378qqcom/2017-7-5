@@ -43,13 +43,13 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="20px"
             android:src="@mipmap/head_default"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <com.lvshandian.lemeng.widget.AvatarView
             android:id="@+id/iv_3"
             android:layout_width="60px"
             android:layout_height="match_parent"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_marginLeft="20px"
             android:src="@mipmap/head_default"/>
     </com.zhy.autolayout.AutoLinearLayout>
