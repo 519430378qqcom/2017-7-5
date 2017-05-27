@@ -182,6 +182,7 @@
     <color name="darkblue">#00008b</color><!--暗蓝色 -->
     <color name="navy">#000080</color><!--海军色 -->
     <color name="black">#000000</color><!--黑色 -->
+    <color name="black_80">#80000000</color><!--黑色 -->
     <color name="alpha_half">#44000000</color>
     <color name="secret_blue">#027BFD</color>
     <color name="lite_blue">#ff359ff2</color>

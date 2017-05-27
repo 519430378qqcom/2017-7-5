@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.utils.GrademipmapUtils;
 import com.netease.nim.uikit.NimUIKit;
+import com.netease.nim.uikit.UiUtils;
 import com.netease.nim.uikit.common.util.sys.ScreenUtil;
 import com.netease.nim.uikit.session.emoji.MoonUtil;
 import com.netease.nim.uikit.session.viewholder.MsgViewHolderText;
@@ -59,6 +60,9 @@ public class ChatRoomViewHolderText extends MsgViewHolderText {
 
     @Override
     protected void bindContentView() {
+        messageItemLayout.setVisibility(View.VISIBLE);
+        messageItemLayout.setPadding(UiUtils.dp2px(context,6),UiUtils.dp2px(context,2),0,UiUtils.dp2px(context,2));
+
         nameTextView.setVisibility(View.GONE);
         avatarLeft.setVisibility(View.INVISIBLE);
         ViewGroup.LayoutParams layoutParams = avatarLeft.getLayoutParams();

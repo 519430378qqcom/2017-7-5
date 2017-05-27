@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.android.volley.Request;
 import com.lvshandian.lemeng.MyApplication;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.UrlBuilder;
@@ -50,7 +49,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 聊天室直播互动fragment
@@ -65,7 +63,7 @@ public class ChatRoomMessageFragment extends TFragment implements ModuleProxy {
     protected ChatRoomInputPanel inputPanel;
     protected ChatRoomMsgListPanel messageListPanel;
     private String roomId;
-    private String liveId;
+    boolean isZhubo;
     private LayoutInflater inflater;
     private EditText editText;
 
@@ -148,18 +146,19 @@ public class ChatRoomMessageFragment extends TFragment implements ModuleProxy {
         return rootView;
     }
 
-     public void inputTypeOnClick(){
-         if (WatchLiveActivity.isJinyan) {
-             ToastUtils.showMessageDefault(getActivity(), "您被禁言中,禁止发言");
-         } else {
-             showEditText();
-         }
-     }
+    public void inputTypeOnClick() {
+        if (WatchLiveActivity.isJinyan) {
+            ToastUtils.showMessageDefault(getActivity(), "您被禁言中,禁止发言");
+        } else {
+            showEditText();
+        }
+    }
 
-    public void ivRankingOnClick(){
+    public void ivRankingOnClick() {
         Intent intent = new Intent(getActivity(), ContributionActivity.class);
         startActivity(intent);
     }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -209,9 +208,8 @@ public class ChatRoomMessageFragment extends TFragment implements ModuleProxy {
         }
     }
 
-    public void init(String roomId, String liveId) {
+    public void init(String roomId) {
         this.roomId = roomId;
-        this.liveId = liveId;
         registerObservers(true);
         findViews();
         messageListPanel.addHeadView(inflater);
@@ -234,10 +232,6 @@ public class ChatRoomMessageFragment extends TFragment implements ModuleProxy {
             inputPanel.setEmojiButtonVisibility(View.GONE);
             inputPanel.setInputToggleButtonVisibility(appUser.getId(), appUser.getVip());
 //            SendRoomMessageUtils.onCustomMessage(this, container, SendRoomMessageUtils.MESSAGE_JOIN_ROOM, date);
-            ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
-            map.put("userId", appUser.getId());
-            map.put("roomId", liveId);
-            httpDatas.getDataForJsoNoloading("加入房间", Request.Method.POST, UrlBuilder.roomJoin, map, myHandler, RequestCode.REQUEST_ROOM_JOIN);
         } else {
             inputPanel.reload(container, null);
         }

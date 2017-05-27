@@ -897,7 +897,7 @@ public class StartLiveActivity extends BaseActivity implements
 
         switch (v.getId()) {
             case R.id.iv_trend: //走势
-                switch (gameType){
+                switch (gameType) {
                     case 1://彩票走势
                         showTrendPop();
                         break;
@@ -1162,11 +1162,11 @@ public class StartLiveActivity extends BaseActivity implements
     /**
      * 牛牛点击事件
      */
-    @OnClick({R.id.iv_bullfight,R.id.rl_bullfight1,R.id.rl_bullfight2,R.id.rl_bullfight3,
+    @OnClick({R.id.iv_bullfight, R.id.rl_bullfight1, R.id.rl_bullfight2, R.id.rl_bullfight3,
             R.id.ll_bullfight_result, R.id.tv_bullfight_result1, R.id.tv_bullfight_result2, R.id.tv_bullfight_result3,
             R.id.tv_bullfight_lepiao, R.id.tv_bullfight_top_up, R.id.iv_100, R.id.iv_1000, R.id.iv_1w, R.id.iv_10w, R.id.iv_100w})
     public void onViewClicked(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.iv_bullfight:
                 startBullfightGame();
                 break;
@@ -1213,6 +1213,7 @@ public class StartLiveActivity extends BaseActivity implements
 
     /**
      * 显示游戏界面
+     *
      * @param gameType 1（彩票）;2（斗牛）
      */
     private void showPlayView(int gameType) {
@@ -1223,7 +1224,7 @@ public class StartLiveActivity extends BaseActivity implements
         rl_game_info.setVisibility(View.VISIBLE);
         //走势图标
         iv_trend.setVisibility(View.VISIBLE);
-        switch (gameType){
+        switch (gameType) {
             case 1://彩票
                 rl_kp.setVisibility(View.VISIBLE);
                 rl_bullfight_banker.setVisibility(View.GONE);
@@ -1240,8 +1241,10 @@ public class StartLiveActivity extends BaseActivity implements
                 break;
         }
     }
+
     /**
      * 影藏游戏界面
+     *
      * @param gameType 1（彩票）;2（斗牛）
      */
     private void hidePlayView(int gameType) {
@@ -1251,7 +1254,7 @@ public class StartLiveActivity extends BaseActivity implements
         rl_game_info.setVisibility(View.GONE);
         //走势图标
         iv_trend.setVisibility(View.GONE);
-        switch (gameType){
+        switch (gameType) {
             case 1://彩票
                 rl_kp.setVisibility(View.GONE);
                 live_game.setVisibility(View.GONE);
@@ -1889,7 +1892,7 @@ public class StartLiveActivity extends BaseActivity implements
                 (R.id.watch_room_message_fragment);
 
         if (messageFragment != null) {
-            messageFragment.init(wy_Id, room_Id);
+            messageFragment.init(wy_Id);
         } else {
             // 如果Fragment还未Create完成，延迟初始化
             getHandler().postDelayed(new Runnable() {
@@ -3987,6 +3990,7 @@ public class StartLiveActivity extends BaseActivity implements
     private void showBullfightRecord() {
 
     }
+
     private void webSetting(WebSettings webSettings) {
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);// 设置js可以直接打开窗口，如window.open()，默认为false
         webSettings.setJavaScriptEnabled(true);// 是否允许执行js，默认为false。设置true时，会提醒可能造成XSS漏洞

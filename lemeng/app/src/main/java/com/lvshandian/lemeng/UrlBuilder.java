@@ -16,11 +16,11 @@ public class UrlBuilder {
 //    public static final String serverUrl = "http://47.88.229.22:80/";// 服务器网址公网
 //    public static final String chargeServerUrl = "http://47.88.229.22:80/admin/";// 充值端口
     //乐檬测试服務器
-    public static final String serverUrl = "http://60.205.114.36:80/";// 服务器网址公网
-    public static final String chargeServerUrl = "http://60.205.114.36:80/admin/";// 充值端口
+//    public static final String serverUrl = "http://60.205.114.36:80/";// 服务器网址公网
+//    public static final String chargeServerUrl = "http://60.205.114.36:80/admin/";// 充值端口
     //本地
-//    public static final String serverUrl = "http://10.11.1.119:8080/";// 服务器网址公网
-//    public static final String chargeServerUrl = "http://10.11.1.119:8081/admin/";// 充值端口
+    public static final String serverUrl = "http://10.11.1.119:8080/";// 服务器网址公网
+    public static final String chargeServerUrl = "http://10.11.1.119:8081/admin/";// 充值端口
     /*乐檬接口*/
     public static final String HEAD_DEFAULT = "http://lemeng.oss-ap-southeast-1.aliyuncs.com/lemengImg/1495594583610.png";    //当有空头像的时候
     public static final String LOGIN = "/api/v1/login";    //登录
@@ -80,7 +80,6 @@ public class UrlBuilder {
 
 
     public static final String room = "/api/v1/room/";//聊天室头像列表
-    public static final String roomJoin = "/api/v1/room/join";//加入直播间
     public static final String barrage = "/api/v1/barrage/";//发送弹幕消息扣金币
     public static final String roomExit = "/api/v1/room/exit";//退出直播间
 

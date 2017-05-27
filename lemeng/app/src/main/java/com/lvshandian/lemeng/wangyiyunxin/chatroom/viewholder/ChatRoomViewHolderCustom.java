@@ -18,6 +18,7 @@ import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.utils.TextUtils;
 import com.netease.nim.uikit.NimUIKit;
+import com.netease.nim.uikit.UiUtils;
 import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.netease.nim.uikit.common.util.sys.ScreenUtil;
 import com.netease.nim.uikit.session.emoji.MoonUtil;
@@ -147,6 +148,7 @@ public class ChatRoomViewHolderCustom extends MsgViewHolderBase {
         bodyTextView.setVisibility(View.VISIBLE);
         bodyLightView.setVisibility(View.GONE);
         messageItemLayout.setVisibility(View.VISIBLE);
+        messageItemLayout.setPadding(UiUtils.dp2px(context,6),UiUtils.dp2px(context,2),0,UiUtils.dp2px(context,2));
         String text = "";
         if (message.getRemoteExtension() != null) {
             Map<String, Object> remote = message.getRemoteExtension();

@@ -219,24 +219,20 @@
 
                     <TextView
                         android:id="@+id/live_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/WhiteShadow24Style"
                         android:layout_marginTop="10px"
                         android:ellipsize="end"
                         android:maxEms="10"
                         android:singleLine="true"
                         android:text="得天独厚"
-                        android:textColor="@color/white"
                         android:textSize="24px" />
 
 
                     <TextView
                         android:id="@+id/live_num"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/WhiteShadow24Style"
                         android:text="0"
-                        android:textColor="@color/white"
-                        android:textSize="23px" />
+                        android:textSize="24px" />
 
                 </com.zhy.autolayout.AutoLinearLayout>
 

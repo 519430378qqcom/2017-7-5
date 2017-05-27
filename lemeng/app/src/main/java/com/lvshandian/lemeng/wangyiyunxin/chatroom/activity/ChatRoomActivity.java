@@ -219,7 +219,7 @@ public class ChatRoomActivity extends UI {
     private void initMessageFragment() {
         messageFragment = (ChatRoomMessageFragment) getSupportFragmentManager().findFragmentById(R.id.chat_room_message_fragment);
         if (messageFragment != null) {
-            messageFragment.init(roomId, "");
+            messageFragment.init(roomId);
         } else {
             // 如果Fragment还未Create完成，延迟初始化
             getHandler().postDelayed(new Runnable() {

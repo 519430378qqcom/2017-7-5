@@ -635,7 +635,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         map.put("gift_Grand_Prix_number", null);
                         map.put("gift_Grand_Prix", null);
                         map.put("gift_giftCoinNumber", mSendGiftItem.getMemberConsume());
-                        map.put("receveUserId", liveListBean.getId()+"");
+                        map.put("receveUserId", liveListBean.getId() + "");
                         map.put("gift_Type1", mSendGiftItem.getWinFlag());
                         map.put("level", appUser.getLevel());
                         map.put("RepeatGiftNumber", num);
@@ -733,7 +733,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     break;
                 //观众进入房间时，查询是否有被连麦人
                 case RequestCode.IS_REQUEST_LIANMAI_LIVE:
-                    LogUtil.e("正在连麦中",json.toString());
+                    LogUtil.e("正在连麦中", json.toString());
                     List<CustomLianmaiBean> lianmaiBeanList = JsonUtil.json2BeanList(json.toString(), CustomLianmaiBean.class);
                     if (lianmaiBeanList != null && lianmaiBeanList.size() > 0) {
                         try {
@@ -1534,17 +1534,17 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 ifattention("请求主播信息", liveListBean.getId() + "", RequestCode.REQUEST_USER_INFO);
                 break;
             case R.id.live_lianmai_head://连麦人的头像
-                if (customLianmaiBean == null){
+                if (customLianmaiBean == null) {
                     ifattention("请求用户信息", appUser.getId(), RequestCode.REQUEST_USER_INFO);
-                }else {
+                } else {
                     ifattention("请求用户信息", customLianmaiBean.getUserId(), RequestCode.REQUEST_USER_INFO);
                 }
 
                 break;
             case R.id.live_lianmai_head_bg2://连麦人的头像
-                if (customLianmaiBean == null){
+                if (customLianmaiBean == null) {
                     ifattention("请求用户信息", appUser.getId(), RequestCode.REQUEST_USER_INFO);
-                }else {
+                } else {
                     ifattention("请求用户信息", customLianmaiBean.getUserId(), RequestCode.REQUEST_USER_INFO);
                 }
 
@@ -2178,7 +2178,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         messageFragment = (ChatRoomMessageFragment) getSupportFragmentManager().findFragmentById
                 (R.id.watch_room_message_fragment);
         if (messageFragment != null) {
-            messageFragment.init(roomId, liveListBean.getRooms().getUserId() + "");
+            messageFragment.init(roomId);
         } else {
             // 如果Fragment还未Create完成，延迟初始化
             getHandler().postDelayed(new Runnable() {
@@ -2332,7 +2332,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         map.put("roomId", liveListBean.getRooms().getId() + "");
         map.put("amount", mSendGiftItem.getMemberConsume());
         map.put("giftId", mSendGiftItem.getId());
-        map.put("toUserId", liveListBean.getId()+"");
+        map.put("toUserId", liveListBean.getId() + "");
         httpDatas.DataNoloadingAdmin("赠送礼物", Request.Method.POST,
                 UrlBuilder.SEND_GIFT, map, myHandler, RequestCode.SEND_GIFT);
     }
@@ -3622,7 +3622,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
 
     /**
-     * 进入直播间，为私密直播插入记录
+     * 进入直播间
      *
      * @author sll
      * @time 2016/12/16 17:14
@@ -4128,13 +4128,13 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         });
     }
 
-    private void showLianmaiView(){
+    private void showLianmaiView() {
         liveLianmaiHead.setVisibility(View.VISIBLE);
         liveLianmaiHeadBg1.setVisibility(View.VISIBLE);
         liveLianmaiHeadBg2.setVisibility(View.VISIBLE);
     }
 
-    private void hideLianmaiView(){
+    private void hideLianmaiView() {
         liveLianmaiHead.setVisibility(View.GONE);
         liveLianmaiHeadBg1.setVisibility(View.GONE);
         liveLianmaiHeadBg2.setVisibility(View.GONE);
