@@ -2121,12 +2121,12 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     //下拉刷新需要清除数据
                     mDatas.clear();
                 }
-                for (int i = 0 ,j = result.size(); i < j; i++) {
-                    if (result.get(i).getUserId().equals(liveListBean.getId()+"")){
-                        result.remove(i);
-                        liveNum.setText(--liveOnLineNums + "");
-                    }
-                }
+//                for (int i = 0 ,j = result.size(); i < j; i++) {
+//                    if (result.get(i).getUserId().equals(liveListBean.getId()+"")){
+//                        result.remove(i);
+//                        liveNum.setText(--liveOnLineNums + "");
+//                    }
+//                }
                 mDatas.addAll(result);
                 mAdapter.notifyDataSetChanged();
             }
@@ -2327,8 +2327,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * @dw 点击赠送礼物按钮
      */
     private void onClickSendGift() {
-        if (Long.valueOf(SharedPreferenceUtils.getGoldCoin(mContext)) < Long.valueOf
-                (mSendGiftItem.getMemberConsume())) {
+        if (myGoldCoin < Long.valueOf(mSendGiftItem.getMemberConsume())) {
             showToast("金币不足，请充值");
             return;
         }
@@ -3982,7 +3981,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         sure_tz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Long.parseLong(SharedPreferenceUtils.getGoldCoin(mContext)) < Long.parseLong(strJinBi)) {
+                if (myGoldCoin < Long.parseLong(strJinBi)) {
                     showToast("您的乐票不足,请充值");
                     rulePop.dismiss();
                 } else {

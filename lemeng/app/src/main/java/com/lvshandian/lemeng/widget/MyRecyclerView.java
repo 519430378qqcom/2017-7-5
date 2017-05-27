@@ -1,9 +1,12 @@
 package com.lvshandian.lemeng.widget;
 
 import android.content.Context;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewParent;
 
 /**
  * 可加空布局的recyclerView
@@ -75,5 +78,28 @@ public class MyRecyclerView extends RecyclerView {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
         super.onMeasure(widthMeasureSpec, expandSpec);
+    }
+
+    /**
+     * 写了不管用，惭愧啊，学艺不精
+     * @param ev
+     * @return
+     */
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        ViewParent parent =this;
+        while(((parent = parent.getParent()) instanceof ViewPager)) ;// 循环查找viewPager
+        getParent().requestDisallowInterceptTouchEvent(true);//这句话告诉父控件此事件你就不要拦截了，由我子view自己进行处理即可
+        return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent e) {
+        return super.onInterceptTouchEvent(e);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent e) {
+        return super.onTouchEvent(e);
     }
 }

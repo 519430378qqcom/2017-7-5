@@ -73,7 +73,6 @@ public class WithdrawActivity extends BaseActivity {
                     AppUser mAppUser = JsonUtil.json2Bean(json, AppUser.class);
 //                    CacheUtils.saveObject(mContext, mAppUser, CacheUtils.USERINFO);
                     SharedPreferenceUtils.saveUserInfo(mContext,mAppUser);
-                    SharedPreferenceUtils.saveGoldCoin(mContext, mAppUser.getGoldCoin());
                     exchangeStatus = mAppUser.getExchangeStatus();
                     break;
             }

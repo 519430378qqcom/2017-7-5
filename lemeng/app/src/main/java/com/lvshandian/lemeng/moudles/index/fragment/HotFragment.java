@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 
 import com.android.volley.Request;
@@ -43,7 +42,7 @@ public class HotFragment extends BaseFragment implements SwipeRefresh.OnRefreshL
     @Bind(R.id.lv_live_room)
     MyRecyclerView hotRecyclerView;
     @Bind(R.id.rankingList)
-    RecyclerView rankingList;
+    MyRecyclerView rankingList;
     @Bind(R.id.iv_empty)
     ImageView iv_empty;
     @Bind(R.id.banner)

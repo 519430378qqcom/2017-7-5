@@ -328,7 +328,6 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
         //存储用户信息
 //        CacheUtils.saveObject(mContext, appUser, CacheUtils.USERINFO);
         SharedPreferenceUtils.saveUserInfo(mContext, appUser);
-        SharedPreferenceUtils.saveGoldCoin(mContext, appUser.getGoldCoin());
         loginWangYi(appUser);
     }
 

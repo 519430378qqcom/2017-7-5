@@ -4051,7 +4051,7 @@ public class StartLiveActivity extends BaseActivity implements
         sure_tz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Long.parseLong(SharedPreferenceUtils.getGoldCoin(mContext)) < Long.parseLong(strJinBi)) {
+                if (myGoldCoin < Long.parseLong(strJinBi)) {
                     showToast("您的乐票不足,请充值");
                     rulePop.dismiss();
                 } else {

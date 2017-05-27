@@ -31,7 +31,7 @@
                     app:title_textcolor="#ffffff"
                     app:title_textsize="30px" />
 
-                <com.zhy.autolayout.AutoLinearLayout
+                <com.zhy.autolayout.AutoRelativeLayout
                     android:id="@+id/ll_ranking_list"
                     android:layout_width="match_parent"
                     android:layout_height="114px"
@@ -39,17 +39,20 @@
                     android:layout_marginTop="10px"
                     android:background="@color/white">
 
+                    <com.lvshandian.lemeng.widget.MyRecyclerView
+                        android:id="@+id/rankingList"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="-30px"
+                        android:layout_toRightOf="@+id/iv" />
+
                     <ImageView
+                        android:id="@+id/iv"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
                         android:src="@mipmap/ic_ranking_list" />
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rankingList"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                </com.zhy.autolayout.AutoLinearLayout>
+                </com.zhy.autolayout.AutoRelativeLayout>
 
                 <View
                     android:id="@+id/line"

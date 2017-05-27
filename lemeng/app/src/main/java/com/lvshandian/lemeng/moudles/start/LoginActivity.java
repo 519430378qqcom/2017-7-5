@@ -126,7 +126,6 @@ public class LoginActivity extends BaseActivity {
         //存储用户信息
 //        CacheUtils.saveObject(LoginActivity.this, appUser, CacheUtils.USERINFO);
         SharedPreferenceUtils.saveUserInfo(mContext,appUser);
-        SharedPreferenceUtils.saveGoldCoin(mContext, appUser.getGoldCoin());
         loginWangYi(appUser);
     }
 

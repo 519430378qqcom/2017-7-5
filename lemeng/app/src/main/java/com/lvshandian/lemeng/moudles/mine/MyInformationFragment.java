@@ -470,7 +470,7 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
                 }
             });
 
-            String goldCoin = SharedPreferenceUtils.getGoldCoin(mContext);
+            String goldCoin = userInfo.getGoldCoin();
             if (com.lvshandian.lemeng.utils.TextUtils.isEmpty(goldCoin))
                 goldCoin = "0";
             goldCoin = CountUtils.getCount(Long.parseLong(goldCoin));
