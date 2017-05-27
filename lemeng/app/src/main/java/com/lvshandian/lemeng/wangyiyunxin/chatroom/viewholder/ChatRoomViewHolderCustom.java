@@ -41,6 +41,9 @@ import java.util.Map;
  * @time 2016/11/22 17:07
  */
 public class ChatRoomViewHolderCustom extends MsgViewHolderBase {
+    
+    private final String GET_DATA_TEXT="data";
+    
     @Override
     protected boolean isChatRoom() {
         return true;
@@ -117,7 +120,7 @@ public class ChatRoomViewHolderCustom extends MsgViewHolderBase {
                 customdate = JavaBeanMapUtils.mapToBean((Map) message.getRemoteExtension(),
                         CustomdateBean.class);
             } else {
-                customdate = JavaBeanMapUtils.mapToBean((Map) remote0.get("data"), CustomdateBean
+                customdate = JavaBeanMapUtils.mapToBean((Map) remote0.get(GET_DATA_TEXT), CustomdateBean
                         .class);
             }
             int level = Integer.valueOf(customdate.getLevel());
@@ -186,7 +189,7 @@ public class ChatRoomViewHolderCustom extends MsgViewHolderBase {
                         text = ((ChatRoomMessage) message).getChatRoomMessageExtension()
                                 .getSenderNick() + "开始表演了，请支付，没支付的看不到哦！";
                         try {
-                            JSONObject jsonObject = new JSONObject((String) remote.get("data"));
+                            JSONObject jsonObject = new JSONObject((String) remote.get(GET_DATA_TEXT));
                             text = ((ChatRoomMessage) message).getChatRoomMessageExtension()
                                     .getSenderNick() + "开始表演了，请支付" + jsonObject.get("cost") +
                                     "，没支付的看不到哦！";
@@ -201,11 +204,11 @@ public class ChatRoomViewHolderCustom extends MsgViewHolderBase {
                         break;
                     case 105:
                         String ZhuBoId = (String) SharedPreferenceUtils.get(context, "ZhuBoId", "");
-                        Map map = (Map) remote.get("data");
+                        Map map = (Map) remote.get(GET_DATA_TEXT);
                         CustomdateBean customdate = null;
                         if (map != null && map.size() > 0) {
                             LogUtils.i("WangYi", "map.size:" + map.size());
-                            customdate = JavaBeanMapUtils.mapToBean((Map) remote.get("data"),
+                            customdate = JavaBeanMapUtils.mapToBean((Map) remote.get(GET_DATA_TEXT),
                                     CustomdateBean.class);
                         }
                         LogUtils.i("WangYi", "ZhuBoId:" + ZhuBoId);

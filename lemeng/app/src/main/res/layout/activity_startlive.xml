@@ -219,7 +219,7 @@
 
                     <TextView
                         android:id="@+id/live_name"
-                        style="@style/WhiteShadow24Style"
+                        style="@style/WhiteShadowStyle"
                         android:layout_marginTop="10px"
                         android:ellipsize="end"
                         android:maxEms="10"
@@ -230,7 +230,7 @@
 
                     <TextView
                         android:id="@+id/live_num"
-                        style="@style/WhiteShadow24Style"
+                        style="@style/WhiteShadowStyle"
                         android:text="0"
                         android:textSize="24px" />
 
@@ -523,22 +523,18 @@
                 android:gravity="center_vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/WhiteShadowStyle"
                     android:layout_marginLeft="22px"
                     android:text="乐票:"
-                    android:textColor="@color/white"
                     android:textSize="24px" />
 
 
                 <TextView
                     android:id="@+id/live_jinpiao"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/WhiteShadowStyle"
                     android:layout_marginLeft="10px"
                     android:layout_marginRight="12px"
                     android:text="0"
-                    android:textColor="@color/white"
                     android:textSize="24px" />
 
                 <ImageView
@@ -551,13 +547,12 @@
 
             <TextView
                 android:id="@+id/live_id"
-                android:layout_width="wrap_content"
+                style="@style/WhiteShadowStyle"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="30px"
                 android:gravity="center_vertical"
                 android:text="乐檬号: 100000"
-                android:textColor="@color/white"
                 android:textSize="28px" />
 
         </com.zhy.autolayout.AutoRelativeLayout>
