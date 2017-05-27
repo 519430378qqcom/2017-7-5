@@ -263,4 +263,7 @@
 
     <string name="top_up">充值</string>
     <string name="wait_next_start">请等待下一局开始</string>
+    <string name="no_select_betbalance">还未选取投注金额</string>
+    <string name="balance_not_enough">余额不足</string>
+    <string name="game_start_fail">游戏开启失败</string>
 </resources>

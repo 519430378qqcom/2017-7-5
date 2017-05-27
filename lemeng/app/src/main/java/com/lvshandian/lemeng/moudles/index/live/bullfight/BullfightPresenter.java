@@ -1,0 +1,196 @@
+package com.lvshandian.lemeng.moudles.index.live.bullfight;
+
+import com.alibaba.fastjson.JSON;
+import com.lvshandian.lemeng.UrlBuilder;
+import com.squareup.okhttp.Request;
+import com.yixia.camera.util.Log;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+/**
+ * Created by dong on 2017/5/26.
+ */
+
+public class BullfightPresenter {
+    private BullfightInterface bullfightInterface;
+    public BullfightPresenter(BullfightInterface bullfightInterface) {
+        this.bullfightInterface = bullfightInterface;
+    }
+
+    /**
+     * 请求开启斗牛游戏
+     * @param roomId
+     */
+    public void startBullGame(String roomId){
+        String url = UrlBuilder.serverUrl + UrlBuilder.BULLFIGHT_START + "?roomId=" + roomId;
+        OkHttpUtils.get().url(url).build().execute(new StringCallback() {
+            @Override
+            public void onError(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(String response) {
+                Log.e("TAG","startBullGame"+response);
+                StartResult startResult = JSON.parseObject(response, StartResult.class);
+                bullfightInterface.startBullGame(startResult);
+            }
+        });
+    };
+
+    /**
+     * 获取庄家信息
+     */
+    public void getBankerInfo(){
+        String url = UrlBuilder.serverUrl + UrlBuilder.BULLFIGHT_BANKER;
+        OkHttpUtils.get().url(url).build().execute(new StringCallback() {
+            @Override
+            public void onError(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(String response) {
+                Log.e("TAG","getBankerInfo"+response);
+                BankerInfo bankerInfo = JSON.parseObject(response, BankerInfo.class);
+                bullfightInterface.getBankerInfo(bankerInfo);
+            }
+        });
+    };
+    /**
+     * 请求获取斗牛游戏倒计时和期数
+     * @param roomId
+     */
+    public void getTimeAndNper(String roomId){
+        String url = UrlBuilder.serverUrl + UrlBuilder.BULLFIGHT_TIMER + "?roomId=" + roomId;
+        OkHttpUtils.get().url(url).build().execute(new StringCallback() {
+            @Override
+            public void onError(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(String response) {
+                Log.e("TAG","getTimeAndNper"+response);
+                TimeAndNper timeAndNper = JSON.parseObject(response,TimeAndNper.class);
+                bullfightInterface.getTimeAndNPer(timeAndNper);
+                Log.e("TAG","期数"+timeAndNper.getObj().getPerid());
+            }
+        });
+    }
+    /**
+     * 生成开奖结果（主播第五秒调用）,
+     */
+    public void initGameResult(String roomId){
+        String url = UrlBuilder.serverUrl + UrlBuilder.BULLFIGHT_INITGAME + "?roomId="+roomId;
+        OkHttpUtils.get().url(url).build().execute(new StringCallback() {
+            @Override
+            public void onError(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(String response) {
+                Log.e("TAG","initGameResult"+response);
+            }
+        });
+    }
+    /**
+     * 获取扑克结果
+     */
+    public void getPokerResult(String roomId){
+        String url = UrlBuilder.serverUrl + UrlBuilder.BULLFIGHT_POKER_RESULT+"?roomId="+roomId;
+        Log.e("TAG",url);
+        OkHttpUtils.get().url(url).build().execute(new StringCallback() {
+            @Override
+            public void onError(Request request, Exception e) {
+
+            }
+            @Override
+            public void onResponse(String response) {
+                Log.e("TAG","getPokerResult"+response);
+                PokerResult pokerResult = JSON.parseObject(response, PokerResult.class);
+                bullfightInterface.getPokerResult(pokerResult);
+            }
+        });
+    }
+
+    /**
+     * 投注
+     * @param userId
+     * @param roomId
+     * @param amount 投注金额
+     * @param type  1为投注天2为投注地3为人
+     * @param perid 期数
+     * @param status 0 为1倍 1为2倍
+     */
+    public void betSuccess(int userId, int roomId, int amount, int type, int perid, int status){
+        String url = UrlBuilder.betting(userId,roomId,amount,type,perid,status);
+        OkHttpUtils.get().url(url).build().execute(new StringCallback() {
+            @Override
+            public void onError(Request request, Exception e) {
+
+            }
+
+            @Override
+            public void onResponse(String response) {
+                Log.e("TAG","betSuccess"+response);
+                BetResult betResult = JSON.parseObject(response, BetResult.class);
+                bullfightInterface.betSuccess(betResult);
+            }
+        });
+    }
+    /**
+     * 获取游戏结果
+     */
+    public void getGameResult(String roomId,String perid,String userId){
+        String url = UrlBuilder.serverUrl + UrlBuilder.BULLFIGHT_RESULT+"?roomId="+roomId+"&perid="+perid+"&userId="+userId;
+        Log.e("TAG","getGameResult="+url);
+        OkHttpUtils.get().url(url).build().execute(new StringCallback() {
+            @Override
+            public void onError(Request request, Exception e) {
+
+            }
+            @Override
+            public void onResponse(String response) {
+                Log.e("TAG","getGameResult"+response);
+                GameResult gameResult = JSON.parseObject(response, GameResult.class);
+                bullfightInterface.getGameResult(gameResult);
+            }
+        });
+    }
+    /**
+     * 刷新庄家账户
+     */
+    public void updateBankerBalance(){
+        String url = UrlBuilder.serverUrl + UrlBuilder.BULLFIGHT_BANKER_BALANCE;
+        OkHttpUtils.get().url(url).build().execute(new StringCallback() {
+            @Override
+            public void onError(Request request, Exception e) {
+
+            }
+            @Override
+            public void onResponse(String response) {
+                Log.e("TAG","updateBankerBalance"+response);
+                BankerBalance BankerBalance = JSON.parseObject(response, BankerBalance.class);
+                bullfightInterface.updataBankerBalance(BankerBalance);
+            }
+        });
+    }
+
+    /**
+     * 初始化倒计时
+     */
+    public void initGameTimer(String roomId,String perId,String userId){
+        String url = UrlBuilder.serverUrl + UrlBuilder.BULLFIGHT_INITTIME+"?roomId="+roomId+"&perid="+perId+"&userId="+userId;
+        OkHttpUtils.get().url(url).build().execute(new StringCallback() {
+            @Override
+            public void onError(Request request, Exception e) {
+            }
+            @Override
+            public void onResponse(String response) {
+                Log.e("TAG","initGameTimer"+response);
+            }
+        });
+    }
+}

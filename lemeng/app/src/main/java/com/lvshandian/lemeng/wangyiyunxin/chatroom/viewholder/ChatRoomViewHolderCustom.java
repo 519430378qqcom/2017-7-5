@@ -113,7 +113,7 @@ public class ChatRoomViewHolderCustom extends MsgViewHolderBase {
                     .equals("109") || ((String) remote0.get("type")).equals("114") ||
                     ((String) remote0.get("type")).equals("112") || ((String) remote0.get("type")).equals("113")
                     || ((String) remote0.get("type")).equals("199") || ((String) remote0.get("type")).equals("2828")
-                    || ((String) remote0.get("type")).equals("1818")) {
+                    || ((String) remote0.get("type")).equals("1818") || ((String) remote0.get("type")).equals("5858")) {
                 customdate = JavaBeanMapUtils.mapToBean((Map) message.getRemoteExtension(),
                         CustomdateBean.class);
             } else {
@@ -273,6 +273,10 @@ public class ChatRoomViewHolderCustom extends MsgViewHolderBase {
                     case 1818://有人投注
                         bodyTextView.setTextColor(context.getResources().getColor(R.color.aquamarine));
                         text = (String) remote.get("inputMsg");
+                        break;
+                    case 5858://主播开斗牛游戏
+                        bodyTextView.setTextColor(context.getResources().getColor(R.color.red));
+                        text = (String) remote.get("palyDouniuMsg");
                         break;
                     default:
                         //默认不显示任何东西

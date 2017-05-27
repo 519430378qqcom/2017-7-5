@@ -1964,6 +1964,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         isPlayerRoom = true;
                         getTimenumber();
                         break;
+                    case 5858:
+                        isPlayerRoom = true;
+                        break;
                     case 10009:
                         LogUtil.e("升级", message.getRemoteExtension().toString());
                         AppUser mAppUser = JavaBeanMapUtils.mapToBean((Map) message.getRemoteExtension().get("data"),

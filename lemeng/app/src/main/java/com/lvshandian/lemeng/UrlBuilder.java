@@ -16,11 +16,10 @@ public class UrlBuilder {
 //    public static final String serverUrl = "http://47.88.229.22:80/";// 服务器网址公网
 //    public static final String chargeServerUrl = "http://47.88.229.22:80/admin/";// 充值端口
     //乐檬测试服務器
-//    public static final String serverUrl = "http://60.205.114.36:80/";// 服务器网址公网
-//    public static final String chargeServerUrl = "http://60.205.114.36:80/admin/";// 充值端口
-    //本地
-    public static final String serverUrl = "http://10.11.1.119:8080/";// 服务器网址公网
-    public static final String chargeServerUrl = "http://10.11.1.119:8081/admin/";// 充值端口
+    public static final String serverUrl = "http://60.205.114.36:80/";// 服务器网址公网
+    public static final String chargeServerUrl = "http://60.205.114.36:80/admin/";// 充值端口
+//    public static final String serverUrl = "http://10.11.1.119:8080/";// 服务器网址公网
+//    public static final String chargeServerUrl = "http://10.11.1.119:8081/admin/";// 充值端口
     /*乐檬接口*/
     public static final String HEAD_DEFAULT = "http://lemeng.oss-ap-southeast-1.aliyuncs.com/lemengImg/1495594583610.png";    //当有空头像的时候
     public static final String LOGIN = "/api/v1/login";    //登录
@@ -94,7 +93,62 @@ public class UrlBuilder {
     public static final String ALIYUN_IMG = "http://lemeng.oss-ap-southeast-1.aliyuncs.com/";//阿里云图片視頻生成地址
     public static final String OSS_ENDPOINT = "http://oss-ap-southeast-1.aliyuncs.com";//阿里云OSS_ENDPOINT
     public static final String BUCKET_NAME = "lemeng";// 阿里云BUCKET_NAME  OSS
+    //------------------------------------斗牛游戏接口----------------------------------------
+    /**
+     * 斗牛开始，get;params（roomId）
+     */
+    public static final String BULLFIGHT_START = "admin/appusers/openPlay";
+    /**
+     * 获取倒计时，get,params(roomId)
+     */
+    public static final String BULLFIGHT_TIMER = "admin/appusers/Countdowntime";
+    /**
+     * 初始化游戏结果25秒调用，get param（roomId）
+     */
+    public static final String BULLFIGHT_INITGAME = "admin/appusers/anchor25s";
+    /**
+     * 获取庄家信息，get
+     */
+    public static final String BULLFIGHT_BANKER = "admin/appusers/getbankerUser";
+    /**
+     * 投注接口，get param（userId，roomId，amount，type
+     ，perid
+     ，status）
+     */
+    public static final String BULLFIGHT_BETTING = "admin/appusers/bugtaurus";
 
+    /**
+     * 生成投注url
+     * @param userId
+     * @param roomId
+     * @param amount 投注金额
+     * @param type  1为投注天2为投注地3为人
+     * @param perid 期数
+     * @param status 0 为1倍 1为2倍
+     * @return
+     */
+    public static String betting(int userId, int roomId, int amount, int type, int perid, int status){
+        return serverUrl+BULLFIGHT_BETTING+"?userId="+userId+"&roomId="+roomId+"&amount="+amount+"&type="+type+"&perid="+perid+"&status="+status;
+    }
+
+    /**
+     * 主播（29s）调用重置时间，get,params(roomId,perId)
+     */
+    public static final String BULLFIGHT_INITTIME = "admin/appusers/changetime";
+    /**
+     * 开牌结果（20s调用），get,params(roomId)
+     */
+    public static final String BULLFIGHT_POKER_RESULT = "admin/appusers/cardsresult";
+    /**
+     * 刷新庄家金币数
+     */
+    public static final String BULLFIGHT_BANKER_BALANCE = "admin/appusers/getcontrol";
+    /**
+     * 开奖结果roomId	String 	房间id
+        perid	String	期数
+        userId	String	用户id
+     */
+    public static final String BULLFIGHT_RESULT = "admin/appusers/cashprize";
     public static final String cloesAnchor(String id) {//关闭直播
         return "/api/v1/room/" + id + "/leave";
     }

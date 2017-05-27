@@ -128,6 +128,15 @@ public class CustomdateBean implements Serializable {
      */
     private String palyMsg;//开游戏信息
     private String inputMsg;//游戏投注信息
+    private String palyDouniuMsg;//开斗牛信息
+
+    public String getPalyDouniuMsg() {
+        return palyDouniuMsg;
+    }
+
+    public void setPalyDouniuMsg(String palyDouniuMsg) {
+        this.palyDouniuMsg = palyDouniuMsg;
+    }
 
     public String getInputMsg() {
         return inputMsg;
