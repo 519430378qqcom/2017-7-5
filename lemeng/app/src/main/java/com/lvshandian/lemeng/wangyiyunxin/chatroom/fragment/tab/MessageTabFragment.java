@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.wangyiyunxin.chatroom.constant.ChatRoomTab;
 import com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragment;
-import com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragmentGift;
 
 
 /**
@@ -17,7 +16,6 @@ import com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragm
  */
 public class MessageTabFragment extends ChatRoomTabFragment {
     private ChatRoomMessageFragment fragment;
-    private ChatRoomMessageFragmentGift fragmentGift;
 
     public MessageTabFragment() {
         this.setContainerId(ChatRoomTab.CHAT_ROOM_MESSAGE.fragmentId);
@@ -53,6 +51,5 @@ public class MessageTabFragment extends ChatRoomTabFragment {
 
     private void findViews() {
         fragment = (ChatRoomMessageFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.chat_room_message_fragment);
-        fragmentGift = (ChatRoomMessageFragmentGift) getActivity().getSupportFragmentManager().findFragmentById(R.id.chat_room_message_fragment);
     }
 }

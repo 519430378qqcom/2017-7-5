@@ -124,7 +124,6 @@ import com.lvshandian.lemeng.view.RotateLayout;
 import com.lvshandian.lemeng.view.RoundDialog;
 import com.lvshandian.lemeng.view.ScrollRelativeLayout;
 import com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragment;
-import com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragmentGift;
 import com.lvshandian.lemeng.wangyiyunxin.chatroom.helper.ChatRoomMemberCache;
 import com.lvshandian.lemeng.wangyiyunxin.live.fragment.ChatRoomSessionListFragment;
 import com.lvshandian.lemeng.wangyiyunxin.live.fragment.LiveMessageFragment;
@@ -401,14 +400,10 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     private int liveOnLineNums;
 
     /**
-     * 左下角消息模块显示非礼物消息布局
+     * 左下角消息模块显示消息布局
      */
     private ChatRoomMessageFragment messageFragment;
 
-    /**
-     * 左下角消息模块显示礼物消息布局
-     */
-    private ChatRoomMessageFragmentGift messageFragmentGift;
 
     /**
      * 登录网易云信聊天室
@@ -552,15 +547,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      */
     private int SEND_NUM;
 
-    /**
-     * 接收礼物人的Id
-     */
-    private String toUserId = "";
-
-    /**
-     * 接收礼物人的名字
-     */
-    private String toUserName = "";
 
     /**
      * 发送礼物时，礼物的图片地址
@@ -643,18 +629,17 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         map.put("gift_item_index", mSendGiftItem.getId());
                         map.put("gift_item_number", "1");
                         map.put("gift_coinnumber_index", mSendGiftItem.getAnchorReceive());
-                        map.put("gift_item_message", "赠送了" + "1个" + mSendGiftItem.getName()
-                                + "给" + toUserName);
+                        map.put("gift_item_message", "赠送了" + "1个" + mSendGiftItem.getName());
                         map.put("vip", appUser.getVip());
                         map.put("userId", appUser.getId());
                         map.put("gift_Grand_Prix_number", null);
                         map.put("gift_Grand_Prix", null);
                         map.put("gift_giftCoinNumber", mSendGiftItem.getMemberConsume());
-                        map.put("receveUserId", toUserId);
+                        map.put("receveUserId", liveListBean.getId()+"");
                         map.put("gift_Type1", mSendGiftItem.getWinFlag());
                         map.put("level", appUser.getLevel());
                         map.put("RepeatGiftNumber", num);
-                        SendRoomMessageUtils.onCustomMessageSendGift(messageFragmentGift,
+                        SendRoomMessageUtils.onCustomMessageSendGift(messageFragment,
                                 liveListBean.getRooms().getRoomId() + "", map);
 
                         myGoldCoin = myGoldCoin - Long.parseLong(mSendGiftItem.getMemberConsume());
@@ -1521,15 +1506,13 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 sessionListFragment = new ChatRoomSessionListFragment();
                 sessionListFragment.init(getSupportFragmentManager(), ll_buttom_mun);
                 transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.watch_room_message_fragment_parent, sessionListFragment);
+                transaction.replace(R.id.watch_room_message_fragment, sessionListFragment);
                 transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 transaction.addToBackStack(null);
                 transaction.commit();
                 break;
             //礼物
             case R.id.iv_live_gift:
-                toUserId = liveListBean.getRooms().getUserId() + "";
-                toUserName = liveListBean.getNickName();
                 getGiftPopup();
                 break;
 //            //分享
@@ -2206,19 +2189,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             }, 50);
         }
 
-        messageFragmentGift = (ChatRoomMessageFragmentGift) getSupportFragmentManager()
-                .findFragmentById(R.id.watch_room_message_fragment_gift);
-        if (messageFragmentGift != null) {
-            messageFragmentGift.init(roomId);
-        } else {
-            // 如果Fragment还未Create完成，延迟初始化
-            getHandler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    initMessageFragment();
-                }
-            }, 50);
-        }
     }
 
     private void onLoginDone() {
@@ -2362,7 +2332,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         map.put("roomId", liveListBean.getRooms().getId() + "");
         map.put("amount", mSendGiftItem.getMemberConsume());
         map.put("giftId", mSendGiftItem.getId());
-        map.put("toUserId", toUserId);
+        map.put("toUserId", liveListBean.getId()+"");
         httpDatas.DataNoloadingAdmin("赠送礼物", Request.Method.POST,
                 UrlBuilder.SEND_GIFT, map, myHandler, RequestCode.SEND_GIFT);
     }
@@ -3419,7 +3389,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 liveMessageFragment.init(getSupportFragmentManager(), ll_buttom_mun);
                 liveMessageFragment.setArguments(arguments);
                 getSupportFragmentManager().beginTransaction().replace(R.id
-                        .watch_room_message_fragment_parent, liveMessageFragment).setTransition
+                        .watch_room_message_fragment, liveMessageFragment).setTransition
                         (FragmentTransaction.TRANSIT_FRAGMENT_OPEN).addToBackStack(null).commit();
                 otherPop.dismiss();
             }

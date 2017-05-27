@@ -269,8 +269,9 @@ public class ChatRoomSessionListFragment extends MainTabFragment {
                         Bundle arguments = intent.getExtras();
                         arguments.putSerializable(Extras.EXTRA_TYPE, SessionTypeEnum.P2P);
                         messageFragment = new LiveMessageFragment();
+                        messageFragment.init(fragmentManager, ll_buttom_mun);
                         messageFragment.setArguments(arguments);
-                        fragmentManager.beginTransaction().add(R.id.watch_room_message_fragment_parent, messageFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).addToBackStack(null).commit();
+                        fragmentManager.beginTransaction().add(R.id.watch_room_message_fragment, messageFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).addToBackStack(null).commit();
                         break;
                     case Team:
 //                        SessionHelper.startTeamSession(getActivity(), recent.getContactId());

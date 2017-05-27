@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.zhy.autolayout.AutoFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
     <!--主播开直播界面-->
 
     <com.zhy.autolayout.AutoRelativeLayout
@@ -194,10 +194,10 @@
                         android:id="@+id/live_head"
                         android:layout_width="70px"
                         android:layout_height="70px"
-                        app:border_color="@color/white"
-                        app:border_width="1dip"
                         android:layout_centerInParent="true"
-                        android:src="@mipmap/head_default" />
+                        android:src="@mipmap/head_default"
+                        app:border_color="@color/white"
+                        app:border_width="1dip" />
 
                     <com.lvshandian.lemeng.widget.AvatarView
                         android:id="@+id/live_lianmai_head_bg1"
@@ -322,8 +322,8 @@
             android:layout_height="380px"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="20px"
-            android:layout_marginBottom="200px">
+            android:layout_marginBottom="200px"
+            android:layout_marginRight="20px">
 
             <com.zhy.autolayout.AutoRelativeLayout
                 android:layout_width="240px"
@@ -332,7 +332,7 @@
                 <SurfaceView
                     android:id="@+id/video_lian"
                     android:layout_width="240px"
-                    android:layout_height="380px"/>
+                    android:layout_height="380px" />
             </com.zhy.autolayout.AutoRelativeLayout>
 
         </com.zhy.autolayout.AutoFrameLayout>
@@ -344,33 +344,13 @@
             android:layout_alignParentBottom="true"
             android:orientation="vertical">
 
-            <com.zhy.autolayout.AutoFrameLayout
-                android:id="@+id/watch_room_message_fragment_parent"
+            <fragment
+                android:id="@+id/watch_room_message_fragment"
+                android:name="com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragment"
                 android:layout_width="match_parent"
-                android:layout_height="505px"
-                android:layout_alignParentBottom="true"
-                android:background="@color/transparent"
-                android:orientation="vertical">
-
-                <fragment
-                    android:id="@+id/watch_room_message_fragment_gift"
-                    android:name="com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragmentGift"
-                    android:layout_width="match_parent"
-                    android:layout_height="200px"
-                    android:background="@drawable/btn_ticket_labe" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="5px" />
-
-                <fragment
-                    android:id="@+id/watch_room_message_fragment"
-                    android:name="com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="300px"
-                    android:layout_gravity="bottom"
-                    android:background="@drawable/btn_ticket_labe" />
-            </com.zhy.autolayout.AutoFrameLayout>
+                android:layout_height="500px"
+                android:layout_gravity="bottom"
+                android:background="@drawable/btn_ticket_labe" />
 
             <com.zhy.autolayout.AutoRelativeLayout
                 android:id="@+id/ll_buttom_mun"
@@ -509,6 +489,7 @@
                 android:layout_height="wrap_content">
 
                 <include layout="@layout/view_show_bullfight_game" />
+
                 <include layout="@layout/view_show_watchlive_game" />
 
             </com.zhy.autolayout.AutoRelativeLayout>

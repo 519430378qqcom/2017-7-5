@@ -3,14 +3,15 @@ package com.lvshandian.lemeng.wangyiyunxin.chatroom.activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.widget.Toast;
 
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomFragment;
 import com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragment;
-import com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragmentGift;
 import com.lvshandian.lemeng.wangyiyunxin.chatroom.helper.ChatRoomMemberCache;
 import com.netease.nim.uikit.common.activity.UI;
 import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
@@ -50,7 +51,6 @@ public class ChatRoomActivity extends UI {
      * 子页面
      */
     private ChatRoomMessageFragment messageFragment;
-    private ChatRoomMessageFragmentGift messageFragmentGift;
     private AbortableFuture<EnterChatRoomResultData> enterRequest;
 
     public static void start(Context context, String roomId) {
@@ -61,6 +61,7 @@ public class ChatRoomActivity extends UI {
         context.startActivity(intent);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -219,19 +220,6 @@ public class ChatRoomActivity extends UI {
         messageFragment = (ChatRoomMessageFragment) getSupportFragmentManager().findFragmentById(R.id.chat_room_message_fragment);
         if (messageFragment != null) {
             messageFragment.init(roomId, "");
-        } else {
-            // 如果Fragment还未Create完成，延迟初始化
-            getHandler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    initMessageFragment();
-                }
-            }, 50);
-        }
-
-        messageFragmentGift = (ChatRoomMessageFragmentGift) getSupportFragmentManager().findFragmentById(R.id.chat_room_message_fragment);
-        if (messageFragmentGift != null) {
-            messageFragmentGift.init(roomId);
         } else {
             // 如果Fragment还未Create完成，延迟初始化
             getHandler().postDelayed(new Runnable() {

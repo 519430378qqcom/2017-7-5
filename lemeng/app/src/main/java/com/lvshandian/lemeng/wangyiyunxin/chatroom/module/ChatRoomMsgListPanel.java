@@ -155,13 +155,9 @@ public class ChatRoomMsgListPanel implements TAdapterDelegate {
                 if (message != null) {
                     remote0 = message.getRemoteExtension();
                 }
-                if (remote0 != null && !TextUtils.isEmpty((String) remote0.get("type")) && remote0.get("type").equals("109")) {
-
-                } else {
-                    saveMessage(message, false);
-                    addedListItems.add(message);
-                    needRefresh = true;
-                }
+                saveMessage(message, false);
+                addedListItems.add(message);
+                needRefresh = true;
             }
         }
         //如果是礼物消息，发送广播给直播室

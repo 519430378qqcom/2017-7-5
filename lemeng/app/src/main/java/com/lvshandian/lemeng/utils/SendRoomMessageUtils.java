@@ -3,7 +3,6 @@ package com.lvshandian.lemeng.utils;
 import android.util.Log;
 
 import com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragment;
-import com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragmentGift;
 import com.netease.nim.uikit.session.module.Container;
 import com.netease.nimlib.sdk.chatroom.ChatRoomMessageBuilder;
 import com.netease.nimlib.sdk.chatroom.model.ChatRoomMessage;
@@ -108,7 +107,7 @@ public class SendRoomMessageUtils {
      * @author sll
      * @time 2016/11/22 20:44
      */
-    public static void onCustomMessageSendGift(ChatRoomMessageFragmentGift fragment, String container, Map<String, Object> date) {
+    public static void onCustomMessageSendGift(ChatRoomMessageFragment fragment, String container, Map<String, Object> date) {
         ChatRoomMessage msg = ChatRoomMessageBuilder.createChatRoomCustomMessage(container, new MsgAttachment() {
             @Override
             public String toJson(boolean b) {

@@ -121,7 +121,6 @@ import com.lvshandian.lemeng.view.BarrageView;
 import com.lvshandian.lemeng.view.RotateLayout;
 import com.lvshandian.lemeng.view.RoundDialog;
 import com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragment;
-import com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragmentGift;
 import com.lvshandian.lemeng.wangyiyunxin.chatroom.helper.ChatRoomMemberCache;
 import com.lvshandian.lemeng.wangyiyunxin.live.fragment.ChatRoomSessionListFragment;
 import com.lvshandian.lemeng.wangyiyunxin.live.fragment.LiveMessageFragment;
@@ -304,8 +303,6 @@ public class StartLiveActivity extends BaseActivity implements
     LinearLayout ll_game;
     @Bind(R.id.ll_buttom_mun)
     RelativeLayout ll_buttom_mun;
-    @Bind(R.id.watch_room_message_fragment_parent)
-    AutoFrameLayout watch_room_message_fragment_parent;
     @Bind(R.id.iv_xy)
     ImageView iv_xy;
     @Bind(R.id.live_game)
@@ -588,14 +585,10 @@ public class StartLiveActivity extends BaseActivity implements
     private GridLayoutManager mLayoutManager;
 
     /**
-     * 左下角消息模块显示非礼物消息布局
+     * 左下角消息模块显示消息布局
      */
     private ChatRoomMessageFragment messageFragment;
 
-    /**
-     * 左下角消息模块显示礼物消息布局
-     */
-    private ChatRoomMessageFragmentGift messageFragmentGift;
 
     /**
      * 登录网易云信聊天室
@@ -1133,7 +1126,7 @@ public class StartLiveActivity extends BaseActivity implements
                 sessionListFragment.init(getSupportFragmentManager(), ll_buttom_mun);
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.watch_room_message_fragment_parent, sessionListFragment);
+                transaction.replace(R.id.watch_room_message_fragment, sessionListFragment);
                 transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 transaction.addToBackStack(null);
                 transaction.commit();
@@ -1897,20 +1890,6 @@ public class StartLiveActivity extends BaseActivity implements
 
         if (messageFragment != null) {
             messageFragment.init(wy_Id, room_Id);
-        } else {
-            // 如果Fragment还未Create完成，延迟初始化
-            getHandler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    initMessageFragment();
-                }
-            }, 50);
-        }
-
-        messageFragmentGift = (ChatRoomMessageFragmentGift) getSupportFragmentManager()
-                .findFragmentById(R.id.watch_room_message_fragment_gift);
-        if (messageFragmentGift != null) {
-            messageFragmentGift.init(wy_Id);
         } else {
             // 如果Fragment还未Create完成，延迟初始化
             getHandler().postDelayed(new Runnable() {
@@ -3492,7 +3471,7 @@ public class StartLiveActivity extends BaseActivity implements
                 liveMessageFragment.init(getSupportFragmentManager(), ll_buttom_mun);
                 liveMessageFragment.setArguments(arguments);
                 getSupportFragmentManager().beginTransaction().replace(R.id
-                        .watch_room_message_fragment_parent, liveMessageFragment).setTransition
+                        .watch_room_message_fragment, liveMessageFragment).setTransition
                         (FragmentTransaction.TRANSIT_FRAGMENT_OPEN).addToBackStack(null).commit();
                 otherPop.dismiss();
             }
