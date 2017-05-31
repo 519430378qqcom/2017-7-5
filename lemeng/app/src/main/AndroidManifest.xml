@@ -334,6 +334,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".moudles.index.live.PrapareStartActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- 粉丝列表 -->
         <activity
             android:name=".moudles.mine.my.FunseListActivity"
@@ -351,8 +357,13 @@
             android:name=".moudles.index.live.WatchLiveActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="adjustPan|stateHidden" />
+        <!--<activity-->
+            <!--android:name=".moudles.index.live.WatchLiveActivity"-->
+            <!--android:launchMode="singleTop"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:theme="@android:style/Theme.Translucent.NoTitleBar"-->
+            <!--android:windowSoftInputMode="adjustPan|stateHidden" />-->
 
         <!-- 开启直播 -->
         <activity

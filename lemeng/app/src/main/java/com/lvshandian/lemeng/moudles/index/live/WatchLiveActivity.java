@@ -24,7 +24,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.PowerManager;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -106,7 +105,7 @@ import com.lvshandian.lemeng.utils.Config;
 import com.lvshandian.lemeng.utils.CountUtils;
 import com.lvshandian.lemeng.utils.DESUtil;
 import com.lvshandian.lemeng.utils.DateUtils;
-import com.lvshandian.lemeng.utils.FastBlur;
+import com.lvshandian.lemeng.utils.FastBlurUtil;
 import com.lvshandian.lemeng.utils.FramesSequenceAnimation;
 import com.lvshandian.lemeng.utils.GrademipmapUtils;
 import com.lvshandian.lemeng.utils.JavaBeanMapUtils;
@@ -162,9 +161,6 @@ import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 import com.netease.nimlib.sdk.msg.model.CustomNotification;
 import com.netease.nimlib.sdk.msg.model.IMMessage;
 import com.netease.nimlib.sdk.uinfo.UserInfoProvider;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.qiniu.android.dns.DnsManager;
 import com.qiniu.android.dns.IResolver;
 import com.qiniu.android.dns.NetworkInfo;
@@ -248,9 +244,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     //是否隐藏直播界面内容
     private boolean isHindRcView = false;
 
-    RelativeLayout rlLoading;
+    ImageView rlLoading;
     RelativeLayout ll_buttom_mun;
-    ImageView ivLoad;
     ImageView ruanjianpanW;
     ImageView zhoubangW;
     TextView tv_lianmai;
@@ -813,9 +808,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
         mRoomContainer = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.view_room_container, null);
 
-        rlLoading = (RelativeLayout) mRoomContainer.findViewById(R.id.rl_loading);
+        rlLoading = (ImageView) mRoomContainer.findViewById(R.id.iv_loading);
         ll_buttom_mun = (RelativeLayout) mRoomContainer.findViewById(R.id.ll_buttom_mun);
-        ivLoad = (ImageView) mRoomContainer.findViewById(R.id.iv_load);
         ruanjianpanW = (ImageView) mRoomContainer.findViewById(R.id.ruanjianpanW);
         zhoubangW = (ImageView) mRoomContainer.findViewById(R.id.zhoubangW);
         tv_lianmai = (TextView) mRoomContainer.findViewById(R.id.tv_lianmai);
@@ -1054,36 +1048,25 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         liveHead.setAvatarUrl(liveListBean.getPicUrl());
         liveHeadImg.setAvatarUrl(liveListBean.getPicUrl());
 
-        if (!com.lvshandian.lemeng.utils.TextUtils.isEmpty(liveListBean.getPicUrl())) {
-            ImageLoader.getInstance().loadImage(liveListBean.getPicUrl(), new
-                    ImageLoadingListener() {
-                        @Override
-                        public void onLoadingStarted(String s, View view) {
-                        }
-
-                        @Override
-                        public void onLoadingFailed(String s, View view, FailReason failReason) {
-                        }
-
-                        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-                        @Override
-                        public void onLoadingComplete(String s, View view, Bitmap bitmap) {
-                            if (bitmap != null) {
-                                try {
-                                    bitmap = FastBlur.doBlur(bitmap, 5, true);
-                                    BitmapDrawable drawable = new BitmapDrawable(bitmap);
-                                    rlLoading.setBackground(drawable);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onLoadingCancelled(String s, View view) {
-                        }
-                    });
+        String picUrl = liveListBean.getPicUrl();
+        if (TextUtils.isEmpty(picUrl)) {
+            picUrl = UrlBuilder.HEAD_DEFAULT;
         }
+        final String finalPicUrl = picUrl;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final Bitmap blurBitmap2 = FastBlurUtil.GetUrlBitmap(finalPicUrl, 4);
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        rlLoading.setImageBitmap(blurBitmap2);
+                    }
+                });
+            }
+        }).start();
+
         if (liveListBean.getNickName().length() > 4) {
             liveName.setText(liveListBean.getNickName().substring(0, 4) + "...");
         } else {
@@ -1674,10 +1657,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      */
     private void startloading() {
         rlLoading.setVisibility(View.VISIBLE);
-//        framesSequenceAnimation = new FramesSequenceAnimation(WatchLiveActivity.this, ivLoad,
-//                R.array.loding, 300);
-//        framesSequenceAnimation.setOneShot(false);
-//        framesSequenceAnimation.start();
     }
 
     @Override

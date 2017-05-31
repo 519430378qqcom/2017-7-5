@@ -13,7 +13,6 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -29,7 +28,6 @@ import android.widget.TabHost;
 
 import com.android.volley.Request;
 import com.lvshandian.lemeng.base.BaseActivity;
-import com.lvshandian.lemeng.bean.CreatReadyBean;
 import com.lvshandian.lemeng.bean.QuitApp;
 import com.lvshandian.lemeng.bean.QuitLogin;
 import com.lvshandian.lemeng.httprequest.HttpDatas;
@@ -37,7 +35,7 @@ import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.interf.ResultListener;
 import com.lvshandian.lemeng.moudles.index.IndexPagerFragment;
 import com.lvshandian.lemeng.moudles.index.fragment.AttentionFragment;
-import com.lvshandian.lemeng.moudles.index.live.StartLiveActivity;
+import com.lvshandian.lemeng.moudles.index.live.PrapareStartActivity;
 import com.lvshandian.lemeng.moudles.mine.HomeChatFragment;
 import com.lvshandian.lemeng.moudles.mine.MyInformationFragment;
 import com.lvshandian.lemeng.moudles.mine.bean.PhotoBean;
@@ -45,10 +43,7 @@ import com.lvshandian.lemeng.moudles.mine.bean.VideoBean;
 import com.lvshandian.lemeng.moudles.start.LoginActivity;
 import com.lvshandian.lemeng.moudles.start.LogoutHelper;
 import com.lvshandian.lemeng.utils.AliYunImageUtils;
-import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
-import com.lvshandian.lemeng.utils.NetWorkUtil;
-import com.lvshandian.lemeng.utils.PermisionUtils;
 import com.lvshandian.lemeng.view.LoadingDialog;
 import com.lvshandian.lemeng.wangyiyunxin.config.preference.Preferences;
 import com.lvshandian.lemeng.wangyiyunxin.main.helper.SystemMessageUnreadManager;
@@ -151,7 +146,6 @@ public class MainActivity extends BaseActivity implements
      */
     private long dowableClick = 1000 * 2;
 
-    private String address = "火星";
     /**
      * 请求Loading
      */
@@ -182,18 +176,6 @@ public class MainActivity extends BaseActivity implements
                     EventBus.getDefault().post(videoBean);
                     intentMyInformationFragment();
                     showToast("上传视频成功");
-                    break;
-                case RequestCode.START_LIVE:
-                    if (mLoading != null && mLoading.isShowing()) {
-                        mLoading.dismiss();
-                    }
-                    CreatReadyBean creatReadyBean = JsonUtil.json2Bean(json, CreatReadyBean.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("START", creatReadyBean);
-                    LogUtils.e("START: " + creatReadyBean.toString());
-                    Intent intent = new Intent(mContext, StartLiveActivity.class);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
                     break;
             }
         }
@@ -249,17 +231,7 @@ public class MainActivity extends BaseActivity implements
             case R.id.ll_startLive:
                 index = 2;
 //                startActivity(new Intent(mContext, PrapareVedioActivity.class));
-                PermisionUtils.newInstance().checkLocationPermission(this, new PermisionUtils.OnPermissionGrantedLintener() {
-                    @Override
-                    public void permissionGranted() {
-                        if (TextUtils.isEmpty(MyApplication.city)) {
-                            address = "火星";
-                        } else {
-                            address = MyApplication.city;
-                        }
-                        quickStartLivePop();
-                    }
-                });
+                quickStartLivePop();
                 return;
             case R.id.ll_chat:
                 index = 3;
@@ -501,7 +473,7 @@ public class MainActivity extends BaseActivity implements
  * 保存图片
  */
     public String savePicture(Bitmap bitmap) {
-        String pictureName = "/mnt/sdcard/" + "partylive" + ".jpg";
+        String pictureName = "/mnt/sdcard/" + "lemeng" + ".jpg";
         File file = new File(pictureName);
         FileOutputStream out;
         try {
@@ -772,31 +744,7 @@ public class MainActivity extends BaseActivity implements
         iv_prapare_live.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (NetWorkUtil.getConnectedType(mContext) == 0) {
-                    initDialog();
-                    baseDialogTitle.setText("当前为移动网络,是否开启直播");
-                    baseDialogLeft.setText("取消直播");
-                    baseDialogRight.setText("继续直播");
-                    baseDialogLeft.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (baseDialog != null && baseDialog.isShowing()) {
-                                baseDialog.dismiss();
-                            }
-                        }
-                    });
-                    baseDialogRight.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (baseDialog != null && baseDialog.isShowing()) {
-                                baseDialog.dismiss();
-                            }
-                            startLive();
-                        }
-                    });
-                } else {
-                    startLive();
-                }
+                startActivity(new Intent(mContext, PrapareStartActivity.class));
                 praparePop.dismiss();
             }
         });
@@ -837,16 +785,4 @@ public class MainActivity extends BaseActivity implements
 
     }
 
-    private void startLive() {
-        mLoading = new LoadingDialog(mContext);
-        mLoading.show();
-        ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
-        map.put("name", appUser.getNickName());
-        map.put("city", address);
-        map.put("userId", appUser.getId());
-        map.put("privateChat", "1");
-        map.put("payForChat", appUser.getPayForVideoChat());
-        map.put("livePicUrl", appUser.getPicUrl());
-        httpDatas.getDataForJson("开启直播", Request.Method.POST, UrlBuilder.START, map, mHandler, RequestCode.START_LIVE);
-    }
 }

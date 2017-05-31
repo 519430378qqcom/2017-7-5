@@ -9,6 +9,7 @@ import android.os.PowerManager;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -75,11 +76,11 @@ public class AnchorVideo {
     };
     private Handler mHandler;
     private Activity mContext;
-    private RelativeLayout rlLoading;//进入直播间背景图
+    private ImageView rlLoading;//进入直播间背景图
     private LoadingDialog mLoading;//进入直播间loading
 
     //初始化播放器
-    public void initLive(String mVideoPath, Activity mContext, SurfaceView mSurfaceView, RelativeLayout rlLoading) {
+    public void initLive(String mVideoPath, Activity mContext, SurfaceView mSurfaceView, ImageView rlLoading) {
         this.mContext = mContext;
         this.mSurfaceView = mSurfaceView;
         this.mVideoPath = mVideoPath;
