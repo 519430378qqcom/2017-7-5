@@ -5,6 +5,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -59,6 +60,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.android.volley.Request;
+import com.bumptech.glide.Glide;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
@@ -92,6 +94,15 @@ import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.httprequest.SdkHttpResultSuccess;
 import com.lvshandian.lemeng.moudles.index.CustomNotificationType;
+import com.lvshandian.lemeng.moudles.index.live.bullfight.BankerBalance;
+import com.lvshandian.lemeng.moudles.index.live.bullfight.BankerInfo;
+import com.lvshandian.lemeng.moudles.index.live.bullfight.BetResult;
+import com.lvshandian.lemeng.moudles.index.live.bullfight.BullfightInterface;
+import com.lvshandian.lemeng.moudles.index.live.bullfight.BullfightPresenter;
+import com.lvshandian.lemeng.moudles.index.live.bullfight.GameResult;
+import com.lvshandian.lemeng.moudles.index.live.bullfight.PokerResult;
+import com.lvshandian.lemeng.moudles.index.live.bullfight.StartResult;
+import com.lvshandian.lemeng.moudles.index.live.bullfight.TimeAndNper;
 import com.lvshandian.lemeng.moudles.index.live.gift.GiftFrameLayout;
 import com.lvshandian.lemeng.moudles.index.live.gift.GiftSendModel;
 import com.lvshandian.lemeng.moudles.index.live.utils.AnchorVideo;
@@ -214,6 +225,7 @@ import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 import fr.castorflex.android.verticalviewpager.VerticalViewPager;
 import xiao.free.horizontalrefreshlayout.HorizontalRefreshLayout;
 import xiao.free.horizontalrefreshlayout.RefreshCallBack;
@@ -228,7 +240,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         .UnreadNumChangedCallback,
         View.OnLayoutChangeListener, StreamStatusCallback,
         StreamingPreviewCallback, SurfaceTextureCallback, AudioSourceCallback,
-        StreamingSessionListener,
+        StreamingSessionListener, BullfightInterface,
         StreamingStateChangedListener, CameraLivePreviewFrameView.Listener, RefreshCallBack {
 
     private VerticalViewPager mViewPager;
@@ -787,6 +799,13 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         getTimenumber();
                     }
                     break;
+                case BULLFIGHT_TIME:
+                    bullfightTimer();
+                    break;
+                case WAIT_NEXT_START:
+                    isWait = false;
+                    bullfightPresenter.getTimeAndNper(liveListBean.getRoomId()+"");
+                    break;
             }
         }
     };
@@ -797,7 +816,111 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     private boolean isTouZhu;//是否可以投注
     private ImageView iv_game;
     private TextView tv_hz;
+    //<start------------斗牛游戏部分-------------->
+    RelativeLayout rl_game_container;
+    ImageView iv_bullfight;
+    AutoLinearLayout live_game_bullfight;
+    RelativeLayout rl_game_info;
+    AutoRelativeLayout rl_bullfight_banker;
+    CircleImageView iv_bullfight_banker_head;
+    TextView tv_bullfight_bankername;
+    TextView tv_bullfight_banker_money;
+    ImageView iv_poker_banker1;
+    ImageView iv_poker_banker2;
+    ImageView iv_poker_banker3;
+    ImageView iv_poker_banker4;
+    ImageView iv_poker_banker5;
+    TextView tv_bullfight_totlanum1;
+    TextView tv_bullfight_minenum1;
+    AutoRelativeLayout rl_bullfight_betting_container1;
+    ImageView iv_poker_palyer11;
+    ImageView iv_poker_palyer12;
+    ImageView iv_poker_palyer13;
+    ImageView iv_poker_palyer14;
+    ImageView iv_poker_palyer15;
+    AutoRelativeLayout rl_bullfight1;
+    TextView tv_bullfight_totlanum2;
+    TextView tv_bullfight_minenum2;
+    AutoRelativeLayout rl_bullfight_betting_container2;
+    ImageView iv_poker_palyer21;
+    ImageView iv_poker_palyer22;
+    ImageView iv_poker_palyer23;
+    ImageView iv_poker_palyer24;
+    ImageView iv_poker_palyer25;
+    AutoRelativeLayout rl_bullfight2;
+    TextView tv_bullfight_totlanum3;
+    TextView tv_bullfight_minenum3;
+    AutoRelativeLayout rl_bullfight_betting_container3;
+    ImageView iv_poker_palyer31;
+    ImageView iv_poker_palyer32;
+    ImageView iv_poker_palyer33;
+    ImageView iv_poker_palyer34;
+    ImageView iv_poker_palyer35;
+    AutoRelativeLayout rl_bullfight3;
+    TextView tv_timing;
+    TextView tv_bullfight_result1;
+    TextView tv_bullfight_result2;
+    TextView tv_bullfight_result3;
+    AutoLinearLayout ll_bullfight_result;
+    AutoRelativeLayout rl_timing;
+    TextView tv_bullfight_lepiao;
+    TextView tv_bullfight_top_up;
+    ImageView iv_10;
+    ImageView iv_50;
+    ImageView iv_100;
+    ImageView iv_1000;
+    ImageView iv_10000;
+    ImageView iv_bull_amount0;
+    ImageView iv_bull_amount1;
+    ImageView iv_bull_amount2;
+    ImageView iv_bull_amount3;
+    AutoRelativeLayout rl_poker_banker_container;
+    AutoRelativeLayout rl_poker_player_container1;
+    AutoRelativeLayout rl_poker_player_container2;
+    AutoRelativeLayout rl_poker_player_container3;
+    /**
+     * 标识直播间当前开启的游戏类型；1（彩票）;2（斗牛）
+     */
+    private int gameType;
+    /**
+     * 被选中的投注icon动画
+     */
+    private ValueAnimator valueAnimator;
+    /**
+     * 投注池支持显示投注视图的最大容量
+     */
+    private final int BETTING_POOL_VIEWS_CAPACITY = 30;
+    /**
+     * 剩余多长时间结束
+     */
+    private int nextTime;
+    /**
+     * 期数
+     */
+    private int uper;
+    /**
+     * 发送斗牛倒计时的消息标识
+     */
+    private final int BULLFIGHT_TIME = 233;
+    /**
+     * 等待下一局开始
+     */
+    private final int WAIT_NEXT_START = 234;
 
+    private BullfightPresenter bullfightPresenter;
+    /**
+     * 投注金额
+     */
+    private int betBalance;
+    /**
+     * 投注位置
+     */
+    private int betPosition;
+    /**
+     * 是否等待下一局
+     */
+    private boolean isWait;
+    //<end------------斗牛游戏部分-------------->
 
     @Override
     protected int getLayoutId() {
@@ -898,6 +1021,68 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         tv_game_next_open_time = (TimeCountDownLayout) mRoomContainer.findViewById(R.id.tv_game_next_open_time);
         rl_kp = (LinearLayout) mRoomContainer.findViewById(R.id.rl_kp);
         tv_hz = (TextView) mRoomContainer.findViewById(R.id.tv_hz);
+        //斗牛部分
+        rl_game_container = (RelativeLayout) mRoomContainer.findViewById(R.id.rl_game_container);
+        iv_bullfight = (ImageView) mRoomContainer.findViewById(R.id.iv_bullfight);
+        live_game_bullfight = (AutoLinearLayout) mRoomContainer.findViewById(R.id.live_game_bullfight);
+        rl_game_info = (RelativeLayout) mRoomContainer.findViewById(R.id.rl_game_info);
+        rl_bullfight_banker = (AutoRelativeLayout) mRoomContainer.findViewById(R.id.rl_bullfight_banker);
+        iv_bullfight_banker_head = (CircleImageView) mRoomContainer.findViewById(R.id.iv_bullfight_banker_head);
+        tv_bullfight_bankername = (TextView) mRoomContainer.findViewById(R.id.tv_bullfight_bankername);
+        tv_bullfight_banker_money = (TextView) mRoomContainer.findViewById(R.id.tv_bullfight_banker_money);
+        iv_poker_banker1 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_banker1);
+        iv_poker_banker2 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_banker2);
+        iv_poker_banker3 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_banker3);
+        iv_poker_banker4 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_banker4);
+        iv_poker_banker5 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_banker5);
+        tv_bullfight_totlanum1 = (TextView) mRoomContainer.findViewById(R.id.tv_bullfight_totlanum1);
+        tv_bullfight_minenum1 = (TextView) mRoomContainer.findViewById(R.id.tv_bullfight_minenum1);
+        tv_bullfight_totlanum2 = (TextView) mRoomContainer.findViewById(R.id.tv_bullfight_totlanum2);
+        tv_bullfight_minenum2 = (TextView) mRoomContainer.findViewById(R.id.tv_bullfight_minenum2);
+        tv_bullfight_totlanum3 = (TextView) mRoomContainer.findViewById(R.id.tv_bullfight_totlanum3);
+        tv_bullfight_minenum3 = (TextView) mRoomContainer.findViewById(R.id.tv_bullfight_minenum3);
+        rl_bullfight_betting_container1 = (AutoRelativeLayout) mRoomContainer.findViewById(R.id.rl_bullfight_betting_container1);
+        rl_bullfight_betting_container2 = (AutoRelativeLayout) mRoomContainer.findViewById(R.id.rl_bullfight_betting_container2);
+        rl_bullfight_betting_container3 = (AutoRelativeLayout) mRoomContainer.findViewById(R.id.rl_bullfight_betting_container3);
+        iv_poker_palyer11 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_palyer11);
+        iv_poker_palyer12 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_palyer12);
+        iv_poker_palyer13 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_palyer13);
+        iv_poker_palyer14 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_palyer14);
+        iv_poker_palyer15 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_palyer15);
+        iv_poker_palyer21 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_palyer21);
+        iv_poker_palyer22 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_palyer22);
+        iv_poker_palyer23 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_palyer23);
+        iv_poker_palyer24 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_palyer24);
+        iv_poker_palyer25 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_palyer25);
+        iv_poker_palyer31 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_palyer31);
+        iv_poker_palyer32 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_palyer32);
+        iv_poker_palyer33 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_palyer33);
+        iv_poker_palyer34 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_palyer34);
+        iv_poker_palyer35 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_palyer35);
+        rl_bullfight1 = (AutoRelativeLayout) mRoomContainer.findViewById(R.id.rl_bullfight1);
+        rl_bullfight2 = (AutoRelativeLayout) mRoomContainer.findViewById(R.id.rl_bullfight2);
+        rl_bullfight3 = (AutoRelativeLayout) mRoomContainer.findViewById(R.id.rl_bullfight3);
+        tv_timing = (TextView) mRoomContainer.findViewById(R.id.tv_timing);
+        tv_bullfight_result1 = (TextView) mRoomContainer.findViewById(R.id.tv_bullfight_result1);
+        tv_bullfight_result2 = (TextView) mRoomContainer.findViewById(R.id.tv_bullfight_result2);
+        tv_bullfight_result3 = (TextView) mRoomContainer.findViewById(R.id.tv_bullfight_result3);
+        ll_bullfight_result = (AutoLinearLayout) mRoomContainer.findViewById(R.id.ll_bullfight_result);
+        rl_timing = (AutoRelativeLayout) mRoomContainer.findViewById(R.id.rl_timing);
+        tv_bullfight_lepiao = (TextView) mRoomContainer.findViewById(R.id.tv_bullfight_lepiao);
+        tv_bullfight_top_up = (TextView) mRoomContainer.findViewById(R.id.tv_bullfight_top_up);
+        iv_10 = (ImageView) mRoomContainer.findViewById(R.id.iv_10);
+        iv_50 = (ImageView) mRoomContainer.findViewById(R.id.iv_50);
+        iv_100 = (ImageView) mRoomContainer.findViewById(R.id.iv_100);
+        iv_1000 = (ImageView) mRoomContainer.findViewById(R.id.iv_1000);
+        iv_10000 = (ImageView) mRoomContainer.findViewById(R.id.iv_10000);
+        iv_bull_amount0 = (ImageView) mRoomContainer.findViewById(R.id.iv_bull_amount0);
+        iv_bull_amount1 = (ImageView) mRoomContainer.findViewById(R.id.iv_bull_amount1);
+        iv_bull_amount2 = (ImageView) mRoomContainer.findViewById(R.id.iv_bull_amount2);
+        iv_bull_amount3 = (ImageView) mRoomContainer.findViewById(R.id.iv_bull_amount3);
+        rl_poker_banker_container = (AutoRelativeLayout) mRoomContainer.findViewById(R.id.rl_poker_banker_container);
+        rl_poker_player_container1 = (AutoRelativeLayout) mRoomContainer.findViewById(R.id.rl_poker_player_container1);
+        rl_poker_player_container2 = (AutoRelativeLayout) mRoomContainer.findViewById(R.id.rl_poker_player_container2);
+        rl_poker_player_container3 = (AutoRelativeLayout) mRoomContainer.findViewById(R.id.rl_poker_player_container3);
 
         List<LiveListBean> list = (List<LiveListBean>) getIntent().getSerializableExtra("LIVELIST");
         position = getIntent().getIntExtra("position", 0);
@@ -1149,10 +1334,18 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         if (liveListBean.getRooms().getRoomsType().equals("1")) {
             isPlayerRoom = true;
             getTimenumber();
-            showPlayView();
-        } else {
+            showPlayView(1);
+        } else if("2".equals(liveListBean.getRooms().getRoomsType())) {
+            if(bullfightPresenter == null) {
+                bullfightPresenter = new BullfightPresenter(this);
+            }
+            isWait = true;
+            bullfightPresenter.getTimeAndNper(liveListBean.getRoomId()+"");
+        }else {
             isPlayerRoom = false;
-            hidePlayView();
+            if(gameType >= 1) {
+                hidePlayView(gameType);
+            }
         }
     }
 
@@ -1226,11 +1419,20 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         tv_lianmai.setOnClickListener(this);
         ll_buttom_mun.setOnClickListener(this);
 
+        rl_bullfight1.setOnClickListener(this);
+        rl_bullfight2.setOnClickListener(this);
+        rl_bullfight3.setOnClickListener(this);
+        tv_bullfight_top_up.setOnClickListener(this);
+        iv_10.setOnClickListener(this);
+        iv_50.setOnClickListener(this);
+        iv_100.setOnClickListener(this);
+        iv_1000.setOnClickListener(this);
+        iv_10000.setOnClickListener(this);
         //点赞
         mRoot.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                hidePlayView();
+                hidePlayView(gameType);
                 ll_buttom_mun.setVisibility(View.VISIBLE);
                 if (sessionListFragment != null) {
                     sessionListFragment.hide();
@@ -1468,15 +1670,15 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 break;
 
             case R.id.ruanjianpanW:
-                hidePlayView();
+                hidePlayView(gameType);
                 messageFragment.inputTypeOnClick();
                 break;
             case R.id.ll_buttom_mun://游戏
                 if (isPlayerRoom) {
-                    if (live_game.getVisibility() == View.VISIBLE) {
-                        hidePlayView();
+                    if (rl_game_container.getVisibility() == View.VISIBLE) {
+                        hidePlayView(gameType);
                     } else {
-                        showPlayView();
+                        showPlayView(gameType);
                     }
 
                 } else {
@@ -1485,10 +1687,10 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 break;
             case R.id.iv_game:
                 if (isPlayerRoom) {
-                    if (live_game.getVisibility() == View.VISIBLE) {
-                        hidePlayView();
+                    if (rl_game_container.getVisibility() == View.VISIBLE) {
+                        hidePlayView(gameType);
                     } else {
-                        showPlayView();
+                        showPlayView(gameType);
                     }
 
                 } else {
@@ -1518,7 +1720,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 break;
             //私信
             case R.id.iv_live_privatechat:
-                hidePlayView();
+                hidePlayView(gameType);
                 ll_buttom_mun.setVisibility(View.GONE);
 
                 sessionListFragment = new ChatRoomSessionListFragment();
@@ -1587,21 +1789,846 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 SEND_NUM++;
                 onClickSendGift();
                 break;
-
+            case R.id.rl_bullfight1:
+                betBullfight(1);
+                break;
+            case R.id.rl_bullfight2:
+                betBullfight(2);
+                break;
+            case R.id.rl_bullfight3:
+                betBullfight(3);
+                break;
+            case R.id.tv_bullfight_top_up:
+                break;
+            case R.id.iv_10:
+                checkBettingBalance(10);
+                break;
+            case R.id.iv_50:
+                checkBettingBalance(50);
+                break;
+            case R.id.iv_100:
+                checkBettingBalance(100);
+                break;
+            case R.id.iv_1000:
+                checkBettingBalance(1000);
+                break;
+            case R.id.iv_10000:
+                checkBettingBalance(10000);
+                break;
         }
     }
 
 
-    private void showPlayView() {
-        live_game.setVisibility(View.VISIBLE);
-        rl_kp.setVisibility(View.VISIBLE);
-        iv_trend.setVisibility(View.VISIBLE);
+    //---------------------------斗牛代码---------------------------
+
+
+    /**
+     * 投注斗牛
+     *
+     * @param position 位置（1，2，3）
+     */
+    private void betBullfight(int position) {
+        betPosition = position;
+        if (betBalance > 0) {
+            if (betBalance > balance) {
+                Toast.makeText(WatchLiveActivity.this, R.string.balance_not_enough, Toast.LENGTH_SHORT).show();
+            } else {
+                bullfightPresenter.betSuccess(Integer.parseInt(appUser.getId()), liveListBean.getRoomId(), betBalance, position, uper, 0);
+            }
+        } else {
+            Toast.makeText(WatchLiveActivity.this, R.string.no_select_betbalance, Toast.LENGTH_SHORT).show();
+        }
     }
 
-    private void hidePlayView() {
-        live_game.setVisibility(View.GONE);
-        rl_kp.setVisibility(View.GONE);
+    /**
+     * 添加投注池视图的显示
+     *
+     * @param position(1,2,3)
+     * @param isAnimation     是否需要显示添加动画
+     */
+    private void addBettingView(int position,int betSum, boolean isAnimation) {
+        final ImageView imageView = new ImageView(this);
+        RelativeLayout bettingPoolView = null;
+        switch (betSum) {
+            case 10:
+                imageView.setImageResource(R.mipmap.ic_bullfight_10_light);
+                break;
+            case 50:
+                imageView.setImageResource(R.mipmap.ic_bullfight_50_light);
+                break;
+            case 100:
+                imageView.setImageResource(R.mipmap.ic_bullfight_100_light);
+                break;
+            case 1000:
+                imageView.setImageResource(R.mipmap.ic_bullfight_1000_light);
+                break;
+            case 10000:
+                imageView.setImageResource(R.mipmap.ic_bullfight_10000_light);
+                break;
+        }
+        switch (position) {
+            case 1:
+                bettingPoolView = rl_bullfight_betting_container1;
+                int total1 = Integer.parseInt(tv_bullfight_totlanum1.getText().toString()) + betBalance;
+                tv_bullfight_totlanum1.setText(total1 + "");
+                break;
+            case 2:
+                bettingPoolView = rl_bullfight_betting_container2;
+                int total2 = Integer.parseInt(tv_bullfight_totlanum2.getText().toString()) + betBalance;
+                tv_bullfight_totlanum2.setText(total2 + "");
+                break;
+            case 3:
+                bettingPoolView = rl_bullfight_betting_container3;
+                int total3 = Integer.parseInt(tv_bullfight_totlanum3.getText().toString()) + betBalance;
+                tv_bullfight_totlanum3.setText(total3 + "");
+                break;
+        }
+        RelativeLayout.LayoutParams layoutParams = new AutoRelativeLayout.LayoutParams(iv_100.getWidth(), iv_100.getHeight());
+        layoutParams.leftMargin = (int) (Math.random() * (rl_bullfight_betting_container1.getWidth() - layoutParams.width));
+        layoutParams.topMargin = (int) (Math.random() * (rl_bullfight_betting_container1.getHeight() - layoutParams.height));
+        if (bettingPoolView.getChildCount() >= BETTING_POOL_VIEWS_CAPACITY) {
+            bettingPoolView.removeViewAt(0);
+        }
+//        if(isAnimation) {
+//            imageView.setVisibility(View.GONE);
+//        }else {
+//            imageView.setVisibility(View.VISIBLE);
+//        }
+        bettingPoolView.addView(imageView, layoutParams);
+        if (isAnimation) {
+//            ValueAnimator valueAnimator = ValueAnimator.ofInt(0, 100);
+//            valueAnimator.setDuration(1000);
+//            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//                @Override
+//                public void onAnimationUpdate(ValueAnimator animation) {
+//                }
+//            });
+        }
+    }
+
+    /**
+     * 选择投注金额
+     */
+    private void checkBettingBalance(int betSum) {
+        betBalance = betSum;
+        if (valueAnimator != null) {
+            valueAnimator.cancel();
+        }
+        valueAnimator = ValueAnimator.ofFloat(0, 1);
+        valueAnimator.setRepeatMode(ValueAnimator.REVERSE);
+        valueAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        valueAnimator.setDuration(800);
+        View targetView = null;
+        switch (betSum) {
+            case 10:
+                targetView = iv_10;
+                break;
+            case 50:
+                targetView = iv_50;
+                break;
+            case 100:
+                targetView = iv_100;
+                break;
+            case 1000:
+                targetView = iv_1000;
+                break;
+            case 10000:
+                targetView = iv_10000;
+                break;
+        }
+        valueAnimator.setTarget(targetView);
+        final View finalTargetView = targetView;
+        valueAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                super.onAnimationCancel(animation);
+                finalTargetView.setAlpha(1);
+            }
+        });
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                finalTargetView.setAlpha(1 - (Float) animation.getAnimatedValue());
+            }
+        });
+        valueAnimator.start();
+    }
+
+
+    /**
+     * 开启斗牛游戏
+     */
+    private void startBullfightGame() {
+    }
+
+    /**
+     * 斗牛倒计时
+     */
+    private void bullfightTimer() {
+        if (nextTime >= 10) {
+            switchTimer();
+        }
+        nextTime--;
+        myHandler.sendEmptyMessageDelayed(BULLFIGHT_TIME, 1000);
+        switch (nextTime) {
+            case 10://获取扑克牌结果
+                setBetPoolEnable(false);
+                rl_timing.setVisibility(View.GONE);
+                bullfightPresenter.getPokerResult(liveListBean.getRoomId()+"");
+                break;
+            case 5://开奖
+                bullfightPresenter.getGameResult(liveListBean.getRoomId()+"", uper + "", appUser.getId());
+                bullfightPresenter.updateBankerBalance();
+                break;
+            case 1://主播更新倒计时
+                bullfightPresenter.initGameTimer(liveListBean.getRoomId()+"", uper + "", appUser.getId() + "");
+                break;
+            case 0://再次请求下一局倒计时
+                myHandler.removeMessages(BULLFIGHT_TIME);
+                bullfightPresenter.getTimeAndNper(liveListBean.getRoomId()+"");
+                break;
+        }
+    }
+
+    /**
+     * 设置点击投注区域的可用性
+     */
+    private void setBetPoolEnable(boolean enable) {
+        if (enable) {
+            rl_bullfight1.setEnabled(true);
+            rl_bullfight2.setEnabled(true);
+            rl_bullfight3.setEnabled(true);
+        } else {
+            rl_bullfight1.setEnabled(false);
+            rl_bullfight2.setEnabled(false);
+            rl_bullfight3.setEnabled(false);
+        }
+    }
+
+    /**
+     * 斗牛结果显示 参数为空不显示
+     *
+     * @param arg1 第一条
+     * @param arg2 第二天
+     * @param arg3 第三条
+     */
+    private void bullfightResultShow(String arg1, String arg2, String arg3) {
+        ll_bullfight_result.setVisibility(View.VISIBLE);
+        if (TextUtils.isEmpty(arg1)) {
+            tv_bullfight_result1.setVisibility(View.INVISIBLE);
+        } else {
+            tv_bullfight_result1.setVisibility(View.VISIBLE);
+            tv_bullfight_result1.setText(arg1);
+        }
+        if (TextUtils.isEmpty(arg2)) {
+            tv_bullfight_result2.setVisibility(View.INVISIBLE);
+        } else {
+            tv_bullfight_result2.setVisibility(View.VISIBLE);
+            tv_bullfight_result2.setText(arg2);
+        }
+        if (TextUtils.isEmpty(arg3)) {
+            tv_bullfight_result3.setVisibility(View.INVISIBLE);
+        } else {
+            tv_bullfight_result3.setVisibility(View.VISIBLE);
+            tv_bullfight_result3.setText(arg3);
+        }
+    }
+
+    /**
+     * 倒计时显示
+     * param isShow
+     */
+    private void switchTimer() {
+        int time = nextTime - 11;
+        tv_timing.setText(time + "S");
+    }
+
+    @Override
+    public void getGameResult(GameResult gameResult) {
+        if (gameResult.isSuccess()) {
+            switch (gameResult.getCode()) {
+                case 0://没用中奖
+                    bullfightResultShow(null, "未中奖", null);
+                    break;
+                case 1://中奖
+                    bullfightResultShow("本次开奖结果", "中奖", gameResult.getObj().getMount() + "");
+                    myGoldCoin += gameResult.getObj().getAmount();
+                    tv_bullfight_lepiao.setText(CountUtils.getCount(myGoldCoin));
+                    break;
+                case 2://异常
+
+                    break;
+            }
+        }
+    }
+
+    @Override
+    public void startBullGame(StartResult result) {
+    }
+
+    @Override
+    public void getBankerInfo(BankerInfo bankerInfo) {
+        if (bankerInfo.isSuccess()) {
+            tv_bullfight_bankername.setText(bankerInfo.getObj().getNickName());
+            String count = CountUtils.getCount(bankerInfo.getObj().getGoldCoin());
+            tv_bullfight_banker_money.setText(count);
+            Glide.with(this).load(bankerInfo.getObj().getLivePicUrl()).into(iv_bullfight_banker_head);
+        }
+    }
+
+    @Override
+    public void getTimeAndNPer(TimeAndNper timeAndNper) {
+        if (timeAndNper.isSuccess()) {
+            setBetPoolEnable(true);
+            ll_bullfight_result.setVisibility(View.GONE);
+            rl_timing.setVisibility(View.VISIBLE);
+            rl_bullfight_betting_container1.removeAllViews();
+            rl_bullfight_betting_container2.removeAllViews();
+            rl_bullfight_betting_container3.removeAllViews();
+            tv_bullfight_totlanum1.setText("000");
+            tv_bullfight_totlanum2.setText("000");
+            tv_bullfight_totlanum3.setText("000");
+            tv_bullfight_minenum1.setText("000");
+            tv_bullfight_minenum2.setText("000");
+            tv_bullfight_minenum3.setText("000");
+            if(myGoldCoin == null) {
+                myHandler.sendEmptyMessageDelayed(WAIT_NEXT_START,1000);
+                return;
+            }
+            tv_bullfight_lepiao.setText(CountUtils.getCount(myGoldCoin));
+            nextTime = timeAndNper.getObj().getTime();
+            uper = timeAndNper.getObj().getPerid();
+            showPlayView(2);
+            isPlayerRoom = true;
+            updateBettingEnable(balance);
+            switchBullNum(false);
+            if(isWait) {
+                switchAllPoker(false);
+                bullfightResultShow(null,getResources().getString(R.string.wait_next_start),null);
+                myHandler.sendEmptyMessageDelayed(WAIT_NEXT_START,nextTime*1000);
+                return;
+            }
+            myHandler.sendEmptyMessage(BULLFIGHT_TIME);
+            switchAllPoker(true);
+            initPokerImg();
+            sendPokerAnimator();
+            bullfightPresenter.getBankerInfo();
+        } else {
+        }
+    }
+
+    ;
+
+    @Override
+    public void betSuccess(BetResult betResult,int amount, int type) {
+        int code = betResult.getCode();
+        switch (code) {
+            case 0://为异常
+                Toast.makeText(WatchLiveActivity.this, "投注失败", Toast.LENGTH_SHORT).show();
+                break;
+            case 1://为成功
+                myGoldCoin -= betBalance;
+                tv_bullfight_lepiao.setText(CountUtils.getCount(myGoldCoin));
+                updateBettingEnable(balance);
+                addBettingView(type,amount, true);
+                switch (betPosition) {
+                    case 1:
+                        int amount1 = Integer.parseInt(tv_bullfight_minenum1.getText().toString()) + betBalance;
+                        tv_bullfight_minenum1.setText(amount1 + "");
+                        break;
+                    case 2:
+                        int amount2 = Integer.parseInt(tv_bullfight_minenum2.getText().toString()) + betBalance;
+                        tv_bullfight_minenum2.setText(amount2 + "");
+                        break;
+                    case 3:
+                        int amount3 = Integer.parseInt(tv_bullfight_minenum3.getText().toString()) + betBalance;
+                        tv_bullfight_minenum3.setText(amount3 + "");
+                        break;
+                }
+                break;
+            case 2://为钱币不够赔
+                Toast.makeText(WatchLiveActivity.this, "不够赔", Toast.LENGTH_SHORT).show();
+                break;
+            case 3://余额不足
+                Toast.makeText(WatchLiveActivity.this, "余额不足", Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+
+    @Override
+    public void updataBankerBalance(BankerBalance BankerBalance) {
+        int balance = BankerBalance.getObj();
+        String count = CountUtils.getCount(balance);
+        tv_bullfight_banker_money.setText(count);
+    }
+
+    @Override
+    public void getPokerResult(PokerResult pokerResult) {
+        if (pokerResult.isSuccess()) {
+            PokerResult.ObjBean.PlayerPokerMapBean playerPokerMap = pokerResult.getObj().getPlayerPokerMap();
+            List<PokerResult.ObjBean.PlayerPokerMapBean.PokersBean> pokers = playerPokerMap.getPoker0().getPokers();
+            iv_poker_banker1.setImageResource(getPokerId(pokers.get(0).getColor(), pokers.get(0).getValue()));
+            iv_poker_banker2.setImageResource(getPokerId(pokers.get(1).getColor(), pokers.get(1).getValue()));
+            iv_poker_banker3.setImageResource(getPokerId(pokers.get(2).getColor(), pokers.get(2).getValue()));
+            iv_poker_banker4.setImageResource(getPokerId(pokers.get(3).getColor(), pokers.get(3).getValue()));
+            iv_poker_banker5.setImageResource(getPokerId(pokers.get(4).getColor(), pokers.get(4).getValue()));
+            iv_bull_amount0.setImageResource(getBullSumId(playerPokerMap.getPoker0().getResult()));
+            List<PokerResult.ObjBean.PlayerPokerMapBean.PokersBean> pokers1 = playerPokerMap.getPoker1().getPokers();
+            iv_poker_palyer11.setImageResource(getPokerId(pokers1.get(0).getColor(), pokers1.get(0).getValue()));
+            iv_poker_palyer12.setImageResource(getPokerId(pokers1.get(1).getColor(), pokers1.get(1).getValue()));
+            iv_poker_palyer13.setImageResource(getPokerId(pokers1.get(2).getColor(), pokers1.get(2).getValue()));
+            iv_poker_palyer14.setImageResource(getPokerId(pokers1.get(3).getColor(), pokers1.get(3).getValue()));
+            iv_poker_palyer15.setImageResource(getPokerId(pokers1.get(4).getColor(), pokers1.get(4).getValue()));
+            iv_bull_amount1.setImageResource(getBullSumId(playerPokerMap.getPoker1().getResult()));
+            List<PokerResult.ObjBean.PlayerPokerMapBean.PokersBean> pokers2 = playerPokerMap.getPoker2().getPokers();
+            iv_poker_palyer21.setImageResource(getPokerId(pokers1.get(0).getColor(), pokers1.get(0).getValue()));
+            iv_poker_palyer22.setImageResource(getPokerId(pokers1.get(1).getColor(), pokers1.get(1).getValue()));
+            iv_poker_palyer23.setImageResource(getPokerId(pokers1.get(2).getColor(), pokers1.get(2).getValue()));
+            iv_poker_palyer24.setImageResource(getPokerId(pokers1.get(3).getColor(), pokers1.get(3).getValue()));
+            iv_poker_palyer25.setImageResource(getPokerId(pokers1.get(4).getColor(), pokers1.get(4).getValue()));
+            iv_bull_amount2.setImageResource(getBullSumId(playerPokerMap.getPoker2().getResult()));
+            List<PokerResult.ObjBean.PlayerPokerMapBean.PokersBean> pokers3 = playerPokerMap.getPoker3().getPokers();
+            iv_poker_palyer31.setImageResource(getPokerId(pokers1.get(0).getColor(), pokers1.get(0).getValue()));
+            iv_poker_palyer32.setImageResource(getPokerId(pokers1.get(1).getColor(), pokers1.get(1).getValue()));
+            iv_poker_palyer33.setImageResource(getPokerId(pokers1.get(2).getColor(), pokers1.get(2).getValue()));
+            iv_poker_palyer34.setImageResource(getPokerId(pokers1.get(3).getColor(), pokers1.get(3).getValue()));
+            iv_poker_palyer35.setImageResource(getPokerId(pokers1.get(4).getColor(), pokers1.get(4).getValue()));
+            iv_bull_amount3.setImageResource(getBullSumId(playerPokerMap.getPoker3().getResult()));
+            switchBullNum(true);
+            sendPokerAnimator();
+        }
+    }
+
+    /**
+     * 获取牛几的id
+     *
+     * @return
+     */
+    private int getBullSumId(int sum) {
+        switch (sum) {
+            case 0:
+                return R.mipmap.bull0;
+            case 1:
+                return R.mipmap.bull1;
+            case 2:
+                return R.mipmap.bull2;
+            case 3:
+                return R.mipmap.bull3;
+            case 4:
+                return R.mipmap.bull4;
+            case 5:
+                return R.mipmap.bull5;
+            case 6:
+                return R.mipmap.bull6;
+            case 7:
+                return R.mipmap.bull7;
+            case 8:
+                return R.mipmap.bull8;
+            case 9:
+                return R.mipmap.bull9;
+            case 10:
+                return R.mipmap.bullbull;
+        }
+        return 0;
+    }
+
+    /**
+     * 根据颜色和数值获取图片id
+     *
+     * @return
+     */
+    private int getPokerId(int color, int value) {
+        switch (color) {
+            case 1:
+                switch (value) {
+                    case 1:
+                        return R.mipmap.poker_1_1;
+                    case 2:
+                        return R.mipmap.poker_1_2;
+                    case 3:
+                        return R.mipmap.poker_1_3;
+                    case 4:
+                        return R.mipmap.poker_1_4;
+                    case 5:
+                        return R.mipmap.poker_1_5;
+                    case 6:
+                        return R.mipmap.poker_1_6;
+                    case 7:
+                        return R.mipmap.poker_1_7;
+                    case 8:
+                        return R.mipmap.poker_1_8;
+                    case 9:
+                        return R.mipmap.poker_1_9;
+                    case 10:
+                        return R.mipmap.poker_1_10;
+                    case 11:
+                        return R.mipmap.poker_1_11;
+                    case 12:
+                        return R.mipmap.poker_1_12;
+                    case 13:
+                        return R.mipmap.poker_1_13;
+                }
+            case 2:
+                switch (value) {
+                    case 1:
+                        return R.mipmap.poker_2_1;
+                    case 2:
+                        return R.mipmap.poker_2_2;
+                    case 3:
+                        return R.mipmap.poker_2_3;
+                    case 4:
+                        return R.mipmap.poker_2_4;
+                    case 5:
+                        return R.mipmap.poker_2_5;
+                    case 6:
+                        return R.mipmap.poker_2_6;
+                    case 7:
+                        return R.mipmap.poker_2_7;
+                    case 8:
+                        return R.mipmap.poker_2_8;
+                    case 9:
+                        return R.mipmap.poker_2_9;
+                    case 10:
+                        return R.mipmap.poker_2_10;
+                    case 11:
+                        return R.mipmap.poker_2_11;
+                    case 12:
+                        return R.mipmap.poker_2_12;
+                    case 13:
+                        return R.mipmap.poker_2_13;
+                }
+            case 3:
+                switch (value) {
+                    case 1:
+                        return R.mipmap.poker_3_1;
+                    case 2:
+                        return R.mipmap.poker_3_2;
+                    case 3:
+                        return R.mipmap.poker_3_3;
+                    case 4:
+                        return R.mipmap.poker_3_4;
+                    case 5:
+                        return R.mipmap.poker_3_5;
+                    case 6:
+                        return R.mipmap.poker_3_6;
+                    case 7:
+                        return R.mipmap.poker_3_7;
+                    case 8:
+                        return R.mipmap.poker_3_8;
+                    case 9:
+                        return R.mipmap.poker_3_9;
+                    case 10:
+                        return R.mipmap.poker_3_10;
+                    case 11:
+                        return R.mipmap.poker_3_11;
+                    case 12:
+                        return R.mipmap.poker_3_12;
+                    case 13:
+                        return R.mipmap.poker_3_13;
+                }
+            case 4:
+                switch (value) {
+                    case 1:
+                        return R.mipmap.poker_4_1;
+                    case 2:
+                        return R.mipmap.poker_4_2;
+                    case 3:
+                        return R.mipmap.poker_4_3;
+                    case 4:
+                        return R.mipmap.poker_4_4;
+                    case 5:
+                        return R.mipmap.poker_4_5;
+                    case 6:
+                        return R.mipmap.poker_4_6;
+                    case 7:
+                        return R.mipmap.poker_4_7;
+                    case 8:
+                        return R.mipmap.poker_4_8;
+                    case 9:
+                        return R.mipmap.poker_4_9;
+                    case 10:
+                        return R.mipmap.poker_4_10;
+                    case 11:
+                        return R.mipmap.poker_4_11;
+                    case 12:
+                        return R.mipmap.poker_4_12;
+                    case 13:
+                        return R.mipmap.poker_4_13;
+                }
+        }
+        return 0;
+    }
+
+    int balance = 1000000;
+
+    /**
+     * 更新投注金额的选择按钮
+     */
+    private void updateBettingEnable(int balance) {
+        if (balance >= 10000) {
+            iv_10.setEnabled(true);
+            iv_10.setImageResource(R.mipmap.ic_bullfight_10_light);
+            iv_50.setEnabled(true);
+            iv_50.setImageResource(R.mipmap.ic_bullfight_50_light);
+            iv_100.setEnabled(true);
+            iv_100.setImageResource(R.mipmap.ic_bullfight_100_light);
+            iv_1000.setEnabled(true);
+            iv_1000.setImageResource(R.mipmap.ic_bullfight_1000_light);
+            iv_10000.setEnabled(true);
+            iv_10000.setImageResource(R.mipmap.ic_bullfight_10000_light);
+        } else if (balance >= 1000) {
+            iv_10.setEnabled(true);
+            iv_10.setImageResource(R.mipmap.ic_bullfight_10_light);
+            iv_50.setEnabled(true);
+            iv_50.setImageResource(R.mipmap.ic_bullfight_50_light);
+            iv_100.setEnabled(true);
+            iv_100.setImageResource(R.mipmap.ic_bullfight_100_light);
+            iv_1000.setEnabled(true);
+            iv_1000.setImageResource(R.mipmap.ic_bullfight_1000_light);
+            iv_10000.setEnabled(false);
+            iv_10000.setImageResource(R.mipmap.ic_bullfight_10000_dark);
+        } else if (balance >= 100) {
+            iv_10.setEnabled(true);
+            iv_10.setImageResource(R.mipmap.ic_bullfight_10_light);
+            iv_50.setEnabled(true);
+            iv_50.setImageResource(R.mipmap.ic_bullfight_50_light);
+            iv_100.setEnabled(true);
+            iv_100.setImageResource(R.mipmap.ic_bullfight_100_light);
+            iv_1000.setEnabled(false);
+            iv_1000.setImageResource(R.mipmap.ic_bullfight_1000_dark);
+            iv_10000.setEnabled(false);
+            iv_10000.setImageResource(R.mipmap.ic_bullfight_10000_dark);
+        } else if (balance >= 50) {
+            iv_10.setEnabled(true);
+            iv_10.setImageResource(R.mipmap.ic_bullfight_10_light);
+            iv_50.setEnabled(true);
+            iv_50.setImageResource(R.mipmap.ic_bullfight_50_light);
+            iv_100.setEnabled(false);
+            iv_100.setImageResource(R.mipmap.ic_bullfight_100_dark);
+            iv_1000.setEnabled(false);
+            iv_1000.setImageResource(R.mipmap.ic_bullfight_1000_dark);
+            iv_10000.setEnabled(false);
+            iv_10000.setImageResource(R.mipmap.ic_bullfight_10000_dark);
+        } else if (balance >= 10) {
+            iv_10.setEnabled(true);
+            iv_10.setImageResource(R.mipmap.ic_bullfight_10_light);
+            iv_50.setEnabled(false);
+            iv_50.setImageResource(R.mipmap.ic_bullfight_50_dark);
+            iv_100.setEnabled(false);
+            iv_100.setImageResource(R.mipmap.ic_bullfight_100_dark);
+            iv_1000.setEnabled(false);
+            iv_1000.setImageResource(R.mipmap.ic_bullfight_1000_dark);
+            iv_10000.setEnabled(false);
+            iv_10000.setImageResource(R.mipmap.ic_bullfight_10000_dark);
+        } else {
+            iv_10.setEnabled(false);
+            iv_10.setImageResource(R.mipmap.ic_bullfight_10_dark);
+            iv_50.setEnabled(false);
+            iv_50.setImageResource(R.mipmap.ic_bullfight_50_dark);
+            iv_100.setEnabled(false);
+            iv_100.setImageResource(R.mipmap.ic_bullfight_100_dark);
+            iv_1000.setEnabled(false);
+            iv_1000.setImageResource(R.mipmap.ic_bullfight_1000_dark);
+            iv_10000.setEnabled(false);
+            iv_10000.setImageResource(R.mipmap.ic_bullfight_10000_dark);
+        }
+    }
+
+    /**
+     * 显示扑克牌
+     *
+     * @param x （0，庄家；1，天；2，地；3，人）
+     * @param y （第几张poker牌）
+     */
+    private void showPoker(int x, int y) {
+
+    }
+
+    /**
+     * 发牌动画
+     */
+    private void sendPokerAnimator() {
+        ObjectAnimator animator = ObjectAnimator.ofFloat(rl_poker_banker_container, "scaleX", 0f, 1f);
+        animator.setDuration(2000);
+        animator.start();
+        ObjectAnimator animator1 = ObjectAnimator.ofFloat(rl_poker_player_container1, "scaleX", 0f, 1f);
+        animator1.setDuration(2000);
+        animator1.start();
+        ObjectAnimator animator2 = ObjectAnimator.ofFloat(rl_poker_player_container2, "scaleX", 0f, 1f);
+        animator2.setDuration(2000);
+        animator2.start();
+        ObjectAnimator animator3 = ObjectAnimator.ofFloat(rl_poker_player_container3, "scaleX", 0f, 1f);
+        animator3.setDuration(2000);
+        animator3.start();
+    }
+
+    /**
+     * 初始化扑克牌（显示背面）
+     */
+    private void initPokerImg() {
+        iv_poker_banker1.setImageResource(R.mipmap.bullfight_poker_nagetive);
+        iv_poker_banker2.setImageResource(R.mipmap.bullfight_poker_nagetive);
+        iv_poker_banker3.setImageResource(R.mipmap.bullfight_poker_nagetive);
+        iv_poker_banker4.setImageResource(R.mipmap.bullfight_poker_nagetive);
+        iv_poker_banker5.setImageResource(R.mipmap.bullfight_poker_nagetive);
+        iv_poker_palyer11.setImageResource(R.mipmap.bullfight_poker_nagetive);
+        iv_poker_palyer12.setImageResource(R.mipmap.bullfight_poker_nagetive);
+        iv_poker_palyer13.setImageResource(R.mipmap.bullfight_poker_nagetive);
+        iv_poker_palyer14.setImageResource(R.mipmap.bullfight_poker_nagetive);
+        iv_poker_palyer15.setImageResource(R.mipmap.bullfight_poker_nagetive);
+        iv_poker_palyer21.setImageResource(R.mipmap.bullfight_poker_nagetive);
+        iv_poker_palyer22.setImageResource(R.mipmap.bullfight_poker_nagetive);
+        iv_poker_palyer23.setImageResource(R.mipmap.bullfight_poker_nagetive);
+        iv_poker_palyer24.setImageResource(R.mipmap.bullfight_poker_nagetive);
+        iv_poker_palyer25.setImageResource(R.mipmap.bullfight_poker_nagetive);
+        iv_poker_palyer31.setImageResource(R.mipmap.bullfight_poker_nagetive);
+        iv_poker_palyer32.setImageResource(R.mipmap.bullfight_poker_nagetive);
+        iv_poker_palyer33.setImageResource(R.mipmap.bullfight_poker_nagetive);
+        iv_poker_palyer34.setImageResource(R.mipmap.bullfight_poker_nagetive);
+        iv_poker_palyer35.setImageResource(R.mipmap.bullfight_poker_nagetive);
+    }
+
+    /**
+     * 牛数显示隐藏
+     *
+     * @param isShow
+     */
+    private void switchBullNum(boolean isShow) {
+        if (isShow) {
+            iv_bull_amount0.setVisibility(View.VISIBLE);
+            iv_bull_amount1.setVisibility(View.VISIBLE);
+            iv_bull_amount2.setVisibility(View.VISIBLE);
+            iv_bull_amount3.setVisibility(View.VISIBLE);
+        } else {
+            iv_bull_amount0.setVisibility(View.GONE);
+            iv_bull_amount1.setVisibility(View.GONE);
+            iv_bull_amount2.setVisibility(View.GONE);
+            iv_bull_amount3.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * 所有扑克牌显示隐藏
+     */
+    private void switchAllPoker(boolean isShow) {
+        if (isShow) {
+            iv_poker_banker1.setVisibility(View.VISIBLE);
+            iv_poker_banker2.setVisibility(View.VISIBLE);
+            iv_poker_banker3.setVisibility(View.VISIBLE);
+            iv_poker_banker4.setVisibility(View.VISIBLE);
+            iv_poker_banker5.setVisibility(View.VISIBLE);
+            iv_poker_palyer11.setVisibility(View.VISIBLE);
+            iv_poker_palyer12.setVisibility(View.VISIBLE);
+            iv_poker_palyer13.setVisibility(View.VISIBLE);
+            iv_poker_palyer14.setVisibility(View.VISIBLE);
+            iv_poker_palyer15.setVisibility(View.VISIBLE);
+            iv_poker_palyer21.setVisibility(View.VISIBLE);
+            iv_poker_palyer22.setVisibility(View.VISIBLE);
+            iv_poker_palyer23.setVisibility(View.VISIBLE);
+            iv_poker_palyer24.setVisibility(View.VISIBLE);
+            iv_poker_palyer25.setVisibility(View.VISIBLE);
+            iv_poker_palyer31.setVisibility(View.VISIBLE);
+            iv_poker_palyer32.setVisibility(View.VISIBLE);
+            iv_poker_palyer33.setVisibility(View.VISIBLE);
+            iv_poker_palyer34.setVisibility(View.VISIBLE);
+            iv_poker_palyer35.setVisibility(View.VISIBLE);
+        } else {
+            iv_poker_banker1.setVisibility(View.GONE);
+            iv_poker_banker1.setImageResource(R.mipmap.bullfight_poker_nagetive);
+            iv_poker_banker2.setVisibility(View.GONE);
+            iv_poker_banker2.setImageResource(R.mipmap.bullfight_poker_nagetive);
+            iv_poker_banker3.setVisibility(View.GONE);
+            iv_poker_banker3.setImageResource(R.mipmap.bullfight_poker_nagetive);
+            iv_poker_banker4.setVisibility(View.GONE);
+            iv_poker_banker4.setImageResource(R.mipmap.bullfight_poker_nagetive);
+            iv_poker_banker5.setVisibility(View.GONE);
+            iv_poker_banker5.setImageResource(R.mipmap.bullfight_poker_nagetive);
+            iv_poker_palyer11.setVisibility(View.GONE);
+            iv_poker_palyer11.setImageResource(R.mipmap.bullfight_poker_nagetive);
+            iv_poker_palyer12.setVisibility(View.GONE);
+            iv_poker_palyer12.setImageResource(R.mipmap.bullfight_poker_nagetive);
+            iv_poker_palyer13.setVisibility(View.GONE);
+            iv_poker_palyer13.setImageResource(R.mipmap.bullfight_poker_nagetive);
+            iv_poker_palyer14.setVisibility(View.GONE);
+            iv_poker_palyer14.setImageResource(R.mipmap.bullfight_poker_nagetive);
+            iv_poker_palyer15.setVisibility(View.GONE);
+            iv_poker_palyer15.setImageResource(R.mipmap.bullfight_poker_nagetive);
+            iv_poker_palyer21.setVisibility(View.GONE);
+            iv_poker_palyer21.setImageResource(R.mipmap.bullfight_poker_nagetive);
+            iv_poker_palyer22.setVisibility(View.GONE);
+            iv_poker_palyer22.setImageResource(R.mipmap.bullfight_poker_nagetive);
+            iv_poker_palyer23.setVisibility(View.GONE);
+            iv_poker_palyer23.setImageResource(R.mipmap.bullfight_poker_nagetive);
+            iv_poker_palyer24.setVisibility(View.GONE);
+            iv_poker_palyer24.setImageResource(R.mipmap.bullfight_poker_nagetive);
+            iv_poker_palyer25.setVisibility(View.GONE);
+            iv_poker_palyer25.setImageResource(R.mipmap.bullfight_poker_nagetive);
+            iv_poker_palyer31.setVisibility(View.GONE);
+            iv_poker_palyer31.setImageResource(R.mipmap.bullfight_poker_nagetive);
+            iv_poker_palyer32.setVisibility(View.GONE);
+            iv_poker_palyer32.setImageResource(R.mipmap.bullfight_poker_nagetive);
+            iv_poker_palyer33.setVisibility(View.GONE);
+            iv_poker_palyer33.setImageResource(R.mipmap.bullfight_poker_nagetive);
+            iv_poker_palyer34.setVisibility(View.GONE);
+            iv_poker_palyer34.setImageResource(R.mipmap.bullfight_poker_nagetive);
+            iv_poker_palyer35.setVisibility(View.GONE);
+            iv_poker_palyer35.setImageResource(R.mipmap.bullfight_poker_nagetive);
+        }
+    }
+
+    /**
+     * 显示游戏界面
+     *
+     * @param gameType 1（彩票）;2（斗牛）
+     */
+    private void showPlayView(int gameType) {
+        this.gameType = gameType;
+        //游戏内容视图
+        rl_game_container.setVisibility(View.VISIBLE);
+        //游戏左上角视图
+        rl_game_info.setVisibility(View.VISIBLE);
+        //走势图标
+        iv_trend.setVisibility(View.VISIBLE);
+        switch (gameType) {
+            case 1://彩票
+                rl_kp.setVisibility(View.VISIBLE);
+                rl_bullfight_banker.setVisibility(View.GONE);
+                live_game.setVisibility(View.VISIBLE);
+                live_game_bullfight.setVisibility(View.GONE);
+                iv_trend.setImageResource(R.mipmap.trend_img);
+                break;
+            case 2://斗牛
+                rl_bullfight_banker.setVisibility(View.VISIBLE);
+                rl_kp.setVisibility(View.GONE);
+                live_game_bullfight.setVisibility(View.VISIBLE);
+                live_game.setVisibility(View.GONE);
+                iv_trend.setImageResource(R.mipmap.ic_bullfight_record);
+                break;
+        }
+    }
+
+    /**
+     * 影藏游戏界面
+     *
+     * @param gameType 1（彩票）;2（斗牛）
+     */
+    private void hidePlayView(int gameType) {
+        //游戏内容视图
+        rl_game_container.setVisibility(View.GONE);
+        //游戏左上角视图
+        rl_game_info.setVisibility(View.GONE);
+        //走势图标
         iv_trend.setVisibility(View.GONE);
+        switch (gameType) {
+            case 1://彩票
+                rl_kp.setVisibility(View.GONE);
+                live_game.setVisibility(View.GONE);
+                break;
+            case 2://斗牛
+                rl_bullfight_banker.setVisibility(View.GONE);
+                live_game_bullfight.setVisibility(View.GONE);
+                break;
+        }
     }
 
     @Override
@@ -1980,6 +3007,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         break;
                     case 5858:
                         isPlayerRoom = true;
+                        bullfightPresenter = new BullfightPresenter(WatchLiveActivity.this);
+                        bullfightPresenter.getTimeAndNper(liveListBean.getRoomId()+"");
                         break;
                     case 10009:
                         LogUtil.e("升级", message.getRemoteExtension().toString());
@@ -2226,7 +3255,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             @Override
             public void run() {
                 mSendGiftLian.setVisibility(View.GONE);
-                hidePlayView();
+                hidePlayView(gameType);
             }
         }, 200);
 
@@ -3394,7 +4423,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         view.findViewById(R.id.tv_chat).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                hidePlayView();
+                hidePlayView(gameType);
                 ll_buttom_mun.setVisibility(View.GONE);
                 Intent intent = new Intent();
                 intent.putExtra(Extras.EXTRA_ACCOUNT, "miu_" + customdateBean.getId());

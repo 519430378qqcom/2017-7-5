@@ -26,7 +26,7 @@ public interface BullfightInterface {
     /**
      * 投注成功
      */
-    void betSuccess(BetResult betResult);
+    void betSuccess(BetResult betResult,int amount, int type);
 
     /**
      * 更新庄家余额

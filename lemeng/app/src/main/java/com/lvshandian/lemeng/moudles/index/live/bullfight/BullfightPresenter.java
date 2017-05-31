@@ -124,7 +124,7 @@ public class BullfightPresenter {
      * @param perid 期数
      * @param status 0 为1倍 1为2倍
      */
-    public void betSuccess(int userId, int roomId, int amount, int type, int perid, int status){
+    public void betSuccess(int userId, int roomId, final int amount, final int type, int perid, int status){
         String url = UrlBuilder.betting(userId,roomId,amount,type,perid,status);
         OkHttpUtils.get().url(url).build().execute(new StringCallback() {
             @Override
@@ -136,7 +136,7 @@ public class BullfightPresenter {
             public void onResponse(String response) {
                 Log.e("TAG","betSuccess"+response);
                 BetResult betResult = JSON.parseObject(response, BetResult.class);
-                bullfightInterface.betSuccess(betResult);
+                bullfightInterface.betSuccess(betResult,amount,type);
             }
         });
     }

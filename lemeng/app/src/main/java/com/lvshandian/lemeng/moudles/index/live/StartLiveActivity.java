@@ -530,10 +530,6 @@ public class StartLiveActivity extends BaseActivity implements
      */
     private int gameType;
     /**
-     * 被选中的投注金额viewid
-     */
-    private int checkedBettingBalanceViewId;
-    /**
      * 被选中的投注icon动画
      */
     private ValueAnimator valueAnimator;
@@ -541,6 +537,29 @@ public class StartLiveActivity extends BaseActivity implements
      * 投注池支持显示投注视图的最大容量
      */
     private final int BETTING_POOL_VIEWS_CAPACITY = 30;
+    /**
+     * 剩余多长时间结束
+     */
+    private int nextTime;
+    /**
+     * 期数
+     */
+    private int uper;
+    /**
+     * 发送斗牛倒计时的消息标识
+     */
+    private final int BULLFIGHT_TIME = 233;
+
+    private BullfightPresenter bullfightPresenter;
+    /**
+     * 投注金额
+     */
+    private int betBalance;
+    /**
+     * 投注位置
+     */
+    private int betPosition;
+
     //<end------------斗牛游戏部分-------------->
     private int tzNumber = 10;
     private int jbNumber = 1;
@@ -764,7 +783,7 @@ public class StartLiveActivity extends BaseActivity implements
                     }
                     break;
                 case BULLFIGHT_TIME:
-                    bullfightTImer();
+                    bullfightTimer();
                     break;
             }
         }
@@ -1076,7 +1095,7 @@ public class StartLiveActivity extends BaseActivity implements
                     ll_game.setVisibility(View.GONE);
                     messageFragment.inputTypeOnClick();
                 } else {
-                    hidePlayView(1);
+                    hidePlayView(gameType);
                     messageFragment.inputTypeOnClick();
                 }
 
@@ -1210,8 +1229,7 @@ public class StartLiveActivity extends BaseActivity implements
      * 牛牛点击事件
      */
     @OnClick({R.id.iv_bullfight, R.id.rl_bullfight1, R.id.rl_bullfight2, R.id.rl_bullfight3,
-            R.id.ll_bullfight_result, R.id.tv_bullfight_result1, R.id.tv_bullfight_result2, R.id.tv_bullfight_result3,
-            R.id.tv_bullfight_lepiao, R.id.tv_bullfight_top_up, R.id.iv_10, R.id.iv_50, R.id.iv_100, R.id.iv_1000, R.id.iv_10000})
+          R.id.tv_bullfight_top_up, R.id.iv_10, R.id.iv_50, R.id.iv_100, R.id.iv_1000, R.id.iv_10000})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_bullfight:
@@ -1226,44 +1244,25 @@ public class StartLiveActivity extends BaseActivity implements
             case R.id.rl_bullfight3:
                 betBullfight(3);
                 break;
-            case R.id.ll_bullfight_result:
-                break;
-            case R.id.tv_bullfight_result1:
-                break;
-            case R.id.tv_bullfight_result2:
-                break;
-            case R.id.tv_bullfight_result3:
-                break;
-            case R.id.tv_bullfight_lepiao:
-                break;
             case R.id.tv_bullfight_top_up:
                 break;
             case R.id.iv_10:
-                checkBettingBalance(R.id.iv_10);
+                checkBettingBalance(10);
                 break;
             case R.id.iv_50:
-                checkBettingBalance(R.id.iv_50);
+                checkBettingBalance(50);
                 break;
             case R.id.iv_100:
-                checkBettingBalance(R.id.iv_100);
+                checkBettingBalance(100);
                 break;
             case R.id.iv_1000:
-                checkBettingBalance(R.id.iv_1000);
+                checkBettingBalance(1000);
                 break;
             case R.id.iv_10000:
-                checkBettingBalance(R.id.iv_10000);
+                checkBettingBalance(10000);
                 break;
         }
     }
-
-    /**
-     * 投注金额
-     */
-    private int betBalance;
-    /**
-     * 投注位置
-     */
-    private int betPosition;
 
     /**
      * 投注斗牛
@@ -1272,24 +1271,7 @@ public class StartLiveActivity extends BaseActivity implements
      */
     private void betBullfight(int position) {
         betPosition = position;
-        if (checkedBettingBalanceViewId > 0) {
-            switch (checkedBettingBalanceViewId) {
-                case R.id.iv_10:
-                    betBalance = 10;
-                    break;
-                case R.id.iv_50:
-                    betBalance = 50;
-                    break;
-                case R.id.iv_100:
-                    betBalance = 100;
-                    break;
-                case R.id.iv_1000:
-                    betBalance = 1000;
-                    break;
-                case R.id.iv_10000:
-                    betBalance = 10000;
-                    break;
-            }
+        if (betBalance > 0) {
             if (betBalance > balance) {
                 Toast.makeText(StartLiveActivity.this, R.string.balance_not_enough, Toast.LENGTH_SHORT).show();
             } else {
@@ -1306,28 +1288,28 @@ public class StartLiveActivity extends BaseActivity implements
      * @param position(1,2,3)
      * @param isAnimation     是否需要显示添加动画
      */
-    private void addBettingView(int position, boolean isAnimation) {
+    private void addBettingView(int position, int betSum, boolean isAnimation) {
         final ImageView imageView = new ImageView(this);
         RelativeLayout bettingPoolView = null;
         int betting = 0;
-        switch (checkedBettingBalanceViewId) {
-            case R.id.iv_10:
+        switch (betSum) {
+            case 10:
                 imageView.setImageResource(R.mipmap.ic_bullfight_10_light);
                 betting = 10;
                 break;
-            case R.id.iv_50:
+            case 50:
                 imageView.setImageResource(R.mipmap.ic_bullfight_50_light);
                 betting = 50;
                 break;
-            case R.id.iv_100:
+            case 100:
                 imageView.setImageResource(R.mipmap.ic_bullfight_100_light);
                 betting = 100;
                 break;
-            case R.id.iv_1000:
+            case 1000:
                 imageView.setImageResource(R.mipmap.ic_bullfight_1000_light);
                 betting = 1000;
                 break;
-            case R.id.iv_10000:
+            case 10000:
                 imageView.setImageResource(R.mipmap.ic_bullfight_10000_light);
                 betting = 10000;
                 break;
@@ -1374,9 +1356,10 @@ public class StartLiveActivity extends BaseActivity implements
 
     /**
      * 选择投注金额
+     * @param betSum 投注数
      */
-    private void checkBettingBalance(int checkedBalanceId) {
-        checkedBettingBalanceViewId = checkedBalanceId;
+    private void checkBettingBalance(int betSum) {
+        betBalance = betSum;
         if (valueAnimator != null) {
             valueAnimator.cancel();
         }
@@ -1385,20 +1368,20 @@ public class StartLiveActivity extends BaseActivity implements
         valueAnimator.setRepeatCount(ValueAnimator.INFINITE);
         valueAnimator.setDuration(800);
         View targetView = null;
-        switch (checkedBalanceId) {
-            case R.id.iv_10:
+        switch (betSum) {
+            case 10:
                 targetView = iv_10;
                 break;
-            case R.id.iv_50:
+            case 50:
                 targetView = iv_50;
                 break;
-            case R.id.iv_100:
+            case 100:
                 targetView = iv_100;
                 break;
-            case R.id.iv_1000:
+            case 1000:
                 targetView = iv_1000;
                 break;
-            case R.id.iv_10000:
+            case 10000:
                 targetView = iv_10000;
                 break;
         }
@@ -1420,20 +1403,6 @@ public class StartLiveActivity extends BaseActivity implements
         valueAnimator.start();
     }
 
-    /**
-     * 剩余多长时间结束
-     */
-    private int nextTime;
-    /**
-     * 期数
-     */
-    private int uper;
-    /**
-     * 发送斗牛倒计时的消息标识
-     */
-    private final int BULLFIGHT_TIME = 233;
-
-    private BullfightPresenter bullfightPresenter;
 
     /**
      * 开启斗牛游戏
@@ -1446,7 +1415,7 @@ public class StartLiveActivity extends BaseActivity implements
     /**
      * 斗牛倒计时
      */
-    private void bullfightTImer() {
+    private void bullfightTimer() {
         if (nextTime >= 10) {
             switchTimer();
         }
@@ -1457,6 +1426,7 @@ public class StartLiveActivity extends BaseActivity implements
                 bullfightPresenter.initGameResult(room_Id);
                 break;
             case 10://获取扑克牌结果
+                setBetPoolEnable(false);
                 rl_timing.setVisibility(View.GONE);
                 bullfightPresenter.getPokerResult(room_Id);
                 break;
@@ -1471,6 +1441,21 @@ public class StartLiveActivity extends BaseActivity implements
                 myHandler.removeMessages(BULLFIGHT_TIME);
                 bullfightPresenter.getTimeAndNper(room_Id);
                 break;
+        }
+    }
+
+    /**
+     * 设置点击投注区域的可用性
+     */
+    private void setBetPoolEnable(boolean enable) {
+        if(enable) {
+            rl_bullfight1.setEnabled(true);
+            rl_bullfight2.setEnabled(true);
+            rl_bullfight3.setEnabled(true);
+        }else {
+            rl_bullfight1.setEnabled(false);
+            rl_bullfight2.setEnabled(false);
+            rl_bullfight3.setEnabled(false);
         }
     }
 
@@ -1561,12 +1546,12 @@ public class StartLiveActivity extends BaseActivity implements
     public void getTimeAndNPer(TimeAndNper timeAndNper) {
         if (timeAndNper.isSuccess()) {
             Log.e("TAG", room_Id);
+            setBetPoolEnable(true);
             ll_bullfight_result.setVisibility(View.GONE);
             rl_timing.setVisibility(View.VISIBLE);
             rl_bullfight_betting_container1.removeAllViews();
             rl_bullfight_betting_container2.removeAllViews();
             rl_bullfight_betting_container3.removeAllViews();
-            ll_bullfight_result.setVisibility(View.GONE);
             tv_bullfight_totlanum1.setText("000");
             tv_bullfight_totlanum2.setText("000");
             tv_bullfight_totlanum3.setText("000");
@@ -1576,12 +1561,12 @@ public class StartLiveActivity extends BaseActivity implements
             tv_bullfight_lepiao.setText(CountUtils.getCount(myGoldCoin));
             nextTime = timeAndNper.getObj().getTime();
             uper = timeAndNper.getObj().getPerid();
-            myHandler.sendEmptyMessage(BULLFIGHT_TIME);
             ll_game.setVisibility(View.GONE);
             showPlayView(2);
             gameIsStart = true;
             updateBettingEnable(balance);
             switchBullNum(false);
+            myHandler.sendEmptyMessage(BULLFIGHT_TIME);
             switchAllPoker(true);
             initPokerImg();
             sendPokerAnimator();
@@ -1592,7 +1577,7 @@ public class StartLiveActivity extends BaseActivity implements
     ;
 
     @Override
-    public void betSuccess(BetResult betResult) {
+    public void betSuccess(BetResult betResult,int amount, int type) {
         int code = betResult.getCode();
         switch (code) {
             case 0://为异常
@@ -1602,7 +1587,7 @@ public class StartLiveActivity extends BaseActivity implements
                 myGoldCoin -= betBalance;
                 tv_bullfight_lepiao.setText(CountUtils.getCount(myGoldCoin));
                 updateBettingEnable(balance);
-                addBettingView(betPosition, true);
+                addBettingView(type,amount, true);
                 switch (betPosition) {
                     case 1:
                         int amount1 = Integer.parseInt(tv_bullfight_minenum1.getText().toString()) + betBalance;
@@ -1904,16 +1889,6 @@ public class StartLiveActivity extends BaseActivity implements
             iv_10000.setEnabled(false);
             iv_10000.setImageResource(R.mipmap.ic_bullfight_10000_dark);
         }
-    }
-
-    /**
-     * 显示扑克牌
-     *
-     * @param x （0，庄家；1，天；2，地；3，人）
-     * @param y （第几张poker牌）
-     */
-    private void showPoker(int x, int y) {
-
     }
 
     /**
