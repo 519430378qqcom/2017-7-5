@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="main">#F6D42C</color><!--主色调 #F6D42C -->
+    <color name="message">#ffff86</color><!--消息模块中字体颜色 -->
     <color name="main_66">#66F6D42C</color><!--主色调 #F6D42C -->
     <color name="global">#F6D42C</color><!--主色调 #F6D42C-->
     <color name="btn_color">#F6D42C</color>

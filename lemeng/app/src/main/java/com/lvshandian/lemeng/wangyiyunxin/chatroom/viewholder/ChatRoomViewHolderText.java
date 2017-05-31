@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.utils.GrademipmapUtils;
 import com.netease.nim.uikit.NimUIKit;
-import com.netease.nim.uikit.UiUtils;
 import com.netease.nim.uikit.common.util.sys.ScreenUtil;
 import com.netease.nim.uikit.session.emoji.MoonUtil;
 import com.netease.nim.uikit.session.viewholder.MsgViewHolderText;
@@ -61,7 +60,7 @@ public class ChatRoomViewHolderText extends MsgViewHolderText {
     @Override
     protected void bindContentView() {
         messageItemLayout.setVisibility(View.VISIBLE);
-        messageItemLayout.setPadding(UiUtils.dp2px(context,6),UiUtils.dp2px(context,2),0,UiUtils.dp2px(context,2));
+        messageItemLayout.setPadding(ScreenUtil.dip2px(6),ScreenUtil.dip2px(2),0,ScreenUtil.dip2px(2));
 
         nameTextView.setVisibility(View.GONE);
         avatarLeft.setVisibility(View.INVISIBLE);
@@ -75,6 +74,8 @@ public class ChatRoomViewHolderText extends MsgViewHolderText {
         levelLeft.setImageResource(R.mipmap.rank_6);
         contentContainer.setMinimumHeight(drawable.getIntrinsicHeight());
         TextView bodyTextView = findViewById(com.netease.nim.uikit.R.id.nim_message_item_text_body);
+
+        bodyTextView.setShadowLayer(1, 0, 2, Color.parseColor("#80000000"));
 
         if (message.getRemoteExtension() != null) {
             JSONObject obj = null;

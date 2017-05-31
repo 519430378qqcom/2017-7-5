@@ -24,6 +24,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.PowerManager;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -105,6 +106,7 @@ import com.lvshandian.lemeng.utils.Config;
 import com.lvshandian.lemeng.utils.CountUtils;
 import com.lvshandian.lemeng.utils.DESUtil;
 import com.lvshandian.lemeng.utils.DateUtils;
+import com.lvshandian.lemeng.utils.FastBlur;
 import com.lvshandian.lemeng.utils.FastBlurUtil;
 import com.lvshandian.lemeng.utils.FramesSequenceAnimation;
 import com.lvshandian.lemeng.utils.GrademipmapUtils;
@@ -161,6 +163,9 @@ import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 import com.netease.nimlib.sdk.msg.model.CustomNotification;
 import com.netease.nimlib.sdk.msg.model.IMMessage;
 import com.netease.nimlib.sdk.uinfo.UserInfoProvider;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.qiniu.android.dns.DnsManager;
 import com.qiniu.android.dns.IResolver;
 import com.qiniu.android.dns.NetworkInfo;
@@ -1049,7 +1054,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         liveHeadImg.setAvatarUrl(liveListBean.getPicUrl());
 
         String picUrl = liveListBean.getPicUrl();
-        if (TextUtils.isEmpty(picUrl)) {
+        if (TextUtils.isEmpty(picUrl)){
             picUrl = UrlBuilder.HEAD_DEFAULT;
         }
         final String finalPicUrl = picUrl;
@@ -1067,6 +1072,36 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             }
         }).start();
 
+        if (!com.lvshandian.lemeng.utils.TextUtils.isEmpty(liveListBean.getPicUrl())) {
+            ImageLoader.getInstance().loadImage(liveListBean.getPicUrl(), new
+                    ImageLoadingListener() {
+                        @Override
+                        public void onLoadingStarted(String s, View view) {
+                        }
+
+                        @Override
+                        public void onLoadingFailed(String s, View view, FailReason failReason) {
+                        }
+
+                        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+                        @Override
+                        public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+                            if (bitmap != null) {
+                                try {
+                                    bitmap = FastBlur.doBlur(bitmap, 5, true);
+                                    BitmapDrawable drawable = new BitmapDrawable(bitmap);
+                                    rlLoading.setBackground(drawable);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onLoadingCancelled(String s, View view) {
+                        }
+                    });
+        }
         if (liveListBean.getNickName().length() > 4) {
             liveName.setText(liveListBean.getNickName().substring(0, 4) + "...");
         } else {

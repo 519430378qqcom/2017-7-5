@@ -112,6 +112,13 @@ public class ChatRoomMessageFragment extends TFragment implements ModuleProxy {
             editText.setFocusableInTouchMode(true);
             editText.requestFocus();
             editText.findFocus();
+
+            boolean toggleState = inputPanel.getToggleState();
+            if (toggleState) {
+                editText.setHint("1乐票每条弹幕");
+            } else {
+                editText.setHint("说些什么...");
+            }
             KeyBoardUtils.openKeybord(editText, MyApplication.mContext);
 //            inputType.setVisibility(View.INVISIBLE);
         }

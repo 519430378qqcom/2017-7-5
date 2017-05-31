@@ -56,7 +56,7 @@ public class MoonUtil {
 //                }else {
 //                    style.setSpan(new ForegroundColorSpan(Color.parseColor("#44C1FE")), 0, name.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 //                }
-                style.setSpan(new ForegroundColorSpan(Color.parseColor("#F6D42C")), 0, name.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                style.setSpan(new ForegroundColorSpan(Color.parseColor("#B4FFED")), 0, name.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 tv.setText(style);
             }
         } else if (textView instanceof EditText) {

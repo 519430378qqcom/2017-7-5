@@ -20,7 +20,9 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -109,6 +111,8 @@ public class InputPanel implements IEmoticonSelectedListener, IAudioRecordCallba
     protected ToggleButton toggle;
     //记录弹幕开关状态
     private boolean toggleState;
+    private ImageView ivTanmu;
+    private RelativeLayout rlMessage;
     private String appUserId;
     private String vip;
 
@@ -145,9 +149,19 @@ public class InputPanel implements IEmoticonSelectedListener, IAudioRecordCallba
     public void setInputToggleButtonVisibility(String appUserId, String vip) {
         this.appUserId = appUserId;
         this.vip = vip;
-        toggleButtonLayout.setVisibility(View.VISIBLE);
-        toggle.setVisibility(View.VISIBLE);
-        messageEditText.setHint("亲，来吐槽一下吧…");
+//        toggleButtonLayout.setVisibility(View.VISIBLE);
+//        toggle.setVisibility(View.VISIBLE);
+        ivTanmu.setVisibility(View.VISIBLE);
+//        messageEditText.setHint("说些什么...");
+        if (toggleState) {
+//            messageEditText.setHint("1乐票每条弹幕");
+            ivTanmu.setImageResource(R.drawable.laba_lv);
+            rlMessage.setBackgroundResource(R.drawable.message_yellow_bg);
+        } else {
+//            messageEditText.setHint("说些什么...");
+            ivTanmu.setImageResource(R.drawable.laba_bai);
+            rlMessage.setBackgroundResource(R.drawable.message_black_bg);
+        }
         messageEditText.setTextSize(15);
     }
 
@@ -208,6 +222,8 @@ public class InputPanel implements IEmoticonSelectedListener, IAudioRecordCallba
         sendMessageButtonInInputBar = view.findViewById(R.id.buttonSendMessage);
         messageEditText = (EditText) view.findViewById(R.id.editTextMessage);
         toggle = (ToggleButton) view.findViewById(R.id.input_toggleButton);
+        ivTanmu = (ImageView) view.findViewById(R.id.iv_tanmu);
+        rlMessage = (RelativeLayout) view.findViewById(R.id.rl_message);
 
         // 语音
         audioRecordBtn = (Button) view.findViewById(R.id.audioRecord);
@@ -245,10 +261,25 @@ public class InputPanel implements IEmoticonSelectedListener, IAudioRecordCallba
                 toggleState = on;
                 if (on) {
                     //弹幕，开
-                    messageEditText.setHint("想全场弹幕呐喊（1条/1颜票）");
+                    messageEditText.setHint("1乐票每条弹幕");
                 } else {
                     //弹幕，关
-                    messageEditText.setHint("亲，来吐槽一下吧…");
+                    messageEditText.setHint("说些什么...");
+                }
+            }
+        });
+        ivTanmu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleState = !toggleState;
+                if (toggleState) {
+                    messageEditText.setHint("1乐票每条弹幕");
+                    ivTanmu.setImageResource(R.drawable.laba_lv);
+                    rlMessage.setBackgroundResource(R.drawable.message_yellow_bg);
+                } else {
+                    messageEditText.setHint("说些什么...");
+                    ivTanmu.setImageResource(R.drawable.laba_bai);
+                    rlMessage.setBackgroundResource(R.drawable.message_black_bg);
                 }
             }
         });
@@ -367,7 +398,8 @@ public class InputPanel implements IEmoticonSelectedListener, IAudioRecordCallba
         hideActionPanelLayout();
 
         audioRecordBtn.setVisibility(View.GONE);
-        messageEditText.setVisibility(View.VISIBLE);
+//        messageEditText.setVisibility(View.VISIBLE);
+        rlMessage.setVisibility(View.VISIBLE);
         switchToTextButtonInInputBar.setVisibility(View.GONE);
         switchToAudioButtonInInputBar.setVisibility(View.VISIBLE);
 
@@ -400,7 +432,8 @@ public class InputPanel implements IEmoticonSelectedListener, IAudioRecordCallba
 
     // 切换成音频，收起键盘，按钮切换成键盘
     private void switchToAudioLayout() {
-        messageEditText.setVisibility(View.GONE);
+//        messageEditText.setVisibility(View.GONE);
+        rlMessage.setVisibility(View.GONE);
         audioRecordBtn.setVisibility(View.VISIBLE);
         hideInputMethod();
         hideEmojiLayout();
@@ -456,7 +489,8 @@ public class InputPanel implements IEmoticonSelectedListener, IAudioRecordCallba
     // 隐藏语音布局
     private void hideAudioLayout() {
         audioRecordBtn.setVisibility(View.GONE);
-        messageEditText.setVisibility(View.VISIBLE);
+//        messageEditText.setVisibility(View.VISIBLE);
+        rlMessage.setVisibility(View.VISIBLE);
         switchToTextButtonInInputBar.setVisibility(View.VISIBLE);
         switchToAudioButtonInInputBar.setVisibility(View.GONE);
     }

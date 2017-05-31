@@ -18,7 +18,6 @@ import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.utils.TextUtils;
 import com.netease.nim.uikit.NimUIKit;
-import com.netease.nim.uikit.UiUtils;
 import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.netease.nim.uikit.common.util.sys.ScreenUtil;
 import com.netease.nim.uikit.session.emoji.MoonUtil;
@@ -41,9 +40,9 @@ import java.util.Map;
  * @time 2016/11/22 17:07
  */
 public class ChatRoomViewHolderCustom extends MsgViewHolderBase {
-    
-    private final String GET_DATA_TEXT="data";
-    
+
+    private final String GET_DATA_TEXT = "data";
+
     @Override
     protected boolean isChatRoom() {
         return true;
@@ -104,6 +103,8 @@ public class ChatRoomViewHolderCustom extends MsgViewHolderBase {
         contentContainer.setMinimumHeight(drawable.getIntrinsicHeight());
         TextView bodyTextView = findViewById(com.netease.nim.uikit.R.id
                 .nim_message_item_text_body_join);
+        bodyTextView.setShadowLayer(1, 0, 2, Color.parseColor("#80000000"));
+
         TextView bodyLightView = findViewById(com.netease.nim.uikit.R.id
                 .nim_message_item_light_body);
 
@@ -151,8 +152,9 @@ public class ChatRoomViewHolderCustom extends MsgViewHolderBase {
         bodyTextView.setVisibility(View.VISIBLE);
         bodyLightView.setVisibility(View.GONE);
         messageItemLayout.setVisibility(View.VISIBLE);
-        messageItemLayout.setPadding(UiUtils.dp2px(context,6),UiUtils.dp2px(context,2),0,UiUtils.dp2px(context,2));
+        messageItemLayout.setPadding(ScreenUtil.dip2px(6), ScreenUtil.dip2px(2), 0, ScreenUtil.dip2px(2));
         String text = "";
+        bodyTextView.setTextColor(context.getResources().getColor(R.color.message));
         if (message.getRemoteExtension() != null) {
             Map<String, Object> remote = message.getRemoteExtension();
             String typeText = (String) remote.get("type");
@@ -236,7 +238,6 @@ public class ChatRoomViewHolderCustom extends MsgViewHolderBase {
                         bodyLightView.setVisibility(View.VISIBLE);
                         break;
                     case 109:
-                        bodyTextView.setTextColor(context.getResources().getColor(R.color.red));
                         bodyTextView.setTextSize(15);
                         CustomGiftBean customGiftBean = JavaBeanMapUtils.mapToBean(remote,
                                 CustomGiftBean.class);
@@ -258,7 +259,6 @@ public class ChatRoomViewHolderCustom extends MsgViewHolderBase {
                         break;
                     case 199:
                         //关注
-//                        bodyTextView.setTextColor(context.getResources().getColor(R.color.red));
                         text = "关注了主播";
                         break;
                     case 200:
@@ -266,19 +266,15 @@ public class ChatRoomViewHolderCustom extends MsgViewHolderBase {
                         text = (String) remote.get("text");
                         break;
                     case 114://禁言消息
-                        bodyTextView.setTextColor(context.getResources().getColor(R.color.red));
                         text = (String) remote.get("jinyan");
                         break;
                     case 2828://主播开游戏
-                        bodyTextView.setTextColor(context.getResources().getColor(R.color.red));
                         text = (String) remote.get("palyMsg");
                         break;
                     case 1818://有人投注
-                        bodyTextView.setTextColor(context.getResources().getColor(R.color.aquamarine));
                         text = (String) remote.get("inputMsg");
                         break;
                     case 5858://主播开斗牛游戏
-                        bodyTextView.setTextColor(context.getResources().getColor(R.color.red));
                         text = (String) remote.get("palyDouniuMsg");
                         break;
                     default:
