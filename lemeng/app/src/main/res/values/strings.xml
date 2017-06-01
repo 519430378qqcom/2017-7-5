@@ -270,4 +270,7 @@
     <string name="betting2">投注地</string>
     <string name="betting3">投注人</string>
     <string name="bet_fail">投注失败</string>
+    <string name="the_result">本局结算</string>
+    <string name="the_user">本家</string>
+    <string name="banker">庄家</string>
 </resources>

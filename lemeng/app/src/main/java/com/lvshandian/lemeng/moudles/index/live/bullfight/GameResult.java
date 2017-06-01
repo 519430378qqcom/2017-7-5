@@ -59,6 +59,15 @@ public class GameResult {
 
         private int amount;
         private int mount;
+        private int tmount;
+
+        public int getTmount() {
+            return tmount;
+        }
+
+        public void setTmount(int tmount) {
+            this.tmount = tmount;
+        }
 
         public int getAmount() {
             return amount;

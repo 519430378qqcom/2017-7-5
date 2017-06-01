@@ -1500,7 +1500,9 @@ public class StartLiveActivity extends BaseActivity implements
                     bullfightResultShow(null, "未中奖", null);
                     break;
                 case 1://中奖
-                    bullfightResultShow("本次开奖结果", "中奖", gameResult.getObj().getMount() + "");
+                    bullfightResultShow(getResources().getString(R.string.the_result), getResources().getString(R.string.the_user)
+                            +gameResult.getObj().getMount(),getResources().getString(R.string.banker)+gameResult.getObj().getTmount());
+                    myGoldCoin += gameResult.getObj().getAmount();
                     myGoldCoin += gameResult.getObj().getAmount();
                     tv_bullfight_lepiao.setText(CountUtils.getCount(myGoldCoin));
                     break;
@@ -4814,6 +4816,16 @@ public class StartLiveActivity extends BaseActivity implements
      * 显示彩票走势
      */
     private void showTrendPop() {
+        String url = "";
+        switch (gameType){
+            case 1:
+                url = "http://47.88.229.22:8080/lucky/trend.html";
+                break;
+            case 2:
+                url = "http://60.205.114.36:8080/cow/cowResult.html?roomId=" + room_Id;
+                break;
+        }
+
         View view = getLayoutInflater().inflate(R.layout.pop_trend, null);
         dialogForSelect.setCanceledOnTouchOutside(true);
         dialogForSelect.setContentView(view);

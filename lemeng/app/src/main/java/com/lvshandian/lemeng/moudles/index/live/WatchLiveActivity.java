@@ -2053,7 +2053,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     bullfightResultShow(null, "未中奖", null);
                     break;
                 case 1://中奖
-                    bullfightResultShow("本次开奖结果", "中奖", gameResult.getObj().getMount() + "");
+                    bullfightResultShow(getResources().getString(R.string.the_result), getResources().getString(R.string.the_user)
+                            +gameResult.getObj().getMount(),getResources().getString(R.string.banker)+gameResult.getObj().getTmount());
                     myGoldCoin += gameResult.getObj().getAmount();
                     tv_bullfight_lepiao.setText(CountUtils.getCount(myGoldCoin));
                     break;
@@ -4973,6 +4974,15 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
 
     private void showTrendPop() {
+        String url = "";
+        switch (liveListBean.getRooms().getRoomsType()){
+            case "1":
+                url = "http://47.88.229.22:8080/lucky/trend.html";
+                break;
+            case "2":
+                url = "http://60.205.114.36:8080/cow/cowResult.html?roomId="+String.valueOf(liveListBean.getRoomId());
+                break;
+        }
         View view = getLayoutInflater().inflate(R.layout.pop_trend, null);
         dialogForSelect.setCanceledOnTouchOutside(true);
         dialogForSelect.setContentView(view);
@@ -4988,7 +4998,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         final ProgressBar iv_include_loading = (ProgressBar) view.findViewById(R.id.iv_include_loading);
         WebSettings webSettings = webView.getSettings();
         webSetting(webSettings);
-        webView.loadUrl("http://47.88.229.22:8080/lucky/trend.html");
+        webView.loadUrl(url);
         webView.setWebChromeClient(new WebChromeClient());
         webView.setWebViewClient(new WebViewClient() {
 
