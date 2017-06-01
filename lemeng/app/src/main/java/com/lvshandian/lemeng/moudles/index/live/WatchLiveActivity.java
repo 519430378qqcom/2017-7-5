@@ -119,7 +119,6 @@ import com.lvshandian.lemeng.utils.CountUtils;
 import com.lvshandian.lemeng.utils.DESUtil;
 import com.lvshandian.lemeng.utils.DateUtils;
 import com.lvshandian.lemeng.utils.FastBlur;
-import com.lvshandian.lemeng.utils.FastBlurUtil;
 import com.lvshandian.lemeng.utils.FramesSequenceAnimation;
 import com.lvshandian.lemeng.utils.GrademipmapUtils;
 import com.lvshandian.lemeng.utils.JavaBeanMapUtils;
@@ -1244,20 +1243,21 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         if (TextUtils.isEmpty(picUrl)) {
             picUrl = UrlBuilder.HEAD_DEFAULT;
         }
-        final String finalPicUrl = picUrl;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final Bitmap blurBitmap2 = FastBlurUtil.GetUrlBitmap(finalPicUrl, 4);
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        rlLoading.setImageBitmap(blurBitmap2);
-                    }
-                });
-            }
-        }).start();
+        Picasso.with(mContext).load(picUrl).error(R.mipmap.zhan_live).into(rlLoading);
+//        final String finalPicUrl = picUrl;
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                final Bitmap blurBitmap2 = FastBlurUtil.GetUrlBitmap(finalPicUrl, 4);
+//
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        rlLoading.setImageBitmap(blurBitmap2);
+//                    }
+//                });
+//            }
+//        }).start();
 
         if (!com.lvshandian.lemeng.utils.TextUtils.isEmpty(liveListBean.getPicUrl())) {
             ImageLoader.getInstance().loadImage(liveListBean.getPicUrl(), new
@@ -2105,6 +2105,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             showPlayView(2);
             updateBettingEnable(myGoldCoin);
             switchBullNum(false);
+            isPlayerRoom = true;
             if (isWait) {
                 isWait = false;
                 setBetPoolEnable(false);
@@ -2113,7 +2114,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 return;
             }
             myHandler.sendEmptyMessage(BULLFIGHT_TIME);
-            isPlayerRoom = true;
             initPokerImg();
             switchAllPoker(true,-1);
             sendPokerAnimator();
@@ -3058,6 +3058,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     case 2828:
                         isPlayerRoom = true;
                         getTimenumber();
+                        showPlayView(1);
                         break;
                     case 2929://主播开启斗牛游戏
                         isPlayerRoom = true;
