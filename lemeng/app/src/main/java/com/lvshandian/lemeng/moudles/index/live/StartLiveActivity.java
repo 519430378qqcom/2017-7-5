@@ -1503,7 +1503,6 @@ public class StartLiveActivity extends BaseActivity implements
                     bullfightResultShow(getResources().getString(R.string.the_result), getResources().getString(R.string.the_user)
                             +gameResult.getObj().getMount(),getResources().getString(R.string.banker)+gameResult.getObj().getTmount());
                     myGoldCoin += gameResult.getObj().getAmount();
-                    myGoldCoin += gameResult.getObj().getAmount();
                     tv_bullfight_lepiao.setText(CountUtils.getCount(myGoldCoin));
                     break;
                 case 2://异常
