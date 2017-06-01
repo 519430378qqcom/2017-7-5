@@ -2116,6 +2116,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             initPokerImg();
             switchAllPoker(true,-1);
             sendPokerAnimator();
+
             bullfightPresenter.getBankerInfo();
         } else {
         }
