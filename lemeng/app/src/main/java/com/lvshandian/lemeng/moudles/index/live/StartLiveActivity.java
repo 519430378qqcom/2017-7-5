@@ -1291,43 +1291,37 @@ public class StartLiveActivity extends BaseActivity implements
     private void addBettingView(int position, int betSum, boolean isAnimation) {
         final ImageView imageView = new ImageView(this);
         RelativeLayout bettingPoolView = null;
-        int betting = 0;
         switch (betSum) {
             case 10:
                 imageView.setImageResource(R.mipmap.ic_bullfight_10_light);
-                betting = 10;
                 break;
             case 50:
                 imageView.setImageResource(R.mipmap.ic_bullfight_50_light);
-                betting = 50;
                 break;
             case 100:
                 imageView.setImageResource(R.mipmap.ic_bullfight_100_light);
-                betting = 100;
                 break;
             case 1000:
                 imageView.setImageResource(R.mipmap.ic_bullfight_1000_light);
-                betting = 1000;
                 break;
             case 10000:
                 imageView.setImageResource(R.mipmap.ic_bullfight_10000_light);
-                betting = 10000;
                 break;
         }
         switch (position) {
             case 1:
                 bettingPoolView = rl_bullfight_betting_container1;
-                int total1 = Integer.parseInt(tv_bullfight_totlanum1.getText().toString()) + betting;
+                int total1 = Integer.parseInt(tv_bullfight_totlanum1.getText().toString()) + betSum;
                 tv_bullfight_totlanum1.setText(total1 + "");
                 break;
             case 2:
                 bettingPoolView = rl_bullfight_betting_container2;
-                int total2 = Integer.parseInt(tv_bullfight_totlanum2.getText().toString()) + betting;
+                int total2 = Integer.parseInt(tv_bullfight_totlanum2.getText().toString()) + betSum;
                 tv_bullfight_totlanum2.setText(total2 + "");
                 break;
             case 3:
                 bettingPoolView = rl_bullfight_betting_container3;
-                int total3 = Integer.parseInt(tv_bullfight_totlanum3.getText().toString()) + betting;
+                int total3 = Integer.parseInt(tv_bullfight_totlanum3.getText().toString()) + betSum;
                 tv_bullfight_totlanum3.setText(total3 + "");
                 break;
         }
@@ -1525,8 +1519,8 @@ public class StartLiveActivity extends BaseActivity implements
             map.put("vip", appUser.getVip());
             map.put("userId", appUser.getId());
             map.put("level", appUser.getLevel());
-            map.put("palyDouniuMsg", "主播开启斗牛游戏");
-            SendRoomMessageUtils.onCustomMessagePlay("5858", messageFragment, wy_Id, map);
+            map.put("NIM_BEGIN_GAME_NIUNIU", "主播开启斗牛游戏");
+            SendRoomMessageUtils.onCustomMessagePlay("2929", messageFragment, wy_Id, map);
         } else {
             Toast.makeText(StartLiveActivity.this, R.string.game_start_fail, Toast.LENGTH_SHORT).show();
         }
@@ -1552,12 +1546,12 @@ public class StartLiveActivity extends BaseActivity implements
             rl_bullfight_betting_container1.removeAllViews();
             rl_bullfight_betting_container2.removeAllViews();
             rl_bullfight_betting_container3.removeAllViews();
-            tv_bullfight_totlanum1.setText("000");
-            tv_bullfight_totlanum2.setText("000");
-            tv_bullfight_totlanum3.setText("000");
-            tv_bullfight_minenum1.setText("000");
-            tv_bullfight_minenum2.setText("000");
-            tv_bullfight_minenum3.setText("000");
+            tv_bullfight_totlanum1.setText("0");
+            tv_bullfight_totlanum2.setText("0");
+            tv_bullfight_totlanum3.setText("0");
+            tv_bullfight_minenum1.setText("0");
+            tv_bullfight_minenum2.setText("0");
+            tv_bullfight_minenum3.setText("0");
             tv_bullfight_lepiao.setText(CountUtils.getCount(myGoldCoin));
             nextTime = timeAndNper.getObj().getTime();
             uper = timeAndNper.getObj().getPerid();
@@ -1584,24 +1578,40 @@ public class StartLiveActivity extends BaseActivity implements
                 Toast.makeText(StartLiveActivity.this, "投注失败", Toast.LENGTH_SHORT).show();
                 break;
             case 1://为成功
-                myGoldCoin -= betBalance;
+                myGoldCoin -= amount;
                 tv_bullfight_lepiao.setText(CountUtils.getCount(myGoldCoin));
                 updateBettingEnable(balance);
                 addBettingView(type,amount, true);
-                switch (betPosition) {
+                switch (type) {
                     case 1:
-                        int amount1 = Integer.parseInt(tv_bullfight_minenum1.getText().toString()) + betBalance;
+                        int amount1 = Integer.parseInt(tv_bullfight_minenum1.getText().toString()) + amount;
                         tv_bullfight_minenum1.setText(amount1 + "");
                         break;
                     case 2:
-                        int amount2 = Integer.parseInt(tv_bullfight_minenum2.getText().toString()) + betBalance;
+                        int amount2 = Integer.parseInt(tv_bullfight_minenum2.getText().toString()) + amount;
                         tv_bullfight_minenum2.setText(amount2 + "");
                         break;
                     case 3:
-                        int amount3 = Integer.parseInt(tv_bullfight_minenum3.getText().toString()) + betBalance;
+                        int amount3 = Integer.parseInt(tv_bullfight_minenum3.getText().toString()) + amount;
                         tv_bullfight_minenum3.setText(amount3 + "");
                         break;
                 }
+                Map<String, Object> map = new HashMap<>();
+                map.put("vip", appUser.getVip());
+                map.put("userId", appUser.getId());
+                map.put("level", appUser.getLevel());
+                switch (type) {
+                    case 1:
+                        map.put("NIM_TOUZHU_GOLD_SELECT_1", amount +"");
+                        break;
+                    case 2:
+                        map.put("NIM_TOUZHU_GOLD_SELECT_2", amount +"");
+                        break;
+                    case 3:
+                        map.put("NIM_TOUZHU_GOLD_SELECT_3", amount +"");
+                        break;
+                }
+                SendRoomMessageUtils.onCustomMessagePlay("3030", messageFragment,wy_Id, map);
                 break;
             case 2://为钱币不够赔
                 Toast.makeText(StartLiveActivity.this, "不够赔", Toast.LENGTH_SHORT).show();
@@ -2536,6 +2546,21 @@ public class StartLiveActivity extends BaseActivity implements
                             SharedPreferenceUtils.saveUserInfo(mContext, appUser);
                             appUser = SharedPreferenceUtils.getUserInfo(mContext);
                         }
+                        break;
+                    case 3030://有人投注
+                        int betPosition = 0;
+                        int amount = 0;
+                        if(remote.get("NIM_TOUZHU_GOLD_SELECT_1")!=null) {
+                            betPosition = 1;
+                            amount = Integer.valueOf((String) remote.get("NIM_TOUZHU_GOLD_SELECT_1"));
+                        }else if(remote.get("NIM_TOUZHU_GOLD_SELECT_2")!=null) {
+                            betPosition = 2;
+                            amount = Integer.valueOf((String) remote.get("NIM_TOUZHU_GOLD_SELECT_2"));
+                        }else if(remote.get("NIM_TOUZHU_GOLD_SELECT_3")!= null) {
+                            betPosition = 3;
+                            amount = Integer.valueOf((String) remote.get("NIM_TOUZHU_GOLD_SELECT_3"));
+                        }
+                        addBettingView(betPosition,amount,false);
                         break;
                     default:
                         break;

@@ -117,7 +117,8 @@ public class ChatRoomViewHolderCustom extends MsgViewHolderBase {
                     .equals("109") || ((String) remote0.get("type")).equals("114") ||
                     ((String) remote0.get("type")).equals("112") || ((String) remote0.get("type")).equals("113")
                     || ((String) remote0.get("type")).equals("199") || ((String) remote0.get("type")).equals("2828")
-                    || ((String) remote0.get("type")).equals("1818") || ((String) remote0.get("type")).equals("5858")) {
+                    || ((String) remote0.get("type")).equals("1818") || ((String) remote0.get("type")).equals("2929")
+                    || ((String) remote0.get("type")).equals("3030")) {
                 customdate = JavaBeanMapUtils.mapToBean((Map) message.getRemoteExtension(),
                         CustomdateBean.class);
             } else {
@@ -274,8 +275,17 @@ public class ChatRoomViewHolderCustom extends MsgViewHolderBase {
                     case 1818://有人投注
                         text = (String) remote.get("inputMsg");
                         break;
-                    case 5858://主播开斗牛游戏
-                        text = (String) remote.get("palyDouniuMsg");
+                    case 2929://主播开斗牛游戏
+                        text = (String) remote.get("NIM_BEGIN_GAME_NIUNIU");
+                        break;
+                    case 3030://有人投注
+                        if(remote.get("NIM_TOUZHU_GOLD_SELECT_1")!=null) {
+                            text = context.getString(R.string.betting1) + remote.get("NIM_TOUZHU_GOLD_SELECT_1");
+                        }else if(remote.get("NIM_TOUZHU_GOLD_SELECT_2")!=null) {
+                            text = context.getString(R.string.betting2) + remote.get("NIM_TOUZHU_GOLD_SELECT_2");
+                        }else if(remote.get("NIM_TOUZHU_GOLD_SELECT_3")!= null) {
+                            text = context.getString(R.string.betting3) + remote.get("NIM_TOUZHU_GOLD_SELECT_3");
+                        }
                         break;
                     default:
                         //默认不显示任何东西

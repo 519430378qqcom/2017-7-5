@@ -48,7 +48,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile file("E:/jks/lemeng.jks")
+            storeFile file("D:/jks/lemeng.jks")
             storePassword "123456"
             keyAlias "lemeng"
             keyPassword "123456"

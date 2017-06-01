@@ -266,4 +266,7 @@
     <string name="no_select_betbalance">还未选取投注金额</string>
     <string name="balance_not_enough">余额不足</string>
     <string name="game_start_fail">游戏开启失败</string>
+    <string name="betting1">投注天</string>
+    <string name="betting2">投注地</string>
+    <string name="betting3">投注人</string>
 </resources>
