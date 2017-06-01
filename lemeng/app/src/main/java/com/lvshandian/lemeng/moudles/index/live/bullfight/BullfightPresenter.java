@@ -78,11 +78,17 @@ public class BullfightPresenter {
             @Override
             public void onResponse(String response) {
                 Log.e("TAG","getTimeAndNper"+response);
-                TimeAndNper timeAndNper = JSON.parseObject(response,TimeAndNper.class);
-                if(bullfightInterface != null) {
-                    bullfightInterface.getTimeAndNPer(timeAndNper);
+                TimeAndNper timeAndNper = null;
+                try {
+                   timeAndNper  = JSON.parseObject(response,TimeAndNper.class);
+                    if(bullfightInterface != null) {
+                        bullfightInterface.getTimeAndNPer(timeAndNper);
+                    }
+                }catch (Exception e){
+                    TimeAndNper timeAndNper1 = new TimeAndNper();
+                    timeAndNper1.setSuccess(false);
+                    bullfightInterface.getTimeAndNPer(timeAndNper1);
                 }
-                Log.e("TAG","期数"+timeAndNper.getObj().getPerid());
             }
         });
     }
