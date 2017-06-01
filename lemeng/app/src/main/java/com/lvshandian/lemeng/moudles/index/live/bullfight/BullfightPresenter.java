@@ -16,7 +16,9 @@ public class BullfightPresenter {
     public BullfightPresenter(BullfightInterface bullfightInterface) {
         this.bullfightInterface = bullfightInterface;
     }
-
+    public void detach(){
+        bullfightInterface = null;
+    }
     /**
      * 请求开启斗牛游戏
      * @param roomId
@@ -33,7 +35,9 @@ public class BullfightPresenter {
             public void onResponse(String response) {
                 Log.e("TAG","startBullGame"+response);
                 StartResult startResult = JSON.parseObject(response, StartResult.class);
-                bullfightInterface.startBullGame(startResult);
+                if(bullfightInterface != null) {
+                    bullfightInterface.startBullGame(startResult);
+                }
             }
         });
     };
@@ -53,7 +57,9 @@ public class BullfightPresenter {
             public void onResponse(String response) {
                 Log.e("TAG","getBankerInfo"+response);
                 BankerInfo bankerInfo = JSON.parseObject(response, BankerInfo.class);
-                bullfightInterface.getBankerInfo(bankerInfo);
+                if(bullfightInterface != null) {
+                    bullfightInterface.getBankerInfo(bankerInfo);
+                }
             }
         });
     };
@@ -73,7 +79,9 @@ public class BullfightPresenter {
             public void onResponse(String response) {
                 Log.e("TAG","getTimeAndNper"+response);
                 TimeAndNper timeAndNper = JSON.parseObject(response,TimeAndNper.class);
-                bullfightInterface.getTimeAndNPer(timeAndNper);
+                if(bullfightInterface != null) {
+                    bullfightInterface.getTimeAndNPer(timeAndNper);
+                }
                 Log.e("TAG","期数"+timeAndNper.getObj().getPerid());
             }
         });
@@ -110,7 +118,9 @@ public class BullfightPresenter {
             public void onResponse(String response) {
                 Log.e("TAG","getPokerResult"+response);
                 PokerResult pokerResult = JSON.parseObject(response, PokerResult.class);
-                bullfightInterface.getPokerResult(pokerResult);
+                if(bullfightInterface != null) {
+                    bullfightInterface.getPokerResult(pokerResult);
+                }
             }
         });
     }
@@ -136,7 +146,9 @@ public class BullfightPresenter {
             public void onResponse(String response) {
                 Log.e("TAG","betSuccess"+response);
                 BetResult betResult = JSON.parseObject(response, BetResult.class);
-                bullfightInterface.betSuccess(betResult,amount,type);
+                if(bullfightInterface != null) {
+                    bullfightInterface.betSuccess(betResult,amount,type);
+                }
             }
         });
     }
@@ -155,7 +167,9 @@ public class BullfightPresenter {
             public void onResponse(String response) {
                 Log.e("TAG","getGameResult"+response);
                 GameResult gameResult = JSON.parseObject(response, GameResult.class);
-                bullfightInterface.getGameResult(gameResult);
+                if(bullfightInterface != null) {
+                    bullfightInterface.getGameResult(gameResult);
+                }
             }
         });
     }
@@ -173,7 +187,9 @@ public class BullfightPresenter {
             public void onResponse(String response) {
                 Log.e("TAG","updateBankerBalance"+response);
                 BankerBalance BankerBalance = JSON.parseObject(response, BankerBalance.class);
-                bullfightInterface.updataBankerBalance(BankerBalance);
+                if(bullfightInterface != null) {
+                    bullfightInterface.updataBankerBalance(BankerBalance);
+                }
             }
         });
     }

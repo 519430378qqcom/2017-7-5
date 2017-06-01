@@ -805,7 +805,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     bullfightTimer();
                     break;
                 case WAIT_NEXT_START:
-                    isWait = false;
                     bullfightPresenter.getTimeAndNper(liveListBean.getRoomId() + "");
                     break;
             }
@@ -1832,13 +1831,13 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     private void betBullfight(int position) {
         betPosition = position;
         if (betBalance > 0) {
-            if (betBalance > balance) {
-                Toast.makeText(WatchLiveActivity.this, R.string.balance_not_enough, Toast.LENGTH_SHORT).show();
+            if (betBalance > myGoldCoin) {
+                ToastUtils.showMessageDefault(WatchLiveActivity.this,getResources().getString(R.string.balance_not_enough));
             } else {
                 bullfightPresenter.betSuccess(Integer.parseInt(appUser.getId()), liveListBean.getRoomId(), betBalance, position, uper, 0);
             }
         } else {
-            Toast.makeText(WatchLiveActivity.this, R.string.no_select_betbalance, Toast.LENGTH_SHORT).show();
+            ToastUtils.showMessageDefault(WatchLiveActivity.this,getResources().getString(R.string.no_select_betbalance));
         }
     }
 
@@ -1967,6 +1966,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * 斗牛倒计时
      */
     private void bullfightTimer() {
+        Log.e("TAG",nextTime+"");
         if (nextTime >= 10) {
             switchTimer();
         }
@@ -2041,7 +2041,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * param isShow
      */
     private void switchTimer() {
-        int time = nextTime - 11;
+        int time = nextTime - 10;
         tv_timing.setText(time + "S");
     }
 
@@ -2098,21 +2098,23 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 return;
             }
             tv_bullfight_lepiao.setText(CountUtils.getCount(myGoldCoin));
-            nextTime = timeAndNper.getObj().getTime();
+            nextTime = timeAndNper.getObj().getTime() + 1;
+            nextTime = nextTime > 30 ? 30 : nextTime;
             uper = timeAndNper.getObj().getPerid();
             showPlayView(2);
-            isPlayerRoom = true;
-            updateBettingEnable(balance);
+            updateBettingEnable(myGoldCoin);
             switchBullNum(false);
             if (isWait) {
-                switchAllPoker(false);
+                isWait = false;
+                setBetPoolEnable(false);
                 bullfightResultShow(null, getResources().getString(R.string.wait_next_start), null);
                 myHandler.sendEmptyMessageDelayed(WAIT_NEXT_START, nextTime * 1000);
                 return;
             }
             myHandler.sendEmptyMessage(BULLFIGHT_TIME);
-            switchAllPoker(true);
+            isPlayerRoom = true;
             initPokerImg();
+            switchAllPoker(true,-1);
             sendPokerAnimator();
             bullfightPresenter.getBankerInfo();
         } else {
@@ -2126,12 +2128,12 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         int code = betResult.getCode();
         switch (code) {
             case 0://为异常
-                Toast.makeText(WatchLiveActivity.this, "投注失败", Toast.LENGTH_SHORT).show();
+                ToastUtils.showMessageDefault(WatchLiveActivity.this,getResources().getString(R.string.bet_fail));
                 break;
             case 1://为成功
                 myGoldCoin -= amount;
                 tv_bullfight_lepiao.setText(CountUtils.getCount(myGoldCoin));
-                updateBettingEnable(balance);
+                updateBettingEnable(myGoldCoin);
                 addBettingView(type, amount, true);
                 switch (type) {
                     case 1:
@@ -2165,10 +2167,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 SendRoomMessageUtils.onCustomMessagePlay("3030", messageFragment, roomId, map);
                 break;
             case 2://为钱币不够赔
-                Toast.makeText(WatchLiveActivity.this, "不够赔", Toast.LENGTH_SHORT).show();
                 break;
             case 3://余额不足
-                Toast.makeText(WatchLiveActivity.this, "余额不足", Toast.LENGTH_SHORT).show();
+                ToastUtils.showMessageDefault(WatchLiveActivity.this,getResources().getString(R.string.balance_not_enough));
                 break;
         }
     }
@@ -2377,12 +2378,10 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         return 0;
     }
 
-    int balance = 1000000;
-
     /**
      * 更新投注金额的选择按钮
      */
-    private void updateBettingEnable(int balance) {
+    private void updateBettingEnable(long balance) {
         if (balance >= 10000) {
             iv_10.setEnabled(true);
             iv_10.setImageResource(R.mipmap.ic_bullfight_10_light);
@@ -2466,18 +2465,18 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * 发牌动画
      */
     private void sendPokerAnimator() {
-        ObjectAnimator animator = ObjectAnimator.ofFloat(rl_poker_banker_container, "scaleX", 0f, 1f);
-        animator.setDuration(2000);
-        animator.start();
-        ObjectAnimator animator1 = ObjectAnimator.ofFloat(rl_poker_player_container1, "scaleX", 0f, 1f);
-        animator1.setDuration(2000);
-        animator1.start();
-        ObjectAnimator animator2 = ObjectAnimator.ofFloat(rl_poker_player_container2, "scaleX", 0f, 1f);
-        animator2.setDuration(2000);
-        animator2.start();
         ObjectAnimator animator3 = ObjectAnimator.ofFloat(rl_poker_player_container3, "scaleX", 0f, 1f);
-        animator3.setDuration(2000);
+        animator3.setDuration(1000);
         animator3.start();
+        ObjectAnimator animator2 = ObjectAnimator.ofFloat(rl_poker_player_container2, "scaleX", 0f, 1f);
+        animator2.setDuration(1000);
+        animator2.start();
+        ObjectAnimator animator1 = ObjectAnimator.ofFloat(rl_poker_player_container1, "scaleX", 0f, 1f);
+        animator1.setDuration(1000);
+        animator1.start();
+        ObjectAnimator animator = ObjectAnimator.ofFloat(rl_poker_banker_container, "scaleX", 0f, 1f);
+        animator.setDuration(1000);
+        animator.start();
     }
 
     /**
@@ -2527,29 +2526,63 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
     /**
      * 所有扑克牌显示隐藏
+     * @param isShow 是否显示
+     * @param position 再显示的基础上显示哪个区域（-1一起显示，0显示庄家，1显示天，2显示地，3显示人）
      */
-    private void switchAllPoker(boolean isShow) {
+    private void switchAllPoker(boolean isShow,int position) {
         if (isShow) {
-            iv_poker_banker1.setVisibility(View.VISIBLE);
-            iv_poker_banker2.setVisibility(View.VISIBLE);
-            iv_poker_banker3.setVisibility(View.VISIBLE);
-            iv_poker_banker4.setVisibility(View.VISIBLE);
-            iv_poker_banker5.setVisibility(View.VISIBLE);
-            iv_poker_palyer11.setVisibility(View.VISIBLE);
-            iv_poker_palyer12.setVisibility(View.VISIBLE);
-            iv_poker_palyer13.setVisibility(View.VISIBLE);
-            iv_poker_palyer14.setVisibility(View.VISIBLE);
-            iv_poker_palyer15.setVisibility(View.VISIBLE);
-            iv_poker_palyer21.setVisibility(View.VISIBLE);
-            iv_poker_palyer22.setVisibility(View.VISIBLE);
-            iv_poker_palyer23.setVisibility(View.VISIBLE);
-            iv_poker_palyer24.setVisibility(View.VISIBLE);
-            iv_poker_palyer25.setVisibility(View.VISIBLE);
-            iv_poker_palyer31.setVisibility(View.VISIBLE);
-            iv_poker_palyer32.setVisibility(View.VISIBLE);
-            iv_poker_palyer33.setVisibility(View.VISIBLE);
-            iv_poker_palyer34.setVisibility(View.VISIBLE);
-            iv_poker_palyer35.setVisibility(View.VISIBLE);
+            switch (position){
+                case -1:
+                    iv_poker_banker1.setVisibility(View.VISIBLE);
+                    iv_poker_banker2.setVisibility(View.VISIBLE);
+                    iv_poker_banker3.setVisibility(View.VISIBLE);
+                    iv_poker_banker4.setVisibility(View.VISIBLE);
+                    iv_poker_banker5.setVisibility(View.VISIBLE);
+                    iv_poker_palyer11.setVisibility(View.VISIBLE);
+                    iv_poker_palyer12.setVisibility(View.VISIBLE);
+                    iv_poker_palyer13.setVisibility(View.VISIBLE);
+                    iv_poker_palyer14.setVisibility(View.VISIBLE);
+                    iv_poker_palyer15.setVisibility(View.VISIBLE);
+                    iv_poker_palyer21.setVisibility(View.VISIBLE);
+                    iv_poker_palyer22.setVisibility(View.VISIBLE);
+                    iv_poker_palyer23.setVisibility(View.VISIBLE);
+                    iv_poker_palyer24.setVisibility(View.VISIBLE);
+                    iv_poker_palyer25.setVisibility(View.VISIBLE);
+                    iv_poker_palyer31.setVisibility(View.VISIBLE);
+                    iv_poker_palyer32.setVisibility(View.VISIBLE);
+                    iv_poker_palyer33.setVisibility(View.VISIBLE);
+                    iv_poker_palyer34.setVisibility(View.VISIBLE);
+                    iv_poker_palyer35.setVisibility(View.VISIBLE);
+                    break;
+                case 0:
+                    iv_poker_banker1.setVisibility(View.VISIBLE);
+                    iv_poker_banker2.setVisibility(View.VISIBLE);
+                    iv_poker_banker3.setVisibility(View.VISIBLE);
+                    iv_poker_banker4.setVisibility(View.VISIBLE);
+                    iv_poker_banker5.setVisibility(View.VISIBLE);
+                    break;
+                case 1:
+                    iv_poker_palyer11.setVisibility(View.VISIBLE);
+                    iv_poker_palyer12.setVisibility(View.VISIBLE);
+                    iv_poker_palyer13.setVisibility(View.VISIBLE);
+                    iv_poker_palyer14.setVisibility(View.VISIBLE);
+                    iv_poker_palyer15.setVisibility(View.VISIBLE);
+                    break;
+                case 2:
+                    iv_poker_palyer21.setVisibility(View.VISIBLE);
+                    iv_poker_palyer22.setVisibility(View.VISIBLE);
+                    iv_poker_palyer23.setVisibility(View.VISIBLE);
+                    iv_poker_palyer24.setVisibility(View.VISIBLE);
+                    iv_poker_palyer25.setVisibility(View.VISIBLE);
+                    break;
+                case 3:
+                    iv_poker_palyer31.setVisibility(View.VISIBLE);
+                    iv_poker_palyer32.setVisibility(View.VISIBLE);
+                    iv_poker_palyer33.setVisibility(View.VISIBLE);
+                    iv_poker_palyer34.setVisibility(View.VISIBLE);
+                    iv_poker_palyer35.setVisibility(View.VISIBLE);
+                    break;
+            }
         } else {
             iv_poker_banker1.setVisibility(View.GONE);
             iv_poker_banker1.setImageResource(R.mipmap.bullfight_poker_nagetive);
@@ -2799,6 +2832,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if(bullfightPresenter != null) {
+            bullfightPresenter.detach();
+        }
         isJinyan = false;
         if (flPlug.getVisibility() == View.VISIBLE) {
             Map<String, Object> map1 = new HashMap<>();

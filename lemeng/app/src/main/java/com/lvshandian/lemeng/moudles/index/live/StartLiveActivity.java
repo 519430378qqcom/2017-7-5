@@ -1229,7 +1229,7 @@ public class StartLiveActivity extends BaseActivity implements
      * 牛牛点击事件
      */
     @OnClick({R.id.iv_bullfight, R.id.rl_bullfight1, R.id.rl_bullfight2, R.id.rl_bullfight3,
-          R.id.tv_bullfight_top_up, R.id.iv_10, R.id.iv_50, R.id.iv_100, R.id.iv_1000, R.id.iv_10000})
+            R.id.tv_bullfight_top_up, R.id.iv_10, R.id.iv_50, R.id.iv_100, R.id.iv_1000, R.id.iv_10000})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_bullfight:
@@ -1272,13 +1272,13 @@ public class StartLiveActivity extends BaseActivity implements
     private void betBullfight(int position) {
         betPosition = position;
         if (betBalance > 0) {
-            if (betBalance > balance) {
-                Toast.makeText(StartLiveActivity.this, R.string.balance_not_enough, Toast.LENGTH_SHORT).show();
+            if (betBalance > myGoldCoin) {
+                ToastUtils.showMessageDefault(StartLiveActivity.this, getResources().getString(R.string.balance_not_enough));
             } else {
                 bullfightPresenter.betSuccess(Integer.parseInt(appUser.getId()), Integer.parseInt(room_Id), betBalance, position, uper, 0);
             }
         } else {
-            Toast.makeText(StartLiveActivity.this, R.string.no_select_betbalance, Toast.LENGTH_SHORT).show();
+            ToastUtils.showMessageDefault(StartLiveActivity.this, getResources().getString(R.string.no_select_betbalance));
         }
     }
 
@@ -1350,6 +1350,7 @@ public class StartLiveActivity extends BaseActivity implements
 
     /**
      * 选择投注金额
+     *
      * @param betSum 投注数
      */
     private void checkBettingBalance(int betSum) {
@@ -1442,11 +1443,11 @@ public class StartLiveActivity extends BaseActivity implements
      * 设置点击投注区域的可用性
      */
     private void setBetPoolEnable(boolean enable) {
-        if(enable) {
+        if (enable) {
             rl_bullfight1.setEnabled(true);
             rl_bullfight2.setEnabled(true);
             rl_bullfight3.setEnabled(true);
-        }else {
+        } else {
             rl_bullfight1.setEnabled(false);
             rl_bullfight2.setEnabled(false);
             rl_bullfight3.setEnabled(false);
@@ -1499,7 +1500,7 @@ public class StartLiveActivity extends BaseActivity implements
                     bullfightResultShow(null, "未中奖", null);
                     break;
                 case 1://中奖
-                    bullfightResultShow("本次开奖结果","中奖", gameResult.getObj().getMount()+"");
+                    bullfightResultShow("本次开奖结果", "中奖", gameResult.getObj().getMount() + "");
                     myGoldCoin += gameResult.getObj().getAmount();
                     tv_bullfight_lepiao.setText(CountUtils.getCount(myGoldCoin));
                     break;
@@ -1558,11 +1559,11 @@ public class StartLiveActivity extends BaseActivity implements
             ll_game.setVisibility(View.GONE);
             showPlayView(2);
             gameIsStart = true;
-            updateBettingEnable(balance);
+            updateBettingEnable(myGoldCoin);
             switchBullNum(false);
             myHandler.sendEmptyMessage(BULLFIGHT_TIME);
-            switchAllPoker(true);
             initPokerImg();
+            switchAllPoker(true,-1);
             sendPokerAnimator();
         } else {
         }
@@ -1571,7 +1572,7 @@ public class StartLiveActivity extends BaseActivity implements
     ;
 
     @Override
-    public void betSuccess(BetResult betResult,int amount, int type) {
+    public void betSuccess(BetResult betResult, int amount, int type) {
         int code = betResult.getCode();
         switch (code) {
             case 0://为异常
@@ -1580,8 +1581,8 @@ public class StartLiveActivity extends BaseActivity implements
             case 1://为成功
                 myGoldCoin -= amount;
                 tv_bullfight_lepiao.setText(CountUtils.getCount(myGoldCoin));
-                updateBettingEnable(balance);
-                addBettingView(type,amount, true);
+                updateBettingEnable(myGoldCoin);
+                addBettingView(type, amount, true);
                 switch (type) {
                     case 1:
                         int amount1 = Integer.parseInt(tv_bullfight_minenum1.getText().toString()) + amount;
@@ -1602,16 +1603,16 @@ public class StartLiveActivity extends BaseActivity implements
                 map.put("level", appUser.getLevel());
                 switch (type) {
                     case 1:
-                        map.put("NIM_TOUZHU_GOLD_SELECT_1", amount +"");
+                        map.put("NIM_TOUZHU_GOLD_SELECT_1", amount + "");
                         break;
                     case 2:
-                        map.put("NIM_TOUZHU_GOLD_SELECT_2", amount +"");
+                        map.put("NIM_TOUZHU_GOLD_SELECT_2", amount + "");
                         break;
                     case 3:
-                        map.put("NIM_TOUZHU_GOLD_SELECT_3", amount +"");
+                        map.put("NIM_TOUZHU_GOLD_SELECT_3", amount + "");
                         break;
                 }
-                SendRoomMessageUtils.onCustomMessagePlay("3030", messageFragment,wy_Id, map);
+                SendRoomMessageUtils.onCustomMessagePlay("3030", messageFragment, wy_Id, map);
                 break;
             case 2://为钱币不够赔
                 Toast.makeText(StartLiveActivity.this, "不够赔", Toast.LENGTH_SHORT).show();
@@ -1826,12 +1827,10 @@ public class StartLiveActivity extends BaseActivity implements
         return 0;
     }
 
-    int balance = 1000000;
-
     /**
      * 更新投注金额的选择按钮
      */
-    private void updateBettingEnable(int balance) {
+    private void updateBettingEnable(long balance) {
         if (balance >= 10000) {
             iv_10.setEnabled(true);
             iv_10.setImageResource(R.mipmap.ic_bullfight_10_light);
@@ -1905,18 +1904,18 @@ public class StartLiveActivity extends BaseActivity implements
      * 发牌动画
      */
     private void sendPokerAnimator() {
-        ObjectAnimator animator = ObjectAnimator.ofFloat(rl_poker_banker_container, "scaleX", 0f, 1f);
-        animator.setDuration(2000);
-        animator.start();
-        ObjectAnimator animator1 = ObjectAnimator.ofFloat(rl_poker_player_container1, "scaleX", 0f, 1f);
-        animator1.setDuration(2000);
-        animator1.start();
-        ObjectAnimator animator2 = ObjectAnimator.ofFloat(rl_poker_player_container2, "scaleX", 0f, 1f);
-        animator2.setDuration(2000);
-        animator2.start();
         ObjectAnimator animator3 = ObjectAnimator.ofFloat(rl_poker_player_container3, "scaleX", 0f, 1f);
-        animator3.setDuration(2000);
+        animator3.setDuration(1000);
         animator3.start();
+        ObjectAnimator animator2 = ObjectAnimator.ofFloat(rl_poker_player_container2, "scaleX", 0f, 1f);
+        animator2.setDuration(1000);
+        animator2.start();
+        ObjectAnimator animator1 = ObjectAnimator.ofFloat(rl_poker_player_container1, "scaleX", 0f, 1f);
+        animator1.setDuration(1000);
+        animator1.start();
+        ObjectAnimator animator = ObjectAnimator.ofFloat(rl_poker_banker_container, "scaleX", 0f, 1f);
+        animator.setDuration(1000);
+        animator.start();
     }
 
     /**
@@ -1966,29 +1965,64 @@ public class StartLiveActivity extends BaseActivity implements
 
     /**
      * 所有扑克牌显示隐藏
+     *
+     * @param isShow   是否显示
+     * @param position 再显示的基础上显示哪个区域（-1一起显示，0显示庄家，1显示天，2显示地，3显示人）
      */
-    private void switchAllPoker(boolean isShow) {
+    private void switchAllPoker(boolean isShow, int position) {
         if (isShow) {
-            iv_poker_banker1.setVisibility(View.VISIBLE);
-            iv_poker_banker2.setVisibility(View.VISIBLE);
-            iv_poker_banker3.setVisibility(View.VISIBLE);
-            iv_poker_banker4.setVisibility(View.VISIBLE);
-            iv_poker_banker5.setVisibility(View.VISIBLE);
-            iv_poker_palyer11.setVisibility(View.VISIBLE);
-            iv_poker_palyer12.setVisibility(View.VISIBLE);
-            iv_poker_palyer13.setVisibility(View.VISIBLE);
-            iv_poker_palyer14.setVisibility(View.VISIBLE);
-            iv_poker_palyer15.setVisibility(View.VISIBLE);
-            iv_poker_palyer21.setVisibility(View.VISIBLE);
-            iv_poker_palyer22.setVisibility(View.VISIBLE);
-            iv_poker_palyer23.setVisibility(View.VISIBLE);
-            iv_poker_palyer24.setVisibility(View.VISIBLE);
-            iv_poker_palyer25.setVisibility(View.VISIBLE);
-            iv_poker_palyer31.setVisibility(View.VISIBLE);
-            iv_poker_palyer32.setVisibility(View.VISIBLE);
-            iv_poker_palyer33.setVisibility(View.VISIBLE);
-            iv_poker_palyer34.setVisibility(View.VISIBLE);
-            iv_poker_palyer35.setVisibility(View.VISIBLE);
+            switch (position) {
+                case -1:
+                    iv_poker_banker1.setVisibility(View.VISIBLE);
+                    iv_poker_banker2.setVisibility(View.VISIBLE);
+                    iv_poker_banker3.setVisibility(View.VISIBLE);
+                    iv_poker_banker4.setVisibility(View.VISIBLE);
+                    iv_poker_banker5.setVisibility(View.VISIBLE);
+                    iv_poker_palyer11.setVisibility(View.VISIBLE);
+                    iv_poker_palyer12.setVisibility(View.VISIBLE);
+                    iv_poker_palyer13.setVisibility(View.VISIBLE);
+                    iv_poker_palyer14.setVisibility(View.VISIBLE);
+                    iv_poker_palyer15.setVisibility(View.VISIBLE);
+                    iv_poker_palyer21.setVisibility(View.VISIBLE);
+                    iv_poker_palyer22.setVisibility(View.VISIBLE);
+                    iv_poker_palyer23.setVisibility(View.VISIBLE);
+                    iv_poker_palyer24.setVisibility(View.VISIBLE);
+                    iv_poker_palyer25.setVisibility(View.VISIBLE);
+                    iv_poker_palyer31.setVisibility(View.VISIBLE);
+                    iv_poker_palyer32.setVisibility(View.VISIBLE);
+                    iv_poker_palyer33.setVisibility(View.VISIBLE);
+                    iv_poker_palyer34.setVisibility(View.VISIBLE);
+                    iv_poker_palyer35.setVisibility(View.VISIBLE);
+                    break;
+                case 0:
+                    iv_poker_banker1.setVisibility(View.VISIBLE);
+                    iv_poker_banker2.setVisibility(View.VISIBLE);
+                    iv_poker_banker3.setVisibility(View.VISIBLE);
+                    iv_poker_banker4.setVisibility(View.VISIBLE);
+                    iv_poker_banker5.setVisibility(View.VISIBLE);
+                    break;
+                case 1:
+                    iv_poker_palyer11.setVisibility(View.VISIBLE);
+                    iv_poker_palyer12.setVisibility(View.VISIBLE);
+                    iv_poker_palyer13.setVisibility(View.VISIBLE);
+                    iv_poker_palyer14.setVisibility(View.VISIBLE);
+                    iv_poker_palyer15.setVisibility(View.VISIBLE);
+                    break;
+                case 2:
+                    iv_poker_palyer21.setVisibility(View.VISIBLE);
+                    iv_poker_palyer22.setVisibility(View.VISIBLE);
+                    iv_poker_palyer23.setVisibility(View.VISIBLE);
+                    iv_poker_palyer24.setVisibility(View.VISIBLE);
+                    iv_poker_palyer25.setVisibility(View.VISIBLE);
+                    break;
+                case 3:
+                    iv_poker_palyer31.setVisibility(View.VISIBLE);
+                    iv_poker_palyer32.setVisibility(View.VISIBLE);
+                    iv_poker_palyer33.setVisibility(View.VISIBLE);
+                    iv_poker_palyer34.setVisibility(View.VISIBLE);
+                    iv_poker_palyer35.setVisibility(View.VISIBLE);
+                    break;
+            }
         } else {
             iv_poker_banker1.setVisibility(View.GONE);
             iv_poker_banker1.setImageResource(R.mipmap.bullfight_poker_nagetive);
@@ -2032,6 +2066,7 @@ public class StartLiveActivity extends BaseActivity implements
             iv_poker_palyer35.setImageResource(R.mipmap.bullfight_poker_nagetive);
         }
     }
+
 
     /**
      * 显示游戏界面
@@ -2344,6 +2379,9 @@ public class StartLiveActivity extends BaseActivity implements
     protected void onDestroy() {
 //        httpDatas.getDataDialog("关闭直播间", false, urlBuilder.cloesAnchor(room_Id), myHandler,
 //                RequestCode.REQUEST_ROOM_CLOES);
+        if (bullfightPresenter != null) {
+            bullfightPresenter.detach();
+        }
         timer.cancel();
         if (lianmaiTimer != null) {
             lianmaiTimer.cancel();
@@ -2550,17 +2588,17 @@ public class StartLiveActivity extends BaseActivity implements
                     case 3030://有人投注
                         int betPosition = 0;
                         int amount = 0;
-                        if(remote.get("NIM_TOUZHU_GOLD_SELECT_1")!=null) {
+                        if (remote.get("NIM_TOUZHU_GOLD_SELECT_1") != null) {
                             betPosition = 1;
                             amount = Integer.valueOf((String) remote.get("NIM_TOUZHU_GOLD_SELECT_1"));
-                        }else if(remote.get("NIM_TOUZHU_GOLD_SELECT_2")!=null) {
+                        } else if (remote.get("NIM_TOUZHU_GOLD_SELECT_2") != null) {
                             betPosition = 2;
                             amount = Integer.valueOf((String) remote.get("NIM_TOUZHU_GOLD_SELECT_2"));
-                        }else if(remote.get("NIM_TOUZHU_GOLD_SELECT_3")!= null) {
+                        } else if (remote.get("NIM_TOUZHU_GOLD_SELECT_3") != null) {
                             betPosition = 3;
                             amount = Integer.valueOf((String) remote.get("NIM_TOUZHU_GOLD_SELECT_3"));
                         }
-                        addBettingView(betPosition,amount,false);
+                        addBettingView(betPosition, amount, false);
                         break;
                     default:
                         break;

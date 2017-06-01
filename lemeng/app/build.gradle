@@ -28,7 +28,7 @@ android {
 //        lenovov {}
 //        yingyongbaov {} //应用宝
 //        m91v {}//91助手
-        m360 {}  //360 手机助手
+//        m360 {}  //360 手机助手
 //        oppov{}//oppo
 //        meizuv {}//魅族
 //        yingyonghuiv{} //应用汇
@@ -40,7 +40,7 @@ android {
 //        sanxingv{} //三星
 //        sogou {}//搜狗
 //        wandoujiav {}//豌豆荚
-//        xiaomivt {}//小米
+        xiaomivt {}//小米
     }
     productFlavors.all {
         flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]

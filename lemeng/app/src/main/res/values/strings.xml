@@ -269,4 +269,5 @@
     <string name="betting1">投注天</string>
     <string name="betting2">投注地</string>
     <string name="betting3">投注人</string>
+    <string name="bet_fail">投注失败</string>
 </resources>
