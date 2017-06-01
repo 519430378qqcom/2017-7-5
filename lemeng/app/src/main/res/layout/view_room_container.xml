@@ -325,7 +325,7 @@
                     android:id="@+id/watch_room_message_fragment"
                     android:name="com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragment"
                     android:layout_width="match_parent"
-                    android:layout_height="500px"
+                    android:layout_height="300px"
                     android:layout_gravity="bottom"
                     android:background="@drawable/btn_ticket_labe" />
 
@@ -509,6 +509,12 @@
 
                 <include layout="@layout/item_game_bullfight_banker" />
             </com.zhy.autolayout.AutoRelativeLayout>
+
+            <FrameLayout
+                android:id="@+id/watch_room_message_fragment_chat"
+                android:layout_width="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_height="500px"/>
         </com.zhy.autolayout.AutoRelativeLayout>
 
     </com.lvshandian.lemeng.view.ScrollRelativeLayout>

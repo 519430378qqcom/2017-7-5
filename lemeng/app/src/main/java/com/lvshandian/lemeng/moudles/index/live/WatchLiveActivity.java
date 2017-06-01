@@ -49,6 +49,7 @@ import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -321,6 +322,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     TextView tvMoreSamll;
 
     AutoLinearLayout live_game;
+    FrameLayout watch_room_message_fragment_chat;
 
     ImageView tv_rule;
 
@@ -997,6 +999,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         ivMoreSamll = (ImageView) mRoomContainer.findViewById(R.id.iv_more_samll);
         tvMoreSamll = (TextView) mRoomContainer.findViewById(R.id.tv_more_samll);
         live_game = (AutoLinearLayout) mRoomContainer.findViewById(R.id.live_game);
+        watch_room_message_fragment_chat = (FrameLayout) mRoomContainer.findViewById(R.id.watch_room_message_fragment_chat);
 
         tv_rule = (ImageView) mRoomContainer.findViewById(R.id.tv_rule);
 
@@ -1720,13 +1723,12 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 break;
             //私信
             case R.id.iv_live_privatechat:
-                hidePlayView(gameType);
-                ll_buttom_mun.setVisibility(View.GONE);
-
+//                watch_room_message_fragment_chat.setVisibility(View.VISIBLE);
                 sessionListFragment = new ChatRoomSessionListFragment();
-                sessionListFragment.init(getSupportFragmentManager(), ll_buttom_mun);
-                transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.watch_room_message_fragment, sessionListFragment);
+                sessionListFragment.init(getSupportFragmentManager());
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.watch_room_message_fragment_chat, sessionListFragment);
                 transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 transaction.addToBackStack(null);
                 transaction.commit();
@@ -4423,8 +4425,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         view.findViewById(R.id.tv_chat).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                hidePlayView(gameType);
-                ll_buttom_mun.setVisibility(View.GONE);
                 Intent intent = new Intent();
                 intent.putExtra(Extras.EXTRA_ACCOUNT, "miu_" + customdateBean.getId());
                 intent.putExtra("SESSION_NAME", customdateBean.getNickName());
@@ -4432,10 +4432,10 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 Bundle arguments = intent.getExtras();
                 arguments.putSerializable(Extras.EXTRA_TYPE, SessionTypeEnum.P2P);
                 liveMessageFragment = new LiveMessageFragment();
-                liveMessageFragment.init(getSupportFragmentManager(), ll_buttom_mun);
+                liveMessageFragment.init(getSupportFragmentManager());
                 liveMessageFragment.setArguments(arguments);
                 getSupportFragmentManager().beginTransaction().replace(R.id
-                        .watch_room_message_fragment, liveMessageFragment).setTransition
+                        .watch_room_message_fragment_chat, liveMessageFragment).setTransition
                         (FragmentTransaction.TRANSIT_FRAGMENT_OPEN).addToBackStack(null).commit();
                 otherPop.dismiss();
             }

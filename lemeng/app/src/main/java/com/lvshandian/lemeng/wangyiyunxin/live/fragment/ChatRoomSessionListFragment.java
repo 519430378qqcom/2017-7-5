@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,15 +71,13 @@ public class ChatRoomSessionListFragment extends MainTabFragment {
     private LiveMessageFragment messageFragment;
 
     private FragmentManager fragmentManager;
-    private RelativeLayout ll_buttom_mun;
 
     public ChatRoomSessionListFragment() {
         this.setContainerId(0);
     }
 
-    public void init(FragmentManager fragmentManager,RelativeLayout ll_buttom_mun) {
+    public void init(FragmentManager fragmentManager) {
         this.fragmentManager = fragmentManager;
-        this.ll_buttom_mun = ll_buttom_mun;
     }
 
     /**
@@ -144,7 +141,7 @@ public class ChatRoomSessionListFragment extends MainTabFragment {
             public void onClick(View view) {
                 fragmentManager.popBackStack();
                 if (fragmentManager.getBackStackEntryCount() == 1){
-                    ll_buttom_mun.setVisibility(View.VISIBLE);
+
                 }
             }
         });
@@ -269,9 +266,9 @@ public class ChatRoomSessionListFragment extends MainTabFragment {
                         Bundle arguments = intent.getExtras();
                         arguments.putSerializable(Extras.EXTRA_TYPE, SessionTypeEnum.P2P);
                         messageFragment = new LiveMessageFragment();
-                        messageFragment.init(fragmentManager, ll_buttom_mun);
+                        messageFragment.init(fragmentManager);
                         messageFragment.setArguments(arguments);
-                        fragmentManager.beginTransaction().add(R.id.watch_room_message_fragment, messageFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).addToBackStack(null).commit();
+                        fragmentManager.beginTransaction().add(R.id.watch_room_message_fragment_chat, messageFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).addToBackStack(null).commit();
                         break;
                     case Team:
 //                        SessionHelper.startTeamSession(getActivity(), recent.getContactId());
@@ -283,7 +280,7 @@ public class ChatRoomSessionListFragment extends MainTabFragment {
                         arguments1.putSerializable(Extras.EXTRA_TYPE, SessionTypeEnum.Team);
                         messageFragment = new LiveMessageFragment();
                         messageFragment.setArguments(arguments1);
-                        fragmentManager.beginTransaction().add(R.id.watch_room_message_fragment, messageFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).addToBackStack(null).commit();
+                        fragmentManager.beginTransaction().add(R.id.watch_room_message_fragment_chat, messageFragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).addToBackStack(null).commit();
                         break;
                     default:
                         break;

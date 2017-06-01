@@ -48,6 +48,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -319,6 +320,8 @@ public class StartLiveActivity extends BaseActivity implements
     ImageView iv_xy;
     @Bind(R.id.live_game)
     AutoLinearLayout live_game;
+    @Bind(R.id.watch_room_message_fragment_chat)
+    FrameLayout watch_room_message_fragment_chat;
     public static LrcView mLrcView;
     private static final String TAG = "StartLiveActivity";
     @Bind(R.id.song_LrcView)
@@ -1183,15 +1186,12 @@ public class StartLiveActivity extends BaseActivity implements
                 break;
             //私信
             case R.id.iv_live_privatechat:
-                ll_game.setVisibility(View.GONE);
-                hidePlayView(gameType);
-                ll_buttom_mun.setVisibility(View.GONE);
-
+//                watch_room_message_fragment_chat.setVisibility(View.VISIBLE);
                 sessionListFragment = new ChatRoomSessionListFragment();
-                sessionListFragment.init(getSupportFragmentManager(), ll_buttom_mun);
+                sessionListFragment.init(getSupportFragmentManager());
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.watch_room_message_fragment, sessionListFragment);
+                transaction.replace(R.id.watch_room_message_fragment_chat, sessionListFragment);
                 transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 transaction.addToBackStack(null);
                 transaction.commit();
@@ -4273,10 +4273,6 @@ public class StartLiveActivity extends BaseActivity implements
         view.findViewById(R.id.tv_chat).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ll_game.setVisibility(View.GONE);
-                hidePlayView(gameType);
-                ll_buttom_mun.setVisibility(View.GONE);
-
                 Intent intent = new Intent();
                 intent.putExtra(Extras.EXTRA_ACCOUNT, "miu_" + customdateBean.getId());
                 intent.putExtra("SESSION_NAME", customdateBean.getNickName());
@@ -4284,10 +4280,10 @@ public class StartLiveActivity extends BaseActivity implements
                 Bundle arguments = intent.getExtras();
                 arguments.putSerializable(Extras.EXTRA_TYPE, SessionTypeEnum.P2P);
                 liveMessageFragment = new LiveMessageFragment();
-                liveMessageFragment.init(getSupportFragmentManager(), ll_buttom_mun);
+                liveMessageFragment.init(getSupportFragmentManager());
                 liveMessageFragment.setArguments(arguments);
                 getSupportFragmentManager().beginTransaction().replace(R.id
-                        .watch_room_message_fragment, liveMessageFragment).setTransition
+                        .watch_room_message_fragment_chat, liveMessageFragment).setTransition
                         (FragmentTransaction.TRANSIT_FRAGMENT_OPEN).addToBackStack(null).commit();
                 otherPop.dismiss();
             }

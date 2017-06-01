@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lvshandian.lemeng.R;
@@ -64,8 +63,6 @@ public class LiveMessageFragment extends TFragment implements ModuleProxy {
 
     private FragmentManager fragmentManager;
 
-    private RelativeLayout ll_buttom_mun;
-
     // modules
     protected InputPanel inputPanel;
     protected MessageListPanel messageListPanel;
@@ -87,9 +84,8 @@ public class LiveMessageFragment extends TFragment implements ModuleProxy {
         parseIntent();
     }
 
-    public void init(FragmentManager fragmentManager, RelativeLayout ll_buttom_mun) {
+    public void init(FragmentManager fragmentManager) {
         this.fragmentManager = fragmentManager;
-        this.ll_buttom_mun = ll_buttom_mun;
     }
 
     @Override
@@ -179,7 +175,7 @@ public class LiveMessageFragment extends TFragment implements ModuleProxy {
                 LogUtils.i("WangYi", "XXXX");
                 fragmentManager.popBackStack();
                 if (fragmentManager.getBackStackEntryCount() == 1){
-                    ll_buttom_mun.setVisibility(View.VISIBLE);
+
                 }
             }
         });
