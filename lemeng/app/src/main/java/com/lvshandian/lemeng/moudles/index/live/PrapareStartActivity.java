@@ -10,6 +10,7 @@ import android.util.DisplayMetrics;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -51,7 +52,7 @@ public class PrapareStartActivity extends BaseActivity {
     @Bind(R.id.tv_address)
     TextView tvAddress;
     @Bind(R.id.et_title)
-    TextView etTitle;
+    EditText etTitle;
     @Bind(R.id.tv_start_live)
     TextView tvStartLive;
     @Bind(R.id.wechat)
@@ -217,7 +218,7 @@ public class PrapareStartActivity extends BaseActivity {
 
     private void startLive() {
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
-        map.put("name", appUser.getNickName());
+        map.put("name", etTitle.getText().toString().trim());
         map.put("city", address);
         map.put("userId", appUser.getId());
         map.put("privateChat", "1");

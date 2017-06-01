@@ -2122,8 +2122,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         }
     }
 
-    ;
-
     @Override
     public void betSuccess(BetResult betResult, int amount, int type) {
         int code = betResult.getCode();

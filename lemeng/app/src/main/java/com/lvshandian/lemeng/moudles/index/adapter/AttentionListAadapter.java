@@ -24,7 +24,7 @@ import java.util.List;
 
 public class AttentionListAadapter extends RecyclerView.Adapter<AttentionListAadapter.HotViewHolder> {
 
-    private List<LiveBean> mData ;
+    private List<LiveBean> mData;
     private Context context;
     private OnRecyclerClickListener onRecyclerClickListener;
 
@@ -45,9 +45,14 @@ public class AttentionListAadapter extends RecyclerView.Adapter<AttentionListAad
         if (mData.size() > 0) {
             LiveBean user = mData.get(position);
 
+
             if (user.getRoomsType().equals("1")) {
                 holder.iv_is_liveing.setVisibility(View.VISIBLE);
-            } else {
+                holder.iv_is_liveing.setImageResource(R.mipmap.icon_play_28);
+            } else if (user.getRoomsType().equals("2")) {
+                holder.iv_is_liveing.setVisibility(View.VISIBLE);
+                holder.iv_is_liveing.setImageResource(R.mipmap.icon_play_niuniu);
+            } else if (user.getRoomsType().equals("0")) {
                 holder.iv_is_liveing.setVisibility(View.GONE);
             }
 
@@ -63,7 +68,7 @@ public class AttentionListAadapter extends RecyclerView.Adapter<AttentionListAad
 
             String picHead = user.getCreator().getPicUrl();
             if (TextUtils.isEmpty(picHead)) {
-                picHead =  UrlBuilder.HEAD_DEFAULT;
+                picHead = UrlBuilder.HEAD_DEFAULT;
             }
             Picasso.with(context).load(picHead).placeholder(R.mipmap.head_default)
                     .error(R.mipmap.head_default).into(holder.mUserHead);

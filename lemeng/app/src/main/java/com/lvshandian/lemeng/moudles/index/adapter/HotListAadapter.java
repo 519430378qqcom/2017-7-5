@@ -53,7 +53,11 @@ public class HotListAadapter extends RecyclerView.Adapter<HotListAadapter.HotVie
 
             if (user.getRooms().getRoomsType().equals("1")) {
                 holder.iv_is_liveing.setVisibility(View.VISIBLE);
-            } else {
+                holder.iv_is_liveing.setImageResource(R.mipmap.icon_play_28);
+            } else if (user.getRooms().getRoomsType().equals("2")) {
+                holder.iv_is_liveing.setVisibility(View.VISIBLE);
+                holder.iv_is_liveing.setImageResource(R.mipmap.icon_play_niuniu);
+            } else if (user.getRooms().getRoomsType().equals("0")) {
                 holder.iv_is_liveing.setVisibility(View.GONE);
             }
 
@@ -61,14 +65,14 @@ public class HotListAadapter extends RecyclerView.Adapter<HotListAadapter.HotVie
 
             String picUrl = user.getRooms().getLivePicUrl();
             if (TextUtils.isEmpty(picUrl)) {
-                picUrl =  UrlBuilder.HEAD_DEFAULT;
+                picUrl = UrlBuilder.HEAD_DEFAULT;
             }
             Picasso.with(context).load(picUrl).placeholder(R.mipmap.zhan_da)
                     .error(R.mipmap.zhan_da).into(holder.mUserPic);
 
             String picHead = user.getPicUrl();
             if (TextUtils.isEmpty(picHead)) {
-                picHead =  UrlBuilder.HEAD_DEFAULT;
+                picHead = UrlBuilder.HEAD_DEFAULT;
             }
             Picasso.with(context).load(picHead).placeholder(R.mipmap.head_default)
                     .error(R.mipmap.head_default).into(holder.mUserHead);
