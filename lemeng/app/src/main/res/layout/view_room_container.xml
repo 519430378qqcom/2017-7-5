@@ -79,24 +79,6 @@
         android:scaleType="centerCrop"
         android:visibility="visible"></ImageView>
 
-
-    <com.lvshandian.lemeng.moudles.index.live.gift.GiftFrameLayout
-        android:id="@+id/gift_layout1"
-        android:layout_width="270dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
-        android:orientation="vertical"
-        android:visibility="gone"></com.lvshandian.lemeng.moudles.index.live.gift.GiftFrameLayout>
-
-
-    <com.lvshandian.lemeng.moudles.index.live.gift.GiftFrameLayout
-        android:id="@+id/gift_layout2"
-        android:layout_width="270dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="250dp"
-        android:orientation="vertical"
-        android:visibility="gone"></com.lvshandian.lemeng.moudles.index.live.gift.GiftFrameLayout>
-
     <com.lvshandian.lemeng.view.ScrollRelativeLayout
         android:id="@+id/scrl"
         android:layout_width="match_parent"
@@ -515,6 +497,25 @@
                 android:layout_width="match_parent"
                 android:layout_alignParentBottom="true"
                 android:layout_height="500px"/>
+
+            <com.lvshandian.lemeng.moudles.index.live.gift.GiftFrameLayout
+                android:id="@+id/gift_layout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="620px"
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical"
+                android:visibility="gone"/>
+
+
+            <com.lvshandian.lemeng.moudles.index.live.gift.GiftFrameLayout
+                android:id="@+id/gift_layout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="520px"
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical"
+                android:visibility="gone"/>
         </com.zhy.autolayout.AutoRelativeLayout>
 
     </com.lvshandian.lemeng.view.ScrollRelativeLayout>

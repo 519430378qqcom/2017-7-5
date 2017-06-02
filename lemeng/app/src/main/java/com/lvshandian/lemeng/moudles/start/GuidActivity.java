@@ -105,14 +105,6 @@ public class GuidActivity extends BaseActivity {
             startActivity(intent);
             finish();
         }
-//
-//        /**
-//         * 暂时没有欢迎页
-//         */
-//        isfirst = (boolean) SharedPreferenceUtils.get(this, "is_first", false);
-//        Intent intent = new Intent(GuidActivity.this, StartActivity.class);
-//        startActivity(intent);
-//        finish();
     }
 
     public class ViewPagerAdapter extends PagerAdapter {

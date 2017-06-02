@@ -20,11 +20,13 @@ import android.widget.TextView;
 
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.widget.AvatarView;
+import com.squareup.picasso.Picasso;
 
 public class GiftFrameLayout extends FrameLayout {
     private LayoutInflater mInflater;
     RelativeLayout anim_rl;
-    AvatarView anim_header, anim_gift;
+    AvatarView anim_header;
+    AvatarView anim_gift;
     ImageView anim_light;
     TextView anim_nickname, anim_sign;
     TextView anim_num;
