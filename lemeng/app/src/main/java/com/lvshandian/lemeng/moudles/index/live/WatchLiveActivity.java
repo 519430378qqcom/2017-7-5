@@ -2104,7 +2104,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             uper = timeAndNper.getObj().getPerid();
             showPlayView(2);
             updateBettingEnable(myGoldCoin);
-            switchBullNum(false);
+            switchBullNum(false,-1);
             isPlayerRoom = true;
             if (isWait) {
                 isWait = false;
@@ -2114,10 +2114,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 return;
             }
             myHandler.sendEmptyMessage(BULLFIGHT_TIME);
-            initPokerImg();
-            switchAllPoker(true,-1);
+            switchAllPoker(false,-1);
             sendPokerAnimator();
-
             bullfightPresenter.getBankerInfo();
         } else {
         }
@@ -2184,37 +2182,98 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     @Override
     public void getPokerResult(PokerResult pokerResult) {
         if (pokerResult.isSuccess()) {
-            PokerResult.ObjBean.PlayerPokerMapBean playerPokerMap = pokerResult.getObj().getPlayerPokerMap();
-            List<PokerResult.ObjBean.PlayerPokerMapBean.PokersBean> pokers = playerPokerMap.getPoker0().getPokers();
-            iv_poker_banker1.setImageResource(getPokerId(pokers.get(0).getColor(), pokers.get(0).getValue()));
-            iv_poker_banker2.setImageResource(getPokerId(pokers.get(1).getColor(), pokers.get(1).getValue()));
-            iv_poker_banker3.setImageResource(getPokerId(pokers.get(2).getColor(), pokers.get(2).getValue()));
-            iv_poker_banker4.setImageResource(getPokerId(pokers.get(3).getColor(), pokers.get(3).getValue()));
-            iv_poker_banker5.setImageResource(getPokerId(pokers.get(4).getColor(), pokers.get(4).getValue()));
-            iv_bull_amount0.setImageResource(getBullSumId(playerPokerMap.getPoker0().getResult()));
-            List<PokerResult.ObjBean.PlayerPokerMapBean.PokersBean> pokers1 = playerPokerMap.getPoker1().getPokers();
-            iv_poker_palyer11.setImageResource(getPokerId(pokers1.get(0).getColor(), pokers1.get(0).getValue()));
-            iv_poker_palyer12.setImageResource(getPokerId(pokers1.get(1).getColor(), pokers1.get(1).getValue()));
-            iv_poker_palyer13.setImageResource(getPokerId(pokers1.get(2).getColor(), pokers1.get(2).getValue()));
-            iv_poker_palyer14.setImageResource(getPokerId(pokers1.get(3).getColor(), pokers1.get(3).getValue()));
-            iv_poker_palyer15.setImageResource(getPokerId(pokers1.get(4).getColor(), pokers1.get(4).getValue()));
-            iv_bull_amount1.setImageResource(getBullSumId(playerPokerMap.getPoker1().getResult()));
-            List<PokerResult.ObjBean.PlayerPokerMapBean.PokersBean> pokers2 = playerPokerMap.getPoker2().getPokers();
-            iv_poker_palyer21.setImageResource(getPokerId(pokers1.get(0).getColor(), pokers1.get(0).getValue()));
-            iv_poker_palyer22.setImageResource(getPokerId(pokers1.get(1).getColor(), pokers1.get(1).getValue()));
-            iv_poker_palyer23.setImageResource(getPokerId(pokers1.get(2).getColor(), pokers1.get(2).getValue()));
-            iv_poker_palyer24.setImageResource(getPokerId(pokers1.get(3).getColor(), pokers1.get(3).getValue()));
-            iv_poker_palyer25.setImageResource(getPokerId(pokers1.get(4).getColor(), pokers1.get(4).getValue()));
-            iv_bull_amount2.setImageResource(getBullSumId(playerPokerMap.getPoker2().getResult()));
-            List<PokerResult.ObjBean.PlayerPokerMapBean.PokersBean> pokers3 = playerPokerMap.getPoker3().getPokers();
-            iv_poker_palyer31.setImageResource(getPokerId(pokers1.get(0).getColor(), pokers1.get(0).getValue()));
-            iv_poker_palyer32.setImageResource(getPokerId(pokers1.get(1).getColor(), pokers1.get(1).getValue()));
-            iv_poker_palyer33.setImageResource(getPokerId(pokers1.get(2).getColor(), pokers1.get(2).getValue()));
-            iv_poker_palyer34.setImageResource(getPokerId(pokers1.get(3).getColor(), pokers1.get(3).getValue()));
-            iv_poker_palyer35.setImageResource(getPokerId(pokers1.get(4).getColor(), pokers1.get(4).getValue()));
-            iv_bull_amount3.setImageResource(getBullSumId(playerPokerMap.getPoker3().getResult()));
-            switchBullNum(true);
-            sendPokerAnimator();
+            final PokerResult.ObjBean.PlayerPokerMapBean playerPokerMap = pokerResult.getObj().getPlayerPokerMap();
+            final ObjectAnimator animator3 = ObjectAnimator.ofFloat(rl_poker_player_container3, "scaleX", 0f, 1f);
+            animator3.setDuration(1000);
+            animator3.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    super.onAnimationStart(animation);
+                    List<PokerResult.ObjBean.PlayerPokerMapBean.PokersBean> pokers3 = playerPokerMap.getPoker3().getPokers();
+                    iv_poker_palyer31.setImageResource(getPokerId(pokers3.get(0).getColor(), pokers3.get(0).getValue()));
+                    iv_poker_palyer32.setImageResource(getPokerId(pokers3.get(1).getColor(), pokers3.get(1).getValue()));
+                    iv_poker_palyer33.setImageResource(getPokerId(pokers3.get(2).getColor(), pokers3.get(2).getValue()));
+                    iv_poker_palyer34.setImageResource(getPokerId(pokers3.get(3).getColor(), pokers3.get(3).getValue()));
+                    iv_poker_palyer35.setImageResource(getPokerId(pokers3.get(4).getColor(), pokers3.get(4).getValue()));
+                }
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    iv_bull_amount3.setImageResource(getBullSumId(playerPokerMap.getPoker3().getResult()));
+                    switchBullNum(true,3);
+                    rl_poker_banker_container.clearAnimation();
+                    rl_poker_player_container1.clearAnimation();
+                    rl_poker_player_container2.clearAnimation();
+                    rl_poker_player_container3.clearAnimation();
+                }
+            });
+            final ObjectAnimator animator2 = ObjectAnimator.ofFloat(rl_poker_player_container2, "scaleX", 0f, 1f);
+            animator2.setDuration(1000);
+            animator2.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    super.onAnimationStart(animation);
+                    List<PokerResult.ObjBean.PlayerPokerMapBean.PokersBean> pokers2 = playerPokerMap.getPoker2().getPokers();
+                    iv_poker_palyer21.setImageResource(getPokerId(pokers2.get(0).getColor(), pokers2.get(0).getValue()));
+                    iv_poker_palyer22.setImageResource(getPokerId(pokers2.get(1).getColor(), pokers2.get(1).getValue()));
+                    iv_poker_palyer23.setImageResource(getPokerId(pokers2.get(2).getColor(), pokers2.get(2).getValue()));
+                    iv_poker_palyer24.setImageResource(getPokerId(pokers2.get(3).getColor(), pokers2.get(3).getValue()));
+                    iv_poker_palyer25.setImageResource(getPokerId(pokers2.get(4).getColor(), pokers2.get(4).getValue()));
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    animator3.start();
+                    iv_bull_amount2.setImageResource(getBullSumId(playerPokerMap.getPoker2().getResult()));
+                    switchBullNum(true,2);
+                }
+            });
+            final ObjectAnimator animator1 = ObjectAnimator.ofFloat(rl_poker_player_container1, "scaleX", 0f, 1f);
+            animator1.setDuration(1000);
+            animator1.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    super.onAnimationStart(animation);
+                    List<PokerResult.ObjBean.PlayerPokerMapBean.PokersBean> pokers1 = playerPokerMap.getPoker1().getPokers();
+                    iv_poker_palyer11.setImageResource(getPokerId(pokers1.get(0).getColor(), pokers1.get(0).getValue()));
+                    iv_poker_palyer12.setImageResource(getPokerId(pokers1.get(1).getColor(), pokers1.get(1).getValue()));
+                    iv_poker_palyer13.setImageResource(getPokerId(pokers1.get(2).getColor(), pokers1.get(2).getValue()));
+                    iv_poker_palyer14.setImageResource(getPokerId(pokers1.get(3).getColor(), pokers1.get(3).getValue()));
+                    iv_poker_palyer15.setImageResource(getPokerId(pokers1.get(4).getColor(), pokers1.get(4).getValue()));
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    animator2.start();
+                    iv_bull_amount1.setImageResource(getBullSumId(playerPokerMap.getPoker1().getResult()));
+                    switchBullNum(true,1);
+                }
+            });
+            final ObjectAnimator animator = ObjectAnimator.ofFloat(rl_poker_banker_container, "scaleX", 0f, 1f);
+            animator.setDuration(1000);
+            animator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    super.onAnimationStart(animation);
+                    List<PokerResult.ObjBean.PlayerPokerMapBean.PokersBean> pokers = playerPokerMap.getPoker0().getPokers();
+                    iv_poker_banker1.setImageResource(getPokerId(pokers.get(0).getColor(), pokers.get(0).getValue()));
+                    iv_poker_banker2.setImageResource(getPokerId(pokers.get(1).getColor(), pokers.get(1).getValue()));
+                    iv_poker_banker3.setImageResource(getPokerId(pokers.get(2).getColor(), pokers.get(2).getValue()));
+                    iv_poker_banker4.setImageResource(getPokerId(pokers.get(3).getColor(), pokers.get(3).getValue()));
+                    iv_poker_banker5.setImageResource(getPokerId(pokers.get(4).getColor(), pokers.get(4).getValue()));
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    animator1.start();
+                    iv_bull_amount0.setImageResource(getBullSumId(playerPokerMap.getPoker0().getResult()));
+                    switchBullNum(true,0);
+                }
+            });
+            animator.start();
         }
     }
 
@@ -2465,17 +2524,68 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * 发牌动画
      */
     private void sendPokerAnimator() {
-        ObjectAnimator animator3 = ObjectAnimator.ofFloat(rl_poker_player_container3, "scaleX", 0f, 1f);
+        final ObjectAnimator animator3 = ObjectAnimator.ofFloat(rl_poker_player_container3, "scaleX", 0f, 1f);
         animator3.setDuration(1000);
-        animator3.start();
-        ObjectAnimator animator2 = ObjectAnimator.ofFloat(rl_poker_player_container2, "scaleX", 0f, 1f);
+        animator3.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                super.onAnimationStart(animation);
+                switchAllPoker(true,3);
+            }
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                rl_poker_banker_container.clearAnimation();
+                rl_poker_player_container1.clearAnimation();
+                rl_poker_player_container2.clearAnimation();
+                rl_poker_player_container3.clearAnimation();
+            }
+        });
+        final ObjectAnimator animator2 = ObjectAnimator.ofFloat(rl_poker_player_container2, "scaleX", 0f, 1f);
         animator2.setDuration(1000);
-        animator2.start();
-        ObjectAnimator animator1 = ObjectAnimator.ofFloat(rl_poker_player_container1, "scaleX", 0f, 1f);
+        animator2.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                super.onAnimationStart(animation);
+                switchAllPoker(true,2);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                animator3.start();
+            }
+        });
+        final ObjectAnimator animator1 = ObjectAnimator.ofFloat(rl_poker_player_container1, "scaleX", 0f, 1f);
         animator1.setDuration(1000);
-        animator1.start();
-        ObjectAnimator animator = ObjectAnimator.ofFloat(rl_poker_banker_container, "scaleX", 0f, 1f);
+        animator1.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                super.onAnimationStart(animation);
+                switchAllPoker(true,1);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                animator2.start();
+            }
+        });
+        final ObjectAnimator animator = ObjectAnimator.ofFloat(rl_poker_banker_container, "scaleX", 0f, 1f);
         animator.setDuration(1000);
+        animator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                super.onAnimationStart(animation);
+                switchAllPoker(true,0);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                animator1.start();
+            }
+        });
         animator.start();
     }
 
@@ -2509,13 +2619,30 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * 牛数显示隐藏
      *
      * @param isShow
+     * @param position -1一起显示
      */
-    private void switchBullNum(boolean isShow) {
+    private void switchBullNum(boolean isShow,int position) {
         if (isShow) {
-            iv_bull_amount0.setVisibility(View.VISIBLE);
-            iv_bull_amount1.setVisibility(View.VISIBLE);
-            iv_bull_amount2.setVisibility(View.VISIBLE);
-            iv_bull_amount3.setVisibility(View.VISIBLE);
+            switch (position){
+                case -1:
+                    iv_bull_amount0.setVisibility(View.VISIBLE);
+                    iv_bull_amount1.setVisibility(View.VISIBLE);
+                    iv_bull_amount2.setVisibility(View.VISIBLE);
+                    iv_bull_amount3.setVisibility(View.VISIBLE);
+                    break;
+                case 0:
+                    iv_bull_amount0.setVisibility(View.VISIBLE);
+                    break;
+                case 1:
+                    iv_bull_amount1.setVisibility(View.VISIBLE);
+                    break;
+                case 2:
+                    iv_bull_amount2.setVisibility(View.VISIBLE);
+                    break;
+                case 3:
+                    iv_bull_amount3.setVisibility(View.VISIBLE);
+                    break;
+            }
         } else {
             iv_bull_amount0.setVisibility(View.GONE);
             iv_bull_amount1.setVisibility(View.GONE);
