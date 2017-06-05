@@ -314,8 +314,6 @@ public class StartLiveActivity extends BaseActivity implements
     TextView tv_lianmai;
     @Bind(R.id.ll_game)
     LinearLayout ll_game;
-    @Bind(R.id.ll_buttom_mun)
-    RelativeLayout ll_buttom_mun;
     @Bind(R.id.iv_xy)
     ImageView iv_xy;
     @Bind(R.id.live_game)
@@ -720,6 +718,11 @@ public class StartLiveActivity extends BaseActivity implements
 
 
     private long mCountDownTotalTime;
+
+    /**
+     * 是否为游戏直播间
+     */
+    private boolean isPlayerRoom;
 
     private Handler myHandler = new Handler() {
         @Override
@@ -2072,6 +2075,7 @@ public class StartLiveActivity extends BaseActivity implements
      * @param gameType 1（彩票）;2（斗牛）
      */
     private void showPlayView(int gameType) {
+        isPlayerRoom = true;
         this.gameType = gameType;
         //游戏内容视图
         rl_game_container.setVisibility(View.VISIBLE);
@@ -3219,6 +3223,9 @@ public class StartLiveActivity extends BaseActivity implements
     }
 
 
+    float DownX;
+    float DownY;
+
     private void initPaly() {
         AspectFrameLayout afl = (AspectFrameLayout) findViewById(R.id.cameraPreview_afl);
         afl.setShowMode(AspectFrameLayout.SHOW_MODE.FULL);
@@ -3230,8 +3237,6 @@ public class StartLiveActivity extends BaseActivity implements
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 ll_game.setVisibility(View.GONE);
-                hidePlayView(gameType);
-                ll_buttom_mun.setVisibility(View.VISIBLE);
                 if (sessionListFragment != null) {
                     sessionListFragment.hide();
                 }
@@ -3240,7 +3245,44 @@ public class StartLiveActivity extends BaseActivity implements
                 if (messageFragment != null) {
                     messageFragment.hideEditText();
                 }
-                return false;
+
+                int eventaction = event.getAction();
+                switch (eventaction) {
+                    case MotionEvent.ACTION_DOWN:
+                        DownX = event.getX();//float DownX
+                        DownY = event.getY();//float DownY
+                        break;
+
+                    case MotionEvent.ACTION_MOVE:
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        float movepX = event.getX() - DownX;//X轴距离
+                        float movepY = event.getY() - DownY;//y轴距离
+
+                        if (movepY > 0 && ((Math.abs(movepY)) > 150)) {
+                            /**
+                             * 下滑动
+                             */
+                            if (isPlayerRoom) {
+                                if (rl_game_container.getVisibility() == View.VISIBLE) {
+                                    hidePlayView(gameType);
+                                }
+                            }
+
+                        } else if (movepY < 0 && ((Math.abs(movepY)) > 150)) {
+                            /**
+                             * 上滑动
+                             */
+                            if (isPlayerRoom) {
+                                if (rl_game_container.getVisibility() == View.GONE) {
+                                    showPlayView(gameType);
+                                }
+                            }
+                        }
+                        break;
+                }
+                return true;
             }
         });
         WatermarkSetting watermarksetting = new WatermarkSetting(this);
@@ -3262,8 +3304,6 @@ public class StartLiveActivity extends BaseActivity implements
 
     private EncodingOrientationSwitcher mEncodingOrientationSwitcher = new
             EncodingOrientationSwitcher();
-
-
 
     private class EncodingOrientationSwitcher implements Runnable {
 
@@ -4815,7 +4855,7 @@ public class StartLiveActivity extends BaseActivity implements
      */
     private void showTrendPop() {
         String url = "";
-        switch (gameType){
+        switch (gameType) {
             case 1:
                 url = "http://47.88.229.22:8080/lucky/trend.html";
                 break;

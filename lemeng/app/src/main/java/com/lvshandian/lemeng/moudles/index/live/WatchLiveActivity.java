@@ -240,8 +240,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
     @Bind(R.id.iv_loading)
     ImageView rlLoading;
-    @Bind(R.id.ll_buttom_mun)
-    RelativeLayout ll_buttom_mun;
     @Bind(R.id.ruanjianpanW)
     ImageView ruanjianpanW;
     @Bind(R.id.zhoubangW)
@@ -836,6 +834,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     private int tzNumber = 10;
     private int jbNumber = 1;
 
+    /**
+     * 是否为游戏直播间
+     */
     private boolean isPlayerRoom;
 
     private Handler myHandler = new Handler() {
@@ -1166,7 +1167,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     }
 
 
-
     private void initBlInfos() {
         String url = UrlBuilder.serverUrl + UrlBuilder.getBl;
         LogUtils.e("roomId::" + liveListBean.getRooms().getId() + "");
@@ -1254,7 +1254,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         ruanjianpanW.setOnClickListener(this);
         zhoubangW.setOnClickListener(this);
         tv_lianmai.setOnClickListener(this);
-        ll_buttom_mun.setOnClickListener(this);
 
         rl_bullfight1.setOnClickListener(this);
         rl_bullfight2.setOnClickListener(this);
@@ -1269,8 +1268,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         mRoot.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                hidePlayView(gameType);
-                ll_buttom_mun.setVisibility(View.VISIBLE);
                 if (sessionListFragment != null) {
                     sessionListFragment.hide();
                 }
@@ -1351,6 +1348,33 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                                     }
                                 }, 300);
 
+                            }
+                            /**
+                             * 上下
+                             */
+                        } else {
+                            if (movepY > 0 && ((Math.abs(movepY)) > 150) && !isHindRcView) {
+                                /**
+                                 * 下滑动
+                                 */
+                                if (isPlayerRoom) {
+                                    if (rl_game_container.getVisibility() == View.VISIBLE) {
+                                        hidePlayView(gameType);
+                                    }
+                                }
+
+                            } else if (movepY < 0 && ((Math.abs(movepY)) > 150) && !isHindRcView) {
+                                /**
+                                 * 上滑动
+                                 */
+                                if (isPlayerRoom) {
+                                    if (rl_game_container.getVisibility() == View.GONE) {
+                                        showPlayView(gameType);
+                                    }
+
+                                } else {
+                                    showToast("主播未开启游戏");
+                                }
                             }
                         }
                         break;
@@ -1510,19 +1534,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 hidePlayView(gameType);
                 messageFragment.inputTypeOnClick();
                 break;
-            case R.id.ll_buttom_mun://游戏
-                if (isPlayerRoom) {
-                    if (rl_game_container.getVisibility() == View.VISIBLE) {
-                        hidePlayView(gameType);
-                    } else {
-                        showPlayView(gameType);
-                    }
-
-                } else {
-                    showToast("主播未开启游戏");
-                }
-                break;
-            case R.id.iv_game:
+            case R.id.iv_game://游戏
                 if (isPlayerRoom) {
                     if (rl_game_container.getVisibility() == View.VISIBLE) {
                         hidePlayView(gameType);
@@ -5246,4 +5258,5 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         liveLianmaiHeadBg2.setVisibility(View.GONE);
         customLianmaiBean = null;
     }
+
 }
