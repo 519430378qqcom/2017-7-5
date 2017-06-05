@@ -12,7 +12,6 @@ import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.UrlBuilder;
 import com.lvshandian.lemeng.base.BaseFragment;
 import com.lvshandian.lemeng.bean.LiveBean;
-import com.lvshandian.lemeng.bean.LiveListBean;
 import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.moudles.index.adapter.AttentionListAadapter;
@@ -146,12 +145,8 @@ public class AttentionFragment extends BaseFragment implements View.OnClickListe
         attentionListAadapter.setOnRecyclerClickListener(new AttentionListAadapter.OnRecyclerClickListener() {
             @Override
             public void onRecyclerClick(int position) {
-                List<LiveListBean> liveListBeen = new ArrayList<>();
-                for (int i = 0, j = mUserList.size(); i < j; i++) {
-                    liveListBeen.add(transformLiveListBeen(mUserList.get(i)));
-                }
 //              进入直播间
-                ifEnter(liveListBeen, position);
+                ifEnter(transformLiveListBeen(mUserList.get(position)));
             }
         });
 

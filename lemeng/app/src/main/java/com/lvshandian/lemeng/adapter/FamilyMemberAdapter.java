@@ -20,7 +20,7 @@ import java.util.List;
  */
 
 /**
- * 附近的人的适配
+ * 家族
  *
  * @author sll
  * @time 2016/12/20 21:49
@@ -48,7 +48,7 @@ public class FamilyMemberAdapter extends RecyclerView.Adapter<FamilyMemberAdapte
     @Override
     public void onBindViewHolder(FamilyMemberViewHolder holder, final int position) {
         if (mData.size() > 0) {
-            LiveListBean user = mData.get(position);
+            final LiveListBean user = mData.get(position);
             holder.userNick.setText(user.getNickName());
             holder.userHead.setAvatarUrl(user.getPicUrl());
 //            holder.userHead.setFocusable(false);
@@ -60,7 +60,7 @@ public class FamilyMemberAdapter extends RecyclerView.Adapter<FamilyMemberAdapte
                         if (tag == 1) {
                             ((WatchLiveActivity) mContext).videoPlayEnd();
 //                            ((WatchLiveActivity) mContext).finish();
-                            ((WatchLiveActivity) mContext).ifEnterTwo(mData, position);
+                            ((WatchLiveActivity) mContext).ifEnterTwo(user);
 
                         }
                     }

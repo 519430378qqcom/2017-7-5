@@ -25,7 +25,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.PowerManager;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -40,7 +39,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -118,7 +116,6 @@ import com.lvshandian.lemeng.utils.Config;
 import com.lvshandian.lemeng.utils.CountUtils;
 import com.lvshandian.lemeng.utils.DESUtil;
 import com.lvshandian.lemeng.utils.DateUtils;
-import com.lvshandian.lemeng.utils.FastBlur;
 import com.lvshandian.lemeng.utils.FramesSequenceAnimation;
 import com.lvshandian.lemeng.utils.GrademipmapUtils;
 import com.lvshandian.lemeng.utils.JavaBeanMapUtils;
@@ -174,9 +171,6 @@ import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 import com.netease.nimlib.sdk.msg.model.CustomNotification;
 import com.netease.nimlib.sdk.msg.model.IMMessage;
 import com.netease.nimlib.sdk.uinfo.UserInfoProvider;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.qiniu.android.dns.DnsManager;
 import com.qiniu.android.dns.IResolver;
 import com.qiniu.android.dns.NetworkInfo;
@@ -224,9 +218,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
-import fr.castorflex.android.verticalviewpager.VerticalViewPager;
 import xiao.free.horizontalrefreshlayout.HorizontalRefreshLayout;
 import xiao.free.horizontalrefreshlayout.RefreshCallBack;
 import xiao.free.horizontalrefreshlayout.refreshhead.LoadingRefreshHeader;
@@ -243,14 +237,340 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         StreamingSessionListener, BullfightInterface,
         StreamingStateChangedListener, CameraLivePreviewFrameView.Listener, RefreshCallBack {
 
-    private VerticalViewPager mViewPager;
-    private RelativeLayout mRoomContainer;
-    private PagerAdapter mPagerAdapter;
-    private int mCurrentItem;
-    private int mRoomId = -1;
-    private List<LiveListBean> listBeenList = new ArrayList<>();
-    private int position = 0;//当前直播位置
-    private boolean isFirst = true;
+    @Bind(R.id.iv_loading)
+    ImageView rlLoading;
+    @Bind(R.id.ll_buttom_mun)
+    RelativeLayout ll_buttom_mun;
+    @Bind(R.id.ruanjianpanW)
+    ImageView ruanjianpanW;
+    @Bind(R.id.zhoubangW)
+    ImageView zhoubangW;
+    @Bind(R.id.tv_lianmai)
+    TextView tv_lianmai;
+    @Bind(R.id.live_head)
+    AvatarView liveHead;
+    @Bind(R.id.live_lianmai_head)
+    AvatarView liveLianmaiHead;
+    @Bind(R.id.live_lianmai_head_bg1)
+    AvatarView liveLianmaiHeadBg1;
+    @Bind(R.id.live_lianmai_head_bg2)
+    AvatarView liveLianmaiHeadBg2;
+    @Bind(R.id.live_name)
+    TextView liveName;
+    @Bind(R.id.live_num)
+    TextView liveNum;
+    @Bind(R.id.ll_tp_labe)
+    AutoLinearLayout llTangpiao;
+    @Bind(R.id.live_jinpiao)
+    TextView liveJinpiao;
+    @Bind(R.id.live_id)
+    TextView liveId;
+    @Bind(R.id.btn_attention)
+    ImageView btnAttention;
+    @Bind(R.id.iv_live_privatechat)
+    ImageView ivLivePrivatechat;
+    @Bind(R.id.iv_live_gift)
+    ImageView ivLiveGift;
+    //    @Bind(R.id.iv_live_share)
+    //    ImageView ivLiveShare;
+    @Bind(R.id.gift_layout1)
+    GiftFrameLayout giftFrameLayout1;
+    @Bind(R.id.gift_layout2)
+    GiftFrameLayout giftFrameLayout2;
+    @Bind(R.id.live_close)
+    ImageView liveClose;
+    @Bind(R.id.rlv_list_live_audiences)
+    RecyclerView rlvListLiveAudiences;
+    @Bind(R.id.horizontalRefreshLayout)
+    HorizontalRefreshLayout horizontalRefreshLayout;
+    @Bind(R.id.rl_live_root)
+    AutoRelativeLayout mRoot;
+    @Bind(R.id.tab_new_indicator)
+    ImageView tabNewIndicator;
+    @Bind(R.id.tab_new_msg_label)
+    DropFake tabNewMsgLabel;
+    @Bind(R.id.video_lian)
+    SurfaceView videoLian;
+    @Bind(R.id.barrageview)
+    BarrageView barrageview;
+    @Bind(R.id.fl_pull)
+    AutoFrameLayout flPull;
+    @Bind(R.id.fl_plug)
+    AutoFrameLayout flPlug;
+    @Bind(R.id.watch_room_jiaZu)
+    ImageView watchRoomJaizu;
+    @Bind(R.id.iv_show_send_gift_lian)
+    RelativeLayout mSendGiftLian;
+    @Bind(R.id.scrl)
+    ScrollRelativeLayout scrl;
+    @Bind(R.id.rl_hv_view)
+    RelativeLayout rlHvView;
+    @Bind(R.id.btn_timer)
+    TextView btn_timer;
+    @Bind(R.id.live_head_img)
+    AvatarView liveHeadImg;
+    @Bind(R.id.SurfaceView)
+    SurfaceView mSurfaceView;
+    @Bind(R.id.iv_big)
+    ImageView ivBig;
+    @Bind(R.id.tv_big)
+    TextView tvBig;
+    @Bind(R.id.iv_samll)
+    ImageView ivSamll;
+    @Bind(R.id.tv_samll)
+    TextView tvSamll;
+    @Bind(R.id.iv_singe)
+    ImageView ivSinge;
+    @Bind(R.id.tv_singe)
+    TextView tvSinge;
+    @Bind(R.id.iv_double)
+    ImageView ivDouble;
+    @Bind(R.id.tv_double)
+    TextView tvDouble;
+    @Bind(R.id.iv_big_sigle)
+    ImageView ivBigSigle;
+    @Bind(R.id.tv_big_sigle)
+    TextView tvBigSigle;
+    @Bind(R.id.iv_samll_singe)
+    ImageView ivSamllSinge;
+    @Bind(R.id.tv_samll_singe)
+    TextView tvSamllSinge;
+    @Bind(R.id.iv_big_double)
+    ImageView ivBigDouble;
+    @Bind(R.id.tv_big_double)
+    TextView tvBigDouble;
+    @Bind(R.id.iv_samll_double)
+    ImageView ivSamllDouble;
+    @Bind(R.id.tv_samll_double)
+    TextView tvSamllDouble;
+    @Bind(R.id.iv_more_big)
+    ImageView ivMoreBig;
+    @Bind(R.id.tv_more_big)
+    TextView tvMoreBig;
+    @Bind(R.id.iv_more_samll)
+    ImageView ivMoreSamll;
+    @Bind(R.id.tv_more_samll)
+    TextView tvMoreSamll;
+    @Bind(R.id.live_game)
+    AutoLinearLayout live_game;
+    @Bind(R.id.watch_room_message_fragment_chat)
+    FrameLayout watch_room_message_fragment_chat;
+    @Bind(R.id.tv_rule)
+    ImageView tv_rule;
+    @Bind(R.id.small_add)
+    ImageView smallAdd;
+    @Bind(R.id.samll_number)
+    TextView samllNumber;
+    @Bind(R.id.small_subtract)
+    ImageView smallSubtract;
+    @Bind(R.id.double_subtract)
+    ImageView doubleSubtract;
+    @Bind(R.id.double_number)
+    TextView doubleNumber;
+    @Bind(R.id.double_add)
+    ImageView doubleAdd;
+    @Bind(R.id.iv_touzhu)
+    ImageView ivTouzhu;
+    @Bind(R.id.iv_trend)
+    ImageView iv_trend;
+    @Bind(R.id.all_lepiao)
+    TextView all_lepiao;
+    @Bind(R.id.tv_periods)
+    TextView tv_periods;
+    @Bind(R.id.frist_num)
+    TextView frist_num;
+    @Bind(R.id.second_num)
+    TextView second_num;
+    @Bind(R.id.third_num)
+    TextView third_num;
+    @Bind(R.id.all_num)
+    TextView all_num;
+    @Bind(R.id.tv_ds)
+    TextView tv_ds;
+    @Bind(R.id.tv_game_next_open_time)
+    TimeCountDownLayout tv_game_next_open_time;
+    @Bind(R.id.rl_kp)
+    LinearLayout rl_kp;
+    @Bind(R.id.iv_game)
+    ImageView iv_game;
+    @Bind(R.id.tv_hz)
+    TextView tv_hz;
+    //<start------------斗牛游戏部分-------------->
+
+    @Bind(R.id.rl_game_container)
+    RelativeLayout rl_game_container;
+    @Bind(R.id.live_game_bullfight)
+    AutoLinearLayout live_game_bullfight;
+    @Bind(R.id.rl_game_info)
+    RelativeLayout rl_game_info;
+    @Bind(R.id.rl_bullfight_banker)
+    AutoRelativeLayout rl_bullfight_banker;
+    @Bind(R.id.iv_bullfight_banker_head)
+    CircleImageView iv_bullfight_banker_head;
+    @Bind(R.id.tv_bullfight_bankername)
+    TextView tv_bullfight_bankername;
+    @Bind(R.id.tv_bullfight_banker_money)
+    TextView tv_bullfight_banker_money;
+    @Bind(R.id.iv_poker_banker1)
+    ImageView iv_poker_banker1;
+    @Bind(R.id.iv_poker_banker2)
+    ImageView iv_poker_banker2;
+    @Bind(R.id.iv_poker_banker3)
+    ImageView iv_poker_banker3;
+    @Bind(R.id.iv_poker_banker4)
+    ImageView iv_poker_banker4;
+    @Bind(R.id.iv_poker_banker5)
+    ImageView iv_poker_banker5;
+    @Bind(R.id.tv_bullfight_totlanum1)
+    TextView tv_bullfight_totlanum1;
+    @Bind(R.id.tv_bullfight_minenum1)
+    TextView tv_bullfight_minenum1;
+    @Bind(R.id.rl_bullfight_betting_container1)
+    AutoRelativeLayout rl_bullfight_betting_container1;
+    @Bind(R.id.rl_bullfight_betting_container2)
+    AutoRelativeLayout rl_bullfight_betting_container2;
+    @Bind(R.id.rl_bullfight_betting_container3)
+    AutoRelativeLayout rl_bullfight_betting_container3;
+    @Bind(R.id.tv_bullfight_totlanum2)
+    TextView tv_bullfight_totlanum2;
+    @Bind(R.id.tv_bullfight_minenum2)
+    TextView tv_bullfight_minenum2;
+    @Bind(R.id.tv_bullfight_totlanum3)
+    TextView tv_bullfight_totlanum3;
+    @Bind(R.id.tv_bullfight_minenum3)
+    TextView tv_bullfight_minenum3;
+    @Bind(R.id.iv_poker_palyer11)
+    ImageView iv_poker_palyer11;
+    @Bind(R.id.iv_poker_palyer12)
+    ImageView iv_poker_palyer12;
+    @Bind(R.id.iv_poker_palyer13)
+    ImageView iv_poker_palyer13;
+    @Bind(R.id.iv_poker_palyer14)
+    ImageView iv_poker_palyer14;
+    @Bind(R.id.iv_poker_palyer15)
+    ImageView iv_poker_palyer15;
+    @Bind(R.id.iv_poker_palyer21)
+    ImageView iv_poker_palyer21;
+    @Bind(R.id.iv_poker_palyer22)
+    ImageView iv_poker_palyer22;
+    @Bind(R.id.iv_poker_palyer23)
+    ImageView iv_poker_palyer23;
+    @Bind(R.id.iv_poker_palyer24)
+    ImageView iv_poker_palyer24;
+    @Bind(R.id.iv_poker_palyer25)
+    ImageView iv_poker_palyer25;
+    @Bind(R.id.iv_poker_palyer31)
+    ImageView iv_poker_palyer31;
+    @Bind(R.id.iv_poker_palyer32)
+    ImageView iv_poker_palyer32;
+    @Bind(R.id.iv_poker_palyer33)
+    ImageView iv_poker_palyer33;
+    @Bind(R.id.iv_poker_palyer34)
+    ImageView iv_poker_palyer34;
+    @Bind(R.id.iv_poker_palyer35)
+    ImageView iv_poker_palyer35;
+    @Bind(R.id.rl_bullfight1)
+    AutoRelativeLayout rl_bullfight1;
+    @Bind(R.id.rl_bullfight2)
+    AutoRelativeLayout rl_bullfight2;
+    @Bind(R.id.rl_bullfight3)
+    AutoRelativeLayout rl_bullfight3;
+    @Bind(R.id.tv_timing)
+    TextView tv_timing;
+    @Bind(R.id.tv_bullfight_result1)
+    TextView tv_bullfight_result1;
+    @Bind(R.id.tv_bullfight_result2)
+    TextView tv_bullfight_result2;
+    @Bind(R.id.tv_bullfight_result3)
+    TextView tv_bullfight_result3;
+    @Bind(R.id.ll_bullfight_result)
+    AutoLinearLayout ll_bullfight_result;
+    @Bind(R.id.rl_timing)
+    AutoRelativeLayout rl_timing;
+    @Bind(R.id.tv_bullfight_lepiao)
+    TextView tv_bullfight_lepiao;
+    @Bind(R.id.tv_bullfight_top_up)
+    TextView tv_bullfight_top_up;
+    @Bind(R.id.iv_10)
+    ImageView iv_10;
+    @Bind(R.id.iv_50)
+    ImageView iv_50;
+    @Bind(R.id.iv_100)
+    ImageView iv_100;
+    @Bind(R.id.iv_1000)
+    ImageView iv_1000;
+    @Bind(R.id.iv_10000)
+    ImageView iv_10000;
+    @Bind(R.id.iv_bull_amount0)
+    ImageView iv_bull_amount0;
+    @Bind(R.id.iv_bull_amount1)
+    ImageView iv_bull_amount1;
+    @Bind(R.id.iv_bull_amount2)
+    ImageView iv_bull_amount2;
+    @Bind(R.id.iv_bull_amount3)
+    ImageView iv_bull_amount3;
+    @Bind(R.id.rl_poker_banker_container)
+    AutoRelativeLayout rl_poker_banker_container;
+    @Bind(R.id.rl_poker_player_container1)
+    AutoRelativeLayout rl_poker_player_container1;
+    @Bind(R.id.rl_poker_player_container2)
+    AutoRelativeLayout rl_poker_player_container2;
+    @Bind(R.id.rl_poker_player_container3)
+    AutoRelativeLayout rl_poker_player_container3;
+
+    private String nper;
+    private int intQh;
+    private String countryType;
+    private String strJinBi;
+    private boolean isTouZhu;//是否可以投注
+
+    /**
+     * 标识直播间当前开启的游戏类型；1（彩票）;2（斗牛）
+     */
+    private int gameType;
+    /**
+     * 被选中的投注icon动画
+     */
+    private ValueAnimator valueAnimator;
+    /**
+     * 投注池支持显示投注视图的最大容量
+     */
+    private final int BETTING_POOL_VIEWS_CAPACITY = 30;
+    /**
+     * 剩余多长时间结束
+     */
+    private int nextTime;
+    /**
+     * 期数
+     */
+    private int uper;
+    /**
+     * 发送斗牛倒计时的消息标识
+     */
+    private final int BULLFIGHT_TIME = 233;
+    /**
+     * 等待下一局开始
+     */
+    private final int WAIT_NEXT_START = 234;
+
+    private BullfightPresenter bullfightPresenter;
+    /**
+     * 投注金额
+     */
+    private int betBalance;
+    /**
+     * 投注位置
+     */
+    private int betPosition;
+    /**
+     * 是否等待下一局
+     */
+    private boolean isWait;
+    //<end------------斗牛游戏部分-------------->
+
+
+    private static final String TAG = "WatchLiveActivity";
+
     private boolean isCanStop = false;//是否可以停止刷新
 
     /**
@@ -260,93 +580,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     float DownY;
     //是否隐藏直播界面内容
     private boolean isHindRcView = false;
-
-    ImageView rlLoading;
-    RelativeLayout ll_buttom_mun;
-    ImageView ruanjianpanW;
-    ImageView zhoubangW;
-    TextView tv_lianmai;
-    AvatarView liveHead;
-    AvatarView liveLianmaiHead;
-    AvatarView liveLianmaiHeadBg1;
-    AvatarView liveLianmaiHeadBg2;
-    TextView liveName;
-    TextView liveNum;
-    AutoLinearLayout llTangpiao;
-    TextView liveJinpiao;
-    TextView liveId;
-    ImageView btnAttention;
-    ImageView ivLivePrivatechat;
-    ImageView ivLiveGift;
-    //    ImageView ivLiveShare;
-    GiftFrameLayout giftFrameLayout1;
-    GiftFrameLayout giftFrameLayout2;
-    ImageView liveClose;
-    RecyclerView rlvListLiveAudiences;
-    HorizontalRefreshLayout horizontalRefreshLayout;
-    AutoRelativeLayout mRoot;
-    ImageView tabNewIndicator;
-    DropFake tabNewMsgLabel;
-    SurfaceView videoLian;
-    BarrageView barrageview;
-    AutoFrameLayout flPull;
-    AutoFrameLayout flPlug;
-    ImageView watchRoomJaizu;
-    RelativeLayout mSendGiftLian;
-    ScrollRelativeLayout scrl;
-    RelativeLayout rlHvView;
-    TextView btn_timer;
-    AvatarView liveHeadImg;
-    SurfaceView mSurfaceView;
-
-    ImageView ivBig;
-    TextView tvBig;
-    ImageView ivSamll;
-    TextView tvSamll;
-    ImageView ivSinge;
-    TextView tvSinge;
-    ImageView ivDouble;
-    TextView tvDouble;
-    ImageView ivBigSigle;
-    TextView tvBigSigle;
-    ImageView ivSamllSinge;
-    TextView tvSamllSinge;
-    ImageView ivBigDouble;
-    TextView tvBigDouble;
-    ImageView ivSamllDouble;
-    TextView tvSamllDouble;
-    ImageView ivMoreBig;
-    TextView tvMoreBig;
-    ImageView ivMoreSamll;
-    TextView tvMoreSamll;
-
-    AutoLinearLayout live_game;
-    FrameLayout watch_room_message_fragment_chat;
-
-    ImageView tv_rule;
-
-    ImageView smallAdd;
-    TextView samllNumber;
-    ImageView smallSubtract;
-    ImageView doubleSubtract;
-    TextView doubleNumber;
-    ImageView doubleAdd;
-    ImageView ivTouzhu;
-
-    ImageView iv_trend;
-
-    TextView all_lepiao;
-
-    TextView tv_periods;
-    TextView frist_num;
-    TextView second_num;
-    TextView third_num;
-    TextView all_num;
-    TextView tv_ds;
-    TimeCountDownLayout tv_game_next_open_time;
-    LinearLayout rl_kp;
-
-    private static final String TAG = "WatchLiveActivity";
 
     /**
      * 分享的地址
@@ -809,118 +1042,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             }
         }
     };
-    private String nper;
-    private int intQh;
-    private String countryType;
-    private String strJinBi;
-    private boolean isTouZhu;//是否可以投注
-    private ImageView iv_game;
-    private TextView tv_hz;
-    //<start------------斗牛游戏部分-------------->
-    RelativeLayout rl_game_container;
-    ImageView iv_bullfight;
-    AutoLinearLayout live_game_bullfight;
-    RelativeLayout rl_game_info;
-    AutoRelativeLayout rl_bullfight_banker;
-    CircleImageView iv_bullfight_banker_head;
-    TextView tv_bullfight_bankername;
-    TextView tv_bullfight_banker_money;
-    ImageView iv_poker_banker1;
-    ImageView iv_poker_banker2;
-    ImageView iv_poker_banker3;
-    ImageView iv_poker_banker4;
-    ImageView iv_poker_banker5;
-    TextView tv_bullfight_totlanum1;
-    TextView tv_bullfight_minenum1;
-    AutoRelativeLayout rl_bullfight_betting_container1;
-    ImageView iv_poker_palyer11;
-    ImageView iv_poker_palyer12;
-    ImageView iv_poker_palyer13;
-    ImageView iv_poker_palyer14;
-    ImageView iv_poker_palyer15;
-    AutoRelativeLayout rl_bullfight1;
-    TextView tv_bullfight_totlanum2;
-    TextView tv_bullfight_minenum2;
-    AutoRelativeLayout rl_bullfight_betting_container2;
-    ImageView iv_poker_palyer21;
-    ImageView iv_poker_palyer22;
-    ImageView iv_poker_palyer23;
-    ImageView iv_poker_palyer24;
-    ImageView iv_poker_palyer25;
-    AutoRelativeLayout rl_bullfight2;
-    TextView tv_bullfight_totlanum3;
-    TextView tv_bullfight_minenum3;
-    AutoRelativeLayout rl_bullfight_betting_container3;
-    ImageView iv_poker_palyer31;
-    ImageView iv_poker_palyer32;
-    ImageView iv_poker_palyer33;
-    ImageView iv_poker_palyer34;
-    ImageView iv_poker_palyer35;
-    AutoRelativeLayout rl_bullfight3;
-    TextView tv_timing;
-    TextView tv_bullfight_result1;
-    TextView tv_bullfight_result2;
-    TextView tv_bullfight_result3;
-    AutoLinearLayout ll_bullfight_result;
-    AutoRelativeLayout rl_timing;
-    TextView tv_bullfight_lepiao;
-    TextView tv_bullfight_top_up;
-    ImageView iv_10;
-    ImageView iv_50;
-    ImageView iv_100;
-    ImageView iv_1000;
-    ImageView iv_10000;
-    ImageView iv_bull_amount0;
-    ImageView iv_bull_amount1;
-    ImageView iv_bull_amount2;
-    ImageView iv_bull_amount3;
-    AutoRelativeLayout rl_poker_banker_container;
-    AutoRelativeLayout rl_poker_player_container1;
-    AutoRelativeLayout rl_poker_player_container2;
-    AutoRelativeLayout rl_poker_player_container3;
-    /**
-     * 标识直播间当前开启的游戏类型；1（彩票）;2（斗牛）
-     */
-    private int gameType;
-    /**
-     * 被选中的投注icon动画
-     */
-    private ValueAnimator valueAnimator;
-    /**
-     * 投注池支持显示投注视图的最大容量
-     */
-    private final int BETTING_POOL_VIEWS_CAPACITY = 30;
-    /**
-     * 剩余多长时间结束
-     */
-    private int nextTime;
-    /**
-     * 期数
-     */
-    private int uper;
-    /**
-     * 发送斗牛倒计时的消息标识
-     */
-    private final int BULLFIGHT_TIME = 233;
-    /**
-     * 等待下一局开始
-     */
-    private final int WAIT_NEXT_START = 234;
-
-    private BullfightPresenter bullfightPresenter;
-    /**
-     * 投注金额
-     */
-    private int betBalance;
-    /**
-     * 投注位置
-     */
-    private int betPosition;
-    /**
-     * 是否等待下一局
-     */
-    private boolean isWait;
-    //<end------------斗牛游戏部分-------------->
 
     @Override
     protected int getLayoutId() {
@@ -932,168 +1053,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         mLoading = new LoadingDialog(mContext);
 //        mLoading.show();
 
-        mViewPager = (VerticalViewPager) findViewById(R.id.view_pager);
-
-        mRoomContainer = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.view_room_container, null);
-
-        rlLoading = (ImageView) mRoomContainer.findViewById(R.id.iv_loading);
-        ll_buttom_mun = (RelativeLayout) mRoomContainer.findViewById(R.id.ll_buttom_mun);
-        ruanjianpanW = (ImageView) mRoomContainer.findViewById(R.id.ruanjianpanW);
-        zhoubangW = (ImageView) mRoomContainer.findViewById(R.id.zhoubangW);
-        tv_lianmai = (TextView) mRoomContainer.findViewById(R.id.tv_lianmai);
-        liveHead = (AvatarView) mRoomContainer.findViewById(R.id.live_head);
-        liveLianmaiHead = (AvatarView) mRoomContainer.findViewById(R.id.live_lianmai_head);
-        liveLianmaiHeadBg1 = (AvatarView) mRoomContainer.findViewById(R.id.live_lianmai_head_bg1);
-        liveLianmaiHeadBg2 = (AvatarView) mRoomContainer.findViewById(R.id.live_lianmai_head_bg2);
-        liveName = (TextView) mRoomContainer.findViewById(R.id.live_name);
-        liveNum = (TextView) mRoomContainer.findViewById(R.id.live_num);
-        llTangpiao = (AutoLinearLayout) mRoomContainer.findViewById(R.id.ll_tp_labe);
-        liveJinpiao = (TextView) mRoomContainer.findViewById(R.id.live_jinpiao);
-        liveId = (TextView) mRoomContainer.findViewById(R.id.live_id);
-        btnAttention = (ImageView) mRoomContainer.findViewById(R.id.btn_attention);
-        ivLivePrivatechat = (ImageView) mRoomContainer.findViewById(R.id.iv_live_privatechat);
-        ivLiveGift = (ImageView) mRoomContainer.findViewById(R.id.iv_live_gift);
-//        ivLiveShare = (ImageView) mRoomContainer.findViewById(R.id.iv_live_share);
-        iv_game = (ImageView) mRoomContainer.findViewById(R.id.iv_game);
-        giftFrameLayout1 = (GiftFrameLayout) mRoomContainer.findViewById(R.id.gift_layout1);
-        giftFrameLayout2 = (GiftFrameLayout) mRoomContainer.findViewById(R.id.gift_layout2);
-        liveClose = (ImageView) mRoomContainer.findViewById(R.id.live_close);
-        horizontalRefreshLayout = (HorizontalRefreshLayout) mRoomContainer.findViewById(R.id.horizontalRefreshLayout);
-        rlvListLiveAudiences = (RecyclerView) mRoomContainer.findViewById(R.id.rlv_list_live_audiences);
-        mRoot = (AutoRelativeLayout) mRoomContainer.findViewById(R.id.rl_live_root);
-        tabNewIndicator = (ImageView) mRoomContainer.findViewById(R.id.tab_new_indicator);
-        tabNewMsgLabel = (DropFake) mRoomContainer.findViewById(R.id.tab_new_msg_label);
-        videoLian = (SurfaceView) mRoomContainer.findViewById(R.id.video_lian);
-        barrageview = (BarrageView) mRoomContainer.findViewById(R.id.barrageview);
-        flPull = (AutoFrameLayout) mRoomContainer.findViewById(R.id.fl_pull);
-        flPlug = (AutoFrameLayout) mRoomContainer.findViewById(R.id.fl_plug);
-        watchRoomJaizu = (ImageView) mRoomContainer.findViewById(R.id.watch_room_jiaZu);
-        mSendGiftLian = (RelativeLayout) mRoomContainer.findViewById(R.id.iv_show_send_gift_lian);
-        scrl = (ScrollRelativeLayout) mRoomContainer.findViewById(R.id.scrl);
-        rlHvView = (RelativeLayout) mRoomContainer.findViewById(R.id.rl_hv_view);
-        btn_timer = (TextView) mRoomContainer.findViewById(R.id.btn_timer);
-        liveHeadImg = (AvatarView) mRoomContainer.findViewById(R.id.live_head_img);
-        mSurfaceView = (SurfaceView) mRoomContainer.findViewById(R.id.SurfaceView);
-
-
-        ivBig = (ImageView) mRoomContainer.findViewById(R.id.iv_big);
-        tvBig = (TextView) mRoomContainer.findViewById(R.id.tv_big);
-        ivSamll = (ImageView) mRoomContainer.findViewById(R.id.iv_samll);
-        tvSamll = (TextView) mRoomContainer.findViewById(R.id.tv_samll);
-        ivSinge = (ImageView) mRoomContainer.findViewById(R.id.iv_singe);
-        tvSinge = (TextView) mRoomContainer.findViewById(R.id.tv_singe);
-        ivDouble = (ImageView) mRoomContainer.findViewById(R.id.iv_double);
-        tvDouble = (TextView) mRoomContainer.findViewById(R.id.tv_double);
-        ivBigSigle = (ImageView) mRoomContainer.findViewById(R.id.iv_big_sigle);
-        tvBigSigle = (TextView) mRoomContainer.findViewById(R.id.tv_big_sigle);
-        ivSamllSinge = (ImageView) mRoomContainer.findViewById(R.id.iv_samll_singe);
-        tvSamllSinge = (TextView) mRoomContainer.findViewById(R.id.tv_samll_singe);
-        ivBigDouble = (ImageView) mRoomContainer.findViewById(R.id.iv_big_double);
-        tvBigDouble = (TextView) mRoomContainer.findViewById(R.id.tv_big_double);
-        ivSamllDouble = (ImageView) mRoomContainer.findViewById(R.id.iv_samll_double);
-        tvSamllDouble = (TextView) mRoomContainer.findViewById(R.id.tv_samll_double);
-        ivMoreBig = (ImageView) mRoomContainer.findViewById(R.id.iv_more_big);
-        tvMoreBig = (TextView) mRoomContainer.findViewById(R.id.tv_more_big);
-        ivMoreSamll = (ImageView) mRoomContainer.findViewById(R.id.iv_more_samll);
-        tvMoreSamll = (TextView) mRoomContainer.findViewById(R.id.tv_more_samll);
-        live_game = (AutoLinearLayout) mRoomContainer.findViewById(R.id.live_game);
-        watch_room_message_fragment_chat = (FrameLayout) mRoomContainer.findViewById(R.id.watch_room_message_fragment_chat);
-
-        tv_rule = (ImageView) mRoomContainer.findViewById(R.id.tv_rule);
-
-
-        smallAdd = (ImageView) mRoomContainer.findViewById(R.id.small_add);
-        samllNumber = (TextView) mRoomContainer.findViewById(R.id.samll_number);
-        smallSubtract = (ImageView) mRoomContainer.findViewById(R.id.small_subtract);
-        doubleSubtract = (ImageView) mRoomContainer.findViewById(R.id.double_subtract);
-        doubleNumber = (TextView) mRoomContainer.findViewById(R.id.double_number);
-        doubleAdd = (ImageView) mRoomContainer.findViewById(R.id.double_add);
-        ivTouzhu = (ImageView) mRoomContainer.findViewById(R.id.iv_touzhu);
-        iv_trend = (ImageView) mRoomContainer.findViewById(R.id.iv_trend);
-
-        all_lepiao = (TextView) mRoomContainer.findViewById(R.id.all_lepiao);
-
-        tv_periods = (TextView) mRoomContainer.findViewById(R.id.tv_periods);
-        frist_num = (TextView) mRoomContainer.findViewById(R.id.frist_num);
-        second_num = (TextView) mRoomContainer.findViewById(R.id.second_num);
-        third_num = (TextView) mRoomContainer.findViewById(R.id.third_num);
-        all_num = (TextView) mRoomContainer.findViewById(R.id.all_num);
-        tv_ds = (TextView) mRoomContainer.findViewById(R.id.tv_ds);
-        tv_game_next_open_time = (TimeCountDownLayout) mRoomContainer.findViewById(R.id.tv_game_next_open_time);
-        rl_kp = (LinearLayout) mRoomContainer.findViewById(R.id.rl_kp);
-        tv_hz = (TextView) mRoomContainer.findViewById(R.id.tv_hz);
-        //斗牛部分
-        rl_game_container = (RelativeLayout) mRoomContainer.findViewById(R.id.rl_game_container);
-        iv_bullfight = (ImageView) mRoomContainer.findViewById(R.id.iv_bullfight);
-        live_game_bullfight = (AutoLinearLayout) mRoomContainer.findViewById(R.id.live_game_bullfight);
-        rl_game_info = (RelativeLayout) mRoomContainer.findViewById(R.id.rl_game_info);
-        rl_bullfight_banker = (AutoRelativeLayout) mRoomContainer.findViewById(R.id.rl_bullfight_banker);
-        iv_bullfight_banker_head = (CircleImageView) mRoomContainer.findViewById(R.id.iv_bullfight_banker_head);
-        tv_bullfight_bankername = (TextView) mRoomContainer.findViewById(R.id.tv_bullfight_bankername);
-        tv_bullfight_banker_money = (TextView) mRoomContainer.findViewById(R.id.tv_bullfight_banker_money);
-        iv_poker_banker1 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_banker1);
-        iv_poker_banker2 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_banker2);
-        iv_poker_banker3 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_banker3);
-        iv_poker_banker4 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_banker4);
-        iv_poker_banker5 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_banker5);
-        tv_bullfight_totlanum1 = (TextView) mRoomContainer.findViewById(R.id.tv_bullfight_totlanum1);
-        tv_bullfight_minenum1 = (TextView) mRoomContainer.findViewById(R.id.tv_bullfight_minenum1);
-        tv_bullfight_totlanum2 = (TextView) mRoomContainer.findViewById(R.id.tv_bullfight_totlanum2);
-        tv_bullfight_minenum2 = (TextView) mRoomContainer.findViewById(R.id.tv_bullfight_minenum2);
-        tv_bullfight_totlanum3 = (TextView) mRoomContainer.findViewById(R.id.tv_bullfight_totlanum3);
-        tv_bullfight_minenum3 = (TextView) mRoomContainer.findViewById(R.id.tv_bullfight_minenum3);
-        rl_bullfight_betting_container1 = (AutoRelativeLayout) mRoomContainer.findViewById(R.id.rl_bullfight_betting_container1);
-        rl_bullfight_betting_container2 = (AutoRelativeLayout) mRoomContainer.findViewById(R.id.rl_bullfight_betting_container2);
-        rl_bullfight_betting_container3 = (AutoRelativeLayout) mRoomContainer.findViewById(R.id.rl_bullfight_betting_container3);
-        iv_poker_palyer11 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_palyer11);
-        iv_poker_palyer12 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_palyer12);
-        iv_poker_palyer13 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_palyer13);
-        iv_poker_palyer14 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_palyer14);
-        iv_poker_palyer15 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_palyer15);
-        iv_poker_palyer21 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_palyer21);
-        iv_poker_palyer22 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_palyer22);
-        iv_poker_palyer23 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_palyer23);
-        iv_poker_palyer24 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_palyer24);
-        iv_poker_palyer25 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_palyer25);
-        iv_poker_palyer31 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_palyer31);
-        iv_poker_palyer32 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_palyer32);
-        iv_poker_palyer33 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_palyer33);
-        iv_poker_palyer34 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_palyer34);
-        iv_poker_palyer35 = (ImageView) mRoomContainer.findViewById(R.id.iv_poker_palyer35);
-        rl_bullfight1 = (AutoRelativeLayout) mRoomContainer.findViewById(R.id.rl_bullfight1);
-        rl_bullfight2 = (AutoRelativeLayout) mRoomContainer.findViewById(R.id.rl_bullfight2);
-        rl_bullfight3 = (AutoRelativeLayout) mRoomContainer.findViewById(R.id.rl_bullfight3);
-        tv_timing = (TextView) mRoomContainer.findViewById(R.id.tv_timing);
-        tv_bullfight_result1 = (TextView) mRoomContainer.findViewById(R.id.tv_bullfight_result1);
-        tv_bullfight_result2 = (TextView) mRoomContainer.findViewById(R.id.tv_bullfight_result2);
-        tv_bullfight_result3 = (TextView) mRoomContainer.findViewById(R.id.tv_bullfight_result3);
-        ll_bullfight_result = (AutoLinearLayout) mRoomContainer.findViewById(R.id.ll_bullfight_result);
-        rl_timing = (AutoRelativeLayout) mRoomContainer.findViewById(R.id.rl_timing);
-        tv_bullfight_lepiao = (TextView) mRoomContainer.findViewById(R.id.tv_bullfight_lepiao);
-        tv_bullfight_top_up = (TextView) mRoomContainer.findViewById(R.id.tv_bullfight_top_up);
-        iv_10 = (ImageView) mRoomContainer.findViewById(R.id.iv_10);
-        iv_50 = (ImageView) mRoomContainer.findViewById(R.id.iv_50);
-        iv_100 = (ImageView) mRoomContainer.findViewById(R.id.iv_100);
-        iv_1000 = (ImageView) mRoomContainer.findViewById(R.id.iv_1000);
-        iv_10000 = (ImageView) mRoomContainer.findViewById(R.id.iv_10000);
-        iv_bull_amount0 = (ImageView) mRoomContainer.findViewById(R.id.iv_bull_amount0);
-        iv_bull_amount1 = (ImageView) mRoomContainer.findViewById(R.id.iv_bull_amount1);
-        iv_bull_amount2 = (ImageView) mRoomContainer.findViewById(R.id.iv_bull_amount2);
-        iv_bull_amount3 = (ImageView) mRoomContainer.findViewById(R.id.iv_bull_amount3);
-        rl_poker_banker_container = (AutoRelativeLayout) mRoomContainer.findViewById(R.id.rl_poker_banker_container);
-        rl_poker_player_container1 = (AutoRelativeLayout) mRoomContainer.findViewById(R.id.rl_poker_player_container1);
-        rl_poker_player_container2 = (AutoRelativeLayout) mRoomContainer.findViewById(R.id.rl_poker_player_container2);
-        rl_poker_player_container3 = (AutoRelativeLayout) mRoomContainer.findViewById(R.id.rl_poker_player_container3);
-
-        List<LiveListBean> list = (List<LiveListBean>) getIntent().getSerializableExtra("LIVELIST");
-        position = getIntent().getIntExtra("position", 0);
-
-        if (list != null) {
-            listBeenList.addAll(list);
-            liveListBean = listBeenList.get(position);
-        }
-
-        mCurrentItem = position;
+        liveListBean = (LiveListBean) getIntent().getSerializableExtra("LIVE");
 
         anchorVideo = new AnchorVideo();
         fragmentManager = getSupportFragmentManager();
@@ -1122,50 +1082,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             }
         }, 30000, 30000);
 
-        mPagerAdapter = new PagerAdapter();
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                mCurrentItem = position;
-            }
-        });
-
-        mViewPager.setPageTransformer(false, new ViewPager.PageTransformer() {
-            @Override
-            public void transformPage(View page, float position) {
-                ViewGroup viewGroup = (ViewGroup) page;
-                Log.e(TAG, "page.id == " + page.getId() + ", position == " + position);
-
-                if ((position < 0 && viewGroup.getId() != mCurrentItem)) {
-                    View roomContainer = viewGroup.findViewById(R.id.rl_live_root);
-                    if (roomContainer != null && roomContainer.getParent() != null && roomContainer.getParent() instanceof ViewGroup) {
-                        ((ViewGroup) (roomContainer.getParent())).removeView(roomContainer);
-                        LogUtil.e("切换直播间", "切换1");
-                        ifEnterTwo(listBeenList, mCurrentItem);
-//                        finish();
-                    }
-
-                }
-
-                // 满足此种条件，表明需要加载直播视频，以及聊天室了
-                if (viewGroup.getId() == mCurrentItem && position == 0 && mCurrentItem != mRoomId) {
-                    if (mRoomContainer.getParent() != null && mRoomContainer.getParent() instanceof ViewGroup) {
-                        ((ViewGroup) (mRoomContainer.getParent())).removeView(mRoomContainer);
-                        LogUtil.e("切换直播间", "切换2");
-                        ifEnterTwo(listBeenList, mCurrentItem);
-//                        finish();
-                    }
-
-                    if (isFirst) {
-                        LogUtil.e("切换直播间", "切换3");
-                        loadVideoAndChatRoom(viewGroup, mCurrentItem);
-                    }
-
-                }
-            }
-        });
-        mViewPager.setAdapter(mPagerAdapter);
-        mViewPager.setCurrentItem(position);
         initQuitDialog("确定离开");
 
         samllNumber.setText(String.valueOf(tzNumber));
@@ -1177,64 +1093,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
          * 请求个人信息
          */
         initMyInfo();
-    }
-
-    private void initBlInfos() {
-        String url = UrlBuilder.serverUrl + UrlBuilder.getBl;
-        LogUtils.e("roomId::" + liveListBean.getRooms().getId() + "");
-        OkHttpUtils.post().url(url).addParams("roomId", liveListBean.getRooms().getId() + "").addParams("type", "0").build().execute(new StringCallback() {
-            @Override
-            public void onError(com.squareup.okhttp.Request request, Exception e) {
-
-            }
-
-            @Override
-            public void onResponse(String response) {
-                LogUtils.e("response :" + response);
-
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    if (jsonObject.getString("code").equals("1")) {
-                        String obj = jsonObject.getString("obj");
-                        List<BlBean> blBeen = JsonUtil.json2BeanList(obj, BlBean.class);
-                        BlBean blBean = blBeen.get(0);
-                        tvBig.setText("1:" + blBean.getBig());
-                        tvSamll.setText("1:" + blBean.getSmall());
-                        tvSinge.setText("1:" + blBean.getSingle());
-                        tvDouble.setText("1:" + blBean.getDoubles());
-                        tvBigSigle.setText("1:" + blBean.getBigSingle());
-                        tvSamllSinge.setText("1:" + blBean.getSmallSingle());
-                        tvBigDouble.setText("1:" + blBean.getBigDouble());
-                        tvSamllDouble.setText("1:" + blBean.getSmallDouble());
-                        tvMoreBig.setText("1:" + blBean.getMoreBig());
-                        tvMoreSamll.setText("1:" + blBean.getMoreSmall());
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    private void initSelectStatus() {
-        restStatus();
-        ivBig.setImageResource(R.mipmap.icon_big_select);
-        selectStatus = "大";
-        tv_hz.setText("和值大于13即中奖");
-
-    }
-
-    private void loadVideoAndChatRoom(ViewGroup viewGroup, int currentItem) {
-        isFirst = false;
-        viewGroup.addView(mRoomContainer);
-        loadVideo(currentItem);
-        mRoomId = currentItem;
-    }
-
-    private void loadVideo(int currentItem) {
-
-        liveListBean = listBeenList.get(currentItem);
 
         liveHead.setAvatarUrl(liveListBean.getPicUrl());
         liveHeadImg.setAvatarUrl(liveListBean.getPicUrl());
@@ -1244,51 +1102,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             picUrl = UrlBuilder.HEAD_DEFAULT;
         }
         Picasso.with(mContext).load(picUrl).error(R.mipmap.zhan_live).into(rlLoading);
-//        final String finalPicUrl = picUrl;
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                final Bitmap blurBitmap2 = FastBlurUtil.GetUrlBitmap(finalPicUrl, 4);
-//
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        rlLoading.setImageBitmap(blurBitmap2);
-//                    }
-//                });
-//            }
-//        }).start();
-
-        if (!com.lvshandian.lemeng.utils.TextUtils.isEmpty(liveListBean.getPicUrl())) {
-            ImageLoader.getInstance().loadImage(liveListBean.getPicUrl(), new
-                    ImageLoadingListener() {
-                        @Override
-                        public void onLoadingStarted(String s, View view) {
-                        }
-
-                        @Override
-                        public void onLoadingFailed(String s, View view, FailReason failReason) {
-                        }
-
-                        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-                        @Override
-                        public void onLoadingComplete(String s, View view, Bitmap bitmap) {
-                            if (bitmap != null) {
-                                try {
-                                    bitmap = FastBlur.doBlur(bitmap, 5, true);
-                                    BitmapDrawable drawable = new BitmapDrawable(bitmap);
-                                    rlLoading.setBackground(drawable);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onLoadingCancelled(String s, View view) {
-                        }
-                    });
-        }
         if (liveListBean.getNickName().length() > 4) {
             liveName.setText(liveListBean.getNickName().substring(0, 4) + "...");
         } else {
@@ -1352,30 +1165,51 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     }
 
 
-    class PagerAdapter extends android.support.v4.view.PagerAdapter {
 
-        @Override
-        public int getCount() {
-            return listBeenList.size();
-        }
+    private void initBlInfos() {
+        String url = UrlBuilder.serverUrl + UrlBuilder.getBl;
+        LogUtils.e("roomId::" + liveListBean.getRooms().getId() + "");
+        OkHttpUtils.post().url(url).addParams("roomId", liveListBean.getRooms().getId() + "").addParams("type", "0").build().execute(new StringCallback() {
+            @Override
+            public void onError(com.squareup.okhttp.Request request, Exception e) {
 
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view == object;
-        }
+            }
 
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            View view = LayoutInflater.from(container.getContext()).inflate(R.layout.view_room_item, null);
-            view.setId(position);
-            container.addView(view);
-            return view;
-        }
+            @Override
+            public void onResponse(String response) {
+                LogUtils.e("response :" + response);
 
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView(container.findViewById(position));
-        }
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (jsonObject.getString("code").equals("1")) {
+                        String obj = jsonObject.getString("obj");
+                        List<BlBean> blBeen = JsonUtil.json2BeanList(obj, BlBean.class);
+                        BlBean blBean = blBeen.get(0);
+                        tvBig.setText("1:" + blBean.getBig());
+                        tvSamll.setText("1:" + blBean.getSmall());
+                        tvSinge.setText("1:" + blBean.getSingle());
+                        tvDouble.setText("1:" + blBean.getDoubles());
+                        tvBigSigle.setText("1:" + blBean.getBigSingle());
+                        tvSamllSinge.setText("1:" + blBean.getSmallSingle());
+                        tvBigDouble.setText("1:" + blBean.getBigDouble());
+                        tvSamllDouble.setText("1:" + blBean.getSmallDouble());
+                        tvMoreBig.setText("1:" + blBean.getMoreBig());
+                        tvMoreSamll.setText("1:" + blBean.getMoreSmall());
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void initSelectStatus() {
+        restStatus();
+        ivBig.setImageResource(R.mipmap.icon_big_select);
+        selectStatus = "大";
+        tv_hz.setText("和值大于13即中奖");
+
     }
 
     @Override
@@ -1832,12 +1666,12 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         betPosition = position;
         if (betBalance > 0) {
             if (betBalance > myGoldCoin) {
-                ToastUtils.showMessageDefault(WatchLiveActivity.this,getResources().getString(R.string.balance_not_enough));
+                ToastUtils.showMessageDefault(WatchLiveActivity.this, getResources().getString(R.string.balance_not_enough));
             } else {
                 bullfightPresenter.betSuccess(Integer.parseInt(appUser.getId()), liveListBean.getRoomId(), betBalance, position, uper, 0);
             }
         } else {
-            ToastUtils.showMessageDefault(WatchLiveActivity.this,getResources().getString(R.string.no_select_betbalance));
+            ToastUtils.showMessageDefault(WatchLiveActivity.this, getResources().getString(R.string.no_select_betbalance));
         }
     }
 
@@ -1966,7 +1800,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * 斗牛倒计时
      */
     private void bullfightTimer() {
-        Log.e("TAG",nextTime+"");
+        Log.e("TAG", nextTime + "");
         if (nextTime >= 10) {
             switchTimer();
         }
@@ -2054,7 +1888,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     break;
                 case 1://中奖
                     bullfightResultShow(getResources().getString(R.string.the_result), getResources().getString(R.string.the_user)
-                            +gameResult.getObj().getMount(),null);
+                            + gameResult.getObj().getMount(), null);
                     myGoldCoin += gameResult.getObj().getAmount();
                     tv_bullfight_lepiao.setText(CountUtils.getCount(myGoldCoin));
                     break;
@@ -2104,7 +1938,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             uper = timeAndNper.getObj().getPerid();
             showPlayView(2);
             updateBettingEnable(myGoldCoin);
-            switchBullNum(false,-1);
+            switchBullNum(false, -1);
             isPlayerRoom = true;
             if (isWait) {
                 isWait = false;
@@ -2114,7 +1948,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 return;
             }
             myHandler.sendEmptyMessage(BULLFIGHT_TIME);
-            switchAllPoker(false,-1);
+            switchAllPoker(false, -1);
             sendPokerAnimator();
             bullfightPresenter.getBankerInfo();
         } else {
@@ -2126,7 +1960,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         int code = betResult.getCode();
         switch (code) {
             case 0://为异常
-                ToastUtils.showMessageDefault(WatchLiveActivity.this,getResources().getString(R.string.bet_fail));
+                ToastUtils.showMessageDefault(WatchLiveActivity.this, getResources().getString(R.string.bet_fail));
                 break;
             case 1://为成功
                 myGoldCoin -= amount;
@@ -2153,13 +1987,13 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 map.put("level", appUser.getLevel());
                 switch (type) {
                     case 1:
-                        map.put("NIM_TOUZHU_GOLD_SELECT_1", amount+"");
+                        map.put("NIM_TOUZHU_GOLD_SELECT_1", amount + "");
                         break;
                     case 2:
-                        map.put("NIM_TOUZHU_GOLD_SELECT_2", amount+"");
+                        map.put("NIM_TOUZHU_GOLD_SELECT_2", amount + "");
                         break;
                     case 3:
-                        map.put("NIM_TOUZHU_GOLD_SELECT_3", amount+"");
+                        map.put("NIM_TOUZHU_GOLD_SELECT_3", amount + "");
                         break;
                 }
                 SendRoomMessageUtils.onCustomMessagePlay("3030", messageFragment, roomId, map);
@@ -2167,7 +2001,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             case 2://为钱币不够赔
                 break;
             case 3://余额不足
-                ToastUtils.showMessageDefault(WatchLiveActivity.this,getResources().getString(R.string.balance_not_enough));
+                ToastUtils.showMessageDefault(WatchLiveActivity.this, getResources().getString(R.string.balance_not_enough));
                 break;
         }
     }
@@ -2196,11 +2030,12 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     iv_poker_palyer34.setImageResource(getPokerId(pokers3.get(3).getColor(), pokers3.get(3).getValue()));
                     iv_poker_palyer35.setImageResource(getPokerId(pokers3.get(4).getColor(), pokers3.get(4).getValue()));
                 }
+
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
                     iv_bull_amount3.setImageResource(getBullSumId(playerPokerMap.getPoker3().getResult()));
-                    switchBullNum(true,3);
+                    switchBullNum(true, 3);
                     rl_poker_banker_container.clearAnimation();
                     rl_poker_player_container1.clearAnimation();
                     rl_poker_player_container2.clearAnimation();
@@ -2226,7 +2061,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     super.onAnimationEnd(animation);
                     animator3.start();
                     iv_bull_amount2.setImageResource(getBullSumId(playerPokerMap.getPoker2().getResult()));
-                    switchBullNum(true,2);
+                    switchBullNum(true, 2);
                 }
             });
             final ObjectAnimator animator1 = ObjectAnimator.ofFloat(rl_poker_player_container1, "scaleX", 0f, 1f);
@@ -2248,7 +2083,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     super.onAnimationEnd(animation);
                     animator2.start();
                     iv_bull_amount1.setImageResource(getBullSumId(playerPokerMap.getPoker1().getResult()));
-                    switchBullNum(true,1);
+                    switchBullNum(true, 1);
                 }
             });
             final ObjectAnimator animator = ObjectAnimator.ofFloat(rl_poker_banker_container, "scaleX", 0f, 1f);
@@ -2270,7 +2105,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     super.onAnimationEnd(animation);
                     animator1.start();
                     iv_bull_amount0.setImageResource(getBullSumId(playerPokerMap.getPoker0().getResult()));
-                    switchBullNum(true,0);
+                    switchBullNum(true, 0);
                 }
             });
             animator.start();
@@ -2530,8 +2365,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             @Override
             public void onAnimationStart(Animator animation) {
                 super.onAnimationStart(animation);
-                switchAllPoker(true,3);
+                switchAllPoker(true, 3);
             }
+
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
@@ -2547,7 +2383,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             @Override
             public void onAnimationStart(Animator animation) {
                 super.onAnimationStart(animation);
-                switchAllPoker(true,2);
+                switchAllPoker(true, 2);
             }
 
             @Override
@@ -2562,7 +2398,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             @Override
             public void onAnimationStart(Animator animation) {
                 super.onAnimationStart(animation);
-                switchAllPoker(true,1);
+                switchAllPoker(true, 1);
             }
 
             @Override
@@ -2577,7 +2413,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             @Override
             public void onAnimationStart(Animator animation) {
                 super.onAnimationStart(animation);
-                switchAllPoker(true,0);
+                switchAllPoker(true, 0);
             }
 
             @Override
@@ -2621,9 +2457,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * @param isShow
      * @param position -1一起显示
      */
-    private void switchBullNum(boolean isShow,int position) {
+    private void switchBullNum(boolean isShow, int position) {
         if (isShow) {
-            switch (position){
+            switch (position) {
                 case -1:
                     iv_bull_amount0.setVisibility(View.VISIBLE);
                     iv_bull_amount1.setVisibility(View.VISIBLE);
@@ -2653,12 +2489,13 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
     /**
      * 所有扑克牌显示隐藏
-     * @param isShow 是否显示
+     *
+     * @param isShow   是否显示
      * @param position 再显示的基础上显示哪个区域（-1一起显示，0显示庄家，1显示天，2显示地，3显示人）
      */
-    private void switchAllPoker(boolean isShow,int position) {
+    private void switchAllPoker(boolean isShow, int position) {
         if (isShow) {
-            switch (position){
+            switch (position) {
                 case -1:
                     iv_poker_banker1.setVisibility(View.VISIBLE);
                     iv_poker_banker2.setVisibility(View.VISIBLE);
@@ -2959,7 +2796,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(bullfightPresenter != null) {
+        if (bullfightPresenter != null) {
             bullfightPresenter.detach();
         }
         isJinyan = false;
@@ -3195,17 +3032,17 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     case 3030://有人投注
                         int betPosition = 0;
                         int amount = 0;
-                        if(remote.get("NIM_TOUZHU_GOLD_SELECT_1")!=null) {
+                        if (remote.get("NIM_TOUZHU_GOLD_SELECT_1") != null) {
                             betPosition = 1;
                             amount = Integer.valueOf((String) remote.get("NIM_TOUZHU_GOLD_SELECT_1"));
-                        }else if(remote.get("NIM_TOUZHU_GOLD_SELECT_2")!=null) {
+                        } else if (remote.get("NIM_TOUZHU_GOLD_SELECT_2") != null) {
                             betPosition = 2;
                             amount = Integer.valueOf((String) remote.get("NIM_TOUZHU_GOLD_SELECT_2"));
-                        }else if(remote.get("NIM_TOUZHU_GOLD_SELECT_3")!= null) {
+                        } else if (remote.get("NIM_TOUZHU_GOLD_SELECT_3") != null) {
                             betPosition = 3;
                             amount = Integer.valueOf((String) remote.get("NIM_TOUZHU_GOLD_SELECT_3"));
                         }
-                        addBettingView(betPosition,amount,false);
+                        addBettingView(betPosition, amount, false);
                         break;
                     case 10009:
                         LogUtil.e("升级", message.getRemoteExtension().toString());
@@ -4020,13 +3857,13 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         }
         requestPermission(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         if (afl == null) {
-            afl = (AspectFrameLayout) mRoomContainer.findViewById(R.id.cameraPreview_afl);
+            afl = (AspectFrameLayout) findViewById(R.id.cameraPreview_afl);
             afl.setShowMode(AspectFrameLayout.SHOW_MODE.FULL);
         }
         LogUtils.e("CameraLivePreviewFrameView" + "11ew");
 //        if (cameraPreviewFrameView == null) {
         cameraPreviewFrameView =
-                (CameraLivePreviewFrameView) mRoomContainer.findViewById(R.id
+                (CameraLivePreviewFrameView) findViewById(R.id
                         .cameraPreview_live_surfaceView);
         LogUtils.e("CameraLivePreviewFrameView" + "22ew");
         cameraPreviewFrameView.setListener(null);
@@ -4113,7 +3950,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     }
 
     private void initUIs() {
-        View rootView = mRoomContainer.findViewById(R.id.fl_plug);
+        View rootView = findViewById(R.id.fl_plug);
         rootView.addOnLayoutChangeListener(this);
     }
 
@@ -5103,12 +4940,12 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
     private void showTrendPop() {
         String url = "";
-        switch (liveListBean.getRooms().getRoomsType()){
+        switch (liveListBean.getRooms().getRoomsType()) {
             case "1":
                 url = "http://47.88.229.22:8080/lucky/trend.html";
                 break;
             case "2":
-                url = "http://60.205.114.36:8080/cow/cowResult.html?roomId="+String.valueOf(liveListBean.getRoomId());
+                url = "http://60.205.114.36:8080/cow/cowResult.html?roomId=" + String.valueOf(liveListBean.getRoomId());
                 break;
         }
         View view = getLayoutInflater().inflate(R.layout.pop_trend, null);

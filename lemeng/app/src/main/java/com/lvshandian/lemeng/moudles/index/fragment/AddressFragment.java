@@ -147,7 +147,7 @@ public class AddressFragment extends BaseFragment implements SwipeRefresh.OnRefr
             @Override
             public void onRecyclerClick(int position) {
 //              进入直播间
-                ifEnter(liveListBeen, position);
+                ifEnter(liveListBeen.get(position));
             }
         });
 

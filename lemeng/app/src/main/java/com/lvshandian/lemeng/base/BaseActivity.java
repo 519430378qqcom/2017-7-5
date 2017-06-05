@@ -71,10 +71,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONException;
 
-import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,6 +91,7 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
     protected TextView titlebar_right;
     protected AppUser appUser;
     private LayoutInflater mInflator;
+    private LiveListBean live;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -582,9 +581,7 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
 
             @Override
             public void onSucess(String data) {
-                LiveBean liveBean = JsonUtil.json2Bean(data, LiveBean.class);
-                final List<LiveBean> beanList = new ArrayList<>();
-                beanList.add(liveBean);
+                final LiveBean liveBean = JsonUtil.json2Bean(data, LiveBean.class);
                 View inflate = mInflator.inflate(R.layout.pop_vedio_notifaction, null);
                 TextView tvContent = (TextView) inflate.findViewById(R.id.tv_text);
                 tvContent.setText(content);
@@ -613,11 +610,11 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
                                     if (baseDialog != null && baseDialog.isShowing()) {
                                         baseDialog.dismiss();
                                     }
-                                    ifEnter(beanList, 0);
+                                    ifEnter(liveBean);
                                 }
                             });
                         } else {
-                            ifEnter(beanList, 0);
+                            ifEnter(liveBean);
                         }
                     }
                 });
@@ -642,17 +639,9 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
      * @author sll
      * @time 2016/12/16 16:58
      */
-    private void startActivityToWatch(List<LiveListBean> live, int position) {
-
-        for (Activity activity : MyApplication.listActivity) {
-            if (activity instanceof WatchLiveActivity) {
-                activity.finish();
-            }
-        }
-
+    private void startActivityToWatch(LiveListBean live) {
         Intent intent = new Intent(this, WatchLiveActivity.class);
-        intent.putExtra("LIVELIST", (Serializable) live);
-        intent.putExtra("position", position);
+        intent.putExtra("LIVE", live);
         startActivity(intent);
     }
 
@@ -662,12 +651,11 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
      * @author sll
      * @time 2016/12/16 17:14
      */
-    public void ifEnter(List<LiveBean> liveListBean, final int position) {
-        final List<LiveListBean> live = new ArrayList<>();
-        live.add(transformLiveListBeen(liveListBean.get(position)));
+    public void ifEnter(LiveBean liveListBean) {
+        live = transformLiveListBeen(liveListBean);
         String url = UrlBuilder.chargeServerUrl + UrlBuilder.ifEnter;
         Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("roomId", live.get(position).getRooms().getId() + "");
+        hashMap.put("roomId", live.getRooms().getId() + "");
         hashMap.put("userId", appUser.getId());
         String json = new org.json.JSONObject(hashMap).toString();
         LogUtils.e("Json:　" + json);
@@ -686,15 +674,15 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
                         JoinRoomBean joinRoom = JsonUtil.json2Bean(response, JoinRoomBean.class);
                         if (joinRoom != null && joinRoom.isSuccess() && joinRoom.getCode() != 1) {
                             //第一次进入
-                            if (live.get(position) != null && !TextUtils.isEmpty(live.get(position).getRooms().getPrivateFlag() + "")
-                                    && ((live.get(position).getRooms().getPrivateFlag() + "")).equals("1")) {
-                                joinSecret(live, position);
+                            if (live!= null && !TextUtils.isEmpty(live.getRooms().getPrivateFlag() + "")
+                                    && ((live.getRooms().getPrivateFlag() + "")).equals("1")) {
+                                joinSecret(live);
                             } else {
-                                startActivityToWatch(live, position);
+                                startActivityToWatch(live);
                             }
                         } else {
                             //不是第一次，直接进入
-                            startActivityToWatch(live, position);
+                            startActivityToWatch(live);
                         }
                     }
                 });
@@ -706,10 +694,10 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
      * @author sll
      * @time 2016/12/16 17:14
      */
-    public void ifEnterTwo(final List<LiveListBean> live, final int position) {
+    public void ifEnterTwo(final LiveListBean live) {
         String url = UrlBuilder.chargeServerUrl + UrlBuilder.ifEnter;
         Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("roomId", live.get(position).getRooms().getId() + "");
+        hashMap.put("roomId", live.getRooms().getId() + "");
         hashMap.put("userId", appUser.getId());
         String json = new org.json.JSONObject(hashMap).toString();
         LogUtils.e("Json:　" + json);
@@ -728,15 +716,15 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
                         JoinRoomBean joinRoom = JsonUtil.json2Bean(response, JoinRoomBean.class);
                         if (joinRoom != null && joinRoom.isSuccess() && joinRoom.getCode() != 1) {
                             //第一次进入
-                            if (live != null && !TextUtils.isEmpty(live.get(position).getRooms().getPrivateFlag() + "")
-                                    && ((live.get(position).getRooms().getPrivateFlag() + "")).equals("1")) {
-                                joinSecret(live, position);
+                            if (live != null && !TextUtils.isEmpty(live.getRooms().getPrivateFlag() + "")
+                                    && ((live.getRooms().getPrivateFlag() + "")).equals("1")) {
+                                joinSecret(live);
                             } else {
-                                startActivityToWatch(live, position);
+                                startActivityToWatch(live);
                             }
                         } else {
                             //不是第一次，直接进入
-                            startActivityToWatch(live, position);
+                            startActivityToWatch(live);
                         }
                     }
                 });
@@ -749,13 +737,13 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
      * @author sll
      * @time 2016/12/16 17:14
      */
-    private void updateCoin(final List<LiveListBean> live, final int position) {
+    private void updateCoin(final LiveListBean live) {
         String url = UrlBuilder.chargeServerUrl + UrlBuilder.updateCoin;
         LogUtils.e("WangYi_secret", "url: " + url);
         Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("createrId", live.get(position).getRooms().getUserId() + "");
+        hashMap.put("createrId", live.getRooms().getUserId() + "");
         hashMap.put("entrantId", appUser.getId());
-        hashMap.put("coinNum", live.get(position).getRooms().getRoomPay() + "");
+        hashMap.put("coinNum", live.getRooms().getRoomPay() + "");
         String json = new org.json.JSONObject(hashMap).toString();
         LogUtils.e("Json:　" + json);
         OkHttpUtils.get().url(url)
@@ -772,7 +760,7 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
                         LogUtils.i("WangYi_secret", "付进入该私密直播: " + response);
                         JoinRoomBean joinRoom = JsonUtil.json2Bean(response, JoinRoomBean.class);
                         if (joinRoom != null && joinRoom.isSuccess() && joinRoom.getCode() == 1) {
-                            startActivityToWatch(live, position);
+                            startActivityToWatch(live);
                         } else {
                             //账户余额不足
                             showToast("账户余额不足");
@@ -794,18 +782,18 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
      * @author sll
      * @time 2016/12/16 15:59
      */
-    private void joinSecret(final List<LiveListBean> live, final int position) {
+    private void joinSecret(final LiveListBean live) {
         final Dialog dialog = new Dialog(this, R.style.homedialog);
         final View view = View.inflate(this, R.layout.dialog_join_secret, null);
         final TextView joinSecretPrompt = (TextView) view.findViewById(R.id.join_secret_prompt);
         final LinearLayout joinSecretCancel = (LinearLayout) view.findViewById(R.id
                 .join_secret_cancel);
-        joinSecretPrompt.setText("需要密码或" + live.get(position).getRooms().getRoomPay() + "金币进入该房间");
+        joinSecretPrompt.setText("需要密码或" + live.getRooms().getRoomPay() + "金币进入该房间");
         //支付
         view.findViewById(R.id.join_secret_pay).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateCoin(live, position);
+                updateCoin(live);
                 dialog.dismiss();
             }
         });
@@ -813,7 +801,7 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
         view.findViewById(R.id.join_secret_pw).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                joinForPw(live, position);
+                joinForPw(live);
                 dialog.dismiss();
             }
         });
@@ -835,7 +823,7 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
      * @author sll
      * @time 2016/12/16 16:34
      */
-    private void joinForPw(final List<LiveListBean> live, final int position) {
+    private void joinForPw(final LiveListBean live) {
         final Dialog dialog = new Dialog(this, R.style.homedialog);
         final View view = View.inflate(this, R.layout.dialog_join_secret_pwd, null);
         final EditText pwdEdit = (EditText) view.findViewById(R.id.join_secret_pwd_edit);
@@ -853,9 +841,9 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
             public void onClick(View v) {
                 if (TextUtils.isEmpty(pwdEdit.getText().toString())) {
                     showToast("请输入密码");
-                } else if (pwdEdit.getText().toString().equals(live.get(position).getRooms().getRoomPw())) {
+                } else if (pwdEdit.getText().toString().equals(live.getRooms().getRoomPw())) {
                     //密码正确，进入直播间
-                    startActivityToWatch(live, position);
+                    startActivityToWatch(live);
                     dialog.dismiss();
                 } else {
                     showToast("密码错误，请确认后再输入");

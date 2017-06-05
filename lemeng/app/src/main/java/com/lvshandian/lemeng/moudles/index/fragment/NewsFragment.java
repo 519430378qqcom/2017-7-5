@@ -129,7 +129,7 @@ public class NewsFragment extends BaseFragment implements SwipeRefresh.OnRefresh
             @Override
             public void onRecyclerClick(int position) {
 //              进入直播间
-                ifEnter(liveListBeen, position);
+                ifEnter(liveListBeen.get(position));
             }
         });
 

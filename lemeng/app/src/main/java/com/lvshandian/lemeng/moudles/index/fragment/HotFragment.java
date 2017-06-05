@@ -197,7 +197,7 @@ public class HotFragment extends BaseFragment implements SwipeRefresh.OnRefreshL
             @Override
             public void onRecyclerClick(int position) {
 //              进入直播间
-                ifEnter(liveListBeen, position);
+                ifEnter(liveListBeen.get(position));
             }
         });
 
