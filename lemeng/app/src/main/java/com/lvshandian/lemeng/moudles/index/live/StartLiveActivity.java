@@ -1903,32 +1903,6 @@ public class StartLiveActivity extends BaseActivity implements
     }
 
     /**
-     * 初始化扑克牌（显示背面）
-     */
-    private void initPokerImg() {
-        iv_poker_banker1.setImageResource(R.mipmap.bullfight_poker_nagetive);
-        iv_poker_banker2.setImageResource(R.mipmap.bullfight_poker_nagetive);
-        iv_poker_banker3.setImageResource(R.mipmap.bullfight_poker_nagetive);
-        iv_poker_banker4.setImageResource(R.mipmap.bullfight_poker_nagetive);
-        iv_poker_banker5.setImageResource(R.mipmap.bullfight_poker_nagetive);
-        iv_poker_palyer11.setImageResource(R.mipmap.bullfight_poker_nagetive);
-        iv_poker_palyer12.setImageResource(R.mipmap.bullfight_poker_nagetive);
-        iv_poker_palyer13.setImageResource(R.mipmap.bullfight_poker_nagetive);
-        iv_poker_palyer14.setImageResource(R.mipmap.bullfight_poker_nagetive);
-        iv_poker_palyer15.setImageResource(R.mipmap.bullfight_poker_nagetive);
-        iv_poker_palyer21.setImageResource(R.mipmap.bullfight_poker_nagetive);
-        iv_poker_palyer22.setImageResource(R.mipmap.bullfight_poker_nagetive);
-        iv_poker_palyer23.setImageResource(R.mipmap.bullfight_poker_nagetive);
-        iv_poker_palyer24.setImageResource(R.mipmap.bullfight_poker_nagetive);
-        iv_poker_palyer25.setImageResource(R.mipmap.bullfight_poker_nagetive);
-        iv_poker_palyer31.setImageResource(R.mipmap.bullfight_poker_nagetive);
-        iv_poker_palyer32.setImageResource(R.mipmap.bullfight_poker_nagetive);
-        iv_poker_palyer33.setImageResource(R.mipmap.bullfight_poker_nagetive);
-        iv_poker_palyer34.setImageResource(R.mipmap.bullfight_poker_nagetive);
-        iv_poker_palyer35.setImageResource(R.mipmap.bullfight_poker_nagetive);
-    }
-
-    /**
      * 牛数显示隐藏
      *
      * @param isShow
