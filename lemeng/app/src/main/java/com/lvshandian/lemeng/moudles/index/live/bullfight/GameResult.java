@@ -56,9 +56,17 @@ public class GameResult {
          * amount : 0
          * mount : 0
          */
-
+        /**
+         * 本金加中奖金额
+         */
         private int amount;
+        /**
+         * 中奖金额
+         */
         private int mount;
+        /**
+         * 庄家输赢
+         */
         private int tmount;
 
         public int getTmount() {

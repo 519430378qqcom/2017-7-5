@@ -1,6 +1,7 @@
 package com.lvshandian.lemeng.moudles.index.live.bullfight;
 
 import com.alibaba.fastjson.JSON;
+import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.UrlBuilder;
 import com.squareup.okhttp.Request;
 import com.yixia.camera.util.Log;
@@ -268,5 +269,208 @@ public class BullfightPresenter {
                 Log.e("TAG", "initGameTimer" + response);
             }
         });
+    }
+
+    /**
+     * 获取 音效文件id
+     * @return
+     */
+    public int getAudioId(int bullNum) {
+        int audioId = 0;
+        switch (bullNum){
+            case 0:
+                audioId = R.raw.bull0;
+                break;
+            case 1:
+                audioId = R.raw.bull1;
+                break;
+            case 2:
+                audioId = R.raw.bull2;
+                break;
+            case 3:
+                audioId = R.raw.bull3;
+                break;
+            case 4:
+                audioId = R.raw.bull4;
+                break;
+            case 5:
+                audioId = R.raw.bull5;
+                break;
+            case 6:
+                audioId = R.raw.bull6;
+                break;
+            case 7:
+                audioId = R.raw.bull7;
+                break;
+            case 8:
+                audioId = R.raw.bull8;
+                break;
+            case 9:
+                audioId = R.raw.bull9;
+                break;
+            case 10:
+                audioId = R.raw.bull10;
+                break;
+        }
+        return audioId;
+    }
+    /**
+     * 获取牛几的id
+     *
+     * @return
+     */
+    public int getBullSumId(int sum) {
+        switch (sum) {
+            case 0:
+                return R.mipmap.bull0;
+            case 1:
+                return R.mipmap.bull1;
+            case 2:
+                return R.mipmap.bull2;
+            case 3:
+                return R.mipmap.bull3;
+            case 4:
+                return R.mipmap.bull4;
+            case 5:
+                return R.mipmap.bull5;
+            case 6:
+                return R.mipmap.bull6;
+            case 7:
+                return R.mipmap.bull7;
+            case 8:
+                return R.mipmap.bull8;
+            case 9:
+                return R.mipmap.bull9;
+            case 10:
+                return R.mipmap.bullbull;
+        }
+        return 0;
+    }
+
+    /**
+     * 根据颜色和数值获取图片id
+     *
+     * @return
+     */
+    public int getPokerId(int color, int value) {
+        switch (color) {
+            case 1:
+                switch (value) {
+                    case 1:
+                        return R.mipmap.poker_1_1;
+                    case 2:
+                        return R.mipmap.poker_1_2;
+                    case 3:
+                        return R.mipmap.poker_1_3;
+                    case 4:
+                        return R.mipmap.poker_1_4;
+                    case 5:
+                        return R.mipmap.poker_1_5;
+                    case 6:
+                        return R.mipmap.poker_1_6;
+                    case 7:
+                        return R.mipmap.poker_1_7;
+                    case 8:
+                        return R.mipmap.poker_1_8;
+                    case 9:
+                        return R.mipmap.poker_1_9;
+                    case 10:
+                        return R.mipmap.poker_1_10;
+                    case 11:
+                        return R.mipmap.poker_1_11;
+                    case 12:
+                        return R.mipmap.poker_1_12;
+                    case 13:
+                        return R.mipmap.poker_1_13;
+                }
+            case 2:
+                switch (value) {
+                    case 1:
+                        return R.mipmap.poker_2_1;
+                    case 2:
+                        return R.mipmap.poker_2_2;
+                    case 3:
+                        return R.mipmap.poker_2_3;
+                    case 4:
+                        return R.mipmap.poker_2_4;
+                    case 5:
+                        return R.mipmap.poker_2_5;
+                    case 6:
+                        return R.mipmap.poker_2_6;
+                    case 7:
+                        return R.mipmap.poker_2_7;
+                    case 8:
+                        return R.mipmap.poker_2_8;
+                    case 9:
+                        return R.mipmap.poker_2_9;
+                    case 10:
+                        return R.mipmap.poker_2_10;
+                    case 11:
+                        return R.mipmap.poker_2_11;
+                    case 12:
+                        return R.mipmap.poker_2_12;
+                    case 13:
+                        return R.mipmap.poker_2_13;
+                }
+            case 3:
+                switch (value) {
+                    case 1:
+                        return R.mipmap.poker_3_1;
+                    case 2:
+                        return R.mipmap.poker_3_2;
+                    case 3:
+                        return R.mipmap.poker_3_3;
+                    case 4:
+                        return R.mipmap.poker_3_4;
+                    case 5:
+                        return R.mipmap.poker_3_5;
+                    case 6:
+                        return R.mipmap.poker_3_6;
+                    case 7:
+                        return R.mipmap.poker_3_7;
+                    case 8:
+                        return R.mipmap.poker_3_8;
+                    case 9:
+                        return R.mipmap.poker_3_9;
+                    case 10:
+                        return R.mipmap.poker_3_10;
+                    case 11:
+                        return R.mipmap.poker_3_11;
+                    case 12:
+                        return R.mipmap.poker_3_12;
+                    case 13:
+                        return R.mipmap.poker_3_13;
+                }
+            case 4:
+                switch (value) {
+                    case 1:
+                        return R.mipmap.poker_4_1;
+                    case 2:
+                        return R.mipmap.poker_4_2;
+                    case 3:
+                        return R.mipmap.poker_4_3;
+                    case 4:
+                        return R.mipmap.poker_4_4;
+                    case 5:
+                        return R.mipmap.poker_4_5;
+                    case 6:
+                        return R.mipmap.poker_4_6;
+                    case 7:
+                        return R.mipmap.poker_4_7;
+                    case 8:
+                        return R.mipmap.poker_4_8;
+                    case 9:
+                        return R.mipmap.poker_4_9;
+                    case 10:
+                        return R.mipmap.poker_4_10;
+                    case 11:
+                        return R.mipmap.poker_4_11;
+                    case 12:
+                        return R.mipmap.poker_4_12;
+                    case 13:
+                        return R.mipmap.poker_4_13;
+                }
+        }
+        return 0;
     }
 }

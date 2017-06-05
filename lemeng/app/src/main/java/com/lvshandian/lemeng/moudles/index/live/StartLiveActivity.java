@@ -411,7 +411,7 @@ public class StartLiveActivity extends BaseActivity implements
     @Bind(R.id.iv_bullfight)
     ImageView iv_bullfight;
     @Bind(R.id.live_game_bullfight)
-    AutoLinearLayout live_game_bullfight;
+    RelativeLayout live_game_bullfight;
     @Bind(R.id.rl_game_info)
     RelativeLayout rl_game_info;
     @Bind(R.id.rl_bullfight_banker)
@@ -1331,20 +1331,33 @@ public class StartLiveActivity extends BaseActivity implements
         if (bettingPoolView.getChildCount() >= BETTING_POOL_VIEWS_CAPACITY) {
             bettingPoolView.removeViewAt(0);
         }
-//        if(isAnimation) {
-//            imageView.setVisibility(View.GONE);
-//        }else {
-//            imageView.setVisibility(View.VISIBLE);
-//        }
         bettingPoolView.addView(imageView, layoutParams);
         if (isAnimation) {
-//            ValueAnimator valueAnimator = ValueAnimator.ofInt(0, 100);
-//            valueAnimator.setDuration(1000);
-//            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-//                @Override
-//                public void onAnimationUpdate(ValueAnimator animation) {
-//                }
-//            });
+//            ImageView iv_start = iv_10;
+//            switch (betSum){
+//                case 10:
+//                    iv_start = iv_10;
+//                    break;
+//                case 50:
+//                    iv_start = iv_50;
+//                    break;
+//                case 100:
+//                    iv_start = iv_100;
+//                    break;
+//                case 1000:
+//                    iv_start = iv_1000;
+//                    break;
+//                case 10000:
+//                    iv_start = iv_10000;
+//                    break;
+//            }
+//            LinearLayout parent = (LinearLayout) iv_start.getParent().getParent().getParent();
+//            int[] startLocation = new int[2];
+//            int[] endLocation = new int[2];
+//            int[] parentLocation = new int[2];
+//            iv_start.getLocationOnScreen(startLocation);
+//            imageView.getLocationOnScreen(endLocation);
+//            parent.getLocationOnScreen(parentLocation);
         }
     }
 
@@ -1500,9 +1513,16 @@ public class StartLiveActivity extends BaseActivity implements
                     bullfightResultShow(null, "未中奖", null);
                     break;
                 case 1://中奖
-//                    getResources().getString(R.string.banker)+gameResult.getObj().getTmount()
-                    bullfightResultShow(getResources().getString(R.string.the_result), getResources().getString(R.string.the_user)
-                            +gameResult.getObj().getMount(),null);
+                    int mount = gameResult.getObj().getMount();
+                    String mine = mount >= 0?"+"+ mount : mount +"";
+                    String banker = gameResult.getObj().getTmount()>=0?"+"+gameResult.getObj().getTmount():gameResult.getObj().getTmount()+"";
+                    bullfightResultShow(getResources().getString(R.string.the_result), getResources().getString(R.string.the_user) +
+                            mine,getResources().getString(R.string.banker)+banker);
+                    if(mount > 0 ) {
+                        MediaPlayer.create(getApplicationContext(),R.raw.bull_win).start();
+                    }else if(mount < 0) {
+                        MediaPlayer.create(getApplicationContext(),R.raw.bull_lose).start();
+                    }
                     myGoldCoin += gameResult.getObj().getAmount();
                     tv_bullfight_lepiao.setText(CountUtils.getCount(myGoldCoin));
                     break;
@@ -1559,7 +1579,9 @@ public class StartLiveActivity extends BaseActivity implements
             nextTime = timeAndNper.getObj().getTime();
             uper = timeAndNper.getObj().getPerid();
             ll_game.setVisibility(View.GONE);
-            showPlayView(2);
+            if(!gameIsStart) {
+                showPlayView(2);
+            }
             gameIsStart = true;
             updateBettingEnable(myGoldCoin);
             switchBullNum(false,-1);
@@ -1580,6 +1602,7 @@ public class StartLiveActivity extends BaseActivity implements
                 Toast.makeText(StartLiveActivity.this, "投注失败", Toast.LENGTH_SHORT).show();
                 break;
             case 1://为成功
+                MediaPlayer.create(getApplicationContext(),R.raw.bet_coin).start();
                 myGoldCoin -= amount;
                 tv_bullfight_lepiao.setText(CountUtils.getCount(myGoldCoin));
                 updateBettingEnable(myGoldCoin);
@@ -1642,21 +1665,20 @@ public class StartLiveActivity extends BaseActivity implements
                 public void onAnimationStart(Animator animation) {
                     super.onAnimationStart(animation);
                     List<PokerResult.ObjBean.PlayerPokerMapBean.PokersBean> pokers3 = playerPokerMap.getPoker3().getPokers();
-                    iv_poker_palyer31.setImageResource(getPokerId(pokers3.get(0).getColor(), pokers3.get(0).getValue()));
-                    iv_poker_palyer32.setImageResource(getPokerId(pokers3.get(1).getColor(), pokers3.get(1).getValue()));
-                    iv_poker_palyer33.setImageResource(getPokerId(pokers3.get(2).getColor(), pokers3.get(2).getValue()));
-                    iv_poker_palyer34.setImageResource(getPokerId(pokers3.get(3).getColor(), pokers3.get(3).getValue()));
-                    iv_poker_palyer35.setImageResource(getPokerId(pokers3.get(4).getColor(), pokers3.get(4).getValue()));
+                    iv_poker_palyer31.setImageResource(bullfightPresenter.getPokerId(pokers3.get(0).getColor(), pokers3.get(0).getValue()));
+                    iv_poker_palyer32.setImageResource(bullfightPresenter.getPokerId(pokers3.get(1).getColor(), pokers3.get(1).getValue()));
+                    iv_poker_palyer33.setImageResource(bullfightPresenter.getPokerId(pokers3.get(2).getColor(), pokers3.get(2).getValue()));
+                    iv_poker_palyer34.setImageResource(bullfightPresenter.getPokerId(pokers3.get(3).getColor(), pokers3.get(3).getValue()));
+                    iv_poker_palyer35.setImageResource(bullfightPresenter.getPokerId(pokers3.get(4).getColor(), pokers3.get(4).getValue()));
                 }
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
-                    iv_bull_amount3.setImageResource(getBullSumId(playerPokerMap.getPoker3().getResult()));
+                    int result = playerPokerMap.getPoker3().getResult();
+                    MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), bullfightPresenter.getAudioId(result));
+                    mediaPlayer.start();
+                    iv_bull_amount3.setImageResource(bullfightPresenter.getBullSumId(result));
                     switchBullNum(true,3);
-                    rl_poker_banker_container.clearAnimation();
-                    rl_poker_player_container1.clearAnimation();
-                    rl_poker_player_container2.clearAnimation();
-                    rl_poker_player_container3.clearAnimation();
                 }
             });
             final ObjectAnimator animator2 = ObjectAnimator.ofFloat(rl_poker_player_container2, "scaleX", 0f, 1f);
@@ -1666,18 +1688,21 @@ public class StartLiveActivity extends BaseActivity implements
                 public void onAnimationStart(Animator animation) {
                     super.onAnimationStart(animation);
                     List<PokerResult.ObjBean.PlayerPokerMapBean.PokersBean> pokers2 = playerPokerMap.getPoker2().getPokers();
-                    iv_poker_palyer21.setImageResource(getPokerId(pokers2.get(0).getColor(), pokers2.get(0).getValue()));
-                    iv_poker_palyer22.setImageResource(getPokerId(pokers2.get(1).getColor(), pokers2.get(1).getValue()));
-                    iv_poker_palyer23.setImageResource(getPokerId(pokers2.get(2).getColor(), pokers2.get(2).getValue()));
-                    iv_poker_palyer24.setImageResource(getPokerId(pokers2.get(3).getColor(), pokers2.get(3).getValue()));
-                    iv_poker_palyer25.setImageResource(getPokerId(pokers2.get(4).getColor(), pokers2.get(4).getValue()));
+                    iv_poker_palyer21.setImageResource(bullfightPresenter.getPokerId(pokers2.get(0).getColor(), pokers2.get(0).getValue()));
+                    iv_poker_palyer22.setImageResource(bullfightPresenter.getPokerId(pokers2.get(1).getColor(), pokers2.get(1).getValue()));
+                    iv_poker_palyer23.setImageResource(bullfightPresenter.getPokerId(pokers2.get(2).getColor(), pokers2.get(2).getValue()));
+                    iv_poker_palyer24.setImageResource(bullfightPresenter.getPokerId(pokers2.get(3).getColor(), pokers2.get(3).getValue()));
+                    iv_poker_palyer25.setImageResource(bullfightPresenter.getPokerId(pokers2.get(4).getColor(), pokers2.get(4).getValue()));
                 }
 
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
                     animator3.start();
-                    iv_bull_amount2.setImageResource(getBullSumId(playerPokerMap.getPoker2().getResult()));
+                    int result = playerPokerMap.getPoker2().getResult();
+                    MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), bullfightPresenter.getAudioId(result));
+                    mediaPlayer.start();
+                    iv_bull_amount2.setImageResource(bullfightPresenter.getBullSumId(result));
                     switchBullNum(true,2);
                 }
             });
@@ -1688,18 +1713,21 @@ public class StartLiveActivity extends BaseActivity implements
                 public void onAnimationStart(Animator animation) {
                     super.onAnimationStart(animation);
                     List<PokerResult.ObjBean.PlayerPokerMapBean.PokersBean> pokers1 = playerPokerMap.getPoker1().getPokers();
-                    iv_poker_palyer11.setImageResource(getPokerId(pokers1.get(0).getColor(), pokers1.get(0).getValue()));
-                    iv_poker_palyer12.setImageResource(getPokerId(pokers1.get(1).getColor(), pokers1.get(1).getValue()));
-                    iv_poker_palyer13.setImageResource(getPokerId(pokers1.get(2).getColor(), pokers1.get(2).getValue()));
-                    iv_poker_palyer14.setImageResource(getPokerId(pokers1.get(3).getColor(), pokers1.get(3).getValue()));
-                    iv_poker_palyer15.setImageResource(getPokerId(pokers1.get(4).getColor(), pokers1.get(4).getValue()));
+                    iv_poker_palyer11.setImageResource(bullfightPresenter.getPokerId(pokers1.get(0).getColor(), pokers1.get(0).getValue()));
+                    iv_poker_palyer12.setImageResource(bullfightPresenter.getPokerId(pokers1.get(1).getColor(), pokers1.get(1).getValue()));
+                    iv_poker_palyer13.setImageResource(bullfightPresenter.getPokerId(pokers1.get(2).getColor(), pokers1.get(2).getValue()));
+                    iv_poker_palyer14.setImageResource(bullfightPresenter.getPokerId(pokers1.get(3).getColor(), pokers1.get(3).getValue()));
+                    iv_poker_palyer15.setImageResource(bullfightPresenter.getPokerId(pokers1.get(4).getColor(), pokers1.get(4).getValue()));
                 }
 
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
                     animator2.start();
-                    iv_bull_amount1.setImageResource(getBullSumId(playerPokerMap.getPoker1().getResult()));
+                    int result = playerPokerMap.getPoker1().getResult();
+                    MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), bullfightPresenter.getAudioId(result));
+                    mediaPlayer.start();
+                    iv_bull_amount1.setImageResource(bullfightPresenter.getBullSumId(result));
                     switchBullNum(true,1);
                 }
             });
@@ -1710,184 +1738,28 @@ public class StartLiveActivity extends BaseActivity implements
                 public void onAnimationStart(Animator animation) {
                     super.onAnimationStart(animation);
                     List<PokerResult.ObjBean.PlayerPokerMapBean.PokersBean> pokers = playerPokerMap.getPoker0().getPokers();
-                    iv_poker_banker1.setImageResource(getPokerId(pokers.get(0).getColor(), pokers.get(0).getValue()));
-                    iv_poker_banker2.setImageResource(getPokerId(pokers.get(1).getColor(), pokers.get(1).getValue()));
-                    iv_poker_banker3.setImageResource(getPokerId(pokers.get(2).getColor(), pokers.get(2).getValue()));
-                    iv_poker_banker4.setImageResource(getPokerId(pokers.get(3).getColor(), pokers.get(3).getValue()));
-                    iv_poker_banker5.setImageResource(getPokerId(pokers.get(4).getColor(), pokers.get(4).getValue()));
+                    iv_poker_banker1.setImageResource(bullfightPresenter.getPokerId(pokers.get(0).getColor(), pokers.get(0).getValue()));
+                    iv_poker_banker2.setImageResource(bullfightPresenter.getPokerId(pokers.get(1).getColor(), pokers.get(1).getValue()));
+                    iv_poker_banker3.setImageResource(bullfightPresenter.getPokerId(pokers.get(2).getColor(), pokers.get(2).getValue()));
+                    iv_poker_banker4.setImageResource(bullfightPresenter.getPokerId(pokers.get(3).getColor(), pokers.get(3).getValue()));
+                    iv_poker_banker5.setImageResource(bullfightPresenter.getPokerId(pokers.get(4).getColor(), pokers.get(4).getValue()));
                 }
 
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
                     animator1.start();
-                    iv_bull_amount0.setImageResource(getBullSumId(playerPokerMap.getPoker0().getResult()));
-                    switchBullNum(true,0);
+                    int result = playerPokerMap.getPoker0().getResult();
+                    MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), bullfightPresenter.getAudioId(result));
+                    mediaPlayer.start();
+                    iv_bull_amount0.setImageResource(bullfightPresenter.getBullSumId(result));
+                    switchBullNum(true, 0);
                 }
             });
             animator.start();
         }
     }
 
-    /**
-     * 获取牛几的id
-     *
-     * @return
-     */
-    private int getBullSumId(int sum) {
-        switch (sum) {
-            case 0:
-                return R.mipmap.bull0;
-            case 1:
-                return R.mipmap.bull1;
-            case 2:
-                return R.mipmap.bull2;
-            case 3:
-                return R.mipmap.bull3;
-            case 4:
-                return R.mipmap.bull4;
-            case 5:
-                return R.mipmap.bull5;
-            case 6:
-                return R.mipmap.bull6;
-            case 7:
-                return R.mipmap.bull7;
-            case 8:
-                return R.mipmap.bull8;
-            case 9:
-                return R.mipmap.bull9;
-            case 10:
-                return R.mipmap.bullbull;
-        }
-        return 0;
-    }
-
-    /**
-     * 根据颜色和数值获取图片id
-     *
-     * @return
-     */
-    private int getPokerId(int color, int value) {
-        switch (color) {
-            case 1:
-                switch (value) {
-                    case 1:
-                        return R.mipmap.poker_1_1;
-                    case 2:
-                        return R.mipmap.poker_1_2;
-                    case 3:
-                        return R.mipmap.poker_1_3;
-                    case 4:
-                        return R.mipmap.poker_1_4;
-                    case 5:
-                        return R.mipmap.poker_1_5;
-                    case 6:
-                        return R.mipmap.poker_1_6;
-                    case 7:
-                        return R.mipmap.poker_1_7;
-                    case 8:
-                        return R.mipmap.poker_1_8;
-                    case 9:
-                        return R.mipmap.poker_1_9;
-                    case 10:
-                        return R.mipmap.poker_1_10;
-                    case 11:
-                        return R.mipmap.poker_1_11;
-                    case 12:
-                        return R.mipmap.poker_1_12;
-                    case 13:
-                        return R.mipmap.poker_1_13;
-                }
-            case 2:
-                switch (value) {
-                    case 1:
-                        return R.mipmap.poker_2_1;
-                    case 2:
-                        return R.mipmap.poker_2_2;
-                    case 3:
-                        return R.mipmap.poker_2_3;
-                    case 4:
-                        return R.mipmap.poker_2_4;
-                    case 5:
-                        return R.mipmap.poker_2_5;
-                    case 6:
-                        return R.mipmap.poker_2_6;
-                    case 7:
-                        return R.mipmap.poker_2_7;
-                    case 8:
-                        return R.mipmap.poker_2_8;
-                    case 9:
-                        return R.mipmap.poker_2_9;
-                    case 10:
-                        return R.mipmap.poker_2_10;
-                    case 11:
-                        return R.mipmap.poker_2_11;
-                    case 12:
-                        return R.mipmap.poker_2_12;
-                    case 13:
-                        return R.mipmap.poker_2_13;
-                }
-            case 3:
-                switch (value) {
-                    case 1:
-                        return R.mipmap.poker_3_1;
-                    case 2:
-                        return R.mipmap.poker_3_2;
-                    case 3:
-                        return R.mipmap.poker_3_3;
-                    case 4:
-                        return R.mipmap.poker_3_4;
-                    case 5:
-                        return R.mipmap.poker_3_5;
-                    case 6:
-                        return R.mipmap.poker_3_6;
-                    case 7:
-                        return R.mipmap.poker_3_7;
-                    case 8:
-                        return R.mipmap.poker_3_8;
-                    case 9:
-                        return R.mipmap.poker_3_9;
-                    case 10:
-                        return R.mipmap.poker_3_10;
-                    case 11:
-                        return R.mipmap.poker_3_11;
-                    case 12:
-                        return R.mipmap.poker_3_12;
-                    case 13:
-                        return R.mipmap.poker_3_13;
-                }
-            case 4:
-                switch (value) {
-                    case 1:
-                        return R.mipmap.poker_4_1;
-                    case 2:
-                        return R.mipmap.poker_4_2;
-                    case 3:
-                        return R.mipmap.poker_4_3;
-                    case 4:
-                        return R.mipmap.poker_4_4;
-                    case 5:
-                        return R.mipmap.poker_4_5;
-                    case 6:
-                        return R.mipmap.poker_4_6;
-                    case 7:
-                        return R.mipmap.poker_4_7;
-                    case 8:
-                        return R.mipmap.poker_4_8;
-                    case 9:
-                        return R.mipmap.poker_4_9;
-                    case 10:
-                        return R.mipmap.poker_4_10;
-                    case 11:
-                        return R.mipmap.poker_4_11;
-                    case 12:
-                        return R.mipmap.poker_4_12;
-                    case 13:
-                        return R.mipmap.poker_4_13;
-                }
-        }
-        return 0;
-    }
 
     /**
      * 更新投注金额的选择按钮
@@ -1977,10 +1849,6 @@ public class StartLiveActivity extends BaseActivity implements
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                rl_poker_banker_container.clearAnimation();
-                rl_poker_player_container1.clearAnimation();
-                rl_poker_player_container2.clearAnimation();
-                rl_poker_player_container3.clearAnimation();
             }
         });
         final ObjectAnimator animator2 = ObjectAnimator.ofFloat(rl_poker_player_container2, "scaleX", 0f, 1f);
@@ -3394,6 +3262,8 @@ public class StartLiveActivity extends BaseActivity implements
 
     private EncodingOrientationSwitcher mEncodingOrientationSwitcher = new
             EncodingOrientationSwitcher();
+
+
 
     private class EncodingOrientationSwitcher implements Runnable {
 

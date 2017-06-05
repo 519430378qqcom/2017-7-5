@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/live_game_bullfight"
     android:layout_width="match_parent"
     android:layout_height="420px"
     android:visibility="gone"
-    android:background="@mipmap/game_backgourd"
-    android:orientation="vertical">
+    android:background="@mipmap/game_backgourd">
 
     <com.zhy.autolayout.AutoRelativeLayout
         android:layout_width="match_parent"
@@ -291,7 +290,7 @@
         <com.zhy.autolayout.AutoLinearLayout
             android:visibility="gone"
             android:id="@+id/ll_bullfight_result"
-            android:layout_width="5000px"
+            android:layout_width="500px"
             android:layout_height="140px"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="60px"
@@ -312,8 +311,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textSize="14sp"
-                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textColor="@color/yellow"
                 android:text="@string/wait_next_start"/>
             <TextView
                 android:id="@+id/tv_bullfight_result3"
@@ -329,6 +328,7 @@
 
     <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
         android:layout_height="99px"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -399,4 +399,4 @@
                 android:src="@mipmap/ic_bullfight_10000_dark" />
         </com.zhy.autolayout.AutoLinearLayout>
     </com.zhy.autolayout.AutoLinearLayout>
-</com.zhy.autolayout.AutoLinearLayout>
+</com.zhy.autolayout.AutoRelativeLayout>
