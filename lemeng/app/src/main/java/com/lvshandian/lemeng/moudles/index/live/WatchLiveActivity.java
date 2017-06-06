@@ -897,7 +897,11 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
                         myGoldCoin = myGoldCoin - Long.parseLong(mSendGiftItem.getMemberConsume());
                         String myCoin = CountUtils.getCount(myGoldCoin);
-                        all_lepiao.setText(myCoin);
+                        if (gameType == 1) {
+                            all_lepiao.setText(myCoin);
+                        } else if (gameType == 2) {
+                            tv_bullfight_lepiao.setText(myCoin);
+                        }
 
                     }
                     break;
@@ -1020,8 +1024,10 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
                     String myCoin = appUser.getGoldCoin();
                     myGoldCoin = Long.parseLong(myCoin);
-                    myCoin = CountUtils.getCount(Long.parseLong(myCoin));
+
+                    myCoin = CountUtils.getCount(myGoldCoin);
                     all_lepiao.setText(myCoin);
+                    tv_bullfight_lepiao.setText(myCoin);
                     break;
                 case RequestCode.REQUEST_REPORT:
                     showToast("已成功举报该用户");
@@ -1960,7 +1966,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 myHandler.sendEmptyMessageDelayed(WAIT_NEXT_START, 1000);
                 return;
             }
-            tv_bullfight_lepiao.setText(CountUtils.getCount(myGoldCoin));
             nextTime = timeAndNper.getObj().getTime() + 1;
             nextTime = nextTime > 30 ? 30 : nextTime;
             uper = timeAndNper.getObj().getPerid();
@@ -2426,6 +2431,15 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 iv_trend.setImageResource(R.mipmap.ic_bullfight_record);
                 break;
         }
+
+        if (myGoldCoin != null) {
+            String myCoin = CountUtils.getCount(myGoldCoin);
+            if (gameType == 1) {
+                all_lepiao.setText(myCoin);
+            } else if (gameType == 2) {
+                tv_bullfight_lepiao.setText(myCoin);
+            }
+        }
     }
 
     /**
@@ -2887,7 +2901,11 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 if (message.getFromAccount().equals("miu_" + appUser.getId())) {
                     myGoldCoin = myGoldCoin - 1;
                     String myCoin = CountUtils.getCount(myGoldCoin);
-                    all_lepiao.setText(myCoin);
+                    if (gameType == 1) {
+                        all_lepiao.setText(myCoin);
+                    } else if (gameType == 2) {
+                        tv_bullfight_lepiao.setText(myCoin);
+                    }
                 }
             } else if (userId != null && userId.indexOf("miu_") != -1) {
                 userId = userId.substring(4);
@@ -4897,7 +4915,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                             SendRoomMessageUtils.onCustomMessagePlay("1818", messageFragment, liveListBean.getRooms()
                                     .getRoomId() + "", map);
                         } else {
-                            showToast("投注失败");
+                            showToast(jsonObject.getString("msg"));
                             rulePop.dismiss();
                         }
                     } catch (JSONException e) {
@@ -4981,7 +4999,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                             all_num.setText(lastAwardBean.getSum() + "");
                             tv_ds.setText(lastAwardBean.getType());
                             tv_game_next_open_time.setText("等待:开奖:中.");
-
                             myHandler.postDelayed(timenNumber, 30000);
                         }
                     } else {

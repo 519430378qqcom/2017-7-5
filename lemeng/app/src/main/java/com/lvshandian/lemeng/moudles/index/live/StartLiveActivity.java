@@ -776,9 +776,7 @@ public class StartLiveActivity extends BaseActivity implements
                     zhuboReceve = Long.parseLong(receivedGoldCoin);
                     myGoldCoin = Long.parseLong(goldCoin);
                     receivedGoldCoin = CountUtils.getCount(Long.parseLong(receivedGoldCoin));
-                    goldCoin = CountUtils.getCount(Long.parseLong(goldCoin));
                     liveJinpiao.setText(receivedGoldCoin); //显示左上角主播收到乐票数量
-                    all_lepiao.setText(goldCoin);
                     break;
                 case 10000:
                     LogUtil.e("mCountDownTotalTime", "mCountDownTotalTime" + mCountDownTotalTime);
@@ -1570,7 +1568,6 @@ public class StartLiveActivity extends BaseActivity implements
             tv_bullfight_minenum1.setText("0");
             tv_bullfight_minenum2.setText("0");
             tv_bullfight_minenum3.setText("0");
-            tv_bullfight_lepiao.setText(CountUtils.getCount(myGoldCoin));
             nextTime = timeAndNper.getObj().getTime();
             uper = timeAndNper.getObj().getPerid();
             ll_game.setVisibility(View.GONE);
@@ -2031,6 +2028,13 @@ public class StartLiveActivity extends BaseActivity implements
                 live_game.setVisibility(View.GONE);
                 iv_trend.setImageResource(R.mipmap.ic_bullfight_record);
                 break;
+        }
+
+        String myCoin = CountUtils.getCount(myGoldCoin);
+        if (gameType == 1) {
+            all_lepiao.setText(myCoin);
+        } else if (gameType == 2) {
+            tv_bullfight_lepiao.setText(myCoin);
         }
     }
 
@@ -2561,7 +2565,12 @@ public class StartLiveActivity extends BaseActivity implements
                 if (message.getFromAccount().equals("miu_" + appUser.getId())) {
                     myGoldCoin = myGoldCoin - 1;
                     String myCoin = CountUtils.getCount(myGoldCoin);
-                    all_lepiao.setText(myCoin);
+                    if (gameType == 1) {
+                        all_lepiao.setText(myCoin);
+                    } else if (gameType == 2) {
+                        tv_bullfight_lepiao.setText(myCoin);
+                    }
+
                 }
             } else if (userId != null && userId.indexOf("miu_") != -1) {
                 userId = userId.substring(4);
@@ -4954,7 +4963,7 @@ public class StartLiveActivity extends BaseActivity implements
                             map.put("inputMsg", intQh + "期 " + selectStatus + " 投注" + strJinBi + "乐票");
                             SendRoomMessageUtils.onCustomMessagePlay("1818", messageFragment, wy_Id, map);
                         } else {
-                            showToast("投注失败");
+                            showToast(jsonObject.getString("msg"));
                             rulePop.dismiss();
                         }
                     } catch (JSONException e) {
