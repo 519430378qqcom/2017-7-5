@@ -14,7 +14,6 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.lvshandian.lemeng.moudles.index.live.WatchLiveActivity;
-import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.view.LoadingDialog;
 import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.pili.pldroid.player.AVOptions;
@@ -39,7 +38,7 @@ public class AnchorVideo {
     private PLMediaPlayer mMediaPlayer;
     private SurfaceView mSurfaceView;
     public boolean mIsStopped = false;
-    public boolean mIsActivityPaused = true;
+    public boolean mIsActivityPaused = false;
     private static final int MESSAGE_ID_RECONNECTING = 0x01;
 
 
@@ -117,7 +116,7 @@ public class AnchorVideo {
 
         @Override
         public void surfaceCreated(SurfaceHolder holder) {
-            LogUtil.e("surfaceView", "surfaceCreated---" );
+            LogUtil.e("surfaceView", "surfaceCreated---");
             prepare();
         }
 
@@ -130,7 +129,7 @@ public class AnchorVideo {
 
         @Override
         public void surfaceDestroyed(SurfaceHolder holder) {
-            LogUtil.e("surfaceView", "surfaceDestroyed---" );
+            LogUtil.e("surfaceView", "surfaceDestroyed---");
 //            release();
             releaseWithoutStop();
         }
@@ -165,7 +164,6 @@ public class AnchorVideo {
         @Override
         public void onCompletion(PLMediaPlayer mp) {
             LogUtil.d("拉流重连", "Play Completed !");
-            showToastTips("Play Completed !");
 //            finish();
         }
     };
@@ -193,7 +191,6 @@ public class AnchorVideo {
             mMediaPlayer.setWakeMode(mContext.getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
 
             mMediaPlayer.setDataSource(mVideoPath);
-            LogUtils.i("拉流地址" + mVideoPath);
             mMediaPlayer.setDisplay(mSurfaceView.getHolder());
             mMediaPlayer.prepareAsync();
         } catch (UnsatisfiedLinkError e) {
@@ -230,38 +227,45 @@ public class AnchorVideo {
             LogUtil.e("mOnErrorListener", "Error happened, errorCode = " + errorCode);
             switch (errorCode) {
                 case PLMediaPlayer.ERROR_CODE_INVALID_URI:
-                    showToastTips("Invalid URL !");
+//                    showToastTips("Invalid URL !");
+                    showToastTips("无效的播放地址,请退出重进");
                     break;
                 case PLMediaPlayer.ERROR_CODE_404_NOT_FOUND:
-                    showToastTips("404 resource not found !");
+//                    showToastTips("404 resource not found !");
+                    showToastTips("视频地址未找到,请退出重进");
                     break;
                 case PLMediaPlayer.ERROR_CODE_CONNECTION_REFUSED:
-                    showToastTips("Connection refused !");
+//                    showToastTips("Connection refused !");
                     break;
                 case PLMediaPlayer.ERROR_CODE_CONNECTION_TIMEOUT:
-                    showToastTips("Connection timeout !");
+//                    showToastTips("Connection timeout !");
+                    showToastTips("连接超时,正在玩命请求...");
                     isNeedReconnect = true;
                     break;
                 case PLMediaPlayer.ERROR_CODE_EMPTY_PLAYLIST:
-                    showToastTips("Empty playlist !");
+//                    showToastTips("Empty playlist !");
                     break;
                 case PLMediaPlayer.ERROR_CODE_STREAM_DISCONNECTED:
-                    showToastTips("Stream disconnected !");
+//                    showToastTips("Stream disconnected !");
+                    showToastTips("播放地址断开,正在玩命请求...");
                     isNeedReconnect = true;
                     break;
                 case PLMediaPlayer.ERROR_CODE_IO_ERROR:
-                    showToastTips("Network IO Error !");
+//                    showToastTips("Network IO Error !");
+                    showToastTips("播放地址错误,请退出重进");
                     isNeedReconnect = true;
                     break;
                 case PLMediaPlayer.ERROR_CODE_UNAUTHORIZED:
-                    showToastTips("Unauthorized Error !");
+//                    showToastTips("Unauthorized Error !");
                     break;
                 case PLMediaPlayer.ERROR_CODE_PREPARE_TIMEOUT:
-                    showToastTips("Prepare timeout !");
+//                    showToastTips("Prepare timeout !");
+                    showToastTips("请求超时,正在玩命请求...");
                     isNeedReconnect = true;
                     break;
                 case PLMediaPlayer.ERROR_CODE_READ_FRAME_TIMEOUT:
-                    showToastTips("Read frame timeout !");
+//                    showToastTips("Read frame timeout !");
+                    showToastTips("读取帧超时,正在玩命请求...");
                     isNeedReconnect = true;
                     break;
                 case PLMediaPlayer.ERROR_CODE_HW_DECODE_FAILURE:
@@ -271,7 +275,8 @@ public class AnchorVideo {
                 case PLMediaPlayer.MEDIA_ERROR_UNKNOWN:
                     break;
                 default:
-                    showToastTips("unknown error !");
+//                    showToastTips("unknown error !");
+                    showToastTips("正在重连...");
                     break;
             }
             // Todo pls handle the error status here, reconnect or call finish()
@@ -325,12 +330,9 @@ public class AnchorVideo {
 //            Log.i(TAG, "OnInfo, what = " + what + ", extra = " + extra);
             switch (what) {
                 case PLMediaPlayer.MEDIA_INFO_BUFFERING_START:
-                    LogUtil.e("进入直播间", "111111");
                     break;
                 case PLMediaPlayer.MEDIA_INFO_BUFFERING_END:
-                    LogUtil.e("进入直播间", "2222222");
                 case PLMediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START:
-                    LogUtil.e("进入直播间", "33333");
 //                    mLoadingView.setVisibility(View.GONE);
                     rlLoading.setVisibility(View.GONE);
                     if (mLoading != null && mLoading.isShowing()) {
@@ -341,7 +343,6 @@ public class AnchorVideo {
 //                    showToastTips(meta.toString());
                     break;
                 case PLMediaPlayer.MEDIA_INFO_SWITCHING_SW_DECODE:
-                    LogUtil.e("进入直播间", "4444444");
 //                    Log.i(TAG, "Hardware decoding failure, switching software decoding!");
                     break;
                 default:

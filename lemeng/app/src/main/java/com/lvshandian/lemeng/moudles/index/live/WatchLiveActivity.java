@@ -1531,7 +1531,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 break;
 
             case R.id.ruanjianpanW:
-                hidePlayView(gameType);
                 messageFragment.inputTypeOnClick();
                 break;
             case R.id.iv_game://游戏
@@ -1901,14 +1900,14 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     break;
                 case 1://中奖
                     int mount = gameResult.getObj().getMount();
-                    String mine = mount >= 0?"+"+ mount : mount +"";
-                    String banker = gameResult.getObj().getTmount()>=0?"+"+gameResult.getObj().getTmount():gameResult.getObj().getTmount()+"";
+                    String mine = mount >= 0 ? "+" + mount : mount + "";
+                    String banker = gameResult.getObj().getTmount() >= 0 ? "+" + gameResult.getObj().getTmount() : gameResult.getObj().getTmount() + "";
                     bullfightResultShow(getResources().getString(R.string.the_result), getResources().getString(R.string.the_user) +
-                            mine,getResources().getString(R.string.banker)+banker);
-                    if(mount > 0 ) {
-                        MediaPlayer.create(getApplicationContext(),R.raw.bull_win).start();
-                    }else if(mount < 0) {
-                        MediaPlayer.create(getApplicationContext(),R.raw.bull_lose).start();
+                            mine, getResources().getString(R.string.banker) + banker);
+                    if (mount > 0) {
+                        MediaPlayer.create(getApplicationContext(), R.raw.bull_win).start();
+                    } else if (mount < 0) {
+                        MediaPlayer.create(getApplicationContext(), R.raw.bull_lose).start();
                     }
                     myGoldCoin += gameResult.getObj().getAmount();
                     tv_bullfight_lepiao.setText(CountUtils.getCount(myGoldCoin));
@@ -1957,7 +1956,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             nextTime = timeAndNper.getObj().getTime() + 1;
             nextTime = nextTime > 30 ? 30 : nextTime;
             uper = timeAndNper.getObj().getPerid();
-            if(!isPlayerRoom) {
+            if (!isPlayerRoom) {
                 showPlayView(2);
             }
             updateBettingEnable(myGoldCoin);
@@ -1986,7 +1985,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 ToastUtils.showMessageDefault(WatchLiveActivity.this, getResources().getString(R.string.bet_fail));
                 break;
             case 1://为成功
-                MediaPlayer.create(getApplicationContext(),R.raw.bet_coin).start();
+                MediaPlayer.create(getApplicationContext(), R.raw.bet_coin).start();
                 myGoldCoin -= amount;
                 tv_bullfight_lepiao.setText(CountUtils.getCount(myGoldCoin));
                 updateBettingEnable(myGoldCoin);
@@ -2054,6 +2053,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     iv_poker_palyer34.setImageResource(bullfightPresenter.getPokerId(pokers3.get(3).getColor(), pokers3.get(3).getValue()));
                     iv_poker_palyer35.setImageResource(bullfightPresenter.getPokerId(pokers3.get(4).getColor(), pokers3.get(4).getValue()));
                 }
+
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
@@ -2061,7 +2061,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), bullfightPresenter.getAudioId(result));
                     mediaPlayer.start();
                     iv_bull_amount3.setImageResource(bullfightPresenter.getBullSumId(result));
-                    switchBullNum(true,3);
+                    switchBullNum(true, 3);
                 }
             });
             final ObjectAnimator animator2 = ObjectAnimator.ofFloat(rl_poker_player_container2, "scaleX", 0f, 1f);
@@ -2086,7 +2086,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), bullfightPresenter.getAudioId(result));
                     mediaPlayer.start();
                     iv_bull_amount2.setImageResource(bullfightPresenter.getBullSumId(result));
-                    switchBullNum(true,2);
+                    switchBullNum(true, 2);
                 }
             });
             final ObjectAnimator animator1 = ObjectAnimator.ofFloat(rl_poker_player_container1, "scaleX", 0f, 1f);
@@ -2111,7 +2111,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), bullfightPresenter.getAudioId(result));
                     mediaPlayer.start();
                     iv_bull_amount1.setImageResource(bullfightPresenter.getBullSumId(result));
-                    switchBullNum(true,1);
+                    switchBullNum(true, 1);
                 }
             });
             final ObjectAnimator animator = ObjectAnimator.ofFloat(rl_poker_banker_container, "scaleX", 0f, 1f);
@@ -2443,6 +2443,10 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * @param gameType 1（彩票）;2（斗牛）
      */
     private void showPlayView(int gameType) {
+//        ObjectAnimator animator = ObjectAnimator.ofFloat(rl_game_container, "translationY", -1, 0);
+//        animator.setDuration(500);
+//        animator.start();
+
         this.gameType = gameType;
         //游戏内容视图
         rl_game_container.setVisibility(View.VISIBLE);
@@ -2474,6 +2478,10 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * @param gameType 1（彩票）;2（斗牛）
      */
     private void hidePlayView(int gameType) {
+//        ObjectAnimator animator = ObjectAnimator.ofFloat(rl_game_container, "translationY", 0, -1);
+//        animator.setDuration(500);
+//        animator.start();
+
         //游戏内容视图
         rl_game_container.setVisibility(View.GONE);
         //游戏左上角视图
@@ -2871,7 +2879,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         showPlayView(1);
                         break;
                     case 2929://主播开启斗牛游戏
-                        isPlayerRoom = true;
                         bullfightPresenter = new BullfightPresenter(WatchLiveActivity.this);
                         bullfightPresenter.getTimeAndNper(liveListBean.getRoomId() + "");
                         break;
@@ -3135,7 +3142,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             @Override
             public void run() {
                 mSendGiftLian.setVisibility(View.GONE);
-                hidePlayView(gameType);
             }
         }, 200);
 

@@ -252,11 +252,11 @@ public class ChatRoomViewHolderCustom extends MsgViewHolderBase {
                         break;
                     case 112:
                         //主播恢复前台拍摄
-                        text = "主播恢复前台拍摄";
+                        text = "主播回来啦, 视频即将恢复";
                         break;
                     case 113:
                         //主播切换到后台
-                        text = "主播切换到后台";
+                        text = "主播离开一下, 精彩不中断, 不要走开哦";
                         break;
                     case 199:
                         //关注

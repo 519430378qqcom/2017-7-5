@@ -722,7 +722,7 @@ public class StartLiveActivity extends BaseActivity implements
     /**
      * 是否为游戏直播间
      */
-    private boolean isPlayerRoom;
+    private boolean gameIsStart = false;
 
     private Handler myHandler = new Handler() {
         @Override
@@ -939,7 +939,6 @@ public class StartLiveActivity extends BaseActivity implements
 
     }
 
-    private boolean gameIsStart = false;
 
     private void restStatus() {
         ivBig.setImageResource(R.mipmap.icon_big_unselect);
@@ -1097,14 +1096,7 @@ public class StartLiveActivity extends BaseActivity implements
             case R.id.iv_bullfight:
                 break;
             case R.id.ruanjianpan:
-                if (gameIsStart == false) {
-                    ll_game.setVisibility(View.GONE);
-                    messageFragment.inputTypeOnClick();
-                } else {
-                    hidePlayView(gameType);
-                    messageFragment.inputTypeOnClick();
-                }
-
+                messageFragment.inputTypeOnClick();
                 break;
 
             case R.id.room_lianmai://邀请连麦按钮
@@ -1137,7 +1129,6 @@ public class StartLiveActivity extends BaseActivity implements
                         showPlayView(gameType);
                     }
                 }
-
                 break;
             case R.id.game_more_btn:
                 View popupView = LayoutInflater.from(this).inflate(R.layout.view_more_button, null);
@@ -1149,7 +1140,6 @@ public class StartLiveActivity extends BaseActivity implements
                 int popupHeight = popupView.getMeasuredHeight();
                 int[] location = new int[2];
                 v.getLocationOnScreen(location);
-                popupWindow.setAnimationStyle(R.style.mypopwindow_anim_style);
                 popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, (location[0] + v.getWidth() / 2) - popupWidth / 2,
                         location[1] - popupHeight);
 //                popupView.findViewById(R.id.iv_live_share).setOnClickListener(new View.OnClickListener() {  //分享
@@ -1517,14 +1507,14 @@ public class StartLiveActivity extends BaseActivity implements
                     break;
                 case 1://中奖
                     int mount = gameResult.getObj().getMount();
-                    String mine = mount >= 0?"+"+ mount : mount +"";
-                    String banker = gameResult.getObj().getTmount()>=0?"+"+gameResult.getObj().getTmount():gameResult.getObj().getTmount()+"";
+                    String mine = mount >= 0 ? "+" + mount : mount + "";
+                    String banker = gameResult.getObj().getTmount() >= 0 ? "+" + gameResult.getObj().getTmount() : gameResult.getObj().getTmount() + "";
                     bullfightResultShow(getResources().getString(R.string.the_result), getResources().getString(R.string.the_user) +
-                            mine,getResources().getString(R.string.banker)+banker);
-                    if(mount > 0 ) {
-                        MediaPlayer.create(getApplicationContext(),R.raw.bull_win).start();
-                    }else if(mount < 0) {
-                        MediaPlayer.create(getApplicationContext(),R.raw.bull_lose).start();
+                            mine, getResources().getString(R.string.banker) + banker);
+                    if (mount > 0) {
+                        MediaPlayer.create(getApplicationContext(), R.raw.bull_win).start();
+                    } else if (mount < 0) {
+                        MediaPlayer.create(getApplicationContext(), R.raw.bull_lose).start();
                     }
                     myGoldCoin += gameResult.getObj().getAmount();
                     tv_bullfight_lepiao.setText(CountUtils.getCount(myGoldCoin));
@@ -1582,14 +1572,14 @@ public class StartLiveActivity extends BaseActivity implements
             nextTime = timeAndNper.getObj().getTime();
             uper = timeAndNper.getObj().getPerid();
             ll_game.setVisibility(View.GONE);
-            if(!gameIsStart) {
+            if (!gameIsStart) {
                 showPlayView(2);
             }
             gameIsStart = true;
             updateBettingEnable(myGoldCoin);
-            switchBullNum(false,-1);
+            switchBullNum(false, -1);
             myHandler.sendEmptyMessage(BULLFIGHT_TIME);
-            switchAllPoker(false,-1);
+            switchAllPoker(false, -1);
             sendPokerAnimator();
         } else {
         }
@@ -1605,7 +1595,7 @@ public class StartLiveActivity extends BaseActivity implements
                 Toast.makeText(StartLiveActivity.this, "投注失败", Toast.LENGTH_SHORT).show();
                 break;
             case 1://为成功
-                MediaPlayer.create(getApplicationContext(),R.raw.bet_coin).start();
+                MediaPlayer.create(getApplicationContext(), R.raw.bet_coin).start();
                 myGoldCoin -= amount;
                 tv_bullfight_lepiao.setText(CountUtils.getCount(myGoldCoin));
                 updateBettingEnable(myGoldCoin);
@@ -1674,6 +1664,7 @@ public class StartLiveActivity extends BaseActivity implements
                     iv_poker_palyer34.setImageResource(bullfightPresenter.getPokerId(pokers3.get(3).getColor(), pokers3.get(3).getValue()));
                     iv_poker_palyer35.setImageResource(bullfightPresenter.getPokerId(pokers3.get(4).getColor(), pokers3.get(4).getValue()));
                 }
+
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
@@ -1681,7 +1672,7 @@ public class StartLiveActivity extends BaseActivity implements
                     MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), bullfightPresenter.getAudioId(result));
                     mediaPlayer.start();
                     iv_bull_amount3.setImageResource(bullfightPresenter.getBullSumId(result));
-                    switchBullNum(true,3);
+                    switchBullNum(true, 3);
                 }
             });
             final ObjectAnimator animator2 = ObjectAnimator.ofFloat(rl_poker_player_container2, "scaleX", 0f, 1f);
@@ -1706,7 +1697,7 @@ public class StartLiveActivity extends BaseActivity implements
                     MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), bullfightPresenter.getAudioId(result));
                     mediaPlayer.start();
                     iv_bull_amount2.setImageResource(bullfightPresenter.getBullSumId(result));
-                    switchBullNum(true,2);
+                    switchBullNum(true, 2);
                 }
             });
             final ObjectAnimator animator1 = ObjectAnimator.ofFloat(rl_poker_player_container1, "scaleX", 0f, 1f);
@@ -1731,7 +1722,7 @@ public class StartLiveActivity extends BaseActivity implements
                     MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), bullfightPresenter.getAudioId(result));
                     mediaPlayer.start();
                     iv_bull_amount1.setImageResource(bullfightPresenter.getBullSumId(result));
-                    switchBullNum(true,1);
+                    switchBullNum(true, 1);
                 }
             });
             final ObjectAnimator animator = ObjectAnimator.ofFloat(rl_poker_banker_container, "scaleX", 0f, 1f);
@@ -1847,8 +1838,9 @@ public class StartLiveActivity extends BaseActivity implements
             @Override
             public void onAnimationStart(Animator animation) {
                 super.onAnimationStart(animation);
-                switchAllPoker(true,3);
+                switchAllPoker(true, 3);
             }
+
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
@@ -1860,7 +1852,7 @@ public class StartLiveActivity extends BaseActivity implements
             @Override
             public void onAnimationStart(Animator animation) {
                 super.onAnimationStart(animation);
-                switchAllPoker(true,2);
+                switchAllPoker(true, 2);
             }
 
             @Override
@@ -1875,7 +1867,7 @@ public class StartLiveActivity extends BaseActivity implements
             @Override
             public void onAnimationStart(Animator animation) {
                 super.onAnimationStart(animation);
-                switchAllPoker(true,1);
+                switchAllPoker(true, 1);
             }
 
             @Override
@@ -1890,7 +1882,7 @@ public class StartLiveActivity extends BaseActivity implements
             @Override
             public void onAnimationStart(Animator animation) {
                 super.onAnimationStart(animation);
-                switchAllPoker(true,0);
+                switchAllPoker(true, 0);
             }
 
             @Override
@@ -1908,9 +1900,9 @@ public class StartLiveActivity extends BaseActivity implements
      * @param isShow
      * @param position -1一起显示
      */
-    private void switchBullNum(boolean isShow,int position) {
+    private void switchBullNum(boolean isShow, int position) {
         if (isShow) {
-            switch (position){
+            switch (position) {
                 case -1:
                     iv_bull_amount0.setVisibility(View.VISIBLE);
                     iv_bull_amount1.setVisibility(View.VISIBLE);
@@ -2049,7 +2041,10 @@ public class StartLiveActivity extends BaseActivity implements
      * @param gameType 1（彩票）;2（斗牛）
      */
     private void showPlayView(int gameType) {
-        isPlayerRoom = true;
+//        ObjectAnimator animator = ObjectAnimator.ofFloat(rl_game_container, "translationY", rl_game_container.getHeight(), 0);
+//        animator.setDuration(500);
+//        animator.start();
+
         this.gameType = gameType;
         //游戏内容视图
         rl_game_container.setVisibility(View.VISIBLE);
@@ -2081,6 +2076,10 @@ public class StartLiveActivity extends BaseActivity implements
      * @param gameType 1（彩票）;2（斗牛）
      */
     private void hidePlayView(int gameType) {
+//        ObjectAnimator animator = ObjectAnimator.ofFloat(rl_game_container, "translationY", 0, rl_game_container.getHeight());
+//        animator.setDuration(500);
+//        animator.start();
+
         //游戏内容视图
         rl_game_container.setVisibility(View.GONE);
         //游戏左上角视图
@@ -3210,7 +3209,6 @@ public class StartLiveActivity extends BaseActivity implements
         cameraPreviewFrameView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                ll_game.setVisibility(View.GONE);
                 if (sessionListFragment != null) {
                     sessionListFragment.hide();
                 }
@@ -3238,9 +3236,13 @@ public class StartLiveActivity extends BaseActivity implements
                             /**
                              * 下滑动
                              */
-                            if (isPlayerRoom) {
+                            if (gameIsStart) {
                                 if (rl_game_container.getVisibility() == View.VISIBLE) {
                                     hidePlayView(gameType);
+                                }
+                            } else {
+                                if (ll_game.getVisibility() == View.VISIBLE) {
+                                    ll_game.setVisibility(View.GONE);
                                 }
                             }
 
@@ -3248,9 +3250,13 @@ public class StartLiveActivity extends BaseActivity implements
                             /**
                              * 上滑动
                              */
-                            if (isPlayerRoom) {
+                            if (gameIsStart) {
                                 if (rl_game_container.getVisibility() == View.GONE) {
                                     showPlayView(gameType);
+                                }
+                            } else {
+                                if (ll_game.getVisibility() == View.GONE) {
+                                    ll_game.setVisibility(View.VISIBLE);
                                 }
                             }
                         }
