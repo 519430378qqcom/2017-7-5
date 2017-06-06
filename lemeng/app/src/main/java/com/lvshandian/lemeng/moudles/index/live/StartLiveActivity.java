@@ -526,6 +526,12 @@ public class StartLiveActivity extends BaseActivity implements
     AutoRelativeLayout rl_poker_player_container2;
     @Bind(R.id.rl_poker_player_container3)
     AutoRelativeLayout rl_poker_player_container3;
+    @Bind(R.id.iv_gray_bg1)
+    ImageView iv_gray_bg1;
+    @Bind(R.id.iv_gray_bg2)
+    ImageView iv_gray_bg2;
+    @Bind(R.id.iv_gray_bg3)
+    ImageView iv_gray_bg3;
     /**
      * 标识直播间当前开启的游戏类型；1（彩票）;2（斗牛）
      */
@@ -1420,7 +1426,6 @@ public class StartLiveActivity extends BaseActivity implements
         if (nextTime >= 10) {
             switchTimer();
         }
-        nextTime--;
         myHandler.sendEmptyMessageDelayed(BULLFIGHT_TIME, 1000);
         switch (nextTime) {
             case 25://主播初始化游戏结果
@@ -1443,6 +1448,7 @@ public class StartLiveActivity extends BaseActivity implements
                 bullfightPresenter.getTimeAndNper(room_Id);
                 break;
         }
+        nextTime--;
     }
 
     /**
@@ -1562,6 +1568,9 @@ public class StartLiveActivity extends BaseActivity implements
             rl_bullfight_betting_container1.removeAllViews();
             rl_bullfight_betting_container2.removeAllViews();
             rl_bullfight_betting_container3.removeAllViews();
+            iv_gray_bg1.setVisibility(View.GONE);
+            iv_gray_bg2.setVisibility(View.GONE);
+            iv_gray_bg3.setVisibility(View.GONE);
             tv_bullfight_totlanum1.setText("0");
             tv_bullfight_totlanum2.setText("0");
             tv_bullfight_totlanum3.setText("0");
@@ -1651,6 +1660,10 @@ public class StartLiveActivity extends BaseActivity implements
     public void getPokerResult(PokerResult pokerResult) {
         if (pokerResult.isSuccess()) {
             final PokerResult.ObjBean.PlayerPokerMapBean playerPokerMap = pokerResult.getObj().getPlayerPokerMap();
+            final int result = playerPokerMap.getPoker0().getResult();
+            final int result1 = playerPokerMap.getPoker1().getResult();
+            final int result2 = playerPokerMap.getPoker2().getResult();
+            final int result3 = playerPokerMap.getPoker3().getResult();
             final ObjectAnimator animator3 = ObjectAnimator.ofFloat(rl_poker_player_container3, "scaleX", 0f, 1f);
             animator3.setDuration(1000);
             animator3.addListener(new AnimatorListenerAdapter() {
@@ -1664,15 +1677,16 @@ public class StartLiveActivity extends BaseActivity implements
                     iv_poker_palyer34.setImageResource(bullfightPresenter.getPokerId(pokers3.get(3).getColor(), pokers3.get(3).getValue()));
                     iv_poker_palyer35.setImageResource(bullfightPresenter.getPokerId(pokers3.get(4).getColor(), pokers3.get(4).getValue()));
                 }
-
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
-                    int result = playerPokerMap.getPoker3().getResult();
-                    MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), bullfightPresenter.getAudioId(result));
+                    MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), bullfightPresenter.getAudioId(result3));
                     mediaPlayer.start();
-                    iv_bull_amount3.setImageResource(bullfightPresenter.getBullSumId(result));
-                    switchBullNum(true, 3);
+                    iv_bull_amount3.setImageResource(bullfightPresenter.getBullSumId(result3));
+                    switchBullNum(true,3);
+                    if(result >= result3) {
+                        iv_gray_bg3.setVisibility(View.VISIBLE);
+                    }
                 }
             });
             final ObjectAnimator animator2 = ObjectAnimator.ofFloat(rl_poker_player_container2, "scaleX", 0f, 1f);
@@ -1693,11 +1707,13 @@ public class StartLiveActivity extends BaseActivity implements
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
                     animator3.start();
-                    int result = playerPokerMap.getPoker2().getResult();
-                    MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), bullfightPresenter.getAudioId(result));
+                    MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), bullfightPresenter.getAudioId(result2));
                     mediaPlayer.start();
-                    iv_bull_amount2.setImageResource(bullfightPresenter.getBullSumId(result));
-                    switchBullNum(true, 2);
+                    iv_bull_amount2.setImageResource(bullfightPresenter.getBullSumId(result2));
+                    switchBullNum(true,2);
+                    if(result >= result2) {
+                        iv_gray_bg2.setVisibility(View.VISIBLE);
+                    }
                 }
             });
             final ObjectAnimator animator1 = ObjectAnimator.ofFloat(rl_poker_player_container1, "scaleX", 0f, 1f);
@@ -1718,11 +1734,13 @@ public class StartLiveActivity extends BaseActivity implements
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
                     animator2.start();
-                    int result = playerPokerMap.getPoker1().getResult();
-                    MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), bullfightPresenter.getAudioId(result));
+                    MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), bullfightPresenter.getAudioId(result1));
                     mediaPlayer.start();
-                    iv_bull_amount1.setImageResource(bullfightPresenter.getBullSumId(result));
-                    switchBullNum(true, 1);
+                    iv_bull_amount1.setImageResource(bullfightPresenter.getBullSumId(result1));
+                    switchBullNum(true,1);
+                    if(result >= result1) {
+                        iv_gray_bg1.setVisibility(View.VISIBLE);
+                    }
                 }
             });
             final ObjectAnimator animator = ObjectAnimator.ofFloat(rl_poker_banker_container, "scaleX", 0f, 1f);
@@ -1743,7 +1761,6 @@ public class StartLiveActivity extends BaseActivity implements
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
                     animator1.start();
-                    int result = playerPokerMap.getPoker0().getResult();
                     MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), bullfightPresenter.getAudioId(result));
                     mediaPlayer.start();
                     iv_bull_amount0.setImageResource(bullfightPresenter.getBullSumId(result));
@@ -1832,65 +1849,18 @@ public class StartLiveActivity extends BaseActivity implements
      * 发牌动画
      */
     private void sendPokerAnimator() {
-        final ObjectAnimator animator3 = ObjectAnimator.ofFloat(rl_poker_player_container3, "scaleX", 0f, 1f);
+        switchAllPoker(true,-1);
+        ObjectAnimator animator3 = ObjectAnimator.ofFloat(rl_poker_player_container3, "scaleX", 0f, 1f);
         animator3.setDuration(1000);
-        animator3.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                super.onAnimationStart(animation);
-                switchAllPoker(true, 3);
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-            }
-        });
-        final ObjectAnimator animator2 = ObjectAnimator.ofFloat(rl_poker_player_container2, "scaleX", 0f, 1f);
+        animator3.start();
+        ObjectAnimator animator2 = ObjectAnimator.ofFloat(rl_poker_player_container2, "scaleX", 0f, 1f);
         animator2.setDuration(1000);
-        animator2.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                super.onAnimationStart(animation);
-                switchAllPoker(true, 2);
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                animator3.start();
-            }
-        });
-        final ObjectAnimator animator1 = ObjectAnimator.ofFloat(rl_poker_player_container1, "scaleX", 0f, 1f);
+        animator2.start();
+        ObjectAnimator animator1 = ObjectAnimator.ofFloat(rl_poker_player_container1, "scaleX", 0f, 1f);
         animator1.setDuration(1000);
-        animator1.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                super.onAnimationStart(animation);
-                switchAllPoker(true, 1);
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                animator2.start();
-            }
-        });
-        final ObjectAnimator animator = ObjectAnimator.ofFloat(rl_poker_banker_container, "scaleX", 0f, 1f);
+        animator1.start();
+        ObjectAnimator animator = ObjectAnimator.ofFloat(rl_poker_banker_container, "scaleX", 0f, 1f);
         animator.setDuration(1000);
-        animator.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                super.onAnimationStart(animation);
-                switchAllPoker(true, 0);
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                animator1.start();
-            }
-        });
         animator.start();
     }
 

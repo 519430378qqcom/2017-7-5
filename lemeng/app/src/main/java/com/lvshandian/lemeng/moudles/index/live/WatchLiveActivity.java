@@ -516,7 +516,12 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     AutoRelativeLayout rl_poker_player_container2;
     @Bind(R.id.rl_poker_player_container3)
     AutoRelativeLayout rl_poker_player_container3;
-
+    @Bind(R.id.iv_gray_bg1)
+    ImageView iv_gray_bg1;
+    @Bind(R.id.iv_gray_bg2)
+    ImageView iv_gray_bg2;
+    @Bind(R.id.iv_gray_bg3)
+    ImageView iv_gray_bg3;
     private String nper;
     private int intQh;
     private String countryType;
@@ -1816,7 +1821,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         if (nextTime >= 10) {
             switchTimer();
         }
-        nextTime--;
         myHandler.sendEmptyMessageDelayed(BULLFIGHT_TIME, 1000);
         switch (nextTime) {
             case 10://获取扑克牌结果
@@ -1836,6 +1840,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 bullfightPresenter.getTimeAndNper(liveListBean.getRoomId() + "");
                 break;
         }
+        nextTime--;
     }
 
     /**
@@ -1942,6 +1947,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             rl_bullfight_betting_container1.removeAllViews();
             rl_bullfight_betting_container2.removeAllViews();
             rl_bullfight_betting_container3.removeAllViews();
+            iv_gray_bg1.setVisibility(View.GONE);
+            iv_gray_bg2.setVisibility(View.GONE);
+            iv_gray_bg3.setVisibility(View.GONE);
             tv_bullfight_totlanum1.setText("0");
             tv_bullfight_totlanum2.setText("0");
             tv_bullfight_totlanum3.setText("0");
@@ -1970,7 +1978,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 return;
             }
             myHandler.sendEmptyMessage(BULLFIGHT_TIME);
-            switchAllPoker(false, -1);
+            switchAllPoker(true, -1);
             sendPokerAnimator();
             bullfightPresenter.getBankerInfo();
         } else {
@@ -2231,69 +2239,17 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * 发牌动画
      */
     private void sendPokerAnimator() {
-        final ObjectAnimator animator3 = ObjectAnimator.ofFloat(rl_poker_player_container3, "scaleX", 0f, 1f);
+        ObjectAnimator animator3 = ObjectAnimator.ofFloat(rl_poker_player_container3, "scaleX", 0f, 1f);
         animator3.setDuration(1000);
-        animator3.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                super.onAnimationStart(animation);
-                switchAllPoker(true, 3);
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                rl_poker_banker_container.clearAnimation();
-                rl_poker_player_container1.clearAnimation();
-                rl_poker_player_container2.clearAnimation();
-                rl_poker_player_container3.clearAnimation();
-            }
-        });
-        final ObjectAnimator animator2 = ObjectAnimator.ofFloat(rl_poker_player_container2, "scaleX", 0f, 1f);
+        animator3.start();
+        ObjectAnimator animator2 = ObjectAnimator.ofFloat(rl_poker_player_container2, "scaleX", 0f, 1f);
         animator2.setDuration(1000);
-        animator2.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                super.onAnimationStart(animation);
-                switchAllPoker(true, 2);
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                animator3.start();
-            }
-        });
-        final ObjectAnimator animator1 = ObjectAnimator.ofFloat(rl_poker_player_container1, "scaleX", 0f, 1f);
+        animator2.start();
+        ObjectAnimator animator1 = ObjectAnimator.ofFloat(rl_poker_player_container1, "scaleX", 0f, 1f);
         animator1.setDuration(1000);
-        animator1.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                super.onAnimationStart(animation);
-                switchAllPoker(true, 1);
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                animator2.start();
-            }
-        });
-        final ObjectAnimator animator = ObjectAnimator.ofFloat(rl_poker_banker_container, "scaleX", 0f, 1f);
+        animator1.start();
+        ObjectAnimator animator = ObjectAnimator.ofFloat(rl_poker_banker_container, "scaleX", 0f, 1f);
         animator.setDuration(1000);
-        animator.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                super.onAnimationStart(animation);
-                switchAllPoker(true, 0);
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                animator1.start();
-            }
-        });
         animator.start();
     }
 

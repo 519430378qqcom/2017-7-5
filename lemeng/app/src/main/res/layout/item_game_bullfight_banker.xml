@@ -2,7 +2,7 @@
 <com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl_bullfight_banker"
     android:layout_width="220px"
-    android:layout_height="280px"
+    android:layout_height="260px"
     android:layout_marginTop="10px"
     android:layout_marginLeft="12px"
     android:visibility="gone"
@@ -30,7 +30,7 @@
             android:layout_toRightOf="@+id/iv_bullfight_banker_head"
             android:textColor="@color/white"
             android:textSize="13sp"
-            android:text="美女荷官"/>
+            android:text="荷官"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
