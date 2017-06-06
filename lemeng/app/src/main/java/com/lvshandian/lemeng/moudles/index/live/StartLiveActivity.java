@@ -973,14 +973,7 @@ public class StartLiveActivity extends BaseActivity implements
 
         switch (v.getId()) {
             case R.id.iv_trend: //走势
-                switch (gameType) {
-                    case 1://彩票走势
-                        showTrendPop();
-                        break;
-                    case 2://斗牛记录
-                        showBullfightRecord();
-                        break;
-                }
+                showTrendPop();
                 break;
 
             case R.id.tv_rule: //规则
@@ -1677,14 +1670,15 @@ public class StartLiveActivity extends BaseActivity implements
                     iv_poker_palyer34.setImageResource(bullfightPresenter.getPokerId(pokers3.get(3).getColor(), pokers3.get(3).getValue()));
                     iv_poker_palyer35.setImageResource(bullfightPresenter.getPokerId(pokers3.get(4).getColor(), pokers3.get(4).getValue()));
                 }
+
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
                     MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), bullfightPresenter.getAudioId(result3));
                     mediaPlayer.start();
                     iv_bull_amount3.setImageResource(bullfightPresenter.getBullSumId(result3));
-                    switchBullNum(true,3);
-                    if(result >= result3) {
+                    switchBullNum(true, 3);
+                    if (result >= result3) {
                         iv_gray_bg3.setVisibility(View.VISIBLE);
                     }
                 }
@@ -1710,8 +1704,8 @@ public class StartLiveActivity extends BaseActivity implements
                     MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), bullfightPresenter.getAudioId(result2));
                     mediaPlayer.start();
                     iv_bull_amount2.setImageResource(bullfightPresenter.getBullSumId(result2));
-                    switchBullNum(true,2);
-                    if(result >= result2) {
+                    switchBullNum(true, 2);
+                    if (result >= result2) {
                         iv_gray_bg2.setVisibility(View.VISIBLE);
                     }
                 }
@@ -1737,8 +1731,8 @@ public class StartLiveActivity extends BaseActivity implements
                     MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), bullfightPresenter.getAudioId(result1));
                     mediaPlayer.start();
                     iv_bull_amount1.setImageResource(bullfightPresenter.getBullSumId(result1));
-                    switchBullNum(true,1);
-                    if(result >= result1) {
+                    switchBullNum(true, 1);
+                    if (result >= result1) {
                         iv_gray_bg1.setVisibility(View.VISIBLE);
                     }
                 }
@@ -1849,7 +1843,7 @@ public class StartLiveActivity extends BaseActivity implements
      * 发牌动画
      */
     private void sendPokerAnimator() {
-        switchAllPoker(true,-1);
+        switchAllPoker(true, -1);
         ObjectAnimator animator3 = ObjectAnimator.ofFloat(rl_poker_player_container3, "scaleX", 0f, 1f);
         animator3.setDuration(1000);
         animator3.start();
@@ -4801,7 +4795,7 @@ public class StartLiveActivity extends BaseActivity implements
     }
 
     /**
-     * 显示彩票走势
+     * 显示走势
      */
     private void showTrendPop() {
         String url = "";
@@ -4830,7 +4824,7 @@ public class StartLiveActivity extends BaseActivity implements
         final ProgressBar iv_include_loading = (ProgressBar) view.findViewById(R.id.iv_include_loading);
         WebSettings webSettings = webView.getSettings();
         webSetting(webSettings);
-        webView.loadUrl("http://47.88.229.22:8080/lucky/trend.html");
+        webView.loadUrl(url);
         webView.setWebChromeClient(new WebChromeClient());
         webView.setWebViewClient(new WebViewClient() {
 
@@ -4856,12 +4850,6 @@ public class StartLiveActivity extends BaseActivity implements
         });
     }
 
-    /**
-     * 显示斗牛记录
-     */
-    private void showBullfightRecord() {
-
-    }
 
     private void webSetting(WebSettings webSettings) {
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);// 设置js可以直接打开窗口，如window.open()，默认为false

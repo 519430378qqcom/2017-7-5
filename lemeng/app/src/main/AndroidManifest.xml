@@ -236,11 +236,6 @@
             android:name=".moudles.mine.activity.ExplainWebViewActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!-- 充值界面 -->
-        <activity
-            android:name=".moudles.mine.activity.ChargeCoinsActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
         <!-- 搜索场控界面 -->
         <activity
             android:name=".moudles.mine.my.SearchControllerActivity"
@@ -294,11 +289,6 @@
         <!-- 显示文本的activity -->
         <activity
             android:name=".moudles.mine.my.BaseTextActivity"
-            android:exported="true"
-            android:launchMode="singleTop" />
-        <!-- 支付界面 -->
-        <activity
-            android:name=".moudles.mine.my.PayOrderActivity"
             android:exported="true"
             android:launchMode="singleTop" />
         <!-- 图片放大 -->
@@ -504,10 +494,6 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity
-            android:name=".wxapi.WXPayEntryActivity"
-            android:exported="true"
-            android:launchMode="singleTop" />
 
         <!-- 腾讯 -->
         <activity

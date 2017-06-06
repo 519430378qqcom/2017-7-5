@@ -3121,12 +3121,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         ll_user_coin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                startActivity(new Intent(mContext, ChargeCoinsActivity.class).putExtra("yanpiao",
-//                        SharedPreferenceUtils.getGoldCoin(mContext)));
-//                startActivity(new Intent(mContext, PayOrderActivity.class));
-             /*   Intent intent = new Intent(mContext, ExplainWebViewActivity.class);
-                intent.putExtra("flag", 1000);
-                startActivity(intent);*/
+//                Intent intent = new Intent(mContext, ExplainWebViewActivity.class);
+//                intent.putExtra("flag", 1000);
+//                startActivity(intent);
                 showToast("暂时不支持充值");
             }
         });
@@ -3186,7 +3183,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      */
     private void onClickSendGift() {
         if (myGoldCoin < Long.valueOf(mSendGiftItem.getMemberConsume())) {
-            showToast("金币不足，请充值");
+            showToast("您的乐票不足，请充值");
             return;
         }
         sendGift();
@@ -4745,7 +4742,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         }
     }
 
-
+    /**
+     * 显示走势
+     */
     private void showTrendPop() {
         String url = "";
         switch (liveListBean.getRooms().getRoomsType()) {

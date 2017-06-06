@@ -764,12 +764,6 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
                         } else {
                             //账户余额不足
                             showToast("账户余额不足");
-//                            gotoActivity(ChargeCoinsActivity.class, false);
-//                            startActivity(new Intent(mContext, PayOrderActivity.class));
-
-//                            Intent intent = new Intent(mContext, ExplainWebViewActivity.class);
-//                            intent.putExtra("flag", 1000);
-//                            startActivity(intent);
                         }
                     }
                 });

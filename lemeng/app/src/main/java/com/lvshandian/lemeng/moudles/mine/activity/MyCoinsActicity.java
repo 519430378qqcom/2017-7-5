@@ -107,18 +107,10 @@ public class MyCoinsActicity extends BaseActivity {
                 startActivity(new Intent(mContext, WithdrawActivity.class).putExtra("exchangeStatus",exchangeStatus));
                 break;
             case R.id.tv_recharge:
-//                startActivity(new Intent(mContext, ChargeCoinsActivity.class).putExtra("yanpiao", appUser.getGoldCoin()));
-//                startActivity(new Intent(mContext, PayOrderActivity.class));
-
-//                String url = String.format(UrlBuilder.YINLIAN_PAY_WEB, appUser.getId());
 //                Intent intent = new Intent(mContext, ExplainWebViewActivity.class);
 //                intent.putExtra("flag", 1000);
-//                intent.putExtra("url", url);
 //                startActivity(intent);
-
-                Intent intent = new Intent(mContext, ExplainWebViewActivity.class);
-                intent.putExtra("flag", 1000);
-                startActivity(intent);
+                showToast("暂时不支持充值");
                 break;
             case R.id.tv_titlebar_left:
                 defaultFinish();

@@ -262,16 +262,6 @@ public class HttpDatas {
                         } else if (response.getCode().equals(SERVERS_CODE)) {
                             ToastUtils.showMessageDefault(context, response.getMessage());
                             LogUtils.i("服务器内部错误:" + response.getMessage());
-                        } else if (response.getMessage() != null && response.getMessage().equals("账户余额不足")) {
-                            //账户余额不足,跳转到充值页面
-//                            context.startActivity(new Intent(context, ChargeCoinsActivity.class));
-//                            context.startActivity(new Intent(context, PayOrderActivity.class));
-
-                            ToastUtils.showMessageDefault(context,"账户余额不足");
-//                            Intent intent = new Intent(context, ExplainWebViewActivity.class);
-//                            intent.putExtra("flag", 1000);
-//                            context.startActivity(intent);
-                        } else {
                         }
                         if (mDialog.isShowing()) {
                             mDialog.dismiss();
@@ -485,7 +475,7 @@ public class HttpDatas {
                     message.what = handlerCode;
                     handler.sendMessage(message);
                 } else if (response.getCode() == 0 || response.getCode() == 401) {
-//                    ToastUtils.showMessageDefault(context, response.getMsg());
+                    ToastUtils.showMessageDefault(context, response.getMsg());
                     ToastUtils.showMessageDefault(context, response.getMsg());
                     LogUtils.i("服务器内部错误:" + response.getMsg());
                     LogUtils.i("服务器内部错误:" + response.toString());

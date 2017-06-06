@@ -66,9 +66,9 @@
                 <com.zhy.autolayout.AutoLinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="20px"
                     android:layout_marginLeft="30px"
                     android:gravity="center_vertical"
-                    android:layout_marginBottom="20px"
                     android:orientation="horizontal">
 
                     <TextView
@@ -104,9 +104,9 @@
                     android:id="@+id/id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30px"
                     android:layout_above="@+id/tv_sign"
                     android:layout_marginBottom="5px"
+                    android:layout_marginLeft="30px"
                     android:text="乐檬号："
                     android:textColor="@color/backgroudcolor"
                     android:textSize="24px" />
@@ -183,8 +183,13 @@
         <!--贡献榜-->
         <include layout="@layout/my_item_gongxian_layout" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="30px"
+            android:background="@color/line_df" />
         <!--我的乐票-->
-        <!--<include layout="@layout/my_item_yanpiao_layout" />-->
+        <include layout="@layout/my_item_yanpiao_layout" />
 
         <!--我的回放-->
         <!--<include layout="@layout/my_item_huifang_layout" />-->
