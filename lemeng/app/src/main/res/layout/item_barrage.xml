@@ -13,7 +13,7 @@
     <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="40px"
+        android:layout_marginLeft="20px"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -21,12 +21,15 @@
             android:id="@+id/barrageview_item_nick"
             android:layout_width="match_parent"
             android:layout_height="35px"
-            android:layout_marginLeft="20px"
             android:gravity="center"
-            android:paddingLeft="10px"
-            android:paddingRight="25px"
-            android:text="德天"
-            android:textColor="#838383"
+            android:paddingRight="20px"
+            android:paddingLeft="60px"
+            android:text="德天独厚"
+            android:shadowColor="#66ffffff"
+            android:shadowDx="0"
+            android:shadowDy="2"
+            android:shadowRadius="1"
+            android:textColor="@color/tv_color6"
             android:textSize="24px" />
 
         <TextView
@@ -35,10 +38,12 @@
             android:layout_height="35px"
             android:background="@drawable/corner_danmu"
             android:gravity="center"
-            android:maxLines="1"
-            android:paddingLeft="40px"
+            android:maxEms="20"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:paddingLeft="60px"
             android:paddingRight="20px"
-            android:text="你好吗"
+            android:text="我是弹幕君"
             android:textColor="@color/white"
             android:textSize="24px" />
 

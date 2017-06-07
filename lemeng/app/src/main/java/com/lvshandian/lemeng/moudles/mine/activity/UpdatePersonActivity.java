@@ -3,7 +3,6 @@ package com.lvshandian.lemeng.moudles.mine.activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
@@ -52,7 +51,7 @@ public class UpdatePersonActivity extends BaseActivity {
         int textnum = numbers - getIntent().getStringExtra("name").length();
         tv_num.setText("(" + textnum + ")");
         content.addTextChangedListener(textWatcher);
-        content.setFilters(new InputFilter[]{new InputFilter.LengthFilter(18)});
+//        content.setFilters(new InputFilter[]{new InputFilter.LengthFilter(30)});
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

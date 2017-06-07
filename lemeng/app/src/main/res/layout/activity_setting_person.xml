@@ -68,6 +68,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="150px"
             android:background="@null"
+            android:singleLine="true"
             android:text=""
             android:textSize="30px" />
 
@@ -207,6 +208,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="150px"
+            android:singleLine="true"
             android:background="@null"
             android:text=""
             android:textSize="30px" />

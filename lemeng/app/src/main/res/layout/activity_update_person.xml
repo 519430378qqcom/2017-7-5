@@ -16,8 +16,7 @@
         android:layout_marginTop="10px"
         android:background="@drawable/edittext_shape_rectangle"
         android:hint="请输入您的签名"
-        android:singleLine="true"
-        android:maxLines="30"
+        android:maxLength="30"
         android:paddingBottom="120px"
         android:paddingLeft="10px"
         android:paddingRight="10px"
@@ -41,7 +40,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="30px"
             android:textSize="30px"
-            android:text="(18)"/>
+            android:text="(30)"/>
     </com.zhy.autolayout.AutoRelativeLayout>
 
 </com.zhy.autolayout.AutoLinearLayout>
