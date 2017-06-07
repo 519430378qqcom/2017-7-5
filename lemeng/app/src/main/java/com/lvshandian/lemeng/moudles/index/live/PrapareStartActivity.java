@@ -30,6 +30,12 @@ import com.lvshandian.lemeng.utils.MyCamPara;
 import com.lvshandian.lemeng.utils.NetWorkUtil;
 import com.lvshandian.lemeng.utils.PermisionUtils;
 import com.lvshandian.lemeng.utils.UMUtils;
+import com.qiniu.pili.droid.streaming.AVCodecType;
+import com.qiniu.pili.droid.streaming.CameraStreamingSetting;
+import com.qiniu.pili.droid.streaming.MediaStreamingManager;
+import com.qiniu.pili.droid.streaming.MicrophoneStreamingSetting;
+import com.qiniu.pili.droid.streaming.StreamingProfile;
+import com.qiniu.pili.droid.streaming.widget.AspectFrameLayout;
 import com.squareup.picasso.Picasso;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
@@ -41,10 +47,10 @@ import butterknife.Bind;
 
 public class PrapareStartActivity extends BaseActivity {
 
-    //    @Bind(R.id.iv_bg)
-//    ImageView ivBg;
     @Bind(R.id.surfaceView)
     SurfaceView surfaceView;
+    @Bind(R.id.cameraPreview_surfaceView)
+    SurfaceView cameraPreview_surfaceView;
     @Bind(R.id.iv_colse)
     ImageView ivColse;
     @Bind(R.id.iv_head)
@@ -151,7 +157,50 @@ public class PrapareStartActivity extends BaseActivity {
                 tvAddress.setText(address);
             }
         });
-        init();
+//        init();
+        initPrapare();
+    }
+
+    private StreamingProfile mProfile;
+    private CameraStreamingSetting mCameraStreamingSetting;
+    private MicrophoneStreamingSetting mMicrophoneStreamingSetting;
+    protected MediaStreamingManager mMediaStreamingManager;
+
+    private void initPrapare() {
+        mProfile = new StreamingProfile();
+        mCameraStreamingSetting = new CameraStreamingSetting();
+        mCameraStreamingSetting.setCameraId(mCameraId)
+                .setContinuousFocusModeEnabled(true)
+                .setRecordingHint(false)
+//                .setCameraSourceImproved(true)
+                .setResetTouchFocusDelayInMs(3000)
+//                .setFocusMode(CameraStreamingSetting.FOCUS_MODE_CONTINUOUS_PICTURE)
+                .setCameraPrvSizeLevel(CameraStreamingSetting.PREVIEW_SIZE_LEVEL.MEDIUM)
+                .setCameraPrvSizeRatio(CameraStreamingSetting.PREVIEW_SIZE_RATIO.RATIO_16_9)
+                .setBuiltInFaceBeautyEnabled(true)
+                .setFaceBeautySetting(new CameraStreamingSetting.
+                        FaceBeautySetting(1f, 1f, 0.8f))
+                .setVideoFilter(CameraStreamingSetting.VIDEO_FILTER_TYPE.VIDEO_FILTER_BEAUTY);
+        mMicrophoneStreamingSetting = new MicrophoneStreamingSetting();
+        mMicrophoneStreamingSetting.setBluetoothSCOEnabled(false);
+
+        AspectFrameLayout afl = (AspectFrameLayout) findViewById(R.id.cameraPreview_afl);
+        afl.setShowMode(AspectFrameLayout.SHOW_MODE.FULL);
+        com.lvshandian.lemeng.view.CameraPreviewFrameView cameraPreviewFrameView =
+                (com.lvshandian.lemeng.view.CameraPreviewFrameView) findViewById(R.id
+                        .cameraPreview_surfaceView);
+
+        mMediaStreamingManager = new MediaStreamingManager(this, afl, cameraPreviewFrameView,
+                AVCodecType.HW_VIDEO_WITH_HW_AUDIO_CODEC); // hw codec
+        mMediaStreamingManager.prepare(mCameraStreamingSetting, mMicrophoneStreamingSetting,
+                null, mProfile);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                mMediaStreamingManager.startStreaming();
+            }
+        }).start();
     }
 
     @Override
@@ -322,24 +371,27 @@ public class PrapareStartActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (mCamera == null) {
-            mCamera = getCamera(mCameraId);
-            if (mHolder != null && mCamera != null) {
-                startPreview(mCamera, mHolder);
-            }
-        }
+//        if (mCamera == null) {
+//            mCamera = getCamera(mCameraId);
+//            if (mHolder != null && mCamera != null) {
+//                startPreview(mCamera, mHolder);
+//            }
+//        }
+        mMediaStreamingManager.resume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        releaseCamera();
+//        releaseCamera();
+        mMediaStreamingManager.pause();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        releaseCamera();
+//        releaseCamera();
+        mMediaStreamingManager.destroy();
     }
 
     /**

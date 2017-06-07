@@ -288,6 +288,9 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
         tv_fs.setOnClickListener(this);
         tv_gz.setOnClickListener(this);
         setting.setOnClickListener(this);
+        iv_1.setOnClickListener(this);
+        iv_2.setOnClickListener(this);
+        iv_3.setOnClickListener(this);
 
         parent_scrollView.setOnTouchListener(new View.OnTouchListener() {
             @Override
