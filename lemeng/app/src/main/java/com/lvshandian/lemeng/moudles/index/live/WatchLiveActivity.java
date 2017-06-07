@@ -2212,7 +2212,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     super.onAnimationEnd(animation);
                     int result = playerPokerMap.getPoker3().getResult();
                     bullfightAudio.play(result);
-                    mediaPlayer.start();
                     iv_bull_amount3.setImageResource(bullfightPresenter.getBullSumId(result));
                     switchBullNum(true, 3);
                 }
@@ -2237,7 +2236,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     animator3.start();
                     int result = playerPokerMap.getPoker2().getResult();
                     bullfightAudio.play(result);
-                    mediaPlayer.start();
                     iv_bull_amount2.setImageResource(bullfightPresenter.getBullSumId(result));
                     switchBullNum(true, 2);
                 }
@@ -2262,7 +2260,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     animator2.start();
                     int result = playerPokerMap.getPoker1().getResult();
                     bullfightAudio.play(result);
-                    mediaPlayer.start();
                     iv_bull_amount1.setImageResource(bullfightPresenter.getBullSumId(result));
                     switchBullNum(true, 1);
                 }
@@ -2287,7 +2284,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     animator1.start();
                     int result = playerPokerMap.getPoker0().getResult();
                     bullfightAudio.play(result);
-                    mediaPlayer.start();
                     iv_bull_amount0.setImageResource(bullfightPresenter.getBullSumId(result));
                     switchBullNum(true, 0);
                 }
