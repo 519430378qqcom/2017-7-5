@@ -3,6 +3,7 @@ package com.netease.nim.uikit.session.module.input;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.text.Editable;
@@ -152,17 +153,16 @@ public class InputPanel implements IEmoticonSelectedListener, IAudioRecordCallba
 //        toggleButtonLayout.setVisibility(View.VISIBLE);
 //        toggle.setVisibility(View.VISIBLE);
         ivTanmu.setVisibility(View.VISIBLE);
-//        messageEditText.setHint("说些什么...");
         if (toggleState) {
-//            messageEditText.setHint("1乐票每条弹幕");
             ivTanmu.setImageResource(R.drawable.laba_lv);
             rlMessage.setBackgroundResource(R.drawable.message_yellow_bg);
         } else {
-//            messageEditText.setHint("说些什么...");
             ivTanmu.setImageResource(R.drawable.laba_bai);
             rlMessage.setBackgroundResource(R.drawable.message_black_bg);
         }
         messageEditText.setTextSize(15);
+        messageEditText.setTextColor(Color.parseColor("#ffffff"));
+
     }
 
     public boolean getToggleState() {

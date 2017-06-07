@@ -115,7 +115,7 @@ public class MainActivity extends BaseActivity implements
     @Bind(R.id.tab_new_indicator)
     ImageView tabNewIndicator;
 
-    private int index;
+    private int index = 0;
     /**
      * 选择相册的requestCode
      */
@@ -221,10 +221,14 @@ public class MainActivity extends BaseActivity implements
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         switch (v.getId()) {
             case R.id.ll_home:
+                if (index == 0)
+                    return;
                 index = 0;
                 ft.replace(R.id.realtabcontent, new IndexPagerFragment());
                 break;
             case R.id.ll_follow:
+                if (index == 1)
+                    return;
                 index = 1;
                 ft.replace(R.id.realtabcontent, new AttentionFragment());
                 break;
@@ -234,10 +238,14 @@ public class MainActivity extends BaseActivity implements
                 quickStartLivePop();
                 return;
             case R.id.ll_chat:
+                if (index == 3)
+                    return;
                 index = 3;
                 ft.replace(R.id.realtabcontent, new HomeChatFragment());
                 break;
             case R.id.ll_myself:
+                if (index == 4)
+                    return;
                 index = 4;
                 ft.replace(R.id.realtabcontent, new MyInformationFragment());
                 break;
