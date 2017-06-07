@@ -242,8 +242,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     ImageView rlLoading;
     @Bind(R.id.ruanjianpanW)
     ImageView ruanjianpanW;
-    @Bind(R.id.zhoubangW)
-    ImageView zhoubangW;
     @Bind(R.id.tv_lianmai)
     TextView tv_lianmai;
     @Bind(R.id.live_head)
@@ -727,7 +725,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     /**
      * 自己是否被禁言
      */
-    public static boolean isJinyan;
+    public boolean isJinyan;
 
     /**
      * ************************* 以下注释关于礼物 ********************************
@@ -1263,7 +1261,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         watchRoomJaizu.setOnClickListener(this);
         liveHeadImg.setOnClickListener(this);
         ruanjianpanW.setOnClickListener(this);
-        zhoubangW.setOnClickListener(this);
         tv_lianmai.setOnClickListener(this);
 
         rl_bullfight1.setOnClickListener(this);
@@ -1370,7 +1367,12 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                                  */
                                 if (isPlayerRoom) {
                                     if (rl_game_container.getVisibility() == View.VISIBLE) {
-                                        hidePlayView(gameType);
+                                        mHandler.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                hidePlayView(gameType);
+                                            }
+                                        }, 200);
                                     }
                                 }
 
@@ -1380,7 +1382,12 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                                  */
                                 if (isPlayerRoom) {
                                     if (rl_game_container.getVisibility() == View.GONE) {
-                                        showPlayView(gameType);
+                                        mHandler.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                showPlayView(gameType);
+                                            }
+                                        }, 200);
                                     }
 
                                 } else {
@@ -1542,7 +1549,11 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 break;
 
             case R.id.ruanjianpanW:
-                messageFragment.inputTypeOnClick();
+                if (isJinyan){
+                    showToast("您被禁言中,禁止发言");
+                }else {
+                    messageFragment.showEditText();
+                }
                 break;
             case R.id.iv_game://游戏
                 if (isPlayerRoom) {
@@ -1555,10 +1566,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 } else {
                     showToast("主播未开启游戏");
                 }
-                break;
-
-            case R.id.zhoubangW:
-                messageFragment.ivRankingOnClick();
                 break;
             /**
              * 关闭推流小窗口
@@ -2623,7 +2630,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         if (bullfightPresenter != null) {
             bullfightPresenter.detach();
         }
-        isJinyan = false;
         if (flPlug.getVisibility() == View.VISIBLE) {
             Map<String, Object> map1 = new HashMap<>();
             map1.put("watch_private_flag", "0");

@@ -1,14 +1,10 @@
 package com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.lvshandian.lemeng.MyApplication;
@@ -17,9 +13,6 @@ import com.lvshandian.lemeng.UrlBuilder;
 import com.lvshandian.lemeng.base.CustomStringCallBack;
 import com.lvshandian.lemeng.bean.AppUser;
 import com.lvshandian.lemeng.httprequest.HttpDatas;
-import com.lvshandian.lemeng.httprequest.RequestCode;
-import com.lvshandian.lemeng.moudles.index.live.WatchLiveActivity;
-import com.lvshandian.lemeng.moudles.mine.my.ContributionActivity;
 import com.lvshandian.lemeng.utils.JavaBeanMapUtils;
 import com.lvshandian.lemeng.utils.KeyBoardUtils;
 import com.lvshandian.lemeng.utils.LogUtils;
@@ -56,33 +49,16 @@ import java.util.Map;
  */
 public class ChatRoomMessageFragment extends TFragment implements ModuleProxy {
     private View rootView;
-    private ImageView inputType;
-    private ImageView ivRanking;
     private LinearLayout messageInputLayout;
     // modules
     protected ChatRoomInputPanel inputPanel;
     protected ChatRoomMsgListPanel messageListPanel;
     private String roomId;
-    boolean isZhubo;
     private LayoutInflater inflater;
     private EditText editText;
 
     protected View snackView;
     protected HttpDatas httpDatas;
-    private Handler myHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            Bundle data = msg.getData();
-            String json = data.getString(HttpDatas.info);
-            switch (msg.what) {
-                //加入直播间
-                case RequestCode.REQUEST_ROOM_JOIN:
-                    LogUtils.i(json.toString());
-                    break;
-            }
-        }
-    };
 
     /**
      * 点击其他地方隐藏软键盘输入框
@@ -121,7 +97,7 @@ public class ChatRoomMessageFragment extends TFragment implements ModuleProxy {
             }
             KeyBoardUtils.openKeybord(editText, MyApplication.mContext);
 //            inputType.setVisibility(View.INVISIBLE);
-        }else {
+        } else {
             hideEditText();
         }
     }
@@ -130,42 +106,11 @@ public class ChatRoomMessageFragment extends TFragment implements ModuleProxy {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.inflater = inflater;
         rootView = inflater.inflate(R.layout.chat_room_message_fragment, container, false);
-        inputType = (ImageView) rootView.findViewById(R.id.input_content);
-        ivRanking = (ImageView) rootView.findViewById(R.id.iv_ranking);
-
         editText = (EditText) rootView.findViewById(com.netease.nim.uikit.R.id.editTextMessage);
-
         messageInputLayout = (LinearLayout) rootView.findViewById(R.id.messageActivityBottomLayout);
-        inputType.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                inputTypeOnClick();
-            }
-        });
-        ivRanking.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ivRankingOnClick();
-            }
-        });
-
         snackView = getActivity().getWindow().getDecorView().getRootView();
         httpDatas = new HttpDatas(getActivity(), snackView);
-
         return rootView;
-    }
-
-    public void inputTypeOnClick() {
-        if (WatchLiveActivity.isJinyan) {
-            ToastUtils.showMessageDefault(getActivity(), "您被禁言中,禁止发言");
-        } else {
-            showEditText();
-        }
-    }
-
-    public void ivRankingOnClick() {
-        Intent intent = new Intent(getActivity(), ContributionActivity.class);
-        startActivity(intent);
     }
 
     @Override

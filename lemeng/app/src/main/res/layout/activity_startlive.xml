@@ -481,14 +481,6 @@
             </com.zhy.autolayout.AutoRelativeLayout>
         </com.zhy.autolayout.AutoLinearLayout>
 
-        <com.lvshandian.lemeng.view.BarrageView
-            android:id="@+id/barrageview"
-            android:layout_width="match_parent"
-            android:layout_height="250px"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="550px" />
-
-
         <com.zhy.autolayout.AutoRelativeLayout
             android:id="@+id/rl_live_id"
             android:layout_width="match_parent"
@@ -588,6 +580,13 @@
             android:layout_width="match_parent"
             android:layout_alignParentBottom="true"
             android:layout_height="500px"/>
+
+        <com.lvshandian.lemeng.view.BarrageView
+            android:id="@+id/barrageview"
+            android:layout_width="match_parent"
+            android:layout_height="250px"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="550px" />
 
         <com.lvshandian.lemeng.moudles.index.live.gift.GiftFrameLayout
             android:id="@+id/gift_layout1"

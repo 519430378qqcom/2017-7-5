@@ -1093,7 +1093,7 @@ public class StartLiveActivity extends BaseActivity implements
             case R.id.iv_bullfight:
                 break;
             case R.id.ruanjianpan:
-                messageFragment.inputTypeOnClick();
+                messageFragment.showEditText();
                 break;
 
             case R.id.room_lianmai://邀请连麦按钮
@@ -3211,11 +3211,21 @@ public class StartLiveActivity extends BaseActivity implements
                              */
                             if (gameIsStart) {
                                 if (rl_game_container.getVisibility() == View.VISIBLE) {
-                                    hidePlayView(gameType);
+                                    mHandler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            hidePlayView(gameType);
+                                        }
+                                    }, 200);
                                 }
                             } else {
                                 if (ll_game.getVisibility() == View.VISIBLE) {
-                                    ll_game.setVisibility(View.GONE);
+                                    mHandler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            ll_game.setVisibility(View.GONE);
+                                        }
+                                    }, 200);
                                 }
                             }
 
@@ -3225,11 +3235,21 @@ public class StartLiveActivity extends BaseActivity implements
                              */
                             if (gameIsStart) {
                                 if (rl_game_container.getVisibility() == View.GONE) {
-                                    showPlayView(gameType);
+                                    mHandler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            showPlayView(gameType);
+                                        }
+                                    }, 200);
                                 }
                             } else {
                                 if (ll_game.getVisibility() == View.GONE) {
-                                    ll_game.setVisibility(View.VISIBLE);
+                                    mHandler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            ll_game.setVisibility(View.VISIBLE);
+                                        }
+                                    }, 200);
                                 }
                             }
                         }

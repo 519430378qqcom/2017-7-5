@@ -327,15 +327,6 @@
                         android:layout_marginLeft="19px"
                         android:background="@mipmap/mg_room_btn_xinxi" />
 
-                    <ImageView
-                        android:id="@+id/zhoubangW"
-                        android:layout_width="80px"
-                        android:layout_height="80px"
-                        android:layout_marginLeft="19px"
-                        android:layout_toRightOf="@id/ruanjianpanW"
-                        android:background="@mipmap/mg_room_btn_ranking"
-                        android:visibility="gone" />
-
                     <TextView
                         android:id="@+id/tv_lianmai"
                         android:layout_width="wrap_content"
@@ -426,38 +417,30 @@
                 </com.zhy.autolayout.AutoRelativeLayout>
             </com.zhy.autolayout.AutoLinearLayout>
 
-
-            <com.lvshandian.lemeng.view.BarrageView
-                android:id="@+id/barrageview"
-                android:layout_width="match_parent"
-                android:layout_height="250px"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="550px" />
-
-            <RelativeLayout
+            <com.zhy.autolayout.AutoRelativeLayout
                 android:id="@+id/iv_show_send_gift_lian"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginBottom="50dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginBottom="100px"
+                android:layout_marginRight="30px"
                 android:background="@drawable/background_show_send_gift"
                 android:visibility="gone">
 
-                <LinearLayout
+                <com.zhy.autolayout.AutoLinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
+                    android:layout_centerInParent="true"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
                         android:text="连击"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/text_size_12" />
+                        android:textSize="24px" />
 
                     <TextView
                         android:id="@+id/btn_timer"
@@ -466,10 +449,10 @@
                         android:layout_gravity="center_horizontal"
                         android:text="3s"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/text_size_12" />
-                </LinearLayout>
+                        android:textSize="24px" />
+                </com.zhy.autolayout.AutoLinearLayout>
 
-            </RelativeLayout>
+            </com.zhy.autolayout.AutoRelativeLayout>
 
             <ImageView
                 android:id="@+id/iv_trend"
@@ -497,6 +480,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="500px"
                 android:layout_alignParentBottom="true" />
+
+            <com.lvshandian.lemeng.view.BarrageView
+                android:id="@+id/barrageview"
+                android:layout_width="match_parent"
+                android:layout_height="250px"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="550px" />
 
             <com.lvshandian.lemeng.moudles.index.live.gift.GiftFrameLayout
                 android:id="@+id/gift_layout1"
