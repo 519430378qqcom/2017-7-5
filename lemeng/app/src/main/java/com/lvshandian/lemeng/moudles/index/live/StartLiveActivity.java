@@ -19,6 +19,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.hardware.Camera;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
@@ -27,6 +28,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.PowerManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
@@ -96,6 +98,7 @@ import com.lvshandian.lemeng.moudles.index.adapter.LianmaiListAadapter;
 import com.lvshandian.lemeng.moudles.index.live.bullfight.BankerBalance;
 import com.lvshandian.lemeng.moudles.index.live.bullfight.BankerInfo;
 import com.lvshandian.lemeng.moudles.index.live.bullfight.BetResult;
+import com.lvshandian.lemeng.moudles.index.live.bullfight.BullfightAudio;
 import com.lvshandian.lemeng.moudles.index.live.bullfight.BullfightInterface;
 import com.lvshandian.lemeng.moudles.index.live.bullfight.BullfightPresenter;
 import com.lvshandian.lemeng.moudles.index.live.bullfight.GameResult;
@@ -532,6 +535,8 @@ public class StartLiveActivity extends BaseActivity implements
     ImageView iv_gray_bg2;
     @Bind(R.id.iv_gray_bg3)
     ImageView iv_gray_bg3;
+    @Bind(R.id.iv_bullcoin)
+    ImageView iv_bullcoin;
     /**
      * 标识直播间当前开启的游戏类型；1（彩票）;2（斗牛）
      */
@@ -566,7 +571,10 @@ public class StartLiveActivity extends BaseActivity implements
      * 投注位置
      */
     private int betPosition;
-
+    /**
+     * 斗牛音效
+     */
+    private BullfightAudio bullfightAudio;
     //<end------------斗牛游戏部分-------------->
     private int tzNumber = 10;
     private int jbNumber = 1;
@@ -1090,8 +1098,6 @@ public class StartLiveActivity extends BaseActivity implements
             case R.id.iv_xy:
                 showXYGame();
                 break;
-            case R.id.iv_bullfight:
-                break;
             case R.id.ruanjianpan:
                 messageFragment.showEditText();
                 break;
@@ -1315,7 +1321,7 @@ public class StartLiveActivity extends BaseActivity implements
                 tv_bullfight_totlanum3.setText(total3 + "");
                 break;
         }
-        RelativeLayout.LayoutParams layoutParams = new AutoRelativeLayout.LayoutParams(iv_100.getWidth(), iv_100.getHeight());
+        RelativeLayout.LayoutParams layoutParams = new AutoRelativeLayout.LayoutParams(iv_10.getWidth(), iv_10.getHeight());
         layoutParams.leftMargin = (int) (Math.random() * (rl_bullfight_betting_container1.getWidth() - layoutParams.width));
         layoutParams.topMargin = (int) (Math.random() * (rl_bullfight_betting_container1.getHeight() - layoutParams.height));
         if (bettingPoolView.getChildCount() >= BETTING_POOL_VIEWS_CAPACITY) {
@@ -1323,31 +1329,68 @@ public class StartLiveActivity extends BaseActivity implements
         }
         bettingPoolView.addView(imageView, layoutParams);
         if (isAnimation) {
-//            ImageView iv_start = iv_10;
-//            switch (betSum){
-//                case 10:
-//                    iv_start = iv_10;
-//                    break;
-//                case 50:
-//                    iv_start = iv_50;
-//                    break;
-//                case 100:
-//                    iv_start = iv_100;
-//                    break;
-//                case 1000:
-//                    iv_start = iv_1000;
-//                    break;
-//                case 10000:
-//                    iv_start = iv_10000;
-//                    break;
-//            }
-//            LinearLayout parent = (LinearLayout) iv_start.getParent().getParent().getParent();
-//            int[] startLocation = new int[2];
-//            int[] endLocation = new int[2];
-//            int[] parentLocation = new int[2];
-//            iv_start.getLocationOnScreen(startLocation);
-//            imageView.getLocationOnScreen(endLocation);
-//            parent.getLocationOnScreen(parentLocation);
+            imageView.setVisibility(View.GONE);
+            ImageView iv_start = iv_10;
+            int imgId = R.mipmap.ic_bullfight_10_light;
+            switch (betSum){
+                case 10:
+                    iv_start = iv_10;
+                    imgId = R.mipmap.ic_bullfight_10_light;
+                    break;
+                case 50:
+                    iv_start = iv_50;
+                    imgId = R.mipmap.ic_bullfight_50_light;
+                    break;
+                case 100:
+                    iv_start = iv_100;
+                    imgId = R.mipmap.ic_bullfight_100_light;
+                    break;
+                case 1000:
+                    iv_start = iv_1000;
+                    imgId = R.mipmap.ic_bullfight_1000_light;
+                    break;
+                case 10000:
+                    iv_start = iv_10000;
+                    imgId = R.mipmap.ic_bullfight_10000_light;
+                    break;
+            }
+            final RelativeLayout parent = (RelativeLayout) iv_start.getParent().getParent().getParent();
+            int[] startLocation = new int[2];
+            int[] endLocation = new int[2];
+            int[] parentLocation = new int[2];
+            iv_start.getLocationOnScreen(startLocation);
+            imageView.getLocationOnScreen(endLocation);
+            endLocation[0] = endLocation[0] + layoutParams.leftMargin;
+            endLocation[1] = endLocation[1] + layoutParams.topMargin;
+            parent.getLocationOnScreen(parentLocation);
+            final ImageView imageView1 = new ImageView(this);
+            imageView1.setImageResource(imgId);
+            RelativeLayout.LayoutParams layoutParams1 = new AutoRelativeLayout.LayoutParams(iv_10.getWidth(), iv_10.getHeight());
+            layoutParams1.leftMargin = startLocation[0] - parentLocation[0];
+            layoutParams1.topMargin = startLocation[1] - parentLocation[1];
+            final int dx = startLocation[0] - endLocation[0];
+            final int dy = startLocation[1] - endLocation[1];
+            parent.addView(imageView1,layoutParams1);
+            ValueAnimator valueAnimator = ValueAnimator.ofFloat(1);
+            valueAnimator.setTarget(imageView1);
+            valueAnimator.setDuration(500);
+            valueAnimator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    parent.removeView(imageView1);
+                    imageView.setVisibility(View.VISIBLE);
+                }
+            });
+            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    float animatedValue = (float) animation.getAnimatedValue();
+                    imageView1.setTranslationX(-dx*animatedValue);
+                    imageView1.setTranslationY(-dy*animatedValue);
+                }
+            });
+            valueAnimator.start();
         }
     }
 
@@ -1357,6 +1400,10 @@ public class StartLiveActivity extends BaseActivity implements
      * @param betSum 投注数
      */
     private void checkBettingBalance(int betSum) {
+        if(betSum > myGoldCoin) {
+            ToastUtils.showMessageDefault(this,getResources().getString(R.string.balance_not_enough));
+            return;
+        }
         betBalance = betSum;
         if (valueAnimator != null) {
             valueAnimator.cancel();
@@ -1509,9 +1556,23 @@ public class StartLiveActivity extends BaseActivity implements
                     bullfightResultShow(getResources().getString(R.string.the_result), getResources().getString(R.string.the_user) +
                             mine, getResources().getString(R.string.banker) + banker);
                     if (mount > 0) {
-                        MediaPlayer.create(getApplicationContext(), R.raw.bull_win).start();
+                        bullfightAudio.play(bullfightAudio.WIN);
+                        bullfightAudio.play(bullfightAudio.FALLING_COIN);
+                        fallingCoinAnimation(true,0);
+                        fallingCoinAnimation(true,100);
+                        fallingCoinAnimation(true,100);
+                        fallingCoinAnimation(true,100);
+                        fallingCoinAnimation(true,100);
+                        fallingCoinAnimation(true,100);
                     } else if (mount < 0) {
-                        MediaPlayer.create(getApplicationContext(), R.raw.bull_lose).start();
+                        bullfightAudio.play(bullfightAudio.FAIL);
+                        bullfightAudio.play(bullfightAudio.FALLING_COIN);
+                        fallingCoinAnimation(false,0);
+                        fallingCoinAnimation(false,100);
+                        fallingCoinAnimation(false,100);
+                        fallingCoinAnimation(false,100);
+                        fallingCoinAnimation(false,100);
+                        fallingCoinAnimation(false,100);
                     }
                     myGoldCoin += gameResult.getObj().getAmount();
                     tv_bullfight_lepiao.setText(CountUtils.getCount(myGoldCoin));
@@ -1521,6 +1582,59 @@ public class StartLiveActivity extends BaseActivity implements
                     break;
             }
         }
+    }
+
+    /**
+     * 金币掉落的动画
+     * @param isFalling true为掉落动画false反动画
+     * @param delay 动画延迟执行
+     */
+    private void fallingCoinAnimation(final boolean isFalling,long delay) {
+        final RelativeLayout parent = (RelativeLayout) iv_bullcoin.getParent().getParent();
+        int[] startLocation = new int[2];
+        int[] endLocation = new int[2];
+        int[] parentLocation = new int[2];
+        ll_bullfight_result.getLocationOnScreen(startLocation);
+        iv_bullcoin.getLocationOnScreen(endLocation);
+        parent.getLocationOnScreen(parentLocation);
+        startLocation[0] = startLocation[0] + ll_bullfight_result.getWidth()/2 - iv_bullcoin.getWidth()/2;
+        startLocation[1] = startLocation[1] + ll_bullfight_result.getHeight()/2 - iv_bullcoin.getHeight()/2;
+        final int dx = startLocation[0] - endLocation[0];
+        final int dy = startLocation[1] - endLocation[1];
+        final ImageView imageView = new ImageView(this);
+        imageView.setImageResource(R.mipmap.niu_jinbi);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(iv_bullcoin.getWidth(), iv_bullcoin.getHeight());
+        if(isFalling) {
+            layoutParams.leftMargin = startLocation[0] - parentLocation[0];
+            layoutParams.topMargin = startLocation[1] - parentLocation[1];
+        }else {
+            layoutParams.leftMargin = endLocation[0] - parentLocation[0];
+            layoutParams.topMargin = endLocation[1] - parentLocation[1];
+        }
+        parent.addView(imageView,layoutParams);
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(1);
+        valueAnimator.setTarget(imageView);
+        valueAnimator.setDuration(500);
+        valueAnimator.setStartDelay(delay);
+        valueAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                parent.removeView(imageView);
+            }
+        });
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float animatedValue = (float) animation.getAnimatedValue();
+                if(isFalling) {
+                    animatedValue = - animatedValue;
+                }
+                imageView.setTranslationX(animatedValue*dx);
+                imageView.setTranslationY(animatedValue*dy);
+            }
+        });
+        valueAnimator.start();
     }
 
     @Override
@@ -1552,9 +1666,8 @@ public class StartLiveActivity extends BaseActivity implements
     @Override
     public void getTimeAndNPer(TimeAndNper timeAndNper) {
         if (timeAndNper.isSuccess()) {
-            Log.e("TAG", room_Id);
             setBetPoolEnable(true);
-            ll_bullfight_result.setVisibility(View.GONE);
+            ll_bullfight_result.setVisibility(View.INVISIBLE);
             rl_timing.setVisibility(View.VISIBLE);
             rl_bullfight_betting_container1.removeAllViews();
             rl_bullfight_betting_container2.removeAllViews();
@@ -1580,12 +1693,18 @@ public class StartLiveActivity extends BaseActivity implements
             myHandler.sendEmptyMessage(BULLFIGHT_TIME);
             switchAllPoker(false, -1);
             sendPokerAnimator();
+            if(bullfightAudio == null) {
+                bullfightAudio = new BullfightAudio(getApplicationContext());
+            }
+            if(betBalance<10) {
+                checkBettingBalance(10);
+            }
         } else {
         }
     }
 
-    ;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void betSuccess(BetResult betResult, int amount, int type) {
         int code = betResult.getCode();
@@ -1594,7 +1713,7 @@ public class StartLiveActivity extends BaseActivity implements
                 Toast.makeText(StartLiveActivity.this, "投注失败", Toast.LENGTH_SHORT).show();
                 break;
             case 1://为成功
-                MediaPlayer.create(getApplicationContext(), R.raw.bet_coin).start();
+                bullfightAudio.play(bullfightAudio.BET);
                 myGoldCoin -= amount;
                 tv_bullfight_lepiao.setText(CountUtils.getCount(myGoldCoin));
                 updateBettingEnable(myGoldCoin);
@@ -1671,8 +1790,7 @@ public class StartLiveActivity extends BaseActivity implements
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
-                    MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), bullfightPresenter.getAudioId(result3));
-                    mediaPlayer.start();
+                    bullfightAudio.play(result3);
                     iv_bull_amount3.setImageResource(bullfightPresenter.getBullSumId(result3));
                     switchBullNum(true, 3);
                     if (result >= result3) {
@@ -1698,8 +1816,7 @@ public class StartLiveActivity extends BaseActivity implements
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
                     animator3.start();
-                    MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), bullfightPresenter.getAudioId(result2));
-                    mediaPlayer.start();
+                    bullfightAudio.play(result2);
                     iv_bull_amount2.setImageResource(bullfightPresenter.getBullSumId(result2));
                     switchBullNum(true, 2);
                     if (result >= result2) {
@@ -1725,8 +1842,7 @@ public class StartLiveActivity extends BaseActivity implements
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
                     animator2.start();
-                    MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), bullfightPresenter.getAudioId(result1));
-                    mediaPlayer.start();
+                    bullfightAudio.play(result1);
                     iv_bull_amount1.setImageResource(bullfightPresenter.getBullSumId(result1));
                     switchBullNum(true, 1);
                     if (result >= result1) {
@@ -1752,8 +1868,7 @@ public class StartLiveActivity extends BaseActivity implements
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
                     animator1.start();
-                    MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), bullfightPresenter.getAudioId(result));
-                    mediaPlayer.start();
+                    bullfightAudio.play(result);
                     iv_bull_amount0.setImageResource(bullfightPresenter.getBullSumId(result));
                     switchBullNum(true, 0);
                 }
@@ -1768,70 +1883,70 @@ public class StartLiveActivity extends BaseActivity implements
      */
     private void updateBettingEnable(long balance) {
         if (balance >= 10000) {
-            iv_10.setEnabled(true);
+            iv_10.setTag(true);
             iv_10.setImageResource(R.mipmap.ic_bullfight_10_light);
-            iv_50.setEnabled(true);
+            iv_50.setTag(true);
             iv_50.setImageResource(R.mipmap.ic_bullfight_50_light);
-            iv_100.setEnabled(true);
+            iv_100.setTag(true);
             iv_100.setImageResource(R.mipmap.ic_bullfight_100_light);
-            iv_1000.setEnabled(true);
+            iv_1000.setTag(true);
             iv_1000.setImageResource(R.mipmap.ic_bullfight_1000_light);
-            iv_10000.setEnabled(true);
+            iv_10000.setTag(true);
             iv_10000.setImageResource(R.mipmap.ic_bullfight_10000_light);
         } else if (balance >= 1000) {
-            iv_10.setEnabled(true);
+            iv_10.setTag(true);
             iv_10.setImageResource(R.mipmap.ic_bullfight_10_light);
-            iv_50.setEnabled(true);
+            iv_50.setTag(true);
             iv_50.setImageResource(R.mipmap.ic_bullfight_50_light);
-            iv_100.setEnabled(true);
+            iv_100.setTag(true);
             iv_100.setImageResource(R.mipmap.ic_bullfight_100_light);
-            iv_1000.setEnabled(true);
+            iv_1000.setTag(true);
             iv_1000.setImageResource(R.mipmap.ic_bullfight_1000_light);
-            iv_10000.setEnabled(false);
+            iv_10000.setTag(false);
             iv_10000.setImageResource(R.mipmap.ic_bullfight_10000_dark);
         } else if (balance >= 100) {
-            iv_10.setEnabled(true);
+            iv_10.setTag(true);
             iv_10.setImageResource(R.mipmap.ic_bullfight_10_light);
-            iv_50.setEnabled(true);
+            iv_50.setTag(true);
             iv_50.setImageResource(R.mipmap.ic_bullfight_50_light);
-            iv_100.setEnabled(true);
+            iv_100.setTag(true);
             iv_100.setImageResource(R.mipmap.ic_bullfight_100_light);
-            iv_1000.setEnabled(false);
+            iv_1000.setTag(false);
             iv_1000.setImageResource(R.mipmap.ic_bullfight_1000_dark);
-            iv_10000.setEnabled(false);
+            iv_10000.setTag(false);
             iv_10000.setImageResource(R.mipmap.ic_bullfight_10000_dark);
         } else if (balance >= 50) {
-            iv_10.setEnabled(true);
+            iv_10.setTag(true);
             iv_10.setImageResource(R.mipmap.ic_bullfight_10_light);
-            iv_50.setEnabled(true);
+            iv_50.setTag(true);
             iv_50.setImageResource(R.mipmap.ic_bullfight_50_light);
-            iv_100.setEnabled(false);
+            iv_100.setTag(false);
             iv_100.setImageResource(R.mipmap.ic_bullfight_100_dark);
-            iv_1000.setEnabled(false);
+            iv_1000.setTag(false);
             iv_1000.setImageResource(R.mipmap.ic_bullfight_1000_dark);
-            iv_10000.setEnabled(false);
+            iv_10000.setTag(false);
             iv_10000.setImageResource(R.mipmap.ic_bullfight_10000_dark);
         } else if (balance >= 10) {
-            iv_10.setEnabled(true);
+            iv_10.setTag(true);
             iv_10.setImageResource(R.mipmap.ic_bullfight_10_light);
-            iv_50.setEnabled(false);
+            iv_50.setTag(false);
             iv_50.setImageResource(R.mipmap.ic_bullfight_50_dark);
-            iv_100.setEnabled(false);
+            iv_100.setTag(false);
             iv_100.setImageResource(R.mipmap.ic_bullfight_100_dark);
-            iv_1000.setEnabled(false);
+            iv_1000.setTag(false);
             iv_1000.setImageResource(R.mipmap.ic_bullfight_1000_dark);
-            iv_10000.setEnabled(false);
+            iv_10000.setTag(false);
             iv_10000.setImageResource(R.mipmap.ic_bullfight_10000_dark);
         } else {
-            iv_10.setEnabled(false);
+            iv_10.setTag(false);
             iv_10.setImageResource(R.mipmap.ic_bullfight_10_dark);
-            iv_50.setEnabled(false);
+            iv_50.setTag(false);
             iv_50.setImageResource(R.mipmap.ic_bullfight_50_dark);
-            iv_100.setEnabled(false);
+            iv_100.setTag(false);
             iv_100.setImageResource(R.mipmap.ic_bullfight_100_dark);
-            iv_1000.setEnabled(false);
+            iv_1000.setTag(false);
             iv_1000.setImageResource(R.mipmap.ic_bullfight_1000_dark);
-            iv_10000.setEnabled(false);
+            iv_10000.setTag(false);
             iv_10000.setImageResource(R.mipmap.ic_bullfight_10000_dark);
         }
     }
@@ -2345,7 +2460,9 @@ public class StartLiveActivity extends BaseActivity implements
         lrcHandler.removeCallbacks(runnable);
         Intent intent = new Intent(mContext, VoiceService.class);
         stopService(intent);
-
+        if(bullfightAudio != null) {
+            bullfightAudio.release();
+        }
 //        myHandler.removeMessages(10000);
 //        myHandler.removeCallbacks(timenNumber);
         myHandler.removeCallbacksAndMessages(null);
