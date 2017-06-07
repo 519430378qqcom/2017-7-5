@@ -60,7 +60,7 @@
             android:layout_marginLeft="10px"
             android:textSize="@dimen/sp_14"
             android:textColor="@color/yellow"
-            android:text="666.23万"/>
+            android:text="888.88万"/>
     </com.zhy.autolayout.AutoLinearLayout>
     <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/rl_poker_banker_container"

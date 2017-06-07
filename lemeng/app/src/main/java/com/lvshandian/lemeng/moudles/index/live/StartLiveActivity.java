@@ -2555,10 +2555,10 @@ public class StartLiveActivity extends BaseActivity implements
                 BarrageDateBean barrageDateBean = new BarrageDateBean();
                 barrageDateBean.setContent(message.getContent());
                 if (message.getChatRoomMessageExtension() != null) {
-                    barrageDateBean.setNickName("@" + message.getChatRoomMessageExtension()
+                    barrageDateBean.setNickName(message.getChatRoomMessageExtension()
                             .getSenderNick());
                 } else {
-                    barrageDateBean.setNickName("@" + appUser.getNickName());
+                    barrageDateBean.setNickName(appUser.getNickName());
                 }
                 barrageDateBean.setPicUrl(url);
                 barrageview.addSentence(barrageDateBean);

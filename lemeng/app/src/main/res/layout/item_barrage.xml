@@ -1,42 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/background_gift_item"
+    android:background="@color/transparent"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingBottom="0px"
+    android:paddingBottom="5px"
     android:paddingRight="20px"
-    android:paddingTop="0px">
+    android:paddingTop="5px">
 
-    <com.lvshandian.lemeng.widget.AvatarView
-        android:id="@+id/barrageview_item_img"
-        android:layout_width="70px"
-        android:layout_height="70px" />
 
     <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20px"
-        android:layout_marginRight="20px"
+        android:layout_marginLeft="40px"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/barrageview_item_nick"
-            android:layout_width="wrap_content"
-            android:layout_height="0px"
-            android:layout_weight="1"
-            android:textColor="@color/white"
-            android:textSize="13sp" />
+            android:layout_width="match_parent"
+            android:layout_height="35px"
+            android:layout_marginLeft="20px"
+            android:gravity="center"
+            android:paddingLeft="10px"
+            android:paddingRight="25px"
+            android:text="德天"
+            android:textColor="#838383"
+            android:textSize="24px" />
 
         <TextView
             android:id="@+id/barrageview_item_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="0px"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="35px"
+            android:background="@drawable/corner_danmu"
+            android:gravity="center"
             android:maxLines="1"
+            android:paddingLeft="40px"
+            android:paddingRight="20px"
+            android:text="你好吗"
             android:textColor="@color/white"
-            android:textSize="13sp" />
+            android:textSize="24px" />
 
     </com.zhy.autolayout.AutoLinearLayout>
-</com.zhy.autolayout.AutoLinearLayout>
+
+    <com.lvshandian.lemeng.widget.AvatarView
+        android:id="@+id/barrageview_item_img"
+        android:layout_width="70px"
+        android:layout_height="70px"
+        android:src="@mipmap/head_default" />
+</com.zhy.autolayout.AutoRelativeLayout>

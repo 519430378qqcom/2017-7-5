@@ -96,6 +96,7 @@ public class ChatRoomMessageFragment extends TFragment implements ModuleProxy {
                 editText.setHint("说些什么...");
             }
             KeyBoardUtils.openKeybord(editText, MyApplication.mContext);
+
 //            inputType.setVisibility(View.INVISIBLE);
         } else {
             hideEditText();

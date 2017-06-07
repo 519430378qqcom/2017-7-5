@@ -4,31 +4,29 @@ package com.lvshandian.lemeng.view;
  * Created by sll on 2016/12/10.
  */
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.base.BarrageDateBean;
 import com.lvshandian.lemeng.widget.AvatarView;
 
-import java.util.ArrayList;
-
-import android.animation.Animator;
-import android.animation.ObjectAnimator;
-import android.content.Context;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.os.Bundle;
-import android.util.AttributeSet;
-
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * 弹幕View
@@ -57,7 +55,7 @@ public class BarrageView extends FrameLayout {
         @Override
         public void handleMessage(Message msg) {
             BarrageDateBean barrageDate = (BarrageDateBean) msg.getData().getSerializable("BarrageDateBean");
-            final LinearLayout layout = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.item_barrage, null);
+            final RelativeLayout layout = (RelativeLayout) LayoutInflater.from(getContext()).inflate(R.layout.item_barrage, null);
             layout.setLayoutParams(tvParams);
             //随机获得Y值
             layout.setY(getRamdomY());
