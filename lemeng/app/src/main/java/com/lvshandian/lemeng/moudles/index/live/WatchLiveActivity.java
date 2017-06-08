@@ -4919,7 +4919,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 if (type == 1) {
                     url = "http://60.205.114.36:8080/lucky/trend.html";
                 } else if (type == 2) {
-                    url = "http://60.205.114.36:8080/gameRecord/cowRecord.html?roomId=" + liveListBean.getRoomId() + "&userId=" + appUser.getId();
+                    url = "http://60.205.114.36:8080/gameRecord/luck28.html?roomId=" + liveListBean.getRoomId() + "&userId=" + appUser.getId();
                 } else {
                     url = "http://60.205.114.36:8080/protocol/rule.html";
                 }
@@ -4928,7 +4928,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 if (type == 1) {
                     url = "http://60.205.114.36:8080/cow/cowResult.html?roomId=" + liveListBean.getRoomId();
                 } else if (type == 2) {
-                    url = "http://60.205.114.36:8080/gameRecord/luck28.html?roomId=" + liveListBean.getRoomId() + "&userId=" + appUser.getId();
+                    url = "http://60.205.114.36:8080/gameRecord/cowRecord.html?roomId=" + liveListBean.getRoomId() + "&userId=" + appUser.getId();
                 }
                 break;
         }

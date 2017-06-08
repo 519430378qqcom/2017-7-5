@@ -4954,7 +4954,7 @@ public class StartLiveActivity extends BaseActivity implements
                 if (type == 1) {
                     url = "http://60.205.114.36:8080/lucky/trend.html";
                 } else if (type == 2) {
-                    url = "http://60.205.114.36:8080/gameRecord/cowRecord.html?roomId=" + room_Id + "&userId=" + appUser.getId();
+                    url = "http://60.205.114.36:8080/gameRecord/luck28.html?roomId=" + room_Id + "&userId=" + appUser.getId();
                 } else {
                     url = "http://47.88.229.22:8080/protocol/rule.html";
                 }
@@ -4963,7 +4963,7 @@ public class StartLiveActivity extends BaseActivity implements
                 if (type == 1) {
                     url = "http://60.205.114.36:8080/cow/cowResult.html?roomId=" + room_Id;
                 } else if (type == 2) {
-                    url = "http://60.205.114.36:8080/gameRecord/luck28.html?roomId=" + room_Id + "&userId=" + appUser.getId();
+                    url = "http://60.205.114.36:8080/gameRecord/cowRecord.html?roomId=" + room_Id + "&userId=" + appUser.getId();
                 }
                 break;
         }
