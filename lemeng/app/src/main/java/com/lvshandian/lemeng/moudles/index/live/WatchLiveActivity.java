@@ -1431,13 +1431,13 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_trend: //走势
-                showTrendPop(1);
+                showHistoryDialog(1);
                 break;
             case R.id.iv_history: //记录
-                showTrendPop(2);
+                showHistoryDialog(2);
                 break;
             case R.id.tv_rule: //规则
-                showTrendPop(3);
+                showHistoryDialog(3);
                 break;
 
             case R.id.small_add:  //最小投注加
@@ -4909,10 +4909,10 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * 显示走势
      * type1:走势图   2:历史记录   3:规则
      */
-    private void showTrendPop(int type) {
+    private void showHistoryDialog(int type) {
         String url = "";
-        switch (liveListBean.getRooms().getRoomsType()) {
-            case "1":
+        switch (gameType) {
+            case 1:
                 if (type == 1) {
                     url = "http://60.205.114.36:8080/lucky/trend.html";
                 } else if (type == 2) {
@@ -4921,7 +4921,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     url = "http://60.205.114.36:8080/protocol/rule.html";
                 }
                 break;
-            case "2":
+            case 2:
                 if (type == 1) {
                     url = "http://60.205.114.36:8080/cow/cowResult.html?roomId=" + liveListBean.getRoomId();
                 } else if (type == 2) {

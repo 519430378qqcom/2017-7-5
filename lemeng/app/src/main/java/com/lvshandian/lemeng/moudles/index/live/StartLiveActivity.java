@@ -2473,7 +2473,6 @@ public class StartLiveActivity extends BaseActivity implements
                 .into(familyMembers, this);
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
