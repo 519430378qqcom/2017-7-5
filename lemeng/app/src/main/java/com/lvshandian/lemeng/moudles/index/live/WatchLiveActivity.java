@@ -2552,6 +2552,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         if (rl_game_container.getVisibility() == View.GONE) {
             //游戏内容视图
             rl_game_container.setVisibility(View.VISIBLE);
+            gameHeight = rl_game_container.getHeight();
             //游戏左上角视图
             rl_game_info.setVisibility(View.VISIBLE);
             //走势图标
@@ -2571,6 +2572,10 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     break;
             }
         } else {
+            //游戏左上角视图
+            rl_game_info.setVisibility(View.VISIBLE);
+            //走势图标
+            ll_trendOrHistory.setVisibility(View.VISIBLE);
             ValueAnimator animator = ValueAnimator.ofFloat(1);
             animator.setTarget(rl_game_container);
             animator.setDuration(500);
@@ -2619,7 +2624,10 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     break;
             }
         } else {
-            gameHeight = rl_game_container.getHeight();
+            //游戏左上角视图
+            rl_game_info.setVisibility(View.GONE);
+            //走势图标
+            ll_trendOrHistory.setVisibility(View.GONE);
             ValueAnimator animator = ValueAnimator.ofFloat(1);
             animator.setTarget(rl_game_container);
             animator.setDuration(500);
