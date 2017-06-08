@@ -2122,7 +2122,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             if (bullfightAudio == null) {
                 bullfightAudio = new BullfightAudio(getApplicationContext());
             }
-            if (betBalance < 10) {
+            if (betBalance < 10 && myGoldCoin >=10) {
                 checkBettingBalance(10);
             }
         } else {

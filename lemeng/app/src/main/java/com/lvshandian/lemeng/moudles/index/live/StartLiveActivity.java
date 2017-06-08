@@ -569,7 +569,7 @@ public class StartLiveActivity extends BaseActivity implements
 
     private BullfightPresenter bullfightPresenter;
     /**
-     * 投注金额
+     * 选中的投注金额
      */
     private int betBalance;
     /**
@@ -1706,7 +1706,7 @@ public class StartLiveActivity extends BaseActivity implements
             if (bullfightAudio == null) {
                 bullfightAudio = new BullfightAudio(getApplicationContext());
             }
-            if (betBalance < 10) {
+            if (betBalance < 10 && myGoldCoin >=10) {
                 checkBettingBalance(10);
             }
         } else {
