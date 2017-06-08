@@ -296,13 +296,37 @@
 
             </com.zhy.autolayout.AutoRelativeLayout>
 
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:id="@+id/ll_trendOrHistory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/iv_history"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/history_img" />
+
+                <ImageView
+                    android:id="@+id/iv_trend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10px"
+                    android:src="@mipmap/trend_img" />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+
             <com.zhy.autolayout.AutoLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:orientation="vertical">
-
 
                 <fragment
                     android:id="@+id/watch_room_message_fragment"
@@ -467,29 +491,6 @@
 
                 <include layout="@layout/item_game_bullfight_banker" />
             </com.zhy.autolayout.AutoRelativeLayout>
-
-            <com.zhy.autolayout.AutoLinearLayout
-                android:id="@+id/ll_trendOrHistory"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <ImageView
-                    android:id="@+id/iv_history"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/history_img" />
-
-                <ImageView
-                    android:id="@+id/iv_trend"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10px"
-                    android:src="@mipmap/trend_img" />
-            </com.zhy.autolayout.AutoLinearLayout>
 
             <FrameLayout
                 android:id="@+id/watch_room_message_fragment_chat"
