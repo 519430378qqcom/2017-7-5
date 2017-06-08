@@ -2570,10 +2570,26 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     break;
             }
         } else {
-            //游戏左上角视图
-            rl_game_info.setVisibility(View.VISIBLE);
-            //走势图标
-            ll_trendOrHistory.setVisibility(View.VISIBLE);
+            ObjectAnimator alpha = ObjectAnimator.ofFloat(rl_game_info, "alpha", 0, 1);
+            alpha.setDuration(500);
+            alpha.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    super.onAnimationStart(animation);
+                    rl_game_info.setVisibility(View.VISIBLE);
+                }
+            });
+            alpha.start();
+            ObjectAnimator alpha1 = ObjectAnimator.ofFloat(ll_trendOrHistory, "alpha", 0, 1);
+            alpha1.setDuration(500);
+            alpha1.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    super.onAnimationStart(animation);
+                    ll_trendOrHistory.setVisibility(View.VISIBLE);
+                }
+            });
+            alpha1.start();
             ValueAnimator animator = ValueAnimator.ofFloat(1);
             animator.setTarget(rl_game_container);
             animator.setDuration(500);
@@ -2625,10 +2641,26 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             if (gameHeight == 0) {
                 gameHeight = rl_game_container.getHeight();
             }
-            //游戏左上角视图
-            rl_game_info.setVisibility(View.GONE);
-            //走势图标
-            ll_trendOrHistory.setVisibility(View.GONE);
+            ObjectAnimator alpha = ObjectAnimator.ofFloat(rl_game_info, "alpha", 1, 0);
+            alpha.setDuration(500);
+            alpha.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    rl_game_info.setVisibility(View.GONE);
+                }
+            });
+            alpha.start();
+            ObjectAnimator alpha1 = ObjectAnimator.ofFloat(ll_trendOrHistory, "alpha", 1, 0);
+            alpha1.setDuration(500);
+            alpha1.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    ll_trendOrHistory.setVisibility(View.GONE);
+                }
+            });
+            alpha1.start();
             ValueAnimator animator = ValueAnimator.ofFloat(1);
             animator.setTarget(rl_game_container);
             animator.setDuration(500);
