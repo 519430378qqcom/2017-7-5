@@ -1379,7 +1379,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                                  * 下滑动
                                  */
                                 if (isPlayerRoom) {
-                                    hidePlayView(gameType);
+                                    if (!gameHide) {
+                                        hidePlayView(gameType);
+                                    }
                                 }
 
                             } else if (movepY < 0 && ((Math.abs(movepY)) > 150) && !isHindRcView) {
@@ -1387,8 +1389,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                                  * 上滑动
                                  */
                                 if (isPlayerRoom) {
-                                    showPlayView(gameType);
-
+                                    if (gameHide) {
+                                        showPlayView(gameType);
+                                    }
                                 } else {
                                     showToast("主播未开启游戏");
                                 }

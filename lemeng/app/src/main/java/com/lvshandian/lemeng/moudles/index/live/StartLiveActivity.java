@@ -3411,7 +3411,9 @@ public class StartLiveActivity extends BaseActivity implements
                              * 下滑动
                              */
                             if (gameIsStart) {
-                                hidePlayView(gameType);
+                                if (!gameHide){
+                                    hidePlayView(gameType);
+                                }
                             } else {
                                 if (ll_game.getVisibility() == View.VISIBLE) {
                                     ll_game.setVisibility(View.GONE);
@@ -3423,7 +3425,9 @@ public class StartLiveActivity extends BaseActivity implements
                              * 上滑动
                              */
                             if (gameIsStart) {
-                                showPlayView(gameType);
+                                if (gameHide){
+                                    showPlayView(gameType);
+                                }
                             } else {
                                 if (ll_game.getVisibility() == View.GONE) {
                                     ll_game.setVisibility(View.VISIBLE);
