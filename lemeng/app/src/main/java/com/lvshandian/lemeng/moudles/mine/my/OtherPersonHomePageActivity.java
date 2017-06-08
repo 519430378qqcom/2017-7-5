@@ -16,7 +16,6 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -36,6 +35,7 @@ import com.lvshandian.lemeng.moudles.mine.fragment.adapter.VideoAdapter;
 import com.lvshandian.lemeng.utils.GrademipmapUtils;
 import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
+import com.lvshandian.lemeng.view.CustomPopWindow;
 import com.lvshandian.lemeng.view.ExpandGridView;
 import com.lvshandian.lemeng.view.HeadZoomScrollView;
 import com.lvshandian.lemeng.wangyiyunxin.session.SessionHelper;
@@ -126,11 +126,11 @@ public class OtherPersonHomePageActivity extends BaseActivity {
     /**
      * 右上角弹框
      */
-    private PopupWindow rightPopup;
+    private CustomPopWindow rightPopup;
     /**
      * 举报弹框
      */
-    private PopupWindow reportPopup;
+    private CustomPopWindow reportPopup;
     /**
      * 标记是否被拉黑
      */
@@ -515,7 +515,7 @@ public class OtherPersonHomePageActivity extends BaseActivity {
      * 右上角举报和加入黑名单弹框
      */
     public void getRightPopup() {
-        rightPopup = new PopupWindow(this);
+        rightPopup = new CustomPopWindow(this);
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.report_blacklist_popup, null);
         rightPopup.setContentView(view);
@@ -525,12 +525,8 @@ public class OtherPersonHomePageActivity extends BaseActivity {
         rightPopup.setBackgroundDrawable(new BitmapDrawable());
         rightPopup.setOutsideTouchable(true);
 
-        backgroundAlpha(0.5f);
-
         rightPopup.setAnimationStyle(R.style.mypopwindow_anim_style);
         rightPopup.showAtLocation(rlFocus, Gravity.BOTTOM, 0, 0);
-        rightPopup.update();
-        rightPopup.setOnDismissListener(new PopOnDismissListner());
 
         Button btn_add_blacklist = (Button) view.findViewById(R.id.btn_add_blacklist);
         Button btn_report = (Button) view.findViewById(R.id.btn_report);
@@ -546,7 +542,7 @@ public class OtherPersonHomePageActivity extends BaseActivity {
      * 举报弹框
      */
     public void getReportPopup() {
-        reportPopup = new PopupWindow(this);
+        reportPopup = new CustomPopWindow(this);
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.report_popupwindow, null);
         reportPopup.setContentView(view);
@@ -556,12 +552,8 @@ public class OtherPersonHomePageActivity extends BaseActivity {
         reportPopup.setBackgroundDrawable(new BitmapDrawable());
         reportPopup.setOutsideTouchable(true);
 
-        backgroundAlpha(0.5f);
-
         reportPopup.setAnimationStyle(R.style.mypopwindow_anim_style);
         reportPopup.showAtLocation(rlFocus, Gravity.BOTTOM, 0, 0);
-        reportPopup.update();
-        reportPopup.setOnDismissListener(new PopOnDismissListner());
 
         Button btn_dssq = (Button) view.findViewById(R.id.btn_dssq);
         Button btn_ljgg = (Button) view.findViewById(R.id.btn_ljgg);
@@ -575,21 +567,6 @@ public class OtherPersonHomePageActivity extends BaseActivity {
         btn_qzpq.setOnClickListener(this);
         btn_other.setOnClickListener(this);
         btn_cancel.setOnClickListener(this);
-    }
-
-    private void backgroundAlpha(float alpha) {
-        WindowManager.LayoutParams params = this.getWindow().getAttributes();
-        params.alpha = alpha;
-        this.getWindow().setAttributes(params);
-    }
-
-
-    private class PopOnDismissListner implements PopupWindow.OnDismissListener {
-
-        @Override
-        public void onDismiss() {
-            backgroundAlpha(1f);
-        }
     }
 
     @Override

@@ -130,6 +130,7 @@ import com.lvshandian.lemeng.utils.ThreadManager;
 import com.lvshandian.lemeng.utils.ToastUtils;
 import com.lvshandian.lemeng.view.BarrageView;
 import com.lvshandian.lemeng.view.CameraLivePreviewFrameView;
+import com.lvshandian.lemeng.view.CustomPopWindow;
 import com.lvshandian.lemeng.view.LoadingDialog;
 import com.lvshandian.lemeng.view.RotateLayout;
 import com.lvshandian.lemeng.view.RoundDialog;
@@ -369,6 +370,10 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     ImageView doubleAdd;
     @Bind(R.id.iv_touzhu)
     ImageView ivTouzhu;
+    @Bind(R.id.ll_trendOrHistory)
+    LinearLayout ll_trendOrHistory;
+    @Bind(R.id.iv_history)
+    ImageView iv_history;
     @Bind(R.id.iv_trend)
     ImageView iv_trend;
     @Bind(R.id.all_lepiao)
@@ -760,7 +765,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     /**
      * 显示礼物的PopupWindow
      */
-    private PopupWindow popupWindow;
+    private CustomPopWindow popupWindow;
 
     /**
      * 获取到礼物面板的集合
@@ -1232,6 +1237,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     @Override
     protected void initListener() {
         iv_trend.setOnClickListener(this);
+        iv_history.setOnClickListener(this);
         tv_rule.setOnClickListener(this);
         iv_game.setOnClickListener(this);
         smallAdd.setOnClickListener(this);
@@ -1425,10 +1431,13 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_trend: //走势
-                showTrendPop();
+                showTrendPop(1);
+                break;
+            case R.id.iv_history: //记录
+                showTrendPop(2);
                 break;
             case R.id.tv_rule: //规则
-                getRulePopup();
+                showTrendPop(3);
                 break;
 
             case R.id.small_add:  //最小投注加
@@ -1974,19 +1983,19 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         bullfightAudio.play(bullfightAudio.FALLING_COIN);
                         fallingCoinAnimation(true, 0);
                         fallingCoinAnimation(true, 100);
-                        fallingCoinAnimation(true, 100);
-                        fallingCoinAnimation(true, 100);
-                        fallingCoinAnimation(true, 100);
-                        fallingCoinAnimation(true, 100);
+                        fallingCoinAnimation(true, 200);
+                        fallingCoinAnimation(true, 300);
+                        fallingCoinAnimation(true, 400);
+                        fallingCoinAnimation(true, 500);
                     } else if (mount < 0) {
                         bullfightAudio.play(bullfightAudio.FAIL);
                         bullfightAudio.play(bullfightAudio.FALLING_COIN);
                         fallingCoinAnimation(false, 0);
                         fallingCoinAnimation(false, 100);
-                        fallingCoinAnimation(false, 100);
-                        fallingCoinAnimation(false, 100);
-                        fallingCoinAnimation(false, 100);
-                        fallingCoinAnimation(false, 100);
+                        fallingCoinAnimation(false, 200);
+                        fallingCoinAnimation(false, 300);
+                        fallingCoinAnimation(false, 400);
+                        fallingCoinAnimation(false, 500);
                     }
                     myGoldCoin += gameResult.getObj().getAmount();
                     tv_bullfight_lepiao.setText(CountUtils.getCount(myGoldCoin));
@@ -2546,21 +2555,19 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             //游戏左上角视图
             rl_game_info.setVisibility(View.VISIBLE);
             //走势图标
-            iv_trend.setVisibility(View.VISIBLE);
+            ll_trendOrHistory.setVisibility(View.VISIBLE);
             switch (gameType) {
                 case 1://彩票
                     rl_kp.setVisibility(View.VISIBLE);
                     rl_bullfight_banker.setVisibility(View.GONE);
                     live_game.setVisibility(View.VISIBLE);
                     live_game_bullfight.setVisibility(View.GONE);
-                    iv_trend.setImageResource(R.mipmap.trend_img);
                     break;
                 case 2://斗牛
                     rl_bullfight_banker.setVisibility(View.VISIBLE);
                     rl_kp.setVisibility(View.GONE);
                     live_game_bullfight.setVisibility(View.VISIBLE);
                     live_game.setVisibility(View.GONE);
-                    iv_trend.setImageResource(R.mipmap.ic_bullfight_record);
                     break;
             }
         } else {
@@ -2600,7 +2607,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             //游戏左上角视图
             rl_game_info.setVisibility(View.GONE);
             //走势图标
-            iv_trend.setVisibility(View.GONE);
+            ll_trendOrHistory.setVisibility(View.GONE);
             switch (gameType) {
                 case 1://彩票
                     rl_kp.setVisibility(View.GONE);
@@ -3279,7 +3286,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             }
         }, 200);
 
-        popupWindow = new PopupWindow(this);
+        popupWindow = new CustomPopWindow(this);
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.view_show_viewpager, null);
         popupWindow.setContentView(view);
@@ -3288,10 +3295,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         popupWindow.setFocusable(true);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
         popupWindow.setOutsideTouchable(true);
-        backgroundAlpha(0.5f);
         popupWindow.setAnimationStyle(R.style.mypopwindow_anim_style);
         popupWindow.showAtLocation(rlvListLiveAudiences, Gravity.BOTTOM, 0, 0);
-        popupWindow.update();
+
         popupWindow.setOnDismissListener(new PopOnDismissListner());
 
         mUserCoin = (TextView) view.findViewById(R.id.tv_show_select_user_coin);
@@ -4167,13 +4173,13 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     }
 
 
-    private PopupWindow lianmai_request_pop;
+    private CustomPopWindow lianmai_request_pop;
 
     /**
      * 展示游客详情
      */
     public void shouLianmaiPop() {
-        lianmai_request_pop = new PopupWindow(this);
+        lianmai_request_pop = new CustomPopWindow(this);
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.lianmai_request_pop, null);
         lianmai_request_pop.setContentView(view);
@@ -4182,11 +4188,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         lianmai_request_pop.setFocusable(true);
         lianmai_request_pop.setBackgroundDrawable(new BitmapDrawable());
         lianmai_request_pop.setOutsideTouchable(true);
-        backgroundAlpha(0.5f);
         lianmai_request_pop.setAnimationStyle(R.style.mypopwindow_anim_style);
         lianmai_request_pop.showAtLocation(doubleAdd, Gravity.BOTTOM, 0, 0);
-        lianmai_request_pop.update();
-        lianmai_request_pop.setOnDismissListener(new RulePopOnDismissListner());
 
         AvatarView civ_image = (AvatarView) view.findViewById(R.id.civ_image);
         TextView tv_name = (TextView) view.findViewById(R.id.tv_name);
@@ -4333,7 +4336,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * @param customdateBean
      */
     public void showDialogForCallOther(final CustomdateBean customdateBean) {
-        final PopupWindow otherPop = new PopupWindow(this);
+        final CustomPopWindow otherPop = new CustomPopWindow(this);
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.dialog_video_room, null);
         otherPop.setContentView(view);
@@ -4342,11 +4345,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         otherPop.setFocusable(true);
         otherPop.setBackgroundDrawable(new BitmapDrawable());
         otherPop.setOutsideTouchable(true);
-        backgroundAlpha(0.5f);
         otherPop.setAnimationStyle(R.style.mypopwindow_anim_style);
         otherPop.showAtLocation(doubleAdd, Gravity.BOTTOM, 0, 0);
-        otherPop.update();
-        otherPop.setOnDismissListener(new RulePopOnDismissListner());
 
         AvatarView civ_image = (AvatarView) view.findViewById(R.id.civ_image);
         LinearLayout buttom_layout = (LinearLayout) view.findViewById(R.id.buttom_layout);
@@ -4865,72 +4865,27 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
 
     /**
-     * 规则pop
-     */
-    public void getRulePopup() {
-        View view = getLayoutInflater().inflate(R.layout.pop_rule_web, null);
-        dialogForSelect.setCanceledOnTouchOutside(true);
-        dialogForSelect.setContentView(view);
-        dialogForSelect.show();
-        ImageView colse_trend = (ImageView) view.findViewById(R.id.colse_trend);
-        colse_trend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialogForSelect.dismiss();
-            }
-        });
-
-        final WebView webView = (WebView) view.findViewById(R.id.webView);
-        final ProgressBar iv_include_loading = (ProgressBar) view.findViewById(R.id.iv_include_loading);
-        WebSettings webSettings = webView.getSettings();
-        webSetting(webSettings);
-        webView.loadUrl("http://47.88.229.22:8080/protocol/rule.html");
-        webView.setWebChromeClient(new WebChromeClient());
-        webView.setWebViewClient(new WebViewClient() {
-
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            }
-
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                iv_include_loading.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                iv_include_loading.setVisibility(View.GONE);
-            }
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                LogUtil.e("shouldOverrideUrlLoading", "url = " + url);
-                return super.shouldOverrideUrlLoading(view, url);
-            }
-        });
-    }
-
-    /**
-     * RulePopupWindow Dismiss监听
-     */
-    private class RulePopOnDismissListner implements PopupWindow.OnDismissListener {
-        @Override
-        public void onDismiss() {
-            backgroundAlpha(1f);
-        }
-    }
-
-    /**
      * 显示走势
+     * type1:走势图   2:历史记录   3:规则
      */
-    private void showTrendPop() {
+    private void showTrendPop(int type) {
         String url = "";
         switch (liveListBean.getRooms().getRoomsType()) {
             case "1":
-                url = "http://47.88.229.22:8080/lucky/trend.html";
+                if (type == 1) {
+                    url = "http://60.205.114.36:8080/lucky/trend.html";
+                } else if (type == 2) {
+                    url = "http://60.205.114.36:8080/gameRecord/cowRecord.html?roomId=" + liveListBean.getRoomId() + "&userId=" + appUser.getId();
+                } else {
+                    url = "http://60.205.114.36:8080/protocol/rule.html";
+                }
                 break;
             case "2":
-                url = "http://60.205.114.36:8080/cow/cowResult.html?roomId=" + String.valueOf(liveListBean.getRoomId());
+                if (type == 1) {
+                    url = "http://60.205.114.36:8080/cow/cowResult.html?roomId=" + liveListBean.getRoomId();
+                } else if (type == 2) {
+                    url = "http://60.205.114.36:8080/gameRecord/luck28.html?roomId=" + liveListBean.getRoomId() + "&userId=" + appUser.getId();
+                }
                 break;
         }
         View view = getLayoutInflater().inflate(R.layout.pop_trend, null);
@@ -4938,6 +4893,15 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         dialogForSelect.setContentView(view);
         dialogForSelect.show();
         ImageView colse_trend = (ImageView) view.findViewById(R.id.colse_trend);
+
+        ImageView iv_frame_bg = (ImageView) view.findViewById(R.id.iv_frame_bg);
+        if (type == 1) {
+            iv_frame_bg.setImageResource(R.mipmap.trend_frame);
+        } else if (type == 2) {
+            iv_frame_bg.setImageResource(R.mipmap.history_frame);
+        } else {
+            iv_frame_bg.setImageResource(R.mipmap.rule_frame);
+        }
         colse_trend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -4987,7 +4951,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
 
     private void showTouZhuPop(String selectStatus, int jbNumber, int tzNumber) {
-        final PopupWindow rulePop = new PopupWindow(this);
+        final CustomPopWindow rulePop = new CustomPopWindow(this);
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.pop_tou_zhu, null);
         rulePop.setContentView(view);
@@ -4996,12 +4960,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         rulePop.setFocusable(true);
         rulePop.setBackgroundDrawable(new BitmapDrawable());
         rulePop.setOutsideTouchable(true);
-
-        backgroundAlpha(0.5f);
-
         rulePop.showAtLocation(doubleAdd, Gravity.CENTER, 0, 0);
-        rulePop.update();
-        rulePop.setOnDismissListener(new RulePopOnDismissListner());
         TextView tv_tzqh = (TextView) view.findViewById(R.id.tv_tzqh);//投注期号
         TextView tv_ds = (TextView) view.findViewById(R.id.tv_ds);  //大小单双
         TextView tv_xzjf = (TextView) view.findViewById(R.id.tv_xzjf);  //下注积分

@@ -285,15 +285,6 @@
             android:layout_marginTop="100dp"
             android:visibility="gone" />
 
-        <ImageView
-            android:id="@+id/iv_trend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/trend_img"
-            android:visibility="gone" />
-
         <com.zhy.autolayout.AutoFrameLayout
             android:id="@+id/lm_fm"
             android:layout_width="240px"
@@ -440,33 +431,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="300px"
                 android:layout_centerVertical="true"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/iv_xy"
                     android:layout_width="200px"
                     android:layout_height="160px"
-                    android:layout_weight="1"
                     android:layout_marginLeft="10px"
+                    android:layout_weight="1"
                     android:src="@mipmap/yx" />
 
                 <ImageView
                     android:id="@+id/iv_bullfight"
                     android:layout_width="200px"
                     android:layout_height="160px"
-                    android:layout_weight="1"
                     android:layout_marginLeft="10px"
+                    android:layout_weight="1"
                     android:src="@mipmap/icon_bullfight" />
+
                 <ImageView
                     android:layout_width="200px"
                     android:layout_height="160px"
-                    android:visibility="invisible"
-                    android:layout_weight="1"
                     android:layout_marginLeft="10px"
                     android:layout_marginRight="10px"
-                    android:src="@mipmap/icon_shuiguoji"/>
+                    android:layout_weight="1"
+                    android:src="@mipmap/icon_shuiguoji"
+                    android:visibility="invisible" />
             </com.zhy.autolayout.AutoLinearLayout>
 
             <com.zhy.autolayout.AutoRelativeLayout
@@ -576,11 +568,34 @@
             android:src="@mipmap/jiazu"
             android:visibility="gone" />
 
+        <com.zhy.autolayout.AutoLinearLayout
+            android:id="@+id/ll_trendOrHistory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_history"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/history_img" />
+
+            <ImageView
+                android:id="@+id/iv_trend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10px"
+                android:src="@mipmap/trend_img" />
+        </com.zhy.autolayout.AutoLinearLayout>
+
         <FrameLayout
             android:id="@+id/watch_room_message_fragment_chat"
             android:layout_width="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_height="500px"/>
+            android:layout_height="500px"
+            android:layout_alignParentBottom="true" />
 
         <com.lvshandian.lemeng.view.BarrageView
             android:id="@+id/barrageview"
@@ -593,8 +608,8 @@
             android:id="@+id/gift_layout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="620px"
             android:layout_alignParentBottom="true"
+            android:layout_marginBottom="620px"
             android:orientation="vertical"
             android:visibility="gone" />
 
@@ -603,8 +618,8 @@
             android:id="@+id/gift_layout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="520px"
             android:layout_alignParentBottom="true"
+            android:layout_marginBottom="520px"
             android:orientation="vertical"
             android:visibility="gone" />
 

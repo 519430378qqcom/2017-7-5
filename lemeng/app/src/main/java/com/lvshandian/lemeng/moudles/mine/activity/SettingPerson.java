@@ -21,7 +21,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -41,6 +40,7 @@ import com.lvshandian.lemeng.utils.AliYunImageUtils;
 import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.utils.UpdateImagerUtils;
+import com.lvshandian.lemeng.view.CustomPopWindow;
 import com.lvshandian.lemeng.widget.AvatarView;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallbackWrapper;
@@ -120,7 +120,7 @@ public class SettingPerson extends BaseActivity {
     /**
      * 选择性别的popupWindow
      */
-    private PopupWindow popupWindow;
+    private CustomPopWindow popupWindow;
     protected static Uri tempUri;
     private Bitmap photo = null;
     protected static final int TAKE_PICTURE = 110;
@@ -351,7 +351,7 @@ public class SettingPerson extends BaseActivity {
      * 选择性别的PopupWindow
      */
     public void getPopupWindow() {
-        popupWindow = new PopupWindow(this);
+        popupWindow = new CustomPopWindow(this);
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.custom_popupwindow, null);
         popupWindow.setContentView(view);
@@ -361,12 +361,8 @@ public class SettingPerson extends BaseActivity {
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
         popupWindow.setOutsideTouchable(true);
 
-        backgroundAlpha(0.5f);
-
         popupWindow.setAnimationStyle(R.style.mypopwindow_anim_style);
         popupWindow.showAtLocation(tvSex, Gravity.BOTTOM, 0, 0);
-        popupWindow.update();
-        popupWindow.setOnDismissListener(new PopOnDismissListner());
 
         Button btn_man = (Button) view.findViewById(R.id.btn_man);
         Button btn_womanto = (Button) view.findViewById(R.id.btn_womanto);
@@ -376,27 +372,6 @@ public class SettingPerson extends BaseActivity {
         btn_cancel.setOnClickListener(this);
     }
 
-    /**
-     * PopupWindow弹出后,activity改变透明度
-     *
-     * @param alpha
-     */
-    private void backgroundAlpha(float alpha) {
-        WindowManager.LayoutParams params = this.getWindow().getAttributes();
-        params.alpha = alpha;
-        this.getWindow().setAttributes(params);
-    }
-
-    /**
-     * PopupWindow dismiss监听
-     */
-    private class PopOnDismissListner implements PopupWindow.OnDismissListener {
-
-        @Override
-        public void onDismiss() {
-            backgroundAlpha(1f);
-        }
-    }
 
     /**
      * 选择拍照或者图库选择

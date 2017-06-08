@@ -133,6 +133,7 @@ import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.utils.ThreadManager;
 import com.lvshandian.lemeng.utils.ToastUtils;
 import com.lvshandian.lemeng.view.BarrageView;
+import com.lvshandian.lemeng.view.CustomPopWindow;
 import com.lvshandian.lemeng.view.RotateLayout;
 import com.lvshandian.lemeng.view.RoundDialog;
 import com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragment;
@@ -383,6 +384,10 @@ public class StartLiveActivity extends BaseActivity implements
     ImageView ivTouzhu;
     @Bind(R.id.tv_rule)
     ImageView tv_rule;
+    @Bind(R.id.ll_trendOrHistory)
+    LinearLayout ll_trendOrHistory;
+    @Bind(R.id.iv_history)
+    ImageView iv_history;
     @Bind(R.id.iv_trend)
     ImageView iv_trend;
     @Bind(R.id.all_lepiao)
@@ -904,6 +909,7 @@ public class StartLiveActivity extends BaseActivity implements
     @Override
     protected void initListener() {
         iv_trend.setOnClickListener(this);
+        iv_history.setOnClickListener(this);
         tv_rule.setOnClickListener(this);
         smallAdd.setOnClickListener(this);
         smallSubtract.setOnClickListener(this);
@@ -979,11 +985,14 @@ public class StartLiveActivity extends BaseActivity implements
 
         switch (v.getId()) {
             case R.id.iv_trend: //走势
-                showTrendPop();
+                showHistoryDialog(1);
+                break;
+            case R.id.iv_history: //记录
+                showHistoryDialog(2);
                 break;
 
             case R.id.tv_rule: //规则
-                getRulePopup();
+                showHistoryDialog(3);
                 break;
             case R.id.small_add:  //最小投注加
                 if (tzNumber == 160) {  //达到最大的投注
@@ -1560,19 +1569,19 @@ public class StartLiveActivity extends BaseActivity implements
                         bullfightAudio.play(bullfightAudio.FALLING_COIN);
                         fallingCoinAnimation(true, 0);
                         fallingCoinAnimation(true, 100);
-                        fallingCoinAnimation(true, 100);
-                        fallingCoinAnimation(true, 100);
-                        fallingCoinAnimation(true, 100);
-                        fallingCoinAnimation(true, 100);
+                        fallingCoinAnimation(true, 200);
+                        fallingCoinAnimation(true, 300);
+                        fallingCoinAnimation(true, 400);
+                        fallingCoinAnimation(true, 500);
                     } else if (mount < 0) {
                         bullfightAudio.play(bullfightAudio.FAIL);
                         bullfightAudio.play(bullfightAudio.FALLING_COIN);
                         fallingCoinAnimation(false, 0);
                         fallingCoinAnimation(false, 100);
-                        fallingCoinAnimation(false, 100);
-                        fallingCoinAnimation(false, 100);
-                        fallingCoinAnimation(false, 100);
-                        fallingCoinAnimation(false, 100);
+                        fallingCoinAnimation(false, 200);
+                        fallingCoinAnimation(false, 300);
+                        fallingCoinAnimation(false, 400);
+                        fallingCoinAnimation(false, 500);
                     }
                     myGoldCoin += gameResult.getObj().getAmount();
                     tv_bullfight_lepiao.setText(CountUtils.getCount(myGoldCoin));
@@ -2134,21 +2143,19 @@ public class StartLiveActivity extends BaseActivity implements
             //游戏左上角视图
             rl_game_info.setVisibility(View.VISIBLE);
             //走势图标
-            iv_trend.setVisibility(View.VISIBLE);
+            ll_trendOrHistory.setVisibility(View.VISIBLE);
             switch (gameType) {
                 case 1://彩票
                     rl_kp.setVisibility(View.VISIBLE);
                     rl_bullfight_banker.setVisibility(View.GONE);
                     live_game.setVisibility(View.VISIBLE);
                     live_game_bullfight.setVisibility(View.GONE);
-                    iv_trend.setImageResource(R.mipmap.trend_img);
                     break;
                 case 2://斗牛
                     rl_bullfight_banker.setVisibility(View.VISIBLE);
                     rl_kp.setVisibility(View.GONE);
                     live_game_bullfight.setVisibility(View.VISIBLE);
                     live_game.setVisibility(View.GONE);
-                    iv_trend.setImageResource(R.mipmap.ic_bullfight_record);
                     break;
             }
         } else {
@@ -2188,7 +2195,7 @@ public class StartLiveActivity extends BaseActivity implements
             //游戏左上角视图
             rl_game_info.setVisibility(View.GONE);
             //走势图标
-            iv_trend.setVisibility(View.GONE);
+            ll_trendOrHistory.setVisibility(View.GONE);
             switch (gameType) {
                 case 1://彩票
                     rl_kp.setVisibility(View.GONE);
@@ -4166,7 +4173,7 @@ public class StartLiveActivity extends BaseActivity implements
         funsePage = 1;
         funseIsRefresh = true;
         inviteFunse = null;
-        final PopupWindow lianmai_search = new PopupWindow(this);
+        final CustomPopWindow lianmai_search = new CustomPopWindow(this);
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.lianmai_search, null);
         lianmai_search.setContentView(view);
@@ -4175,11 +4182,8 @@ public class StartLiveActivity extends BaseActivity implements
         lianmai_search.setFocusable(true);
         lianmai_search.setBackgroundDrawable(new BitmapDrawable());
         lianmai_search.setOutsideTouchable(true);
-        backgroundAlpha(0.5f);
         lianmai_search.setAnimationStyle(R.style.mypopwindow_anim_style);
         lianmai_search.showAtLocation(doubleAdd, Gravity.BOTTOM, 0, 0);
-        lianmai_search.update();
-        lianmai_search.setOnDismissListener(new RulePopOnDismissListner());
 
         final EditText et_search_input = (EditText) view.findViewById(R.id.et_search_input);
         ImageView iv_search = (ImageView) view.findViewById(R.id.iv_search);
@@ -4357,7 +4361,7 @@ public class StartLiveActivity extends BaseActivity implements
      * @param customdateBean
      */
     public void showDialogForCallOther(final CustomdateBean customdateBean) {
-        final PopupWindow otherPop = new PopupWindow(this);
+        final CustomPopWindow otherPop = new CustomPopWindow(this);
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.dialog_video_room, null);
         otherPop.setContentView(view);
@@ -4366,11 +4370,8 @@ public class StartLiveActivity extends BaseActivity implements
         otherPop.setFocusable(true);
         otherPop.setBackgroundDrawable(new BitmapDrawable());
         otherPop.setOutsideTouchable(true);
-        backgroundAlpha(0.5f);
         otherPop.setAnimationStyle(R.style.mypopwindow_anim_style);
         otherPop.showAtLocation(doubleAdd, Gravity.BOTTOM, 0, 0);
-        otherPop.update();
-        otherPop.setOnDismissListener(new RulePopOnDismissListner());
 
         AvatarView civ_image = (AvatarView) view.findViewById(R.id.civ_image);
         LinearLayout buttom_layout = (LinearLayout) view.findViewById(R.id.buttom_layout);
@@ -4896,73 +4897,29 @@ public class StartLiveActivity extends BaseActivity implements
         }
     };
 
-    /**
-     * 规则pop
-     */
-    public void getRulePopup() {
-        View view = getLayoutInflater().inflate(R.layout.pop_rule_web, null);
-        dialogForSelect.setCanceledOnTouchOutside(true);
-        dialogForSelect.setContentView(view);
-        dialogForSelect.show();
-        ImageView colse_trend = (ImageView) view.findViewById(R.id.colse_trend);
-        colse_trend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialogForSelect.dismiss();
-            }
-        });
-
-        final WebView webView = (WebView) view.findViewById(R.id.webView);
-        final ProgressBar iv_include_loading = (ProgressBar) view.findViewById(R.id.iv_include_loading);
-        WebSettings webSettings = webView.getSettings();
-        webSetting(webSettings);
-        webView.loadUrl("http://47.88.229.22:8080/protocol/rule.html");
-        webView.setWebChromeClient(new WebChromeClient());
-        webView.setWebViewClient(new WebViewClient() {
-
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            }
-
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                iv_include_loading.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                iv_include_loading.setVisibility(View.GONE);
-            }
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                LogUtil.e("shouldOverrideUrlLoading", "url = " + url);
-                return super.shouldOverrideUrlLoading(view, url);
-            }
-        });
-    }
-
-    /**
-     * RulePopupWindow Dismiss监听
-     */
-    private class RulePopOnDismissListner implements PopupWindow.OnDismissListener {
-        @Override
-        public void onDismiss() {
-            backgroundAlpha(1f);
-        }
-    }
 
     /**
      * 显示走势
+     * type1:走势图   2:历史记录   3:规则
      */
-    private void showTrendPop() {
+    private void showHistoryDialog(int type) {
         String url = "";
         switch (gameType) {
             case 1:
-                url = "http://47.88.229.22:8080/lucky/trend.html";
+                if (type == 1) {
+                    url = "http://60.205.114.36:8080/lucky/trend.html";
+                } else if (type == 2) {
+                    url = "http://60.205.114.36:8080/gameRecord/cowRecord.html?roomId=" + room_Id + "&userId=" + appUser.getId();
+                } else {
+                    url = "http://47.88.229.22:8080/protocol/rule.html";
+                }
                 break;
             case 2:
-                url = "http://60.205.114.36:8080/cow/cowResult.html?roomId=" + room_Id;
+                if (type == 1) {
+                    url = "http://60.205.114.36:8080/cow/cowResult.html?roomId=" + room_Id;
+                } else if (type == 2) {
+                    url = "http://60.205.114.36:8080/gameRecord/luck28.html?roomId=" + room_Id + "&userId=" + appUser.getId();
+                }
                 break;
         }
 
@@ -4971,6 +4928,15 @@ public class StartLiveActivity extends BaseActivity implements
         dialogForSelect.setContentView(view);
         dialogForSelect.show();
         ImageView colse_trend = (ImageView) view.findViewById(R.id.colse_trend);
+        ImageView iv_frame_bg = (ImageView) view.findViewById(R.id.iv_frame_bg);
+        if (type == 1) {
+            iv_frame_bg.setImageResource(R.mipmap.trend_frame);
+        } else if (type == 2) {
+            iv_frame_bg.setImageResource(R.mipmap.history_frame);
+        } else {
+            iv_frame_bg.setImageResource(R.mipmap.rule_frame);
+        }
+
         colse_trend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -5022,7 +4988,7 @@ public class StartLiveActivity extends BaseActivity implements
 
 
     private void showTouZhuPop(String selectStatus, int jbNumber, int tzNumber) {
-        final PopupWindow rulePop = new PopupWindow(this);
+        final CustomPopWindow rulePop = new CustomPopWindow(this);
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.pop_tou_zhu, null);
         rulePop.setContentView(view);
@@ -5032,11 +4998,7 @@ public class StartLiveActivity extends BaseActivity implements
         rulePop.setBackgroundDrawable(new BitmapDrawable());
         rulePop.setOutsideTouchable(true);
 
-        backgroundAlpha(0.5f);
-
         rulePop.showAtLocation(doubleAdd, Gravity.CENTER, 0, 0);
-        rulePop.update();
-        rulePop.setOnDismissListener(new RulePopOnDismissListner());
         TextView tv_tzqh = (TextView) view.findViewById(R.id.tv_tzqh);//投注期号
         TextView tv_ds = (TextView) view.findViewById(R.id.tv_ds);  //大小单双
         TextView tv_xzjf = (TextView) view.findViewById(R.id.tv_xzjf);  //下注积分
@@ -5322,7 +5284,6 @@ public class StartLiveActivity extends BaseActivity implements
         meiyanPopup.setOutsideTouchable(true);
         meiyanPopup.setAnimationStyle(R.style.mypopwindow_anim_style);
         meiyanPopup.showAtLocation(rlvListLiveAudiences, Gravity.BOTTOM, 0, 0);
-        meiyanPopup.update();
 
         SeekBar m_Seekpink = (SeekBar) view.findViewById(R.id.seek_pink);
         m_Seekpink.setOnSeekBarChangeListener(this);
@@ -5339,17 +5300,6 @@ public class StartLiveActivity extends BaseActivity implements
         SeekBar m_Seeksoften = (SeekBar) view.findViewById(R.id.seek_soften);
         m_Seeksoften.setOnSeekBarChangeListener(this);
         m_Seeksoften.setProgress((int) (mPinkValue * 100));
-    }
-
-    /**
-     * 设置activity背景
-     *
-     * @param alpha
-     */
-    private void backgroundAlpha(float alpha) {
-        WindowManager.LayoutParams params = this.getWindow().getAttributes();
-        params.alpha = alpha;
-        this.getWindow().setAttributes(params);
     }
 
     private void showLianmaiView() {

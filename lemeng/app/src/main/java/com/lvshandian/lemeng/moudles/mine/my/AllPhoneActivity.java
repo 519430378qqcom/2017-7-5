@@ -12,7 +12,6 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.PopupWindow;
 
 import com.android.volley.Request;
 import com.lvshandian.lemeng.R;
@@ -25,6 +24,7 @@ import com.lvshandian.lemeng.moudles.mine.bean.PhotoBean;
 import com.lvshandian.lemeng.moudles.mine.my.adapter.AllPhoneAdapter;
 import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
+import com.lvshandian.lemeng.view.CustomPopWindow;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallbackWrapper;
 import com.netease.nimlib.sdk.ResponseCode;
@@ -54,7 +54,7 @@ public class AllPhoneActivity extends BaseActivity {
     /**
      * 右上角弹框
      */
-    private PopupWindow editPopup;
+    private CustomPopWindow editPopup;
 
     private AllPhoneAdapter allPhoneAdapter;
 
@@ -165,10 +165,10 @@ public class AllPhoneActivity extends BaseActivity {
 
 
     /**
-     * 右上角举报和加入黑名单弹框
+     * 图片编辑弹框
      */
     public void getEditPopup(final int position) {
-        editPopup = new PopupWindow(this);
+        editPopup = new CustomPopWindow(this);
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.pic_edit_popup, null);
         editPopup.setContentView(view);
@@ -178,12 +178,8 @@ public class AllPhoneActivity extends BaseActivity {
         editPopup.setBackgroundDrawable(new BitmapDrawable());
         editPopup.setOutsideTouchable(true);
 
-        backgroundAlpha(0.5f);
-
         editPopup.setAnimationStyle(R.style.mypopwindow_anim_style);
         editPopup.showAtLocation(mygrid, Gravity.BOTTOM, 0, 0);
-        editPopup.update();
-        editPopup.setOnDismissListener(new PopOnDismissListner());
 
         Button btn_set_head = (Button) view.findViewById(R.id.btn_set_head);
         Button btn_delete = (Button) view.findViewById(R.id.btn_delete);
@@ -216,21 +212,6 @@ public class AllPhoneActivity extends BaseActivity {
                 editPopup.dismiss();
             }
         });
-    }
-
-    private void backgroundAlpha(float alpha) {
-        WindowManager.LayoutParams params = this.getWindow().getAttributes();
-        params.alpha = alpha;
-        this.getWindow().setAttributes(params);
-    }
-
-
-    private class PopOnDismissListner implements PopupWindow.OnDismissListener {
-
-        @Override
-        public void onDismiss() {
-            backgroundAlpha(1f);
-        }
     }
 
     /**

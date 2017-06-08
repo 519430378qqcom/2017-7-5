@@ -18,11 +18,9 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
 
@@ -44,6 +42,7 @@ import com.lvshandian.lemeng.moudles.start.LoginActivity;
 import com.lvshandian.lemeng.moudles.start.LogoutHelper;
 import com.lvshandian.lemeng.utils.AliYunImageUtils;
 import com.lvshandian.lemeng.utils.LogUtils;
+import com.lvshandian.lemeng.view.CustomPopWindow;
 import com.lvshandian.lemeng.view.LoadingDialog;
 import com.lvshandian.lemeng.wangyiyunxin.config.preference.Preferences;
 import com.lvshandian.lemeng.wangyiyunxin.main.helper.SystemMessageUnreadManager;
@@ -730,20 +729,16 @@ public class MainActivity extends BaseActivity implements
      * 一键开播
      */
     public void quickStartLivePop() {
-        final PopupWindow praparePop = new PopupWindow(this);
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.start_prapare_pop, null);
-        praparePop.setContentView(view);
-        praparePop.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
-        praparePop.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        int width = FrameLayout.LayoutParams.MATCH_PARENT;
+        int height = FrameLayout.LayoutParams.WRAP_CONTENT;
+        final CustomPopWindow praparePop = new CustomPopWindow(view, width, height, this);
         praparePop.setFocusable(true);
         praparePop.setBackgroundDrawable(new BitmapDrawable());
         praparePop.setOutsideTouchable(true);
-        backgroundAlpha(0.5f);
         praparePop.setAnimationStyle(R.style.mypopwindow_anim_style);
         praparePop.showAtLocation(ll_myself, Gravity.BOTTOM, 0, 0);
-        praparePop.update();
-        praparePop.setOnDismissListener(new PopOnDismissListner());
 
         ImageView iv_prapare_live = (ImageView) view.findViewById(R.id.iv_prapare_live);
         ImageView iv_prapare_video = (ImageView) view.findViewById(R.id.iv_prapare_video);
@@ -769,28 +764,6 @@ public class MainActivity extends BaseActivity implements
                 praparePop.dismiss();
             }
         });
-    }
-
-    /**
-     * 设置activity背景
-     *
-     * @param alpha
-     */
-    private void backgroundAlpha(float alpha) {
-        WindowManager.LayoutParams params = this.getWindow().getAttributes();
-        params.alpha = alpha;
-        this.getWindow().setAttributes(params);
-    }
-
-    /**
-     * Dismiss监听
-     */
-    private class PopOnDismissListner implements PopupWindow.OnDismissListener {
-        @Override
-        public void onDismiss() {
-            backgroundAlpha(1f);
-        }
-
     }
 
 }
