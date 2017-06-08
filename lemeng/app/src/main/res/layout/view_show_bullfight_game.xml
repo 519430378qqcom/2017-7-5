@@ -7,6 +7,7 @@
     android:background="@mipmap/game_backgourd">
 
     <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/rl_bull_pool"
         android:layout_width="match_parent"
         android:layout_height="320px">
 
@@ -346,7 +347,7 @@
 
     <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/rl_bull_pool"
         android:layout_height="99px"
         android:gravity="center_vertical"
         android:orientation="horizontal">

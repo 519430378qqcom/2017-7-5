@@ -471,6 +471,7 @@
 
             <com.zhy.autolayout.AutoRelativeLayout
                 android:id="@+id/rl_game_container"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 

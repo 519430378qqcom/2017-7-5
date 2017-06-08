@@ -39,6 +39,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -225,8 +226,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import xiao.free.horizontalrefreshlayout.HorizontalRefreshLayout;
 import xiao.free.horizontalrefreshlayout.RefreshCallBack;
 import xiao.free.horizontalrefreshlayout.refreshhead.LoadingRefreshHeader;
-
-import static com.lvshandian.lemeng.service.VoiceService.mediaPlayer;
 
 /**
  * 观看直播页面
@@ -1374,14 +1373,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                                  * 下滑动
                                  */
                                 if (isPlayerRoom) {
-                                    if (rl_game_container.getVisibility() == View.VISIBLE) {
-                                        mHandler.postDelayed(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                hidePlayView(gameType);
-                                            }
-                                        }, 200);
-                                    }
+                                    hidePlayView(gameType);
                                 }
 
                             } else if (movepY < 0 && ((Math.abs(movepY)) > 150) && !isHindRcView) {
@@ -1389,14 +1381,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                                  * 上滑动
                                  */
                                 if (isPlayerRoom) {
-                                    if (rl_game_container.getVisibility() == View.GONE) {
-                                        mHandler.postDelayed(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                showPlayView(gameType);
-                                            }
-                                        }, 200);
-                                    }
+                                    showPlayView(gameType);
 
                                 } else {
                                     showToast("主播未开启游戏");
@@ -1557,15 +1542,15 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 break;
 
             case R.id.ruanjianpanW:
-                if (isJinyan){
+                if (isJinyan) {
                     showToast("您被禁言中,禁止发言");
-                }else {
+                } else {
                     messageFragment.showEditText();
                 }
                 break;
             case R.id.iv_game://游戏
                 if (isPlayerRoom) {
-                    if (rl_game_container.getVisibility() == View.VISIBLE) {
+                    if (!gameHide) {
                         hidePlayView(gameType);
                     } else {
                         showPlayView(gameType);
@@ -1767,7 +1752,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             imageView.setVisibility(View.GONE);
             ImageView iv_start = iv_10;
             int imgId = R.mipmap.ic_bullfight_10_light;
-            switch (betSum){
+            switch (betSum) {
                 case 10:
                     iv_start = iv_10;
                     imgId = R.mipmap.ic_bullfight_10_light;
@@ -1805,7 +1790,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             layoutParams1.topMargin = startLocation[1] - parentLocation[1];
             final int dx = startLocation[0] - endLocation[0];
             final int dy = startLocation[1] - endLocation[1];
-            parent.addView(imageView1,layoutParams1);
+            parent.addView(imageView1, layoutParams1);
             ValueAnimator valueAnimator = ValueAnimator.ofFloat(1);
             valueAnimator.setTarget(imageView1);
             valueAnimator.setDuration(500);
@@ -1821,8 +1806,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
                     float animatedValue = (float) animation.getAnimatedValue();
-                    imageView1.setTranslationX(-dx*animatedValue);
-                    imageView1.setTranslationY(-dy*animatedValue);
+                    imageView1.setTranslationX(-dx * animatedValue);
+                    imageView1.setTranslationY(-dy * animatedValue);
                 }
             });
             valueAnimator.start();
@@ -1833,8 +1818,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * 选择投注金额
      */
     private void checkBettingBalance(int betSum) {
-        if(betSum > myGoldCoin) {
-            ToastUtils.showMessageDefault(this,getResources().getString(R.string.balance_not_enough));
+        if (betSum > myGoldCoin) {
+            ToastUtils.showMessageDefault(this, getResources().getString(R.string.balance_not_enough));
             return;
         }
         betBalance = betSum;
@@ -1987,21 +1972,21 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     if (mount > 0) {
                         bullfightAudio.play(bullfightAudio.WIN);
                         bullfightAudio.play(bullfightAudio.FALLING_COIN);
-                        fallingCoinAnimation(true,0);
-                        fallingCoinAnimation(true,100);
-                        fallingCoinAnimation(true,100);
-                        fallingCoinAnimation(true,100);
-                        fallingCoinAnimation(true,100);
-                        fallingCoinAnimation(true,100);
+                        fallingCoinAnimation(true, 0);
+                        fallingCoinAnimation(true, 100);
+                        fallingCoinAnimation(true, 100);
+                        fallingCoinAnimation(true, 100);
+                        fallingCoinAnimation(true, 100);
+                        fallingCoinAnimation(true, 100);
                     } else if (mount < 0) {
                         bullfightAudio.play(bullfightAudio.FAIL);
                         bullfightAudio.play(bullfightAudio.FALLING_COIN);
-                        fallingCoinAnimation(false,0);
-                        fallingCoinAnimation(false,100);
-                        fallingCoinAnimation(false,100);
-                        fallingCoinAnimation(false,100);
-                        fallingCoinAnimation(false,100);
-                        fallingCoinAnimation(false,100);
+                        fallingCoinAnimation(false, 0);
+                        fallingCoinAnimation(false, 100);
+                        fallingCoinAnimation(false, 100);
+                        fallingCoinAnimation(false, 100);
+                        fallingCoinAnimation(false, 100);
+                        fallingCoinAnimation(false, 100);
                     }
                     myGoldCoin += gameResult.getObj().getAmount();
                     tv_bullfight_lepiao.setText(CountUtils.getCount(myGoldCoin));
@@ -2012,12 +1997,14 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             }
         }
     }
+
     /**
      * 金币掉落的动画
+     *
      * @param isFalling true为掉落动画false反动画
-     * @param delay 动画延迟执行
+     * @param delay     动画延迟执行
      */
-    private void fallingCoinAnimation(final boolean isFalling,long delay) {
+    private void fallingCoinAnimation(final boolean isFalling, long delay) {
         final RelativeLayout parent = (RelativeLayout) iv_bullcoin.getParent().getParent();
         int[] startLocation = new int[2];
         int[] endLocation = new int[2];
@@ -2025,21 +2012,21 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         ll_bullfight_result.getLocationOnScreen(startLocation);
         iv_bullcoin.getLocationOnScreen(endLocation);
         parent.getLocationOnScreen(parentLocation);
-        startLocation[0] = startLocation[0] + ll_bullfight_result.getWidth()/2 - iv_bullcoin.getWidth()/2;
-        startLocation[1] = startLocation[1] + ll_bullfight_result.getHeight()/2 - iv_bullcoin.getHeight()/2;
+        startLocation[0] = startLocation[0] + ll_bullfight_result.getWidth() / 2 - iv_bullcoin.getWidth() / 2;
+        startLocation[1] = startLocation[1] + ll_bullfight_result.getHeight() / 2 - iv_bullcoin.getHeight() / 2;
         final int dx = startLocation[0] - endLocation[0];
         final int dy = startLocation[1] - endLocation[1];
         final ImageView imageView = new ImageView(this);
         imageView.setImageResource(R.mipmap.niu_jinbi);
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(iv_bullcoin.getWidth(), iv_bullcoin.getHeight());
-        if(isFalling) {
+        if (isFalling) {
             layoutParams.leftMargin = startLocation[0] - parentLocation[0];
             layoutParams.topMargin = startLocation[1] - parentLocation[1];
-        }else {
+        } else {
             layoutParams.leftMargin = endLocation[0] - parentLocation[0];
             layoutParams.topMargin = endLocation[1] - parentLocation[1];
         }
-        parent.addView(imageView,layoutParams);
+        parent.addView(imageView, layoutParams);
         ValueAnimator valueAnimator = ValueAnimator.ofFloat(1);
         valueAnimator.setTarget(imageView);
         valueAnimator.setDuration(500);
@@ -2055,15 +2042,16 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float animatedValue = (float) animation.getAnimatedValue();
-                if(isFalling) {
-                    animatedValue = - animatedValue;
+                if (isFalling) {
+                    animatedValue = -animatedValue;
                 }
-                imageView.setTranslationX(animatedValue*dx);
-                imageView.setTranslationY(animatedValue*dy);
+                imageView.setTranslationX(animatedValue * dx);
+                imageView.setTranslationY(animatedValue * dy);
             }
         });
         valueAnimator.start();
     }
+
     @Override
     public void startBullGame(StartResult result) {
     }
@@ -2120,10 +2108,10 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             switchAllPoker(false, -1);
             sendPokerAnimator();
             bullfightPresenter.getBankerInfo();
-            if(bullfightAudio == null) {
+            if (bullfightAudio == null) {
                 bullfightAudio = new BullfightAudio(getApplicationContext());
             }
-            if(betBalance<10) {
+            if (betBalance < 10) {
                 checkBettingBalance(10);
             }
         } else {
@@ -2380,7 +2368,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * 发牌动画
      */
     private void sendPokerAnimator() {
-        switchAllPoker(true,-1);
+        switchAllPoker(true, -1);
         ObjectAnimator animator3 = ObjectAnimator.ofFloat(rl_poker_player_container3, "scaleX", 0f, 1f);
         animator3.setDuration(1000);
         animator3.start();
@@ -2536,46 +2524,66 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     }
 
     /**
+     * 标记游戏是否隐藏
+     */
+    private boolean gameHide = true;
+    /**
+     * 游戏布局的高度
+     */
+    private int gameHeight;
+
+    /**
      * 显示游戏界面
      *
      * @param gameType 1（彩票）;2（斗牛）
      */
     private void showPlayView(int gameType) {
-//        ObjectAnimator animator = ObjectAnimator.ofFloat(rl_game_container, "translationY", -1, 0);
-//        animator.setDuration(500);
-//        animator.start();
-
+        gameHide = false;
         this.gameType = gameType;
-        //游戏内容视图
-        rl_game_container.setVisibility(View.VISIBLE);
-        //游戏左上角视图
-        rl_game_info.setVisibility(View.VISIBLE);
-        //走势图标
-        iv_trend.setVisibility(View.VISIBLE);
-        switch (gameType) {
-            case 1://彩票
-                rl_kp.setVisibility(View.VISIBLE);
-                rl_bullfight_banker.setVisibility(View.GONE);
-                live_game.setVisibility(View.VISIBLE);
-                live_game_bullfight.setVisibility(View.GONE);
-                iv_trend.setImageResource(R.mipmap.trend_img);
-                break;
-            case 2://斗牛
-                rl_bullfight_banker.setVisibility(View.VISIBLE);
-                rl_kp.setVisibility(View.GONE);
-                live_game_bullfight.setVisibility(View.VISIBLE);
-                live_game.setVisibility(View.GONE);
-                iv_trend.setImageResource(R.mipmap.ic_bullfight_record);
-                break;
-        }
-
-        if (myGoldCoin != null) {
-            String myCoin = CountUtils.getCount(myGoldCoin);
-            if (gameType == 1) {
-                all_lepiao.setText(myCoin);
-            } else if (gameType == 2) {
-                tv_bullfight_lepiao.setText(myCoin);
+        if (rl_game_container.getVisibility() == View.GONE) {
+            //游戏内容视图
+            rl_game_container.setVisibility(View.VISIBLE);
+            //游戏左上角视图
+            rl_game_info.setVisibility(View.VISIBLE);
+            //走势图标
+            iv_trend.setVisibility(View.VISIBLE);
+            switch (gameType) {
+                case 1://彩票
+                    rl_kp.setVisibility(View.VISIBLE);
+                    rl_bullfight_banker.setVisibility(View.GONE);
+                    live_game.setVisibility(View.VISIBLE);
+                    live_game_bullfight.setVisibility(View.GONE);
+                    iv_trend.setImageResource(R.mipmap.trend_img);
+                    break;
+                case 2://斗牛
+                    rl_bullfight_banker.setVisibility(View.VISIBLE);
+                    rl_kp.setVisibility(View.GONE);
+                    live_game_bullfight.setVisibility(View.VISIBLE);
+                    live_game.setVisibility(View.GONE);
+                    iv_trend.setImageResource(R.mipmap.ic_bullfight_record);
+                    break;
             }
+        } else {
+            ValueAnimator animator = ValueAnimator.ofFloat(1);
+            animator.setTarget(rl_game_container);
+            animator.setDuration(500);
+            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    float animatedValue = (float) animation.getAnimatedValue();
+                    ViewGroup.LayoutParams layoutParams = rl_game_container.getLayoutParams();
+                    layoutParams.height = (int) (animatedValue * gameHeight);
+                    LogUtils.e("TAG", "layoutParams.height==" + layoutParams.height);
+                    rl_game_container.setLayoutParams(layoutParams);
+                }
+            });
+            animator.start();
+        }
+        String myCoin = CountUtils.getCount(myGoldCoin);
+        if (gameType == 1) {
+            all_lepiao.setText(myCoin);
+        } else if (gameType == 2) {
+            tv_bullfight_lepiao.setText(myCoin);
         }
     }
 
@@ -2585,25 +2593,39 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * @param gameType 1（彩票）;2（斗牛）
      */
     private void hidePlayView(int gameType) {
-//        ObjectAnimator animator = ObjectAnimator.ofFloat(rl_game_container, "translationY", 0, -1);
-//        animator.setDuration(500);
-//        animator.start();
-
-        //游戏内容视图
-        rl_game_container.setVisibility(View.GONE);
-        //游戏左上角视图
-        rl_game_info.setVisibility(View.GONE);
-        //走势图标
-        iv_trend.setVisibility(View.GONE);
-        switch (gameType) {
-            case 1://彩票
-                rl_kp.setVisibility(View.GONE);
-                live_game.setVisibility(View.GONE);
-                break;
-            case 2://斗牛
-                rl_bullfight_banker.setVisibility(View.GONE);
-                live_game_bullfight.setVisibility(View.GONE);
-                break;
+        gameHide = true;
+        if (rl_game_container.getVisibility() == View.GONE) {
+            //游戏内容视图
+            rl_game_container.setVisibility(View.GONE);
+            //游戏左上角视图
+            rl_game_info.setVisibility(View.GONE);
+            //走势图标
+            iv_trend.setVisibility(View.GONE);
+            switch (gameType) {
+                case 1://彩票
+                    rl_kp.setVisibility(View.GONE);
+                    live_game.setVisibility(View.GONE);
+                    break;
+                case 2://斗牛
+                    rl_bullfight_banker.setVisibility(View.GONE);
+                    live_game_bullfight.setVisibility(View.GONE);
+                    break;
+            }
+        } else {
+            gameHeight = rl_game_container.getHeight();
+            ValueAnimator animator = ValueAnimator.ofFloat(1);
+            animator.setTarget(rl_game_container);
+            animator.setDuration(500);
+            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    float animatedValue = (float) animation.getAnimatedValue();
+                    ViewGroup.LayoutParams layoutParams = rl_game_container.getLayoutParams();
+                    layoutParams.height = (int) ((1 - animatedValue) * gameHeight);
+                    rl_game_container.setLayoutParams(layoutParams);
+                }
+            });
+            animator.start();
         }
     }
 
@@ -2790,7 +2812,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         registerSystemMessageObservers(false);
         unregisterReceiver(broadcastReceiver);
         barrageview.setSentenceList(new ArrayList<BarrageDateBean>());
-        if(bullfightAudio != null) {
+        if (bullfightAudio != null) {
             bullfightAudio.release();
         }
         myHandler.removeMessages(10000);
