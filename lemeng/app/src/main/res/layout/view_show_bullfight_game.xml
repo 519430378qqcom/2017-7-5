@@ -303,19 +303,16 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:textColor="@color/white"
-                android:textSize="16sp"
-                android:text="1S"/>
+                android:textSize="16sp" />
         </com.zhy.autolayout.AutoRelativeLayout>
         <com.zhy.autolayout.AutoLinearLayout
             android:visibility="invisible"
             android:id="@+id/ll_bullfight_result"
             android:layout_width="500px"
-            android:layout_height="140px"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="60px"
-            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:orientation="vertical"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:background="@mipmap/bullfight_result_bg">
             <TextView
                 android:id="@+id/tv_bullfight_result1"
@@ -323,6 +320,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textSize="16sp"
+                android:layout_marginTop="6px"
                 android:textColor="@color/white"
                 />
             <TextView
@@ -331,14 +329,16 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textSize="16sp"
-                android:textColor="@color/yellow"
-                android:text="@string/wait_next_start"/>
+                android:layout_marginTop="8px"
+                android:textColor="@color/yellow" />
             <TextView
                 android:id="@+id/tv_bullfight_result3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textSize="14sp"
+                android:layout_marginBottom="8px"
+                android:layout_marginTop="6px"
                 android:textColor="@color/white"
                 />
 

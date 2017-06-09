@@ -1935,19 +1935,19 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     private void bullfightResultShow(String arg1, String arg2, String arg3) {
         ll_bullfight_result.setVisibility(View.VISIBLE);
         if (TextUtils.isEmpty(arg1)) {
-            tv_bullfight_result1.setVisibility(View.INVISIBLE);
+            tv_bullfight_result1.setVisibility(View.GONE);
         } else {
             tv_bullfight_result1.setVisibility(View.VISIBLE);
             tv_bullfight_result1.setText(arg1);
         }
         if (TextUtils.isEmpty(arg2)) {
-            tv_bullfight_result2.setVisibility(View.INVISIBLE);
+            tv_bullfight_result2.setVisibility(View.GONE);
         } else {
             tv_bullfight_result2.setVisibility(View.VISIBLE);
             tv_bullfight_result2.setText(arg2);
         }
         if (TextUtils.isEmpty(arg3)) {
-            tv_bullfight_result3.setVisibility(View.INVISIBLE);
+            tv_bullfight_result3.setVisibility(View.GONE);
         } else {
             tv_bullfight_result3.setVisibility(View.VISIBLE);
             tv_bullfight_result3.setText(arg3);
@@ -2107,7 +2107,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             if (isWait) {
                 isWait = false;
                 setBetPoolEnable(false);
-                bullfightResultShow(null, getResources().getString(R.string.wait_next_start), null);
+                rl_timing.setVisibility(View.GONE);
+                switchAllPoker(false,-1);
+                bullfightResultShow(getResources().getString(R.string.wait_next_start), null, null);
                 myHandler.sendEmptyMessageDelayed(WAIT_NEXT_START, nextTime * 1000);
                 return;
             }
@@ -2188,6 +2190,10 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     public void getPokerResult(PokerResult pokerResult) {
         if (pokerResult.isSuccess()) {
             final PokerResult.ObjBean.PlayerPokerMapBean playerPokerMap = pokerResult.getObj().getPlayerPokerMap();
+            final int result = playerPokerMap.getPoker0().getResult();
+            final int result1 = playerPokerMap.getPoker1().getResult();
+            final int result2 = playerPokerMap.getPoker2().getResult();
+            final int result3 = playerPokerMap.getPoker3().getResult();
             final ObjectAnimator animator3 = ObjectAnimator.ofFloat(rl_poker_player_container3, "scaleX", 0f, 1f);
             animator3.setDuration(1000);
             animator3.addListener(new AnimatorListenerAdapter() {
@@ -2205,11 +2211,13 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
-                    int result = playerPokerMap.getPoker3().getResult();
-                    bullfightAudio.play(result);
-                    iv_bull_amount3.setImageResource(bullfightPresenter.getBullSumId(result));
+                    bullfightAudio.play(result3);
+                    iv_bull_amount3.setImageResource(bullfightPresenter.getBullSumId(result3));
                     switchBullNum(true, 3);
-                    if (result == 10) {
+                    if (result >= result3) {
+                        iv_gray_bg3.setVisibility(View.VISIBLE);
+                    }
+                    if (result3 == 10) {
                         showBullAnimation();
                     }
                 }
@@ -2232,11 +2240,13 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
                     animator3.start();
-                    int result = playerPokerMap.getPoker2().getResult();
-                    bullfightAudio.play(result);
-                    iv_bull_amount2.setImageResource(bullfightPresenter.getBullSumId(result));
+                    bullfightAudio.play(result2);
+                    iv_bull_amount2.setImageResource(bullfightPresenter.getBullSumId(result2));
                     switchBullNum(true, 2);
-                    if (result == 10) {
+                    if (result >= result2) {
+                        iv_gray_bg2.setVisibility(View.VISIBLE);
+                    }
+                    if (result2 == 10) {
                         showBullAnimation();
                     }
                 }
@@ -2259,11 +2269,13 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
                     animator2.start();
-                    int result = playerPokerMap.getPoker1().getResult();
-                    bullfightAudio.play(result);
-                    iv_bull_amount1.setImageResource(bullfightPresenter.getBullSumId(result));
+                    bullfightAudio.play(result1);
+                    iv_bull_amount1.setImageResource(bullfightPresenter.getBullSumId(result1));
                     switchBullNum(true, 1);
-                    if (result == 10) {
+                    if (result >= result1) {
+                        iv_gray_bg1.setVisibility(View.VISIBLE);
+                    }
+                    if (result1 == 10) {
                         showBullAnimation();
                     }
                 }
@@ -2286,7 +2298,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
                     animator1.start();
-                    int result = playerPokerMap.getPoker0().getResult();
                     bullfightAudio.play(result);
                     iv_bull_amount0.setImageResource(bullfightPresenter.getBullSumId(result));
                     switchBullNum(true, 0);
