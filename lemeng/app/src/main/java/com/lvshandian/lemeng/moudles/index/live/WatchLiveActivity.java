@@ -2110,6 +2110,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 rl_timing.setVisibility(View.GONE);
                 switchAllPoker(false,-1);
                 bullfightResultShow(getResources().getString(R.string.wait_next_start), null, null);
+                bullfightPresenter.getBankerInfo();
                 myHandler.sendEmptyMessageDelayed(WAIT_NEXT_START, nextTime * 1000);
                 return;
             }
