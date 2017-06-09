@@ -1,5 +1,6 @@
 package com.lvshandian.lemeng.moudles.mine.activity;
 
+import android.graphics.Bitmap;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,10 +9,13 @@ import android.widget.TextView;
 
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.base.BaseActivity;
+import com.lvshandian.lemeng.view.LoadingDialog;
 import com.lvshandian.lemeng.widget.PinchImageView;
 import com.lvshandian.lemeng.widget.PinchImageViewPager;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.List;
 
@@ -29,7 +33,7 @@ public class BigImageActivity extends BaseActivity {
     private String imageStr;
     private int clickPosition;
 
-
+    private LoadingDialog mLoading;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_bigimage;
@@ -103,10 +107,68 @@ public class BigImageActivity extends BaseActivity {
             });
             bigImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
             if (imageList == null) {
-                ImageLoader.getInstance().displayImage(imageStr, bigImage, thumbOptions);
+                ImageLoader.getInstance().displayImage(imageStr, bigImage, thumbOptions, new ImageLoadingListener() {
+                    @Override
+                    public void onLoadingStarted(String imageUri, View view) {
+                        mLoading = new LoadingDialog(mContext);
+                        if (mLoading != null && !mLoading.isShowing()) {
+                            mLoading.show();
+                        }
+                    }
+
+                    @Override
+                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                        if (mLoading != null && mLoading.isShowing()) {
+                            mLoading.dismiss();
+                        }
+                    }
+
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                        if (mLoading != null && mLoading.isShowing()) {
+                            mLoading.dismiss();
+                        }
+                    }
+
+                    @Override
+                    public void onLoadingCancelled(String imageUri, View view) {
+                        if (mLoading != null && mLoading.isShowing()) {
+                            mLoading.dismiss();
+                        }
+                    }
+                });
             } else {
                 ImageLoader.getInstance().displayImage(imageList.get(position), bigImage,
-                        thumbOptions);
+                        thumbOptions, new ImageLoadingListener() {
+                            @Override
+                            public void onLoadingStarted(String imageUri, View view) {
+                                mLoading = new LoadingDialog(mContext);
+                                if (mLoading != null && !mLoading.isShowing()) {
+                                    mLoading.show();
+                                }
+                            }
+
+                            @Override
+                            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                                if (mLoading != null && mLoading.isShowing()) {
+                                    mLoading.dismiss();
+                                }
+                            }
+
+                            @Override
+                            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                                if (mLoading != null && mLoading.isShowing()) {
+                                    mLoading.dismiss();
+                                }
+                            }
+
+                            @Override
+                            public void onLoadingCancelled(String imageUri, View view) {
+                                if (mLoading != null && mLoading.isShowing()) {
+                                    mLoading.dismiss();
+                                }
+                            }
+                        });
 
             }
             container.addView(bigImage);
