@@ -2213,6 +2213,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     bullfightAudio.play(result);
                     iv_bull_amount3.setImageResource(bullfightPresenter.getBullSumId(result));
                     switchBullNum(true, 3);
+                    if(result == 10) {
+                        showBullAnimation();
+                    }
                 }
             });
             final ObjectAnimator animator2 = ObjectAnimator.ofFloat(rl_poker_player_container2, "scaleX", 0f, 1f);
@@ -2237,6 +2240,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     bullfightAudio.play(result);
                     iv_bull_amount2.setImageResource(bullfightPresenter.getBullSumId(result));
                     switchBullNum(true, 2);
+                    if(result == 10) {
+                        showBullAnimation();
+                    }
                 }
             });
             final ObjectAnimator animator1 = ObjectAnimator.ofFloat(rl_poker_player_container1, "scaleX", 0f, 1f);
@@ -2261,6 +2267,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     bullfightAudio.play(result);
                     iv_bull_amount1.setImageResource(bullfightPresenter.getBullSumId(result));
                     switchBullNum(true, 1);
+                    if(result == 10) {
+                        showBullAnimation();
+                    }
                 }
             });
             final ObjectAnimator animator = ObjectAnimator.ofFloat(rl_poker_banker_container, "scaleX", 0f, 1f);
@@ -2285,12 +2294,43 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     bullfightAudio.play(result);
                     iv_bull_amount0.setImageResource(bullfightPresenter.getBullSumId(result));
                     switchBullNum(true, 0);
+                    if(result == 10) {
+                        showBullAnimation();
+                    }
                 }
             });
             animator.start();
         }
     }
 
+    /**
+     * 显示牛牛动画
+     */
+    private void showBullAnimation() {
+        final ImageView bullbullbg = new ImageView(this);
+        bullbullbg.setImageResource(R.mipmap.bullbullbg);
+        final ImageView bull_alert = new ImageView(this);
+        bull_alert.setImageResource(R.mipmap.bull_alert);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+        bullbullbg.setLayoutParams(layoutParams);
+        RelativeLayout.LayoutParams layoutParams1 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams1.addRule(RelativeLayout.CENTER_IN_PARENT);
+        bull_alert.setLayoutParams(layoutParams1);
+        mRoot.addView(bullbullbg);
+        mRoot.addView(bull_alert);
+        ObjectAnimator rotation = ObjectAnimator.ofFloat(bullbullbg, "rotation", 0f, 180f);
+        rotation.setDuration(1000);
+        rotation.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                mRoot.removeView(bullbullbg);
+                mRoot.removeView(bull_alert);
+            }
+        });
+        rotation.start();
+    }
 
     /**
      * 更新投注金额的选择按钮

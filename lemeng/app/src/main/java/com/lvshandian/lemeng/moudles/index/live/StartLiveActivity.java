@@ -1706,7 +1706,7 @@ public class StartLiveActivity extends BaseActivity implements
             if (bullfightAudio == null) {
                 bullfightAudio = new BullfightAudio(getApplicationContext());
             }
-            if (betBalance < 10 && myGoldCoin >=10) {
+            if (betBalance < 10 && myGoldCoin >= 10) {
                 checkBettingBalance(10);
             }
         } else {
@@ -1806,6 +1806,9 @@ public class StartLiveActivity extends BaseActivity implements
                     if (result >= result3) {
                         iv_gray_bg3.setVisibility(View.VISIBLE);
                     }
+                    if (result3 == 10) {
+                        showBullAnimation();
+                    }
                 }
             });
             final ObjectAnimator animator2 = ObjectAnimator.ofFloat(rl_poker_player_container2, "scaleX", 0f, 1f);
@@ -1831,6 +1834,9 @@ public class StartLiveActivity extends BaseActivity implements
                     switchBullNum(true, 2);
                     if (result >= result2) {
                         iv_gray_bg2.setVisibility(View.VISIBLE);
+                    }
+                    if (result2 == 10) {
+                        showBullAnimation();
                     }
                 }
             });
@@ -1858,6 +1864,9 @@ public class StartLiveActivity extends BaseActivity implements
                     if (result >= result1) {
                         iv_gray_bg1.setVisibility(View.VISIBLE);
                     }
+                    if (result1 == 10) {
+                        showBullAnimation();
+                    }
                 }
             });
             final ObjectAnimator animator = ObjectAnimator.ofFloat(rl_poker_banker_container, "scaleX", 0f, 1f);
@@ -1881,12 +1890,43 @@ public class StartLiveActivity extends BaseActivity implements
                     bullfightAudio.play(result);
                     iv_bull_amount0.setImageResource(bullfightPresenter.getBullSumId(result));
                     switchBullNum(true, 0);
+                    if (result == 10) {
+                        showBullAnimation();
+                    }
                 }
             });
             animator.start();
         }
     }
 
+    /**
+     * 显示牛牛动画
+     */
+    private void showBullAnimation() {
+        final ImageView bullbullbg = new ImageView(this);
+        bullbullbg.setImageResource(R.mipmap.bullbullbg);
+        final ImageView bull_alert = new ImageView(this);
+        bull_alert.setImageResource(R.mipmap.bull_alert);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+        bullbullbg.setLayoutParams(layoutParams);
+        RelativeLayout.LayoutParams layoutParams1 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams1.addRule(RelativeLayout.CENTER_IN_PARENT);
+        bull_alert.setLayoutParams(layoutParams1);
+        mRoot.addView(bullbullbg);
+        mRoot.addView(bull_alert);
+        ObjectAnimator rotation = ObjectAnimator.ofFloat(bullbullbg, "rotation", 0f, 180f);
+        rotation.setDuration(1000);
+        rotation.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                mRoot.removeView(bullbullbg);
+                mRoot.removeView(bull_alert);
+            }
+        });
+        rotation.start();
+    }
 
     /**
      * 更新投注金额的选择按钮
@@ -3411,7 +3451,7 @@ public class StartLiveActivity extends BaseActivity implements
                              * 下滑动
                              */
                             if (gameIsStart) {
-                                if (!gameHide){
+                                if (!gameHide) {
                                     hidePlayView(gameType);
                                 }
                             } else {
@@ -3425,7 +3465,7 @@ public class StartLiveActivity extends BaseActivity implements
                              * 上滑动
                              */
                             if (gameIsStart) {
-                                if (gameHide){
+                                if (gameHide) {
                                     showPlayView(gameType);
                                 }
                             } else {
