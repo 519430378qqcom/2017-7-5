@@ -150,8 +150,9 @@ public class BullfightPresenter {
                 Log.e("TAG", "getPokerResult" + response);
                 PokerResult pokerResult = null;
                 try {
-                    if (pokerResult != null && pokerResult.getObj() != null) {
-                        pokerResult = JSON.parseObject(response, PokerResult.class);
+                    pokerResult = JSON.parseObject(response, PokerResult.class);
+                    if (pokerResult.getObj() == null) {
+                        pokerResult.setSuccess(false);
                     }
                 } catch (Exception e) {
                     pokerResult = new PokerResult();
