@@ -72,7 +72,7 @@ public class BullfightPresenter {
                 BankerInfo bankerInfo = null;
                 try {
                     bankerInfo = JSON.parseObject(response, BankerInfo.class);
-                }catch (Exception e){
+                } catch (Exception e) {
                     bankerInfo = new BankerInfo();
                     bankerInfo.setSuccess(false);
                 }
@@ -150,8 +150,10 @@ public class BullfightPresenter {
                 Log.e("TAG", "getPokerResult" + response);
                 PokerResult pokerResult = null;
                 try {
-                    pokerResult = JSON.parseObject(response, PokerResult.class);
-                }catch (Exception e){
+                    if (pokerResult != null && pokerResult.getObj() != null) {
+                        pokerResult = JSON.parseObject(response, PokerResult.class);
+                    }
+                } catch (Exception e) {
                     pokerResult = new PokerResult();
                     pokerResult.setSuccess(false);
                 }
@@ -186,7 +188,7 @@ public class BullfightPresenter {
                 BetResult betResult = null;
                 try {
                     betResult = JSON.parseObject(response, BetResult.class);
-                }catch (Exception e){
+                } catch (Exception e) {
                     betResult = new BetResult();
                     betResult.setSuccess(false);
                 }
@@ -215,7 +217,7 @@ public class BullfightPresenter {
                 GameResult gameResult = null;
                 try {
                     gameResult = JSON.parseObject(response, GameResult.class);
-                }catch (Exception e){
+                } catch (Exception e) {
                     gameResult = new GameResult();
                     gameResult.setSuccess(false);
                 }
@@ -243,7 +245,7 @@ public class BullfightPresenter {
                 BankerBalance bankerBalance = null;
                 try {
                     bankerBalance = JSON.parseObject(response, BankerBalance.class);
-                }catch (Exception e){
+                } catch (Exception e) {
                     bankerBalance = new BankerBalance();
                     bankerBalance.setSuccess(false);
                 }
@@ -273,11 +275,12 @@ public class BullfightPresenter {
 
     /**
      * 获取 音效文件id
+     *
      * @return
      */
     public int getAudioId(int bullNum) {
         int audioId = 0;
-        switch (bullNum){
+        switch (bullNum) {
             case 0:
                 audioId = R.raw.bull0;
                 break;
@@ -314,6 +317,7 @@ public class BullfightPresenter {
         }
         return audioId;
     }
+
     /**
      * 获取牛几的id
      *
