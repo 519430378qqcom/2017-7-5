@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.base.BaseActivity;
 import com.lvshandian.lemeng.utils.KeyBoardUtils;
-import com.lvshandian.lemeng.utils.TextUtils;
 import com.nostra13.universalimageloader.utils.L;
 
 import butterknife.Bind;
@@ -71,12 +70,10 @@ public class UpdatePersonActivity extends BaseActivity {
             case R.id.tv_titlebar_right:
                 Intent intent = new Intent();
                 String qianming = content.getText().toString().trim();
-                if (!TextUtils.isEmpty(qianming)) {
-                    KeyBoardUtils.closeKeybord(content, mContext);
-                    intent.putExtra("qianming", qianming);
-                    setResult(2, intent);
-                    finish();
-                }
+                KeyBoardUtils.closeKeybord(content, mContext);
+                intent.putExtra("qianming", qianming);
+                setResult(2, intent);
+                finish();
 
                 break;
         }

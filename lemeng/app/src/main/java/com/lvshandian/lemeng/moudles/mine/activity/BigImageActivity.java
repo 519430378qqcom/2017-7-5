@@ -59,6 +59,12 @@ public class BigImageActivity extends BaseActivity {
         if (imageList != null && imageList.size() > 1) {
             viewPager.setOffscreenPageLimit(imageList.size());
             viewPager.setCurrentItem(clickPosition);
+
+            mLoading = new LoadingDialog(mContext);
+            if (mLoading != null && !mLoading.isShowing()) {
+                mLoading.show();
+            }
+
             tv_bigImage.setText((clickPosition + 1) + "/" + imageList.size());
             viewPager.setOnPageChangeListener(new PinchImageViewPager.OnPageChangeListener() {
                 @Override
@@ -138,37 +144,33 @@ public class BigImageActivity extends BaseActivity {
                     }
                 });
             } else {
-                ImageLoader.getInstance().displayImage(imageList.get(position), bigImage,
-                        thumbOptions, new ImageLoadingListener() {
-                            @Override
-                            public void onLoadingStarted(String imageUri, View view) {
-                                mLoading = new LoadingDialog(mContext);
-                                if (mLoading != null && !mLoading.isShowing()) {
-                                    mLoading.show();
-                                }
-                            }
+                ImageLoader.getInstance().displayImage(imageList.get(position), bigImage, thumbOptions, new ImageLoadingListener() {
+                    @Override
+                    public void onLoadingStarted(String imageUri, View view) {
 
-                            @Override
-                            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                                if (mLoading != null && mLoading.isShowing()) {
-                                    mLoading.dismiss();
-                                }
-                            }
+                    }
 
-                            @Override
-                            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                                if (mLoading != null && mLoading.isShowing()) {
-                                    mLoading.dismiss();
-                                }
-                            }
+                    @Override
+                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                        if (mLoading != null && mLoading.isShowing()) {
+                            mLoading.dismiss();
+                        }
+                    }
 
-                            @Override
-                            public void onLoadingCancelled(String imageUri, View view) {
-                                if (mLoading != null && mLoading.isShowing()) {
-                                    mLoading.dismiss();
-                                }
-                            }
-                        });
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                        if (mLoading != null && mLoading.isShowing()) {
+                            mLoading.dismiss();
+                        }
+                    }
+
+                    @Override
+                    public void onLoadingCancelled(String imageUri, View view) {
+                        if (mLoading != null && mLoading.isShowing()) {
+                            mLoading.dismiss();
+                        }
+                    }
+                });
 
             }
             container.addView(bigImage);

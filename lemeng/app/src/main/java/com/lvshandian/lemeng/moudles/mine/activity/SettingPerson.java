@@ -252,18 +252,18 @@ public class SettingPerson extends BaseActivity {
                     showToast("请填写性别");
                     return;
                 }
-                if (com.lvshandian.lemeng.utils.TextUtils.isEmpty(xz)) {
-                    showToast("请填写星座");
-                    return;
-                }
-                if (com.lvshandian.lemeng.utils.TextUtils.isEmpty(address)) {
-                    showToast("请填写地址");
-                    return;
-                }
-                if (com.lvshandian.lemeng.utils.TextUtils.isEmpty(signature)) {
-                    showToast("请填写签名");
-                    return;
-                }
+//                if (com.lvshandian.lemeng.utils.TextUtils.isEmpty(xz)) {
+//                    showToast("请填写星座");
+//                    return;
+//                }
+//                if (com.lvshandian.lemeng.utils.TextUtils.isEmpty(address)) {
+//                    showToast("请填写地址");
+//                    return;
+//                }
+//                if (com.lvshandian.lemeng.utils.TextUtils.isEmpty(signature)) {
+//                    showToast("请填写签名");
+//                    return;
+//                }
                 if (userState())
                     changeappUser(headUrl, nick, gender, xz, address, signature);
                 break;
