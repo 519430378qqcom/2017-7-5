@@ -125,23 +125,24 @@ public class MyContributionActivity extends BaseActivity {
     @Override
     protected void initialized() {
         initTitle("", "我的贡献榜", null);
-        initListView();
         requestContribution();
         scrollView.smoothScrollTo(0, 0);
     }
 
 
     private void initListView() {
-        listAdapter = new MyContributionListAdapter(mContext, mDatas, R.layout.item_paihang_list);
-        myList.setAdapter(listAdapter);
-        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
-                intent.putExtra(getString(R.string.visiti_person), mDatas.get(position).getId());
-                startActivity(intent);
-            }
-        });
+        if (listAdapter == null) {
+            listAdapter = new MyContributionListAdapter(mContext, mDatas, R.layout.item_paihang_list);
+            myList.setAdapter(listAdapter);
+            myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
+                    intent.putExtra(getString(R.string.visiti_person), mDatas.get(position).getId());
+                    startActivity(intent);
+                }
+            });
+        }
     }
 
 
@@ -180,6 +181,7 @@ public class MyContributionActivity extends BaseActivity {
                 result.remove(0);
             }
             mDatas.addAll(result);
+            initListView();
             listAdapter.notifyDataSetChanged();
         } else {
             //如果是上拉加载更多切没有加载出更多，则加载页数应该-1

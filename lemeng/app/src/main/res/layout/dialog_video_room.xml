@@ -319,6 +319,7 @@
         android:src="@mipmap/head_default" />
 
     <com.lvshandian.lemeng.widget.AvatarView
+        android:id="@+id/civ_image_bg"
         android:layout_width="180px"
         android:layout_height="180px"
         android:layout_alignParentTop="true"

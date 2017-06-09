@@ -126,23 +126,24 @@ public class ContributionActivity extends BaseActivity {
     @Override
     protected void initialized() {
         initTitle("", "周榜排行榜", null);
-        initListView();
         requestContribution();
         scrollView.smoothScrollTo(0, 0);
     }
 
 
     private void initListView() {
-        listAdapter = new ContributionListAdapter(mContext, mDatas, R.layout.item_paihang_list);
-        myList.setAdapter(listAdapter);
-        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
-                intent.putExtra(getString(R.string.visiti_person), mDatas.get(position).getId());
-                startActivity(intent);
-            }
-        });
+        if (listAdapter == null) {
+            listAdapter = new ContributionListAdapter(mContext, mDatas, R.layout.item_paihang_list);
+            myList.setAdapter(listAdapter);
+            myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
+                    intent.putExtra(getString(R.string.visiti_person), mDatas.get(position).getId());
+                    startActivity(intent);
+                }
+            });
+        }
     }
 
 
@@ -180,6 +181,7 @@ public class ContributionActivity extends BaseActivity {
                 result.remove(0);
             }
             mDatas.addAll(result);
+            initListView();
             listAdapter.notifyDataSetChanged();
         } else {
             if (!isRefresh)

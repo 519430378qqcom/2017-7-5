@@ -4475,6 +4475,7 @@ public class StartLiveActivity extends BaseActivity implements
         TextView tv_reply = (TextView) view.findViewById(R.id.tv_reply);
         LinearLayout ll_report = (LinearLayout) view.findViewById(R.id.ll_report);
         LinearLayout ll_banned = (LinearLayout) view.findViewById(R.id.ll_banned);
+        ImageView civ_image_bg = (ImageView) view.findViewById(R.id.civ_image_bg);
 
         if (!TextUtils.isEmpty(customdateBean.getId()) && customdateBean.getId().equals(appUser
                 .getId())) {
@@ -4509,7 +4510,7 @@ public class StartLiveActivity extends BaseActivity implements
             Picasso.with(mContext).load(customdateBean.getPicUrl()).placeholder(R.mipmap.head_default)
                     .error(R.mipmap.head_default).into(civ_image);
         }
-        civ_image.setOnClickListener(new View.OnClickListener() {
+        civ_image_bg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
@@ -5213,7 +5214,7 @@ public class StartLiveActivity extends BaseActivity implements
                             }
 
                             if (lastAwardBean.getWinStatus().equals("1")) {
-                                getZhonaJiangTZ(lastAwardBean.getNper(), lastAwardBean.getWinAmountAll(), "1");
+                                getZhonaJiangTZ(String.valueOf(Integer.parseInt(lastAwardBean.getNper()) - 1), lastAwardBean.getWinAmountAll(), "1");
 
                                 /**
                                  * 设置游戏布局的金币数量
@@ -5222,7 +5223,7 @@ public class StartLiveActivity extends BaseActivity implements
                                 String myCoin = CountUtils.getCount(myGoldCoin);
                                 all_lepiao.setText(myCoin);
                             } else if (lastAwardBean.getWinStatus().equals("0")) {
-                                getZhonaJiangTZ(lastAwardBean.getNper(), lastAwardBean.getWinAmountAll(), "0");
+                                getZhonaJiangTZ(String.valueOf(Integer.parseInt(lastAwardBean.getNper()) - 1), lastAwardBean.getWinAmountAll(), "0");
                             }
                         }
                     } else if (code.equals("1")) {
