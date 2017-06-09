@@ -1470,10 +1470,10 @@ public class StartLiveActivity extends BaseActivity implements
      * 斗牛倒计时
      */
     private void bullfightTimer() {
+        myHandler.sendEmptyMessageDelayed(BULLFIGHT_TIME, 1000);
         if (nextTime >= 10) {
             switchTimer();
         }
-        myHandler.sendEmptyMessageDelayed(BULLFIGHT_TIME, 1000);
         switch (nextTime) {
             case 25://主播初始化游戏结果
                 bullfightPresenter.initGameResult(room_Id);
