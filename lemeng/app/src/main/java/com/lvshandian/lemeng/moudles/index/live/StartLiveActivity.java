@@ -132,6 +132,7 @@ import com.lvshandian.lemeng.utils.SendRoomMessageUtils;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.utils.ThreadManager;
 import com.lvshandian.lemeng.utils.ToastUtils;
+import com.lvshandian.lemeng.utils.UMUtils;
 import com.lvshandian.lemeng.view.BarrageView;
 import com.lvshandian.lemeng.view.CustomPopWindow;
 import com.lvshandian.lemeng.view.RotateLayout;
@@ -585,10 +586,6 @@ public class StartLiveActivity extends BaseActivity implements
     private int jbNumber = 1;
 
     private ArrayList<Integer> JbList = new ArrayList<>();
-    /**
-     * 分享的地址
-     */
-    private final String share_url = "http://app.lemenglive.com/video/share.html";
 
     /**
      * 直播开启时间
@@ -1144,7 +1141,7 @@ public class StartLiveActivity extends BaseActivity implements
                 break;
             case R.id.game_more_btn:
                 View popupView = LayoutInflater.from(this).inflate(R.layout.view_more_button, null);
-                PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT,
+                final PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT, true);
                 popupWindow.setBackgroundDrawable(new BitmapDrawable());
                 popupView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
@@ -1154,17 +1151,20 @@ public class StartLiveActivity extends BaseActivity implements
                 v.getLocationOnScreen(location);
                 popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, (location[0] + v.getWidth() / 2) - popupWidth / 2,
                         location[1] - popupHeight);
-//                popupView.findViewById(R.id.iv_live_share).setOnClickListener(new View.OnClickListener() {  //分享
-//                    @Override
-//                    public void onClick(View v) {
-//                        UMUtils.umShare(StartLiveActivity.this, creatReadyBean.getCreator().getNickName(), creatReadyBean
-//                                .getLivePicUrl(), share_url + "?userId=" + appUser.getId());
-//                    }
-//                });
+                popupView.findViewById(R.id.iv_live_share).setOnClickListener(new View.OnClickListener() {  //分享
+                    @Override
+                    public void onClick(View v) {
+                        UMUtils.umShare(StartLiveActivity.this, "主播" + appUser.getNickName() + "邀你玩游戏啦",
+                                "够刺激,主播" + creatReadyBean.getCreator().getNickName() + "带你玩转直播间,一起游戏嗨起来!",
+                                creatReadyBean.getLivePicUrl(), UrlBuilder.SHARE_VIDEO_URL + "?roomId=" + wy_Id + "&userId=" + appUser.getId());
+                        popupWindow.dismiss();
+                    }
+                });
                 popupView.findViewById(R.id.audio_player).setOnClickListener(new View.OnClickListener() { //音乐
                     @Override
                     public void onClick(View v) {
                         startActivity(new Intent(mContext, AudioPlayerActivity.class));
+                        popupWindow.dismiss();
                     }
                 });
 
@@ -1172,7 +1172,7 @@ public class StartLiveActivity extends BaseActivity implements
                     @Override
                     public void onClick(View v) {
                         getMeiyanPopup();
-//                        showToast("暂未开通美颜效果");
+                        popupWindow.dismiss();
                     }
                 });
 

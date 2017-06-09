@@ -50,11 +50,9 @@ import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.MyCamPara;
 import com.lvshandian.lemeng.utils.NetWorkUtil;
 import com.lvshandian.lemeng.utils.PermisionUtils;
-import com.lvshandian.lemeng.utils.UMUtils;
 import com.lvshandian.lemeng.view.LoadingDialog;
 import com.lvshandian.lemeng.view.RoundDialog;
 import com.umeng.socialize.UMShareAPI;
-import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.zhy.autolayout.AutoFrameLayout;
 import com.zhy.autolayout.AutoLinearLayout;
 import com.zhy.autolayout.AutoRelativeLayout;
@@ -504,20 +502,12 @@ public class PrapareVedioActivity extends BaseActivity {
                 }
                 break;
             case R.id.wechat:
-                UMUtils.umShareSingle(this, appUser.getNickName(), appUser.getPicUrl(),
-                        "http://app.lemenglive.com/video/share.html?userId=" + appUser.getId(), SHARE_MEDIA.WEIXIN);
                 break;
             case R.id.qq:
-                UMUtils.umShareSingle(this, appUser.getNickName(), appUser.getPicUrl(),
-                        "http://app.lemenglive.com/video/share.html?userId=" + appUser.getId(), SHARE_MEDIA.QQ);
                 break;
             case R.id.qq_zone:
-                UMUtils.umShareSingle(this, appUser.getNickName(), appUser.getPicUrl(),
-                        "http://app.lemenglive.com/video/share.html?userId=" + appUser.getId(), SHARE_MEDIA.QZONE);
                 break;
             case R.id.wechat_circle:
-                UMUtils.umShareSingle(this, appUser.getNickName(), appUser.getPicUrl(),
-                        "http://app.lemenglive.com/video/share.html?userId=" + appUser.getId(), SHARE_MEDIA.WEIXIN_CIRCLE);
                 break;
         }
     }

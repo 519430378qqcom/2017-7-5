@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -151,6 +150,9 @@ public class OtherPersonHomePageActivity extends BaseActivity {
      */
     private String isBlackList = "";
 
+    private int width;
+    private int height;
+
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -248,16 +250,10 @@ public class OtherPersonHomePageActivity extends BaseActivity {
                         avHeader.setLayoutParams(lp);
                         break;
                     case MotionEvent.ACTION_UP:
-//                        AutoRelativeLayout.LayoutParams lp1 = new AutoRelativeLayout.LayoutParams(AutoRelativeLayout.LayoutParams.MATCH_PARENT, 520);
-//                        myHead.setLayoutParams(lp1);
 
                         mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                DisplayMetrics dm = new DisplayMetrics();
-                                getWindowManager().getDefaultDisplay().getMetrics(dm);
-                                int width = dm.widthPixels;
-                                int height = width * 520 / 750;
                                 AutoRelativeLayout.LayoutParams lp1 = new AutoRelativeLayout.LayoutParams(width, height);
                                 avHeader.setLayoutParams(lp1);
                             }
@@ -284,6 +280,14 @@ public class OtherPersonHomePageActivity extends BaseActivity {
         mygrid.setAdapter(adapter);
         adaptervideo = new VideoAdapter(mContext, listvideo, "notShow");
         mygrid_samll_video.setAdapter(adaptervideo);
+
+        avHeader.post(new Runnable() {
+            @Override
+            public void run() {
+                width = avHeader.getWidth();
+                height = avHeader.getHeight();
+            }
+        });
     }
 
     @Override

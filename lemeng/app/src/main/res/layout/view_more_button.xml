@@ -24,7 +24,7 @@
         android:layout_marginBottom="19px"
         android:layout_marginRight="15px"
         android:src="@mipmap/mg_room_btn_fen"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <ImageView
         android:id="@+id/audio_player"

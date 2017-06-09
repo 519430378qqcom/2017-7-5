@@ -22,6 +22,8 @@ public class UrlBuilder {
 //    public static final String chargeServerUrl = "http://10.11.1.119:8081/admin/";// 充值端口
     /*乐檬接口*/
     public static final String HEAD_DEFAULT = "http://lemeng.oss-ap-southeast-1.aliyuncs.com/lemengImg/1495594583610.png";    //当有空头像的时候
+    public static final String SHARE_VIDEO_URL = "http://60.205.114.36:8080/videoShare/liveShare.html";    //分享直播链接
+    public static final String SHARE_DOWNLOAD_URL = "http://60.205.114.36:8080/shareNew/share.html";    //分享下载链接
     public static final String LOGIN = "/api/v1/login";    //登录
     public static final String REGISTER = "/appusers/register"; //注册
     public static final String forgetPswd = "/appusers/forgetRegister"; //忘记密码
@@ -36,18 +38,12 @@ public class UrlBuilder {
     public static final String selectLevel = "/appLevel/getLevelRate";  //查询当前等级信息
     public static final String Authentication = "/appusers/updateVer";  //实名认证
     public static final String report = "/api/v1/user/report";//举报
-//    public static final String weekContribution = "/appusers/getConsumeAmount";//周榜排行榜
     public static final String weekContribution = "/appusers/getConsumeAmountAndroid";//周榜排行榜
-//    public static final String myContribution = "/appusers/getUserContribution";//我的贡献榜
     public static final String myContribution = "/appusers/getUserContributionAndroid";//我的贡献榜
     public static final String drawMoney = "/appExchange/updateExchangeCash";//提现
     public static final String drawMoney_ratio = "/appExchange/exchangeRatioUse";//提现比例
-    public static final String orderCreate = "/appZfPay/toApppay";//生成订单
-    public static final String wxPay = "/appwxpay/prepare";//微信支付
     public static final String selectQuite = "/appusers/getUserById";//主播离开后获取用户信息
     public static final String openRegister = "/appusers/open/register";//第三方登录
-    public static final String requestLianmai = "/api/v1/room/live/apply";//主播向观众发起连麦
-    public static final String acceptLianmai = "/api/v1/room/live/result";//主播向观众发起连麦
     public static final String selectFamilyMember = "/appusers/selectFamilyMember.do";//家族
     public static final String myController = "appUserControl/getUserControlList";//我的场控列表
     public static final String myControllerAdd = "appUserControl/add";//我的场控添加
@@ -56,14 +52,12 @@ public class UrlBuilder {
     public static final String aliyun = "/aliyun/token";    //请求阿里云id、key
     public static final String START = "/api/v1/room/create/";//新建直播/api/v1/room/create
     public static final String SEARCH = "/api/v1/user/find";//搜索用户
-    public static final String CHAGE_LIANMAI_STATUS = "/api/v1/room/live/apply";//将我的状态变成未连麦状态
     public static final String SEARCH_CONTROLLER = "/appusers/find";//搜索用户场控
     public static final String WEICHAT_BIND = "/api/v1/exchange/bind";//绑定微信公众号
     public static final String YINLIAN_PAY_WEB = "http://59.110.17.224:80/admin/static/payment.html?userId=%s";//银联支付web
     public static final String BAIDU_SONG_SEARCH = "http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.search.catalogSug&query=%s";//搜索
     public static final String BAIDU_SONG_PLAY = "http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.song.play&songid=%s";//得到下载的url
     public static final String getBanner = "/appCarouselFigure/carouselList";//得到banner图
-    public static final String ChangeRooms = "/appRooms/getnewRoom";//切换房间
     public static final String getStateCode = "/appusers/getcountry";//获得国家代码
     public static final String room_funse = "/appRooms/findFansOnline";//直播间的粉丝列表
 

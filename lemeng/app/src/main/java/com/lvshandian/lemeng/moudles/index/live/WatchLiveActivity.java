@@ -128,6 +128,7 @@ import com.lvshandian.lemeng.utils.SendRoomMessageUtils;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.utils.ThreadManager;
 import com.lvshandian.lemeng.utils.ToastUtils;
+import com.lvshandian.lemeng.utils.UMUtils;
 import com.lvshandian.lemeng.view.BarrageView;
 import com.lvshandian.lemeng.view.CameraLivePreviewFrameView;
 import com.lvshandian.lemeng.view.CustomPopWindow;
@@ -270,8 +271,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     ImageView ivLivePrivatechat;
     @Bind(R.id.iv_live_gift)
     ImageView ivLiveGift;
-    //    @Bind(R.id.iv_live_share)
-    //    ImageView ivLiveShare;
+    @Bind(R.id.iv_live_share)
+    ImageView ivLiveShare;
     @Bind(R.id.gift_layout1)
     GiftFrameLayout giftFrameLayout1;
     @Bind(R.id.gift_layout2)
@@ -594,12 +595,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     float DownY;
     //是否隐藏直播界面内容
     private boolean isHindRcView = false;
-
-    /**
-     * 分享的地址
-     */
-    private final String share_url = "http://app.lemenglive.com/video/share.html";
-
 
     /**
      * 乐檬开始动画
@@ -1103,7 +1098,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             public void run() {
                 myHandler.sendEmptyMessage(10001);
             }
-        }, 30000, 30000);
+        }, 10000, 10000);
 
         initQuitDialog("确定离开");
 
@@ -1267,7 +1262,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         liveLianmaiHeadBg2.setOnClickListener(this);
         ivLivePrivatechat.setOnClickListener(this);
         ivLiveGift.setOnClickListener(this);
-//        ivLiveShare.setOnClickListener(this);
+        ivLiveShare.setOnClickListener(this);
         llTangpiao.setOnClickListener(this);
         liveClose.setOnClickListener(this);
         btnAttention.setOnClickListener(this);
@@ -1605,11 +1600,12 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             case R.id.iv_live_gift:
                 getGiftPopup();
                 break;
-//            //分享
-//            case R.id.iv_live_share:
-//                UMUtils.umShare(this, liveListBean.getNickName(), liveListBean.getLivePicUrl(),
-//                        share_url + "?userId=" + liveListBean.getId());
-//                break;
+            //分享
+            case R.id.iv_live_share:
+                UMUtils.umShare(WatchLiveActivity.this, "主播" + liveListBean.getNickName() + "邀你玩游戏啦",
+                        "够刺激,主播" + liveListBean.getNickName() + "带你玩转直播间,一起游戏嗨起来!",
+                        liveListBean.getLivePicUrl(), UrlBuilder.SHARE_VIDEO_URL + "?roomId=" + liveListBean.getRooms().getRoomId() + "&userId=" + liveListBean.getId());
+                break;
             //跳转到排行榜
             case R.id.ll_tp_labe:
                 Intent intent = new Intent(this, ContributionActivity.class);
@@ -2122,7 +2118,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             if (bullfightAudio == null) {
                 bullfightAudio = new BullfightAudio(getApplicationContext());
             }
-            if (betBalance < 10 && myGoldCoin >=10) {
+            if (betBalance < 10 && myGoldCoin >= 10) {
                 checkBettingBalance(10);
             }
         } else {
@@ -2213,7 +2209,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     bullfightAudio.play(result);
                     iv_bull_amount3.setImageResource(bullfightPresenter.getBullSumId(result));
                     switchBullNum(true, 3);
-                    if(result == 10) {
+                    if (result == 10) {
                         showBullAnimation();
                     }
                 }
@@ -2240,7 +2236,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     bullfightAudio.play(result);
                     iv_bull_amount2.setImageResource(bullfightPresenter.getBullSumId(result));
                     switchBullNum(true, 2);
-                    if(result == 10) {
+                    if (result == 10) {
                         showBullAnimation();
                     }
                 }
@@ -2267,7 +2263,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     bullfightAudio.play(result);
                     iv_bull_amount1.setImageResource(bullfightPresenter.getBullSumId(result));
                     switchBullNum(true, 1);
-                    if(result == 10) {
+                    if (result == 10) {
                         showBullAnimation();
                     }
                 }
@@ -2294,7 +2290,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     bullfightAudio.play(result);
                     iv_bull_amount0.setImageResource(bullfightPresenter.getBullSumId(result));
                     switchBullNum(true, 0);
-                    if(result == 10) {
+                    if (result == 10) {
                         showBullAnimation();
                     }
                 }
@@ -2648,11 +2644,14 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             });
             animator.start();
         }
-        String myCoin = CountUtils.getCount(myGoldCoin);
-        if (gameType == 1) {
-            all_lepiao.setText(myCoin);
-        } else if (gameType == 2) {
-            tv_bullfight_lepiao.setText(myCoin);
+
+        if (myGoldCoin != null) {
+            String myCoin = CountUtils.getCount(myGoldCoin);
+            if (gameType == 1) {
+                all_lepiao.setText(myCoin);
+            } else if (gameType == 2) {
+                tv_bullfight_lepiao.setText(myCoin);
+            }
         }
     }
 
@@ -3486,6 +3485,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         map.put("amount", mSendGiftItem.getMemberConsume());
         map.put("giftId", mSendGiftItem.getId());
         map.put("toUserId", liveListBean.getId() + "");
+        map.put("goldAmount", myGoldCoin + "");
         httpDatas.DataNoloadingAdmin("赠送礼物", Request.Method.POST,
                 UrlBuilder.SEND_GIFT, map, myHandler, RequestCode.SEND_GIFT);
     }

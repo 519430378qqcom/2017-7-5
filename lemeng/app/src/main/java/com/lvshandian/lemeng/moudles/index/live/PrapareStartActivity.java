@@ -246,20 +246,24 @@ public class PrapareStartActivity extends BaseActivity {
                 }
                 break;
             case R.id.wechat:
-                UMUtils.umShareSingle(this, appUser.getNickName(), appUser.getPicUrl(),
-                        "http://app.lemenglive.com/video/share.html?userId=" + appUser.getId(), SHARE_MEDIA.WEIXIN);
+                UMUtils.umShareSingle(this, "乐檬直播,共享世界的快乐",
+                        "万人直播室嗨翻天!超火人气,边撩妹纸边玩游戏,赶紧加入吧!", appUser.getPicUrl(),
+                        UrlBuilder.SHARE_DOWNLOAD_URL, SHARE_MEDIA.WEIXIN);
                 break;
             case R.id.wechat_circle:
-                UMUtils.umShareSingle(this, appUser.getNickName(), appUser.getPicUrl(),
-                        "http://app.lemenglive.com/video/share.html?userId=" + appUser.getId(), SHARE_MEDIA.WEIXIN_CIRCLE);
+                UMUtils.umShareSingle(this, "乐檬直播,共享世界的快乐",
+                        "万人直播室嗨翻天!超火人气,边撩妹纸边玩游戏,赶紧加入吧!", appUser.getPicUrl(),
+                        UrlBuilder.SHARE_DOWNLOAD_URL, SHARE_MEDIA.WEIXIN_CIRCLE);
                 break;
             case R.id.qq:
-                UMUtils.umShareSingle(this, appUser.getNickName(), appUser.getPicUrl(),
-                        "http://app.lemenglive.com/video/share.html?userId=" + appUser.getId(), SHARE_MEDIA.QQ);
+                UMUtils.umShareSingle(this, "乐檬直播,共享世界的快乐",
+                        "万人直播室嗨翻天!超火人气,边撩妹纸边玩游戏,赶紧加入吧!", appUser.getPicUrl(),
+                        UrlBuilder.SHARE_DOWNLOAD_URL, SHARE_MEDIA.QQ);
                 break;
             case R.id.qq_zone:
-                UMUtils.umShareSingle(this, appUser.getNickName(), appUser.getPicUrl(),
-                        "http://app.lemenglive.com/video/share.html?userId=" + appUser.getId(), SHARE_MEDIA.QZONE);
+                UMUtils.umShareSingle(this, "乐檬直播,共享世界的快乐",
+                        "万人直播室嗨翻天!超火人气,边撩妹纸边玩游戏,赶紧加入吧!", appUser.getPicUrl(),
+                        UrlBuilder.SHARE_DOWNLOAD_URL, SHARE_MEDIA.QZONE);
                 break;
 
         }

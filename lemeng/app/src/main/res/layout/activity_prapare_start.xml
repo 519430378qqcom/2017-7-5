@@ -126,14 +126,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80px"
-            android:src="@mipmap/room_qq1" />
+            android:src="@mipmap/room_qq1"
+            android:visibility="gone"/>
 
         <ImageView
             android:id="@+id/qq_zone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80px"
-            android:src="@mipmap/room_qqzone1" />
+            android:src="@mipmap/room_qqzone1"
+            android:visibility="gone"/>
     </com.zhy.autolayout.AutoLinearLayout>
 
     <TextView

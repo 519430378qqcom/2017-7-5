@@ -23,11 +23,6 @@ import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 import com.umeng.socialize.utils.Log;
 
-import static com.umeng.socialize.bean.SHARE_MEDIA.FACEBOOK;
-import static com.umeng.socialize.bean.SHARE_MEDIA.GOOGLEPLUS;
-import static com.umeng.socialize.bean.SHARE_MEDIA.QQ;
-import static com.umeng.socialize.bean.SHARE_MEDIA.QZONE;
-import static com.umeng.socialize.bean.SHARE_MEDIA.TWITTER;
 import static com.umeng.socialize.bean.SHARE_MEDIA.WEIXIN;
 import static com.umeng.socialize.bean.SHARE_MEDIA.WEIXIN_CIRCLE;
 
@@ -155,29 +150,23 @@ public class UMUtils {
 
     }
 
-    public static void umShare(Activity act, String nikeName, final String picUrl, String share_url) {
+    public static void umShare(Activity act, String share_title, String share_content, final String picUrl, String share_url) {
         mActivity = act;
-
-        String share_content = "分享是真爱,你是我的菜!" + nikeName + "正在直播,快来一起看~";
-        String share_title = "分享是真爱,你是我的菜\n";
-
         UMWeb web = new UMWeb(share_url);
         web.setTitle(share_title);//标题
         web.setThumb(new UMImage(act, picUrl));  //缩略图
         web.setDescription(share_content);//描述
 
         new ShareAction(act).withText(share_title)
-                .setDisplayList(FACEBOOK, TWITTER, GOOGLEPLUS, WEIXIN, QQ, WEIXIN_CIRCLE, QZONE)
+//                .setDisplayList(FACEBOOK, TWITTER, GOOGLEPLUS, WEIXIN, QQ, WEIXIN_CIRCLE, QZONE)
+                .setDisplayList(WEIXIN, WEIXIN_CIRCLE)
                 .withMedia(web)
                 .setCallback(umShareListener).open();
 
     }
 
-    public static void umShareSingle(final Activity act, String nikeName, final String picUrl, String share_url, SHARE_MEDIA shareMedia) {
+    public static void umShareSingle(final Activity act, String share_title, String share_content, final String picUrl, String share_url, SHARE_MEDIA shareMedia) {
         mActivity = act;
-        String share_content = "分享是真爱,你是我的菜!" + nikeName + "正在直播,快来一起看~";
-        String share_title = "分享是真爱,你是我的菜\n";
-
         UMWeb web = new UMWeb(share_url);
         web.setTitle(share_title);//标题
         web.setThumb(new UMImage(act, picUrl));  //缩略图

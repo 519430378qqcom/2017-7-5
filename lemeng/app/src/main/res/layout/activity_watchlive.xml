@@ -415,6 +415,13 @@
                                 android:visibility="gone" />
                         </com.zhy.autolayout.AutoRelativeLayout>
 
+                        <ImageView
+                            android:id="@+id/iv_live_share"
+                            android:layout_width="80px"
+                            android:layout_height="80px"
+                            android:layout_marginBottom="19px"
+                            android:layout_marginLeft="19px"
+                            android:background="@mipmap/mg_room_btn_fen" />
 
                         <ImageView
                             android:id="@+id/iv_game"
@@ -431,9 +438,9 @@
 
                 <com.zhy.autolayout.AutoRelativeLayout
                     android:id="@+id/rl_game_container"
-                    android:visibility="gone"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
 
                     <include layout="@layout/view_show_bullfight_game" />
 
@@ -481,11 +488,11 @@
 
             <com.zhy.autolayout.AutoRelativeLayout
                 android:id="@+id/rl_game_info"
-                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10px"
-                android:layout_marginTop="200px">
+                android:layout_marginTop="200px"
+                android:visibility="gone">
 
                 <include layout="@layout/item_game_infos" />
 

@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -146,6 +146,8 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
     public List<VideoBean> listvideo = new ArrayList<>();
     public List<String> imgList = new ArrayList<>();
 
+    private int width;
+    private int height;
 
     private Handler mHandler = new Handler() {
         @Override
@@ -277,6 +279,18 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
     }
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        myHead.post(new Runnable() {
+            @Override
+            public void run() {
+                width = myHead.getWidth();
+                height = myHead.getHeight();
+            }
+        });
+    }
+
+    @Override
     protected void initListener() {
         llCoin.setOnClickListener(this);
         llEarnest.setOnClickListener(this);
@@ -311,14 +325,6 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
                         mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                if (getActivity() == null)
-                                    return;
-                                if (getActivity().getWindowManager() == null)
-                                    return;
-                                DisplayMetrics dm = new DisplayMetrics();
-                                getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-                                int width = dm.widthPixels;
-                                int height = width * 520 / 750;
                                 AutoRelativeLayout.LayoutParams lp1 = new AutoRelativeLayout.LayoutParams(width, height);
                                 myHead.setLayoutParams(lp1);
                             }
