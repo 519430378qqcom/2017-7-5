@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.lvshandian.lemeng.MyApplication;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.widget.AvatarView;
 import com.squareup.picasso.Picasso;
@@ -26,7 +27,7 @@ public class GiftFrameLayout extends FrameLayout {
     private LayoutInflater mInflater;
     RelativeLayout anim_rl;
     AvatarView anim_header;
-    AvatarView anim_gift;
+    ImageView anim_gift;
     ImageView anim_light;
     TextView anim_nickname, anim_sign;
     TextView anim_num;
@@ -57,7 +58,7 @@ public class GiftFrameLayout extends FrameLayout {
     private void initView() {
         View view = mInflater.inflate(R.layout.show_gift_animation, this, false);
         anim_rl = (RelativeLayout) view.findViewById(R.id.animation_person_rl);
-        anim_gift = (AvatarView) view.findViewById(R.id.animation_gift);
+        anim_gift = (ImageView) view.findViewById(R.id.animation_gift);
         anim_light = (ImageView) view.findViewById(R.id.animation_light);
 //        anim_num = (StrokeTextView) view.findViewById(R.id.animation_num);
         anim_num = (TextView) view.findViewById(R.id.animation_num);
@@ -87,7 +88,7 @@ public class GiftFrameLayout extends FrameLayout {
             anim_header.setAvatarUrl(model.getUserAvatarRes());
         }
         if (!TextUtils.isEmpty(model.getGift_id())) {
-            anim_gift.setAvatarUrl(model.getGift_id());
+            Picasso.with(MyApplication.mContext).load(model.getGift_id()).into(anim_gift);
         }
         if (!TextUtils.isEmpty(model.getRepeatGiftNumber())) {
             RepeatGiftNumber = model.getRepeatGiftNumber();
@@ -183,6 +184,7 @@ public class GiftFrameLayout extends FrameLayout {
             public void onTick(long millisUntilFinished) {
 
             }
+
             @Override
             public void onFinish() {
                 animatorSet = GiftAnimationUtil.startAnimationHint(fadeAnimator);

@@ -40,6 +40,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -393,6 +394,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     TextView tv_ds;
     @Bind(R.id.tv_game_next_open_time)
     TimeCountDownLayout tv_game_next_open_time;
+    @Bind(R.id.tv_next)
+    TextView tv_next;
     @Bind(R.id.rl_kp)
     LinearLayout rl_kp;
     @Bind(R.id.iv_game)
@@ -2850,6 +2853,22 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         }
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
+        //设置虚拟按键变成三个小点
+        final Window window = getWindow();
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE;
+        window.setAttributes(params);
+
+        /**
+         * 虚拟键盘弹出来监听
+         */
+        window.getDecorView().setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+            @Override
+            public void onSystemUiVisibilityChange(int visibility) {
+                setHideVirtualKey(window);
+            }
+        });
     }
 
 
@@ -3588,7 +3607,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      */
     private void changeSendGiftBtnStatue(boolean statue) {
         if (statue) {
-            mSendGiftBtn.setBackgroundColor(getResources().getColor(R.color.crimson));
+            mSendGiftBtn.setBackgroundColor(getResources().getColor(R.color.main));
             mSendGiftBtn.setEnabled(true);
         } else {
             mSendGiftBtn.setBackgroundColor(getResources().getColor(R.color.light_gray2));
@@ -5195,6 +5214,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                             third_num.setText(lastAwardBean.getThirdNum() + "");
                             all_num.setText(lastAwardBean.getSum() + "");
                             tv_ds.setText(lastAwardBean.getType());
+                            tv_next.setText("距离" + (Integer.parseInt(lastAwardBean.getNper()) + 1) + "期开奖还有");
 
                             long now = System.currentTimeMillis();
                             mCountDownTotalTime = Long.parseLong(lastAwardBean.getDateLine()) - now;
@@ -5207,7 +5227,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                             }
 
                             if (lastAwardBean.getWinStatus().equals("1")) {
-                                getZhonaJiangTZ(String.valueOf(Integer.parseInt(lastAwardBean.getNper()) - 1), lastAwardBean.getWinAmountAll(), "1");
+                                getZhongJiangTZ(lastAwardBean.getNper(), lastAwardBean.getWinAmountAll(), "1");
 
                                 /**
                                  * 设置游戏布局的金币数量
@@ -5216,7 +5236,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                                 String myCoin = CountUtils.getCount(myGoldCoin);
                                 all_lepiao.setText(myCoin);
                             } else if (lastAwardBean.getWinStatus().equals("0")) {
-                                getZhonaJiangTZ(String.valueOf(Integer.parseInt(lastAwardBean.getNper()) - 1), lastAwardBean.getWinAmountAll(), "0");
+                                getZhongJiangTZ(lastAwardBean.getNper(), lastAwardBean.getWinAmountAll(), "0");
                             }
 
                         }
@@ -5234,6 +5254,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                             third_num.setText(lastAwardBean.getThirdNum() + "");
                             all_num.setText(lastAwardBean.getSum() + "");
                             tv_ds.setText(lastAwardBean.getType());
+                            tv_next.setText("距离" + (Integer.parseInt(lastAwardBean.getNper()) + 1) + "期开奖还有");
                             tv_game_next_open_time.setText("等待:开奖:中.");
                             myHandler.postDelayed(timenNumber, 30000);
                         }
@@ -5256,7 +5277,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         }
     };
 
-    private void getZhonaJiangTZ(String nper, String winAmountAll, String type) {
+    private void getZhongJiangTZ(String nper, String winAmountAll, String type) {
         initDialog();
         String content = "";
         if (type.equals("1")) {

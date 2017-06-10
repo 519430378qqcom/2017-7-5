@@ -7,7 +7,7 @@
         android:id="@+id/animation_person_rl"
         android:layout_width="408px"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10px"
+        android:layout_marginTop="30px"
         android:layout_gravity="left"
         android:background="@drawable/background_gift_item">
 
@@ -51,11 +51,11 @@
 
     </com.zhy.autolayout.AutoRelativeLayout>
 
-    <com.lvshandian.lemeng.widget.AvatarView
+    <ImageView
         android:id="@+id/animation_gift"
-        android:layout_width="100px"
-        android:layout_height="100px"
-        android:layout_marginLeft="310px"/>
+        android:layout_width="140px"
+        android:layout_height="140px"
+        android:layout_marginLeft="300px"/>
 
     <ImageView
         android:id="@+id/animation_light"

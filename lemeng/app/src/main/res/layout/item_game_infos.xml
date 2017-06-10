@@ -32,7 +32,7 @@
             android:layout_alignParentTop="true"
             android:text="第5200期"
             android:textColor="@color/white"
-            android:textSize="12sp" />
+            android:textSize="24px" />
 
     </com.zhy.autolayout.AutoRelativeLayout>
 
@@ -97,13 +97,14 @@
     </com.zhy.autolayout.AutoLinearLayout>
 
     <TextView
+        android:id="@+id/tv_next"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10px"
         android:gravity="center"
         android:text="距离下期开奖还有"
         android:textColor="@color/white"
-        android:textSize="10sp" />
+        android:textSize="19px" />
 
     <com.lvshandian.lemeng.widget.TimeCountDownLayout
         android:id="@+id/tv_game_next_open_time"

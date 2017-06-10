@@ -41,6 +41,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -406,6 +407,8 @@ public class StartLiveActivity extends BaseActivity implements
     TextView tv_ds;
     @Bind(R.id.tv_game_next_open_time)
     TimeCountDownLayout tv_game_next_open_time;
+    @Bind(R.id.tv_next)
+    TextView tv_next;
     @Bind(R.id.rl_kp)
     LinearLayout rl_kp;
     @Bind(R.id.tv_hz)
@@ -2540,6 +2543,22 @@ public class StartLiveActivity extends BaseActivity implements
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
+        //设置虚拟按键变成三个小点
+        final Window window = getWindow();
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE;
+        window.setAttributes(params);
+
+        /**
+         * 虚拟键盘弹出来监听
+         */
+        window.getDecorView().setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+            @Override
+            public void onSystemUiVisibilityChange(int visibility) {
+                setHideVirtualKey(window);
+            }
+        });
     }
 
     private boolean isFirstJoin = true;//是否第一次调onResume
@@ -5218,6 +5237,7 @@ public class StartLiveActivity extends BaseActivity implements
                             third_num.setText(lastAwardBean.getThirdNum() + "");
                             all_num.setText(lastAwardBean.getSum() + "");
                             tv_ds.setText(lastAwardBean.getType());
+                            tv_next.setText("距离" + (Integer.parseInt(lastAwardBean.getNper()) + 1) + "期开奖还有");
 
                             long now = System.currentTimeMillis();
                             mCountDownTotalTime = Long.parseLong(lastAwardBean.getDateLine()) - now;
@@ -5230,7 +5250,7 @@ public class StartLiveActivity extends BaseActivity implements
                             }
 
                             if (lastAwardBean.getWinStatus().equals("1")) {
-                                getZhonaJiangTZ(String.valueOf(Integer.parseInt(lastAwardBean.getNper()) - 1), lastAwardBean.getWinAmountAll(), "1");
+                                getZhongJiangTZ(lastAwardBean.getNper(), lastAwardBean.getWinAmountAll(), "1");
 
                                 /**
                                  * 设置游戏布局的金币数量
@@ -5239,7 +5259,7 @@ public class StartLiveActivity extends BaseActivity implements
                                 String myCoin = CountUtils.getCount(myGoldCoin);
                                 all_lepiao.setText(myCoin);
                             } else if (lastAwardBean.getWinStatus().equals("0")) {
-                                getZhonaJiangTZ(String.valueOf(Integer.parseInt(lastAwardBean.getNper()) - 1), lastAwardBean.getWinAmountAll(), "0");
+                                getZhongJiangTZ(lastAwardBean.getNper(), lastAwardBean.getWinAmountAll(), "0");
                             }
                         }
                     } else if (code.equals("1")) {
@@ -5257,6 +5277,7 @@ public class StartLiveActivity extends BaseActivity implements
                             all_num.setText(lastAwardBean.getSum() + "");
                             tv_ds.setText(lastAwardBean.getType());
                             tv_game_next_open_time.setText("等待:开奖:中.");
+                            tv_next.setText("距离" + (Integer.parseInt(lastAwardBean.getNper()) + 1) + "期开奖还有");
 
                             myHandler.postDelayed(timenNumber, 30000);
                         }
@@ -5279,7 +5300,7 @@ public class StartLiveActivity extends BaseActivity implements
         }
     };
 
-    private void getZhonaJiangTZ(String nper, String winAmountAll, String type) {
+    private void getZhongJiangTZ(String nper, String winAmountAll, String type) {
         initDialog();
         String content = "";
         if (type.equals("1")) {

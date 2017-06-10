@@ -125,21 +125,21 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
         preliminary();
         EventBus.getDefault().register(this);
 
-        //设置虚拟按键变成三个小点
-        final Window window = getWindow();
-        WindowManager.LayoutParams params = window.getAttributes();
-        params.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE;
-        window.setAttributes(params);
-
-        /**
-         * 虚拟键盘弹出来监听
-         */
-        window.getDecorView().setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
-            @Override
-            public void onSystemUiVisibilityChange(int visibility) {
-                setHideVirtualKey(window);
-            }
-        });
+//        //设置虚拟按键变成三个小点
+//        final Window window = getWindow();
+//        WindowManager.LayoutParams params = window.getAttributes();
+//        params.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE;
+//        window.setAttributes(params);
+//
+//        /**
+//         * 虚拟键盘弹出来监听
+//         */
+//        window.getDecorView().setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+//            @Override
+//            public void onSystemUiVisibilityChange(int visibility) {
+//                setHideVirtualKey(window);
+//            }
+//        });
     }
 
     @Override
