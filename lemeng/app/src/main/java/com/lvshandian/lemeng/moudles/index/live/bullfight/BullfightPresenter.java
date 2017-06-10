@@ -274,7 +274,21 @@ public class BullfightPresenter {
             }
         });
     }
+    /**
+     * 初始化倒计时
+     */
+    public void computeAllResult(String roomId, String perId) {
+        String url = UrlBuilder.serverUrl + UrlBuilder.ALL_RESULT + "?roomId=" + roomId + "&perid=" + perId;
+        OkHttpUtils.get().url(url).build().execute(new StringCallback() {
+            @Override
+            public void onError(Request request, Exception e) {
+            }
 
+            @Override
+            public void onResponse(String response) {
+            }
+        });
+    }
     /**
      * 获取牛几的id
      *

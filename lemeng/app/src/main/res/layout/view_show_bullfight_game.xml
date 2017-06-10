@@ -106,7 +106,7 @@
                     android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/agray"/>
+                    android:background="@drawable/bg_black_radius"/>
             </com.zhy.autolayout.AutoRelativeLayout>
 
             <com.zhy.autolayout.AutoRelativeLayout
@@ -196,7 +196,7 @@
                     android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/agray"/>
+                    android:background="@drawable/bg_black_radius"/>
             </com.zhy.autolayout.AutoRelativeLayout>
 
             <com.zhy.autolayout.AutoRelativeLayout
@@ -287,7 +287,7 @@
                     android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/agray"/>
+                    android:background="@drawable/bg_black_radius"/>
             </com.zhy.autolayout.AutoRelativeLayout>
         </com.zhy.autolayout.AutoLinearLayout>
         <com.zhy.autolayout.AutoRelativeLayout
@@ -318,30 +318,26 @@
                 android:id="@+id/tv_bullfight_result1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:textSize="16sp"
                 android:layout_marginTop="6px"
+                android:layout_marginBottom="6px"
                 android:textColor="@color/white"
                 />
             <TextView
                 android:id="@+id/tv_bullfight_result2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="16sp"
-                android:layout_marginTop="8px"
+                android:textSize="14sp"
                 android:textColor="@color/yellow" />
             <TextView
                 android:id="@+id/tv_bullfight_result3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:textSize="14sp"
-                android:layout_marginBottom="8px"
+                android:layout_marginBottom="6px"
                 android:layout_marginTop="6px"
                 android:textColor="@color/white"
                 />
-
         </com.zhy.autolayout.AutoLinearLayout>
     </com.zhy.autolayout.AutoRelativeLayout>
 

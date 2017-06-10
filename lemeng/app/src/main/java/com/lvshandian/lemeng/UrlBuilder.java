@@ -143,6 +143,10 @@ public class UrlBuilder {
         userId	String	用户id
      */
     public static final String BULLFIGHT_RESULT = "admin/appusers/cashprize";
+    /**
+     * 所有开奖结果 roomId String perid	String	期数
+     */
+    public static final String ALL_RESULT = "admin/appusers/altogetherTaurusBug";
     public static final String cloesAnchor(String id) {//关闭直播
         return "/api/v1/room/" + id + "/leave";
     }

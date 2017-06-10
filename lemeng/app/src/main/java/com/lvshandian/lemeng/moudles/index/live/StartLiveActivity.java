@@ -1287,9 +1287,11 @@ public class StartLiveActivity extends BaseActivity implements
             ToastUtils.showMessageDefault(StartLiveActivity.this, getResources().getString(R.string.no_select_betbalance));
         }
     }
+
     private int total1;
     private int total2;
     private int total3;
+
     /**
      * 添加投注池视图的显示
      *
@@ -1477,6 +1479,9 @@ public class StartLiveActivity extends BaseActivity implements
         if (nextTime >= 15) {
             switchTimer();
         }
+        if (nextTime <= 5 && nextTime > 0) {
+            bullfightResultShow(null,null,getResources().getString(R.string.take_a_rest)+nextTime+"S");
+        }
         switch (nextTime) {
             case 30://主播初始化游戏结果
                 bullfightPresenter.initGameResult(room_Id);
@@ -1485,13 +1490,11 @@ public class StartLiveActivity extends BaseActivity implements
                 setBetPoolEnable(false);
                 rl_timing.setVisibility(View.GONE);
                 bullfightPresenter.getPokerResult(room_Id);
+                bullfightPresenter.computeAllResult(room_Id, uper + "");
                 break;
             case 8://开奖
                 bullfightPresenter.getGameResult(room_Id, uper + "", appUser.getId());
                 bullfightPresenter.updateBankerBalance();
-                break;
-            case 5://休息一下
-                bullfightResultShow(getResources().getString(R.string.take_a_rest),null,null);
                 break;
             case 0://主播更新倒计时
                 myHandler.removeMessages(BULLFIGHT_TIME);
@@ -1677,13 +1680,13 @@ public class StartLiveActivity extends BaseActivity implements
     }
 
     @Override
-    public void initGameTimer(){
+    public void initGameTimer() {
         bullfightPresenter.getTimeAndNper(room_Id);
         Map<String, Object> map = new HashMap<>();
         map.put("vip", appUser.getVip());
         map.put("userId", appUser.getId());
         map.put("level", appUser.getLevel());
-        map.put("NIM_CONTER_TIMER_MPER", uper+"");
+        map.put("NIM_CONTER_TIMER_MPER", uper + "");
         SendRoomMessageUtils.onCustomMessagePlay("3131", messageFragment, wy_Id, map);
     }
 
@@ -1736,6 +1739,7 @@ public class StartLiveActivity extends BaseActivity implements
     private long amount1;
     private long amount2;
     private long amount3;
+
     @Override
     public void betSuccess(BetResult betResult, int amount, int type) {
         int code = betResult.getCode();

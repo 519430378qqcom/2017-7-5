@@ -1892,10 +1892,13 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * 斗牛倒计时
      */
     private void bullfightTimer() {
+        myHandler.sendEmptyMessageDelayed(BULLFIGHT_TIME, 1000);
         if (nextTime >= 15) {
             switchTimer();
         }
-        myHandler.sendEmptyMessageDelayed(BULLFIGHT_TIME, 1000);
+        if (nextTime <= 5 && nextTime > 0) {
+            bullfightResultShow(null,null,getResources().getString(R.string.take_a_rest)+nextTime+"S");
+        }
         switch (nextTime) {
             case 15://获取扑克牌结果
                 setBetPoolEnable(false);
