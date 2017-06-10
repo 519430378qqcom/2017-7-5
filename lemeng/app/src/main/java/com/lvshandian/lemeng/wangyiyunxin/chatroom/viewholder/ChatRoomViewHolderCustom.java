@@ -276,15 +276,6 @@ public class ChatRoomViewHolderCustom extends MsgViewHolderBase {
                     case 2929://主播开斗牛游戏
                         text = (String) remote.get("NIM_BEGIN_GAME_NIUNIU");
                         break;
-                    case 3030://有人投注
-//                        if(remote.get("NIM_TOUZHU_GOLD_SELECT_1")!=null) {
-//                            text = context.getString(R.string.betting1) + remote.get("NIM_TOUZHU_GOLD_SELECT_1");
-//                        }else if(remote.get("NIM_TOUZHU_GOLD_SELECT_2")!=null) {
-//                            text = context.getString(R.string.betting2) + remote.get("NIM_TOUZHU_GOLD_SELECT_2");
-//                        }else if(remote.get("NIM_TOUZHU_GOLD_SELECT_3")!= null) {
-//                            text = context.getString(R.string.betting3) + remote.get("NIM_TOUZHU_GOLD_SELECT_3");
-//                        }
-                        break;
                     default:
                         //默认不显示任何东西
 //                        messageItemLayout.setPadding(0, 0, 0, 0);

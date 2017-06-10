@@ -552,7 +552,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      */
     private int nextTime;
     /**
-     * 期数
+     * 斗牛期数
      */
     private int uper;
     /**
@@ -1706,6 +1706,10 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         }
     }
 
+    private int total1;
+    private int total2;
+    private int total3;
+
     /**
      * 添加投注池视图的显示
      *
@@ -1735,17 +1739,17 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         switch (position) {
             case 1:
                 bettingPoolView = rl_bullfight_betting_container1;
-                int total1 = Integer.parseInt(tv_bullfight_totlanum1.getText().toString()) + betSum;
+                total1 += betSum;
                 tv_bullfight_totlanum1.setText(CountUtils.getCount(total1));
                 break;
             case 2:
                 bettingPoolView = rl_bullfight_betting_container2;
-                int total2 = Integer.parseInt(tv_bullfight_totlanum2.getText().toString()) + betSum;
+                total2 += betSum;
                 tv_bullfight_totlanum2.setText(CountUtils.getCount(total2));
                 break;
             case 3:
                 bettingPoolView = rl_bullfight_betting_container3;
-                int total3 = Integer.parseInt(tv_bullfight_totlanum3.getText().toString()) + betSum;
+                total3 += betSum;
                 tv_bullfight_totlanum3.setText(CountUtils.getCount(total3));
                 break;
         }
@@ -1885,26 +1889,22 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * 斗牛倒计时
      */
     private void bullfightTimer() {
-        if (nextTime >= 10) {
+        if (nextTime >= 15) {
             switchTimer();
         }
         myHandler.sendEmptyMessageDelayed(BULLFIGHT_TIME, 1000);
         switch (nextTime) {
-            case 10://获取扑克牌结果
+            case 15://获取扑克牌结果
                 setBetPoolEnable(false);
                 rl_timing.setVisibility(View.GONE);
                 bullfightPresenter.getPokerResult(liveListBean.getRoomId() + "");
                 break;
-            case 5://开奖
+            case 8://开奖
                 bullfightPresenter.getGameResult(liveListBean.getRoomId() + "", uper + "", appUser.getId());
                 bullfightPresenter.updateBankerBalance();
                 break;
-            case 1://主播更新倒计时
-//                bullfightPresenter.initGameTimer(liveListBean.getRoomId() + "", uper + "", appUser.getId() + "");
-                break;
-            case 0://再次请求下一局倒计时
-                myHandler.removeMessages(BULLFIGHT_TIME);
-                bullfightPresenter.getTimeAndNper(liveListBean.getRoomId() + "");
+            case 5://休息一下
+                bullfightResultShow(getResources().getString(R.string.take_a_rest),null,null);
                 break;
         }
         nextTime--;
@@ -1959,7 +1959,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * param isShow
      */
     private void switchTimer() {
-        int time = nextTime - 10;
+        int time = nextTime - 15;
         tv_timing.setText(time + "S");
     }
 
@@ -2074,8 +2074,14 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     }
 
     @Override
+    public void initGameTimer() {
+
+    }
+
+    @Override
     public void getTimeAndNPer(TimeAndNper timeAndNper) {
         if (timeAndNper.isSuccess()) {
+            myHandler.removeMessages(BULLFIGHT_TIME);
             setBetPoolEnable(true);
             ll_bullfight_result.setVisibility(View.INVISIBLE);
             rl_timing.setVisibility(View.VISIBLE);
@@ -2085,6 +2091,12 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             iv_gray_bg1.setVisibility(View.GONE);
             iv_gray_bg2.setVisibility(View.GONE);
             iv_gray_bg3.setVisibility(View.GONE);
+            amount1 = 0;
+            amount2 = 0;
+            amount3 = 0;
+            total1 = 0;
+            total2 = 0;
+            total3 = 0;
             tv_bullfight_totlanum1.setText("0");
             tv_bullfight_totlanum2.setText("0");
             tv_bullfight_totlanum3.setText("0");
@@ -2096,7 +2108,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 return;
             }
             nextTime = timeAndNper.getObj().getTime() + 1;
-            nextTime = nextTime > 30 ? 30 : nextTime;
+            nextTime = nextTime > 35 ? 35 : nextTime;
             uper = timeAndNper.getObj().getPerid();
             if (!isPlayerRoom) {
                 showPlayView(2);
@@ -2111,7 +2123,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 switchAllPoker(false, -1);
                 bullfightResultShow(getResources().getString(R.string.wait_next_start), null, null);
                 bullfightPresenter.getBankerInfo();
-                myHandler.sendEmptyMessageDelayed(WAIT_NEXT_START, nextTime * 1000);
                 return;
             }
             myHandler.sendEmptyMessage(BULLFIGHT_TIME);
@@ -2128,6 +2139,10 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         }
     }
 
+    private long amount1;
+    private long amount2;
+    private long amount3;
+
     @Override
     public void betSuccess(BetResult betResult, int amount, int type) {
         int code = betResult.getCode();
@@ -2143,15 +2158,15 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 addBettingView(type, amount, true);
                 switch (type) {
                     case 1:
-                        int amount1 = Integer.parseInt(tv_bullfight_minenum1.getText().toString()) + amount;
+                        amount1 += amount;
                         tv_bullfight_minenum1.setText(CountUtils.getCount(amount1));
                         break;
                     case 2:
-                        int amount2 = Integer.parseInt(tv_bullfight_minenum2.getText().toString()) + amount;
+                        amount2 += amount;
                         tv_bullfight_minenum2.setText(CountUtils.getCount(amount2));
                         break;
                     case 3:
-                        int amount3 = Integer.parseInt(tv_bullfight_minenum3.getText().toString()) + amount;
+                        amount3 += amount;
                         tv_bullfight_minenum3.setText(CountUtils.getCount(amount3));
                         break;
                 }
@@ -3128,6 +3143,11 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                             amount = Integer.valueOf((String) remote.get("NIM_TOUZHU_GOLD_SELECT_3"));
                         }
                         addBettingView(betPosition, amount, false);
+                        break;
+                    case 3131://重新开始下一局
+                        if (bullfightPresenter != null) {
+                            bullfightPresenter.getTimeAndNper(liveListBean.getRoomId() + "");
+                        }
                         break;
                     case 10009:
                         LogUtil.e("升级", message.getRemoteExtension().toString());

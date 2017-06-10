@@ -19,7 +19,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.hardware.Camera;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
@@ -28,7 +27,6 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.PowerManager;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
@@ -560,7 +558,7 @@ public class StartLiveActivity extends BaseActivity implements
      */
     private int nextTime;
     /**
-     * 期数
+     * 斗牛期数
      */
     private int uper;
     /**
@@ -1286,7 +1284,9 @@ public class StartLiveActivity extends BaseActivity implements
             ToastUtils.showMessageDefault(StartLiveActivity.this, getResources().getString(R.string.no_select_betbalance));
         }
     }
-
+    private int total1;
+    private int total2;
+    private int total3;
     /**
      * 添加投注池视图的显示
      *
@@ -1316,17 +1316,17 @@ public class StartLiveActivity extends BaseActivity implements
         switch (position) {
             case 1:
                 bettingPoolView = rl_bullfight_betting_container1;
-                int total1 = Integer.parseInt(tv_bullfight_totlanum1.getText().toString()) + betSum;
+                total1 += betSum;
                 tv_bullfight_totlanum1.setText(CountUtils.getCount(total1));
                 break;
             case 2:
                 bettingPoolView = rl_bullfight_betting_container2;
-                int total2 = Integer.parseInt(tv_bullfight_totlanum2.getText().toString()) + betSum;
+                total2 += betSum;
                 tv_bullfight_totlanum2.setText(CountUtils.getCount(total2));
                 break;
             case 3:
                 bettingPoolView = rl_bullfight_betting_container3;
-                int total3 = Integer.parseInt(tv_bullfight_totlanum3.getText().toString()) + betSum;
+                total3 += betSum;
                 tv_bullfight_totlanum3.setText(CountUtils.getCount(total3));
                 break;
         }
@@ -1471,28 +1471,28 @@ public class StartLiveActivity extends BaseActivity implements
      */
     private void bullfightTimer() {
         myHandler.sendEmptyMessageDelayed(BULLFIGHT_TIME, 1000);
-        if (nextTime >= 10) {
+        if (nextTime >= 15) {
             switchTimer();
         }
         switch (nextTime) {
-            case 25://主播初始化游戏结果
+            case 30://主播初始化游戏结果
                 bullfightPresenter.initGameResult(room_Id);
                 break;
-            case 10://获取扑克牌结果
+            case 15://获取扑克牌结果
                 setBetPoolEnable(false);
                 rl_timing.setVisibility(View.GONE);
                 bullfightPresenter.getPokerResult(room_Id);
                 break;
-            case 5://开奖
+            case 8://开奖
                 bullfightPresenter.getGameResult(room_Id, uper + "", appUser.getId());
                 bullfightPresenter.updateBankerBalance();
                 break;
-            case 1://主播更新倒计时
-                bullfightPresenter.initGameTimer(room_Id, uper + "", appUser.getId() + "");
+            case 5://休息一下
+                bullfightResultShow(getResources().getString(R.string.take_a_rest),null,null);
                 break;
-            case 0://再次请求下一局倒计时
+            case 0://主播更新倒计时
                 myHandler.removeMessages(BULLFIGHT_TIME);
-                bullfightPresenter.getTimeAndNper(room_Id);
+                bullfightPresenter.initGameTimer(room_Id, uper + "", appUser.getId() + "");
                 break;
         }
         nextTime--;
@@ -1547,7 +1547,7 @@ public class StartLiveActivity extends BaseActivity implements
      * param isShow
      */
     private void switchTimer() {
-        int time = nextTime - 10;
+        int time = nextTime - 15;
         tv_timing.setText(time + "S");
     }
 
@@ -1674,6 +1674,17 @@ public class StartLiveActivity extends BaseActivity implements
     }
 
     @Override
+    public void initGameTimer(){
+        bullfightPresenter.getTimeAndNper(room_Id);
+        Map<String, Object> map = new HashMap<>();
+        map.put("vip", appUser.getVip());
+        map.put("userId", appUser.getId());
+        map.put("level", appUser.getLevel());
+        map.put("NIM_CONTER_TIMER_MPER", uper+"");
+        SendRoomMessageUtils.onCustomMessagePlay("3131", messageFragment, wy_Id, map);
+    }
+
+    @Override
     public void getTimeAndNPer(TimeAndNper timeAndNper) {
         if (timeAndNper.isSuccess()) {
             setBetPoolEnable(true);
@@ -1685,6 +1696,12 @@ public class StartLiveActivity extends BaseActivity implements
             iv_gray_bg1.setVisibility(View.GONE);
             iv_gray_bg2.setVisibility(View.GONE);
             iv_gray_bg3.setVisibility(View.GONE);
+            amount1 = 0;
+            amount2 = 0;
+            amount3 = 0;
+            total1 = 0;
+            total2 = 0;
+            total3 = 0;
             tv_bullfight_totlanum1.setText("0");
             tv_bullfight_totlanum2.setText("0");
             tv_bullfight_totlanum3.setText("0");
@@ -1713,8 +1730,9 @@ public class StartLiveActivity extends BaseActivity implements
         }
     }
 
-
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private long amount1;
+    private long amount2;
+    private long amount3;
     @Override
     public void betSuccess(BetResult betResult, int amount, int type) {
         int code = betResult.getCode();
@@ -1730,15 +1748,15 @@ public class StartLiveActivity extends BaseActivity implements
                 addBettingView(type, amount, true);
                 switch (type) {
                     case 1:
-                        int amount1 = Integer.parseInt(tv_bullfight_minenum1.getText().toString()) + amount;
+                        amount1 += amount;
                         tv_bullfight_minenum1.setText(CountUtils.getCount(amount1));
                         break;
                     case 2:
-                        int amount2 = Integer.parseInt(tv_bullfight_minenum2.getText().toString()) + amount;
+                        amount2 += amount;
                         tv_bullfight_minenum2.setText(CountUtils.getCount(amount2));
                         break;
                     case 3:
-                        int amount3 = Integer.parseInt(tv_bullfight_minenum3.getText().toString()) + amount;
+                        amount3 += amount;
                         tv_bullfight_minenum3.setText(CountUtils.getCount(amount3));
                         break;
                 }

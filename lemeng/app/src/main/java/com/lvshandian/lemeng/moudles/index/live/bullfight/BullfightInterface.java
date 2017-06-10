@@ -45,4 +45,9 @@ public interface BullfightInterface {
      * @param gameResult
      */
     void getGameResult(GameResult gameResult);
+
+    /**
+     * 初始化倒计时成功
+     */
+    void initGameTimer();
 }

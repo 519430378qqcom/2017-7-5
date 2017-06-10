@@ -270,6 +270,7 @@ public class BullfightPresenter {
             @Override
             public void onResponse(String response) {
                 Log.e("TAG", "initGameTimer" + response);
+                bullfightInterface.initGameTimer();
             }
         });
     }

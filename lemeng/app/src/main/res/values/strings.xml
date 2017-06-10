@@ -273,4 +273,5 @@
     <string name="the_result">本局结算</string>
     <string name="the_user">本家</string>
     <string name="banker">庄家</string>
+    <string name="take_a_rest">休息一下</string>
 </resources>
