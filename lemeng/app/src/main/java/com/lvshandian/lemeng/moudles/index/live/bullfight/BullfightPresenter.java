@@ -275,51 +275,6 @@ public class BullfightPresenter {
     }
 
     /**
-     * 获取 音效文件id
-     *
-     * @return
-     */
-    public int getAudioId(int bullNum) {
-        int audioId = 0;
-        switch (bullNum) {
-            case 0:
-                audioId = R.raw.bull0;
-                break;
-            case 1:
-                audioId = R.raw.bull1;
-                break;
-            case 2:
-                audioId = R.raw.bull2;
-                break;
-            case 3:
-                audioId = R.raw.bull3;
-                break;
-            case 4:
-                audioId = R.raw.bull4;
-                break;
-            case 5:
-                audioId = R.raw.bull5;
-                break;
-            case 6:
-                audioId = R.raw.bull6;
-                break;
-            case 7:
-                audioId = R.raw.bull7;
-                break;
-            case 8:
-                audioId = R.raw.bull8;
-                break;
-            case 9:
-                audioId = R.raw.bull9;
-                break;
-            case 10:
-                audioId = R.raw.bull10;
-                break;
-        }
-        return audioId;
-    }
-
-    /**
      * 获取牛几的id
      *
      * @return

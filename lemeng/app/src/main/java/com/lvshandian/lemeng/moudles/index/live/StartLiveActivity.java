@@ -1317,17 +1317,17 @@ public class StartLiveActivity extends BaseActivity implements
             case 1:
                 bettingPoolView = rl_bullfight_betting_container1;
                 int total1 = Integer.parseInt(tv_bullfight_totlanum1.getText().toString()) + betSum;
-                tv_bullfight_totlanum1.setText(total1 + "");
+                tv_bullfight_totlanum1.setText(CountUtils.getCount(total1));
                 break;
             case 2:
                 bettingPoolView = rl_bullfight_betting_container2;
                 int total2 = Integer.parseInt(tv_bullfight_totlanum2.getText().toString()) + betSum;
-                tv_bullfight_totlanum2.setText(total2 + "");
+                tv_bullfight_totlanum2.setText(CountUtils.getCount(total2));
                 break;
             case 3:
                 bettingPoolView = rl_bullfight_betting_container3;
                 int total3 = Integer.parseInt(tv_bullfight_totlanum3.getText().toString()) + betSum;
-                tv_bullfight_totlanum3.setText(total3 + "");
+                tv_bullfight_totlanum3.setText(CountUtils.getCount(total3));
                 break;
         }
         RelativeLayout.LayoutParams layoutParams = new AutoRelativeLayout.LayoutParams(iv_10.getWidth(), iv_10.getHeight());
@@ -1731,15 +1731,15 @@ public class StartLiveActivity extends BaseActivity implements
                 switch (type) {
                     case 1:
                         int amount1 = Integer.parseInt(tv_bullfight_minenum1.getText().toString()) + amount;
-                        tv_bullfight_minenum1.setText(amount1 + "");
+                        tv_bullfight_minenum1.setText(CountUtils.getCount(amount1));
                         break;
                     case 2:
                         int amount2 = Integer.parseInt(tv_bullfight_minenum2.getText().toString()) + amount;
-                        tv_bullfight_minenum2.setText(amount2 + "");
+                        tv_bullfight_minenum2.setText(CountUtils.getCount(amount2));
                         break;
                     case 3:
                         int amount3 = Integer.parseInt(tv_bullfight_minenum3.getText().toString()) + amount;
-                        tv_bullfight_minenum3.setText(amount3 + "");
+                        tv_bullfight_minenum3.setText(CountUtils.getCount(amount3));
                         break;
                 }
                 Map<String, Object> map = new HashMap<>();
