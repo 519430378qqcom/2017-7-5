@@ -2691,8 +2691,6 @@ public class StartLiveActivity extends BaseActivity implements
                             return;
                         }
 
-                        changeJinpiao(customGiftBean);
-
                         if (message.getChatRoomMessageExtension() == null) {
                             name = appUser.getNickName();
                         } else {
@@ -2711,8 +2709,7 @@ public class StartLiveActivity extends BaseActivity implements
                                 (customGiftBean.getGift_item_number()), url, name, customGiftBean
                                 .getGift_item_message(), staticIcon, customGiftBean.getRepeatGiftNumber()
                                 , customGiftBean.getGift_item_index(), customGiftBean.getUserId());
-                        if (giftBean.getWinFlag().equals("2") && !customGiftBean
-                                .getGift_item_message().contains("占领了热一")) {
+                        if (giftBean.getWinFlag().equals("2")) {
                             /**
                              * 有特效
                              */
@@ -2735,6 +2732,7 @@ public class StartLiveActivity extends BaseActivity implements
 
                             }
                         }
+                        changeJinpiao(customGiftBean);
                         starGiftAnimation(giftSendModel);
                         break;
                     case 110:

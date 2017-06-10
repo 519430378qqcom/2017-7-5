@@ -2108,7 +2108,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 isWait = false;
                 setBetPoolEnable(false);
                 rl_timing.setVisibility(View.GONE);
-                switchAllPoker(false,-1);
+                switchAllPoker(false, -1);
                 bullfightResultShow(getResources().getString(R.string.wait_next_start), null, null);
                 bullfightPresenter.getBankerInfo();
                 myHandler.sendEmptyMessageDelayed(WAIT_NEXT_START, nextTime * 1000);
@@ -3012,8 +3012,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                             return;
                         }
 
-                        changeJinpiao(customGiftBean);
-
                         if (message.getChatRoomMessageExtension() == null) {
                             name = appUser.getNickName();
                         } else {
@@ -3034,8 +3032,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                                 (customGiftBean.getGift_item_number()), url, name, customGiftBean
                                 .getGift_item_message(), staticIcon, customGiftBean.getRepeatGiftNumber()
                                 , customGiftBean.getGift_item_index(), customGiftBean.getUserId());
-                        if (giftBean.getWinFlag().equals("2") && !customGiftBean
-                                .getGift_item_message().contains("占领了热一")) {
+                        if (giftBean.getWinFlag().equals("2")) {
                             /**
                              * 礼物特效
                              */
@@ -3057,7 +3054,10 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                                 }
                             }
                         }
+
+                        changeJinpiao(customGiftBean);
                         starGiftAnimation(giftSendModel);
+
                         giftSendModel = null;
                         giftBean = null;
                         break;
