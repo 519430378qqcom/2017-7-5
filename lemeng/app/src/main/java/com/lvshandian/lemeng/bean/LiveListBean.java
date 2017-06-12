@@ -10,7 +10,7 @@ public class LiveListBean implements Serializable {
 
 
     /**
-     * id : 1000000
+     * id : 1000000   主播ID
      * userName : 17600330098
      * password : e10adc3949ba59abbe56e057f20f883e
      * address : 北京市
@@ -785,11 +785,11 @@ public class LiveListBean implements Serializable {
 
     public static class RoomsBean implements Serializable{
         /**
-         * id : 6236
-         * userId : 1000000
+         * id : 6236              后台房间ID
+         * userId : 1000000      主播的ID
          * name :
          * city : 北京市
-         * roomId : 8411693
+         * roomId : 8411693    网易云信ID
          * livePicUrl : http://lemeng-news.oss-cn-beijing.aliyuncs.com/live/1000000/liveshowpic-1491880985.png
          * pubStat : 0
          * publishUrl : rtmp://pili-publish.lemenglive.com/lemengzhibo/lemengzhibo1491880988433A?e=1491884588&token=_8EgPhKIHK6v4Y58ZDAGZDmCdwyAF7yOf76RQqUf:WO_e_QXwoQnyhcsA2bdWfTDBiE4=

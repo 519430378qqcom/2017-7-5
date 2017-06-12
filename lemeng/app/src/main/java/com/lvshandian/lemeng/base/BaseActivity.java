@@ -146,7 +146,7 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
     protected void onResume() {
         //友盟统计
         MobclickAgent.onResume(this);
-        registerReceiveCustom(true);
+//        registerReceiveCustom(true);
         super.onResume();
 //        appUser = (AppUser) CacheUtils.readObject(this, CacheUtils.USERINFO);
         appUser = SharedPreferenceUtils.getUserInfo(mContext);
@@ -242,7 +242,7 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
 
     @Override
     protected void onStop() {
-        registerReceiveCustom(false);
+//        registerReceiveCustom(false);
         super.onStop();
     }
 

@@ -24,6 +24,7 @@ public class UrlBuilder {
     public static final String HEAD_DEFAULT = "http://lemeng.oss-ap-southeast-1.aliyuncs.com/lemengImg/1495594583610.png";    //当有空头像的时候
     public static final String SHARE_VIDEO_URL = "http://60.205.114.36:8080/videoShare/liveShare.html";    //分享直播链接
     public static final String SHARE_DOWNLOAD_URL = "http://60.205.114.36:8080/shareNew/share.html";    //分享下载链接
+    public static final String STARTJOINROOM = "/appRooms/getShareRoom";    //进入直播间
     public static final String LOGIN = "/api/v1/login";    //登录
     public static final String REGISTER = "/appusers/register"; //注册
     public static final String forgetPswd = "/appusers/forgetRegister"; //忘记密码

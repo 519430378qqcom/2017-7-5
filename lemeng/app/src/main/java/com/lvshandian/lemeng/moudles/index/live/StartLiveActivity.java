@@ -842,7 +842,7 @@ public class StartLiveActivity extends BaseActivity implements
             public void run() {
                 myHandler.sendEmptyMessage(1000);
             }
-        }, 30000, 30000);
+        }, 10000, 10000);
 
         getGiftList();
         //进入房间

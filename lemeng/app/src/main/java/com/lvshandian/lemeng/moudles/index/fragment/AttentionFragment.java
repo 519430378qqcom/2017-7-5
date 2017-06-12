@@ -11,21 +11,15 @@ import com.android.volley.Request;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.UrlBuilder;
 import com.lvshandian.lemeng.base.BaseFragment;
-import com.lvshandian.lemeng.bean.LiveBean;
+import com.lvshandian.lemeng.bean.LiveListBean;
 import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.httprequest.RequestCode;
-import com.lvshandian.lemeng.moudles.index.adapter.AttentionListAadapter;
-import com.lvshandian.lemeng.utils.LogUtils;
-import com.lvshandian.lemeng.utils.TextUtils;
+import com.lvshandian.lemeng.moudles.index.adapter.HotListAadapter;
+import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.widget.FullyLinearLayoutManager;
 import com.lvshandian.lemeng.widget.MyRecyclerView;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefresh;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout;
-import com.tandong.sa.json.Gson;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,61 +38,39 @@ public class AttentionFragment extends BaseFragment implements View.OnClickListe
     @Bind(R.id.mrl_layout)
     SwipeRefreshLayout mrlLayout;
 
-    private AttentionListAadapter attentionListAadapter;
+    private HotListAadapter attentionListAadapter;
     private int page = 1;
 
-    private List<LiveBean> mUserList = new ArrayList<>();
+    private List<LiveListBean> liveListBeen = new ArrayList<>();
 
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             Bundle data = msg.getData();
-            String json = data.getString(HttpDatas.info);
-            LogUtils.e("关注数据" + json.toString());
-
+            String json = data.getString(HttpDatas.obj);
+            if (com.lvshandian.lemeng.utils.TextUtils.isEmpty(json)) {
+                return;
+            }
             switch (msg.what) {
-                //关注请求接收数据
+                //最新
                 case RequestCode.ATTENTION_LIVE:
                     if (mrlLayout == null)
                         return;
                     finishRefresh();
-                    String res = json.toString();
-                    try {
-                        JSONObject resJson = new JSONObject(res);
-                        String res2 = resJson.getString("result");
-                        LogUtils.i(res2);
-                        if (TextUtils.isEmpty(res2)) {
-                            return;
-                        } else {
-                            JSONArray resJa = new JSONArray(res2);
-                            LogUtils.i("集合长度" + resJa.length() + "");
-                            if (resJa.length() > 0) {
-                                if (page == 1) {
-                                    mUserList.clear();
-                                    for (int i = 0; i < resJa.length(); i++) {
-                                        LiveBean user = new Gson().fromJson(resJa.getJSONObject(i).toString(), LiveBean.class);
-                                        mUserList.add(user);
-                                    }
-                                    attentionListAadapter.notifyDataSetChanged();
-                                } else {
-                                    for (int i = 0; i < resJa.length(); i++) {
-                                        LiveBean user = new Gson().fromJson(resJa.getJSONObject(i).toString(), LiveBean.class);
-                                        mUserList.add(user);
-                                    }
-                                    attentionListAadapter.notifyDataSetChanged();
-                                }
-                            } else {
-                                if (page == 1) {
-                                    mUserList.clear();
-                                    attentionListAadapter.notifyDataSetChanged();
-                                }
-                            }
+                    List<LiveListBean> liveListBeen1 = JsonUtil.json2BeanList(json.toString(), LiveListBean.class);
+                    if (null == liveListBeen1 || liveListBeen1.size() == 0) {
+                        if (page == 1) {
+                            liveListBeen.clear();
+                            attentionListAadapter.notifyDataSetChanged();
                         }
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        return;
                     }
+                    if (page == 1) {
+                        liveListBeen.clear();
+                    }
+                    liveListBeen.addAll(liveListBeen1);
+                    attentionListAadapter.notifyDataSetChanged();
                     break;
             }
         }
@@ -134,7 +106,7 @@ public class AttentionFragment extends BaseFragment implements View.OnClickListe
         mrlLayout.setOnPullUpRefreshListener(this);
         mrlLayout.setColorSchemeColors(getResources().getColor(R.color.main));
 
-        attentionListAadapter = new AttentionListAadapter(mContext, mUserList);
+        attentionListAadapter = new HotListAadapter(mContext, liveListBeen);
 //        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         FullyLinearLayoutManager layoutManager = new FullyLinearLayoutManager(getActivity());
         attentionRecyclerView.setNestedScrollingEnabled(false);
@@ -142,11 +114,11 @@ public class AttentionFragment extends BaseFragment implements View.OnClickListe
         attentionRecyclerView.setLayoutManager(layoutManager);
         attentionRecyclerView.setAdapter(attentionListAadapter);
 
-        attentionListAadapter.setOnRecyclerClickListener(new AttentionListAadapter.OnRecyclerClickListener() {
+        attentionListAadapter.setOnRecyclerClickListener(new HotListAadapter.OnRecyclerClickListener() {
             @Override
             public void onRecyclerClick(int position) {
 //              进入直播间
-                ifEnter(transformLiveListBeen(mUserList.get(position)));
+                ifEnter(liveListBeen.get(position).getRooms().getRoomId() + "",liveListBeen.get(position).getRooms().getBroadcastUrl());
             }
         });
 
@@ -155,19 +127,15 @@ public class AttentionFragment extends BaseFragment implements View.OnClickListe
 
     public void getLiveList(int page) {
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
-        map.put("pageNum", page + "");
-        httpDatas.getDataNoLoading("获取关注人直播的接口", Request.Method.GET, UrlBuilder.myattention(appUser.getId()), map, mHandler, RequestCode.ATTENTION_LIVE, mrlLayout);
+        map.put("page", page + "");
+        map.put("userId", appUser.getId());
+        map.put("type", "4");
+        httpDatas.getNewDataCharServerRefresh("获取直播关注界面接口列表", Request.Method.GET, UrlBuilder.appRooms, map, mHandler, RequestCode.ATTENTION_LIVE, mrlLayout);
     }
 
 
     @Override
     public void onClick(View v) {
-//        switch (v.getId()) {
-//            case to_loke:
-//                MainActivity mainActivity = (MainActivity) getActivity();
-//                mainActivity.intentIndexPager();
-//                break;
-//        }
     }
 
     @Override

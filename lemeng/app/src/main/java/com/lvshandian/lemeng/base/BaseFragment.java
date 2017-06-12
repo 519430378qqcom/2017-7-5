@@ -19,11 +19,9 @@ import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.UrlBuilder;
 import com.lvshandian.lemeng.bean.AppUser;
 import com.lvshandian.lemeng.bean.JoinRoomBean;
-import com.lvshandian.lemeng.bean.LiveBean;
 import com.lvshandian.lemeng.bean.LiveListBean;
 import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.moudles.index.live.WatchLiveActivity;
-import com.lvshandian.lemeng.utils.DESUtil;
 import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.NetWorkUtil;
@@ -152,13 +150,13 @@ public abstract class BaseFragment extends Fragment {
     }
 
     /**
-     * 判断是否进入过该私密直播
+     * 进入直播间
      *
      * @author sll
      * @time 2016/12/16 17:14
      */
 
-    public void ifEnter(final LiveListBean live) {
+    public void ifEnter(final String wyRoomId,final String mVideoPath) {
         if (NetWorkUtil.getConnectedType(mContext) == 0) {
             initDialog();
             baseDialogTitle.setText("当前为移动网络,是否继续观看");
@@ -178,16 +176,24 @@ public abstract class BaseFragment extends Fragment {
                     if (baseDialog != null && baseDialog.isShowing()) {
                         baseDialog.dismiss();
                     }
-                    ifEnterGo(live);
+//                    ifEnterGo(live);
+                    startActivityToWatch(wyRoomId,mVideoPath);
                 }
             });
         } else {
-            ifEnterGo(live);
+//            ifEnterGo(live);
+            startActivityToWatch(wyRoomId,mVideoPath);
         }
 
     }
 
 
+    /**
+     * 判断是否进入过该私密直播
+     *
+     * @author sll
+     * @time 2016/12/16 17:14
+     */
     public void ifEnterGo(final LiveListBean live) {
         //进入直播间请求
         String url = UrlBuilder.chargeServerUrl + UrlBuilder.ifEnter;
@@ -211,15 +217,15 @@ public abstract class BaseFragment extends Fragment {
                         JoinRoomBean joinRoom = JsonUtil.json2Bean(response, JoinRoomBean.class);
                         if (joinRoom != null && joinRoom.isSuccess() && joinRoom.getCode() != 1) {
                             //第一次进入
-                            if (live!= null && !TextUtils.isEmpty(live.getRooms().getPrivateFlag() + "")
+                            if (live != null && !TextUtils.isEmpty(live.getRooms().getPrivateFlag() + "")
                                     && ((live.getRooms().getPrivateFlag() + "")).equals("1")) {
                                 joinSecret(live);
                             } else {
-                                startActivityToWatch(live);
+//                                startActivityToWatch(live);
                             }
                         } else {
                             //不是第一次，直接进入
-                            startActivityToWatch(live);
+//                            startActivityToWatch(live);
                         }
                     }
                 });
@@ -253,7 +259,7 @@ public abstract class BaseFragment extends Fragment {
                     public void onResponse(String response) {
                         JoinRoomBean joinRoom = JsonUtil.json2Bean(response, JoinRoomBean.class);
                         if (joinRoom != null && joinRoom.isSuccess() && joinRoom.getCode() == 1) {
-                            startActivityToWatch(live);
+//                            startActivityToWatch(live);
                         } else {
                             //账户余额不足
                             showToast("账户余额不足");
@@ -269,9 +275,10 @@ public abstract class BaseFragment extends Fragment {
      * @author sll
      * @time 2016/12/16 16:58
      */
-    private void startActivityToWatch(LiveListBean live) {
+    private void startActivityToWatch(String wyRoomId,String mVideoPath) {
         Intent intent = new Intent(getActivity(), WatchLiveActivity.class);
-        intent.putExtra("LIVE", live);
+        intent.putExtra("wyRoomId", wyRoomId);
+        intent.putExtra("mVideoPath", mVideoPath);
         startActivity(intent);
     }
 
@@ -342,7 +349,7 @@ public abstract class BaseFragment extends Fragment {
                     showToast("请输入密码");
                 } else if (pwdEdit.getText().toString().equals(live.getRooms().getRoomPw())) {
                     //密码正确，进入直播间
-                    startActivityToWatch(live);
+//                    startActivityToWatch(live);
                     dialog.dismiss();
                 } else {
                     showToast("密码错误，请确认后再输入");
@@ -352,44 +359,6 @@ public abstract class BaseFragment extends Fragment {
         dialog.setCanceledOnTouchOutside(true);
         dialog.setContentView(view);
         dialog.show();
-    }
-
-    /**
-     * 将有用的数据类型进行转换
-     *
-     * @param liveBean
-     * @return
-     */
-    public LiveListBean transformLiveListBeen(final LiveBean liveBean) {
-        LiveListBean liveListBean = new LiveListBean();
-        liveListBean.setLivePicUrl(liveBean.getLivePicUrl());
-        liveListBean.setPicUrl(liveBean.getCreator().getPicUrl());
-        liveListBean.setAddress(liveBean.getCity());
-        liveListBean.setNickName(liveBean.getCreator().getNickName());
-        liveListBean.setId(Integer.parseInt(liveBean.getCreator().getId().trim()));
-        LiveListBean.RoomsBean creatorBean = new LiveListBean.RoomsBean();
-        creatorBean.setCity(liveBean.getCity());
-        creatorBean.setId(Integer.parseInt(liveBean.getId()));
-        creatorBean.setOnlineUserNum(Integer.parseInt(liveBean.getOnlineUserNum().trim()));
-        creatorBean.setUserId(Integer.parseInt(liveBean.getCreator().getId()));
-        creatorBean.setRoomId(Integer.parseInt(liveBean.getRoomId()));
-        creatorBean.setRoomsType(liveBean.getRoomsType());
-
-        try {
-            creatorBean.setBroadcastUrl(DESUtil.decrypt(liveBean.getBroadcastUrl()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        creatorBean.setPublishUrl(liveBean.getPublishUrl());
-        if (!TextUtils.isEmpty(liveBean.getPrivateFlag())) {
-            creatorBean.setPrivateFlag(Integer.parseInt(liveBean.getPrivateFlag().trim()));//是否是私密房间1是2否
-        }
-        if (!TextUtils.isEmpty(liveBean.getRoomPay())) {
-            creatorBean.setRoomPay(Integer.parseInt(liveBean.getRoomPay()));//私密直播需要的金币
-        }
-        creatorBean.setRoomPw(liveBean.getRoomPw());//私密直播需要的密码
-        liveListBean.setRooms(creatorBean);
-        return liveListBean;
     }
 
     /**

@@ -8,6 +8,7 @@ package com.lvshandian.lemeng.httprequest;
  */
 public interface RequestCode {
 
+    int START_JOIN_ROOM = 888;     //进入直播间
     int SELECT_USER = 999;     //查询用户信息
     int SELECT_USER_MY = 9990;     //查询用户信息
     int LOGIN_TAG = 1000;     //登录
