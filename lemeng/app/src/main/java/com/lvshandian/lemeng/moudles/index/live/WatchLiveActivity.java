@@ -66,6 +66,7 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.lvshandian.lemeng.MainActivity;
 import com.lvshandian.lemeng.MyApplication;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.UrlBuilder;
@@ -84,7 +85,6 @@ import com.lvshandian.lemeng.bean.DianBoDateBean;
 import com.lvshandian.lemeng.bean.GiftBean;
 import com.lvshandian.lemeng.bean.IfAttentionBean;
 import com.lvshandian.lemeng.bean.LastAwardBean;
-import com.lvshandian.lemeng.bean.LiveBean;
 import com.lvshandian.lemeng.bean.LiveEven;
 import com.lvshandian.lemeng.bean.LiveFamilyMemberBean;
 import com.lvshandian.lemeng.bean.LiveListBean;
@@ -621,21 +621,29 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     private RoundDialog mQuitDialog;
 
     /**
+     * 网易云信生成的id
+     */
+    private String wy_Id = "";
+
+    /**
+     * 后台生成的id
+     */
+    private String room_Id = "";
+
+    /**
+     * 主播的id
+     */
+    private String zhubo_Id = "";
+
+    /**
      * 主播对象实体类
      */
     private LiveListBean liveListBean;
-    private LiveBean liveBean; //主播bean
-    private CustomdateBean zhuBo;
 
     /**
      * 判断主播是否被关注过
      */
     private IfAttentionBean ifAttentionBean;
-
-    /**
-     * 网易云信的roomid
-     */
-    private String roomId;
 
     /**
      * 拉流地址
@@ -817,11 +825,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     private List<GiftSendModel> giftSendModelList = new ArrayList<>();
 
     /**
-     * 是不是第一次连麦
-     */
-    private boolean isFristLianmai = true;
-
-    /**
      * 礼物连点计时器
      */
     private CountDownTimer giftTimer;
@@ -860,6 +863,84 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             String json = data.getString(HttpDatas.info);
 
             switch (msg.what) {
+                case RequestCode.START_JOIN_ROOM:
+                    liveListBean = JsonUtil.json2Bean(json.toString(), LiveListBean.class);
+                    if (liveListBean == null) {
+                        showToast("该直播间已关闭");
+                        //开启登录页面
+                        MyApplication.finishActivity();
+                        gotoActivity(MainActivity.class, true);
+                        return;
+                    }
+                    room_Id = liveListBean.getRoomId() + "";
+                    zhubo_Id = liveListBean.getId() + "";
+                    liveHead.setAvatarUrl(liveListBean.getPicUrl());
+                    liveHeadImg.setAvatarUrl(liveListBean.getPicUrl());
+                    String picUrl = liveListBean.getPicUrl();
+                    if (TextUtils.isEmpty(picUrl)) {
+                        picUrl = UrlBuilder.HEAD_DEFAULT;
+                    }
+                    Picasso.with(mContext).load(picUrl).error(R.mipmap.zhan_live).into(rlLoading);
+                    if (liveListBean.getNickName().length() > 4) {
+                        liveName.setText(liveListBean.getNickName().substring(0, 4) + "...");
+                    } else {
+                        liveName.setText(liveListBean.getNickName());
+                    }
+                    liveId.setText("乐檬号:" + zhubo_Id);
+
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            myHandler.sendEmptyMessage(10001);
+                        }
+                    }, 10000, 10000);
+                    if (!TextUtils.isEmpty(zhubo_Id)) {
+                        SharedPreferenceUtils.put(mContext, "ZhuBoId", zhubo_Id);
+                    } else {
+                        SharedPreferenceUtils.put(mContext, "isZhuBo", false);
+                    }
+
+                    samllNumber.setText(String.valueOf(tzNumber));
+                    doubleNumber.setText(String.valueOf(jbNumber));
+                    initSelectStatus();
+                    initBlInfos();
+
+                    //获取礼物列表
+                    getGiftList();
+                    initRecycle();
+                    /**
+                     * 请求个人信息
+                     */
+                    initMyInfo();
+                    //请求主播信息,得到主播乐票数量
+                    initUser();
+                    //请求主播信息并且附上金票显示隐藏关注按钮
+                    ifattention("请求主播信息", zhubo_Id, RequestCode.IF_ATTENTION);
+                    //請求是否有被连麦人
+                    iSrequstLiveValid();
+                    // 登录聊天室
+                    enterRoom();
+                    //进入直播间
+                    join();
+                    startloading();
+
+                    if (liveListBean.getRooms().getRoomsType().equals("1")) {
+                        isPlayerRoom = true;
+                        getTimenumber();
+                        showPlayView(1);
+                    } else if ("2".equals(liveListBean.getRooms().getRoomsType())) {
+                        if (bullfightPresenter == null) {
+                            bullfightPresenter = new BullfightPresenter(WatchLiveActivity.this);
+                        }
+                        isWait = true;
+                        bullfightPresenter.getTimeAndNper(room_Id);
+                    } else {
+                        isPlayerRoom = false;
+                        if (gameType >= 1) {
+                            hidePlayView(gameType);
+                        }
+                    }
+                    break;
                 //礼物列表
                 case RequestCode.GET_GIFT:
                     mGiftResStr = json;
@@ -870,8 +951,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     btnAttention.setVisibility(View.GONE);
                     Map<String, Object> map0 = new HashMap<>();
                     map0.put("level", appUser.getLevel());
-                    SendRoomMessageUtils.onCustomMessageGuanzhu("199", messageFragment, liveListBean.getRooms()
-                            .getRoomId() + "", map0);
+                    SendRoomMessageUtils.onCustomMessageGuanzhu("199", messageFragment, wy_Id, map0);
                     break;
                 //赠送礼物
                 case RequestCode.SEND_GIFT:
@@ -896,12 +976,12 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         map.put("gift_Grand_Prix_number", null);
                         map.put("gift_Grand_Prix", null);
                         map.put("gift_giftCoinNumber", mSendGiftItem.getMemberConsume());
-                        map.put("receveUserId", liveListBean.getId() + "");
+                        map.put("receveUserId", zhubo_Id);
                         map.put("gift_Type1", mSendGiftItem.getWinFlag());
                         map.put("level", appUser.getLevel());
                         map.put("RepeatGiftNumber", num);
                         SendRoomMessageUtils.onCustomMessageSendGift(messageFragment,
-                                liveListBean.getRooms().getRoomId() + "", map);
+                                wy_Id, map);
 
                         myGoldCoin = myGoldCoin - Long.parseLong(mSendGiftItem.getMemberConsume());
                         String myCoin = CountUtils.getCount(myGoldCoin);
@@ -916,8 +996,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 //获取主播的信息,是否关注主播
                 case RequestCode.IF_ATTENTION:
                     LogUtils.i(json.toString());
-                    zhuBo = JSON.parseObject(data.getString(HttpDatas.obj).toString(),
-                            CustomdateBean.class);
                     ifAttentionBean = JsonUtil.json2Bean(json, IfAttentionBean.class);
                     runOnUiThread(new Runnable() {
                         @Override
@@ -939,11 +1017,11 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     LogUtils.i("请求接口成功，可以连麦");
                     break;
                 case RequestCode.TIMERLIVE:
-                    LogUtils.i("主播隔30s时间刷新状态" + json.toString());
+                    LogUtils.i("隔10s时间刷新状态" + json.toString());
                     break;
                 case 10001:
-                    httpDatas.getDataDialog("主播隔一段时间刷新状态", false, urlBuilder.TimerUserLive
-                                    (liveListBean.getRoomId() + "", liveListBean.getRooms().getId() + "")
+                    httpDatas.getDataDialog("观众隔一段时间刷新状态", false, urlBuilder.TimerUserLive
+                                    (room_Id, appUser.getId())
                             , myHandler, RequestCode.TIMERLIVE);
                     break;
                 //主播请求与观众连麦，观众同意后，生成推拉流地址，并向所有人发送推拉流
@@ -983,7 +1061,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                                 e.printStackTrace();
                             }
                             SendRoomMessageUtils.onCustomMessageLianmai(SendRoomMessageUtils.MESSAGE_WATCHER_CONNECT,
-                                    messageFragment, liveListBean.getRooms().getRoomId() + "", map1);
+                                    messageFragment, wy_Id, map1);
 
                             showLianmaiView();
                             tv_lianmai.setVisibility(View.VISIBLE);
@@ -1058,7 +1136,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     bullfightTimer();
                     break;
                 case WAIT_NEXT_START:
-                    bullfightPresenter.getTimeAndNper(liveListBean.getRoomId() + "");
+                    bullfightPresenter.getTimeAndNper(room_Id);
                     break;
             }
         }
@@ -1073,16 +1151,22 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     protected void initialized() {
         mLoading = new LoadingDialog(mContext);
 //        mLoading.show();
-
-        liveListBean = (LiveListBean) getIntent().getSerializableExtra("LIVE");
-
+        if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {
+//            Uri uri = getIntent().getData();
+//            if (uri != null) {
+//                wy_Id = uri.getQueryParameter("wyRoomId");
+//                mVideoPath = uri.getQueryParameter("mVideoPath");
+//            }
+        } else {
+            wy_Id = getIntent().getStringExtra("wyRoomId");
+            mVideoPath = getIntent().getStringExtra("mVideoPath");
+        }
         anchorVideo = new AnchorVideo();
-        fragmentManager = getSupportFragmentManager();
-
-        //获取礼物列表
-        getGiftList();
-
-        initRecycle();
+        anchorVideo.initLive(mVideoPath, WatchLiveActivity.this, mSurfaceView, rlLoading);
+        //隐藏视频地址
+        flPull.setVisibility(View.GONE);
+        flPlug.setVisibility(View.GONE);
+        getWindow().setFormat(PixelFormat.TRANSLUCENT);
 
         // 注册监听
         registerObservers(true);
@@ -1090,106 +1174,31 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         registerReceiveCustom(true);
         //注册广播接收器
         registerReceiverWatchLiveActivity();
-
         //网易云信消息未读数
         registerMsgUnreadInfoObserver(true);
         registerSystemMessageObservers(true);
         requestSystemMessageUnreadCount();
 
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                myHandler.sendEmptyMessage(10001);
-            }
-        }, 10000, 10000);
-
+        fragmentManager = getSupportFragmentManager();
         initQuitDialog("确定离开");
+        dialogForSelect = new Dialog(mContext, R.style.homedialog);
 
-        samllNumber.setText(String.valueOf(tzNumber));
-        doubleNumber.setText(String.valueOf(jbNumber));
-        initSelectStatus();
-        initBlInfos();
+        startJoinRoom();
+    }
 
-        /**
-         * 请求个人信息
-         */
-        initMyInfo();
-
-        liveHead.setAvatarUrl(liveListBean.getPicUrl());
-        liveHeadImg.setAvatarUrl(liveListBean.getPicUrl());
-
-        String picUrl = liveListBean.getPicUrl();
-        if (TextUtils.isEmpty(picUrl)) {
-            picUrl = UrlBuilder.HEAD_DEFAULT;
-        }
-        Picasso.with(mContext).load(picUrl).error(R.mipmap.zhan_live).into(rlLoading);
-        if (liveListBean.getNickName().length() > 4) {
-            liveName.setText(liveListBean.getNickName().substring(0, 4) + "...");
-        } else {
-            liveName.setText(liveListBean.getNickName());
-        }
-
-        liveId.setText("乐檬号:" + liveListBean.getId());
-
-        //请求主播信息,得到主播乐票数量
-        initUser();
-        //请求主播信息并且附上金票显示隐藏关注按钮
-        ifattention("请求主播信息", liveListBean.getId() + "", RequestCode.IF_ATTENTION);
-
-        //进入房间
-//        requestNet();
-        //請求是否有被连麦人
-        iSrequstLiveValid();
-        roomId = liveListBean.getRooms().getRoomId() + "";
-
-        // 登录聊天室
-        enterRoom();
-
-        if (!TextUtils.isEmpty(liveListBean.getRooms().getUserId() + "")) {
-            SharedPreferenceUtils.put(this, "ZhuBoId", liveListBean.getRooms().getUserId() + "");
-        } else {
-            SharedPreferenceUtils.put(this, "isZhuBo", false);
-        }
-
-        mVideoPath = liveListBean.getRooms().getBroadcastUrl();
-
-        LogUtils.e("拉流---" + mVideoPath);
-
-        anchorVideo.initLive(mVideoPath, WatchLiveActivity.this, mSurfaceView, rlLoading);
-        //隐藏视频地址
-        flPull.setVisibility(View.GONE);
-        flPlug.setVisibility(View.GONE);
-        getWindow().setFormat(PixelFormat.TRANSLUCENT);
-
-
-        dialogForSelect = new Dialog(this, R.style.homedialog);
-
-        join();
-        startloading();
-
-        if (liveListBean.getRooms().getRoomsType().equals("1")) {
-            isPlayerRoom = true;
-            getTimenumber();
-            showPlayView(1);
-        } else if ("2".equals(liveListBean.getRooms().getRoomsType())) {
-            if (bullfightPresenter == null) {
-                bullfightPresenter = new BullfightPresenter(this);
-            }
-            isWait = true;
-            bullfightPresenter.getTimeAndNper(liveListBean.getRoomId() + "");
-        } else {
-            isPlayerRoom = false;
-            if (gameType >= 1) {
-                hidePlayView(gameType);
-            }
-        }
+    /**
+     * 根据网易云信房间ID查询房间信息
+     */
+    private void startJoinRoom() {
+        ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
+        map.put("roomId", wy_Id);
+        httpDatas.getNewDataCharServerCodeNoLoading("进入直播间接口", Request.Method.GET, UrlBuilder.STARTJOINROOM, map, myHandler, RequestCode.START_JOIN_ROOM);
     }
 
 
     private void initBlInfos() {
         String url = UrlBuilder.serverUrl + UrlBuilder.getBl;
-        LogUtils.e("roomId::" + liveListBean.getRooms().getId() + "");
-        OkHttpUtils.post().url(url).addParams("roomId", liveListBean.getRooms().getId() + "").addParams("type", "0").build().execute(new StringCallback() {
+        OkHttpUtils.post().url(url).addParams("roomId", room_Id).addParams("type", "0").build().execute(new StringCallback() {
             @Override
             public void onError(com.squareup.okhttp.Request request, Exception e) {
 
@@ -1312,8 +1321,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                             map.put("userId", appUser.getId());
                             map.put("level", appUser.getLevel());
                             SendRoomMessageUtils.onCustomMessageDianzan(SendRoomMessageUtils
-                                    .MESSAGE_LIKE_LIGHT, messageFragment, liveListBean.getRooms()
-                                    .getRoomId() + "", map);
+                                    .MESSAGE_LIKE_LIGHT, messageFragment, wy_Id, map);
                             isfirstclick = false;
                         } else {
                             Map<String, Object> map = new HashMap<>();
@@ -1325,8 +1333,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                             map.put("userId", appUser.getId());
                             map.put("level", appUser.getLevel());
                             SendRoomMessageUtils.onCustomMessageDianzan(SendRoomMessageUtils
-                                    .MESSAGE_LIKE_CLICK, messageFragment, liveListBean.getRooms()
-                                    .getRoomId() + "", map);
+                                    .MESSAGE_LIKE_CLICK, messageFragment, wy_Id, map);
 //                        showLit();
                         }
                         break;
@@ -1399,15 +1406,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 }
                 return true;
 
-            }
-        });
-
-        //点击头像列表
-        mAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                RoomUserBean bean = mDatas.get(position);
-                ifattention("请求用户信息", bean.getUserId(), RequestCode.REQUEST_USER_INFO);
             }
         });
 
@@ -1578,7 +1576,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 map.put("watch_private_flag", "0");
                 map.put("vip", "0");
                 SendRoomMessageUtils.onCustomMessageLianmai(SendRoomMessageUtils.MESSAGE_WATCHER_DISCONNECT,
-                        messageFragment, liveListBean.getRooms().getRoomId() + "", map);
+                        messageFragment, wy_Id, map);
                 roomLiveExit();
                 break;
             case R.id.live_close:
@@ -1607,7 +1605,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             case R.id.iv_live_share:
                 UMUtils.umShare(WatchLiveActivity.this, "主播" + liveListBean.getNickName() + "邀你玩游戏啦",
                         "够刺激,主播" + liveListBean.getNickName() + "带你玩转直播间,一起游戏嗨起来!",
-                        liveListBean.getLivePicUrl(), UrlBuilder.SHARE_VIDEO_URL + "?roomId=" + liveListBean.getRooms().getRoomId() + "&userId=" + liveListBean.getId());
+                        liveListBean.getLivePicUrl(), UrlBuilder.SHARE_VIDEO_URL + "?roomId=" + wy_Id + "&userId=" + zhubo_Id);
                 break;
             //跳转到排行榜
             case R.id.ll_tp_labe:
@@ -1616,11 +1614,11 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 break;
             //请求主播信息
             case R.id.live_head:
-                ifattention("请求主播信息", liveListBean.getId() + "", RequestCode.REQUEST_USER_INFO);
+                ifattention("请求主播信息", zhubo_Id, RequestCode.REQUEST_USER_INFO);
                 break;
             //请求主播信息
             case R.id.live_lianmai_head_bg1:
-                ifattention("请求主播信息", liveListBean.getId() + "", RequestCode.REQUEST_USER_INFO);
+                ifattention("请求主播信息", zhubo_Id, RequestCode.REQUEST_USER_INFO);
                 break;
             case R.id.live_lianmai_head://连麦人的头像
                 if (customLianmaiBean == null) {
@@ -1641,7 +1639,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             //关注主播
             case R.id.btn_attention:
                 ConcurrentHashMap<String, String> map1 = new ConcurrentHashMap<>();
-                map1.put("followUserId", liveListBean.getId() + "");
+                map1.put("followUserId", zhubo_Id);
                 map1.put("userId", appUser.getId());
                 httpDatas.getDataForJsoNoloading("关注用户", Request.Method.POST, UrlBuilder
                         .ATTENTION_USER, map1, myHandler, RequestCode.ATTENTION_USER);
@@ -1702,7 +1700,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             if (betBalance > myGoldCoin) {
                 ToastUtils.showMessageDefault(WatchLiveActivity.this, getResources().getString(R.string.balance_not_enough));
             } else {
-                bullfightPresenter.betSuccess(Integer.parseInt(appUser.getId()), liveListBean.getRoomId(), betBalance, position, uper, 0);
+                bullfightPresenter.betSuccess(Integer.parseInt(appUser.getId()), Integer.parseInt(room_Id), betBalance, position, uper, 0);
             }
         } else {
             ToastUtils.showMessageDefault(WatchLiveActivity.this, getResources().getString(R.string.no_select_betbalance));
@@ -1897,20 +1895,20 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             switchTimer();
         }
         if (nextTime <= 5 && nextTime > 0) {
-            bullfightResultShow(null,null,getResources().getString(R.string.take_a_rest)+nextTime+"S");
+            bullfightResultShow(null, null, getResources().getString(R.string.take_a_rest) + nextTime + "S");
         }
         switch (nextTime) {
             case 15://获取扑克牌结果
                 setBetPoolEnable(false);
                 rl_timing.setVisibility(View.GONE);
-                bullfightPresenter.getPokerResult(liveListBean.getRoomId() + "");
+                bullfightPresenter.getPokerResult(room_Id);
                 break;
             case 8://开奖
-                bullfightPresenter.getGameResult(liveListBean.getRoomId() + "", uper + "", appUser.getId());
+                bullfightPresenter.getGameResult(room_Id, uper + "", appUser.getId());
                 bullfightPresenter.updateBankerBalance();
                 break;
             case 5://休息一下
-                bullfightResultShow(getResources().getString(R.string.take_a_rest),null,null);
+                bullfightResultShow(getResources().getString(R.string.take_a_rest), null, null);
                 break;
         }
         nextTime--;
@@ -2191,7 +2189,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         map.put("NIM_TOUZHU_GOLD_SELECT_3", amount + "");
                         break;
                 }
-                SendRoomMessageUtils.onCustomMessagePlay("3030", messageFragment, roomId, map);
+                SendRoomMessageUtils.onCustomMessagePlay("3030", messageFragment, wy_Id, map);
                 break;
             case 2://为钱币不够赔
                 break;
@@ -2769,7 +2767,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         String url = UrlBuilder.chargeServerUrl + UrlBuilder.selectFamilyMember;
         LogUtils.i("家族url: " + url);
         Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("userId", liveListBean.getRooms().getUserId() + "");
+        hashMap.put("userId", zhubo_Id);
         String json = new JSONObject(hashMap).toString();
         LogUtils.i("家族Json:　" + json);
         OkHttpUtils.get().url(url)
@@ -2926,7 +2924,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             map1.put("watch_private_flag", "0");
             map1.put("vip", "0");
             SendRoomMessageUtils.onCustomMessageLianmai(SendRoomMessageUtils.MESSAGE_WATCHER_DISCONNECT,
-                    messageFragment, liveListBean.getRooms().getRoomId() + "", map1);
+                    messageFragment, wy_Id, map1);
         }
 
         roomLiveExit();
@@ -2935,7 +2933,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         }
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("userId", appUser.getId());
-        map.put("roomId", liveListBean.getRooms().getId() + "");
+        map.put("roomId", room_Id);
         httpDatas.getDataForJsoNoloading("退出直播间", Request.Method.POST, UrlBuilder.roomExit, map,
                 myHandler, RequestCode.REQUEST_ROOM_EXIT);
 
@@ -3149,7 +3147,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         break;
                     case 2929://主播开启斗牛游戏
                         bullfightPresenter = new BullfightPresenter(WatchLiveActivity.this);
-                        bullfightPresenter.getTimeAndNper(liveListBean.getRoomId() + "");
+                        bullfightPresenter.getTimeAndNper(room_Id);
                         break;
                     case 3030://有人投注
                         int betPosition = 0;
@@ -3168,7 +3166,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         break;
                     case 3131://重新开始下一局
                         if (bullfightPresenter != null) {
-                            bullfightPresenter.getTimeAndNper(liveListBean.getRoomId() + "");
+                            bullfightPresenter.getTimeAndNper(room_Id);
                         }
                         break;
                     case 10009:
@@ -3234,6 +3232,14 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         rlvListLiveAudiences.setLayoutManager(mLayoutManager);
         mAdapter = new RoomUsersDataAdapter(mContext, mDatas);
         rlvListLiveAudiences.setAdapter(mAdapter);
+        //点击头像列表
+        mAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                RoomUserBean bean = mDatas.get(position);
+                ifattention("请求用户信息", bean.getUserId(), RequestCode.REQUEST_USER_INFO);
+            }
+        });
         //进入页面自动刷新
         requestNet();
     }
@@ -3271,7 +3277,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         page = isRefresh ? 1 : ++page;
         String url = UrlBuilder.serverUrl + UrlBuilder.room;
         if (appUser != null) {
-            url += liveListBean.getRooms().getId();
+            url += room_Id;
             url += "/users?pageNum=" + page;
             LogUtils.i("聊天室头像列表(url):" + url);
             OkHttpUtils.get().url(url).build().execute(new CustomStringCallBack(mContext,
@@ -3315,12 +3321,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     //下拉刷新需要清除数据
                     mDatas.clear();
                 }
-//                for (int i = 0 ,j = result.size(); i < j; i++) {
-//                    if (result.get(i).getUserId().equals(liveListBean.getId()+"")){
-//                        result.remove(i);
-//                        liveNum.setText(--liveOnLineNums + "");
-//                    }
-//                }
                 mDatas.addAll(result);
                 mAdapter.notifyDataSetChanged();
             }
@@ -3339,7 +3339,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * @time 2016/11/18 11:21
      */
     private void enterRoom() {
-        EnterChatRoomData data = new EnterChatRoomData(roomId);
+        EnterChatRoomData data = new EnterChatRoomData(wy_Id);
         enterRequest = NIMClient.getService(ChatRoomService.class).enterChatRoom(data);
         enterRequest.setCallback(new RequestCallback<EnterChatRoomResultData>() {
             @Override
@@ -3389,7 +3389,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         messageFragment = (ChatRoomMessageFragment) getSupportFragmentManager().findFragmentById
                 (R.id.watch_room_message_fragment);
         if (messageFragment != null) {
-            messageFragment.init(roomId);
+            messageFragment.init(wy_Id);
         } else {
             // 如果Fragment还未Create完成，延迟初始化
             getHandler().postDelayed(new Runnable() {
@@ -3535,10 +3535,10 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         mSendGiftNumList.add(SEND_NUM + "");
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("userId", appUser.getId());
-        map.put("roomId", liveListBean.getRooms().getId() + "");
+        map.put("roomId", room_Id);
         map.put("amount", mSendGiftItem.getMemberConsume());
         map.put("giftId", mSendGiftItem.getId());
-        map.put("toUserId", liveListBean.getId() + "");
+        map.put("toUserId", zhubo_Id);
         map.put("goldAmount", myGoldCoin + "");
         httpDatas.DataNoloadingAdmin("赠送礼物", Request.Method.POST,
                 UrlBuilder.SEND_GIFT, map, myHandler, RequestCode.SEND_GIFT);
@@ -3753,7 +3753,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     Observer<ChatRoomStatusChangeData> onlineStatus = new Observer<ChatRoomStatusChangeData>() {
         @Override
         public void onEvent(ChatRoomStatusChangeData chatRoomStatusChangeData) {
-            if (!chatRoomStatusChangeData.roomId.equals(roomId)) {
+            if (!chatRoomStatusChangeData.roomId.equals(wy_Id)) {
                 return;
             }
             if (chatRoomStatusChangeData.status == StatusCode.CONNECTING) {
@@ -3764,7 +3764,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 LogUtils.i("WangYi", "检测在线");
             } else if (chatRoomStatusChangeData.status == StatusCode.UNLOGIN) {
                 LogUtils.i("WangYi", "检测不在线");
-                int code = NIMClient.getService(ChatRoomService.class).getEnterErrorCode(roomId);
+                int code = NIMClient.getService(ChatRoomService.class).getEnterErrorCode(wy_Id);
                 LogUtils.d(TAG, "chat room enter error code:" + code);
                 if (code != ResponseCode.RES_ECONNECTION) {
                     LogUtils.i("WangYi", "未登录,code=" + code);
@@ -3785,7 +3785,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     };
 
     public void clearChatRoom() {
-        ChatRoomMemberCache.getInstance().clearRoomCache(roomId);
+        ChatRoomMemberCache.getInstance().clearRoomCache(wy_Id);
         finish();
     }
 
@@ -3977,7 +3977,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
 
     private void initPaly() {
-        isFristLianmai = false;
         if (mPm == null) {
             mPm = (PowerManager) getSystemService(Context.POWER_SERVICE);
             mWl = mPm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "MyTag");
@@ -4352,7 +4351,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         tv_refuse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendCustomNotificationForLive("miu_" + liveListBean.getId(), appUser.getId(),
+                sendCustomNotificationForLive("miu_" + zhubo_Id, appUser.getId(),
                         appUser.getNickName(), appUser.getPicUrl(), appUser.getVip(), "观众拒绝了你的连麦请求", "2",
                         CustomNotificationType.IM_P2P_TYPE_SUBLIVE_PUBLIC, "2");
                 lianmai_request_pop.dismiss();
@@ -4369,7 +4368,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     private void requstLianPush() {
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         httpDatas.getDataForJsoNoloading("主播连麦请求推拉流信息", Request.Method.GET, UrlBuilder.roomLive
-                        (liveListBean.getRooms().getId() + "", appUser.getId()), map, myHandler,
+                        (room_Id, appUser.getId()), map, myHandler,
                 RequestCode.REQUEST_LIANMAI_LIVE);
     }
 
@@ -4382,7 +4381,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     private void iSrequstLiveValid() {
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         httpDatas.getDataForJsoNoloading("是否有被连麦的观众", Request.Method.GET, UrlBuilder
-                .roomLiveValid(liveListBean.getRooms().getId() + ""), map, myHandler, RequestCode
+                .roomLiveValid(room_Id), map, myHandler, RequestCode
                 .IS_REQUEST_LIANMAI_LIVE);
     }
 
@@ -4416,7 +4415,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         httpDatas.getDataForJsoNoloading("观众退出连线", Request.Method.GET, UrlBuilder.roomLiveExit
-                        (liveListBean.getRooms().getId() + "", appUser.getId()), map, myHandler,
+                        (room_Id, appUser.getId()), map, myHandler,
                 RequestCode.ROOMLIVEEXIT);
     }
 
@@ -4437,7 +4436,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      */
     private void initUser() {
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
-        map.put("id", liveListBean.getId() + "");
+        map.put("id", zhubo_Id);
         httpDatas.getNewDataCharServerCodeNoLoading("查询用户信息", Request.Method
                 .POST, UrlBuilder.selectUserInfo, map, myHandler, RequestCode.SELECT_USER);
     }
@@ -4790,15 +4789,14 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     customdateBean.setFollow("1");
                 }
                 focus(tvFoucs, customdateBean);
-                if (customdateBean.getId().equals(liveListBean.getId() + "")) {
+                if (customdateBean.getId().equals(zhubo_Id)) {
                     if (TextUtils.equals(follow, "1")) {
                         btnAttention.setVisibility(View.VISIBLE);
                     } else {
                         btnAttention.setVisibility(View.GONE);
                         Map<String, Object> map0 = new HashMap<>();
                         map0.put("level", appUser.getLevel());
-                        SendRoomMessageUtils.onCustomMessageGuanzhu("199", messageFragment, liveListBean.getRooms()
-                                .getRoomId() + "", map0);
+                        SendRoomMessageUtils.onCustomMessageGuanzhu("199", messageFragment, wy_Id, map0);
                     }
                 }
             }
@@ -4830,7 +4828,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     private void join() {
         String url = UrlBuilder.chargeServerUrl + UrlBuilder.join;
         Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("roomId", liveListBean.getRooms().getId() + "");
+        hashMap.put("roomId", room_Id);
         hashMap.put("userId", appUser.getId());
         String json = new JSONObject(hashMap).toString();
         LogUtils.e("Json:　" + json);
@@ -5014,16 +5012,16 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 if (type == 1) {
                     url = "http://60.205.114.36:8080/lucky/trend.html";
                 } else if (type == 2) {
-                    url = "http://60.205.114.36:8080/gameRecord/luck28.html?roomId=" + liveListBean.getRoomId() + "&userId=" + appUser.getId();
+                    url = "http://60.205.114.36:8080/gameRecord/luck28.html?roomId=" + room_Id + "&userId=" + appUser.getId();
                 } else {
                     url = "http://60.205.114.36:8080/protocol/rule.html";
                 }
                 break;
             case 2:
                 if (type == 1) {
-                    url = "http://60.205.114.36:8080/cow/cowResult.html?roomId=" + liveListBean.getRoomId();
+                    url = "http://60.205.114.36:8080/cow/cowResult.html?roomId=" + room_Id;
                 } else if (type == 2) {
-                    url = "http://60.205.114.36:8080/gameRecord/cowRecord.html?roomId=" + liveListBean.getRoomId() + "&userId=" + appUser.getId();
+                    url = "http://60.205.114.36:8080/gameRecord/cowRecord.html?roomId=" + room_Id + "&userId=" + appUser.getId();
                 }
                 break;
         }
@@ -5136,7 +5134,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
         OkHttpUtils.get().url(url)
                 .addParams("userId", appUser.getId())
-                .addParams("roomId", liveListBean.getRooms().getId() + "")
+                .addParams("roomId", room_Id)
                 .addParams("periods", intQh + "")
                 .addParams("amount", tzNumber + "")
                 .addParams("acountTimes", jbNumber + "")
@@ -5170,8 +5168,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                             map.put("userId", appUser.getId());
                             map.put("level", appUser.getLevel());
                             map.put("inputMsg", intQh + "期 " + selectStatus + " 投注" + strJinBi + "乐票");
-                            SendRoomMessageUtils.onCustomMessagePlay("1818", messageFragment, liveListBean.getRooms()
-                                    .getRoomId() + "", map);
+                            SendRoomMessageUtils.onCustomMessagePlay("1818", messageFragment, wy_Id, map);
                         } else {
                             showToast(jsonObject.getString("msg"));
                             rulePop.dismiss();
