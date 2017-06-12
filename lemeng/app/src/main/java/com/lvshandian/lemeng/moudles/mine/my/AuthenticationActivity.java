@@ -11,12 +11,14 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -74,6 +76,10 @@ public class AuthenticationActivity extends BaseActivity {
     ImageView ivHandCard;
     @Bind(R.id.btn_submit)
     Button btnSubmit;
+    @Bind(R.id.ll_quhao)
+    LinearLayout ll_quhao;
+    @Bind(R.id.tv_quhao)
+    TextView tv_quhao;
 
     /**
      * 验证码倒计时1分钟
@@ -160,7 +166,7 @@ public class AuthenticationActivity extends BaseActivity {
                 case RequestCode.REAL_NAME_VERTIFY:
 //                    appUser.setVerified("1");
 //                    CacheUtils.saveObject(AuthenticationActivity.this, appUser, CacheUtils.USERINFO);
-                    SharedPreferenceUtils.put(mContext,"verified","1");
+                    SharedPreferenceUtils.put(mContext, "verified", "1");
                     showToast("上传成功");
                     startActivity(new Intent(mContext, RealNameVertifyActivity.class));
                     finish();
@@ -180,6 +186,7 @@ public class AuthenticationActivity extends BaseActivity {
         ivIdCard.setOnClickListener(this);
         ivHandCard.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
+        ll_quhao.setOnClickListener(this);
     }
 
     @Override
@@ -227,7 +234,7 @@ public class AuthenticationActivity extends BaseActivity {
         mTimer = new CountDownTimer(daoJiShi, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                tvGetVerifyCode.setText(String.valueOf((int) (millisUntilFinished / countDownInterval)));
+                tvGetVerifyCode.setText(String.valueOf((int) (millisUntilFinished / countDownInterval)) + "s");
             }
 
             @Override
@@ -241,6 +248,10 @@ public class AuthenticationActivity extends BaseActivity {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.ll_quhao:
+                Intent intent = new Intent(mContext, StateCodeActivity.class);
+                startActivityForResult(intent, 200);
+                break;
             case R.id.tv_titlebar_left:
                 defaultFinish();
                 break;
@@ -283,6 +294,11 @@ public class AuthenticationActivity extends BaseActivity {
             showToast("请输入正确的手机号");
             return;
         }
+
+        String str = tv_quhao.getText().toString();
+        str = str.substring(str.lastIndexOf("+") + 1, str.length());
+        phoneNum = str + phoneNum;
+
         OkHttpUtils.get().url(UrlBuilder.chargeServerUrl + UrlBuilder.getCode)
                 .addParams("mobile", phoneNum)
                 .build().execute(new CustomStringCallBack() {
@@ -318,6 +334,10 @@ public class AuthenticationActivity extends BaseActivity {
             showToast("请输入正确的手机号");
             return;
         }
+        String str = tv_quhao.getText().toString();
+        str = str.substring(str.lastIndexOf("+") + 1, str.length());
+        phone = str + phone;
+
         params.put("phoneNum", phone);
 
 
@@ -412,6 +432,13 @@ public class AuthenticationActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
+            case 200:
+                if (data != null) {
+                    if (!TextUtils.isEmpty(data.getStringExtra("stateCode"))) {
+                        tv_quhao.setText(data.getStringExtra("stateCode"));
+                    }
+                }
+                break;
             case TAKE_PICTURE:
                 ImageCompressUtils.newInstance().compress(this, mFile, new ImageCompressUtils.CompressResultListener() {
                     @Override
@@ -486,14 +513,15 @@ public class AuthenticationActivity extends BaseActivity {
                 break;
         }
     }
+
     private void getAliyunHandIDImageUrl() {
         File certifationFile = new File(HAND_ID_IMAGE_PATH);
         Bitmap bitmap1 = null;
         File file1 = null;
         try {
             bitmap1 = BitmpTools.revitionImageSize(certifationFile.getAbsolutePath());
-            file1 =compressImage(bitmap1);
-            String HandabsolutePath =  file1.getAbsolutePath();
+            file1 = compressImage(bitmap1);
+            String HandabsolutePath = file1.getAbsolutePath();
             AliYunImageUtils.newInstance().uploadImage(this, HandabsolutePath, new ResultListener() {
                 @Override
                 public void onSucess(String data) {
@@ -521,9 +549,9 @@ public class AuthenticationActivity extends BaseActivity {
         File file1 = null;
         try {
             bitmap1 = BitmpTools.revitionImageSize(idCardfile.getAbsolutePath());
-            file1 =compressImage(bitmap1);
+            file1 = compressImage(bitmap1);
             String IDImageabsolutePath = file1.getAbsolutePath();
-            AliYunImageUtils.newInstance().uploadImage(this,IDImageabsolutePath, new ResultListener() {
+            AliYunImageUtils.newInstance().uploadImage(this, IDImageabsolutePath, new ResultListener() {
                 @Override
                 public void onSucess(String data) {
                     LogUtils.e("身份证正面照地址: " + data);
@@ -551,19 +579,17 @@ public class AuthenticationActivity extends BaseActivity {
         String fileName = System.currentTimeMillis() + ".jpg";
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.JPEG, 70, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
-        return byte2File(baos.toByteArray(),filePath,fileName);
+        return byte2File(baos.toByteArray(), filePath, fileName);
 
     }
 
-    public static File byte2File(byte[] buf, String filePath, String fileName)
-    {
+    public static File byte2File(byte[] buf, String filePath, String fileName) {
         BufferedOutputStream bos = null;
         FileOutputStream fos = null;
         File file = null;
         try {
             File dir = new File(filePath);
-            if (!dir.exists() && dir.isDirectory())
-            {
+            if (!dir.exists() && dir.isDirectory()) {
                 dir.mkdirs();
             }
             file = new File(filePath + File.separator + fileName);
@@ -572,23 +598,21 @@ public class AuthenticationActivity extends BaseActivity {
             bos.write(buf);
 
             return file;
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
-        }finally{
-            if (bos != null){
-                try{
+        } finally {
+            if (bos != null) {
+                try {
                     bos.close();
-                }
-                catch (IOException e){
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-            if (fos != null){
-                try{
+            if (fos != null) {
+                try {
                     fos.close();
-                }
-                catch (IOException e){
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }

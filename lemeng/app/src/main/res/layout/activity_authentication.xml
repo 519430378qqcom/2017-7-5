@@ -38,6 +38,40 @@
         android:layout_height="1px"
         android:background="@color/line_df" />
 
+
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/ll_quhao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingBottom="15px"
+        android:paddingLeft="20px"
+        android:paddingRight="30px"
+        android:paddingTop="15px">
+
+        <TextView
+            android:id="@+id/tv_quhao"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="中国 +86"
+            android:textColor="@color/main"
+            android:textSize="30px" />
+
+        <ImageView
+            android:layout_width="33px"
+            android:layout_height="33px"
+            android:src="@mipmap/donw_hui"
+            android:layout_marginRight="10px"/>
+
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/line_df" />
+
     <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -69,6 +103,7 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/line_df" />
+
 
     <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="match_parent"
