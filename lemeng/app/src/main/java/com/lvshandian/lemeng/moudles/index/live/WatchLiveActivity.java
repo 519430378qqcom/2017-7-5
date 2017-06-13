@@ -864,14 +864,26 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
             switch (msg.what) {
                 case RequestCode.START_JOIN_ROOM:
-                    liveListBean = JsonUtil.json2Bean(json.toString(), LiveListBean.class);
-                    if (liveListBean == null) {
-                        showToast("该直播间已关闭");
-                        //开启登录页面
-                        MyApplication.finishActivity();
-                        gotoActivity(MainActivity.class, true);
-                        return;
+                    if (json == null) {
+                        initDialog();
+                        String content = "提示" + "\n" + "\n" + "该直播间已关闭,请返回主页";
+                        baseDialogTitle.setText(content);
+                        baseDialogLeft.setVisibility(View.GONE);
+                        baseDialogLine.setVisibility(View.GONE);
+                        baseDialog.setCancelable(false);
+                        baseDialog.setCanceledOnTouchOutside(false);
+                        baseDialogRight.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                baseDialog.dismiss();
+                                startActivity(new Intent(mContext, MainActivity.class));
+                                finish();
+                            }
+                        });
+                        break;
                     }
+
+                    liveListBean = JsonUtil.json2Bean(json.toString(), LiveListBean.class);
                     room_Id = liveListBean.getRoomId() + "";
                     zhubo_Id = liveListBean.getId() + "";
                     liveHead.setAvatarUrl(liveListBean.getPicUrl());
@@ -1152,11 +1164,11 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         mLoading = new LoadingDialog(mContext);
 //        mLoading.show();
         if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {
-//            Uri uri = getIntent().getData();
-//            if (uri != null) {
-//                wy_Id = uri.getQueryParameter("wyRoomId");
-//                mVideoPath = uri.getQueryParameter("mVideoPath");
-//            }
+            Uri uri = getIntent().getData();
+            if (uri != null) {
+                wy_Id = uri.getQueryParameter("roomId");
+                mVideoPath = uri.getQueryParameter("videoPath");
+            }
         } else {
             wy_Id = getIntent().getStringExtra("wyRoomId");
             mVideoPath = getIntent().getStringExtra("mVideoPath");
@@ -1605,7 +1617,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             case R.id.iv_live_share:
                 UMUtils.umShare(WatchLiveActivity.this, "主播" + liveListBean.getNickName() + "邀你玩游戏啦",
                         "够刺激,主播" + liveListBean.getNickName() + "带你玩转直播间,一起游戏嗨起来!",
-                        liveListBean.getLivePicUrl(), UrlBuilder.SHARE_VIDEO_URL + "?roomId=" + wy_Id + "&userId=" + zhubo_Id);
+                        liveListBean.getLivePicUrl(), UrlBuilder.SHARE_VIDEO_URL + "?roomId=" + wy_Id + "&userId=" + zhubo_Id + "&videoPath" + mVideoPath);
                 break;
             //跳转到排行榜
             case R.id.ll_tp_labe:

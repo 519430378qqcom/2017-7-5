@@ -117,21 +117,7 @@
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
-
-            <!-- 要想在别的App上能成功调起App，必须添加intent过滤器 -->
-            <intent-filter>
-
-                <!-- 协议部分，随便设置 -->
-                <data android:scheme="LMLWeb" />
-                <!-- 下面这几行也必须得设置 -->
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.BROWSABLE" />
-            </intent-filter>
-        </activity>
+            android:screenOrientation="portrait"></activity>
 
         <service
             android:name=".service.VoiceService"
@@ -159,7 +145,17 @@
         <activity
             android:name=".moudles.start.LoginSelectActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+            <!-- 要想在别的App上能成功调起App，必须添加intent过滤器 -->
+            <intent-filter>
+                <!-- 协议部分，随便设置 -->
+                <data android:scheme="lmlweb" />
+                <!-- 下面这几行也必须得设置 -->
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+        </activity>
         <!-- 登录页面 -->
         <activity
             android:name=".moudles.start.LoginActivity"
@@ -347,13 +343,17 @@
             android:name=".moudles.index.live.WatchLiveActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
-        <!--<activity-->
-            <!--android:name=".moudles.index.live.WatchLiveActivity"-->
-            <!--android:launchMode="singleTop"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@android:style/Theme.Translucent.NoTitleBar"-->
-            <!--android:windowSoftInputMode="adjustPan|stateHidden" />-->
+            android:windowSoftInputMode="adjustPan|stateHidden">
+            <!--要想在别的App上能成功调起App，必须添加intent过滤器-->
+            <intent-filter>
+                <!-- 协议部分，随便设置 -->
+                <data android:scheme="lemeng" />
+                <!-- 下面这几行也必须得设置 -->
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+        </activity>
 
         <!-- 开启直播 -->
         <activity

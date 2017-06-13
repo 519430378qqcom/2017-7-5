@@ -2,6 +2,7 @@ package com.lvshandian.lemeng.moudles.start;
 
 import android.Manifest;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -88,6 +89,20 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
         requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
         mLoading = new LoadingDialog(this);
         mShareAPI = UMShareAPI.get(mContext);
+
+        if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {
+            Uri uri = getIntent().getData();
+            if (uri != null) {
+                String unionId = uri.getQueryParameter("unionId");
+                String userName = uri.getQueryParameter("userName");
+                LogUtil.e("webLogin", "uri=" + uri.toString() + ",unionId=" + unionId + ",userName=" + userName);
+                Map<String, String> params = new HashMap<>();
+                params.put("unionId", unionId);
+                params.put("userName", userName);
+                webLogin(params);
+            }
+        }
+
 //
 //        GoogleSignInOptions gso = new GoogleSignInOptions
 //                .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -317,6 +332,41 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
         }
     }
 
+    /**
+     * web登录
+     *
+     * @param params 请求参数,用于生成请求实体 json
+     */
+    private void webLogin(Map<String, String> params) {
+        if (params != null) {
+            JSONObject jsonObject = new JSONObject(params);
+            String json = jsonObject.toString();
+            LogUtils.e("json: " + json);
+            OkHttpUtils.postString()
+                    .url(UrlBuilder.chargeServerUrl + UrlBuilder.openRegister)
+                    .addHeader("udid", "lemeng")
+                    .mediaType(MediaType.parse("application/json;charset=UTF-8"))
+                    .content(json)
+                    .build().
+                    execute(new CustomStringCallBackOne(mContext, HttpDatas.KEY_CODE_SUCCESS) {
+                        @Override
+                        public void onFaild() {
+                            showToast("登录失败");
+                        }
+
+                        @Override
+                        public void onSucess(String data) {
+                            LogUtils.e("第三方登录: " + data);
+                            loginSucess(data);
+                            LoginFrom loginFrom = new LoginFrom();
+                            loginFrom.setThirdLogin(true);
+                            loginFrom.setPassword("");
+//                            CacheUtils.saveObject(mContext, loginFrom, CacheUtils.PASSWORD);
+                            SharedPreferenceUtils.saveLoginFrom(mContext, loginFrom);
+                        }
+                    });
+        }
+    }
 
     /**
      * 登录成功
@@ -390,7 +440,7 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
 
             @Override
             public void onException(Throwable exception) {
-                LogUtil.e("网易云信无效输入",exception.toString());
+                LogUtil.e("网易云信无效输入", exception.toString());
                 showToast(R.string.login_exception);
                 onLoginDone();
             }

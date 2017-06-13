@@ -614,6 +614,11 @@ public class StartLiveActivity extends BaseActivity implements
     private String room_Id = "";
 
     /**
+     * 拉流地址
+     */
+    private String mVideoPath = "";
+
+    /**
      * 退出对话框
      */
     private RoundDialog mQuitDialog;
@@ -853,6 +858,8 @@ public class StartLiveActivity extends BaseActivity implements
         try {
             initLivePlay(DESUtil.decrypt(creatReadyBean.getPublishUrl()));
             LogUtils.i("推流地址　：" + DESUtil.decrypt(creatReadyBean.getPublishUrl()));
+            mVideoPath = DESUtil.decrypt(creatReadyBean.getBroadcastUrl());
+            LogUtils.i("拉流地址　：" + mVideoPath + "---wy_Id=" + wy_Id);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1157,7 +1164,7 @@ public class StartLiveActivity extends BaseActivity implements
                     public void onClick(View v) {
                         UMUtils.umShare(StartLiveActivity.this, "主播" + appUser.getNickName() + "邀你玩游戏啦",
                                 "够刺激,主播" + creatReadyBean.getCreator().getNickName() + "带你玩转直播间,一起游戏嗨起来!",
-                                creatReadyBean.getLivePicUrl(), UrlBuilder.SHARE_VIDEO_URL + "?roomId=" + wy_Id + "&userId=" + appUser.getId());
+                                creatReadyBean.getLivePicUrl(), UrlBuilder.SHARE_VIDEO_URL + "?roomId=" + wy_Id + "&userId=" + appUser.getId() + "&videoPath" + mVideoPath);
                         popupWindow.dismiss();
                     }
                 });
@@ -1480,7 +1487,7 @@ public class StartLiveActivity extends BaseActivity implements
             switchTimer();
         }
         if (nextTime <= 5 && nextTime > 0) {
-            bullfightResultShow(null,null,getResources().getString(R.string.take_a_rest)+nextTime+"S");
+            bullfightResultShow(null, null, getResources().getString(R.string.take_a_rest) + nextTime + "S");
         }
         switch (nextTime) {
             case 30://主播初始化游戏结果
