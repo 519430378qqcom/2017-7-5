@@ -299,7 +299,7 @@ public class AuthenticationActivity extends BaseActivity {
         str = str.substring(str.lastIndexOf("+") + 1, str.length());
         phoneNum = str + phoneNum;
 
-        OkHttpUtils.get().url(UrlBuilder.chargeServerUrl + UrlBuilder.getCode)
+        OkHttpUtils.get().url(UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.getCode)
                 .addParams("mobile", phoneNum)
                 .build().execute(new CustomStringCallBack() {
             @Override

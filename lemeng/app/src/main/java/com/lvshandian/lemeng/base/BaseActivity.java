@@ -611,7 +611,7 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
      */
 
     private void ok(final String content, String roomId) {
-        String url = UrlBuilder.serverUrl + UrlBuilder.joinRoom + roomId;
+        String url = UrlBuilder.SERVER_URL + UrlBuilder.joinRoom + roomId;
         OkHttpUtils.get().url(url)
                 .build().execute(new CustomStringCallBack(mContext, HttpDatas.KEY_CODE) {
             @Override
@@ -692,7 +692,7 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
      */
     public void ifEnter(LiveBean liveListBean) {
         live = transformLiveListBeen(liveListBean);
-        String url = UrlBuilder.chargeServerUrl + UrlBuilder.ifEnter;
+        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.ifEnter;
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("roomId", live.getRooms().getId() + "");
         hashMap.put("userId", appUser.getId());
@@ -734,7 +734,7 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
      * @time 2016/12/16 17:14
      */
     public void ifEnterTwo(final LiveListBean live) {
-        String url = UrlBuilder.chargeServerUrl + UrlBuilder.ifEnter;
+        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.ifEnter;
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("roomId", live.getRooms().getId() + "");
         hashMap.put("userId", appUser.getId());
@@ -777,7 +777,7 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
      * @time 2016/12/16 17:14
      */
     private void updateCoin(final LiveListBean live) {
-        String url = UrlBuilder.chargeServerUrl + UrlBuilder.updateCoin;
+        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.updateCoin;
         LogUtils.e("WangYi_secret", "url: " + url);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("createrId", live.getRooms().getUserId() + "");

@@ -125,7 +125,7 @@ public class UserBaseInfoAdapter extends BaseAdapter {
         JSONObject params = new JSONObject(map);
         LogUtils.i("JSONObject:" + params.toString());
         //第二个参数我们传了user=zhangqi。则请求方法就为post
-        BaseJsonRequest objRequest = new BaseJsonRequest(Request.Method.POST, UrlBuilder.serverUrl + UrlBuilder.ATTENTION_USER, params,
+        BaseJsonRequest objRequest = new BaseJsonRequest(Request.Method.POST, UrlBuilder.SERVER_URL + UrlBuilder.ATTENTION_USER, params,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject obj) {

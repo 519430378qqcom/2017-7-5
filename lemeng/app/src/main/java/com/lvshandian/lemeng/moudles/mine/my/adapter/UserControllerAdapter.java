@@ -116,7 +116,7 @@ public class UserControllerAdapter extends BaseAdapter {
      */
     private void requestControllerDelete(String userControlId, final TextView tv) {
 
-        RequestParams params = new RequestParams(UrlBuilder.chargeServerUrl + UrlBuilder.myControllerDelete);
+        RequestParams params = new RequestParams(UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.myControllerDelete);
         params.addQueryStringParameter("userId", appuserid);
         params.addQueryStringParameter("userControlId", userControlId);
         x.http().get(params, new Callback.CommonCallback<String>() {
@@ -160,7 +160,7 @@ public class UserControllerAdapter extends BaseAdapter {
      */
     private void requestControllerAdd(String userControlId, final TextView tv) {
 
-        RequestParams params = new RequestParams(UrlBuilder.chargeServerUrl + UrlBuilder.myControllerAdd);
+        RequestParams params = new RequestParams(UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.myControllerAdd);
         params.addQueryStringParameter("userId", appuserid);
         params.addQueryStringParameter("userControlId", userControlId);
         x.http().get(params, new Callback.CommonCallback<String>() {

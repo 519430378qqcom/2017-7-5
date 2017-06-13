@@ -94,7 +94,7 @@ public class ControllerBaseAdapter extends BaseAdapter {
      */
     private void requestControllerDelete(String userControlId, final int position) {
 
-        RequestParams params = new RequestParams(UrlBuilder.chargeServerUrl + UrlBuilder.myControllerDelete);
+        RequestParams params = new RequestParams(UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.myControllerDelete);
         params.addQueryStringParameter("userId", appuserid);
         params.addQueryStringParameter("userControlId", userControlId);
         x.http().get(params, new Callback.CommonCallback<String>() {

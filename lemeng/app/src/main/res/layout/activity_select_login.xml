@@ -76,14 +76,28 @@
             android:src="@mipmap/icon_def_moble" />
     </com.zhy.autolayout.AutoLinearLayout>
 
-    <ImageView
-        android:id="@+id/iv_tiaokuan"
+    <!--<ImageView-->
+        <!--android:id="@+id/iv_tiaokuan"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="48px"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:padding="10px"-->
+        <!--android:layout_marginBottom="65px"-->
+        <!--android:src="@mipmap/icon_tiaokuan" />-->
+    <TextView
+        android:id="@+id/term_of_service"
         android:layout_width="wrap_content"
         android:layout_height="48px"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:drawableLeft="@mipmap/icon_round"
+        android:text="@string/agree_term_of_service"
+        android:gravity="center_vertical"
+        android:drawablePadding="10px"
+        android:textColor="@color/white"
+        android:textSize="24px"
         android:padding="10px"
-        android:layout_marginBottom="65px"
-        android:src="@mipmap/icon_tiaokuan" />
+        android:layout_marginBottom="65px"/>
 
 </com.zhy.autolayout.AutoRelativeLayout>

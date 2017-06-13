@@ -6,7 +6,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -67,7 +66,6 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.lvshandian.lemeng.MainActivity;
-import com.lvshandian.lemeng.MyApplication;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.UrlBuilder;
 import com.lvshandian.lemeng.adapter.FamilyMemberAdapter;
@@ -113,6 +111,7 @@ import com.lvshandian.lemeng.moudles.mine.my.ContributionActivity;
 import com.lvshandian.lemeng.moudles.mine.my.OtherPersonHomePageActivity;
 import com.lvshandian.lemeng.moudles.mine.my.adapter.OnItemClickListener;
 import com.lvshandian.lemeng.moudles.mine.my.adapter.RoomUsersDataAdapter;
+import com.lvshandian.lemeng.moudles.start.LoginSelectActivity;
 import com.lvshandian.lemeng.utils.AnimationUtils;
 import com.lvshandian.lemeng.utils.ChannelToLiveBean;
 import com.lvshandian.lemeng.utils.Config;
@@ -139,6 +138,7 @@ import com.lvshandian.lemeng.view.RoundDialog;
 import com.lvshandian.lemeng.view.ScrollRelativeLayout;
 import com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragment;
 import com.lvshandian.lemeng.wangyiyunxin.chatroom.helper.ChatRoomMemberCache;
+import com.lvshandian.lemeng.wangyiyunxin.config.preference.Preferences;
 import com.lvshandian.lemeng.wangyiyunxin.live.fragment.ChatRoomSessionListFragment;
 import com.lvshandian.lemeng.wangyiyunxin.live.fragment.LiveMessageFragment;
 import com.lvshandian.lemeng.wangyiyunxin.main.helper.SystemMessageUnreadManager;
@@ -539,6 +539,15 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     private boolean isTouZhu;//是否可以投注
 
     /**
+     * 是否web分享打开的APP
+     */
+    private boolean isWebOpen;
+    /**
+     * 是否登录
+     */
+    private boolean isLogin = true;
+
+    /**
      * 标识直播间当前开启的游戏类型；1（彩票）;2（斗牛）
      */
     private int gameType;
@@ -876,8 +885,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                             @Override
                             public void onClick(View v) {
                                 baseDialog.dismiss();
-                                startActivity(new Intent(mContext, MainActivity.class));
-                                finish();
+                                videoPlayEnd();
                             }
                         });
                         break;
@@ -1161,6 +1169,11 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
     @Override
     protected void initialized() {
+        //隐藏视频地址
+        flPull.setVisibility(View.GONE);
+        flPlug.setVisibility(View.GONE);
+        getWindow().setFormat(PixelFormat.TRANSLUCENT);
+
         mLoading = new LoadingDialog(mContext);
 //        mLoading.show();
         if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {
@@ -1168,17 +1181,19 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             if (uri != null) {
                 wy_Id = uri.getQueryParameter("roomId");
                 mVideoPath = uri.getQueryParameter("videoPath");
+                isWebOpen = true;
+                if (!Preferences.getAppLogin().equals("1") || !Preferences.getWyyxLogin().equals("1")) {
+                    isLogin = false;
+                    videoPlayEnd();
+                }
             }
         } else {
             wy_Id = getIntent().getStringExtra("wyRoomId");
             mVideoPath = getIntent().getStringExtra("mVideoPath");
         }
+
         anchorVideo = new AnchorVideo();
         anchorVideo.initLive(mVideoPath, WatchLiveActivity.this, mSurfaceView, rlLoading);
-        //隐藏视频地址
-        flPull.setVisibility(View.GONE);
-        flPlug.setVisibility(View.GONE);
-        getWindow().setFormat(PixelFormat.TRANSLUCENT);
 
         // 注册监听
         registerObservers(true);
@@ -1194,7 +1209,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         fragmentManager = getSupportFragmentManager();
         initQuitDialog("确定离开");
         dialogForSelect = new Dialog(mContext, R.style.homedialog);
-
+        if (!isLogin)
+            return;
         startJoinRoom();
     }
 
@@ -1204,12 +1220,12 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     private void startJoinRoom() {
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("roomId", wy_Id);
-        httpDatas.getNewDataCharServerCodeNoLoading("进入直播间接口", Request.Method.GET, UrlBuilder.STARTJOINROOM, map, myHandler, RequestCode.START_JOIN_ROOM);
+        httpDatas.getNewDataCharServerCodeNoLoading("进入直播间接口", Request.Method.GET, UrlBuilder.START_JOIN_ROOM, map, myHandler, RequestCode.START_JOIN_ROOM);
     }
 
 
     private void initBlInfos() {
-        String url = UrlBuilder.serverUrl + UrlBuilder.getBl;
+        String url = UrlBuilder.SERVER_URL + UrlBuilder.getBl;
         OkHttpUtils.post().url(url).addParams("roomId", room_Id).addParams("type", "0").build().execute(new StringCallback() {
             @Override
             public void onError(com.squareup.okhttp.Request request, Exception e) {
@@ -1617,7 +1633,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             case R.id.iv_live_share:
                 UMUtils.umShare(WatchLiveActivity.this, "主播" + liveListBean.getNickName() + "邀你玩游戏啦",
                         "够刺激,主播" + liveListBean.getNickName() + "带你玩转直播间,一起游戏嗨起来!",
-                        liveListBean.getLivePicUrl(), UrlBuilder.SHARE_VIDEO_URL + "?roomId=" + wy_Id + "&userId=" + zhubo_Id + "&videoPath" + mVideoPath);
+                        liveListBean.getLivePicUrl(), String.format(UrlBuilder.SHARE_VIDEO_URL, wy_Id, zhubo_Id, mVideoPath));
                 break;
             //跳转到排行榜
             case R.id.ll_tp_labe:
@@ -2776,7 +2792,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * @time 2016/12/22 16:11
      */
     private void getFamilyMember() {
-        String url = UrlBuilder.chargeServerUrl + UrlBuilder.selectFamilyMember;
+        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.selectFamilyMember;
         LogUtils.i("家族url: " + url);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("userId", zhubo_Id);
@@ -2928,20 +2944,13 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (bullfightPresenter != null) {
-            bullfightPresenter.detach();
-        }
         if (flPlug.getVisibility() == View.VISIBLE) {
             Map<String, Object> map1 = new HashMap<>();
             map1.put("watch_private_flag", "0");
             map1.put("vip", "0");
             SendRoomMessageUtils.onCustomMessageLianmai(SendRoomMessageUtils.MESSAGE_WATCHER_DISCONNECT,
                     messageFragment, wy_Id, map1);
-        }
-
-        roomLiveExit();
-        if (null != mMediaStreamingManager) {
-            mMediaStreamingManager.destroy();
+            roomLiveExit();
         }
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("userId", appUser.getId());
@@ -2949,9 +2958,15 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         httpDatas.getDataForJsoNoloading("退出直播间", Request.Method.POST, UrlBuilder.roomExit, map,
                 myHandler, RequestCode.REQUEST_ROOM_EXIT);
 
-        timer.cancel();
+        if (null != mMediaStreamingManager) {
+            mMediaStreamingManager.destroy();
+        }
+        if (null != mHandler) {
+            mHandler.removeCallbacksAndMessages(null);
+        }
         if (anchorVideo != null) {
             anchorVideo.release();
+            anchorVideo = null;
         }
         AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         audioManager.abandonAudioFocus(null);
@@ -2961,6 +2976,10 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         registerSystemMessageObservers(false);
         unregisterReceiver(broadcastReceiver);
         barrageview.setSentenceList(new ArrayList<BarrageDateBean>());
+        timer.cancel();
+        if (bullfightPresenter != null) {
+            bullfightPresenter.detach();
+        }
         if (bullfightAudio != null) {
             bullfightAudio.release();
         }
@@ -2979,6 +2998,18 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         return super.onKeyDown(keyCode, event);
     }
 
+
+    //关闭直播间
+    public void videoPlayEnd() {
+        if (isWebOpen) {
+            if (isLogin) {
+                startActivity(new Intent(mContext, MainActivity.class));
+            } else {
+                startActivity(new Intent(mContext, LoginSelectActivity.class));
+            }
+        }
+        finish();
+    }
 
     /**
      * 注册网易云信广播接收器
@@ -3287,7 +3318,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      */
     private void requestNet() {
         page = isRefresh ? 1 : ++page;
-        String url = UrlBuilder.serverUrl + UrlBuilder.room;
+        String url = UrlBuilder.SERVER_URL + UrlBuilder.room;
         if (appUser != null) {
             url += room_Id;
             url += "/users?pageNum=" + page;
@@ -4415,9 +4446,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             mHandler.removeCallbacksAndMessages(null);
             mMediaStreamingManager.pause();
         }
-//        if (null != mMediaStreamingManager) {
-//            mMediaStreamingManager.destroy();
-//        }
+
         if (null != cameraPreviewFrameView) {
             cameraPreviewFrameView.getHolder().getSurface().release();
             cameraPreviewFrameView.setVisibility(View.GONE);
@@ -4776,7 +4805,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         params.put("followUserId", customdateBean.getId());
         JSONObject jsonObject = new JSONObject(params);
         String json = jsonObject.toString();
-        String url = UrlBuilder.serverUrl + UrlBuilder.ATTENTION_USER;
+        String url = UrlBuilder.SERVER_URL + UrlBuilder.ATTENTION_USER;
         LogUtils.e("ulr: " + url);
         OkHttpUtils.postString().url(url)
                 .content(json)
@@ -4838,7 +4867,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * @time 2016/12/16 17:14
      */
     private void join() {
-        String url = UrlBuilder.chargeServerUrl + UrlBuilder.join;
+        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.join;
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("roomId", room_Id);
         hashMap.put("userId", appUser.getId());
@@ -4992,27 +5021,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     }
 
 
-    //直播结束释放资源
-    public void videoPlayEnd() {
-        if (null != mHandler) {
-            mHandler.removeCallbacksAndMessages(null);
-        }
-        if (null != anchorVideo) {
-            anchorVideo.release();
-            anchorVideo = null;
-        }
-        if (null != mMediaStreamingManager) {
-            mMediaStreamingManager.destroy();
-        }
-
-        for (Activity activity : MyApplication.listActivity) {
-            if (activity instanceof WatchLiveActivity) {
-                activity.finish();
-            }
-        }
-    }
-
-
     /**
      * 显示走势
      * type1:走势图   2:历史记录   3:规则
@@ -5022,18 +5030,18 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         switch (gameType) {
             case 1:
                 if (type == 1) {
-                    url = "http://60.205.114.36:8080/lucky/trend.html";
+                    url = UrlBuilder.LUCKY28_TREND;
                 } else if (type == 2) {
-                    url = "http://60.205.114.36:8080/gameRecord/luck28.html?roomId=" + room_Id + "&userId=" + appUser.getId();
+                    url = String.format(UrlBuilder.LUCKY28_HISTORY, room_Id, appUser.getId());
                 } else {
-                    url = "http://60.205.114.36:8080/protocol/rule.html";
+                    url = UrlBuilder.LUCKY28_RULE;
                 }
                 break;
             case 2:
                 if (type == 1) {
-                    url = "http://60.205.114.36:8080/cow/cowResult.html?roomId=" + room_Id;
+                    url = String.format(UrlBuilder.NIUNIU_TREND, room_Id);
                 } else if (type == 2) {
-                    url = "http://60.205.114.36:8080/gameRecord/cowRecord.html?roomId=" + room_Id + "&userId=" + appUser.getId();
+                    url = String.format(UrlBuilder.NIUNIU_HISTORY, room_Id, appUser.getId());
                 }
                 break;
         }
@@ -5142,7 +5150,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     }
 
     private void sureTz(final PopupWindow rulePop) {
-        String url = UrlBuilder.chargeServerUrl + UrlBuilder.reciveAmount;
+        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.reciveAmount;
 
         OkHttpUtils.get().url(url)
                 .addParams("userId", appUser.getId())
@@ -5197,7 +5205,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * @dw 获取上期开奖数据
      */
     private void getTimenumber() {
-        String url = UrlBuilder.chargeServerUrl + UrlBuilder.getTimenumber + "?userId=" + appUser.getId();
+        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.getTimenumber + "?userId=" + appUser.getId();
         OkHttpUtils.get().url(url).build().execute(new StringCallback() {
 
 

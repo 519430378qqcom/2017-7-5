@@ -1164,7 +1164,7 @@ public class StartLiveActivity extends BaseActivity implements
                     public void onClick(View v) {
                         UMUtils.umShare(StartLiveActivity.this, "主播" + appUser.getNickName() + "邀你玩游戏啦",
                                 "够刺激,主播" + creatReadyBean.getCreator().getNickName() + "带你玩转直播间,一起游戏嗨起来!",
-                                creatReadyBean.getLivePicUrl(), UrlBuilder.SHARE_VIDEO_URL + "?roomId=" + wy_Id + "&userId=" + appUser.getId() + "&videoPath" + mVideoPath);
+                                creatReadyBean.getLivePicUrl(), String.format(UrlBuilder.SHARE_VIDEO_URL, wy_Id, appUser.getId(), mVideoPath));
                         popupWindow.dismiss();
                     }
                 });
@@ -2339,7 +2339,7 @@ public class StartLiveActivity extends BaseActivity implements
     }
 
     private void showXYGame() {
-        String url = UrlBuilder.serverUrl + UrlBuilder.getBl;
+        String url = UrlBuilder.SERVER_URL + UrlBuilder.getBl;
 
         OkHttpUtils.post().url(url).addParams("roomId", room_Id).addParams("type", "1").build().execute(new StringCallback() {
             @Override
@@ -2401,7 +2401,7 @@ public class StartLiveActivity extends BaseActivity implements
      * @time 2016/12/22 16:11
      */
     private void getFamilyMember() {
-        String url = UrlBuilder.chargeServerUrl + UrlBuilder.selectFamilyMember;
+        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.selectFamilyMember;
         LogUtils.i("家族url: " + url);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("userId", creatReadyBean.getCreator().getId());
@@ -2465,7 +2465,7 @@ public class StartLiveActivity extends BaseActivity implements
      */
 
     private void request() {
-        RequestParams params = new RequestParams(UrlBuilder.chargeServerUrl + UrlBuilder
+        RequestParams params = new RequestParams(UrlBuilder.CHARGE_SERVER_URL + UrlBuilder
                 .myController);
         params.addQueryStringParameter("page", 1 + "");
         params.addQueryStringParameter("rows", "10");
@@ -2886,7 +2886,7 @@ public class StartLiveActivity extends BaseActivity implements
      * 聊天室头像列表
      */
     private void requestNet() {
-        String url = UrlBuilder.serverUrl + room;
+        String url = UrlBuilder.SERVER_URL + room;
         if (appUser != null) {
             url += room_Id;
             if (isRefresh) {
@@ -3963,7 +3963,7 @@ public class StartLiveActivity extends BaseActivity implements
      */
     private void push(String roomid) {
 
-        String url = UrlBuilder.serverUrl + UrlBuilder.livepush(wy_Id);
+        String url = UrlBuilder.SERVER_URL + UrlBuilder.livepush(wy_Id);
         LogUtils.i(url);
         OkHttpUtils.get()
                 .url(url)
@@ -4430,7 +4430,7 @@ public class StartLiveActivity extends BaseActivity implements
      */
     private void requestFunse(final SwipeRefreshLayout refresh, String content) {
         funsePage = funseIsRefresh ? 1 : ++funsePage;
-        String url = UrlBuilder.chargeServerUrl + UrlBuilder.room_funse;
+        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.room_funse;
         OkHttpUtils.get().url(url).
                 addParams("page", String.valueOf(funsePage)).
                 addParams("roomId", room_Id).
@@ -4737,7 +4737,7 @@ public class StartLiveActivity extends BaseActivity implements
      * 禁言成功失败
      */
     private void banned(final String stopUserId, final String nickNane) {
-        RequestParams params = new RequestParams(UrlBuilder.chargeServerUrl + UrlBuilder
+        RequestParams params = new RequestParams(UrlBuilder.CHARGE_SERVER_URL + UrlBuilder
                 .appUserControl);
 
         params.addQueryStringParameter("userId", appUser.getId());
@@ -4812,7 +4812,7 @@ public class StartLiveActivity extends BaseActivity implements
         params.put("followUserId", customdateBean.getId());
         JSONObject jsonObject = new JSONObject(params);
         String json = jsonObject.toString();
-        String url = UrlBuilder.serverUrl + UrlBuilder.ATTENTION_USER;
+        String url = UrlBuilder.SERVER_URL + UrlBuilder.ATTENTION_USER;
         LogUtils.e("ulr: " + url);
         OkHttpUtils.postString().url(url)
                 .content(json)
@@ -5039,18 +5039,18 @@ public class StartLiveActivity extends BaseActivity implements
         switch (gameType) {
             case 1:
                 if (type == 1) {
-                    url = "http://60.205.114.36:8080/lucky/trend.html";
+                    url = UrlBuilder.LUCKY28_TREND;
                 } else if (type == 2) {
-                    url = "http://60.205.114.36:8080/gameRecord/luck28.html?roomId=" + room_Id + "&userId=" + appUser.getId();
+                    url = String.format(UrlBuilder.LUCKY28_HISTORY, room_Id, appUser.getId());
                 } else {
-                    url = "http://47.88.229.22:8080/protocol/rule.html";
+                    url = UrlBuilder.LUCKY28_RULE;
                 }
                 break;
             case 2:
                 if (type == 1) {
-                    url = "http://60.205.114.36:8080/cow/cowResult.html?roomId=" + room_Id;
+                    url = String.format(UrlBuilder.NIUNIU_TREND, room_Id);
                 } else if (type == 2) {
-                    url = "http://60.205.114.36:8080/gameRecord/cowRecord.html?roomId=" + room_Id + "&userId=" + appUser.getId();
+                    url = String.format(UrlBuilder.NIUNIU_HISTORY, room_Id, appUser.getId());
                 }
                 break;
         }
@@ -5166,7 +5166,7 @@ public class StartLiveActivity extends BaseActivity implements
 
 
     private void sureTz(final PopupWindow rulePop) {
-        String url = UrlBuilder.chargeServerUrl + UrlBuilder.reciveAmount;
+        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.reciveAmount;
         LogUtils.e("countryType :" + countryType);
         OkHttpUtils.get().url(url)
                 .addParams("userId", appUser.getId())
@@ -5221,7 +5221,7 @@ public class StartLiveActivity extends BaseActivity implements
      * @dw 获取上期开奖数据
      */
     private void getTimenumber() {
-        String url = UrlBuilder.chargeServerUrl + UrlBuilder.getTimenumber + "?userId=" + appUser.getId();
+        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.getTimenumber + "?userId=" + appUser.getId();
         OkHttpUtils.get().url(url).build().execute(new StringCallback() {
             @Override
             public void onError(Request request, Exception e) {

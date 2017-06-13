@@ -12,7 +12,6 @@ import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.UrlBuilder;
 import com.lvshandian.lemeng.base.BaseActivity;
 import com.lvshandian.lemeng.view.LoadingDialog;
-import com.netease.nim.uikit.common.util.log.LogUtil;
 
 import butterknife.Bind;
 
@@ -57,14 +56,14 @@ public class ExplainWebViewActivity extends BaseActivity implements View.OnClick
         mLoading.show();
         flag = getIntent().getExtras().getInt("flag");
         if (flag == 1000) {
-            tv_titlebar_title.setText("乐票充值");
+            tv_titlebar_title.setText(getResources().getString(R.string.yinlian_pay_web));
             url = String.format(UrlBuilder.YINLIAN_PAY_WEB, appUser.getId());
-        }else if(flag == 2000){
-            tv_titlebar_title.setText("用户协议");
-            url = "http://47.88.229.22:8080/protocol/private.html";
-        }else if(flag == 3000){
-            tv_titlebar_title.setText("关于我们");
-            url = "http://47.88.229.22:8080/protocol/about.html";
+        } else if (flag == 2000) {
+            tv_titlebar_title.setText(getResources().getString(R.string.user_agreement));
+            url = UrlBuilder.USER_AGREEMENT;
+        } else if (flag == 3000) {
+            tv_titlebar_title.setText(getResources().getString(R.string.about_us));
+            url = UrlBuilder.ABOUT_US;
         }
 
         initView();
@@ -73,7 +72,6 @@ public class ExplainWebViewActivity extends BaseActivity implements View.OnClick
     private void initView() {
         WebSettings webSettings = webView.getSettings();
         webSetting(webSettings);
-        LogUtil.e("支付地址", url);
         webView.loadUrl(url);
         webView.setWebChromeClient(new WebChromeClient());
         webView.setWebViewClient(new WebViewClient() {
@@ -100,14 +98,13 @@ public class ExplainWebViewActivity extends BaseActivity implements View.OnClick
                     mLoading.dismiss();
                 }
             }
-
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                LogUtil.e("shouldOverrideUrlLoading", "url = " + url);
                 return super.shouldOverrideUrlLoading(view, url);
             }
         });
     }
+
     private void webSetting(WebSettings webSettings) {
 //        webSettings.setJavaScriptEnabled(true);
 //        webSettings.setSupportZoom(true);

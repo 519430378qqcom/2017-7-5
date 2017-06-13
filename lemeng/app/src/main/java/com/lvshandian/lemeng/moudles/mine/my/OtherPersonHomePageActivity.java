@@ -485,7 +485,7 @@ public class OtherPersonHomePageActivity extends BaseActivity {
         params.put("followUserId", mOtherBean.getId());
         JSONObject jsonObject = new JSONObject(params);
         String json = jsonObject.toString();
-        String url = UrlBuilder.serverUrl + UrlBuilder.ATTENTION_USER;
+        String url = UrlBuilder.SERVER_URL + UrlBuilder.ATTENTION_USER;
         LogUtils.e("ulr: " + url);
         OkHttpUtils.postString().url(url)
                 .content(json)

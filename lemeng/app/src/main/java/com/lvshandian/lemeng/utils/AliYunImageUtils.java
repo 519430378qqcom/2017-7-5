@@ -40,7 +40,7 @@ public class AliYunImageUtils {
      * @param imagePath
      */
     public void uploadImage(final Context context, final String imagePath, final ResultListener listener) {
-        OkHttpUtils.get().url(UrlBuilder.serverUrl + UrlBuilder.aliyun)
+        OkHttpUtils.get().url(UrlBuilder.SERVER_URL + UrlBuilder.aliyun)
                 .build().execute(new CustomStringCallBack(context, HttpDatas.KEY_CODE) {
 
             @Override
@@ -93,7 +93,7 @@ public class AliYunImageUtils {
      * @param imagePath
      */
     public void uploadVideo(final Context context, final String imagePath, final ResultListener listener) {
-        OkHttpUtils.get().url(UrlBuilder.serverUrl + UrlBuilder.aliyun)
+        OkHttpUtils.get().url(UrlBuilder.SERVER_URL + UrlBuilder.aliyun)
                 .build().execute(new CustomStringCallBack(context, HttpDatas.KEY_CODE) {
 
             @Override

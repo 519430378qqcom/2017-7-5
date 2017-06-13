@@ -13,18 +13,34 @@ import java.util.Map;
  */
 public class UrlBuilder {
     //乐檬线上服務器
-//    public static final String serverUrl = "http://47.88.229.22:80/";// 服务器网址公网
-//    public static final String chargeServerUrl = "http://47.88.229.22:80/admin/";// 充值端口
+//    public static final String SERVER_URL = "http://47.88.229.22:80/";// 服务器网址公网
+//    public static final String CHARGE_SERVER_URL = "http://47.88.229.22:80/admin/";// 充值端口
     //乐檬测试服務器
-    public static final String serverUrl = "http://60.205.114.36:80/";// 服务器网址公网
-    public static final String chargeServerUrl = "http://60.205.114.36:80/admin/";// 充值端口
-//    public static final String serverUrl = "http://10.11.1.119:8080/";// 服务器网址公网
-//    public static final String chargeServerUrl = "http://10.11.1.119:8081/admin/";// 充值端口
-    /*乐檬接口*/
-    public static final String HEAD_DEFAULT = "http://lemeng.oss-ap-southeast-1.aliyuncs.com/lemengImg/1495594583610.png";    //当有空头像的时候
-    public static final String SHARE_VIDEO_URL = "http://60.205.114.36:8080/videoShare/liveShare.html";    //分享直播链接
-    public static final String SHARE_DOWNLOAD_URL = "http://60.205.114.36:8080/shareNew/share.html";    //分享下载链接
-    public static final String STARTJOINROOM = "/appRooms/getShareRoom";    //进入直播间
+    public static final String SERVER_URL = "http://60.205.114.36:80/";// 服务器网址公网
+    public static final String CHARGE_SERVER_URL = "http://60.205.114.36:80/admin/";// 充值端口
+
+    public static final String SERVER_URL_8080 = "http://60.205.114.36:8080/";// 服务器网址公网
+    public static final String CHARGE_SERVER_URL_8080 = "http://60.205.114.36:8080/admin/";// 充值端口
+
+    //阿里云
+    public static final String ALIYUN_IMG = "http://lemeng.oss-ap-southeast-1.aliyuncs.com/";//阿里云图片視頻生成地址
+    public static final String OSS_ENDPOINT = "http://oss-ap-southeast-1.aliyuncs.com";//阿里云OSS_ENDPOINT
+    public static final String BUCKET_NAME = "lemeng";// 阿里云BUCKET_NAME  OSS
+
+    //乐檬接口
+    public static final String YINLIAN_PAY_WEB = CHARGE_SERVER_URL_8080 + "static/payment.html?userId=%s";//银联支付WEB
+    public static final String USER_AGREEMENT = SERVER_URL_8080 + "protocol/private.html";//用户协议
+    public static final String ABOUT_US = SERVER_URL_8080 + "protocol/about.html";//关于我们
+    public static final String LUCKY28_RULE = SERVER_URL_8080 + "protocol/rule.html";//幸运28规则
+    public static final String LUCKY28_TREND = SERVER_URL_8080 + "lucky/trend.html";//幸运28走势图
+    public static final String LUCKY28_HISTORY = SERVER_URL_8080 + "gameRecord/luck28.html?roomId=%s&userId=%s";//幸运28历史记录图
+    public static final String NIUNIU_TREND = SERVER_URL_8080 + "cow/cowResult.html?roomId=%s";//牛牛走势图
+    public static final String NIUNIU_HISTORY = SERVER_URL_8080 + "gameRecord/cowRecord.html?roomId=%s&userId=%s";//牛牛历史记录图
+    public static final String SHARE_VIDEO_URL = SERVER_URL_8080 +"videoShare/liveShare.html?roomId=%s&userId=%s&videoPath=%s";//分享直播链接
+    public static final String SHARE_DOWNLOAD_URL = SERVER_URL_8080 +"shareNew/share.html";//分享下载链接
+
+    public static final String HEAD_DEFAULT = "http://lemeng.oss-ap-southeast-1.aliyuncs.com/lemengImg/1495594583610.png";//默认像地址
+    public static final String START_JOIN_ROOM = "/appRooms/getShareRoom";    //进入直播间
     public static final String LOGIN = "/api/v1/login";    //登录
     public static final String REGISTER = "/appusers/register"; //注册
     public static final String forgetPswd = "/appusers/forgetRegister"; //忘记密码
@@ -55,7 +71,6 @@ public class UrlBuilder {
     public static final String SEARCH = "/api/v1/user/find";//搜索用户
     public static final String SEARCH_CONTROLLER = "/appusers/find";//搜索用户场控
     public static final String WEICHAT_BIND = "/api/v1/exchange/bind";//绑定微信公众号
-    public static final String YINLIAN_PAY_WEB = "http://59.110.17.224:80/admin/static/payment.html?userId=%s";//银联支付web
     public static final String BAIDU_SONG_SEARCH = "http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.search.catalogSug&query=%s";//搜索
     public static final String BAIDU_SONG_PLAY = "http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.song.play&songid=%s";//得到下载的url
     public static final String getBanner = "/appCarouselFigure/carouselList";//得到banner图
@@ -84,10 +99,6 @@ public class UrlBuilder {
     public static final String getBl = "/admin/appusers/getCathecticRate";//开游戏、查询投注比例
 
 
-    //阿里云
-    public static final String ALIYUN_IMG = "http://lemeng.oss-ap-southeast-1.aliyuncs.com/";//阿里云图片視頻生成地址
-    public static final String OSS_ENDPOINT = "http://oss-ap-southeast-1.aliyuncs.com";//阿里云OSS_ENDPOINT
-    public static final String BUCKET_NAME = "lemeng";// 阿里云BUCKET_NAME  OSS
     //------------------------------------斗牛游戏接口----------------------------------------
     /**
      * 斗牛开始，get;params（roomId）
@@ -107,23 +118,24 @@ public class UrlBuilder {
     public static final String BULLFIGHT_BANKER = "admin/appusers/getbankerUser";
     /**
      * 投注接口，get param（userId，roomId，amount，type
-     ，perid
-     ，status）
+     * ，perid
+     * ，status）
      */
     public static final String BULLFIGHT_BETTING = "admin/appusers/bugtaurus";
 
     /**
      * 生成投注url
+     *
      * @param userId
      * @param roomId
      * @param amount 投注金额
-     * @param type  1为投注天2为投注地3为人
-     * @param perid 期数
+     * @param type   1为投注天2为投注地3为人
+     * @param perid  期数
      * @param status 0 为1倍 1为2倍
      * @return
      */
-    public static String betting(int userId, int roomId, int amount, int type, int perid, int status){
-        return serverUrl+BULLFIGHT_BETTING+"?userId="+userId+"&roomId="+roomId+"&amount="+amount+"&type="+type+"&perid="+perid+"&status="+status;
+    public static String betting(int userId, int roomId, int amount, int type, int perid, int status) {
+        return SERVER_URL + BULLFIGHT_BETTING + "?userId=" + userId + "&roomId=" + roomId + "&amount=" + amount + "&type=" + type + "&perid=" + perid + "&status=" + status;
     }
 
     /**
@@ -140,14 +152,15 @@ public class UrlBuilder {
     public static final String BULLFIGHT_BANKER_BALANCE = "admin/appusers/getcontrol";
     /**
      * 开奖结果roomId	String 	房间id
-        perid	String	期数
-        userId	String	用户id
+     * perid	String	期数
+     * userId	String	用户id
      */
     public static final String BULLFIGHT_RESULT = "admin/appusers/cashprize";
     /**
      * 所有开奖结果 roomId String perid	String	期数
      */
     public static final String ALL_RESULT = "admin/appusers/altogetherTaurusBug";
+
     public static final String cloesAnchor(String id) {//关闭直播
         return "/api/v1/room/" + id + "/leave";
     }
@@ -170,7 +183,6 @@ public class UrlBuilder {
     /**
      * 获取用户申请信息
      * 服务器接口地址：http://miulive.cc:8080/api/v1/room/{roomId}/{userId}/live get请求 其中roomId为直播间id，不是roomid 参数字段，userId为用户id 举例
-     *
      *
      * @author sll
      * @time 2016/12/16 11:08
@@ -253,7 +265,7 @@ public class UrlBuilder {
      * @return
      */
     public String build(String route, Map<String, String> params) {
-        StringBuilder sb = new StringBuilder(serverUrl);//.append("/").append(serverName);
+        StringBuilder sb = new StringBuilder(SERVER_URL);//.append("/").append(serverName);
         sb.append(route);
         if (params != null && params.size() > 0) {
             int index = 0;
@@ -274,7 +286,7 @@ public class UrlBuilder {
     }
 
     public String buildChaServer(String route, Map<String, String> params) {
-        StringBuilder sb = new StringBuilder(chargeServerUrl);//.append("/").append(serverName);
+        StringBuilder sb = new StringBuilder(CHARGE_SERVER_URL);//.append("/").append(serverName);
         sb.append(route);
         if (params != null && params.size() > 0) {
             int index = 0;

@@ -110,7 +110,7 @@ public class FollowListActivity extends BaseActivity implements SwipeRefresh.OnR
      */
     private void requestFunse() {
         page = isRefresh ? 1 : ++page;
-        String url = UrlBuilder.serverUrl + UrlBuilder.funseAndFollow;
+        String url = UrlBuilder.SERVER_URL + UrlBuilder.funseAndFollow;
         url += mUserId;
         url += "/follows?pageNum=" + page;
         LogUtils.e("关注列表url: " + url);

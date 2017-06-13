@@ -196,7 +196,7 @@ public abstract class BaseFragment extends Fragment {
      */
     public void ifEnterGo(final LiveListBean live) {
         //进入直播间请求
-        String url = UrlBuilder.chargeServerUrl + UrlBuilder.ifEnter;
+        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.ifEnter;
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("roomId", live.getRooms().getId() + "");
         hashMap.put("userId", appUser.getId());
@@ -239,7 +239,7 @@ public abstract class BaseFragment extends Fragment {
      * @time 2016/12/16 17:14
      */
     private void updateCoin(final LiveListBean live) {
-        String url = UrlBuilder.chargeServerUrl + UrlBuilder.updateCoin;
+        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.updateCoin;
         LogUtils.e("WangYi_secret", "url: " + url);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("createrId", live.getRooms().getUserId() + "");

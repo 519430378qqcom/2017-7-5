@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.google.android.gms.auth.api.Auth;
@@ -66,15 +67,14 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
     ImageView wchatLogin;
     @Bind(R.id.iv_moble_login)
     ImageView mobleLogin;
-    @Bind(R.id.iv_tiaokuan)
-    ImageView tiaokuan;
+    @Bind(R.id.term_of_service)
+    TextView termService;
 
     private UMShareAPI mShareAPI;
     private LoadingDialog mLoading;
     private AbortableFuture<LoginInfo> loginRequest;
     private String account = null;
     private String token = null;
-    public static final String KICK_OUT = "KICK_OUT";
 
     private static int RC_SIGN_IN = 10001;
     private GoogleApiClient mGoogleApiClient;
@@ -125,7 +125,7 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
         googleLogin.setOnClickListener(this);
         wchatLogin.setOnClickListener(this);
         mobleLogin.setOnClickListener(this);
-        tiaokuan.setOnClickListener(this);
+        termService.setOnClickListener(this);
 
     }
 
@@ -147,7 +147,7 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
             case R.id.iv_moble_login:
                 gotoActivity(LoginActivity.class, false);
                 break;
-            case R.id.iv_tiaokuan:
+            case R.id.term_of_service:
                 Intent intent = new Intent(mContext, ExplainWebViewActivity.class);
                 intent.putExtra("flag", 2000);
                 startActivity(intent);
@@ -307,7 +307,7 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
             String json = jsonObject.toString();
             LogUtils.e("json: " + json);
             OkHttpUtils.postString()
-                    .url(UrlBuilder.chargeServerUrl + UrlBuilder.openRegister)
+                    .url(UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.openRegister)
                     .addHeader("udid", "lemeng")
                     .mediaType(MediaType.parse("application/json;charset=UTF-8"))
                     .content(json)
@@ -343,7 +343,7 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
             String json = jsonObject.toString();
             LogUtils.e("json: " + json);
             OkHttpUtils.postString()
-                    .url(UrlBuilder.chargeServerUrl + UrlBuilder.openRegister)
+                    .url(UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.openRegister)
                     .addHeader("udid", "lemeng")
                     .mediaType(MediaType.parse("application/json;charset=UTF-8"))
                     .content(json)

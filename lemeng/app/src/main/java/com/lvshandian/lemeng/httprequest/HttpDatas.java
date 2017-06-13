@@ -57,7 +57,7 @@ public class HttpDatas {
      * @param handlerCode
      */
     public void getData(String details, String url, final Handler handler, final int handlerCode) {
-        url = urlBuilder.serverUrl + url;
+        url = urlBuilder.SERVER_URL + url;
         LogUtils.i(details + ":" + url);
         if (!mDialog.isShowing()) {
             mDialog.show();
@@ -193,7 +193,7 @@ public class HttpDatas {
 //        map.put("Accept-Encoding", "gzip,deflate");
         JSONObject params = new JSONObject(map);
         //第二个参数我们传了user=zhangqi。则请求方法就为post
-        String url1 = UrlBuilder.serverUrl + url;
+        String url1 = UrlBuilder.SERVER_URL + url;
         LogUtils.e("url1: " + url1);
         BaseJsonRequest objRequest = new BaseJsonRequest(method, url1, params,
                 new Response.Listener<JSONObject>() {
@@ -245,7 +245,7 @@ public class HttpDatas {
         JSONObject params = new JSONObject(map);
         LogUtils.i("JSONObject:" + params.toString());
         //第二个参数我们传了user=zhangqi。则请求方法就为post
-        BaseJsonRequest objRequest = new BaseJsonRequest(method, UrlBuilder.serverUrl + url, params,
+        BaseJsonRequest objRequest = new BaseJsonRequest(method, UrlBuilder.SERVER_URL + url, params,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject obj) {
@@ -291,7 +291,7 @@ public class HttpDatas {
         JSONObject params = new JSONObject(map);
         LogUtils.i("JSONObject:" + params.toString());
         //第二个参数我们传了user=zhangqi。则请求方法就为post
-        BaseJsonRequest objRequest = new BaseJsonRequest(method, UrlBuilder.chargeServerUrl + url, params,
+        BaseJsonRequest objRequest = new BaseJsonRequest(method, UrlBuilder.CHARGE_SERVER_URL + url, params,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject obj) {
@@ -333,7 +333,7 @@ public class HttpDatas {
         JSONObject params = new JSONObject(map);
         LogUtils.i("JSONObject:" + params.toString());
         //第二个参数我们传了user=zhangqi。则请求方法就为post
-        BaseJsonRequest objRequest = new BaseJsonRequest(method, UrlBuilder.chargeServerUrl + url, params,
+        BaseJsonRequest objRequest = new BaseJsonRequest(method, UrlBuilder.CHARGE_SERVER_URL + url, params,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject obj) {
@@ -414,7 +414,7 @@ public class HttpDatas {
 
 
     public void getDataDialog(String details, final boolean isDialog, String url, final Handler handler, final int handlerCode) {
-        url = urlBuilder.serverUrl + url;
+        url = urlBuilder.SERVER_URL + url;
         LogUtils.i(details + ":" + url);
         this.isDialog = isDialog;
         if (isDialog) {

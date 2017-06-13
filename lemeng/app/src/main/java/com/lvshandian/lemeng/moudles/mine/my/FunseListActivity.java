@@ -137,7 +137,7 @@ public class FunseListActivity extends BaseActivity implements SwipeRefresh.OnRe
         params.put("followUserId", bean.getUserId());
         JSONObject jsonObject = new JSONObject(params);
         String json = jsonObject.toString();
-        String url = UrlBuilder.serverUrl + UrlBuilder.ATTENTION_USER;
+        String url = UrlBuilder.SERVER_URL + UrlBuilder.ATTENTION_USER;
         OkHttpUtils.postString().url(url)
                 .content(json)
                 .mediaType(MediaType.parse("application/json"))
@@ -171,7 +171,7 @@ public class FunseListActivity extends BaseActivity implements SwipeRefresh.OnRe
      */
     private void requestFunse() {
         page = isRefresh ? 1 : ++page;
-        String url = UrlBuilder.serverUrl + UrlBuilder.funseAndFollow;
+        String url = UrlBuilder.SERVER_URL + UrlBuilder.funseAndFollow;
         url += mUserId;
         url += "/fans?pageNum=" + page;
         OkHttpUtils.get().url(url).build().execute(new CustomStringCallBack(this, HttpDatas.KEY_CODE) {

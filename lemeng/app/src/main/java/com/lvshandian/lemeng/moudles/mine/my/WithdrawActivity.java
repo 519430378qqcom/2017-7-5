@@ -244,7 +244,7 @@ public class WithdrawActivity extends BaseActivity {
             String json = jsonObject.toString();
             LogUtils.e("json: " + json);
             OkHttpUtils.postString()
-                    .url(UrlBuilder.serverUrl + UrlBuilder.WEICHAT_BIND)
+                    .url(UrlBuilder.SERVER_URL + UrlBuilder.WEICHAT_BIND)
                     .addHeader("udid", "lemeng")
                     .mediaType(MediaType.parse("application/json;charset=UTF-8"))
                     .content(json)

@@ -114,7 +114,7 @@ public class FollowListForGroupActivity extends BaseActivity {
    /* http://miulive.cc:8080/api/v1/user/{id}/fans?pageNum=1 获取列表 get请求 id为用户id*/
     private void requestFunse() {
         page = isRefresh ? 1 : ++page;
-        String url = UrlBuilder.serverUrl + UrlBuilder.funseAndFollow;
+        String url = UrlBuilder.SERVER_URL + UrlBuilder.funseAndFollow;
         url += mUserId;
         url += "/follows?pageNum=" + page;
         LogUtils.e("关注列表(url): " + url);
