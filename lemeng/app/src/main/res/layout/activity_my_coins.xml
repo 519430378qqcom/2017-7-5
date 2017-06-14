@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="50px"
-                android:text="拥有乐票"
+                android:text="@string/my_lepiao"
                 android:textColor="@color/black"
                 android:textSize="30px" />
 
@@ -35,7 +35,6 @@
                 android:layout_below="@+id/tv_tp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15px"
-                android:text="0"
                 android:textColor="@color/black"
                 android:textSize="30px" />
         </com.zhy.autolayout.AutoRelativeLayout>
@@ -59,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="50px"
-                android:text="已提现金额"
+                android:text="@string/withdraw_money"
                 android:textColor="@color/black"
                 android:textSize="30px" />
 
@@ -70,7 +69,6 @@
                 android:layout_below="@+id/tv_hb"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15px"
-                android:text="0.00"
                 android:textColor="@color/black"
                 android:textSize="30px" />
         </com.zhy.autolayout.AutoRelativeLayout>
@@ -85,7 +83,7 @@
         android:layout_marginTop="200px"
         android:background="@drawable/shape_bg_btn"
         android:gravity="center"
-        android:text="提现"
+        android:text="@string/withdraw"
         android:textColor="@color/white"
         android:textSize="30px" />
 
@@ -98,7 +96,7 @@
         android:layout_marginTop="50px"
         android:background="@drawable/background_recharge"
         android:gravity="center"
-        android:text="充值"
+        android:text="@string/recharge"
         android:textColor="@color/main"
         android:textSize="30px" />
 </com.zhy.autolayout.AutoLinearLayout>

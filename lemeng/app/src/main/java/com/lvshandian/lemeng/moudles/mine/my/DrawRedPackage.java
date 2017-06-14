@@ -20,7 +20,6 @@ import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.utils.DecimalUtils;
 import com.lvshandian.lemeng.utils.JsonUtil;
-import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.utils.TextUtils;
 
@@ -44,7 +43,7 @@ public class DrawRedPackage extends BaseActivity {
     /**
      * 提现比例
      */
-    private String ratio = "4000";
+    private String ratio = "1";
     /**
      * 可提现金额
      */
@@ -58,19 +57,17 @@ public class DrawRedPackage extends BaseActivity {
 
             switch (msg.what) {
                 case RequestCode.DRAW_MONEY:
-                    LogUtils.e("提现返回信息: " + json);
                     String goldCoin = String.valueOf(Long.valueOf(SharedPreferenceUtils.getGoldCoin(mContext)) - (long) (Double.valueOf(etWantDraw.getText().toString().trim()) * Integer.parseInt(ratio)));
                     SharedPreferenceUtils.saveGoldCoin(mContext, goldCoin);
                     money = DecimalUtils.divideWithRoundingModeAndScale(goldCoin, ratio, RoundingMode.DOWN, 2);
-                    tvCanDraw.setText(money + "元");
-                    showToast("提现申请成功!");
+                    tvCanDraw.setText(getString(R.string.rmb, money));
+                    showToast(getString(R.string.withdraw_application_succeed));
                     break;
                 case RequestCode.DRAW_MONEY_RATIO:
-                    LogUtils.e("提现比例返回信息: " + json);
                     DrawMonyRatioBean ratioBean = JsonUtil.json2Bean(json, DrawMonyRatioBean.class);
                     ratio = (Integer.parseInt(ratioBean.getExchangeGold()) / Integer.parseInt(ratioBean.getExchangeAmount())) + "";
                     money = DecimalUtils.divideWithRoundingModeAndScale(SharedPreferenceUtils.getGoldCoin(mContext), ratio, RoundingMode.DOWN, 2);
-                    tvCanDraw.setText(money + "元");
+                    tvCanDraw.setText(getString(R.string.rmb, money));
                     break;
             }
         }
@@ -112,7 +109,7 @@ public class DrawRedPackage extends BaseActivity {
 
     @Override
     protected void initialized() {
-        initTitle("", "支付宝提现", null);
+        initTitle("", getString(R.string.alipay_withdraw), null);
         drawMoneyRatio();
     }
 
@@ -121,11 +118,11 @@ public class DrawRedPackage extends BaseActivity {
         switch (v.getId()) {
             case R.id.btn_confirm:
                 if (TextUtils.isEmpty(etWantDraw.getText().toString().trim())) {
-                    showToast("请输入提现金额");
+                    showToast(getString(R.string.please_input_withdraw_num));
                 } else if (TextUtils.isEmpty(etAlipayNumber.getText().toString().trim())) {
-                    showToast("请输入支付宝帐号");
+                    showToast(getString(R.string.please_input_alipay_num));
                 } else if (Double.valueOf(etWantDraw.getText().toString().trim()) < 0) {
-                    showToast("提现金额必须大于0");
+                    showToast(getString(R.string.withdraw_num_must_big_0));
                 } else {
                     drawMoney();
                 }

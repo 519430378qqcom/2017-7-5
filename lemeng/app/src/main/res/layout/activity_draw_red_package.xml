@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="可提现金额:"
+            android:text="@string/can_withdraw_num"
             android:textColor="@color/black"
             android:textSize="30px" />
 
@@ -24,7 +24,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10px"
-            android:text="0.00"
             android:textColor="@color/red"
             android:textSize="30px" />
     </com.zhy.autolayout.AutoLinearLayout>
@@ -41,7 +40,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="金额:"
+            android:text="@string/withdraw_num"
             android:textColor="@color/black"
             android:textSize="30px" />
 
@@ -49,9 +48,9 @@
             android:id="@+id/red_package_money"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="请输入提现金额"
-            android:inputType="numberDecimal"
             android:background="@null"
+            android:hint="@string/please_input_withdraw_num"
+            android:inputType="numberDecimal"
             android:paddingLeft="50px"
             android:textSize="30px" />
 
@@ -69,7 +68,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="支付宝账户:"
+            android:text="@string/alipay_num"
             android:textColor="@color/black"
             android:textSize="30px" />
 
@@ -83,8 +82,8 @@
             android:id="@+id/alipay_number"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="请输入支付宝账户"
             android:background="@null"
+            android:hint="@string/please_input_alipay_num"
             android:paddingLeft="8px"
             android:textSize="30px" />
 
@@ -94,7 +93,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="20px"
-        android:text="提现时间在72小时之内,请耐心等待"
+        android:text="@string/wait_withdraw"
         android:textSize="25px" />
 
     <Button
@@ -105,6 +104,6 @@
         android:layout_marginRight="50px"
         android:layout_marginTop="20px"
         android:background="@drawable/shape_bg_btn"
-        android:text="确认提现"
+        android:text="@string/withdraw"
         android:textColor="@color/white" />
 </com.zhy.autolayout.AutoLinearLayout>

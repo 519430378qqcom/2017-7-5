@@ -17,7 +17,6 @@ import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.moudles.mine.my.WithdrawActivity;
 import com.lvshandian.lemeng.utils.CountUtils;
 import com.lvshandian.lemeng.utils.JsonUtil;
-import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -26,9 +25,7 @@ import butterknife.Bind;
 
 /**
  * 我的乐票界面
- * Created by Administrator on 2017/1/17.
  */
-
 public class MyCoinsActicity extends BaseActivity {
     @Bind(R.id.tv_my_coins)
     TextView myCoins;
@@ -50,15 +47,14 @@ public class MyCoinsActicity extends BaseActivity {
 
             switch (msg.what) {
                 case RequestCode.SELECT_USER:
-                    LogUtils.e("查询个人信息返回json: " + json);
                     AppUser mAppUser = JsonUtil.json2Bean(json, AppUser.class);
 //                    CacheUtils.saveObject(mContext, mAppUser, CacheUtils.USERINFO);
-                    SharedPreferenceUtils.saveUserInfo(mContext,mAppUser);
+                    SharedPreferenceUtils.saveUserInfo(mContext, mAppUser);
                     String myCoin = mAppUser.getGoldCoin();
-                    SharedPreferenceUtils.saveGoldCoin(mContext,myCoin);
+                    SharedPreferenceUtils.saveGoldCoin(mContext, myCoin);
                     myCoin = CountUtils.getCount(Long.parseLong(myCoin));
                     myCoins.setText(myCoin);
-                    mytvRedPackage.setText(mAppUser.getExchangeCash() + "元");
+                    mytvRedPackage.setText(getString(R.string.rmb, mAppUser.getExchangeCash()));
                     exchangeStatus = mAppUser.getExchangeStatus();
                     break;
             }
@@ -78,11 +74,11 @@ public class MyCoinsActicity extends BaseActivity {
 
     @Override
     protected void initialized() {
-        initTitle("", "我的乐票", null);
+        initTitle("", getString(R.string.my_lepiao), null);
         String myCoin = appUser.getGoldCoin();
         myCoin = CountUtils.getCount(Long.parseLong(myCoin));
         myCoins.setText(myCoin);
-        mytvRedPackage.setText(appUser.getExchangeCash() + "元");
+        mytvRedPackage.setText(getString(R.string.rmb, appUser.getExchangeCash()));
     }
 
     @Override
@@ -104,7 +100,7 @@ public class MyCoinsActicity extends BaseActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_receive:
-                startActivity(new Intent(mContext, WithdrawActivity.class).putExtra("exchangeStatus",exchangeStatus));
+                startActivity(new Intent(mContext, WithdrawActivity.class).putExtra("exchangeStatus", exchangeStatus));
                 break;
             case R.id.tv_recharge:
 //                Intent intent = new Intent(mContext, ExplainWebViewActivity.class);

@@ -16,11 +16,9 @@ import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.moudles.mine.activity.WeichatDraw;
 import com.lvshandian.lemeng.utils.JsonUtil;
-import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.view.LoadingDialog;
 import com.lvshandian.lemeng.view.RoundDialog;
-import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.squareup.okhttp.MediaType;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
@@ -40,7 +38,6 @@ import butterknife.Bind;
 
 /**
  * 提现界面
- * Created by shang on 2017/4/11.
  */
 public class WithdrawActivity extends BaseActivity {
 
@@ -69,7 +66,6 @@ public class WithdrawActivity extends BaseActivity {
 
             switch (msg.what) {
                 case RequestCode.SELECT_USER:
-                    LogUtils.e("查询个人信息返回json: " + json);
                     AppUser mAppUser = JsonUtil.json2Bean(json, AppUser.class);
 //                    CacheUtils.saveObject(mContext, mAppUser, CacheUtils.USERINFO);
                     SharedPreferenceUtils.saveUserInfo(mContext,mAppUser);
@@ -94,7 +90,7 @@ public class WithdrawActivity extends BaseActivity {
 
     @Override
     protected void initialized() {
-        initTitle("", "选择提现", null);
+        initTitle("", getString(R.string.withdraw), null);
         exchangeStatus = getIntent().getStringExtra("exchangeStatus");
         mShareAPI = UMShareAPI.get(mContext);
     }
@@ -143,7 +139,7 @@ public class WithdrawActivity extends BaseActivity {
         bindDialog = new RoundDialog(this, view, R.style.dialog, 0.66f, 0.2f);
         bindDialog.setCanceledOnTouchOutside(false);
         TextView tv_title = (TextView) view.findViewById(R.id.tv_title);
-        tv_title.setText("绑定微信公众号才能提现,是否绑定");
+        tv_title.setText(getString(R.string.if_binding_wechat));
         TextView tvCancel = (TextView) view.findViewById(R.id.tv_cancel);
         TextView tvSure = (TextView) view.findViewById(R.id.tv_sure);
         tvCancel.setOnClickListener(new View.OnClickListener() {
@@ -179,10 +175,9 @@ public class WithdrawActivity extends BaseActivity {
         @Override
         public void onStart(SHARE_MEDIA platform) {
             //授权开始的回调
-            LogUtils.e("微信登录", "is onStart()");
             if (mLoading != null && !mLoading.isShowing()) {
                 mLoading.show();
-                mLoading.setText("正在获取授权");
+                mLoading.setText(getString(R.string.is_authorized_to));
             }
         }
         @Override
@@ -192,7 +187,7 @@ public class WithdrawActivity extends BaseActivity {
                 if (mLoading != null && mLoading.isShowing()) {
                     mLoading.dismiss();
                 }
-                showToast("授权失败");
+                showToast(getString(R.string.authorized_failure));
                 return;
             }
             Map<String, String> params = new HashMap<>();
@@ -210,7 +205,6 @@ public class WithdrawActivity extends BaseActivity {
 
         @Override
         public void onError(SHARE_MEDIA platform, int action, Throwable t) {
-            LogUtils.e("微信登录", "is onError()");
             if (mLoading != null && mLoading.isShowing()) {
                 mLoading.dismiss();
             }
@@ -218,7 +212,6 @@ public class WithdrawActivity extends BaseActivity {
 
         @Override
         public void onCancel(SHARE_MEDIA platform, int action) {
-            LogUtils.e("微信登录", "is onCancel()");
             if (mLoading != null && mLoading.isShowing()) {
                 mLoading.dismiss();
             }
@@ -242,7 +235,6 @@ public class WithdrawActivity extends BaseActivity {
         if (params != null) {
             JSONObject jsonObject = new JSONObject(params);
             String json = jsonObject.toString();
-            LogUtils.e("json: " + json);
             OkHttpUtils.postString()
                     .url(UrlBuilder.SERVER_URL + UrlBuilder.WEICHAT_BIND)
                     .addHeader("udid", "lemeng")
@@ -252,16 +244,14 @@ public class WithdrawActivity extends BaseActivity {
                     execute(new StringCallback() {
                         @Override
                         public void onError(com.squareup.okhttp.Request request, Exception e) {
-                            LogUtil.e("绑定微信失败", e.toString());
                         }
 
                         @Override
                         public void onResponse(String response) {
-                            LogUtil.e("绑定微信成功", response);
                             try {
                                 JSONObject obj = new JSONObject(response);
                                 if (obj.getString("code").equals("0")) {
-                                    showToast("绑定成功!");
+                                    showToast(getString(R.string.binding_succeed));
                                     initUser();
                                 }
                             } catch (JSONException e) {

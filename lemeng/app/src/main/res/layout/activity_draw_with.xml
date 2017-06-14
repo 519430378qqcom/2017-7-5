@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_weight="1"
-            android:text="支付宝提现"
+            android:text="@string/alipay_withdraw"
             android:textSize="30px" />
 
         <ImageView
@@ -62,7 +62,7 @@
             android:layout_marginLeft="15dp"
             android:layout_weight="1"
             android:gravity="left"
-            android:text="微信公众号提现"
+            android:text="@string/wechat_withdraw"
             android:textSize="30px" />
 
         <ImageView

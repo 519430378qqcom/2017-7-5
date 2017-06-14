@@ -34,7 +34,9 @@
     <string name="small_video_amount">%1$s个短片</string>
     <string name="blacklist">拉黑</string>
     <string name="report">举报</string>
+    <string name="confirm">确定</string>
     <string name="cancel">取消</string>
+    <string name="hint">提示</string>
     <string name="cancel_blacklist">取消拉黑</string>
     <string name="lemeng_id">乐檬号:%1$s</string>
     <string name="default_sign">这个家伙很懒，什么都没留下</string>
@@ -45,6 +47,23 @@
     <string name="other">其他</string>
     <string name="address">地址</string>
     <string name="contribution_lepiao_num">贡献 %1$s 乐票</string>
+    <string name="withdraw_money">已提现金额</string>
+    <string name="recharge">充值</string>
+    <string name="withdraw">提现</string>
+    <string name="alipay_withdraw">支付宝提现</string>
+    <string name="can_withdraw_num">可提现金额:</string>
+    <string name="withdraw_num">提现金额:</string>
+    <string name="alipay_num">支付宝帐号:</string>
+    <string name="wait_withdraw">提现时间在72小时之内,请耐心等待</string>
+    <string name="please_input_withdraw_num">请输入提现金额</string>
+    <string name="please_input_alipay_num">请输入支付宝帐号</string>
+    <string name="withdraw_num_must_big_0">提现金额必须大于0</string>
+    <string name="withdraw_application_succeed">提现申请成功</string>
+    <string name="wechat_withdraw">微信公众号提现</string>
+    <string name="if_binding_wechat">绑定微信公众号才能提现,是否绑定</string>
+    <string name="binding_succeed">绑定成功</string>
+    <string name="search_wechat_withdraw">请搜索微信公众号《乐檬LIVE》进行提现</string>
+    <string name="rmb">%1$s元</string>
 
 
     <string name="share_live_title">主播%1$s邀你玩游戏啦</string>
@@ -61,6 +80,7 @@
     <string name="about_us">关于我们</string>
     <string name="my_contribution">我的贡献榜</string>
     <string name="week_ranking">周榜排行榜</string>
+    <string name="my_lepiao">我的乐票</string>
 
     <!--吐司提示-->
     <string name="user_name_error">用户名不正确</string>

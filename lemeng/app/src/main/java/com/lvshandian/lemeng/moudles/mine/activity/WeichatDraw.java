@@ -1,6 +1,5 @@
 package com.lvshandian.lemeng.moudles.mine.activity;
 
-import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 
@@ -29,11 +28,11 @@ public class WeichatDraw extends BaseActivity {
 
     @Override
     protected void initialized() {
-        initTitle("", "微信公众号提现", null);
-        text.setText(Html.fromHtml(
-                "<font color='#666666'>" + "请搜索微信公众号    " + "</font>" +
-                        "<font color='#000000'><u><big>" + "乐檬LIVE" + "</big></u></font>"
-                        + "<font color='#666666'>" + "    进行提现" + "</font>"));
+        initTitle("", getString(R.string.wechat_withdraw), null);
+//        text.setText(Html.fromHtml(
+//                "<font color='#666666'>" + "请搜索微信公众号    " + "</font>" +
+//                        "<font color='#000000'><u><big>" + "乐檬LIVE" + "</big></u></font>"
+//                        + "<font color='#666666'>" + "    进行提现" + "</font>"));
     }
 
     @Override

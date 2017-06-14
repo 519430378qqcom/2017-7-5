@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:paddingBottom="50px"
-        android:text="提示"
+        android:text="@string/hint"
         android:visibility="gone" />
 
     <TextView
@@ -20,8 +20,7 @@
         android:layout_gravity="center_horizontal"
         android:paddingBottom="50px"
         android:paddingTop="50px"
-        android:textColor="@color/tv_color6"
-        android:text="确认退出登录吗?" />
+        android:textColor="@color/tv_color6"/>
 
     <View
         android:layout_width="match_parent"
@@ -49,7 +48,7 @@
             android:layout_weight="1"
             android:textColor="@color/black"
             android:background="@drawable/shape_btn_stroke"
-            android:text="取消" />
+            android:text="@string/cancel" />
 
         <TextView
             android:id="@+id/tv_sure"
@@ -63,7 +62,7 @@
             android:layout_marginRight="30px"
             android:layout_weight="1"
             android:background="@drawable/shape_btn_sloid"
-            android:text="确定"
+            android:text="@string/confirm"
             android:textColor="@color/white" />
     </com.zhy.autolayout.AutoLinearLayout>
 </com.zhy.autolayout.AutoLinearLayout>
