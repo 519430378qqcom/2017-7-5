@@ -1,5 +1,17 @@
 <resources>
     <string name="app_name">乐檬直播</string>
+    <!--标题栏-->
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="retrieve_password">找回密码</string>
+    <string name="top_up_recharge">乐票充值</string>
+    <string name="user_agreement">用户协议</string>
+    <string name="about_us">关于我们</string>
+    <string name="my_contribution">我的贡献榜</string>
+    <string name="week_ranking">周榜排行榜</string>
+    <string name="my_lepiao">我的乐票</string>
+    <string name="state_code">国家代码</string>
+    <!--注册登录部分-->
     <string name="agree_term_of_service">登入即代表您同意《服务条款》</string>
     <string name="mobile_terminal">移动端</string>
     <string name="computer_terminal">电脑端</string>
@@ -8,15 +20,15 @@
     <string name="is_authorized_to">正在获取授权</string>
     <string name="authorized_failure">授权失败</string>
     <string name="login_failure">登录失败</string>
-
     <string name="china_phone_code">中国 +86</string>
     <string name="password">密码</string>
     <string name="forget_password">忘记密码</string>
-    <string name="please_input_phone">请输入手机号</string>
-    <string name="please_input_code">请输入验证码</string>
     <string name="password_stand">请输入6至16位密码</string>
+    <string name="please_input_code">请输入验证码</string>
+    <string name="auth_code">验证码</string>
     <string name="agreement_lemeng">同意乐檬</string>
     <string name="sent_validate">发送验证码</string>
+    <!--个人中心部分-->
     <string name="attention">关注</string>
     <string name="fans">粉丝</string>
     <string name="contribution">贡献榜</string>
@@ -47,6 +59,7 @@
     <string name="other">其他</string>
     <string name="address">地址</string>
     <string name="contribution_lepiao_num">贡献 %1$s 乐票</string>
+    <!--提现部分-->
     <string name="withdraw_money">已提现金额</string>
     <string name="recharge">充值</string>
     <string name="withdraw">提现</string>
@@ -64,52 +77,25 @@
     <string name="binding_succeed">绑定成功</string>
     <string name="search_wechat_withdraw">请搜索微信公众号《乐檬LIVE》进行提现</string>
     <string name="rmb">%1$s元</string>
-
-
+    <!--认证部分-->
+    <string name="wait_authentication">您的申请已提交,请耐心等待审核</string>
+    <string name="real_name">真实姓名</string>
+    <string name="please_input_real_name">请输入真实姓名</string>
+    <string name="phone_number">手机号码</string>
+    <string name="please_input_phone">请输入手机号码</string>
+    <string name="id_number">身份证号</string>
+    <string name="please_input_id_number">请输入身份证号</string>
+    <string name="uploading_id_number">上传证件照片</string>
+    <string name="id_number_phone">身份证正面照</string>
+    <string name="take_id_number_phone">手持身份证正面照</string>
+    <string name="submit_authentication">提交认证</string>
+    <string name="select_an_album">选择相册</string>
+    <string name="take_pictures">立刻拍照</string>
+    <!--直播部分-->
     <string name="share_live_title">主播%1$s邀你玩游戏啦</string>
     <string name="share_live_content">够刺激,主播%1$s带你玩转直播间,一起游戏嗨起来!</string>
     <string name="share_download_title">乐檬直播,共享世界的快乐</string>
     <string name="share_download_content">万人直播室嗨翻天!超火人气,边撩妹纸边玩游戏,赶紧加入吧!</string>
-
-    <!--标题栏-->
-    <string name="login">登录</string>
-    <string name="register">注册</string>
-    <string name="retrieve_password">找回密码</string>
-    <string name="top_up_recharge">乐票充值</string>
-    <string name="user_agreement">用户协议</string>
-    <string name="about_us">关于我们</string>
-    <string name="my_contribution">我的贡献榜</string>
-    <string name="week_ranking">周榜排行榜</string>
-    <string name="my_lepiao">我的乐票</string>
-
-    <!--吐司提示-->
-    <string name="user_name_error">用户名不正确</string>
-    <string name="register_success">注册成功</string>
-    <string name="edit_password_success">密码修改成功</string>
-    <string name="validate_code_sent">验证码已发送</string>
-    <string name="input_right_phone">请输入正确手机号</string>
-    <string name="input_right_validate">请输入正确手机验证码</string>
-    <string name="input_right_password">请输入6-16位密码</string>
-    <string name="report_succeed">举报成功</string>
-    <string name="add_blacklist_succeed">加入黑名单成功</string>
-    <string name="add_blacklist_failure">加入黑名单失败</string>
-    <string name="remove_blacklist_succeed">移除黑名单成功</string>
-    <string name="remove_blacklist_failure">移除黑名单失败</string>
-    <string name="attention_succeed">关注成功</string>
-    <string name="cancel_attention_succeed">取消关注成功</string>
-    <string name="attention_failure">关注失败</string>
-    <string name="cancel_attention_failure">取消关注失败</string>
-    <string name="already_pass_authentication">您已认证通过了哦!</string>
-
-    <!--参数-->
-    <string name="web_flag">WEB_FLAG</string>
-    <string name="register_flag">REGISTER_FLAG</string>
-    <string name="visit_person">VISIT_PERSON</string>
-
-    <string name="loading">正在加载…</string>
-    <string name="refreshing">正在刷新…</string>
-    <string name="complete">刷新完成</string>
-
     <!--牛牛部分-->
     <string name="top_up">充值</string>
     <string name="wait_next_start">请等待下一局开始</string>
@@ -121,7 +107,40 @@
     <string name="the_user">本家</string>
     <string name="banker">庄家</string>
     <string name="take_a_rest">休息一下</string>
+    <!--吐司提示-->
+    <string name="user_name_error">用户名不正确</string>
+    <string name="register_success">注册成功</string>
+    <string name="edit_password_success">密码修改成功</string>
+    <string name="validate_code_sent">验证码已发送</string>
+    <string name="validate_code_sent_failure">验证码发送失败</string>
+    <string name="input_right_phone">请输入正确手机号</string>
+    <string name="input_right_validate">请输入正确手机验证码</string>
+    <string name="input_right_id_number">请输入正确的身份证号</string>
+    <string name="uploading_id_number_phone">请上传身份证正面图片</string>
+    <string name="uploading_take_id_number_phone">请上传手持身份证正面图片</string>
+    <string name="input_right_password">请输入6-16位密码</string>
+    <string name="report_succeed">举报成功</string>
+    <string name="add_blacklist_succeed">加入黑名单成功</string>
+    <string name="add_blacklist_failure">加入黑名单失败</string>
+    <string name="remove_blacklist_succeed">移除黑名单成功</string>
+    <string name="remove_blacklist_failure">移除黑名单失败</string>
+    <string name="attention_succeed">关注成功</string>
+    <string name="cancel_attention_succeed">取消关注成功</string>
+    <string name="attention_failure">关注失败</string>
+    <string name="cancel_attention_failure">取消关注失败</string>
+    <string name="already_pass_authentication">您已认证通过了哦</string>
+    <string name="uploading_succeed">上传成功</string>
+    <string name="uploading_id_number_phone_failure">上传身份证正面照失败</string>
+    <string name="uploading_take_id_number_phone_failure">上传手持身份证正面照失败</string>
+    <string name="uselect_phone_failure">选取照片失败</string>
 
+    <!--参数-->
+    <string name="web_flag">WEB_FLAG</string>
+    <string name="register_flag">REGISTER_FLAG</string>
+    <string name="visit_person">VISIT_PERSON</string>
+    <string name="loading">正在加载…</string>
+    <string name="refreshing">正在刷新…</string>
+    <string name="complete">刷新完成</string>
 
     <!--网易云信开始-->
     <string name="main_tab_session">会话</string>
@@ -286,7 +305,6 @@
     <string name="gender">性 别</string>
     <string name="male">男</string>
     <string name="female">女</string>
-    <string name="phone_number">请输入手机号</string>
     <string name="set_head_image">设置头像</string>
     <string name="user_info_update_success">设置成功</string>
     <string name="user_info_update_cancel">取消更新</string>

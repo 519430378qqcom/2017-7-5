@@ -119,7 +119,7 @@ public class UserProfileEditItemActivity extends UI implements View.OnClickListe
                 setTitle(R.string.nickname);
                 break;
             case UserConstant.KEY_PHONE:
-                setTitle(R.string.phone_number);
+                setTitle(R.string.please_input_phone);
                 editText.setInputType(InputType.TYPE_CLASS_NUMBER);
                 break;
             case UserConstant.KEY_EMAIL:

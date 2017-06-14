@@ -32,7 +32,6 @@ import com.lvshandian.lemeng.interf.ResultListener;
 import com.lvshandian.lemeng.utils.AliYunImageUtils;
 import com.lvshandian.lemeng.utils.BitmpTools;
 import com.lvshandian.lemeng.utils.ImageCompressUtils;
-import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.MiPictureHelper;
 import com.lvshandian.lemeng.utils.PermisionUtils;
 import com.lvshandian.lemeng.utils.PicassoUtil;
@@ -55,11 +54,8 @@ import butterknife.Bind;
 
 /**
  * 提交认证界面
- * Created by gjj on 2016/11/21.
  */
-
 public class AuthenticationActivity extends BaseActivity {
-
     @Bind(R.id.et_name)
     EditText etName;
     @Bind(R.id.et_phone)
@@ -119,7 +115,7 @@ public class AuthenticationActivity extends BaseActivity {
     /**
      * 图片储存目录
      */
-    public String SDPATH = Environment.getExternalStorageDirectory() + "/TangRen/";
+    public String SDPATH = Environment.getExternalStorageDirectory() + "/lemeng/";
 
     /**
      * 图片储存路径
@@ -167,7 +163,7 @@ public class AuthenticationActivity extends BaseActivity {
 //                    appUser.setVerified("1");
 //                    CacheUtils.saveObject(AuthenticationActivity.this, appUser, CacheUtils.USERINFO);
                     SharedPreferenceUtils.put(mContext, "verified", "1");
-                    showToast("上传成功");
+                    showToast(getString(R.string.uploading_succeed));
                     startActivity(new Intent(mContext, RealNameVertifyActivity.class));
                     finish();
                     break;
@@ -191,7 +187,7 @@ public class AuthenticationActivity extends BaseActivity {
 
     @Override
     protected void initialized() {
-        initTitle("", "认证", null);
+        initTitle("", getString(R.string.my_authentication), null);
         initCutDonwTime();
         initPop();
         File file = new File(SDPATH);
@@ -206,7 +202,6 @@ public class AuthenticationActivity extends BaseActivity {
      */
     private void initPop() {
         View popView = View.inflate(this, R.layout.pop_header_address, null);
-
         tvCamera = (TextView) popView.findViewById(R.id.tv_camera);
         tvCancel = (TextView) popView.findViewById(R.id.tv_cancel);
         tvPhonePicture = (TextView) popView.findViewById(R.id.tv_phone_picture);
@@ -239,7 +234,7 @@ public class AuthenticationActivity extends BaseActivity {
 
             @Override
             public void onFinish() {
-                tvGetVerifyCode.setText("获取验证码");
+                tvGetVerifyCode.setText(getString(R.string.sent_validate));
                 tvGetVerifyCode.setEnabled(true);
             }
         };
@@ -291,7 +286,7 @@ public class AuthenticationActivity extends BaseActivity {
     private void getVerifyCode() {
         String phoneNum = etPhone.getText().toString().trim();
         if (!TextPhoneNumber.isPhone(phoneNum)) {
-            showToast("请输入正确的手机号");
+            showToast(getString(R.string.input_right_phone));
             return;
         }
 
@@ -304,12 +299,12 @@ public class AuthenticationActivity extends BaseActivity {
                 .build().execute(new CustomStringCallBack() {
             @Override
             public void onFaild() {
-                showToast("验证码发送失败,请重试");
+                showToast(getString(R.string.validate_code_sent_failure));
             }
 
             @Override
             public void onSucess(String data) {
-                showToast("验证码已经发送，请注意查收");
+                showToast(getString(R.string.validate_code_sent));
                 mTimer.start();
                 tvGetVerifyCode.setEnabled(false);
             }
@@ -331,7 +326,7 @@ public class AuthenticationActivity extends BaseActivity {
 
         String phone = etPhone.getText().toString().trim();
         if (!TextPhoneNumber.isPhone(phone)) {
-            showToast("请输入正确的手机号");
+            showToast(getString(R.string.input_right_phone));
             return;
         }
         String str = tv_quhao.getText().toString();
@@ -343,31 +338,31 @@ public class AuthenticationActivity extends BaseActivity {
 
         String verCode = etVerifyCode.getText().toString().trim();
         if (android.text.TextUtils.isEmpty(verCode)) {
-            showToast("请输入验证码");
+            showToast(getString(R.string.input_right_validate));
             return;
         }
         params.put("verCode", verCode);
 
         String idNo = etIdcardNum.getText().toString().trim();
         if (!RegexUtils.isIDCard15(idNo) && !RegexUtils.isIDCard18(idNo)) {
-            showToast("请输入正确的身份证号");
+            showToast(getString(R.string.input_right_id_number));
             return;
         }
         params.put("IDNo", idNo);
 
         if (android.text.TextUtils.isEmpty(idImageNetPath)) {
-            showToast("请上传身份证正面图片");
+            showToast(getString(R.string.uploading_id_number_phone));
             return;
         }
         params.put("IDFrontPic", idImageNetPath);
 
         if (android.text.TextUtils.isEmpty(handIdImageNetPath)) {
-            showToast("请上传手持身份证正面图片");
+            showToast(getString(R.string.uploading_take_id_number_phone));
             return;
         }
         params.put("IDbackPic", handIdImageNetPath);
 
-        httpDatas.getNewDataCharServer("上传认证信息", Request.Method.POST, UrlBuilder.Authentication, params, mHandler, RequestCode.REAL_NAME_VERTIFY);
+        httpDatas.getNewDataCharServer("上传认证信息", Request.Method.POST, UrlBuilder.AUTHENTICATION, params, mHandler, RequestCode.REAL_NAME_VERTIFY);
     }
 
     /**
@@ -443,7 +438,6 @@ public class AuthenticationActivity extends BaseActivity {
                 ImageCompressUtils.newInstance().compress(this, mFile, new ImageCompressUtils.CompressResultListener() {
                     @Override
                     public void onError() {
-                        showToast("压缩失败,请重试");
                     }
 
                     @Override
@@ -472,21 +466,19 @@ public class AuthenticationActivity extends BaseActivity {
 
                 if (uri == null) {
                     Bundle bundle = data.getExtras();
-                    LogUtils.e("bundle: " + bundle);
                     Set<String> strings = bundle.keySet();
                     for (String key : strings) {
-                        LogUtils.e("key: " + key + " ,value: " + bundle.get(key));
                     }
                     if (bundle != null) {
                         photo = (Bitmap) bundle.get("data"); //get bitmap
                     } else {
-                        showToast("选取相册失败,请重试");
+                        showToast(getString(R.string.uselect_phone_failure));
                     }
                 } else {
                     try {
                         photo = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
                     } catch (FileNotFoundException e) {
-                        showToast("选取相册失败,请重试");
+                        showToast(getString(R.string.uselect_phone_failure));
                     }
                 }
 
@@ -525,14 +517,13 @@ public class AuthenticationActivity extends BaseActivity {
             AliYunImageUtils.newInstance().uploadImage(this, HandabsolutePath, new ResultListener() {
                 @Override
                 public void onSucess(String data) {
-                    LogUtils.e("手持身份证正面照: " + data);
                     uploadImageCount++;
                     handIdImageNetPath = data;
                 }
 
                 @Override
                 public void onFaild() {
-                    showToast("上传手持身份证正面照失败,请重试");
+                    showToast(getString(R.string.uploading_take_id_number_phone_failure));
                     uploadImageCount = 0;
                 }
             });
@@ -554,7 +545,6 @@ public class AuthenticationActivity extends BaseActivity {
             AliYunImageUtils.newInstance().uploadImage(this, IDImageabsolutePath, new ResultListener() {
                 @Override
                 public void onSucess(String data) {
-                    LogUtils.e("身份证正面照地址: " + data);
                     idImageNetPath = data;
                     uploadImageCount++;
 
@@ -562,7 +552,7 @@ public class AuthenticationActivity extends BaseActivity {
 
                 @Override
                 public void onFaild() {
-                    showToast("上传身份证正面照失败,请重试");
+                    showToast(getString(R.string.uploading_id_number_phone_failure));
                     uploadImageCount = 0;
                 }
             });

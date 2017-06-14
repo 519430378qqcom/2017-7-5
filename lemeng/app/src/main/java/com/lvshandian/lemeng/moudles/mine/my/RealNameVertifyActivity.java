@@ -11,11 +11,9 @@ import butterknife.Bind;
 
 /**
  * 认证提交,正在审核界面
- * Created by gjj on 2016/12/2.
  */
 
 public class RealNameVertifyActivity extends BaseActivity {
-
     @Bind(R.id.iv_image)
     ImageView ivImage;
     @Bind(R.id.tv_content)
@@ -33,7 +31,7 @@ public class RealNameVertifyActivity extends BaseActivity {
 
     @Override
     protected void initialized() {
-        initTitle("", "实名认证", null);
+        initTitle("", getString(R.string.my_authentication), null);
     }
 
     @Override

@@ -19,7 +19,7 @@
         <TextView
             android:layout_width="180px"
             android:layout_height="wrap_content"
-            android:text="真实姓名"
+            android:text="@string/real_name"
             android:textColor="@color/backgeragd_head"
             android:textSize="30px" />
 
@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:hint="请输入真实姓名"
+            android:hint="@string/please_input_real_name"
             android:maxLines="1"
             android:textSize="30px" />
     </com.zhy.autolayout.AutoLinearLayout>
@@ -37,8 +37,6 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/line_df" />
-
-
 
     <com.zhy.autolayout.AutoLinearLayout
         android:id="@+id/ll_phone_code"
@@ -55,15 +53,15 @@
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="中国 +86"
+            android:text="@string/china_phone_code"
             android:textColor="@color/main"
             android:textSize="30px" />
 
         <ImageView
             android:layout_width="33px"
             android:layout_height="33px"
-            android:src="@mipmap/donw_hui"
-            android:layout_marginRight="10px"/>
+            android:layout_marginRight="10px"
+            android:src="@mipmap/donw_hui" />
 
     </com.zhy.autolayout.AutoLinearLayout>
 
@@ -84,7 +82,7 @@
         <TextView
             android:layout_width="180px"
             android:layout_height="wrap_content"
-            android:text="手机号码"
+            android:text="@string/phone_number"
             android:textColor="@color/backgeragd_head"
             android:textSize="30px" />
 
@@ -93,7 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:hint="请输入手机号码"
+            android:hint="@string/please_input_phone"
             android:inputType="number"
             android:maxLines="1"
             android:textSize="30px" />
@@ -118,7 +116,7 @@
             android:id="@+id/textView2"
             android:layout_width="180px"
             android:layout_height="wrap_content"
-            android:text="验证码"
+            android:text="@string/auth_code"
             android:textColor="@color/backgeragd_head"
             android:textSize="30px" />
 
@@ -128,7 +126,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
-            android:hint="请输入验证码"
+            android:hint="@string/please_input_code"
             android:inputType="number"
             android:maxLines="1"
             android:textSize="30px" />
@@ -142,9 +140,9 @@
             android:paddingBottom="5px"
             android:paddingLeft="15px"
             android:paddingRight="15px"
-            android:textColor="@color/white"
             android:paddingTop="5px"
-            android:text="获取验证码"
+            android:text="@string/sent_validate"
+            android:textColor="@color/white"
             android:textSize="25px" />
     </com.zhy.autolayout.AutoLinearLayout>
 
@@ -162,7 +160,7 @@
         <TextView
             android:layout_width="180px"
             android:layout_height="wrap_content"
-            android:text="身份证号"
+            android:text="@string/id_number"
             android:textColor="@color/backgeragd_head"
             android:textSize="30px" />
 
@@ -171,7 +169,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:hint="请输入身份证号码"
+            android:hint="@string/please_input_id_number"
             android:inputType="number"
             android:maxLines="1"
             android:textSize="30px" />
@@ -191,7 +189,7 @@
         android:paddingBottom="15px"
         android:paddingLeft="20px"
         android:paddingTop="15px"
-        android:text="上传证件照片"
+        android:text="@string/uploading_id_number"
         android:textColor="@color/backgeragd_head"
         android:textSize="30px" />
 
@@ -236,7 +234,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="身份证正面照"
+            android:text="@string/id_number_phone"
             android:textColor="@color/backgeragd_head"
             android:textSize="30px" />
 
@@ -246,7 +244,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="手持身份证正面照"
+            android:text="@string/take_id_number_phone"
             android:textColor="@color/backgeragd_head"
             android:textSize="30px" />
     </com.zhy.autolayout.AutoLinearLayout>
@@ -259,7 +257,7 @@
         android:layout_marginRight="50px"
         android:layout_marginTop="50px"
         android:background="@drawable/shape_bg_btn"
-        android:text="提交认证"
+        android:text="@string/submit_authentication"
         android:textColor="@color/white"
         android:textSize="30px" />
 

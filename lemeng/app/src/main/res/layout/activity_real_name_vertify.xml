@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:padding="30px"
-                android:text="您的申请已提交,请耐心等待审核!" />
+                android:text="@string/wait_authentication" />
         </com.zhy.autolayout.AutoLinearLayout>
     </com.zhy.autolayout.AutoFrameLayout>
 </com.zhy.autolayout.AutoLinearLayout>

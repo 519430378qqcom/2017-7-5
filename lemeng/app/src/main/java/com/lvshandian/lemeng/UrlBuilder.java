@@ -52,24 +52,18 @@ public class UrlBuilder {
     public static final String REPORT = "/api/v1/user/REPORT";//举报
     public static final String WEEK_CONTRIBUTION = "/appusers/getConsumeAmountAndroid";//周榜排行榜
     public static final String MY_CONTRIBUTION = "/appusers/getUserContributionAndroid";//我的贡献榜
-
+    public static final String WITHDRAW = "/appExchange/updateExchangeCash";//提现
+    public static final String WITHDRAW_RATIO = "/appExchange/exchangeRatioUse";//提现比例
+    public static final String WEICHAT_BIND = "/api/v1/exchange/bind";//绑定微信公众号
+    public static final String AUTHENTICATION = "/appusers/updateVer";  //实名认证
 
     public static final String appRooms = "/appRooms/getRooms";// type=1热门，type = 2最新，type ==3 地方北京市直播
     public static final String GET_GIFT = "/appGift/findGift";//获取礼物列表
     public static final String user = "/appusers/update";    //修改用户信息public static final String modifyPass = "/api/v1/user/password";//修改密码 public static final String GET_GIFT = "appGift/findGift";//获取礼物列表
     public static final String modifyPass = "/api/v1/user/password";   //修改密码
-
-
-
     public static final String selectLevel = "/appLevel/getLevelRate";  //查询当前等级信息
     public static final String START_JOIN_ROOM = "/appRooms/getShareRoom";    //进入直播间
-    public static final String Authentication = "/appusers/updateVer";  //实名认证
-
-
-    public static final String drawMoney = "/appExchange/updateExchangeCash";//提现
-    public static final String drawMoney_ratio = "/appExchange/exchangeRatioUse";//提现比例
-    public static final String selectQuite = "/appusers/getUserById";//主播离开后获取用户信息
-
+    public static final String selectQuite = "/appusers/getUserById";//主播离开后获取直播信息
     public static final String selectFamilyMember = "/appusers/selectFamilyMember.do";//家族
     public static final String myController = "appUserControl/getUserControlList";//我的场控列表
     public static final String myControllerAdd = "appUserControl/add";//我的场控添加
@@ -79,14 +73,10 @@ public class UrlBuilder {
     public static final String START = "/api/v1/room/create/";//新建直播/api/v1/room/create
     public static final String SEARCH = "/api/v1/user/find";//搜索用户
     public static final String SEARCH_CONTROLLER = "/appusers/find";//搜索用户场控
-    public static final String WEICHAT_BIND = "/api/v1/exchange/bind";//绑定微信公众号
     public static final String BAIDU_SONG_SEARCH = "http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.search.catalogSug&query=%s";//搜索
     public static final String BAIDU_SONG_PLAY = "http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.song.play&songid=%s";//得到下载的url
     public static final String getBanner = "/appCarouselFigure/carouselList";//得到banner图
-
     public static final String room_funse = "/appRooms/findFansOnline";//直播间的粉丝列表
-
-
     public static final String IF_ATTENTION = "/appusers/user/info";//请求别人信息
     public static final String SEND_GIFT = "/appRooms/reward";//送礼物
     public static final String joinRoom = "/api/v1/room/";//加入直播间
@@ -179,15 +169,6 @@ public class UrlBuilder {
         return "/api/v1/room/" + roomId + "/live/valid";
     }
 
-    /***
-     * 接受与主播的连麦请求id
-     *
-     * @param roomId
-     * @return
-     */
-    public static final String RequestIdlianmai(String roomId) {
-        return "/api/v1/room/" + roomId + "/live";
-    }
 
     /**
      * 获取用户申请信息
@@ -250,12 +231,6 @@ public class UrlBuilder {
     public static final String photoDelete(String id) {//图片详情删除
         return "/api/v1/user/album/" + id;
     }
-
-
-    public static final String myattention(String id) {//关注人的直播列表
-        return "/api/v1/live/user/" + id + "/follow";
-    }
-
 
     public static final String myVideo(String id) {//我的界面视频图片展示
         return "/api/v1/user/" + id + "/album/videos";

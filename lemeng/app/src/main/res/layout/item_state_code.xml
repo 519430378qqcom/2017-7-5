@@ -17,7 +17,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10px"
             android:singleLine="true"
-            android:text="中国"
             android:textColor="@color/tv_color6"
             android:textSize="32px" />
 
@@ -27,7 +26,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10px"
             android:singleLine="true"
-            android:text=" +86"
             android:textColor="@color/tv_color6"
             android:textSize="32px" />
     </com.zhy.autolayout.AutoLinearLayout>

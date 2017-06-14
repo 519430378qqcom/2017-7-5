@@ -67,7 +67,7 @@ public class StateCodeActivity extends BaseActivity {
 
     @Override
     protected void initialized() {
-        initTitle("", "国家代码", null);
+        initTitle("", getString(R.string.state_code), null);
 
         getStateCode();
 
