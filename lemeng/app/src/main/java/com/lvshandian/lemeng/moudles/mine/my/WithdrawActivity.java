@@ -132,7 +132,7 @@ public class WithdrawActivity extends BaseActivity {
     private void initUser() {
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("id", appUser.getId());
-        httpDatas.getNewDataCharServerCodeNoLoading("查询用户信息", Request.Method.POST, UrlBuilder.selectUserInfo, map, mHandler, RequestCode.SELECT_USER);
+        httpDatas.getNewDataCharServerCodeNoLoading("查询用户信息", Request.Method.POST, UrlBuilder.SELECT_USER_INFO, map, mHandler, RequestCode.SELECT_USER);
     }
 
     /**

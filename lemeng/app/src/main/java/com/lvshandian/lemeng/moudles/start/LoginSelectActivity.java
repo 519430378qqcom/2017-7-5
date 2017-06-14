@@ -95,7 +95,6 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
             if (uri != null) {
                 String unionId = uri.getQueryParameter("unionId");
                 String userName = uri.getQueryParameter("userName");
-                LogUtil.e("webLogin", "uri=" + uri.toString() + ",unionId=" + unionId + ",userName=" + userName);
                 Map<String, String> params = new HashMap<>();
                 params.put("unionId", unionId);
                 params.put("userName", userName);
@@ -149,7 +148,7 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
                 break;
             case R.id.term_of_service:
                 Intent intent = new Intent(mContext, ExplainWebViewActivity.class);
-                intent.putExtra("flag", 2000);
+                intent.putExtra(getString(R.string.web_flag), getString(R.string.user_agreement));
                 startActivity(intent);
                 break;
 
@@ -210,7 +209,7 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
             LogUtils.e("微信登录", "is onStart()");
             if (mLoading != null && !mLoading.isShowing()) {
                 mLoading.show();
-                mLoading.setText("正在获取授权");
+                mLoading.setText(getString(R.string.is_authorized_to));
             }
         }
 
@@ -221,7 +220,7 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
                 if (mLoading != null && mLoading.isShowing()) {
                     mLoading.dismiss();
                 }
-                showToast("授权失败");
+                showToast(getString(R.string.authorized_failure));
                 return;
             }
 
@@ -256,7 +255,7 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
                 params.put("userName", map.get("usid").toString());
                 params.put("nickName", map.get("username").toString());
                 if (map.get("iconurl") == null) {
-                    params.put("picUrl", "http://lemeng.oss-ap-southeast-1.aliyuncs.com/lemengImg/1494471272058.png");
+                    params.put("picUrl", UrlBuilder.HEAD_DEFAULT);
                 } else {
                     params.put("picUrl", map.get("iconurl").toString());
                 }
@@ -270,8 +269,7 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
 
         @Override
         public void onError(SHARE_MEDIA platform, int action, Throwable t) {
-            LogUtils.e("微信登录", "is onError()");
-            LogUtils.e("微信登录", "is onError()" + "----action=" + action + "----t=" + t.toString());
+            LogUtils.e("微信登录", "is onError()" + "  action=" + action + "  t=" + t.toString());
             if (mLoading != null && mLoading.isShowing()) {
                 mLoading.dismiss();
             }
@@ -307,7 +305,7 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
             String json = jsonObject.toString();
             LogUtils.e("json: " + json);
             OkHttpUtils.postString()
-                    .url(UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.openRegister)
+                    .url(UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.OPEN_REGISTER)
                     .addHeader("udid", "lemeng")
                     .mediaType(MediaType.parse("application/json;charset=UTF-8"))
                     .content(json)
@@ -315,7 +313,7 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
                     execute(new CustomStringCallBackOne(mContext, HttpDatas.KEY_CODE_SUCCESS) {
                         @Override
                         public void onFaild() {
-                            showToast("登录失败");
+                            showToast(getString(R.string.login_failure));
                         }
 
                         @Override
@@ -343,7 +341,7 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
             String json = jsonObject.toString();
             LogUtils.e("json: " + json);
             OkHttpUtils.postString()
-                    .url(UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.openRegister)
+                    .url(UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.OPEN_REGISTER)
                     .addHeader("udid", "lemeng")
                     .mediaType(MediaType.parse("application/json;charset=UTF-8"))
                     .content(json)
@@ -351,7 +349,7 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
                     execute(new CustomStringCallBackOne(mContext, HttpDatas.KEY_CODE_SUCCESS) {
                         @Override
                         public void onFaild() {
-                            showToast("登录失败");
+                            showToast(getString(R.string.login_failure));
                         }
 
                         @Override
@@ -396,7 +394,6 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
         try {
             account = DESUtil.decrypt(appUser.getNeteaseAccount());
             token = DESUtil.decrypt(appUser.getNeteaseToken());
-            LogUtils.i("WangYi", "account:" + account + "\ntoken:" + token);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -406,24 +403,18 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
         loginRequest.setCallback(new RequestCallback<LoginInfo>() {
             @Override
             public void onSuccess(LoginInfo param) {
-                LogUtils.i("WangYi", "login success");
-
                 onLoginDone();
                 DemoCache.setAccount(account);
                 saveLoginInfo(account, token);
-
                 // 初始化消息提醒
                 NIMClient.toggleNotification(UserPreferences.getNotificationToggle());
-
                 // 初始化免打扰
                 if (UserPreferences.getStatusConfig() == null) {
                     UserPreferences.setStatusConfig(DemoCache.getNotificationConfig());
                 }
                 NIMClient.updateStatusBarNotificationConfig(UserPreferences.getStatusConfig());
-
                 // 构建缓存
                 DataCacheManager.buildDataCacheAsync();
-
                 // 进入主界面
                 gotoActivity(MainActivity.class, true);
             }
@@ -432,15 +423,14 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
             public void onFailed(int code) {
                 onLoginDone();
                 if (code == 302 || code == 404) {
-                    showToast(R.string.login_failed);
+                    showToast(R.string.login_error);
                 } else {
-                    showToast("登录失败: " + code);
+                    showToast(getString(R.string.login_failure));
                 }
             }
 
             @Override
             public void onException(Throwable exception) {
-                LogUtil.e("网易云信无效输入", exception.toString());
                 showToast(R.string.login_exception);
                 onLoginDone();
             }

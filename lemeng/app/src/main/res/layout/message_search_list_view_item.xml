@@ -22,7 +22,7 @@
     </FrameLayout>
 
     <TextView
-        android:id="@+id/tv_nick_name"
+        android:id="@+id/nick_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="6dp"
@@ -38,7 +38,7 @@
         android:id="@+id/img_msg_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_nick_name"
+        android:layout_below="@id/nick_name"
         android:layout_marginRight="6dp"
         android:layout_marginTop="6dp"
         android:layout_toRightOf="@id/portrait_panel"
@@ -49,7 +49,7 @@
         android:id="@+id/tv_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_nick_name"
+        android:layout_below="@id/nick_name"
         android:layout_marginRight="10dip"
         android:layout_marginTop="5dp"
         android:layout_toRightOf="@+id/img_msg_status"

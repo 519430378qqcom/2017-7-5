@@ -57,7 +57,7 @@ public class UserControllerAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = View.inflate(context, R.layout.item_search, null);
-        TextView tv_nick_name = (TextView) convertView.findViewById(R.id.tv_nick_name);
+        TextView tv_nick_name = (TextView) convertView.findViewById(R.id.nick_name);
         TextView tv_data = (TextView) convertView.findViewById(R.id.tv_data);
         TextView tv_cancle = (TextView) convertView.findViewById(R.id.tv_cancle);
         CircleImageView iv_pic = (CircleImageView) convertView.findViewById(R.id.iv_pic);

@@ -1,7 +1,6 @@
 package com.lvshandian.lemeng.httprequest;
 
 /**
- * author: newlq on 2016/9/1 17:08.
  * email： @lvshandian.com
  * company:北京绿闪电科技有限公司
  * details：请求常量类， 用于判断请求与handler 回调的msg.what 的值 是否是统一请求

@@ -10,18 +10,25 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="30px"
-        android:text="家乡"
+        android:text="@string/lepiao"
         android:textColor="@color/tv_color6"
         android:textSize="15sp" />
 
-    <TextView
-        android:id="@+id/tv_address"
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="22px"
-        android:text="北京市"
-        android:textColor="@color/black" />
+        android:layout_marginRight="24px"
+        android:src="@mipmap/next" />
+     <TextView
+         android:id="@+id/tv_coin"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentRight="true"
+         android:layout_centerVertical="true"
+         android:layout_marginRight="60px"
+         android:textColor="@color/black"
+         android:text="0" />
 
 </com.zhy.autolayout.AutoRelativeLayout>

@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="100px"
             android:background="@null"
-            android:text="低俗色情"
+            android:text="@string/dssq"
             android:textSize="35px" />
 
         <TextView
@@ -35,8 +35,9 @@
             android:layout_width="match_parent"
             android:layout_height="100px"
             android:background="@null"
-            android:text="垃圾广告"
+            android:text="@string/ljgg"
             android:textSize="35px" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -48,8 +49,9 @@
             android:layout_width="match_parent"
             android:layout_height="100px"
             android:background="@null"
-            android:text="违法信息"
+            android:text="@string/wfxx"
             android:textSize="35px" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -61,8 +63,9 @@
             android:layout_width="match_parent"
             android:layout_height="100px"
             android:background="@null"
-            android:text="欺诈骗钱"
+            android:text="@string/qzpq"
             android:textSize="35px" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -74,7 +77,7 @@
             android:layout_width="match_parent"
             android:layout_height="100px"
             android:background="@null"
-            android:text="其它"
+            android:text="@string/other"
             android:textSize="35px" />
     </com.zhy.autolayout.AutoLinearLayout>
 
@@ -88,7 +91,7 @@
         android:layout_width="match_parent"
         android:layout_height="100px"
         android:background="@drawable/custom_popupwindow_border"
-        android:text="取消"
+        android:text="@string/cancel"
         android:textSize="35px" />
 
 

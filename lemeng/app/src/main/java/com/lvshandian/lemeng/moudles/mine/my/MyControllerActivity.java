@@ -140,7 +140,7 @@ public class MyControllerActivity extends BaseActivity {
                 ControllerBean userBean = controllerList.get(position);
                 String id1 = userBean.getId() + "";
                 Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
-                intent.putExtra(getString(R.string.visiti_person), id1);
+                intent.putExtra(getString(R.string.visit_person), id1);
                 startActivity(intent);
             }
         });

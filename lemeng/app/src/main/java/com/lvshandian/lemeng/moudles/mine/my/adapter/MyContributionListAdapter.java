@@ -61,8 +61,7 @@ public class MyContributionListAdapter extends CommonAdapter<MyContributionBeanB
         String nickName = bean.getNickName();
         tv_name.setText(nickName);
 
-        String investment = bean.getContributeCoin() + "";
-        tv_gong_xian.setText(investment);
+        tv_gong_xian.setText(mContext.getResources().getString(R.string.contribution_lepiao_num,String.valueOf(bean.getContributeCoin())));
 
         String picUrl = bean.getPicUrl();
         PicassoUtil.newInstance().onRoundnessImage(mContext, picUrl, iv_header);

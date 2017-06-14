@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -81,12 +82,12 @@ public class OtherPersonHomePageActivity extends BaseActivity {
     TextView tvSign;
     @Bind(R.id.tv_fanse)
     TextView tvFanse;
-    @Bind(R.id.tv_foucs)
-    TextView tvFoucs;
-    @Bind(R.id.tv_gz)
-    TextView tv_gz;
-    @Bind(R.id.tv_fs)
-    TextView tv_fs;
+    @Bind(R.id.tv_attention)
+    TextView tvAttention;
+    @Bind(R.id.ll_attention)
+    LinearLayout llAttention;
+    @Bind(R.id.ll_fans)
+    LinearLayout llFans;
     @Bind(R.id.tv_address)
     TextView tv_address;
     @Bind(R.id.rl_focus)
@@ -167,17 +168,16 @@ public class OtherPersonHomePageActivity extends BaseActivity {
                     break;
                 //关注请求接收数据
                 case RequestCode.REQUEST_REPORT:
-                    showToast("举报成功");
+                    showToast(getString(R.string.report_succeed));
                     break;
                 case RequestCode.MY_PHOTO_LOAD://图片请求列表
                     List<PhotoBean> listAdd = JsonUtil.json2BeanList(json.toString(), PhotoBean.class);
 
                     imgList.clear();
-                    for (int i = 0 , j = listAdd.size(); i < j; i++) {
+                    for (int i = 0, j = listAdd.size(); i < j; i++) {
                         imgList.add(listAdd.get(i).getUrl());
                     }
-
-                    tv_phone_num.setText(listAdd.size() + "张照片");
+                    tv_phone_num.setText(getString(R.string.phone_amount, String.valueOf(listAdd.size())));
                     list.clear();
                     list.addAll(listAdd);
                     adapter.notifyDataSetChanged();
@@ -189,7 +189,7 @@ public class OtherPersonHomePageActivity extends BaseActivity {
 //                            intent.putExtra("photo", list.get(position));
 //                            intent.putExtra("isShow", "notShow");
 //                            startActivity(intent);
-                            startActivity(new Intent(mContext, BigImageActivity.class).putStringArrayListExtra("imageList", (ArrayList<String>) imgList).putExtra("clickPosition",position));
+                            startActivity(new Intent(mContext, BigImageActivity.class).putStringArrayListExtra("imageList", (ArrayList<String>) imgList).putExtra("clickPosition", position));
                         }
                     });
 
@@ -198,7 +198,7 @@ public class OtherPersonHomePageActivity extends BaseActivity {
                 case RequestCode.MY_VIDEO_LOAD://视频请求列表
                     final List<VideoBean> listAdds = JsonUtil.json2BeanList(json.toString(), VideoBean.class);
 
-                    tv_video_num.setText(listAdds.size() + "个短片");
+                    tv_phone_num.setText(getString(R.string.small_video_amount, String.valueOf(listAdds.size())));
                     listvideo.clear();
                     listvideo.addAll(listAdds);
                     adaptervideo.notifyDataSetChanged();
@@ -231,8 +231,8 @@ public class OtherPersonHomePageActivity extends BaseActivity {
         reportRight.setOnClickListener(this);
         rlFocus.setOnClickListener(this);
         rlTalk.setOnClickListener(this);
-        tv_gz.setOnClickListener(this);
-        tv_fs.setOnClickListener(this);
+        llAttention.setOnClickListener(this);
+        llFans.setOnClickListener(this);
         tv_watch_all_phone.setOnClickListener(this);
         tv_watch_all_video.setOnClickListener(this);
 
@@ -257,7 +257,7 @@ public class OtherPersonHomePageActivity extends BaseActivity {
                                 AutoRelativeLayout.LayoutParams lp1 = new AutoRelativeLayout.LayoutParams(width, height);
                                 avHeader.setLayoutParams(lp1);
                             }
-                        },400);
+                        }, 400);
 
                         break;
                 }
@@ -268,13 +268,13 @@ public class OtherPersonHomePageActivity extends BaseActivity {
 
     @Override
     protected void initialized() {
-        userId = getIntent().getStringExtra(getString(R.string.visiti_person));
+        userId = getIntent().getStringExtra(getString(R.string.visit_person));
         //判断是否拉黑
         black = NIMClient.getService(FriendService.class).isInBlackList("miu_" + userId);
         if (black) {
-            isBlackList = "取消拉黑";
+            isBlackList = getString(R.string.cancel_blacklist);
         } else {
-            isBlackList = "拉黑";
+            isBlackList = getString(R.string.blacklist);
         }
         adapter = new PhotoAdapter(mContext, list, "notShow");
         mygrid.setAdapter(adapter);
@@ -301,7 +301,7 @@ public class OtherPersonHomePageActivity extends BaseActivity {
 
     public static void start(Context context, String userId) {
         Intent intent = new Intent(context, OtherPersonHomePageActivity.class);
-        intent.putExtra(context.getResources().getString(R.string.visiti_person), userId);
+        intent.putExtra(context.getResources().getString(R.string.visit_person), userId);
         context.startActivity(intent);
     }
 
@@ -317,10 +317,10 @@ public class OtherPersonHomePageActivity extends BaseActivity {
 
             String nickName = mOtherBean.getNickName();
             String id = mOtherBean.getId();
-            String online = mOtherBean.getOnline();
+//            String online = mOtherBean.getOnline();
 
-            tvName.setText(nickName + "[" + (online.endsWith("0") ? "离线" : "在线") + "]");
-            tvId.setText("乐檬号:" + id);
+            tvName.setText(nickName);
+            tvId.setText(getString(R.string.lemeng_id, id));
             String gender = mOtherBean.getGender();
             ivSex.setImageResource(TextUtils.equals(gender, "1") ? R.mipmap.male : R.mipmap.female);
 
@@ -333,7 +333,7 @@ public class OtherPersonHomePageActivity extends BaseActivity {
             if (!com.lvshandian.lemeng.utils.TextUtils.isEmpty(signature)) {
                 tvSign.setText(signature);
             } else {
-                tvSign.setText("这个家伙很懒，什么都没留下");
+                tvSign.setText(getString(R.string.default_sign));
             }
 
             String fansNum = mOtherBean.getFansNum();
@@ -345,9 +345,9 @@ public class OtherPersonHomePageActivity extends BaseActivity {
 
             String followNum = mOtherBean.getFollowNum();
             if (!com.lvshandian.lemeng.utils.TextUtils.isEmpty(followNum)) {
-                tvFoucs.setText(followNum);
+                tvAttention.setText(followNum);
             } else {
-                tvFoucs.setText(String.valueOf(0));
+                tvAttention.setText(String.valueOf(0));
             }
 
             focus();
@@ -417,7 +417,7 @@ public class OtherPersonHomePageActivity extends BaseActivity {
         map.put("reportUserId", appUser.getId());
         map.put("userId", userId);
         map.put("content", str);
-        httpDatas.getDataForJson("举报信息", Request.Method.POST, UrlBuilder.report, map, mHandler, RequestCode.REQUEST_REPORT);
+        httpDatas.getDataForJson("举报信息", Request.Method.POST, UrlBuilder.REPORT, map, mHandler, RequestCode.REQUEST_REPORT);
     }
 
 
@@ -431,14 +431,14 @@ public class OtherPersonHomePageActivity extends BaseActivity {
         NIMClient.getService(FriendService.class).addToBlackList(account).setCallback(new RequestCallback<Void>() {
             @Override
             public void onSuccess(Void param) {
-                showToast("加入黑名单成功");
-                isBlackList = "取消拉黑";
+                showToast(getString(R.string.add_blacklist_succeed));
+                isBlackList = getString(R.string.cancel_blacklist);
                 black = NIMClient.getService(FriendService.class).isInBlackList(account);
             }
 
             @Override
             public void onFailed(int code) {
-                showToast("加入黑名单失败,code:" + code);
+                showToast(getString(R.string.add_blacklist_failure));
             }
 
             @Override
@@ -457,14 +457,14 @@ public class OtherPersonHomePageActivity extends BaseActivity {
         NIMClient.getService(FriendService.class).removeFromBlackList(account).setCallback(new RequestCallback<Void>() {
             @Override
             public void onSuccess(Void param) {
-                showToast("移出黑名单成功");
-                isBlackList = "拉黑";
+                showToast(getString(R.string.remove_blacklist_succeed));
+                isBlackList = getString(R.string.blacklist);
                 black = NIMClient.getService(FriendService.class).isInBlackList(account);
             }
 
             @Override
             public void onFailed(int code) {
-                showToast("移出黑名单失败，错误码：" + code);
+                showToast(getString(R.string.remove_blacklist_failure));
             }
 
             @Override
@@ -495,9 +495,9 @@ public class OtherPersonHomePageActivity extends BaseActivity {
             public void onFaild() {
                 String toast;
                 if (TextUtils.equals(follow, "1")) {
-                    toast = "取消关注失败";
+                    toast = getString(R.string.cancel_attention_failure);
                 } else {
-                    toast = "关注失败";
+                    toast = getString(R.string.attention_failure);
                 }
                 showToast(toast);
             }
@@ -588,12 +588,12 @@ public class OtherPersonHomePageActivity extends BaseActivity {
             case R.id.rl_talk://点击聊天
                 SessionHelper.startP2PSession(this, "miu_" + mOtherBean.getId());
                 break;
-            case R.id.tv_fs://查看他的粉丝
+            case R.id.ll_fans://查看他的粉丝
                 Intent intent = new Intent(mContext, FunseListActivity.class);
                 intent.putExtra("userId", userId);
                 startActivity(intent);
                 break;
-            case R.id.tv_gz://查看他的关注
+            case R.id.ll_attention://查看他的关注
                 intent = new Intent(mContext, FollowListActivity.class);
                 intent.putExtra("userId", userId);
                 startActivity(intent);
@@ -614,23 +614,23 @@ public class OtherPersonHomePageActivity extends BaseActivity {
                 rightPopup.dismiss();
                 break;
             case R.id.btn_dssq:
-                report("低俗色情");
+                report(getString(R.string.dssq));
                 reportPopup.dismiss();
                 break;
             case R.id.btn_ljgg:
-                report("垃圾广告");
+                report(getString(R.string.ljgg));
                 reportPopup.dismiss();
                 break;
             case R.id.btn_wfxx:
-                report("违法信息");
+                report(getString(R.string.wfxx));
                 reportPopup.dismiss();
                 break;
             case R.id.btn_qzpq:
-                report("欺诈骗钱");
+                report(getString(R.string.qzpq));
                 reportPopup.dismiss();
                 break;
             case R.id.btn_other:
-                report("其它");
+                report(getString(R.string.other));
                 reportPopup.dismiss();
                 break;
             case R.id.btn_cancel:

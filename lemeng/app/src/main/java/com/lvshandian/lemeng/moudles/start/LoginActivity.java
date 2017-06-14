@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.android.volley.Request;
@@ -27,7 +26,6 @@ import com.lvshandian.lemeng.moudles.mine.activity.ExplainWebViewActivity;
 import com.lvshandian.lemeng.moudles.mine.bean.LoginFrom;
 import com.lvshandian.lemeng.moudles.mine.my.StateCodeActivity;
 import com.lvshandian.lemeng.utils.DESUtil;
-import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.MD5Utils;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.utils.TextPhoneNumber;
@@ -49,23 +47,22 @@ import butterknife.Bind;
 
 /**
  * 登录页面
- * Created by 张振 on 2016/11/8.
  */
 public class LoginActivity extends BaseActivity {
     @Bind(R.id.ed_login_phone)
-    EditText edLoginPhone;
+    EditText etLoginPhone;
     @Bind(R.id.ed_login_password)
-    EditText edLoginPassword;
+    EditText etLoginPassword;
     @Bind(R.id.tv_forget_password)
     TextView tvForgetPassword;
     @Bind(R.id.btn_login)
     TextView btnLogin;
-    @Bind(R.id.ll_xieyi)
-    LinearLayout ll_xieyi;
-    @Bind(R.id.ll_quhao)
-    LinearLayout ll_quhao;
-    @Bind(R.id.tv_quhao)
-    TextView tv_quhao;
+    @Bind(R.id.user_agreement)
+    LinearLayout userAgreement;
+    @Bind(R.id.ll_phone_code)
+    LinearLayout llPhoneCode;
+    @Bind(R.id.tv_phone_code)
+    TextView tvPhoneCode;
 
     private AbortableFuture<LoginInfo> loginRequest;
     private String account = null;
@@ -83,7 +80,6 @@ public class LoginActivity extends BaseActivity {
                 //用户登录成功
                 case RequestCode.LOGIN_TAG:
                     loginSucess(json);
-                    LogUtils.e("用户信息: " + json);
                     break;
             }
         }
@@ -98,13 +94,13 @@ public class LoginActivity extends BaseActivity {
     protected void initListener() {
         tvForgetPassword.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
-        ll_xieyi.setOnClickListener(this);
-        ll_quhao.setOnClickListener(this);
+        userAgreement.setOnClickListener(this);
+        llPhoneCode.setOnClickListener(this);
     }
 
     @Override
     protected void initialized() {
-        initTitle("", "登录", "注册");
+        initTitle("", getString(R.string.login), getString(R.string.register));
         //请求基础权限，存储
         requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
         onParseIntent();
@@ -117,15 +113,15 @@ public class LoginActivity extends BaseActivity {
      * @param json
      */
     private void loginSucess(String json) {
-       AppUser appUser = JSON.parseObject(json, AppUser.class);
-        String passWord = edLoginPassword.getText().toString().trim();
+        AppUser appUser = JSON.parseObject(json, AppUser.class);
+        String passWord = etLoginPassword.getText().toString().trim();
         if (!TextUtils.isEmpty(passWord)) {
             passWord = MD5Utils.md5(passWord);
             appUser.setPassword(passWord);
         }
         //存储用户信息
 //        CacheUtils.saveObject(LoginActivity.this, appUser, CacheUtils.USERINFO);
-        SharedPreferenceUtils.saveUserInfo(mContext,appUser);
+        SharedPreferenceUtils.saveUserInfo(mContext, appUser);
         loginWangYi(appUser);
     }
 
@@ -133,36 +129,36 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ll_quhao:
+            case R.id.ll_phone_code:
                 Intent intent = new Intent(mContext, StateCodeActivity.class);
                 startActivityForResult(intent, 200);
                 break;
-            case R.id.ll_xieyi:
+            case R.id.user_agreement:
                 Intent intent1 = new Intent(mContext, ExplainWebViewActivity.class);
-                intent1.putExtra("flag", 2000);
+                intent1.putExtra(getString(R.string.web_flag), getString(R.string.user_agreement));
                 startActivity(intent1);
                 break;
             case R.id.tv_titlebar_left:
                 defaultFinish();
                 break;
             case R.id.tv_titlebar_right:
-                startActivity(new Intent(mContext, RegisterActivity.class).putExtra("type", "1"));
+                startActivity(new Intent(mContext, RegisterActivity.class).putExtra(getString(R.string.register_flag), getString(R.string.register)));
                 break;
             case R.id.btn_login:
-                if (TextUtils.isEmpty(edLoginPhone.getText().toString().trim()) || !TextPhoneNumber.isPhone(edLoginPhone.getText().toString())) {
-                    showToast("用户名不正确");
+                if (TextUtils.isEmpty(etLoginPhone.getText().toString().trim()) || !TextPhoneNumber.isPhone(etLoginPhone.getText().toString())) {
+                    showToast(getString(R.string.user_name_error));
                     return;
                 }
-                if (TextUtils.isEmpty(edLoginPassword.getText().toString().trim())) {
-                    showToast("密码不能为空");
+                if (TextUtils.isEmpty(etLoginPassword.getText().toString().trim())) {
+                    showToast(getString(R.string.input_right_password));
                     return;
                 }
-                String phone = tv_quhao.getText().toString();
-                phone = phone.substring(phone.lastIndexOf("+") + 1, phone.length()) + edLoginPhone.getText().toString();
-                login(phone, edLoginPassword.getText().toString().trim());
+                String phone = tvPhoneCode.getText().toString();
+                phone = phone.substring(phone.lastIndexOf("+") + 1, phone.length()) + etLoginPhone.getText().toString();
+                login(phone, etLoginPassword.getText().toString().trim());
                 break;
             case R.id.tv_forget_password:
-                startActivity(new Intent(mContext, RegisterActivity.class).putExtra("type", "2"));
+                startActivity(new Intent(mContext, RegisterActivity.class).putExtra(getString(R.string.register_flag), getString(R.string.retrieve_password)));
                 break;
         }
 
@@ -170,16 +166,13 @@ public class LoginActivity extends BaseActivity {
 
     /**
      * 登录
-     *
-     * @author sll
-     * @time 2016/11/11 18:05
      */
     private void login(String name, String pass) {
         LoginFrom loginFrom = new LoginFrom();
         loginFrom.setThirdLogin(false);
         loginFrom.setPassword(pass);
 //        CacheUtils.saveObject(mContext, loginFrom, CacheUtils.PASSWORD);
-        SharedPreferenceUtils.saveLoginFrom(mContext,loginFrom);
+        SharedPreferenceUtils.saveLoginFrom(mContext, loginFrom);
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("userName", name);
         map.put("password", pass);
@@ -193,16 +186,16 @@ public class LoginActivity extends BaseActivity {
             String client;
             switch (type) {
                 case ClientType.Web:
-                    client = "网页端";
+                    client = getString(R.string.web_terminal);
                     break;
                 case ClientType.Windows:
-                    client = "电脑端";
+                    client = getString(R.string.computer_terminal);
                     break;
                 case ClientType.REST:
-                    client = "服务端";
+                    client = getString(R.string.service_terminal);
                     break;
                 default:
-                    client = "移动端";
+                    client = getString(R.string.mobile_terminal);
                     break;
             }
             EasyAlertDialogHelper.showOneButtonDiolag(LoginActivity.this, getString(R.string.kickout_notify),
@@ -213,9 +206,6 @@ public class LoginActivity extends BaseActivity {
 
     /**
      * 登录网易云信
-     *
-     * @author sll
-     * @time 2016/11/16 13:39
      */
     private void loginWangYi(AppUser appUser) {
         // 云信只提供消息通道，并不包含用户资料逻辑。开发者需要在管理后台或通过服务器接口将用户帐号和token同步到云信服务器。
@@ -225,7 +215,6 @@ public class LoginActivity extends BaseActivity {
         try {
             account = DESUtil.decrypt(appUser.getNeteaseAccount());//
             token = DESUtil.decrypt(appUser.getNeteaseToken());
-            LogUtils.i("WangYi", "account:" + account + "\ntoken:" + token);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -235,7 +224,6 @@ public class LoginActivity extends BaseActivity {
         loginRequest.setCallback(new RequestCallback<LoginInfo>() {
             @Override
             public void onSuccess(LoginInfo param) {
-                LogUtils.i("WangYi", "login success");
                 onLoginDone();
                 DemoCache.setAccount(account);
                 saveLoginInfo(account, token);
@@ -246,10 +234,8 @@ public class LoginActivity extends BaseActivity {
                     UserPreferences.setStatusConfig(DemoCache.getNotificationConfig());
                 }
                 NIMClient.updateStatusBarNotificationConfig(UserPreferences.getStatusConfig());
-
                 // 构建缓存
                 DataCacheManager.buildDataCacheAsync();
-
                 for (Activity activity : MyApplication.listActivity) {
                     if (activity instanceof LoginSelectActivity) {
                         activity.finish();
@@ -263,15 +249,15 @@ public class LoginActivity extends BaseActivity {
             public void onFailed(int code) {
                 onLoginDone();
                 if (code == 302 || code == 404) {
-                    Toast.makeText(LoginActivity.this, R.string.login_failed, Toast.LENGTH_SHORT).show();
+                    showToast(getString(R.string.login_error));
                 } else {
-                    Toast.makeText(LoginActivity.this, "登录失败: " + code, Toast.LENGTH_SHORT).show();
+                    showToast(getString(R.string.login_failure) + code);
                 }
             }
 
             @Override
             public void onException(Throwable exception) {
-                Toast.makeText(LoginActivity.this, R.string.login_exception, Toast.LENGTH_LONG).show();
+                showToast(getString(R.string.login_exception));
                 onLoginDone();
             }
         });
@@ -295,7 +281,7 @@ public class LoginActivity extends BaseActivity {
             case 200:
                 if (data != null) {
                     if (!TextUtils.isEmpty(data.getStringExtra("stateCode"))) {
-                        tv_quhao.setText(data.getStringExtra("stateCode"));
+                        tvPhoneCode.setText(data.getStringExtra("stateCode"));
                     }
                 }
                 break;

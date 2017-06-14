@@ -83,7 +83,7 @@ public class WatchQuitLiveActivity extends BaseActivity {
         switch (v.getId()) {
             case R.id.ll_go_home:
                 Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
-                intent.putExtra(getString(R.string.visiti_person), userId);
+                intent.putExtra(getString(R.string.visit_person), userId);
                 startActivity(intent);
                 finish();
                 break;

@@ -15,7 +15,7 @@
         android:orientation="vertical">
 
         <com.zhy.autolayout.AutoLinearLayout
-            android:id="@+id/ll_quhao"
+            android:id="@+id/ll_phone_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -23,7 +23,7 @@
 
 
             <TextView
-                android:id="@+id/tv_quhao"
+                android:id="@+id/tv_phone_code"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -137,7 +137,7 @@
             android:textSize="36px" />
 
         <com.zhy.autolayout.AutoLinearLayout
-            android:id="@+id/ll_xieyi"
+            android:id="@+id/user_agreement"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30px"

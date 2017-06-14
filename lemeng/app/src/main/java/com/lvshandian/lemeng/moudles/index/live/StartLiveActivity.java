@@ -1162,9 +1162,9 @@ public class StartLiveActivity extends BaseActivity implements
                 popupView.findViewById(R.id.iv_live_share).setOnClickListener(new View.OnClickListener() {  //分享
                     @Override
                     public void onClick(View v) {
-                        UMUtils.umShare(StartLiveActivity.this, "主播" + appUser.getNickName() + "邀你玩游戏啦",
-                                "够刺激,主播" + creatReadyBean.getCreator().getNickName() + "带你玩转直播间,一起游戏嗨起来!",
-                                creatReadyBean.getLivePicUrl(), String.format(UrlBuilder.SHARE_VIDEO_URL, wy_Id, appUser.getId(), mVideoPath));
+                        UMUtils.umShare(StartLiveActivity.this, getString(R.string.share_live_title, appUser.getNickName()),
+                                getString(R.string.share_live_content, appUser.getNickName()), creatReadyBean.getLivePicUrl(),
+                                String.format(UrlBuilder.SHARE_VIDEO_URL, wy_Id, appUser.getId(), mVideoPath));
                         popupWindow.dismiss();
                     }
                 });
@@ -1286,12 +1286,12 @@ public class StartLiveActivity extends BaseActivity implements
         betPosition = position;
         if (betBalance > 0) {
             if (betBalance > myGoldCoin) {
-                ToastUtils.showMessageDefault(StartLiveActivity.this, getResources().getString(R.string.balance_not_enough));
+                showToast(getString(R.string.balance_not_enough));
             } else {
                 bullfightPresenter.betSuccess(Integer.parseInt(appUser.getId()), Integer.parseInt(room_Id), betBalance, position, uper, 0);
             }
         } else {
-            ToastUtils.showMessageDefault(StartLiveActivity.this, getResources().getString(R.string.no_select_betbalance));
+            showToast(getString(R.string.no_select_betbalance));
         }
     }
 
@@ -1422,7 +1422,7 @@ public class StartLiveActivity extends BaseActivity implements
      */
     private void checkBettingBalance(int betSum) {
         if (betSum > myGoldCoin) {
-            ToastUtils.showMessageDefault(this, getResources().getString(R.string.balance_not_enough));
+            showToast(getString(R.string.balance_not_enough));
             return;
         }
         betBalance = betSum;
@@ -1487,7 +1487,7 @@ public class StartLiveActivity extends BaseActivity implements
             switchTimer();
         }
         if (nextTime <= 5 && nextTime > 0) {
-            bullfightResultShow(null, null, getResources().getString(R.string.take_a_rest) + nextTime + "S");
+            bullfightResultShow(null, null, getString(R.string.take_a_rest) + nextTime + "S");
         }
         switch (nextTime) {
             case 30://主播初始化游戏结果
@@ -1575,8 +1575,8 @@ public class StartLiveActivity extends BaseActivity implements
                     int mount = gameResult.getObj().getMount();
                     String mine = mount >= 0 ? "+" + mount : mount + "";
                     String banker = gameResult.getObj().getTmount() >= 0 ? "+" + gameResult.getObj().getTmount() : gameResult.getObj().getTmount() + "";
-                    bullfightResultShow(getResources().getString(R.string.the_result), getResources().getString(R.string.the_user) +
-                            mine, getResources().getString(R.string.banker) + banker);
+                    bullfightResultShow(getString(R.string.the_result), getString(R.string.the_user) +
+                            mine, getString(R.string.banker) + banker);
                     if (mount > 0) {
                         bullfightAudio.play(bullfightAudio.WIN);
                         bullfightAudio.play(bullfightAudio.FALLING_COIN);
@@ -4286,7 +4286,7 @@ public class StartLiveActivity extends BaseActivity implements
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("id", appUser.getId() + "");
         httpDatas.getNewDataCharServerCodeNoLoading("查询用户信息", com.android.volley.Request.Method
-                .POST, UrlBuilder.selectUserInfo, map, myHandler, RequestCode.SELECT_USER);
+                .POST, UrlBuilder.SELECT_USER_INFO, map, myHandler, RequestCode.SELECT_USER);
     }
 
 
@@ -4560,7 +4560,7 @@ public class StartLiveActivity extends BaseActivity implements
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
-                intent.putExtra(getString(R.string.visiti_person), customdateBean.getId());
+                intent.putExtra(getString(R.string.visit_person), customdateBean.getId());
                 startActivity(intent);
                 otherPop.dismiss();
             }
@@ -4598,12 +4598,12 @@ public class StartLiveActivity extends BaseActivity implements
 
         });
 
-        focus((TextView) view.findViewById(R.id.tv_foucs), customdateBean);
+        focus((TextView) view.findViewById(R.id.tv_attention), customdateBean);
         //关注
-        view.findViewById(R.id.tv_foucs).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.tv_attention).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeFollow((TextView) view.findViewById(R.id.tv_foucs), customdateBean);
+                changeFollow((TextView) view.findViewById(R.id.tv_attention), customdateBean);
             }
         });
 
@@ -4657,7 +4657,7 @@ public class StartLiveActivity extends BaseActivity implements
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
-                intent.putExtra(getString(R.string.visiti_person), customdateBean.getId());
+                intent.putExtra(getString(R.string.visit_person), customdateBean.getId());
                 startActivity(intent);
                 otherPop.dismiss();
             }
@@ -4727,7 +4727,7 @@ public class StartLiveActivity extends BaseActivity implements
         map.put("reportUserId", appUser.getId());
         map.put("userId", userId);
         map.put("content", content);
-        httpDatas.getDataForJsoNoloading("举报", com.android.volley.Request.Method.POST, UrlBuilder.report, map,
+        httpDatas.getDataForJsoNoloading("举报", com.android.volley.Request.Method.POST, UrlBuilder.REPORT, map,
                 myHandler, RequestCode.REQUEST_REPORT);
 
     }

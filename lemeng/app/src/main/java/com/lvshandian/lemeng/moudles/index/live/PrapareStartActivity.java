@@ -102,9 +102,6 @@ public class PrapareStartActivity extends BaseActivity {
     private static final int CAMERA_FRONT = 1;
     private static final int CAMERA_BACK = 0;
 
-    private String share_title = "乐檬直播,共享世界的快乐";
-    private String share_content = "万人直播室嗨翻天!超火人气,边撩妹纸边玩游戏,赶紧加入吧!";
-
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -249,19 +246,23 @@ public class PrapareStartActivity extends BaseActivity {
                 }
                 break;
             case R.id.wechat:
-                UMUtils.umShareSingle(this, share_title,share_content, appUser.getPicUrl(),
+                UMUtils.umShareSingle(this, getString(R.string.share_download_title),
+                        getString(R.string.share_download_content), appUser.getPicUrl(),
                         UrlBuilder.SHARE_DOWNLOAD_URL, SHARE_MEDIA.WEIXIN);
                 break;
             case R.id.wechat_circle:
-                UMUtils.umShareSingle(this, share_title,share_content, appUser.getPicUrl(),
+                UMUtils.umShareSingle(this, getString(R.string.share_download_title),
+                        getString(R.string.share_download_content), appUser.getPicUrl(),
                         UrlBuilder.SHARE_DOWNLOAD_URL, SHARE_MEDIA.WEIXIN_CIRCLE);
                 break;
             case R.id.qq:
-                UMUtils.umShareSingle(this, share_title,share_content, appUser.getPicUrl(),
+                UMUtils.umShareSingle(this, getString(R.string.share_download_title),
+                        getString(R.string.share_download_content), appUser.getPicUrl(),
                         UrlBuilder.SHARE_DOWNLOAD_URL, SHARE_MEDIA.QQ);
                 break;
             case R.id.qq_zone:
-                UMUtils.umShareSingle(this, share_title,share_content, appUser.getPicUrl(),
+                UMUtils.umShareSingle(this, getString(R.string.share_download_title),
+                        getString(R.string.share_download_content), appUser.getPicUrl(),
                         UrlBuilder.SHARE_DOWNLOAD_URL, SHARE_MEDIA.QZONE);
                 break;
 

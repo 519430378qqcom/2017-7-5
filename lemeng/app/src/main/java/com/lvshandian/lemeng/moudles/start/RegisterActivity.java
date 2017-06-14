@@ -22,7 +22,6 @@ import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.moudles.mine.activity.ExplainWebViewActivity;
 import com.lvshandian.lemeng.moudles.mine.my.StateCodeActivity;
-import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.utils.TextPhoneNumber;
 import com.lvshandian.lemeng.wangyiyunxin.config.DemoCache;
@@ -47,9 +46,7 @@ import butterknife.Bind;
 
 /**
  * 注册页面
- * Created by 张振 on 2016/11/8.
  */
-
 public class RegisterActivity extends BaseActivity {
 
     @Bind(R.id.ed_register_phone)
@@ -60,14 +57,14 @@ public class RegisterActivity extends BaseActivity {
     TextView tvSendCode;
     @Bind(R.id.ed_register_password)
     EditText edRegisterPassword;
-    @Bind(R.id.ll_xieyi)
-    LinearLayout ll_xieyi;
-    @Bind(R.id.ll_quhao)
-    LinearLayout ll_quhao;
+    @Bind(R.id.user_agreement)
+    LinearLayout userAgreement;
+    @Bind(R.id.ll_phone_code)
+    LinearLayout llPhoneCode;
     @Bind(R.id.btn_register)
     TextView btnRegister;
-    @Bind(R.id.tv_quhao)
-    TextView tv_quhao;
+    @Bind(R.id.tv_phone_code)
+    TextView tvPhoneCode;
 
     private int waitTime = 60;
     /**
@@ -84,26 +81,26 @@ public class RegisterActivity extends BaseActivity {
 
             switch (msg.what) {
                 case RequestCode.REGISTER_TAG:
-                    showToast("注册成功");
+                    showToast(getString(R.string.register_success));
                     AppUser appUser = JSON.parseObject(json, AppUser.class);
                     //存储用户信息
 //                    CacheUtils.saveObject(RegisterActivity.this, appUser, CacheUtils.USERINFO);
-                    SharedPreferenceUtils.saveUserInfo(mContext,appUser);
+                    SharedPreferenceUtils.saveUserInfo(mContext, appUser);
                     loginWangYi(appUser);
 
 //                    startActivity(new Intent(RegisterActivity.this, SettingPerson.class).putExtra("isRegister", "register"));
                     break;
                 case RequestCode.FORGETPSWD_TAG:
-                    showToast("修改成功,请重新登录");
+                    showToast(getString(R.string.edit_password_success));
                     AppUser appUser1 = JSON.parseObject(json, AppUser.class);
                     //存储用户信息
 //                    CacheUtils.saveObject(RegisterActivity.this, appUser1, CacheUtils.USERINFO);
-                    SharedPreferenceUtils.saveUserInfo(mContext,appUser1);
+                    SharedPreferenceUtils.saveUserInfo(mContext, appUser1);
                     finish();
                     break;
 
                 case RequestCode.GET_CODE:
-                    showToast("验证码已发送");
+                    showToast(getString(R.string.validate_code_sent));
                     break;
 
             }
@@ -117,8 +114,8 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     protected void initListener() {
-        ll_quhao.setOnClickListener(this);
-        ll_xieyi.setOnClickListener(this);
+        llPhoneCode.setOnClickListener(this);
+        userAgreement.setOnClickListener(this);
         tvSendCode.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
     }
@@ -126,15 +123,15 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     protected void initialized() {
-        type = getIntent().getStringExtra("type");
-        if (type.equals("1")) {
-            initTitle("", "注册", "");
-            ll_xieyi.setVisibility(View.VISIBLE);
-            btnRegister.setText("注册");
+        type = getIntent().getStringExtra(getString(R.string.register_flag));
+        if (getString(R.string.register).equals(type)) {
+            initTitle("", getString(R.string.register), "");
+            userAgreement.setVisibility(View.VISIBLE);
+            btnRegister.setText(getString(R.string.register));
         } else {
-            initTitle("", "找回密码", "");
-            ll_xieyi.setVisibility(View.GONE);
-            btnRegister.setText("确认");
+            initTitle("", getString(R.string.retrieve_password), "");
+            userAgreement.setVisibility(View.GONE);
+            btnRegister.setText(getString(R.string.retrieve_password));
         }
     }
 
@@ -145,38 +142,38 @@ public class RegisterActivity extends BaseActivity {
             case R.id.tv_titlebar_left:
                 defaultFinish();
                 break;
-            case R.id.ll_quhao:
+            case R.id.ll_phone_code:
                 Intent intent = new Intent(mContext, StateCodeActivity.class);
                 startActivityForResult(intent, 200);
                 break;
-            case R.id.ll_xieyi:
+            case R.id.user_agreement:
                 Intent intent1 = new Intent(mContext, ExplainWebViewActivity.class);
-                intent1.putExtra("flag", 2000);
+                intent1.putExtra(getString(R.string.web_flag), getString(R.string.user_agreement));
                 startActivity(intent1);
                 break;
             case R.id.tv_send_code:
                 sendCode();
                 break;
             case R.id.btn_register:
-                String str = tv_quhao.getText().toString();
+                String str = tvPhoneCode.getText().toString();
                 str = str.substring(str.lastIndexOf("+") + 1, str.length());
                 String phone = str + edRegisterPhone.getText().toString();
 
                 String registerCode = edRegisterCode.getText().toString();
                 String pwd = edRegisterPassword.getText().toString();
                 if (TextUtils.isEmpty(edRegisterPhone.getText().toString()) || edRegisterPhone.getText().toString().length() != 11 || !TextPhoneNumber.isPhone(edRegisterPhone.getText().toString())) {
-                    showToast("手机号不正确");
+                    showToast(getString(R.string.input_right_phone));
                     return;
                 }
                 if (TextUtils.isEmpty(registerCode)) {
-                    showToast("短信验证码不能为空");
+                    showToast(getString(R.string.input_right_validate));
                     return;
                 }
-                if (TextUtils.isEmpty(pwd) || pwd.length() < 4 || pwd.length() > 16) {
-                    showToast("密码不正确，请设置为4-16位字符");
+                if (TextUtils.isEmpty(pwd) || pwd.length() < 6 || pwd.length() > 16) {
+                    showToast(getString(R.string.input_right_password));
                     return;
                 }
-                if (type.equals("1")) {
+                if (getString(R.string.register).equals(type)) {
                     register(phone, pwd, registerCode);
                 } else {
                     forgetPswd(phone, pwd, registerCode);
@@ -205,7 +202,7 @@ public class RegisterActivity extends BaseActivity {
         map.put("userName", name);
         map.put("password", pass);
         map.put("identityCode", code);
-        httpDatas.DataJsonAdmin("修改密码", Request.Method.POST, UrlBuilder.forgetPswd, map, mHandler2, RequestCode.FORGETPSWD_TAG);
+        httpDatas.DataJsonAdmin("修改密码", Request.Method.POST, UrlBuilder.FORGET_PASSWORD, map, mHandler2, RequestCode.FORGETPSWD_TAG);
     }
 
 
@@ -214,23 +211,23 @@ public class RegisterActivity extends BaseActivity {
      */
     private void sendCode() {
         // 给request赋一个TAG，以便于取消时候使用
-        String phone =  edRegisterPhone.getText().toString();
+        String phone = edRegisterPhone.getText().toString();
         if (!phone.equals("") && phone.length() == 11 && TextPhoneNumber.isPhone(phone)) {
             tvSendCode.setEnabled(false);
             tvSendCode.setTextColor(getContext().getResources().getColor(R.color.gray));
             tvSendCode.setText(waitTime + "s");
             handler.postDelayed(runnable, 1000);
 
-            String str = tv_quhao.getText().toString();
+            String str = tvPhoneCode.getText().toString();
             str = str.substring(str.lastIndexOf("+") + 1, str.length());
             phone = str + edRegisterPhone.getText().toString();
 
             ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
             map.put("mobile", phone);
-            httpDatas.getNewDataCharServer("获取验证码", Request.Method.GET, UrlBuilder.getCode, map, mHandler2, RequestCode.GET_CODE);
+            httpDatas.getNewDataCharServer("获取验证码", Request.Method.GET, UrlBuilder.GET_CODE, map, mHandler2, RequestCode.GET_CODE);
 
         } else {
-            showToast("请输入正确手机号");
+            showToast(getString(R.string.input_right_phone));
         }
 
     }
@@ -243,7 +240,7 @@ public class RegisterActivity extends BaseActivity {
             tvSendCode.setTextColor(getContext().getResources().getColor(R.color.gray));
             if (waitTime == 0) {
                 handler.removeCallbacks(runnable);
-                tvSendCode.setText("发送验证码");
+                tvSendCode.setText(getString(R.string.sent_validate));
                 tvSendCode.setTextColor(getContext().getResources().getColor(R.color.main));
                 tvSendCode.setEnabled(true);
                 waitTime = 60;
@@ -270,7 +267,7 @@ public class RegisterActivity extends BaseActivity {
             case 200:
                 if (data != null) {
                     if (!TextUtils.isEmpty(data.getStringExtra("stateCode"))) {
-                        tv_quhao.setText(data.getStringExtra("stateCode"));
+                        tvPhoneCode.setText(data.getStringExtra("stateCode"));
                     }
                 }
                 break;
@@ -281,6 +278,7 @@ public class RegisterActivity extends BaseActivity {
     private AbortableFuture<LoginInfo> loginRequest;
     private String account = null;
     private String token = null;
+
     /**
      * 登录网易云信
      *
@@ -321,9 +319,9 @@ public class RegisterActivity extends BaseActivity {
             public void onFailed(int code) {
                 onLoginDone();
                 if (code == 302 || code == 404) {
-                    showToast(R.string.login_failed);
+                    showToast(R.string.login_error);
                 } else {
-                    showToast("登录失败:" + code);
+                    showToast(getString(R.string.login_failure) + code);
                 }
             }
 
@@ -359,9 +357,7 @@ public class RegisterActivity extends BaseActivity {
                     @Override
                     public void onResult(int code, Void aVoid, Throwable throwable) {
                         if (code == ResponseCode.RES_SUCCESS) {
-                            LogUtils.i("WangYi", "上传昵称头像成功");
                         } else {
-                            LogUtils.i("WangYi", "上传昵称头像失败");
                         }
                     }
                 });

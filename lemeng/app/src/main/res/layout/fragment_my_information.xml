@@ -72,11 +72,10 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/name"
+                        android:id="@+id/nick_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="昵称"
                         android:textColor="@color/backgroudcolor"
                         android:textSize="36px" />
 
@@ -101,13 +100,12 @@
                 </com.zhy.autolayout.AutoLinearLayout>
 
                 <TextView
-                    android:id="@+id/id"
+                    android:id="@+id/lemeng_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_above="@+id/tv_sign"
                     android:layout_marginBottom="5px"
                     android:layout_marginLeft="30px"
-                    android:text="乐檬号："
                     android:textColor="@color/backgroudcolor"
                     android:textSize="24px" />
 
@@ -118,62 +116,76 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="15px"
                     android:layout_marginLeft="30px"
-                    android:text="签名哦"
                     android:textColor="@color/backgroudcolor"
                     android:textSize="24px" />
             </com.zhy.autolayout.AutoRelativeLayout>
 
         </com.zhy.autolayout.AutoRelativeLayout>
 
-
         <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="match_parent"
-            android:layout_height="116px"
-            android:background="@color/backgroudcolor">
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tv_gz"
+            <com.zhy.autolayout.AutoLinearLayout
+                android:id="@+id/ll_attention"
                 android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="30px"
+                android:layout_height="116px"
                 android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="关注"
-                android:textColor="@color/tv_color6"
-                android:textSize="15sp" />
+                android:background="@color/backgroudcolor"
+                android:gravity="center_vertical">
 
-            <TextView
-                android:id="@+id/attention"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="40px"
-                android:text="0"
-                android:textColor="@color/black" />
+                <TextView
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="30px"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/attention"
+                    android:textColor="@color/tv_color6"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tv_attention"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="40px"
+                    android:textColor="@color/black" />
+
+            </com.zhy.autolayout.AutoLinearLayout>
 
             <View
                 android:layout_width="1px"
-                android:layout_height="15px"
+                android:layout_height="30px"
                 android:layout_gravity="center_vertical"
                 android:background="@color/line_df" />
 
-            <TextView
-                android:id="@+id/tv_fs"
+            <com.zhy.autolayout.AutoLinearLayout
+                android:id="@+id/ll_fans"
                 android:layout_width="0px"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30px"
+                android:layout_height="116px"
                 android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="粉丝"
-                android:textColor="@color/tv_color6"
-                android:textSize="15sp" />
+                android:background="@color/backgroudcolor"
+                android:gravity="center_vertical">
 
-            <TextView
-                android:id="@+id/fanse"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="30px"
-                android:text="0"
-                android:textColor="@color/black" />
+
+                <TextView
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30px"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/fans"
+                    android:textColor="@color/tv_color6"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tv_fanse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="30px"
+                    android:text="0"
+                    android:textColor="@color/black" />
+            </com.zhy.autolayout.AutoLinearLayout>
         </com.zhy.autolayout.AutoLinearLayout>
 
         <View
@@ -181,7 +193,7 @@
             android:layout_height="20px"
             android:background="@color/wide_line" />
         <!--贡献榜-->
-        <include layout="@layout/my_item_gongxian_layout" />
+        <include layout="@layout/my_contribution_layout" />
 
         <View
             android:layout_width="match_parent"
@@ -189,7 +201,7 @@
             android:layout_marginLeft="30px"
             android:background="@color/line_df" />
         <!--我的乐票-->
-        <include layout="@layout/my_item_yanpiao_layout" />
+        <include layout="@layout/my_lepiao_layout" />
 
         <!--我的回放-->
         <!--<include layout="@layout/my_item_huifang_layout" />-->
@@ -198,7 +210,7 @@
             android:layout_height="20px"
             android:background="@color/wide_line" />
         <!--我的认证-->
-        <include layout="@layout/my_item_renzheng_layout" />
+        <include layout="@layout/my_authentication_layout" />
 
         <View
             android:layout_width="match_parent"
@@ -206,21 +218,21 @@
             android:layout_marginLeft="30px"
             android:background="@color/line_df" />
         <!--我的等级-->
-        <include layout="@layout/my_item_dengji_layout" />
+        <include layout="@layout/my_level_layout" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="20px"
             android:background="@color/wide_line" />
         <!--我的相册-->
-        <include layout="@layout/my_item_txxc_layout" />
+        <include layout="@layout/my_photo_album_layout" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="20px"
             android:background="@color/wide_line" />
         <!--我的短片-->
-        <include layout="@layout/my_item_small_video_layout" />
+        <include layout="@layout/my_small_video_layout" />
 
     </com.zhy.autolayout.AutoLinearLayout>
 </com.lvshandian.lemeng.view.HeadZoomScrollView>

@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="100px"
             android:background="@null"
-            android:text="拉黑"
+            android:text="@string/blacklist"
             android:textSize="35px" />
 
         <TextView
@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="100px"
             android:background="@null"
-            android:text="举报"
+            android:text="@string/report"
             android:textSize="35px" />
 
     </com.zhy.autolayout.AutoLinearLayout>
@@ -50,7 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="100px"
         android:background="@drawable/custom_popupwindow_border"
-        android:text="取消"
+        android:text="@string/cancel"
         android:textSize="35px" />
 
 

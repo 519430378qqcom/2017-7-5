@@ -19,15 +19,13 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * 开机引导页  by  张振 on 2016/10/11.
+ * 开机引导页
  */
 public class GuidActivity extends BaseActivity {
-
-    private boolean isfirst = false;
-
     @Bind(R.id.contentPager)
     ViewPager contentPager;
 
+    private boolean isfirst = false;
     /**
      * 界面列表
      */

@@ -1631,9 +1631,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 break;
             //分享
             case R.id.iv_live_share:
-                UMUtils.umShare(WatchLiveActivity.this, "主播" + liveListBean.getNickName() + "邀你玩游戏啦",
-                        "够刺激,主播" + liveListBean.getNickName() + "带你玩转直播间,一起游戏嗨起来!",
-                        liveListBean.getLivePicUrl(), String.format(UrlBuilder.SHARE_VIDEO_URL, wy_Id, zhubo_Id, mVideoPath));
+                UMUtils.umShare(WatchLiveActivity.this, getString(R.string.share_live_title, liveListBean.getNickName()),
+                        getString(R.string.share_live_content, liveListBean.getNickName()), liveListBean.getLivePicUrl(),
+                        String.format(UrlBuilder.SHARE_VIDEO_URL, wy_Id, zhubo_Id, mVideoPath));
                 break;
             //跳转到排行榜
             case R.id.ll_tp_labe:
@@ -1726,12 +1726,12 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         betPosition = position;
         if (betBalance > 0) {
             if (betBalance > myGoldCoin) {
-                ToastUtils.showMessageDefault(WatchLiveActivity.this, getResources().getString(R.string.balance_not_enough));
+                ToastUtils.showMessageDefault(WatchLiveActivity.this, getString(R.string.balance_not_enough));
             } else {
                 bullfightPresenter.betSuccess(Integer.parseInt(appUser.getId()), Integer.parseInt(room_Id), betBalance, position, uper, 0);
             }
         } else {
-            ToastUtils.showMessageDefault(WatchLiveActivity.this, getResources().getString(R.string.no_select_betbalance));
+            ToastUtils.showMessageDefault(WatchLiveActivity.this, getString(R.string.no_select_betbalance));
         }
     }
 
@@ -1860,7 +1860,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      */
     private void checkBettingBalance(int betSum) {
         if (betSum > myGoldCoin) {
-            ToastUtils.showMessageDefault(this, getResources().getString(R.string.balance_not_enough));
+            ToastUtils.showMessageDefault(this, getString(R.string.balance_not_enough));
             return;
         }
         betBalance = betSum;
@@ -1923,7 +1923,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             switchTimer();
         }
         if (nextTime <= 5 && nextTime > 0) {
-            bullfightResultShow(null, null, getResources().getString(R.string.take_a_rest) + nextTime + "S");
+            bullfightResultShow(null, null, getString(R.string.take_a_rest) + nextTime + "S");
         }
         switch (nextTime) {
             case 15://获取扑克牌结果
@@ -1936,7 +1936,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 bullfightPresenter.updateBankerBalance();
                 break;
             case 5://休息一下
-                bullfightResultShow(getResources().getString(R.string.take_a_rest), null, null);
+                bullfightResultShow(getString(R.string.take_a_rest), null, null);
                 break;
         }
         nextTime--;
@@ -2006,8 +2006,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     int mount = gameResult.getObj().getMount();
                     String mine = mount >= 0 ? "+" + mount : mount + "";
                     String banker = gameResult.getObj().getTmount() >= 0 ? "+" + gameResult.getObj().getTmount() : gameResult.getObj().getTmount() + "";
-                    bullfightResultShow(getResources().getString(R.string.the_result), getResources().getString(R.string.the_user) +
-                            mine, getResources().getString(R.string.banker) + banker);
+                    bullfightResultShow(getString(R.string.the_result), getString(R.string.the_user) +
+                            mine, getString(R.string.banker) + banker);
                     if (mount > 0) {
                         bullfightAudio.play(bullfightAudio.WIN);
                         bullfightAudio.play(bullfightAudio.FALLING_COIN);
@@ -2153,7 +2153,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 setBetPoolEnable(false);
                 rl_timing.setVisibility(View.GONE);
                 switchAllPoker(false, -1);
-                bullfightResultShow(getResources().getString(R.string.wait_next_start), null, null);
+                bullfightResultShow(getString(R.string.wait_next_start), null, null);
                 bullfightPresenter.getBankerInfo();
                 return;
             }
@@ -2180,7 +2180,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         int code = betResult.getCode();
         switch (code) {
             case 0://为异常
-                ToastUtils.showMessageDefault(WatchLiveActivity.this, getResources().getString(R.string.bet_fail));
+                showToast(getString(R.string.bet_fail));
                 break;
             case 1://为成功
                 bullfightAudio.play(bullfightAudio.BET);
@@ -2222,7 +2222,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             case 2://为钱币不够赔
                 break;
             case 3://余额不足
-                ToastUtils.showMessageDefault(WatchLiveActivity.this, getResources().getString(R.string.balance_not_enough));
+                showToast(getString(R.string.balance_not_enough));
                 break;
         }
     }
@@ -4479,7 +4479,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("id", zhubo_Id);
         httpDatas.getNewDataCharServerCodeNoLoading("查询用户信息", Request.Method
-                .POST, UrlBuilder.selectUserInfo, map, myHandler, RequestCode.SELECT_USER);
+                .POST, UrlBuilder.SELECT_USER_INFO, map, myHandler, RequestCode.SELECT_USER);
     }
 
     /**
@@ -4489,7 +4489,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("id", appUser.getId() + "");
         httpDatas.getNewDataCharServerCodeNoLoading("查询用户信息", Request.Method
-                .POST, UrlBuilder.selectUserInfo, map, myHandler, RequestCode.SELECT_USER_MY);
+                .POST, UrlBuilder.SELECT_USER_INFO, map, myHandler, RequestCode.SELECT_USER_MY);
     }
 
     /**
@@ -4577,7 +4577,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
-                intent.putExtra(getString(R.string.visiti_person), customdateBean.getId());
+                intent.putExtra(getString(R.string.visit_person), customdateBean.getId());
                 startActivity(intent);
                 otherPop.dismiss();
             }
@@ -4606,12 +4606,12 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         tv_gold_coin.setText(receivedGoldCoin);
 
 
-        focus((TextView) view.findViewById(R.id.tv_foucs), customdateBean);
+        focus((TextView) view.findViewById(R.id.tv_attention), customdateBean);
         //关注
-        view.findViewById(R.id.tv_foucs).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.tv_attention).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeFollow((TextView) view.findViewById(R.id.tv_foucs), customdateBean);
+                changeFollow((TextView) view.findViewById(R.id.tv_attention), customdateBean);
             }
         });
 
@@ -4665,7 +4665,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
-                intent.putExtra(getString(R.string.visiti_person), customdateBean.getId());
+                intent.putExtra(getString(R.string.visit_person), customdateBean.getId());
                 startActivity(intent);
                 otherPop.dismiss();
             }
@@ -4790,7 +4790,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         map.put("reportUserId", appUser.getId());
         map.put("userId", userId);
         map.put("content", content);
-        httpDatas.getDataForJsoNoloading("举报", Request.Method.POST, UrlBuilder.report, map,
+        httpDatas.getDataForJsoNoloading("举报", Request.Method.POST, UrlBuilder.REPORT, map,
                 myHandler, RequestCode.REQUEST_REPORT);
 
     }

@@ -31,7 +31,6 @@ public class ExplainWebViewActivity extends BaseActivity implements View.OnClick
     @Bind(R.id.error)
     TextView error;
 
-    private int flag;
     private String url = "http://baidu.com";
 
     /**
@@ -54,18 +53,17 @@ public class ExplainWebViewActivity extends BaseActivity implements View.OnClick
     protected void initialized() {
         mLoading = new LoadingDialog(mContext);
         mLoading.show();
-        flag = getIntent().getExtras().getInt("flag");
-        if (flag == 1000) {
-            tv_titlebar_title.setText(getResources().getString(R.string.yinlian_pay_web));
+        String flag = getIntent().getStringExtra(getString(R.string.web_flag));
+        if (getString(R.string.top_up_recharge).equals(flag)) {
+            tv_titlebar_title.setText(getString(R.string.top_up_recharge));
             url = String.format(UrlBuilder.YINLIAN_PAY_WEB, appUser.getId());
-        } else if (flag == 2000) {
-            tv_titlebar_title.setText(getResources().getString(R.string.user_agreement));
+        } else if (getString(R.string.user_agreement).equals(flag)) {
+            tv_titlebar_title.setText(getString(R.string.user_agreement));
             url = UrlBuilder.USER_AGREEMENT;
-        } else if (flag == 3000) {
-            tv_titlebar_title.setText(getResources().getString(R.string.about_us));
+        } else if (getString(R.string.about_us).equals(flag)) {
+            tv_titlebar_title.setText(getString(R.string.about_us));
             url = UrlBuilder.ABOUT_US;
         }
-
         initView();
     }
 
@@ -98,6 +96,7 @@ public class ExplainWebViewActivity extends BaseActivity implements View.OnClick
                     mLoading.dismiss();
                 }
             }
+
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 return super.shouldOverrideUrlLoading(view, url);

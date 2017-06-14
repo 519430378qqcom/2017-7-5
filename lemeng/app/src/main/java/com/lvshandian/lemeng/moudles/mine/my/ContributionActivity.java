@@ -22,7 +22,6 @@ import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.moudles.mine.my.adapter.ContributionListAdapter;
 import com.lvshandian.lemeng.utils.GrademipmapUtils;
 import com.lvshandian.lemeng.utils.JsonUtil;
-import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.PicassoUtil;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefresh;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout;
@@ -85,7 +84,6 @@ public class ContributionActivity extends BaseActivity {
             switch (msg.what) {
                 //关注请求接收数据
                 case RequestCode.REQUEST_RANK:
-                    LogUtils.LogAll("周榜排行榜返回内容json:" + json);
                     List<ContributionBeanBack> listBean = JsonUtil.json2BeanList(json, ContributionBeanBack.class);
                     handlerContribution(listBean);
                     break;
@@ -125,7 +123,7 @@ public class ContributionActivity extends BaseActivity {
 
     @Override
     protected void initialized() {
-        initTitle("", "周榜排行榜", null);
+        initTitle("", getString(R.string.week_ranking), null);
         requestContribution();
         scrollView.smoothScrollTo(0, 0);
     }
@@ -139,7 +137,7 @@ public class ContributionActivity extends BaseActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
-                    intent.putExtra(getString(R.string.visiti_person), mDatas.get(position).getId());
+                    intent.putExtra(getString(R.string.visit_person), mDatas.get(position).getId());
                     startActivity(intent);
                 }
             });
@@ -155,7 +153,7 @@ public class ContributionActivity extends BaseActivity {
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("rows", "10");
         map.put("page", String.valueOf(page));
-        httpDatas.getNewDataCharServerRefresh("查询周榜排行榜", Request.Method.GET, UrlBuilder.weekContribution, map, mHandler, RequestCode.REQUEST_RANK, refreshLayout);
+        httpDatas.getNewDataCharServerRefresh("查询周榜排行榜", Request.Method.GET, UrlBuilder.WEEK_CONTRIBUTION, map, mHandler, RequestCode.REQUEST_RANK, refreshLayout);
     }
 
 
@@ -208,12 +206,13 @@ public class ContributionActivity extends BaseActivity {
         int level = oneData.getLevel();
         imglevel.setImageResource(GrademipmapUtils.LevelImg[level - 1]);
         tvName.setText(oneData.getNickName());
-        tvDevote.setText(oneData.getSumAmount() + "");
+
+        tvDevote.setText(getString(R.string.contribution_lepiao_num,String.valueOf(oneData.getSumAmount())));
         imgHead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
-                intent.putExtra(getString(R.string.visiti_person), oneData.getId());
+                intent.putExtra(getString(R.string.visit_person), oneData.getId());
                 startActivity(intent);
             }
         });

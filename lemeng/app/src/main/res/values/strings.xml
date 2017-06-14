@@ -1,15 +1,91 @@
 <resources>
     <string name="app_name">乐檬直播</string>
     <string name="agree_term_of_service">登入即代表您同意《服务条款》</string>
-    <string name="yinlian_pay_web">乐票充值</string>
-    <string name="user_agreement">用户协议</string>
-    <string name="about_us">关于我们</string>
+    <string name="mobile_terminal">移动端</string>
+    <string name="computer_terminal">电脑端</string>
+    <string name="service_terminal">服务端</string>
+    <string name="web_terminal">网页端</string>
+    <string name="is_authorized_to">正在获取授权</string>
+    <string name="authorized_failure">授权失败</string>
+    <string name="login_failure">登录失败</string>
 
+    <string name="china_phone_code">中国 +86</string>
     <string name="password">密码</string>
     <string name="forget_password">忘记密码</string>
     <string name="please_input_phone">请输入手机号</string>
     <string name="please_input_code">请输入验证码</string>
     <string name="password_stand">请输入6至16位密码</string>
+    <string name="agreement_lemeng">同意乐檬</string>
+    <string name="sent_validate">发送验证码</string>
+    <string name="attention">关注</string>
+    <string name="fans">粉丝</string>
+    <string name="contribution">贡献榜</string>
+    <string name="lepiao">乐票</string>
+    <string name="my_authentication">我的认证</string>
+    <string name="not_authentication">未认证</string>
+    <string name="in_authentication">认证中</string>
+    <string name="already_authentication">已认证</string>
+    <string name="authentication_failure">认证失败</string>
+    <string name="my_level">我的等级</string>
+    <string name="photo_album">相册</string>
+    <string name="small_video">短片</string>
+    <string name="look_all">查看全部</string>
+    <string name="phone_amount">%1$s张照片</string>
+    <string name="small_video_amount">%1$s个短片</string>
+    <string name="blacklist">拉黑</string>
+    <string name="report">举报</string>
+    <string name="cancel">取消</string>
+    <string name="cancel_blacklist">取消拉黑</string>
+    <string name="lemeng_id">乐檬号:%1$s</string>
+    <string name="default_sign">这个家伙很懒，什么都没留下</string>
+    <string name="dssq">低俗色情</string>
+    <string name="ljgg">垃圾广告</string>
+    <string name="wfxx">违法信息</string>
+    <string name="qzpq">欺诈骗钱</string>
+    <string name="other">其他</string>
+    <string name="address">地址</string>
+    <string name="contribution_lepiao_num">贡献 %1$s 乐票</string>
+
+
+    <string name="share_live_title">主播%1$s邀你玩游戏啦</string>
+    <string name="share_live_content">够刺激,主播%1$s带你玩转直播间,一起游戏嗨起来!</string>
+    <string name="share_download_title">乐檬直播,共享世界的快乐</string>
+    <string name="share_download_content">万人直播室嗨翻天!超火人气,边撩妹纸边玩游戏,赶紧加入吧!</string>
+
+    <!--标题栏-->
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="retrieve_password">找回密码</string>
+    <string name="top_up_recharge">乐票充值</string>
+    <string name="user_agreement">用户协议</string>
+    <string name="about_us">关于我们</string>
+    <string name="my_contribution">我的贡献榜</string>
+    <string name="week_ranking">周榜排行榜</string>
+
+    <!--吐司提示-->
+    <string name="user_name_error">用户名不正确</string>
+    <string name="register_success">注册成功</string>
+    <string name="edit_password_success">密码修改成功</string>
+    <string name="validate_code_sent">验证码已发送</string>
+    <string name="input_right_phone">请输入正确手机号</string>
+    <string name="input_right_validate">请输入正确手机验证码</string>
+    <string name="input_right_password">请输入6-16位密码</string>
+    <string name="report_succeed">举报成功</string>
+    <string name="add_blacklist_succeed">加入黑名单成功</string>
+    <string name="add_blacklist_failure">加入黑名单失败</string>
+    <string name="remove_blacklist_succeed">移除黑名单成功</string>
+    <string name="remove_blacklist_failure">移除黑名单失败</string>
+    <string name="attention_succeed">关注成功</string>
+    <string name="cancel_attention_succeed">取消关注成功</string>
+    <string name="attention_failure">关注失败</string>
+    <string name="cancel_attention_failure">取消关注失败</string>
+    <string name="already_pass_authentication">您已认证通过了哦!</string>
+
+    <!--参数-->
+    <string name="web_flag">WEB_FLAG</string>
+    <string name="register_flag">REGISTER_FLAG</string>
+    <string name="visit_person">VISIT_PERSON</string>
+
     <string name="loading">正在加载…</string>
     <string name="refreshing">正在刷新…</string>
     <string name="complete">刷新完成</string>
@@ -31,9 +107,7 @@
     <string name="main_tab_session">会话</string>
     <string name="main_tab_contact">通讯录</string>
     <string name="user_profile">个人名片</string>
-    <string name="login">登录</string>
     <string name="logining">登录中\u2026</string>
-    <string name="register">注册</string>
     <string name="registering">注册中\u2026</string>
     <string name="agree">同意</string>
     <string name="reject">拒绝</string>
@@ -46,7 +120,6 @@
     <string name="register_nick_name_tip">昵称限10位汉字、字母或者数字</string>
     <string name="input_password">请输入密码，6~20位字母或者数字</string>
     <string name="register_password_tip">密码必须为6~20位字母或者数字</string>
-    <string name="register_success">注册成功</string>
     <string name="register_failed">注册失败,错误码%1$s:%2$s</string>
     <string name="login_has_account">已有帐号？直接登录</string>
     <string name="done">完成</string>
@@ -73,7 +146,7 @@
     <string name="delete_system_message">删除该条系统消息？</string>
     <string name="delete_success">删除成功</string>
     <string name="clear_all_success">清空成功</string>
-    <string name="login_failed">帐号或密码错误</string>
+    <string name="login_error">帐号或密码错误</string>
     <string name="login_exception">无效输入</string>
     <string name="kick_out">帐号在其它设备登录</string>
     <string name="edittext_length_tips">你输入的字数已经超过了限制！</string>
@@ -193,7 +266,6 @@
     <string name="gender">性 别</string>
     <string name="male">男</string>
     <string name="female">女</string>
-    <string name="other">其他</string>
     <string name="phone_number">请输入手机号</string>
     <string name="set_head_image">设置头像</string>
     <string name="user_info_update_success">设置成功</string>
@@ -212,8 +284,6 @@
     <string name="send_custom_notification_failed">自定义通知发送失败</string>
     <string name="send_custom_notification_to_buddy">发送给好友</string>
     <string name="send_custom_notification_to_team">发送给群组</string>
-    <string name="visiti_person">VISIT_PERSON</string>
-    <string name="user_id">user_id</string>
     <!--网易云信结束-->
 
     <!--七牛云开始-->

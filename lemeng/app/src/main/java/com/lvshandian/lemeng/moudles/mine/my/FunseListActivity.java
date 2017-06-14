@@ -33,9 +33,7 @@ import butterknife.Bind;
 
 /**
  * 粉丝列表
- * Created by gjj on 2016/12/6.
  */
-
 public class FunseListActivity extends BaseActivity implements SwipeRefresh.OnRefreshListener, SwipeRefreshLayout.OnPullUpRefreshListener {
     @Bind(R.id.lv_list)
     ListView lvList;
@@ -76,7 +74,7 @@ public class FunseListActivity extends BaseActivity implements SwipeRefresh.OnRe
 
     @Override
     protected void initialized() {
-        initTitle("", "粉丝", null);
+        initTitle("", getString(R.string.fans), null);
         mUserId = getIntent().getStringExtra("userId");
 
         mAdapter = new FunseListAdapter(mContext, mDatas, R.layout.item_attention_fans, true);
@@ -104,7 +102,7 @@ public class FunseListActivity extends BaseActivity implements SwipeRefresh.OnRe
                 FunseBean funseBean = mDatas.get(position);
                 String userId = funseBean.getUserId();
                 Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
-                intent.putExtra(getString(R.string.visiti_person), userId);
+                intent.putExtra(getString(R.string.visit_person), userId);
                 startActivity(intent);
             }
         });
@@ -116,7 +114,7 @@ public class FunseListActivity extends BaseActivity implements SwipeRefresh.OnRe
                 if (bean.getFollow().equals("1")) {
                     String userId = bean.getUserId();
                     Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
-                    intent.putExtra(getString(R.string.visiti_person), userId);
+                    intent.putExtra(getString(R.string.visit_person), userId);
                     startActivity(intent);
                 } else {
                     changeFollow(bean);
@@ -144,22 +142,20 @@ public class FunseListActivity extends BaseActivity implements SwipeRefresh.OnRe
                 .build().execute(new CustomStringCallBack(mContext, HttpDatas.KEY_CODE) {
             @Override
             public void onFaild() {
-                String toast;
                 if (TextUtils.equals(follow, "1")) {
-                    toast = "取消关注失败";
+                    showToast(getString(R.string.cancel_attention_failure));
                 } else {
-                    toast = "关注失败";
+                    showToast(getString(R.string.attention_failure));
                 }
-                showToast(toast);
             }
 
             @Override
             public void onSucess(String data) {
                 requestFunse();
                 if (TextUtils.equals(follow, "1")) {
-                    showToast("取消关注成功");
+                    showToast(getString(R.string.cancel_attention_succeed));
                 } else {
-                    showToast("关注成功");
+                    showToast(getString(R.string.attention_succeed));
                 }
             }
         });
@@ -171,14 +167,13 @@ public class FunseListActivity extends BaseActivity implements SwipeRefresh.OnRe
      */
     private void requestFunse() {
         page = isRefresh ? 1 : ++page;
-        String url = UrlBuilder.SERVER_URL + UrlBuilder.funseAndFollow;
+        String url = UrlBuilder.SERVER_URL + UrlBuilder.FUNSE_AND_FOLLOW;
         url += mUserId;
         url += "/fans?pageNum=" + page;
         OkHttpUtils.get().url(url).build().execute(new CustomStringCallBack(this, HttpDatas.KEY_CODE) {
             @Override
             public void onFaild() {
                 finishRefresh();
-                showToast("网络错误");
             }
 
             @Override
@@ -244,7 +239,6 @@ public class FunseListActivity extends BaseActivity implements SwipeRefresh.OnRe
             requestFunse();
         } else {
             finishRefresh();
-            showToast("没有更多了!");
         }
     }
 

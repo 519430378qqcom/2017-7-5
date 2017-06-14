@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -75,14 +76,14 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
     ImageView sex;
     @Bind(R.id.iv_level)
     ImageView ivLevel;
-    @Bind(R.id.name)
-    TextView name;
-    @Bind(R.id.id)
-    TextView id;
-    @Bind(R.id.fanse)
-    TextView fanse;
-    @Bind(R.id.attention)
-    TextView attention;
+    @Bind(R.id.nick_name)
+    TextView nickName;
+    @Bind(R.id.lemeng_id)
+    TextView lemengId;
+    @Bind(R.id.tv_fanse)
+    TextView tvFanse;
+    @Bind(R.id.tv_attention)
+    TextView tvAttention;
     @Bind(R.id.tv_sign)
     TextView tvSign;
     @Bind(R.id.setting)
@@ -105,10 +106,10 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
     TextView tv_phone_num;
     @Bind(R.id.tv_video_num)
     TextView tv_video_num;
-    @Bind(R.id.tv_gz)
-    TextView tv_gz;
-    @Bind(R.id.tv_fs)
-    TextView tv_fs;
+    @Bind(R.id.ll_attention)
+    LinearLayout llAttention;
+    @Bind(R.id.ll_fans)
+    LinearLayout llFans;
     @Bind(R.id.iv_1)
     AvatarView iv_1;
     @Bind(R.id.iv_2)
@@ -173,7 +174,7 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
 
                     if (tv_phone_num == null)
                         return;
-                    tv_phone_num.setText(listAdd.size() + "张照片");
+                    tv_phone_num.setText(getString(R.string.phone_amount, String.valueOf(listAdd.size())));
                     list.clear();
                     list.addAll(listAdd);
                     list.add(new PhotoBean());
@@ -226,7 +227,7 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
 
                     if (tv_video_num == null)
                         return;
-                    tv_video_num.setText(listAdds.size() + "个短片");
+                    tv_video_num.setText(getString(R.string.small_video_amount, String.valueOf(listAdds.size())));
                     listvideo.clear();
                     listvideo.addAll(listAdds);
                     listvideo.add(new VideoBean());
@@ -299,8 +300,8 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
         tv_watch_all_phone.setOnClickListener(this);
         tv_watch_all_video.setOnClickListener(this);
         ivEdit.setOnClickListener(this);
-        tv_fs.setOnClickListener(this);
-        tv_gz.setOnClickListener(this);
+        llFans.setOnClickListener(this);
+        llAttention.setOnClickListener(this);
         setting.setOnClickListener(this);
         iv_1.setOnClickListener(this);
         iv_2.setOnClickListener(this);
@@ -363,7 +364,7 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
     private void initUser() {
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("id", appUser.getId());
-        httpDatas.getNewDataCharServerCodeNoLoading("查询用户信息", Request.Method.POST, UrlBuilder.selectUserInfo, map, mHandler, RequestCode.SELECT_USER);
+        httpDatas.getNewDataCharServerCodeNoLoading("查询用户信息", Request.Method.POST, UrlBuilder.SELECT_USER_INFO, map, mHandler, RequestCode.SELECT_USER);
     }
 
     /**
@@ -374,7 +375,7 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
         map.put("userId", appUser.getId());
         map.put("rows", "10");
         map.put("page", "1");
-        httpDatas.getNewDataCharServerNoLoading("查询排我的贡献榜", Request.Method.GET, UrlBuilder.myContribution, map, mHandler, RequestCode.REQUEST_RANK);
+        httpDatas.getNewDataCharServerNoLoading("查询排我的贡献榜", Request.Method.GET, UrlBuilder.MY_CONTRIBUTION, map, mHandler, RequestCode.REQUEST_RANK);
     }
 
     /**
@@ -417,29 +418,29 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
      */
     private void initUserInfo(AppUser userInfo) {
         if (userInfo != null) {
-            if (name == null || id == null || fanse == null || attention == null || sex == null || ivLevel == null
+            if (nickName == null || lemengId == null || tvFanse == null || tvAttention == null || sex == null || ivLevel == null
                     || tvSign == null || myHead == null || my_level == null || tvVerified == null)
                 return;
             String nickName = userInfo.getNickName();
             if (!com.lvshandian.lemeng.utils.TextUtils.isEmpty(nickName))
-                name.setText(nickName);
+                this.nickName.setText(nickName);
 
             String idInfo = userInfo.getId();
             if (!com.lvshandian.lemeng.utils.TextUtils.isEmpty(idInfo))
-                id.setText("乐檬号:" + idInfo);
+                lemengId.setText(getString(R.string.lemeng_id, idInfo));
 
             String fansNum = userInfo.getFansNum();
             if (!com.lvshandian.lemeng.utils.TextUtils.isEmpty(fansNum)) {
-                fanse.setText(fansNum);
+                tvFanse.setText(fansNum);
             } else {
-                fanse.setText(String.valueOf(0));
+                tvFanse.setText(String.valueOf(0));
             }
 
             String points = userInfo.getFollowNum();
             if (!com.lvshandian.lemeng.utils.TextUtils.isEmpty(points)) {
-                attention.setText(points);
+                tvAttention.setText(points);
             } else {
-                attention.setText(String.valueOf(0));
+                tvAttention.setText(String.valueOf(0));
             }
 
             String gender = userInfo.getGender();
@@ -462,7 +463,7 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
             if (!com.lvshandian.lemeng.utils.TextUtils.isEmpty(signature)) {
                 tvSign.setText(signature);
             } else {
-                tvSign.setText("这个家伙很懒，什么都没留下");
+                tvSign.setText(getString(R.string.default_sign));
             }
 
             String picUrl = userInfo.getPicUrl();
@@ -491,18 +492,18 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
             my_level.setText(level);
 
             if (TextUtils.isEmpty(userInfo.getVerified())) {
-                tvVerified.setText("未认证");
+                tvVerified.setText(getString(R.string.not_authentication));
                 return;
             }
             String verified = userInfo.getVerified();
             if (verified.equals("0")) {
-                tvVerified.setText("未认证");
+                tvVerified.setText(getString(R.string.not_authentication));
             } else if (verified.equals("1")) {
-                tvVerified.setText("认证中");
+                tvVerified.setText(getString(R.string.in_authentication));
             } else if (verified.equals("2")) {
-                tvVerified.setText("已认证");
+                tvVerified.setText(getString(R.string.already_authentication));
             } else if (verified.equals("3")) {
-                tvVerified.setText("认证失败");
+                tvVerified.setText(getString(R.string.authentication_failure));
             }
         }
 
@@ -562,7 +563,7 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
                     //已提交认证
                     gotoActivity(RealNameVertifyActivity.class, false);
                 } else if (TextUtils.equals(verified, "2")) {
-                    showToast("您已认证通过了哦!");
+                    showToast(getString(R.string.already_pass_authentication));
                 } else {
                     //未认证
                     gotoActivity(AuthenticationActivity.class, false);
@@ -585,14 +586,14 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
                 getActivity().startActivity(new Intent(mContext, AllVideoActivity.class).putExtra("userId", appUser.getId()).putExtra("isShow", "isShow"));
                 break;
             case R.id.iv_edit:
-                startActivity(new Intent(getContext(), SettingPerson.class).putExtra("isRegister", "unRegister"));
+                startActivity(new Intent(getContext(), SettingPerson.class));
                 break;
-            case R.id.tv_fs:
+            case R.id.ll_fans:
                 Intent intent1 = new Intent(getActivity(), FunseListActivity.class);
                 intent1.putExtra("userId", appUser.getId());
                 startActivity(intent1);
                 break;
-            case R.id.tv_gz:
+            case R.id.ll_attention:
                 Intent intent2 = new Intent(getActivity(), FollowListActivity.class);
                 intent2.putExtra("userId", appUser.getId());
                 startActivity(intent2);

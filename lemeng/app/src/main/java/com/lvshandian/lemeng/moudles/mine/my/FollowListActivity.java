@@ -15,7 +15,6 @@ import com.lvshandian.lemeng.moudles.mine.bean.Funse;
 import com.lvshandian.lemeng.moudles.mine.bean.FunseBean;
 import com.lvshandian.lemeng.moudles.mine.my.adapter.FunseListAdapter;
 import com.lvshandian.lemeng.utils.JsonUtil;
-import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefresh;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout;
@@ -28,9 +27,7 @@ import butterknife.Bind;
 
 /**
  * 关注列表
- * Created by gjj on 2016/12/6.
  */
-
 public class FollowListActivity extends BaseActivity implements SwipeRefresh.OnRefreshListener, SwipeRefreshLayout.OnPullUpRefreshListener {
     @Bind(R.id.lv_list)
     ListView lvList;
@@ -71,7 +68,7 @@ public class FollowListActivity extends BaseActivity implements SwipeRefresh.OnR
 
     @Override
     protected void initialized() {
-        initTitle("", "关注", null);
+        initTitle("", getString(R.string.attention), null);
         mUserId = getIntent().getStringExtra("userId");
         mAdapter = new FunseListAdapter(mContext, mDatas, R.layout.item_attention_fans, false);
         lvList.setAdapter(mAdapter);
@@ -98,7 +95,7 @@ public class FollowListActivity extends BaseActivity implements SwipeRefresh.OnR
                 FunseBean funseBean = mDatas.get(position);
                 String userId = funseBean.getUserId();
                 Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
-                intent.putExtra(getString(R.string.visiti_person), userId);
+                intent.putExtra(getString(R.string.visit_person), userId);
                 startActivity(intent);
             }
         });
@@ -110,15 +107,13 @@ public class FollowListActivity extends BaseActivity implements SwipeRefresh.OnR
      */
     private void requestFunse() {
         page = isRefresh ? 1 : ++page;
-        String url = UrlBuilder.SERVER_URL + UrlBuilder.funseAndFollow;
+        String url = UrlBuilder.SERVER_URL + UrlBuilder.FUNSE_AND_FOLLOW;
         url += mUserId;
         url += "/follows?pageNum=" + page;
-        LogUtils.e("关注列表url: " + url);
         OkHttpUtils.get().url(url).build().execute(new CustomStringCallBack(this, HttpDatas.KEY_CODE) {
             @Override
             public void onFaild() {
                 finishRefresh();
-                showToast("网络错误");
             }
 
             @Override
@@ -183,7 +178,6 @@ public class FollowListActivity extends BaseActivity implements SwipeRefresh.OnR
             requestFunse();
         } else {
             finishRefresh();
-            showToast("没有更多了!");
         }
     }
 

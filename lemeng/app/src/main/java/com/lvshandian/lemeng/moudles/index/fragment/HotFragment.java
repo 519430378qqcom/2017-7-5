@@ -235,7 +235,7 @@ public class HotFragment extends BaseFragment implements SwipeRefresh.OnRefreshL
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("rows", "50");
         map.put("page", "1");
-        httpDatas.getNewDataCharServerNoLoading("查询周榜排行榜", Request.Method.GET, UrlBuilder.weekContribution, map, mHandler, RequestCode.REQUEST_RANK);
+        httpDatas.getNewDataCharServerNoLoading("查询周榜排行榜", Request.Method.GET, UrlBuilder.WEEK_CONTRIBUTION, map, mHandler, RequestCode.REQUEST_RANK);
     }
 
     /**

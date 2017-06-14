@@ -22,7 +22,6 @@ import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.moudles.mine.my.adapter.MyContributionListAdapter;
 import com.lvshandian.lemeng.utils.GrademipmapUtils;
 import com.lvshandian.lemeng.utils.JsonUtil;
-import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.PicassoUtil;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefresh;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout;
@@ -85,7 +84,6 @@ public class MyContributionActivity extends BaseActivity {
             switch (msg.what) {
                 //关注请求接收数据
                 case RequestCode.REQUEST_RANK:
-                    LogUtils.i("我的贡献榜返回内容json:" + json);
                     List<MyContributionBeanBack> listBean = JsonUtil.json2BeanList(json, MyContributionBeanBack.class);
                     handlerContribution(listBean);
                     break;
@@ -124,7 +122,7 @@ public class MyContributionActivity extends BaseActivity {
 
     @Override
     protected void initialized() {
-        initTitle("", "我的贡献榜", null);
+        initTitle("", getString(R.string.my_contribution), null);
         requestContribution();
         scrollView.smoothScrollTo(0, 0);
     }
@@ -138,7 +136,7 @@ public class MyContributionActivity extends BaseActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
-                    intent.putExtra(getString(R.string.visiti_person), mDatas.get(position).getId());
+                    intent.putExtra(getString(R.string.visit_person), mDatas.get(position).getId());
                     startActivity(intent);
                 }
             });
@@ -155,7 +153,7 @@ public class MyContributionActivity extends BaseActivity {
         map.put("userId", appUser.getId());
         map.put("rows", "10");
         map.put("page", String.valueOf(page));
-        httpDatas.getNewDataCharServerRefresh("查询排我的贡献榜", Request.Method.GET, UrlBuilder.myContribution, map, mHandler, RequestCode.REQUEST_RANK, refreshLayout);
+        httpDatas.getNewDataCharServerRefresh("查询排我的贡献榜", Request.Method.GET, UrlBuilder.MY_CONTRIBUTION, map, mHandler, RequestCode.REQUEST_RANK, refreshLayout);
     }
 
 
@@ -209,12 +207,12 @@ public class MyContributionActivity extends BaseActivity {
         int level = oneData.getLevel();
         imglevel.setImageResource(GrademipmapUtils.LevelImg[level - 1]);
         tvName.setText(oneData.getNickName());
-        tvDevote.setText(oneData.getContributeCoin() + "");
+        tvDevote.setText(getString(R.string.contribution_lepiao_num,String.valueOf(oneData.getContributeCoin())));
         imgHead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
-                intent.putExtra(getString(R.string.visiti_person), oneData.getId());
+                intent.putExtra(getString(R.string.visit_person), oneData.getId());
                 startActivity(intent);
             }
         });

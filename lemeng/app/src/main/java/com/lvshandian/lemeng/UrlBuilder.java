@@ -40,27 +40,36 @@ public class UrlBuilder {
     public static final String SHARE_DOWNLOAD_URL = SERVER_URL_8080 +"shareNew/share.html";//分享下载链接
 
     public static final String HEAD_DEFAULT = "http://lemeng.oss-ap-southeast-1.aliyuncs.com/lemengImg/1495594583610.png";//默认像地址
-    public static final String START_JOIN_ROOM = "/appRooms/getShareRoom";    //进入直播间
     public static final String LOGIN = "/api/v1/login";    //登录
+    public static final String OPEN_REGISTER = "/appusers/open/register";//第三方登录
     public static final String REGISTER = "/appusers/register"; //注册
-    public static final String forgetPswd = "/appusers/forgetRegister"; //忘记密码
-    public static final String getCode = "/appUserControl/sendMSG";  //获取验证码
+    public static final String GET_STATE_CODE = "/appusers/getcountry";//获得国家代码
+    public static final String GET_CODE = "/appUserControl/sendMSG";  //获取验证码
+    public static final String FORGET_PASSWORD = "/appusers/forgetRegister"; //忘记密码
+    public static final String FUNSE_AND_FOLLOW = "/api/v1/user/";//粉丝/关注列表
+    public static final String ATTENTION_USER = "/api/v1/user/follow";//关注取消关注
+    public static final String SELECT_USER_INFO = "/appusers/selectUserById";  //查询个人信息
+    public static final String REPORT = "/api/v1/user/REPORT";//举报
+    public static final String WEEK_CONTRIBUTION = "/appusers/getConsumeAmountAndroid";//周榜排行榜
+    public static final String MY_CONTRIBUTION = "/appusers/getUserContributionAndroid";//我的贡献榜
+
+
     public static final String appRooms = "/appRooms/getRooms";// type=1热门，type = 2最新，type ==3 地方北京市直播
     public static final String GET_GIFT = "/appGift/findGift";//获取礼物列表
     public static final String user = "/appusers/update";    //修改用户信息public static final String modifyPass = "/api/v1/user/password";//修改密码 public static final String GET_GIFT = "appGift/findGift";//获取礼物列表
     public static final String modifyPass = "/api/v1/user/password";   //修改密码
-    public static final String funseAndFollow = "/api/v1/user/";//粉丝/关注列表
-    public static final String ATTENTION_USER = "/api/v1/user/follow";//关注取消关注
-    public static final String selectUserInfo = "/appusers/selectUserById";  //查询个人信息
+
+
+
     public static final String selectLevel = "/appLevel/getLevelRate";  //查询当前等级信息
+    public static final String START_JOIN_ROOM = "/appRooms/getShareRoom";    //进入直播间
     public static final String Authentication = "/appusers/updateVer";  //实名认证
-    public static final String report = "/api/v1/user/report";//举报
-    public static final String weekContribution = "/appusers/getConsumeAmountAndroid";//周榜排行榜
-    public static final String myContribution = "/appusers/getUserContributionAndroid";//我的贡献榜
+
+
     public static final String drawMoney = "/appExchange/updateExchangeCash";//提现
     public static final String drawMoney_ratio = "/appExchange/exchangeRatioUse";//提现比例
     public static final String selectQuite = "/appusers/getUserById";//主播离开后获取用户信息
-    public static final String openRegister = "/appusers/open/register";//第三方登录
+
     public static final String selectFamilyMember = "/appusers/selectFamilyMember.do";//家族
     public static final String myController = "appUserControl/getUserControlList";//我的场控列表
     public static final String myControllerAdd = "appUserControl/add";//我的场控添加
@@ -74,7 +83,7 @@ public class UrlBuilder {
     public static final String BAIDU_SONG_SEARCH = "http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.search.catalogSug&query=%s";//搜索
     public static final String BAIDU_SONG_PLAY = "http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.song.play&songid=%s";//得到下载的url
     public static final String getBanner = "/appCarouselFigure/carouselList";//得到banner图
-    public static final String getStateCode = "/appusers/getcountry";//获得国家代码
+
     public static final String room_funse = "/appRooms/findFansOnline";//直播间的粉丝列表
 
 

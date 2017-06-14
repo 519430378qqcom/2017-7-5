@@ -83,7 +83,7 @@ public class SearchMessageAdapter extends BaseAdapter {
         public TextSearchResultViewHolder(View view) {
             this.imgHead = (HeadImageView) view.findViewById(R.id.img_head);
 
-            this.tvNickname = (TextView) view.findViewById(R.id.tv_nick_name);
+            this.tvNickname = (TextView) view.findViewById(R.id.nick_name);
             this.tvMessage = (TextView) view.findViewById(R.id.tv_message);
             this.tvDatetime = (TextView) view.findViewById(R.id.tv_date_time);
             this.imgMsgStatus = (ImageView) view.findViewById(R.id.img_msg_status);

@@ -76,9 +76,9 @@ public class AuthenticationActivity extends BaseActivity {
     ImageView ivHandCard;
     @Bind(R.id.btn_submit)
     Button btnSubmit;
-    @Bind(R.id.ll_quhao)
+    @Bind(R.id.ll_phone_code)
     LinearLayout ll_quhao;
-    @Bind(R.id.tv_quhao)
+    @Bind(R.id.tv_phone_code)
     TextView tv_quhao;
 
     /**
@@ -248,7 +248,7 @@ public class AuthenticationActivity extends BaseActivity {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ll_quhao:
+            case R.id.ll_phone_code:
                 Intent intent = new Intent(mContext, StateCodeActivity.class);
                 startActivityForResult(intent, 200);
                 break;
@@ -299,7 +299,7 @@ public class AuthenticationActivity extends BaseActivity {
         str = str.substring(str.lastIndexOf("+") + 1, str.length());
         phoneNum = str + phoneNum;
 
-        OkHttpUtils.get().url(UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.getCode)
+        OkHttpUtils.get().url(UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.GET_CODE)
                 .addParams("mobile", phoneNum)
                 .build().execute(new CustomStringCallBack() {
             @Override

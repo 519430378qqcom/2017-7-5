@@ -20,8 +20,8 @@
                 android:id="@+id/av_header"
                 android:layout_width="match_parent"
                 android:layout_height="520px"
-                android:src="@mipmap/zhan_da"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                android:src="@mipmap/zhan_da" />
 
             <ImageView
                 android:layout_width="match_parent"
@@ -96,7 +96,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="昵称"
                         android:textColor="@color/backgroudcolor"
                         android:textSize="36px" />
 
@@ -118,10 +117,9 @@
                     android:id="@+id/tv_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30px"
                     android:layout_above="@+id/tv_sign"
                     android:layout_marginBottom="5px"
-                    android:text="乐檬号："
+                    android:layout_marginLeft="30px"
                     android:textColor="@color/backgroudcolor"
                     android:textSize="24px" />
 
@@ -132,7 +130,6 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="15px"
                     android:layout_marginLeft="30px"
-                    android:text="签名哦"
                     android:textColor="@color/backgroudcolor"
                     android:textSize="24px" />
 
@@ -140,76 +137,93 @@
 
         </com.zhy.autolayout.AutoRelativeLayout>
 
+
         <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="match_parent"
-            android:layout_height="116px"
-            android:background="@color/backgroudcolor">
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tv_gz"
+            <com.zhy.autolayout.AutoLinearLayout
+                android:id="@+id/ll_attention"
                 android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="30px"
+                android:layout_height="116px"
                 android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="关注"
-                android:textColor="@color/tv_color6"
-                android:textSize="15sp" />
+                android:background="@color/backgroudcolor"
+                android:gravity="center_vertical">
 
-            <TextView
-                android:id="@+id/tv_foucs"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="40px"
-                android:text="0"
-                android:textColor="@color/black" />
+                <TextView
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="30px"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/attention"
+                    android:textColor="@color/tv_color6"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tv_attention"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="40px"
+                    android:textColor="@color/black" />
+
+            </com.zhy.autolayout.AutoLinearLayout>
 
             <View
                 android:layout_width="1px"
-                android:layout_height="15px"
+                android:layout_height="30px"
                 android:layout_gravity="center_vertical"
                 android:background="@color/line_df" />
 
-            <TextView
-                android:id="@+id/tv_fs"
+            <com.zhy.autolayout.AutoLinearLayout
+                android:id="@+id/ll_fans"
                 android:layout_width="0px"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30px"
+                android:layout_height="116px"
                 android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="粉丝"
-                android:textColor="@color/tv_color6"
-                android:textSize="15sp" />
+                android:background="@color/backgroudcolor"
+                android:gravity="center_vertical">
 
-            <TextView
-                android:id="@+id/tv_fanse"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="30px"
-                android:text="0"
-                android:textColor="@color/black" />
+                <TextView
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30px"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/fans"
+                    android:textColor="@color/tv_color6"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tv_fanse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="30px"
+                    android:text="0"
+                    android:textColor="@color/black" />
+            </com.zhy.autolayout.AutoLinearLayout>
         </com.zhy.autolayout.AutoLinearLayout>
+
 
         <View
             android:layout_width="match_parent"
             android:layout_height="20px"
             android:background="@color/wide_line" />
 
-        <include layout="@layout/other_item_address_layout" />
+        <include layout="@layout/other_address_layout" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="20px"
             android:background="@color/wide_line" />
         <!--我的相册-->
-        <include layout="@layout/my_item_txxc_layout" />
+        <include layout="@layout/my_photo_album_layout" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="20px"
             android:background="@color/wide_line" />
         <!--我的短片-->
-        <include layout="@layout/my_item_small_video_layout" />
+        <include layout="@layout/my_small_video_layout" />
 
         <View
             android:layout_width="match_parent"

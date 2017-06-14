@@ -120,7 +120,7 @@ public class MyGradeActivity extends BaseActivity {
 
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("id", appUser.getId());
-        httpDatas.getNewDataCharServer("查询个人信息", Request.Method.POST, UrlBuilder.selectUserInfo, map, mHandler, RequestCode.SELECT_USER);
+        httpDatas.getNewDataCharServer("查询个人信息", Request.Method.POST, UrlBuilder.SELECT_USER_INFO, map, mHandler, RequestCode.SELECT_USER);
 
     }
 

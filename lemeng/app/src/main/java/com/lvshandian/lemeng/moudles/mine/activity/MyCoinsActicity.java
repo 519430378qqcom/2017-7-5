@@ -97,7 +97,7 @@ public class MyCoinsActicity extends BaseActivity {
     private void initUser() {
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("id", appUser.getId());
-        httpDatas.getNewDataCharServerCodeNoLoading("查询用户信息", Request.Method.POST, UrlBuilder.selectUserInfo, map, mHandler, RequestCode.SELECT_USER);
+        httpDatas.getNewDataCharServerCodeNoLoading("查询用户信息", Request.Method.POST, UrlBuilder.SELECT_USER_INFO, map, mHandler, RequestCode.SELECT_USER);
     }
 
     @Override
@@ -108,7 +108,7 @@ public class MyCoinsActicity extends BaseActivity {
                 break;
             case R.id.tv_recharge:
 //                Intent intent = new Intent(mContext, ExplainWebViewActivity.class);
-//                intent.putExtra("flag", 1000);
+//                intent.putExtra(getString(R.string.web_intent_flag), 1000);
 //                startActivity(intent);
                 showToast("暂时不支持充值");
                 break;

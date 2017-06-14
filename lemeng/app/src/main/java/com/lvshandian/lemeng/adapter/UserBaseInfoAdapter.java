@@ -97,7 +97,7 @@ public class UserBaseInfoAdapter extends BaseAdapter {
 //                    u.setFollow("0");
 //                    ((ImageView) v.findViewById(R.id.iv_item_attention)).setImageResource(R.mipmap.me_follow);
                     Intent intent = new Intent(context, OtherPersonHomePageActivity.class);
-                    intent.putExtra(context.getString(R.string.visiti_person), u.getId());
+                    intent.putExtra(context.getString(R.string.visit_person), u.getId());
                     context.startActivity(intent);
                 } else {
                     attention(u);

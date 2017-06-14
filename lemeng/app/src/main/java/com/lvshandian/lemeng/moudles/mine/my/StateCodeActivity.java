@@ -104,6 +104,6 @@ public class StateCodeActivity extends BaseActivity {
      */
     private void getStateCode() {
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
-        httpDatas.getNewDataCharServer("获得国家代码", Request.Method.POST, UrlBuilder.getStateCode, map, mHandler, RequestCode.GETSTATECODE);
+        httpDatas.getNewDataCharServer("获得国家代码", Request.Method.POST, UrlBuilder.GET_STATE_CODE, map, mHandler, RequestCode.GETSTATECODE);
     }
 }

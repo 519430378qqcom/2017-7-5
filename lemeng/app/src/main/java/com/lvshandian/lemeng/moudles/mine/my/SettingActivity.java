@@ -126,7 +126,7 @@ public class SettingActivity extends BaseActivity {
                 gotoActivity(ModifyPasswordActivity.class, false);
                 break;
             case R.id.rl_edit:  //编辑资料
-                startActivity(new Intent(getContext(), SettingPerson.class).putExtra("isRegister", "unRegister"));
+                startActivity(new Intent(getContext(), SettingPerson.class));
                 break;
             case R.id.on_off: //免打扰开关
 
@@ -146,9 +146,8 @@ public class SettingActivity extends BaseActivity {
                 }
                 break;
             case R.id.rl_about://关于乐檬
-//                gotoActivity(AboutLeMengActivity.class, false);
                 Intent intent1 = new Intent(mContext, ExplainWebViewActivity.class);
-                intent1.putExtra("flag", 3000);
+                intent1.putExtra(getString(R.string.web_flag), getString(R.string.about_us));
                 startActivity(intent1);
                 break;
             case R.id.btn_quit://退出登录
@@ -169,8 +168,8 @@ public class SettingActivity extends BaseActivity {
 //        CacheUtils.saveObject(mContext, null, CacheUtils.USERINFO);
         AppUser appUser = new AppUser();
         LoginFrom loginFrom = new LoginFrom();
-        SharedPreferenceUtils.saveUserInfo(mContext,appUser);
-        SharedPreferenceUtils.saveLoginFrom(mContext,loginFrom);
+        SharedPreferenceUtils.saveUserInfo(mContext, appUser);
+        SharedPreferenceUtils.saveLoginFrom(mContext, loginFrom);
 
         //发送到MainActivity，关闭页面
         EventBus.getDefault().post(new QuitLogin());
