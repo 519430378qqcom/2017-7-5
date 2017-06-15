@@ -49,7 +49,7 @@
 
     </com.zhy.autolayout.AutoLinearLayout>
 
-    <com.lvshandian.lemeng.widget.AvatarView
+    <com.lvshandian.lemeng.widget.view.AvatarView
         android:id="@+id/barrageview_item_img"
         android:layout_width="70px"
         android:layout_height="70px"

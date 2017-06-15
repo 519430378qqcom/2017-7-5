@@ -23,7 +23,7 @@
             android:gravity="center"
             android:orientation="vertical">
             <!--礼物图片-->
-            <com.lvshandian.lemeng.widget.LoadUrlImageView
+            <com.lvshandian.lemeng.widget.view.LoadUrlImageView
                 android:id="@+id/iv_show_gift_img"
                 android:layout_width="55dp"
                 android:layout_height="55dp" />

@@ -226,7 +226,7 @@
                     android:text="免打扰"
                     android:textSize="30px" />
 
-                <com.lvshandian.lemeng.view.ToggleView
+                <com.lvshandian.lemeng.widget.view.ToggleView
                     android:id="@+id/on_off"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

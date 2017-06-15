@@ -11,7 +11,7 @@ import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.bean.LiveListBean;
 import com.lvshandian.lemeng.moudles.index.live.WatchLiveActivity;
 import com.lvshandian.lemeng.utils.LogUtils;
-import com.lvshandian.lemeng.widget.AvatarView;
+import com.lvshandian.lemeng.widget.view.AvatarView;
 
 import java.util.List;
 

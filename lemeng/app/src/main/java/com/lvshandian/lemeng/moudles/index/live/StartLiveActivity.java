@@ -132,10 +132,10 @@ import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.utils.ThreadManager;
 import com.lvshandian.lemeng.utils.ToastUtils;
 import com.lvshandian.lemeng.utils.UMUtils;
-import com.lvshandian.lemeng.view.BarrageView;
-import com.lvshandian.lemeng.view.CustomPopWindow;
-import com.lvshandian.lemeng.view.RotateLayout;
-import com.lvshandian.lemeng.view.RoundDialog;
+import com.lvshandian.lemeng.widget.view.BarrageView;
+import com.lvshandian.lemeng.widget.view.CustomPopWindow;
+import com.lvshandian.lemeng.widget.view.RotateLayout;
+import com.lvshandian.lemeng.widget.view.RoundDialog;
 import com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragment;
 import com.lvshandian.lemeng.wangyiyunxin.chatroom.helper.ChatRoomMemberCache;
 import com.lvshandian.lemeng.wangyiyunxin.live.fragment.ChatRoomSessionListFragment;
@@ -144,8 +144,8 @@ import com.lvshandian.lemeng.wangyiyunxin.main.helper.SystemMessageUnreadManager
 import com.lvshandian.lemeng.wangyiyunxin.main.reminder.ReminderItem;
 import com.lvshandian.lemeng.wangyiyunxin.main.reminder.ReminderManager;
 import com.lvshandian.lemeng.wangyiyunxin.main.reminder.ReminderSettings;
-import com.lvshandian.lemeng.widget.AvatarView;
-import com.lvshandian.lemeng.widget.TimeCountDownLayout;
+import com.lvshandian.lemeng.widget.view.AvatarView;
+import com.lvshandian.lemeng.widget.view.TimeCountDownLayout;
 import com.lvshandian.lemeng.widget.lrcview.LrcView;
 import com.lvshandian.lemeng.widget.myrecycler.RefreshRecyclerView;
 import com.lvshandian.lemeng.widget.myrecycler.manager.RecyclerMode;
@@ -256,7 +256,7 @@ public class StartLiveActivity extends BaseActivity implements
         AudioSourceCallback,
         CameraPreviewFrameView.Listener,
         StreamingSessionListener,
-        StreamingStateChangedListener, com.lvshandian.lemeng.view.CameraPreviewFrameView
+        StreamingStateChangedListener, com.lvshandian.lemeng.widget.view.CameraPreviewFrameView
         .Listener, MediaPlayer.OnCompletionListener
         , SeekBar.OnSeekBarChangeListener
         , BullfightInterface {
@@ -3462,8 +3462,8 @@ public class StartLiveActivity extends BaseActivity implements
     private void initPaly() {
         AspectFrameLayout afl = (AspectFrameLayout) findViewById(R.id.cameraPreview_afl);
         afl.setShowMode(AspectFrameLayout.SHOW_MODE.FULL);
-        com.lvshandian.lemeng.view.CameraPreviewFrameView cameraPreviewFrameView =
-                (com.lvshandian.lemeng.view.CameraPreviewFrameView) findViewById(R.id
+        com.lvshandian.lemeng.widget.view.CameraPreviewFrameView cameraPreviewFrameView =
+                (com.lvshandian.lemeng.widget.view.CameraPreviewFrameView) findViewById(R.id
                         .cameraPreview_surfaceView);
         cameraPreviewFrameView.setListener(null);
         cameraPreviewFrameView.setOnTouchListener(new View.OnTouchListener() {

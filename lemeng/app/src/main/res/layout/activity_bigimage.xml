@@ -4,13 +4,13 @@
                 android:background="#000000"
                 android:gravity="center_vertical">
     <!--自定义图片放大-->
-    <com.lvshandian.lemeng.widget.PinchImageViewPager
+    <com.lvshandian.lemeng.widget.bigimage.PinchImageViewPager
         android:id="@+id/image_viewpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true">
-    </com.lvshandian.lemeng.widget.PinchImageViewPager>
+    </com.lvshandian.lemeng.widget.bigimage.PinchImageViewPager>
 
     <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="120px"

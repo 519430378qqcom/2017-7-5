@@ -91,6 +91,20 @@
     <string name="submit_authentication">提交认证</string>
     <string name="select_an_album">选择相册</string>
     <string name="take_pictures">立刻拍照</string>
+    <!--我的等级部分-->
+    <string name="now_level">当前等级</string>
+    <string name="what_upgrade">如何提升经验</string>
+    <string name="what_upgrade_1">1.送礼时间越长，获得经验越多</string>
+    <string name="what_upgrade_2">2.观看时间越长，获得的经验越多</string>
+    <string name="what_upgrade_3">3.送礼物是提升等级最快的方式，送的越多升级就越快</string>
+    <string name="level_use">等级有何用途</string>
+    <string name="level_use_1">1.尊贵图标，凸显身份</string>
+    <string name="level_use_2">2.等级越高，排序越前</string>
+    <string name="level_use_3">3.更多特权，敬请期待</string>
+    <string name="level">Lv.%1$s</string>
+    <string name="my_empirical_value">我的经验值:%1$s</string>
+    <string name="upgrade_need_empirical_value">升级还需经验值:%1$s</string>
+
     <!--直播部分-->
     <string name="share_live_title">主播%1$s邀你玩游戏啦</string>
     <string name="share_live_content">够刺激,主播%1$s带你玩转直播间,一起游戏嗨起来!</string>

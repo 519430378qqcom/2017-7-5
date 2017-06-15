@@ -28,9 +28,7 @@ import butterknife.Bind;
 
 /**
  * 我的等级界面
- * Created by Administrator on 2017/1/17.
  */
-
 public class MyGradeActivity extends BaseActivity {
     @Bind(R.id.my_head)
     ImageView myHead;
@@ -80,11 +78,11 @@ public class MyGradeActivity extends BaseActivity {
     };
 
     private void upDateView() {
-        tvLevelStart.setText("Lv." + level);
-        tvLevelEnd.setText("Lv." + (Integer.valueOf(level) + 1));
-        tvStart.setText("我的经验值:" + startPoints);
-        tvEnd.setText("升级还需经验值:" + (Integer.valueOf(endPoints) - Integer.valueOf(startPoints)));
-        tvLevel.setText("Lv." + level);
+        tvLevelStart.setText(getString(R.string.level, level));
+        tvLevelEnd.setText(getString(R.string.level, String.valueOf(Integer.valueOf(level) + 1)));
+        tvStart.setText(getString(R.string.my_empirical_value, startPoints));
+        tvEnd.setText(getString(R.string.upgrade_need_empirical_value, String.valueOf(Integer.valueOf(endPoints) - Integer.valueOf(startPoints))));
+        tvLevel.setText(getString(R.string.level, level));
         progressBar.setMax(Integer.valueOf(endPoints));
         progressBar.setProgress(Integer.valueOf(startPoints));
     }
@@ -110,7 +108,7 @@ public class MyGradeActivity extends BaseActivity {
 
     @Override
     protected void initialized() {
-        initTitle("", "我的等级", null);
+        initTitle("", getString(R.string.my_level), null);
         initInfo();
     }
 

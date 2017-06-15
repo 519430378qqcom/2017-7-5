@@ -16,7 +16,7 @@ import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.moudles.mine.bean.VideoBean;
 import com.lvshandian.lemeng.moudles.mine.my.adapter.AllVideoAdapter;
 import com.lvshandian.lemeng.utils.JsonUtil;
-import com.lvshandian.lemeng.view.ExpandGridView;
+import com.lvshandian.lemeng.widget.view.ExpandGridView;
 
 import java.util.ArrayList;
 import java.util.List;

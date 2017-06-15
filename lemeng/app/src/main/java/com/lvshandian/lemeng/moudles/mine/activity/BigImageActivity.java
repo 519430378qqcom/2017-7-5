@@ -9,9 +9,9 @@ import android.widget.TextView;
 
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.base.BaseActivity;
-import com.lvshandian.lemeng.view.LoadingDialog;
-import com.lvshandian.lemeng.widget.PinchImageView;
-import com.lvshandian.lemeng.widget.PinchImageViewPager;
+import com.lvshandian.lemeng.widget.view.LoadingDialog;
+import com.lvshandian.lemeng.widget.bigimage.PinchImageView;
+import com.lvshandian.lemeng.widget.bigimage.PinchImageViewPager;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;

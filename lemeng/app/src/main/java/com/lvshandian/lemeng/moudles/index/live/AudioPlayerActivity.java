@@ -26,7 +26,7 @@ import com.lvshandian.lemeng.moudles.index.adapter.AudioPlayerAdapter;
 import com.lvshandian.lemeng.service.VoiceService;
 import com.lvshandian.lemeng.utils.PermisionUtils;
 import com.lvshandian.lemeng.utils.TextUtils;
-import com.lvshandian.lemeng.view.LoadingDialog;
+import com.lvshandian.lemeng.widget.view.LoadingDialog;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefresh;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout;
 import com.netease.nim.uikit.team.activity.JsonUtil;

@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.UrlBuilder;
 import com.lvshandian.lemeng.bean.LiveListBean;
-import com.lvshandian.lemeng.widget.AvatarView;
+import com.lvshandian.lemeng.widget.view.AvatarView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

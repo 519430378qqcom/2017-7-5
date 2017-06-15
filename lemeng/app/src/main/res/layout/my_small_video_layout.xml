@@ -27,7 +27,7 @@
               android:layout_marginRight="24px"/>
 
     </com.zhy.autolayout.AutoRelativeLayout>
-    <com.lvshandian.lemeng.view.ExpandGridView
+    <com.lvshandian.lemeng.widget.view.ExpandGridView
         android:id="@+id/mygrid_samll_video"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

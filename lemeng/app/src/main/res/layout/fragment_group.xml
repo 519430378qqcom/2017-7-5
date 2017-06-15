@@ -12,7 +12,7 @@
         android:layout_height="30px"
         android:background="@color/main" />
 
-    <com.lvshandian.lemeng.view.MyTitleBar
+    <com.lvshandian.lemeng.widget.view.MyTitleBar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="100px"

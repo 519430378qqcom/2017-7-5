@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.bean.ContributionBeanBack;
-import com.lvshandian.lemeng.widget.AvatarView;
+import com.lvshandian.lemeng.widget.view.AvatarView;
 
 import java.util.ArrayList;
 import java.util.List;

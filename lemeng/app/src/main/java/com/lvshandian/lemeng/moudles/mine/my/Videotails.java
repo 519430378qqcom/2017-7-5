@@ -16,8 +16,8 @@ import com.lvshandian.lemeng.base.BaseActivity;
 import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.moudles.mine.bean.VideoBean;
-import com.lvshandian.lemeng.view.DialogView;
-import com.lvshandian.lemeng.view.FullScreenVideoView;
+import com.lvshandian.lemeng.widget.view.DialogView;
+import com.lvshandian.lemeng.widget.view.FullScreenVideoView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhy.autolayout.AutoRelativeLayout;
 

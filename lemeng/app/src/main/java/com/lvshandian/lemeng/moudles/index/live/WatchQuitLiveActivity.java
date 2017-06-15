@@ -12,7 +12,7 @@ import com.lvshandian.lemeng.base.BaseActivity;
 import com.lvshandian.lemeng.bean.LiveListBean;
 import com.lvshandian.lemeng.moudles.mine.my.OtherPersonHomePageActivity;
 import com.lvshandian.lemeng.utils.FastBlurUtil;
-import com.lvshandian.lemeng.widget.AvatarView;
+import com.lvshandian.lemeng.widget.view.AvatarView;
 
 import butterknife.Bind;
 

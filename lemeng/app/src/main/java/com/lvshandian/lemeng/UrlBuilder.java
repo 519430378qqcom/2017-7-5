@@ -56,6 +56,10 @@ public class UrlBuilder {
     public static final String WITHDRAW_RATIO = "/appExchange/exchangeRatioUse";//提现比例
     public static final String WEICHAT_BIND = "/api/v1/exchange/bind";//绑定微信公众号
     public static final String AUTHENTICATION = "/appusers/updateVer";  //实名认证
+    public static final String MY_PHOTO_UPLOAD = "/api/v1/user/album/pic";//我的界面图片上传
+    public static final String MY_VIDEO_UPLOAD = "/api/v1/user/album/video";//我的界面图片上传
+    public static final String ALIYUN = "/aliyun/token";    //请求阿里云id、key
+
 
     public static final String appRooms = "/appRooms/getRooms";// type=1热门，type = 2最新，type ==3 地方北京市直播
     public static final String GET_GIFT = "/appGift/findGift";//获取礼物列表
@@ -69,7 +73,7 @@ public class UrlBuilder {
     public static final String myControllerAdd = "appUserControl/add";//我的场控添加
     public static final String myControllerDelete = "appUserControl/delete";//我的场控刪除
     public static final String appUserControl = "appUserControl/stopUser";//禁言
-    public static final String aliyun = "/aliyun/token";    //请求阿里云id、key
+
     public static final String START = "/api/v1/room/create/";//新建直播/api/v1/room/create
     public static final String SEARCH = "/api/v1/user/find";//搜索用户
     public static final String SEARCH_CONTROLLER = "/appusers/find";//搜索用户场控
@@ -83,8 +87,7 @@ public class UrlBuilder {
     public static final String ifEnter = "/appRooms/ifEnter";//判断是否进入过该房间
     public static final String updateCoin = "/appRooms/updateCoin";//支付进入
     public static final String join = "/appRooms/join";//进入直播间
-    public static final String MY_PHOTO_UPLOAD = "/api/v1/user/album/pic";//我的界面图片上传
-    public static final String MY_VIDEO_UPLOAD = "/api/v1/user/album/video";//我的界面图片上传
+
 
 
     public static final String room = "/api/v1/room/";//聊天室头像列表

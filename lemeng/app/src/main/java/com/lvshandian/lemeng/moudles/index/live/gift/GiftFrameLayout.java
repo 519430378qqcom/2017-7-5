@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.lvshandian.lemeng.MyApplication;
 import com.lvshandian.lemeng.R;
-import com.lvshandian.lemeng.widget.AvatarView;
+import com.lvshandian.lemeng.widget.view.AvatarView;
 import com.squareup.picasso.Picasso;
 
 public class GiftFrameLayout extends FrameLayout {

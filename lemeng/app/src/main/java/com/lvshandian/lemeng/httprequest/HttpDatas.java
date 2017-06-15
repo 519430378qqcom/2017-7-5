@@ -13,7 +13,7 @@ import com.lvshandian.lemeng.MyApplication;
 import com.lvshandian.lemeng.UrlBuilder;
 import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.ToastUtils;
-import com.lvshandian.lemeng.view.LoadingDialog;
+import com.lvshandian.lemeng.widget.view.LoadingDialog;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout;
 
 import org.json.JSONObject;

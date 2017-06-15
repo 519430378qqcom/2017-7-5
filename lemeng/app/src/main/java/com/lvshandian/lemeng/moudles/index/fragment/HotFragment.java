@@ -21,8 +21,8 @@ import com.lvshandian.lemeng.moudles.index.adapter.RankingListAadapter;
 import com.lvshandian.lemeng.moudles.mine.my.ContributionActivity;
 import com.lvshandian.lemeng.utils.GlideImageLoader;
 import com.lvshandian.lemeng.utils.JsonUtil;
-import com.lvshandian.lemeng.widget.FullyLinearLayoutManager;
-import com.lvshandian.lemeng.widget.MyRecyclerView;
+import com.lvshandian.lemeng.widget.view.FullyLinearLayoutManager;
+import com.lvshandian.lemeng.widget.view.EmptyRecyclerView;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefresh;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout;
 import com.youth.banner.Banner;
@@ -40,9 +40,9 @@ import butterknife.Bind;
  */
 public class HotFragment extends BaseFragment implements SwipeRefresh.OnRefreshListener, SwipeRefreshLayout.OnPullUpRefreshListener {
     @Bind(R.id.lv_live_room)
-    MyRecyclerView hotRecyclerView;
+    EmptyRecyclerView hotRecyclerView;
     @Bind(R.id.rankingList)
-    MyRecyclerView rankingList;
+    EmptyRecyclerView rankingList;
     @Bind(R.id.iv_empty)
     ImageView iv_empty;
     @Bind(R.id.banner)

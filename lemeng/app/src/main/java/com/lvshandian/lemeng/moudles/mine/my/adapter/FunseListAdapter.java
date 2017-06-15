@@ -12,7 +12,7 @@ import com.lvshandian.lemeng.base.ViewHolder;
 import com.lvshandian.lemeng.moudles.mine.bean.FunseBean;
 import com.lvshandian.lemeng.utils.GrademipmapUtils;
 import com.lvshandian.lemeng.utils.PicassoUtil;
-import com.lvshandian.lemeng.widget.CircleImageView;
+import com.lvshandian.lemeng.widget.view.CircleImageView;
 
 import java.util.List;
 

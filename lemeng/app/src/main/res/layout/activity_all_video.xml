@@ -6,7 +6,7 @@
     android:orientation="vertical">
     <include layout="@layout/title_bar" />
 
-    <com.lvshandian.lemeng.view.ExpandGridView
+    <com.lvshandian.lemeng.widget.view.ExpandGridView
         android:id="@+id/mygrid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <!--观看直播界面-->
-    <com.lvshandian.lemeng.widget.VideoSurfaceView
+    <com.lvshandian.lemeng.widget.view.VideoSurfaceView
         android:id="@+id/video"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -59,7 +59,7 @@
                 layout="@layout/focus_indicator"
                 android:visibility="gone" />
 
-            <com.lvshandian.lemeng.view.CameraLivePreviewFrameView
+            <com.lvshandian.lemeng.widget.view.CameraLivePreviewFrameView
                 android:id="@+id/cameraPreview_live_surfaceView"
                 android:layout_width="300px"
                 android:layout_height="450px"
@@ -80,7 +80,7 @@
         android:scaleType="centerCrop"
         android:visibility="visible"></ImageView>
 
-    <com.lvshandian.lemeng.view.ScrollRelativeLayout
+    <com.lvshandian.lemeng.widget.view.ScrollRelativeLayout
         android:id="@+id/scrl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -130,7 +130,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
 
-                            <com.lvshandian.lemeng.widget.AvatarView
+                            <com.lvshandian.lemeng.widget.view.AvatarView
                                 android:id="@+id/live_head"
                                 android:layout_width="70px"
                                 android:layout_height="70px"
@@ -139,7 +139,7 @@
                                 app:border_color="@color/white"
                                 app:border_width="1dip" />
 
-                            <com.lvshandian.lemeng.widget.AvatarView
+                            <com.lvshandian.lemeng.widget.view.AvatarView
                                 android:id="@+id/live_lianmai_head_bg1"
                                 android:layout_width="70px"
                                 android:layout_height="70px"
@@ -189,7 +189,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
 
-                            <com.lvshandian.lemeng.widget.AvatarView
+                            <com.lvshandian.lemeng.widget.view.AvatarView
                                 android:id="@+id/live_lianmai_head"
                                 android:layout_width="70px"
                                 android:layout_height="70px"
@@ -197,7 +197,7 @@
                                 android:src="@mipmap/head_default"
                                 android:visibility="gone" />
 
-                            <com.lvshandian.lemeng.widget.AvatarView
+                            <com.lvshandian.lemeng.widget.view.AvatarView
                                 android:id="@+id/live_lianmai_head_bg2"
                                 android:layout_width="70px"
                                 android:layout_height="70px"
@@ -283,7 +283,7 @@
                         android:layout_height="70px"
                         android:visibility="gone">
                         <!--守护按钮图-->
-                        <com.lvshandian.lemeng.widget.AvatarView
+                        <com.lvshandian.lemeng.widget.view.AvatarView
                             android:id="@+id/live_head_img"
                             android:layout_width="70px"
                             android:layout_height="70px"
@@ -505,7 +505,7 @@
                 android:layout_height="500px"
                 android:layout_alignParentBottom="true" />
 
-            <com.lvshandian.lemeng.view.BarrageView
+            <com.lvshandian.lemeng.widget.view.BarrageView
                 android:id="@+id/barrageview"
                 android:layout_width="match_parent"
                 android:layout_height="250px"
@@ -532,5 +532,5 @@
                 android:visibility="gone" />
         </com.zhy.autolayout.AutoRelativeLayout>
 
-    </com.lvshandian.lemeng.view.ScrollRelativeLayout>
+    </com.lvshandian.lemeng.widget.view.ScrollRelativeLayout>
 </com.zhy.autolayout.AutoRelativeLayout>

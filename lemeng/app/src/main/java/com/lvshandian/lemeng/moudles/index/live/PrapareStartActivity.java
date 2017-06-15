@@ -186,8 +186,8 @@ public class PrapareStartActivity extends BaseActivity {
 
         AspectFrameLayout afl = (AspectFrameLayout) findViewById(R.id.cameraPreview_afl);
         afl.setShowMode(AspectFrameLayout.SHOW_MODE.FULL);
-        com.lvshandian.lemeng.view.CameraPreviewFrameView cameraPreviewFrameView =
-                (com.lvshandian.lemeng.view.CameraPreviewFrameView) findViewById(R.id
+        com.lvshandian.lemeng.widget.view.CameraPreviewFrameView cameraPreviewFrameView =
+                (com.lvshandian.lemeng.widget.view.CameraPreviewFrameView) findViewById(R.id
                         .cameraPreview_surfaceView);
 
         mMediaStreamingManager = new MediaStreamingManager(this, afl, cameraPreviewFrameView,

@@ -14,7 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.lvshandian.lemeng.moudles.index.live.WatchLiveActivity;
-import com.lvshandian.lemeng.view.LoadingDialog;
+import com.lvshandian.lemeng.widget.view.LoadingDialog;
 import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.pili.pldroid.player.AVOptions;
 import com.pili.pldroid.player.PLMediaPlayer;

@@ -28,7 +28,7 @@ import com.lvshandian.lemeng.moudles.mine.bean.LoginFrom;
 import com.lvshandian.lemeng.utils.DESUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
-import com.lvshandian.lemeng.view.LoadingDialog;
+import com.lvshandian.lemeng.widget.view.LoadingDialog;
 import com.lvshandian.lemeng.wangyiyunxin.config.DemoCache;
 import com.lvshandian.lemeng.wangyiyunxin.config.preference.Preferences;
 import com.lvshandian.lemeng.wangyiyunxin.config.preference.UserPreferences;

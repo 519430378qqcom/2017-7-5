@@ -14,7 +14,7 @@ import com.lvshandian.lemeng.moudles.mine.my.SearchControllerActivity;
 import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.ToastUtils;
-import com.lvshandian.lemeng.widget.CircleImageView;
+import com.lvshandian.lemeng.widget.view.CircleImageView;
 
 import org.kymjs.kjframe.Core;
 import org.xutils.common.Callback;

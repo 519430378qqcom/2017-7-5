@@ -24,7 +24,7 @@ import com.lvshandian.lemeng.moudles.mine.bean.PhotoBean;
 import com.lvshandian.lemeng.moudles.mine.my.adapter.AllPhoneAdapter;
 import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
-import com.lvshandian.lemeng.view.CustomPopWindow;
+import com.lvshandian.lemeng.widget.view.CustomPopWindow;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallbackWrapper;
 import com.netease.nimlib.sdk.ResponseCode;

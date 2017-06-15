@@ -22,7 +22,7 @@ import com.lvshandian.lemeng.httprequest.SdkHttpResult;
 import com.lvshandian.lemeng.moudles.mine.my.OtherPersonHomePageActivity;
 import com.lvshandian.lemeng.utils.GrademipmapUtils;
 import com.lvshandian.lemeng.utils.LogUtils;
-import com.lvshandian.lemeng.widget.CircleImageView;
+import com.lvshandian.lemeng.widget.view.CircleImageView;
 
 
 import org.json.JSONObject;

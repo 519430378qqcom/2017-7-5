@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.lvshandian.lemeng.widget.AvatarView
+    <com.lvshandian.lemeng.widget.view.AvatarView
         android:id="@+id/room_user_header"
         android:layout_width="70px"
         android:layout_height="70px"

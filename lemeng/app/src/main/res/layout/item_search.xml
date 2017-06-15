@@ -15,7 +15,7 @@
         android:layout_marginLeft="10px"
         android:layout_marginTop="10px">
 
-        <com.lvshandian.lemeng.widget.CircleImageView
+        <com.lvshandian.lemeng.widget.view.CircleImageView
             android:id="@+id/iv_pic"
             android:layout_width="80px"
             android:layout_height="80px"

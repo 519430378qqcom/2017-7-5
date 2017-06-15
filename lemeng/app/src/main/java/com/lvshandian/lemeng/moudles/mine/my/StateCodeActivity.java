@@ -17,7 +17,7 @@ import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.moudles.mine.bean.StateCodeBean;
 import com.lvshandian.lemeng.moudles.mine.my.adapter.StateCodeAadapter;
 import com.lvshandian.lemeng.utils.JsonUtil;
-import com.lvshandian.lemeng.widget.FullyLinearLayoutManager;
+import com.lvshandian.lemeng.widget.view.FullyLinearLayoutManager;
 
 import java.util.ArrayList;
 import java.util.List;

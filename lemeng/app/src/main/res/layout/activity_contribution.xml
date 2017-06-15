@@ -40,7 +40,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true">
 
-                            <com.lvshandian.lemeng.widget.AvatarView
+                            <com.lvshandian.lemeng.widget.view.AvatarView
                                 android:id="@+id/my_head"
                                 android:layout_width="100px"
                                 android:layout_height="100px"
@@ -117,7 +117,7 @@
                     android:layout_below="@id/parent_layout"
                     android:background="@color/wide_line" />
 
-                <com.lvshandian.lemeng.widget.MyListView
+                <com.lvshandian.lemeng.widget.view.ScrollListView
                     android:id="@+id/my_list"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

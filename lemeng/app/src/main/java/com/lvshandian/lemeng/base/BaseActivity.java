@@ -46,7 +46,7 @@ import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.NetWorkUtil;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
-import com.lvshandian.lemeng.view.ShowPop;
+import com.lvshandian.lemeng.widget.view.ShowPop;
 import com.lvshandian.lemeng.wangyiyunxin.config.preference.Preferences;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;

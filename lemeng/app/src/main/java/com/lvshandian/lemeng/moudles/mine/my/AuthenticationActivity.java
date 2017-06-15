@@ -38,7 +38,7 @@ import com.lvshandian.lemeng.utils.PicassoUtil;
 import com.lvshandian.lemeng.utils.RegexUtils;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.utils.TextPhoneNumber;
-import com.lvshandian.lemeng.view.CustomPopWindow;
+import com.lvshandian.lemeng.widget.view.CustomPopWindow;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.io.BufferedOutputStream;

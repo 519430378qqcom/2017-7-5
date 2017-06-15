@@ -14,7 +14,7 @@
             android:layout_height="match_parent"
             android:scrollbars="none">
 
-            <com.lvshandian.lemeng.widget.MyRecyclerView
+            <com.lvshandian.lemeng.widget.view.EmptyRecyclerView
                 android:id="@+id/lv_live_room"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

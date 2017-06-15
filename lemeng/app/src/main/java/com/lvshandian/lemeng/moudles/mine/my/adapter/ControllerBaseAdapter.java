@@ -13,7 +13,7 @@ import com.lvshandian.lemeng.httprequest.NewSdkHttpResult;
 import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.ToastUtils;
-import com.lvshandian.lemeng.widget.CircleImageView;
+import com.lvshandian.lemeng.widget.view.CircleImageView;
 import com.tandong.bottomview.view.BottomView;
 
 import org.kymjs.kjframe.Core;

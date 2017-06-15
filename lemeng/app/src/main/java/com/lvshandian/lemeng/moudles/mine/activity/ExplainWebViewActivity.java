@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.UrlBuilder;
 import com.lvshandian.lemeng.base.BaseActivity;
-import com.lvshandian.lemeng.view.LoadingDialog;
+import com.lvshandian.lemeng.widget.view.LoadingDialog;
 
 import butterknife.Bind;
 

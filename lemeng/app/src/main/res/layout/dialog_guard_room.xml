@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10px">
 
-            <com.lvshandian.lemeng.widget.AvatarView
+            <com.lvshandian.lemeng.widget.view.AvatarView
                 android:id="@+id/civ_image"
                 android:layout_width="100px"
                 android:layout_height="100px"

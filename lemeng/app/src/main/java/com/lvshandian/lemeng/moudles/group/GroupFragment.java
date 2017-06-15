@@ -21,7 +21,7 @@ import android.widget.Toast;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.base.BaseFragment;
 import com.lvshandian.lemeng.moudles.group.activity.FollowListForGroupActivity;
-import com.lvshandian.lemeng.view.MyTitleBar;
+import com.lvshandian.lemeng.widget.view.MyTitleBar;
 import com.lvshandian.lemeng.wangyiyunxin.main.activity.WYYXSystemMessageActivity;
 import com.lvshandian.lemeng.wangyiyunxin.session.SessionHelper;
 import com.lvshandian.lemeng.wangyiyunxin.team.TeamCreateHelper;

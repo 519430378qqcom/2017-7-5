@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 
 import com.lvshandian.lemeng.R;
-import com.lvshandian.lemeng.view.RoundDialog;
+import com.lvshandian.lemeng.widget.view.RoundDialog;
 
 import java.util.HashSet;
 import java.util.LinkedList;

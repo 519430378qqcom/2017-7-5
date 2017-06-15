@@ -22,7 +22,7 @@
         android:scaleType="centerCrop"
         android:src="@mipmap/zhan_da" />
 
-    <com.lvshandian.lemeng.view.FullScreenVideoView
+    <com.lvshandian.lemeng.widget.view.FullScreenVideoView
         android:id="@+id/videoView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

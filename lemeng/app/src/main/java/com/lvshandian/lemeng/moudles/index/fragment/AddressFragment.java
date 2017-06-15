@@ -17,8 +17,8 @@ import com.lvshandian.lemeng.moudles.index.adapter.HotListAadapter;
 import com.lvshandian.lemeng.utils.Constant;
 import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
-import com.lvshandian.lemeng.widget.FullyLinearLayoutManager;
-import com.lvshandian.lemeng.widget.MyRecyclerView;
+import com.lvshandian.lemeng.widget.view.FullyLinearLayoutManager;
+import com.lvshandian.lemeng.widget.view.EmptyRecyclerView;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefresh;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout;
 
@@ -33,7 +33,7 @@ import butterknife.Bind;
  */
 public class AddressFragment extends BaseFragment implements SwipeRefresh.OnRefreshListener, SwipeRefreshLayout.OnPullUpRefreshListener {
     @Bind(R.id.lv_live_room)
-    MyRecyclerView addressRecyclerView;
+    EmptyRecyclerView addressRecyclerView;
     @Bind(R.id.iv_empty)
     ImageView iv_empty;
     @Bind(R.id.mrl_layout)

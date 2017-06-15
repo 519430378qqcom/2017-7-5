@@ -25,7 +25,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="30px">
 
-                <com.lvshandian.lemeng.widget.AvatarView
+                <com.lvshandian.lemeng.widget.view.AvatarView
                     android:id="@+id/iv_live_user_head"
                     android:layout_width="50px"
                     android:layout_height="50px"

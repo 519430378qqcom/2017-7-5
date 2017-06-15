@@ -106,7 +106,7 @@
         android:textColor="@color/white"
         android:textSize="19px" />
 
-    <com.lvshandian.lemeng.widget.TimeCountDownLayout
+    <com.lvshandian.lemeng.widget.view.TimeCountDownLayout
         android:id="@+id/tv_game_next_open_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
