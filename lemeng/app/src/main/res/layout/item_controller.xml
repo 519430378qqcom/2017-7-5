@@ -20,7 +20,7 @@
             android:layout_width="80px"
             android:layout_height="80px"
             android:layout_gravity="center"
-            android:src="@mipmap/null_blacklist" />
+            android:src="@mipmap/head_default" />
 
         <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="match_parent"

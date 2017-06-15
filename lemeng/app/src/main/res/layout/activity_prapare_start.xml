@@ -112,21 +112,21 @@
             android:id="@+id/wechat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/room_wechat1" />
+            android:src="@mipmap/room_wechat" />
 
         <ImageView
             android:id="@+id/wechat_circle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80px"
-            android:src="@mipmap/room_timeline1" />
+            android:src="@mipmap/room_timeline" />
 
         <ImageView
             android:id="@+id/qq"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80px"
-            android:src="@mipmap/room_qq1"
+            android:src="@mipmap/room_qq"
             android:visibility="gone"/>
 
         <ImageView
@@ -134,7 +134,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80px"
-            android:src="@mipmap/room_qqzone1"
+            android:src="@mipmap/room_qqzone"
             android:visibility="gone"/>
     </com.zhy.autolayout.AutoLinearLayout>
 

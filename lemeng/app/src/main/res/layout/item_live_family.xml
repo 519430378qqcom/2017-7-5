@@ -11,7 +11,7 @@
         android:layout_width="80px"
         android:layout_height="80px"
         android:layout_gravity="center"
-        android:src="@mipmap/null_blacklist"
+        android:src="@mipmap/head_default"
         app:border_color="@color/main"
         app:border_width="1dip" />
 

@@ -223,7 +223,7 @@ public class MyApplication extends LitePalApplication {
 
         @Override
         public int getDefaultIconResId() {
-            return R.drawable.avatar_def;
+            return R.mipmap.head_default;
         }
 
         @Override

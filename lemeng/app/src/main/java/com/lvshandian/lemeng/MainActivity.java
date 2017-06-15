@@ -233,7 +233,6 @@ public class MainActivity extends BaseActivity implements
                 break;
             case R.id.ll_startLive:
                 index = 2;
-//                startActivity(new Intent(mContext, PrapareVedioActivity.class));
                 quickStartLivePop();
                 return;
             case R.id.ll_chat:

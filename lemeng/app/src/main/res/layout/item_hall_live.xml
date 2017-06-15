@@ -42,7 +42,7 @@
                     android:layout_marginBottom="14px"
                     android:layout_marginLeft="-20px"
                     android:layout_toRightOf="@id/iv_live_user_head"
-                    android:src="@mipmap/icon_vip"
+                    android:src="@mipmap/vip_orange"
                     android:visibility="gone"/>
 
             </com.zhy.autolayout.AutoRelativeLayout>

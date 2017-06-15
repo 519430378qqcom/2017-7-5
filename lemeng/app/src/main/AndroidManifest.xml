@@ -212,11 +212,6 @@
             android:name=".moudles.mine.my.StateCodeActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!-- 关于乐檬 -->
-        <activity
-            android:name=".moudles.mine.activity.AboutLeMengActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
         <!-- 修改密码 -->
         <activity
             android:name=".moudles.mine.my.ModifyPasswordActivity"
@@ -314,12 +309,6 @@
             android:launchMode="singleTop" />
 
         <!-- 开启直播准备 -->
-        <activity
-            android:name=".moudles.index.live.PrapareVedioActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".moudles.index.live.PrapareStartActivity"
             android:configChanges="keyboardHidden|orientation"
