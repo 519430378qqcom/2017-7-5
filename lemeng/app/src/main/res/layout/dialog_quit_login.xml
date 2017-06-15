@@ -20,6 +20,7 @@
         android:layout_gravity="center_horizontal"
         android:paddingBottom="50px"
         android:paddingTop="50px"
+        android:text="确定退出登录吗？"
         android:textColor="@color/tv_color6"/>
 
     <View
