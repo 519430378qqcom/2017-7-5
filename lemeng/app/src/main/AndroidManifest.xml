@@ -277,11 +277,6 @@
             android:name=".moudles.mine.my.OtherPersonHomePageActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!-- 显示文本的activity -->
-        <activity
-            android:name=".moudles.mine.my.BaseTextActivity"
-            android:exported="true"
-            android:launchMode="singleTop" />
         <!-- 图片放大 -->
         <activity
             android:name=".moudles.mine.activity.BigImageActivity"
@@ -458,14 +453,6 @@
             android:value="6nA2WhechygPITw5pM01vb8zLTWvABgd" />
 
         <!-- 友盟分享:开始 -->
-        <activity
-            android:name="com.umeng.socialize.view.ShareActivity"
-            android:configChanges="orientation|keyboard"
-            android:launchMode="singleTask"
-            android:noHistory="true"
-            android:theme="@style/Theme.UMDialog"
-            android:windowSoftInputMode="stateVisible|adjustResize" />
-
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="593b69af677baa2df100120f" />
