@@ -17,7 +17,7 @@
             android:id="@+id/btn_man"
             android:layout_width="match_parent"
             android:layout_height="100px"
-            android:text="男"
+            android:text="@string/male"
             android:background="@null"
             android:textColor="#0079FF"
             android:textSize="35px"/>
@@ -32,7 +32,7 @@
             android:id="@+id/btn_womanto"
             android:layout_width="match_parent"
             android:layout_height="100px"
-            android:text="女"
+            android:text="@string/female"
             android:background="@null"
             android:textColor="#0079FF"
             android:textSize="35px"/>
@@ -48,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="100px"
         android:background="@drawable/custom_popupwindow_border"
-        android:text="取消"
+        android:text="@string/cancel"
         android:textColor="#0079FF"
         android:textSize="35px"/>
 

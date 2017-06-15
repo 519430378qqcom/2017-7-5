@@ -64,11 +64,8 @@ import butterknife.Bind;
 
 /**
  * 修改个人资料
- * Created by Administrator on 2017/1/19.
  */
-
 public class SettingPerson extends BaseActivity {
-
     @Bind(R.id.iv_head)
     AvatarView ivHead;
     @Bind(R.id.tv_name)
@@ -139,12 +136,11 @@ public class SettingPerson extends BaseActivity {
             switch (msg.what) {
                 //关注请求接收数据
                 case RequestCode.USER_TAG:
-                    LogUtils.e("修改个人信息: " + json);
                     AppUser appUser = JSON.parseObject(json, AppUser.class);
                     //存储用户信息
                     SharedPreferenceUtils.saveUserInfo(mContext, appUser);
                     sendUserToWangYi(appUser);
-                    showToast("修改成功");
+                    showToast(getString(R.string.edit_success));
                     finish();
                     break;
             }
@@ -169,7 +165,7 @@ public class SettingPerson extends BaseActivity {
 
     @Override
     protected void initialized() {
-        initTitle("", "编辑资料", "保存");
+        initTitle("", getString(R.string.edit_profile), getString(R.string.save));
         initappUser();
     }
 
@@ -183,14 +179,14 @@ public class SettingPerson extends BaseActivity {
             String gender = appUser.getGender();
             if (gender != null) {
                 if (gender.equals("1"))
-                    tvSex.setText("男");
+                    tvSex.setText(getString(R.string.male));
                 if (gender.equals("0"))
-                    tvSex.setText("女");
+                    tvSex.setText(getString(R.string.female));
             }
 
 
             if (com.lvshandian.lemeng.utils.TextUtils.isEmpty(appUser.getSignature())) {
-                tvQm.setText("这个家伙很懒，什么都没留下");
+                tvQm.setText(getString(R.string.default_sign));
             } else {
                 tvQm.setText(appUser.getSignature());
             }
@@ -245,25 +241,13 @@ public class SettingPerson extends BaseActivity {
                     headUrl = appUser.getPicUrl();
                 }
                 if (com.lvshandian.lemeng.utils.TextUtils.isEmpty(nick)) {
-                    showToast("请填写昵称");
+                    showToast(getString(R.string.input_right_nickname));
                     return;
                 }
-                if (com.lvshandian.lemeng.utils.TextUtils.isEmpty(gender) || !(gender.equals("男") || gender.equals("女"))) {
-                    showToast("请填写性别");
+                if (com.lvshandian.lemeng.utils.TextUtils.isEmpty(gender)) {
+                    showToast(getString(R.string.input_right_gender));
                     return;
                 }
-//                if (com.lvshandian.lemeng.utils.TextUtils.isEmpty(xz)) {
-//                    showToast("请填写星座");
-//                    return;
-//                }
-//                if (com.lvshandian.lemeng.utils.TextUtils.isEmpty(address)) {
-//                    showToast("请填写地址");
-//                    return;
-//                }
-//                if (com.lvshandian.lemeng.utils.TextUtils.isEmpty(signature)) {
-//                    showToast("请填写签名");
-//                    return;
-//                }
                 if (userState())
                     changeappUser(headUrl, nick, gender, xz, address, signature);
                 break;
@@ -279,7 +263,6 @@ public class SettingPerson extends BaseActivity {
             case R.id.rl_qm: //签名
                 Intent intent2 = new Intent(SettingPerson.this, UpdatePersonActivity.class);
                 intent2.putExtra("name", tvQm.getText().toString());
-                intent2.putExtra("title", "签名");
                 startActivityForResult(intent2, 2);
                 break;
             case R.id.rl_xz: //星座
@@ -332,11 +315,11 @@ public class SettingPerson extends BaseActivity {
                 selectPhoto();
                 break;
             case R.id.btn_man:
-                tvSex.setText("男");
+                tvSex.setText(getString(R.string.male));
                 popupWindow.dismiss();
                 break;
             case R.id.btn_womanto:
-                tvSex.setText("女");
+                tvSex.setText(getString(R.string.female));
                 popupWindow.dismiss();
                 break;
             case R.id.btn_cancel:
@@ -520,9 +503,9 @@ public class SettingPerson extends BaseActivity {
         map.put("id", appUser.getId());
         map.put("picUrl", picUrl);
         map.put("nickName", nickName);
-        if (gender.equals("男"))
+        if (gender.equals(getString(R.string.male)))
             map.put("gender", "1");
-        if (gender.equals("女"))
+        if (gender.equals(getString(R.string.female)))
             map.put("gender", "0");
         map.put("constellation", constellation);
         map.put("address", address);

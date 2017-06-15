@@ -17,7 +17,6 @@ import butterknife.Bind;
 
 /**
  * 更改签名
- * Created by Administrator on 2017/1/19.
  */
 
 public class UpdatePersonActivity extends BaseActivity {
@@ -39,7 +38,7 @@ public class UpdatePersonActivity extends BaseActivity {
 
     @Override
     protected void initialized() {
-        initTitle("", "签名", "完成");
+        initTitle("", getString(R.string.signature), getString(R.string.done));
         String qianming = getIntent().getStringExtra("name");
         content.setText(qianming);
         if (qianming.length() > 30) {

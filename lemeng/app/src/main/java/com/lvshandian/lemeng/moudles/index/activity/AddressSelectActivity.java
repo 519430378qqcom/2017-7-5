@@ -31,11 +31,8 @@ import butterknife.Bind;
 
 /**
  * 地址选择
- * Created by gjj on 2016/12/20.
  */
-
-public class  AddressSelectActivity extends BaseActivity {
-
+public class AddressSelectActivity extends BaseActivity {
     @Bind(R.id.rlv_recycler)
     RecyclerView rlvRecycler;
     @Bind(R.id.rb_women)
@@ -82,19 +79,19 @@ public class  AddressSelectActivity extends BaseActivity {
     private RadioGroup.OnCheckedChangeListener checkedChangeListener = new RadioGroup.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId) {
-            String text = "看全部";
+            String text = getString(R.string.looks_all);
             switch (checkedId) {
                 case R.id.rb_women:
-                    SharedPreferenceUtils.put(mContext,Constant.GENDER,0);
-                    text = "看女神";
+                    SharedPreferenceUtils.put(mContext, Constant.GENDER, 0);
+                    text = getString(R.string.look_female);
                     break;
                 case R.id.rb_all:
-                    SharedPreferenceUtils.put(mContext,Constant.GENDER,2);
-                    text = "看全部";
+                    SharedPreferenceUtils.put(mContext, Constant.GENDER, 2);
+                    text = getString(R.string.looks_all);
                     break;
                 case R.id.rb_men:
-                    SharedPreferenceUtils.put(mContext,Constant.GENDER,1);
-                    text = "看男神";
+                    SharedPreferenceUtils.put(mContext, Constant.GENDER, 1);
+                    text = getString(R.string.look_male);
                     break;
             }
             Toast.makeText(mContext, text, Toast.LENGTH_SHORT).show();
@@ -110,10 +107,10 @@ public class  AddressSelectActivity extends BaseActivity {
 
     @Override
     protected void initialized() {
-        only = getIntent().getBooleanExtra("only",false);
-        if (only){
+        only = getIntent().getBooleanExtra("only", false);
+        if (only) {
             rgGroup.setVisibility(View.GONE);
-        }else {
+        } else {
             rgGroup.setVisibility(View.VISIBLE);
         }
 

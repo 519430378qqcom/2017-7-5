@@ -27,7 +27,7 @@
             android:drawablePadding="5px"
             android:drawableTop="@drawable/selector_choice_girl"
             android:gravity="center"
-            android:text="看女神"
+            android:text="@string/look_female"
             android:textColor="@color/gray7" />
 
         <RadioButton
@@ -40,7 +40,7 @@
             android:drawablePadding="5px"
             android:drawableTop="@drawable/selector_choice_all"
             android:gravity="center"
-            android:text="看全部"
+            android:text="@string/looks_all"
             android:textColor="@color/gray7" />
 
         <RadioButton
@@ -52,7 +52,7 @@
             android:drawablePadding="5px"
             android:drawableTop="@drawable/selector_choice_boy"
             android:gravity="center"
-            android:text="看男神"
+            android:text="@string/look_male"
             android:textColor="@color/gray7" />
     </RadioGroup>
 
@@ -63,7 +63,7 @@
         android:gravity="center"
         android:paddingBottom="25px"
         android:paddingTop="25px"
-        android:text="选择地区" />
+        android:text="@string/select_location" />
 
     <com.zhy.autolayout.AutoFrameLayout
         android:layout_width="match_parent"

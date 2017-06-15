@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_gravity="left"
-            android:text="头像"
+            android:text="@string/gender"
             android:textColor="@color/backgeragd_head"
             android:textSize="30px" />
 
@@ -57,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="昵称"
+            android:text="@string/nickname"
             android:textColor="@color/backgeragd_head"
             android:textSize="30px" />
 
@@ -93,7 +93,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="性别"
+            android:text="@string/gender"
             android:textColor="@color/backgeragd_head"
             android:textSize="30px" />
 
@@ -128,7 +128,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="星座"
+            android:text="@string/constellation"
             android:textColor="@color/backgeragd_head"
             android:textSize="30px" />
 
@@ -163,7 +163,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="所在地"
+            android:text="@string/location"
             android:textColor="@color/backgeragd_head"
             android:textSize="30px" />
 
@@ -198,7 +198,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="签名"
+            android:text="@string/signature"
             android:textColor="@color/backgeragd_head"
             android:textSize="30px" />
 

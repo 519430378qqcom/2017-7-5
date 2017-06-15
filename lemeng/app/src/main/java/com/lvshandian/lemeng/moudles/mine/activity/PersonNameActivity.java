@@ -59,7 +59,7 @@ public class PersonNameActivity extends BaseActivity {
 
     @Override
     protected void initialized() {
-        initTitle("", "昵称", "保存");
+        initTitle("", getString(R.string.nickname), getString(R.string.save));
         String nickName = getIntent().getStringExtra("nickName");
         etName.setText(nickName);
         if (nickName.length() > 10) {
@@ -89,7 +89,7 @@ public class PersonNameActivity extends BaseActivity {
             case R.id.tv_titlebar_right:
                 String strName = etName.getText().toString().trim();
                 if (TextUtils.isEmpty(strName)) {
-                    showToast("昵称不能为空");
+                    showToast(getString(R.string.nickname_empty));
                 } else {
                     KeyBoardUtils.closeKeybord(etName, mContext);
                     Intent intent = new Intent();

@@ -13,7 +13,6 @@
         android:background="@color/white"
         android:padding="20px">
 
-
         <EditText
             android:id="@+id/et_name"
             android:layout_width="match_parent"
@@ -21,7 +20,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10px"
             android:background="@null"
-            android:hint="请输入您的昵称"
+            android:hint="@string/input_nickname"
             android:maxLength="10"
             android:textSize="30px" />
 

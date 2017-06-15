@@ -91,7 +91,7 @@ public class RegisterActivity extends BaseActivity {
 //                    startActivity(new Intent(RegisterActivity.this, SettingPerson.class).putExtra("isRegister", "register"));
                     break;
                 case RequestCode.FORGETPSWD_TAG:
-                    showToast(getString(R.string.edit_password_success));
+                    showToast(getString(R.string.edit_success));
                     AppUser appUser1 = JSON.parseObject(json, AppUser.class);
                     //存储用户信息
 //                    CacheUtils.saveObject(RegisterActivity.this, appUser1, CacheUtils.USERINFO);
