@@ -45,11 +45,6 @@ public class AnimationUtils {
     public void SwichAnimation(CustomGiftBean customGiftBean, Activity context, AutoRelativeLayout mRoot, int type) {
         this.mRoot = mRoot;
         this.context = context;
-        if (type == 2) {
-            //type==2中奖特效否则为礼物特效
-            showFireworksAnimationGold(customGiftBean);
-            return;
-        }
         messageQueueList.add(customGiftBean);
         if (isFirst) {
             LogUtils.e("礼物id--return" + customGiftBean.getGift_item_index());
@@ -170,41 +165,6 @@ public class AnimationUtils {
                     }
 
                 });
-
-    }
-
-    /**
-     * @dw 金币
-     * @author 张亚楠
-     */
-    protected void showFireworksAnimationGold(CustomGiftBean mSendGiftBean) {
-        final ImageView image = new ImageView(context);
-        framesSequenceAnimation = new FramesSequenceAnimation(context, image,
-                R.array.gold_icons, 20);
-        framesSequenceAnimation.setOneShot(true);
-        image.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
-                RelativeLayout.LayoutParams.MATCH_PARENT)); // 设置图片宽高
-        image.setScaleType(ImageView.ScaleType.FIT_XY);
-        mRoot.addView(image);
-        framesSequenceAnimation.start();
-        framesSequenceAnimation
-                .setFramesSequenceAnimationListener(new FramesSequenceAnimation.FramesSequenceAnimationListener() {
-
-                    @Override
-                    public void AnimationStopped() {
-                        // TODO Auto-generated method stub
-                        if (mRoot == null) return;
-                        mRoot.removeView(image);
-                    }
-
-                    @Override
-                    public void AnimationStarted() {
-                        // TODO Auto-generated method stub
-
-                    }
-
-                });
-
     }
 
 

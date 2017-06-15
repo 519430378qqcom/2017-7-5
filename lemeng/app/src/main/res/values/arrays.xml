@@ -36,34 +36,6 @@
         <item>@drawable/rocket33</item>
         <item>@drawable/rocket34</item>
     </string-array>
-    <string-array name="gold_icons">
-        <item>@drawable/gold00</item>
-        <item>@drawable/gold01</item>
-        <item>@drawable/gold02</item>
-        <item>@drawable/gold03</item>
-        <item>@drawable/gold04</item>
-        <item>@drawable/gold05</item>
-        <item>@drawable/gold06</item>
-        <item>@drawable/gold07</item>
-        <item>@drawable/gold08</item>
-        <item>@drawable/gold09</item>
-        <item>@drawable/gold10</item>
-        <item>@drawable/gold11</item>
-        <item>@drawable/gold12</item>
-        <item>@drawable/gold13</item>
-        <item>@drawable/gold14</item>
-        <item>@drawable/gold15</item>
-        <item>@drawable/gold16</item>
-        <item>@drawable/gold17</item>
-        <item>@drawable/gold18</item>
-        <item>@drawable/gold19</item>
-        <item>@drawable/gold20</item>
-        <item>@drawable/gold21</item>
-        <item>@drawable/gold22</item>
-        <item>@drawable/gold23</item>
-        <item>@drawable/gold24</item>
-        <item>@drawable/gold25</item>
-    </string-array>
     <string-array name="marry_icons">
         <item>@drawable/marry01</item>
         <item>@drawable/marry02</item>
@@ -244,49 +216,5 @@
         <item>@drawable/steamer25</item>
         <item>@drawable/steamer26</item>
         <item>@drawable/steamer27</item>
-    </string-array>
-    <string-array name="loding">
-        <item>@drawable/loding02</item>
-        <item>@drawable/loding03</item>
-        <item>@drawable/loding04</item>
-        <item>@drawable/loding05</item>
-        <item>@drawable/loding06</item>
-        <item>@drawable/loding07</item>
-        <item>@drawable/loding08</item>
-        <item>@drawable/loding09</item>
-        <item>@drawable/loding010</item>
-        <item>@drawable/loding11</item>
-        <item>@drawable/loding12</item>
-        <item>@drawable/loding13</item>
-        <item>@drawable/loding14</item>
-        <item>@drawable/loding15</item>
-        <item>@drawable/loding16</item>
-        <item>@drawable/loding17</item>
-        <item>@drawable/loding18</item>
-        <item>@drawable/loding19</item>
-        <item>@drawable/loding20</item>
-        <item>@drawable/loding22</item>
-        <item>@drawable/loding23</item>
-        <item>@drawable/loding24</item>
-        <item>@drawable/loding25</item>
-        <item>@drawable/loding26</item>
-        <item>@drawable/loding27</item>
-        <item>@drawable/loding28</item>
-        <item>@drawable/loding29</item>
-        <item>@drawable/loding30</item>
-        <item>@drawable/loding31</item>
-        <item>@drawable/loding32</item>
-        <item>@drawable/loding33</item>
-        <item>@drawable/loding34</item>
-        <item>@drawable/loding35</item>
-        <item>@drawable/loding36</item>
-        <item>@drawable/loding37</item>
-        <item>@drawable/loding38</item>
-        <item>@drawable/loding39</item>
-        <item>@drawable/loding40</item>
-        <item>@drawable/loding41</item>
-        <item>@drawable/loding42</item>
-        <item>@drawable/loding43</item>
-        <item>@drawable/loding44</item>
     </string-array>
 </resources>
