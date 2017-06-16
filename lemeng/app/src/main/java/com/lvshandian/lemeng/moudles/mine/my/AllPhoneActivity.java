@@ -192,7 +192,7 @@ public class AllPhoneActivity extends BaseActivity {
                 ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
                 map.put("id", appUser.getId());
                 map.put("picUrl", picUrl);
-                httpDatas.getNewDataCharServer("设置头像信息", Request.Method.POST, UrlBuilder.user, map, mHandler, RequestCode.USER_TAG);
+                httpDatas.getNewDataCharServer("设置头像信息", Request.Method.POST, UrlBuilder.EDIT_PROFILE, map, mHandler, RequestCode.USER_TAG);
                 editPopup.dismiss();
             }
         });

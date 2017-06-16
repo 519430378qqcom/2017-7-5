@@ -15,10 +15,11 @@ public class UrlBuilder {
     //乐檬线上服務器
 //    public static final String SERVER_URL = "http://47.88.229.22:80/";// 服务器网址公网
 //    public static final String CHARGE_SERVER_URL = "http://47.88.229.22:80/admin/";// 充值端口
+//    public static final String SERVER_URL_8080 = "http://47.88.229.22:8080/";// 服务器网址公网
+//    public static final String CHARGE_SERVER_URL_8080 = "http://47.88.229.22:8080/admin/";// 充值端口
     //乐檬测试服務器
     public static final String SERVER_URL = "http://60.205.114.36:80/";// 服务器网址公网
     public static final String CHARGE_SERVER_URL = "http://60.205.114.36:80/admin/";// 充值端口
-
     public static final String SERVER_URL_8080 = "http://60.205.114.36:8080/";// 服务器网址公网
     public static final String CHARGE_SERVER_URL_8080 = "http://60.205.114.36:8080/admin/";// 充值端口
 
@@ -26,7 +27,6 @@ public class UrlBuilder {
     public static final String ALIYUN_IMG = "http://lemeng.oss-ap-southeast-1.aliyuncs.com/";//阿里云图片視頻生成地址
     public static final String OSS_ENDPOINT = "http://oss-ap-southeast-1.aliyuncs.com";//阿里云OSS_ENDPOINT
     public static final String BUCKET_NAME = "lemeng";// 阿里云BUCKET_NAME  OSS
-
     //乐檬接口
     public static final String YINLIAN_PAY_WEB = CHARGE_SERVER_URL_8080 + "static/payment.html?userId=%s";//银联支付WEB
     public static final String USER_AGREEMENT = SERVER_URL_8080 + "protocol/private.html";//用户协议
@@ -49,7 +49,7 @@ public class UrlBuilder {
     public static final String FUNSE_AND_FOLLOW = "/api/v1/user/";//粉丝/关注列表
     public static final String ATTENTION_USER = "/api/v1/user/follow";//关注取消关注
     public static final String SELECT_USER_INFO = "/appusers/selectUserById";  //查询个人信息
-    public static final String REPORT = "/api/v1/user/REPORT";//举报
+    public static final String REPORT = "/api/v1/user/report";//举报
     public static final String WEEK_CONTRIBUTION = "/appusers/getConsumeAmountAndroid";//周榜排行榜
     public static final String MY_CONTRIBUTION = "/appusers/getUserContributionAndroid";//我的贡献榜
     public static final String WITHDRAW = "/appExchange/updateExchangeCash";//提现
@@ -59,11 +59,12 @@ public class UrlBuilder {
     public static final String MY_PHOTO_UPLOAD = "/api/v1/user/album/pic";//我的界面图片上传
     public static final String MY_VIDEO_UPLOAD = "/api/v1/user/album/video";//我的界面图片上传
     public static final String ALIYUN = "/aliyun/token";    //请求阿里云id、key
+    public static final String EDIT_PROFILE = "/appusers/update";    //修改用户信息
+
 
 
     public static final String appRooms = "/appRooms/getRooms";// type=1热门，type = 2最新，type ==3 地方北京市直播
     public static final String GET_GIFT = "/appGift/findGift";//获取礼物列表
-    public static final String user = "/appusers/update";    //修改用户信息public static final String modifyPass = "/api/v1/user/password";//修改密码 public static final String GET_GIFT = "appGift/findGift";//获取礼物列表
     public static final String modifyPass = "/api/v1/user/password";   //修改密码
     public static final String selectLevel = "/appLevel/getLevelRate";  //查询当前等级信息
     public static final String START_JOIN_ROOM = "/appRooms/getShareRoom";    //进入直播间
@@ -73,7 +74,6 @@ public class UrlBuilder {
     public static final String myControllerAdd = "appUserControl/add";//我的场控添加
     public static final String myControllerDelete = "appUserControl/delete";//我的场控刪除
     public static final String appUserControl = "appUserControl/stopUser";//禁言
-
     public static final String START = "/api/v1/room/create/";//新建直播/api/v1/room/create
     public static final String SEARCH = "/api/v1/user/find";//搜索用户
     public static final String SEARCH_CONTROLLER = "/appusers/find";//搜索用户场控
@@ -87,17 +87,11 @@ public class UrlBuilder {
     public static final String ifEnter = "/appRooms/ifEnter";//判断是否进入过该房间
     public static final String updateCoin = "/appRooms/updateCoin";//支付进入
     public static final String join = "/appRooms/join";//进入直播间
-
-
-
     public static final String room = "/api/v1/room/";//聊天室头像列表
     public static final String barrage = "/api/v1/barrage/";//发送弹幕消息扣金币
     public static final String roomExit = "/api/v1/room/exit";//退出直播间
-
     public static final String getTimenumber = "/appusers/gettimenumber";//获取上期开奖数据
-
     public static final String reciveAmount = "/appRooms/reciveAmount";//投注
-
     public static final String getBl = "/admin/appusers/getCathecticRate";//开游戏、查询投注比例
 
 

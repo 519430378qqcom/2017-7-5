@@ -1,5 +1,6 @@
 package com.lvshandian.lemeng.moudles.start;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -7,7 +8,6 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
 
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.base.BaseActivity;
@@ -24,6 +24,8 @@ import butterknife.ButterKnife;
 public class GuidActivity extends BaseActivity {
     @Bind(R.id.contentPager)
     ViewPager contentPager;
+    @Bind(R.id.logo)
+    ImageView logo;
 
     private boolean isfirst = false;
     /**
@@ -35,6 +37,8 @@ public class GuidActivity extends BaseActivity {
      * 引导图片资源
      */
     private final int[] pics = {R.mipmap.welcome_1, R.mipmap.welcome_2, R.mipmap.welcome_3};
+
+    private ObjectAnimator anim;
 
     @Override
     protected void initialized() {
@@ -78,10 +82,27 @@ public class GuidActivity extends BaseActivity {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
+                if (state == 1) {
+                    if (anim != null) {
+                        anim.cancel();
+                        logo.clearAnimation();
+                    }
+                    anim = ObjectAnimator.ofFloat(logo, "alpha", logo.getAlpha(), 0);
+                    anim.setDuration(500);
+                    anim.start();
+                } else if (state == 0) {
+                    if (anim != null) {
+                        anim.cancel();
+                        logo.clearAnimation();
+                    }
+                    anim = ObjectAnimator.ofFloat(logo, "alpha", logo.getAlpha(), 1);
+                    anim.setDuration(500);
+                    anim.start();
+                }
             }
         });
     }
+
 
     @Override
     protected int getLayoutId() {

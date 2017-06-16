@@ -510,7 +510,7 @@ public class SettingPerson extends BaseActivity {
         map.put("constellation", constellation);
         map.put("address", address);
         map.put("signature", signature);
-        httpDatas.getNewDataCharServer("修改用户信息", Request.Method.POST, UrlBuilder.user, map, mHandler, RequestCode.USER_TAG);
+        httpDatas.getNewDataCharServer("修改用户信息", Request.Method.POST, UrlBuilder.EDIT_PROFILE, map, mHandler, RequestCode.USER_TAG);
     }
 
 

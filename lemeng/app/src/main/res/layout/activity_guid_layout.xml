@@ -11,6 +11,7 @@
         android:flipInterval="30" />
 
     <ImageView
+        android:id="@+id/logo"
         android:layout_width="150px"
         android:layout_height="150px"
         android:layout_alignParentTop="true"

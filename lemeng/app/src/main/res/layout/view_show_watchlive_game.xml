@@ -4,7 +4,7 @@
     android:layout_height="420px"
     android:id="@+id/live_game"
     android:background="@mipmap/game_backgourd"
-    android:visibility="gone"
+    android:visibility="visible"
     android:orientation="vertical">
 
     <com.zhy.autolayout.AutoLinearLayout
