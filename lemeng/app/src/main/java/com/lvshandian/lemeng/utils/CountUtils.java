@@ -16,10 +16,10 @@ public class CountUtils {
      */
     public static String getCount(long number) {
         String str = "";
-        if (number > 100000000) {
-            str = DecimalUtils.divideWithRoundingModeAndScale(number + "", "100000000", RoundingMode.DOWN, 2) + "亿";
-        } else if (number > 10000) {
-            str = DecimalUtils.divideWithRoundingModeAndScale(number + "", "10000", RoundingMode.DOWN, 2) + "万";
+        if (number >= 100000000) {
+            str = DecimalUtils.divideWithRoundingModeAndScale(number + "", "100000000", RoundingMode.UP, 2) + "亿";
+        } else if (number >= 10000) {
+            str = DecimalUtils.divideWithRoundingModeAndScale(number + "", "10000", RoundingMode.UP, 2) + "万";
         } else {
             str = number + "";
         }
