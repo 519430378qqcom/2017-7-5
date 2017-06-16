@@ -49,6 +49,8 @@
     <string name="report">举报</string>
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
+    <string name="delete">删除</string>
+    <string name="camera">相机</string>
     <string name="hint">提示</string>
     <string name="cancel_blacklist">取消拉黑</string>
     <string name="lemeng_id">乐檬号:%1$s</string>
@@ -122,6 +124,9 @@
     <string name="look_male">看男神</string>
     <string name="look_female">看女神</string>
     <string name="looks_all">看全部</string>
+    <string name="avatar_setting">设为头像</string>
+    <string name="picture_delete">删除图片</string>
+
 
     <!--直播部分-->
     <string name="share_live_title">主播%1$s邀你玩游戏啦</string>
@@ -173,6 +178,8 @@
     <string name="lucky_set_empty">请输入投注金额</string>
     <string name="must_more_10">投注金额必须大于10</string>
     <string name="must_small_160000">投注金额必须小于160000</string>
+    <string name="picture_delete_succeed">图片删除成功</string>
+    <string name="avatar_setting_succeed">设置头像成功</string>
 
     <!--参数-->
     <string name="web_flag">WEB_FLAG</string>

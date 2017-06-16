@@ -112,7 +112,7 @@ public class Videotails extends BaseActivity {
                 finish();
                 break;
             case R.id.image_delete://删除
-                new DialogView(getContext(), rlPart, "", "相机", "删除", "取消",
+                new DialogView(getContext(), rlPart, "", getString(R.string.camera), getString(R.string.delete), getString(R.string.cancel),
                         new DialogView.MyCameraCallback() {
                             @Override
                             public void refreshCallback(int tag) {

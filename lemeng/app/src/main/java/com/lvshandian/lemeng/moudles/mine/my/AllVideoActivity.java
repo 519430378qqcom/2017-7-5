@@ -81,7 +81,7 @@ public class AllVideoActivity extends BaseActivity {
 
     @Override
     protected void initialized() {
-        initTitle("", "短片", null);
+        initTitle("", getString(R.string.small_video), null);
         userId = getIntent().getStringExtra("userId");
         isShow = getIntent().getStringExtra("isShow");
     }

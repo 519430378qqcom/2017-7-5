@@ -109,12 +109,11 @@ public class AllPhoneActivity extends BaseActivity {
                     photoBean.setId("yes");
                     EventBus.getDefault().post(photoBean);
                     //图片删除成功
-                    showToast("图片删除成功");
+                    showToast(getString(R.string.picture_delete_succeed));
                     requestPhoto();
                     break;
                 case RequestCode.USER_TAG:
-                    LogUtils.e("设置头像返回: " + json);
-                    showToast("设置头像成功");
+                    showToast(getString(R.string.avatar_setting_succeed));
                     sendUserToWangYi();
                     break;
             }
@@ -143,7 +142,7 @@ public class AllPhoneActivity extends BaseActivity {
 
     @Override
     protected void initialized() {
-        initTitle("", "相册", null);
+        initTitle("", getString(R.string.photo_album), null);
         userId = getIntent().getStringExtra("userId");
         isShow = getIntent().getStringExtra("isShow");
     }
