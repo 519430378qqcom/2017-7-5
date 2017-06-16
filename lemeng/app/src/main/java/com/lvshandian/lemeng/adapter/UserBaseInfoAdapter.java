@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.android.volley.Request;
@@ -22,8 +21,8 @@ import com.lvshandian.lemeng.httprequest.SdkHttpResult;
 import com.lvshandian.lemeng.moudles.mine.my.OtherPersonHomePageActivity;
 import com.lvshandian.lemeng.utils.GrademipmapUtils;
 import com.lvshandian.lemeng.utils.LogUtils;
+import com.lvshandian.lemeng.utils.ToastUtils;
 import com.lvshandian.lemeng.widget.view.CircleImageView;
-
 
 import org.json.JSONObject;
 import org.kymjs.kjframe.Core;
@@ -130,7 +129,7 @@ public class UserBaseInfoAdapter extends BaseAdapter {
                     @Override
                     public void onResponse(JSONObject obj) {
                         SdkHttpResult response = JSON.parseObject(obj.toString(), SdkHttpResult.class);
-                        Toast.makeText(context, "关注成功", Toast.LENGTH_LONG).show();
+                        ToastUtils.showMessageDefault(context,context.getResources().getString(R.string.attention_succeed));
                         LogUtils.i(response.toString());
                     }
                 }, errorListener);

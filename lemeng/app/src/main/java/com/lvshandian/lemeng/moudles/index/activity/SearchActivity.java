@@ -33,10 +33,8 @@ import butterknife.Bind;
 
 /**
  * 搜索页面
- * Created by zz on 2016/11/22.
  */
 public class SearchActivity extends BaseActivity {
-
     @Bind(R.id.iv_private_chat_back)
     ImageView ivPrivateChatBack;
     @Bind(R.id.et_search_input)
@@ -85,7 +83,7 @@ public class SearchActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if (TextUtils.isEmpty(etSearchInput.getText().toString())) {
-                    showToast("请输入您要搜索的信息");
+                    showToast(getString(R.string.input_id_or_nickname));
                 } else {
                     seachUser(etSearchInput.getText().toString());
                 }

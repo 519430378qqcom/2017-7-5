@@ -42,7 +42,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="最新"
+                android:text="@string/newest"
                 android:textColor="@color/main"
                 android:textSize="30px" />
 
@@ -52,7 +52,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="热门"
+                android:text="@string/hot"
                 android:textColor="@color/tv_color6"
                 android:textSize="30px" />
 

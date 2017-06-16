@@ -33,7 +33,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10px"
-                    android:text="直播"
+                    android:text="@string/live"
                     android:textColor="@color/tv_color6"
                     android:textSize="30px" />
             </com.zhy.autolayout.AutoLinearLayout>
@@ -57,7 +57,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10px"
-                    android:text="视频"
+                    android:text="@string/video"
                     android:textColor="@color/tv_color6"
                     android:textSize="30px" />
             </com.zhy.autolayout.AutoLinearLayout>

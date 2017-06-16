@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="私信"
+                android:text="@string/private_letter"
                 android:textColor="@color/tv_color6"
                 android:textSize="34px" />
 

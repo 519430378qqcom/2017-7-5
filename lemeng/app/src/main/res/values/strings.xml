@@ -11,6 +11,7 @@
     <string name="state_code">国家代码</string>
     <string name="edit_profile">编辑资料</string>
     <string name="change_password">修改密码</string>
+    <string name="private_letter">私信</string>
     <!--注册登录部分-->
     <string name="agree_term_of_service">登入即代表您同意《服务条款》</string>
     <string name="mobile_terminal">移动端</string>
@@ -137,12 +138,17 @@
     <string name="old_password_failure">旧密码输入不正确</string>
     <string name="password_different_twice">两次输入的密码不一致</string>
     <string name="new_and_old_password_must_different">新密码不能与旧密码相同</string>
-
     <!--直播部分-->
     <string name="share_live_title">主播%1$s邀你玩游戏啦</string>
     <string name="share_live_content">够刺激,主播%1$s带你玩转直播间,一起游戏嗨起来!</string>
     <string name="share_download_title">乐檬直播,共享世界的快乐</string>
     <string name="share_download_content">万人直播室嗨翻天!超火人气,边撩妹纸边玩游戏,赶紧加入吧!</string>
+    <string name="live">直播</string>
+    <string name="video">视频</string>
+    <string name="newest">最新</string>
+    <string name="hot">热门</string>
+    <string name="some_people_in_look">%1$s 在看</string>
+
     <!--牛牛部分-->
     <string name="top_up">充值</string>
     <string name="wait_next_start">请等待下一局开始</string>
@@ -154,9 +160,11 @@
     <string name="the_user">本家</string>
     <string name="banker">庄家</string>
     <string name="take_a_rest">休息一下</string>
+    <!--幸运28部分-->
     <string name="intput_lucky_bet">最低:10 最高:1600000</string>
 
     <!--吐司提示-->
+    <string name="again_press_quit">再按一次退出应用</string>
     <string name="user_name_error">用户名不正确</string>
     <string name="edit_success">修改成功</string>
     <string name="validate_code_sent">验证码已发送</string>

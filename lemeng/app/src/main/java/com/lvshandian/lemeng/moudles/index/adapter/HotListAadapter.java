@@ -77,7 +77,7 @@ public class HotListAadapter extends RecyclerView.Adapter<HotListAadapter.HotVie
             Picasso.with(context).load(picHead).placeholder(R.mipmap.head_default)
                     .error(R.mipmap.head_default).into(holder.mUserHead);
 
-            holder.mUserNums.setText(String.valueOf(user.getRooms().getOnlineUserNum()) + " 在看");
+            holder.mUserNums.setText(context.getResources().getString(R.string.some_people_in_look, String.valueOf(user.getRooms().getOnlineUserNum())));
             holder.mLinerLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

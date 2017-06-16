@@ -161,7 +161,7 @@ public class MainActivity extends BaseActivity implements
                  * 图片上传成功
                  */
                 case RequestCode.MY_PHOTO_UPLOAD_CODE:
-                    showToast("上传成功");
+                    showToast(getString(R.string.uploading_succeed));
                     PhotoBean photoBean = new PhotoBean();
                     photoBean.setId("yes");
                     EventBus.getDefault().post(photoBean);
@@ -174,7 +174,7 @@ public class MainActivity extends BaseActivity implements
                     videoBean.setId("yes");
                     EventBus.getDefault().post(videoBean);
                     intentMyInformationFragment();
-                    showToast("上传视频成功");
+                    showToast(getString(R.string.uploading_succeed));
                     break;
             }
         }
@@ -719,7 +719,7 @@ public class MainActivity extends BaseActivity implements
             super.onBackPressed();
             System.exit(0);
         } else {
-            showToast("再按一次退出应用");
+            showToast(getString(R.string.again_press_quit));
             firstPressed = now;
         }
     }

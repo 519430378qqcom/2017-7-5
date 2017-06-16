@@ -55,7 +55,6 @@
                 android:layout_marginLeft="13px"
                 android:layout_weight="1"
                 android:singleLine="true"
-                android:text="刘德华"
                 android:textColor="@color/tv_color6"
                 android:textSize="28px" />
 
@@ -66,7 +65,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="33px"
-                android:text="1295人在看"
                 android:textColor="@color/tv_color9"
                 android:textSize="24px" />
         </com.zhy.autolayout.AutoLinearLayout>
