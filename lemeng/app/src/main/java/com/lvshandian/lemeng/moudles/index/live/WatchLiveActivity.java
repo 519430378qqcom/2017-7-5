@@ -358,18 +358,10 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     FrameLayout watch_room_message_fragment_chat;
     @Bind(R.id.tv_rule)
     ImageView tv_rule;
-    @Bind(R.id.small_add)
-    ImageView smallAdd;
-    @Bind(R.id.samll_number)
-    TextView samllNumber;
-    @Bind(R.id.small_subtract)
-    ImageView smallSubtract;
-    @Bind(R.id.double_subtract)
-    ImageView doubleSubtract;
-    @Bind(R.id.double_number)
-    TextView doubleNumber;
-    @Bind(R.id.double_add)
-    ImageView doubleAdd;
+    @Bind(R.id.lucky_bet)
+    EditText etLuckyBet;
+    @Bind(R.id.recharge)
+    TextView recharge;
     @Bind(R.id.iv_touzhu)
     ImageView ivTouzhu;
     @Bind(R.id.ll_trendOrHistory)
@@ -535,7 +527,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     private String nper;
     private int intQh;
     private String countryType;
-    private String strJinBi;
     private boolean isTouZhu;//是否可以投注
 
     /**
@@ -855,9 +846,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      */
     private CustomLianmaiBean customLianmaiBean;
 
-
-    private int tzNumber = 10;
-    private int jbNumber = 1;
+    private int luckySet;
 
     /**
      * 是否为游戏直播间
@@ -920,8 +909,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         SharedPreferenceUtils.put(mContext, "isZhuBo", false);
                     }
 
-                    samllNumber.setText(String.valueOf(tzNumber));
-                    doubleNumber.setText(String.valueOf(jbNumber));
                     initSelectStatus();
                     initBlInfos();
 
@@ -1275,12 +1262,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         iv_history.setOnClickListener(this);
         tv_rule.setOnClickListener(this);
         iv_game.setOnClickListener(this);
-        smallAdd.setOnClickListener(this);
-        smallSubtract.setOnClickListener(this);
-        doubleSubtract.setOnClickListener(this);
-        doubleAdd.setOnClickListener(this);
         ivTouzhu.setOnClickListener(this);
-
+        recharge.setOnClickListener(this);
 
         live_game.setOnClickListener(this);
         ivBig.setOnClickListener(this);
@@ -1457,6 +1440,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.recharge: //幸运28充值
+                showToast("暂不支持充值");
+                break;
             case R.id.iv_trend: //走势
                 showHistoryDialog(1);
                 break;
@@ -1466,43 +1452,22 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             case R.id.tv_rule: //规则
                 showHistoryDialog(3);
                 break;
-
-            case R.id.small_add:  //最小投注加
-                if (tzNumber == 160) {  //达到最大的投注
-                    return;
-                }
-                tzNumber = tzNumber * 2;
-                samllNumber.setText(String.valueOf(tzNumber));
-                break;
-            case R.id.small_subtract:  //最小投注减
-                String strNumber = samllNumber.getText().toString();
-                if (Integer.valueOf(strNumber) == 10) {
-                    return;
-                } else {
-                    tzNumber = Integer.valueOf(strNumber) / 2;
-                    samllNumber.setText(String.valueOf(tzNumber));
-                }
-
-                break;
-            case R.id.double_add:  //加倍投注加
-                if (jbNumber == 1000) {
-                    return;
-                }
-                jbNumber = jbNumber * 10;
-                doubleNumber.setText(String.valueOf(jbNumber));
-                break;
-            case R.id.double_subtract: //加倍投注减
-                String strdouNumber = doubleNumber.getText().toString();
-                if (Integer.valueOf(strdouNumber) == 1) {
-                    return;
-                } else {
-                    jbNumber = Integer.valueOf(strdouNumber) / 10;
-                    doubleNumber.setText(String.valueOf(jbNumber));
-                }
-                break;
             case R.id.iv_touzhu:  //投注
                 if (isTouZhu) {
-                    showTouZhuPop(selectStatus, jbNumber, tzNumber);
+                    if (TextUtils.isEmpty(etLuckyBet.getText().toString().trim())) {
+                        showToast(getString(R.string.lucky_set_empty));
+                        return;
+                    }
+                    luckySet = Integer.parseInt(etLuckyBet.getText().toString().trim());
+                    if (luckySet < 10) {
+                        showToast(getString(R.string.must_more_10));
+                        return;
+                    }
+                    if (luckySet > 1600000) {
+                        showToast(getString(R.string.must_small_160000));
+                        return;
+                    }
+                    showTouZhuPop(selectStatus, luckySet);
                 } else {
                     showToast("没有开奖信息,请稍候再试");
                 }
@@ -4369,7 +4334,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         lianmai_request_pop.setBackgroundDrawable(new BitmapDrawable());
         lianmai_request_pop.setOutsideTouchable(true);
         lianmai_request_pop.setAnimationStyle(R.style.mypopwindow_anim_style);
-        lianmai_request_pop.showAtLocation(doubleAdd, Gravity.BOTTOM, 0, 0);
+        lianmai_request_pop.showAtLocation(liveHead, Gravity.BOTTOM, 0, 0);
 
         AvatarView civ_image = (AvatarView) view.findViewById(R.id.civ_image);
         TextView tv_name = (TextView) view.findViewById(R.id.tv_name);
@@ -4524,7 +4489,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         otherPop.setBackgroundDrawable(new BitmapDrawable());
         otherPop.setOutsideTouchable(true);
         otherPop.setAnimationStyle(R.style.mypopwindow_anim_style);
-        otherPop.showAtLocation(doubleAdd, Gravity.BOTTOM, 0, 0);
+        otherPop.showAtLocation(liveHead, Gravity.BOTTOM, 0, 0);
 
         AvatarView civ_image = (AvatarView) view.findViewById(R.id.civ_image);
         LinearLayout buttom_layout = (LinearLayout) view.findViewById(R.id.buttom_layout);
@@ -5107,7 +5072,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     }
 
 
-    private void showTouZhuPop(String selectStatus, int jbNumber, int tzNumber) {
+    private void showTouZhuPop(String selectStatus, final int luckySet) {
         final CustomPopWindow rulePop = new CustomPopWindow(this);
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.pop_tou_zhu, null);
@@ -5117,7 +5082,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         rulePop.setFocusable(true);
         rulePop.setBackgroundDrawable(new BitmapDrawable());
         rulePop.setOutsideTouchable(true);
-        rulePop.showAtLocation(doubleAdd, Gravity.CENTER, 0, 0);
+        rulePop.showAtLocation(liveHead, Gravity.CENTER, 0, 0);
         TextView tv_tzqh = (TextView) view.findViewById(R.id.tv_tzqh);//投注期号
         TextView tv_ds = (TextView) view.findViewById(R.id.tv_ds);  //大小单双
         TextView tv_xzjf = (TextView) view.findViewById(R.id.tv_xzjf);  //下注积分
@@ -5125,8 +5090,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         ImageView colse_rule = (ImageView) view.findViewById(R.id.colse_rule);  //关闭弹框
 
         tv_ds.setText("大小单双：" + selectStatus);
-        strJinBi = String.valueOf(jbNumber * tzNumber);
-        tv_xzjf.setText("投注乐票：" + strJinBi);
+        tv_xzjf.setText("投注乐票：" + luckySet);
         intQh = Integer.valueOf(nper) + 1;
         tv_tzqh.setText("投注期号：" + intQh);
 
@@ -5139,25 +5103,25 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         sure_tz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (myGoldCoin < Long.parseLong(strJinBi)) {
+                if (myGoldCoin < luckySet) {
                     showToast("您的乐票不足,请充值");
                     rulePop.dismiss();
                 } else {
-                    sureTz(rulePop);
+                    sureTz(rulePop, luckySet);
                 }
             }
         });
     }
 
-    private void sureTz(final PopupWindow rulePop) {
+    private void sureTz(final PopupWindow rulePop, final int luckySet) {
         String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.reciveAmount;
 
         OkHttpUtils.get().url(url)
                 .addParams("userId", appUser.getId())
                 .addParams("roomId", room_Id)
                 .addParams("periods", intQh + "")
-                .addParams("amount", tzNumber + "")
-                .addParams("acountTimes", jbNumber + "")
+                .addParams("amount", luckySet + "")
+                .addParams("acountTimes", "1")
                 .addParams("gameType", "1")
                 .addParams("buyType", selectStatus)
                 .addParams("countryType", countryType).build().execute(new StringCallback() {
@@ -5178,7 +5142,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                             /**
                              * 设置游戏布局的金币数量
                              */
-                            myGoldCoin = myGoldCoin - Long.parseLong(strJinBi);
+                            myGoldCoin = myGoldCoin - luckySet;
                             String myCoin = CountUtils.getCount(myGoldCoin);
                             all_lepiao.setText(myCoin);
                             rulePop.dismiss();
@@ -5187,7 +5151,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                             map.put("vip", appUser.getVip());
                             map.put("userId", appUser.getId());
                             map.put("level", appUser.getLevel());
-                            map.put("inputMsg", intQh + "期 " + selectStatus + " 投注" + strJinBi + "乐票");
+                            map.put("inputMsg", intQh + "期 " + selectStatus + " 投注" + luckySet + "乐票");
                             SendRoomMessageUtils.onCustomMessagePlay("1818", messageFragment, wy_Id, map);
                         } else {
                             showToast(jsonObject.getString("msg"));

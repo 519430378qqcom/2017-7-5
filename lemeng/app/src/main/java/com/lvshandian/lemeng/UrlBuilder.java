@@ -17,11 +17,18 @@ public class UrlBuilder {
 //    public static final String CHARGE_SERVER_URL = "http://47.88.229.22:80/admin/";// 充值端口
 //    public static final String SERVER_URL_8080 = "http://47.88.229.22:8080/";// 服务器网址公网
 //    public static final String CHARGE_SERVER_URL_8080 = "http://47.88.229.22:8080/admin/";// 充值端口
+
     //乐檬测试服務器
     public static final String SERVER_URL = "http://60.205.114.36:80/";// 服务器网址公网
     public static final String CHARGE_SERVER_URL = "http://60.205.114.36:80/admin/";// 充值端口
     public static final String SERVER_URL_8080 = "http://60.205.114.36:8080/";// 服务器网址公网
     public static final String CHARGE_SERVER_URL_8080 = "http://60.205.114.36:8080/admin/";// 充值端口
+
+    //乐檬本地服務器
+//    public static final String SERVER_URL = "http://10.11.1.119:8080/";// 服务器网址公网
+//    public static final String CHARGE_SERVER_URL = "http://10.11.1.119:8081/admin/";// 充值端口
+//    public static final String SERVER_URL_8080 = "http://10.11.1.119:8080/";// 服务器网址公网
+//    public static final String CHARGE_SERVER_URL_8080 = "http://10.11.1.119:8080/admin/";// 充值端口
 
     //阿里云
     public static final String ALIYUN_IMG = "http://lemeng.oss-ap-southeast-1.aliyuncs.com/";//阿里云图片視頻生成地址

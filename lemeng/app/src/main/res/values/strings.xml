@@ -139,6 +139,8 @@
     <string name="the_user">本家</string>
     <string name="banker">庄家</string>
     <string name="take_a_rest">休息一下</string>
+    <string name="intput_lucky_bet">最低:10 最高:1600000</string>
+
     <!--吐司提示-->
     <string name="user_name_error">用户名不正确</string>
     <string name="register_success">注册成功</string>
@@ -168,6 +170,9 @@
     <string name="uploading_take_id_number_phone_failure">上传手持身份证正面照失败</string>
     <string name="uselect_phone_failure">选取照片失败</string>
     <string name="nickname_empty">昵称不能为空</string>
+    <string name="lucky_set_empty">请输入投注金额</string>
+    <string name="must_more_10">投注金额必须大于10</string>
+    <string name="must_small_160000">投注金额必须小于160000</string>
 
     <!--参数-->
     <string name="web_flag">WEB_FLAG</string>

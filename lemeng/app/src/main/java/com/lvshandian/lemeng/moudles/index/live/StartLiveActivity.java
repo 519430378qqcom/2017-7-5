@@ -132,10 +132,6 @@ import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.utils.ThreadManager;
 import com.lvshandian.lemeng.utils.ToastUtils;
 import com.lvshandian.lemeng.utils.UMUtils;
-import com.lvshandian.lemeng.widget.view.BarrageView;
-import com.lvshandian.lemeng.widget.view.CustomPopWindow;
-import com.lvshandian.lemeng.widget.view.RotateLayout;
-import com.lvshandian.lemeng.widget.view.RoundDialog;
 import com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragment;
 import com.lvshandian.lemeng.wangyiyunxin.chatroom.helper.ChatRoomMemberCache;
 import com.lvshandian.lemeng.wangyiyunxin.live.fragment.ChatRoomSessionListFragment;
@@ -144,14 +140,18 @@ import com.lvshandian.lemeng.wangyiyunxin.main.helper.SystemMessageUnreadManager
 import com.lvshandian.lemeng.wangyiyunxin.main.reminder.ReminderItem;
 import com.lvshandian.lemeng.wangyiyunxin.main.reminder.ReminderManager;
 import com.lvshandian.lemeng.wangyiyunxin.main.reminder.ReminderSettings;
-import com.lvshandian.lemeng.widget.view.AvatarView;
-import com.lvshandian.lemeng.widget.view.TimeCountDownLayout;
 import com.lvshandian.lemeng.widget.lrcview.LrcView;
 import com.lvshandian.lemeng.widget.myrecycler.RefreshRecyclerView;
 import com.lvshandian.lemeng.widget.myrecycler.manager.RecyclerMode;
 import com.lvshandian.lemeng.widget.myrecycler.manager.RecyclerViewManager;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefresh;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout;
+import com.lvshandian.lemeng.widget.view.AvatarView;
+import com.lvshandian.lemeng.widget.view.BarrageView;
+import com.lvshandian.lemeng.widget.view.CustomPopWindow;
+import com.lvshandian.lemeng.widget.view.RotateLayout;
+import com.lvshandian.lemeng.widget.view.RoundDialog;
+import com.lvshandian.lemeng.widget.view.TimeCountDownLayout;
 import com.netease.nim.uikit.NimUIKit;
 import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
 import com.netease.nim.uikit.common.ui.drop.DropFake;
@@ -368,20 +368,12 @@ public class StartLiveActivity extends BaseActivity implements
     ImageView ivMoreSamll;
     @Bind(R.id.tv_more_samll)
     TextView tvMoreSamll;
-    @Bind(R.id.small_add)
-    ImageView smallAdd;
-    @Bind(R.id.samll_number)
-    TextView samllNumber;
-    @Bind(R.id.small_subtract)
-    ImageView smallSubtract;
-    @Bind(R.id.double_subtract)
-    ImageView doubleSubtract;
-    @Bind(R.id.double_number)
-    TextView doubleNumber;
-    @Bind(R.id.double_add)
-    ImageView doubleAdd;
     @Bind(R.id.iv_touzhu)
     ImageView ivTouzhu;
+    @Bind(R.id.lucky_bet)
+    EditText etLuckyBet;
+    @Bind(R.id.recharge)
+    TextView recharge;
     @Bind(R.id.tv_rule)
     ImageView tv_rule;
     @Bind(R.id.ll_trendOrHistory)
@@ -583,8 +575,8 @@ public class StartLiveActivity extends BaseActivity implements
      */
     private BullfightAudio bullfightAudio;
     //<end------------斗牛游戏部分-------------->
-    private int tzNumber = 10;
-    private int jbNumber = 1;
+
+    private int luckySet;
 
     private ArrayList<Integer> JbList = new ArrayList<>();
 
@@ -823,7 +815,6 @@ public class StartLiveActivity extends BaseActivity implements
     private String nper;
     private int intQh;
     private String countryType;
-    private String strJinBi;
     private boolean isTouZhu;//是否可以投注
 
 
@@ -899,8 +890,6 @@ public class StartLiveActivity extends BaseActivity implements
         dialogForSelect = new Dialog(this, R.style.homedialog);
         initQuitDialog();
 
-        samllNumber.setText(String.valueOf(tzNumber));
-        doubleNumber.setText(String.valueOf(jbNumber));
         initSelectStatus();
     }
 
@@ -916,12 +905,8 @@ public class StartLiveActivity extends BaseActivity implements
         iv_trend.setOnClickListener(this);
         iv_history.setOnClickListener(this);
         tv_rule.setOnClickListener(this);
-        smallAdd.setOnClickListener(this);
-        smallSubtract.setOnClickListener(this);
-        doubleSubtract.setOnClickListener(this);
-        doubleAdd.setOnClickListener(this);
         ivTouzhu.setOnClickListener(this);
-
+        recharge.setOnClickListener(this);
 
         live_game.setOnClickListener(this);
         ivBig.setOnClickListener(this);
@@ -952,6 +937,7 @@ public class StartLiveActivity extends BaseActivity implements
         startRoomJaiZu.setOnClickListener(this);
         roomShowId.setOnClickListener(this);
         game_more_btn.setOnClickListener(this);
+        ivTouzhu.setOnClickListener(this);
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -980,15 +966,10 @@ public class StartLiveActivity extends BaseActivity implements
 
     @Override
     public void onClick(View v) {
-
-        smallAdd.setOnClickListener(this);
-        smallSubtract.setOnClickListener(this);
-        doubleSubtract.setOnClickListener(this);
-        doubleAdd.setOnClickListener(this);
-        ivTouzhu.setOnClickListener(this);
-
-
         switch (v.getId()) {
+            case R.id.recharge: //幸运28充值
+                showToast("暂不支持充值");
+                break;
             case R.id.iv_trend: //走势
                 showHistoryDialog(1);
                 break;
@@ -999,43 +980,22 @@ public class StartLiveActivity extends BaseActivity implements
             case R.id.tv_rule: //规则
                 showHistoryDialog(3);
                 break;
-            case R.id.small_add:  //最小投注加
-                if (tzNumber == 160) {  //达到最大的投注
-                    return;
-                }
-                tzNumber = tzNumber * 2;
-                samllNumber.setText(String.valueOf(tzNumber));
-                break;
-            case R.id.small_subtract:  //最小投注减
-                String strNumber = samllNumber.getText().toString();
-                if (Integer.valueOf(strNumber) == 10) {
-                    return;
-                } else {
-                    tzNumber = Integer.valueOf(strNumber) / 2;
-                    samllNumber.setText(String.valueOf(tzNumber));
-                }
-
-                break;
-            case R.id.double_add:  //加倍投注加
-                if (jbNumber == 1000) {
-                    return;
-                }
-                jbNumber = jbNumber * 10;
-                doubleNumber.setText(String.valueOf(jbNumber));
-                break;
-            case R.id.double_subtract: //加倍投注减
-
-                String strdouNumber = doubleNumber.getText().toString();
-                if (Integer.valueOf(strdouNumber) == 1) {
-                    return;
-                } else {
-                    jbNumber = Integer.valueOf(strdouNumber) / 10;
-                    doubleNumber.setText(String.valueOf(jbNumber));
-                }
-                break;
             case R.id.iv_touzhu:  //投注
                 if (isTouZhu) {
-                    showTouZhuPop(selectStatus, jbNumber, tzNumber);
+                    if (TextUtils.isEmpty(etLuckyBet.getText().toString().trim())) {
+                        showToast(getString(R.string.lucky_set_empty));
+                        return;
+                    }
+                    luckySet = Integer.parseInt(etLuckyBet.getText().toString().trim());
+                    if (luckySet < 10) {
+                        showToast(getString(R.string.must_more_10));
+                        return;
+                    }
+                    if (luckySet > 1600000) {
+                        showToast(getString(R.string.must_small_160000));
+                        return;
+                    }
+                    showTouZhuPop(selectStatus, luckySet);
                 } else {
                     showToast("没有开奖信息,请稍候再试");
                 }
@@ -4314,7 +4274,7 @@ public class StartLiveActivity extends BaseActivity implements
         lianmai_search.setBackgroundDrawable(new BitmapDrawable());
         lianmai_search.setOutsideTouchable(true);
         lianmai_search.setAnimationStyle(R.style.mypopwindow_anim_style);
-        lianmai_search.showAtLocation(doubleAdd, Gravity.BOTTOM, 0, 0);
+        lianmai_search.showAtLocation(liveHead, Gravity.BOTTOM, 0, 0);
 
         final EditText et_search_input = (EditText) view.findViewById(R.id.et_search_input);
         ImageView iv_search = (ImageView) view.findViewById(R.id.iv_search);
@@ -4502,7 +4462,7 @@ public class StartLiveActivity extends BaseActivity implements
         otherPop.setBackgroundDrawable(new BitmapDrawable());
         otherPop.setOutsideTouchable(true);
         otherPop.setAnimationStyle(R.style.mypopwindow_anim_style);
-        otherPop.showAtLocation(doubleAdd, Gravity.BOTTOM, 0, 0);
+        otherPop.showAtLocation(liveHead, Gravity.BOTTOM, 0, 0);
 
         AvatarView civ_image = (AvatarView) view.findViewById(R.id.civ_image);
         LinearLayout buttom_layout = (LinearLayout) view.findViewById(R.id.buttom_layout);
@@ -5119,7 +5079,7 @@ public class StartLiveActivity extends BaseActivity implements
     }
 
 
-    private void showTouZhuPop(String selectStatus, int jbNumber, int tzNumber) {
+    private void showTouZhuPop(String selectStatus, final int luckySet) {
         final CustomPopWindow rulePop = new CustomPopWindow(this);
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.pop_tou_zhu, null);
@@ -5130,7 +5090,7 @@ public class StartLiveActivity extends BaseActivity implements
         rulePop.setBackgroundDrawable(new BitmapDrawable());
         rulePop.setOutsideTouchable(true);
 
-        rulePop.showAtLocation(doubleAdd, Gravity.CENTER, 0, 0);
+        rulePop.showAtLocation(liveHead, Gravity.CENTER, 0, 0);
         TextView tv_tzqh = (TextView) view.findViewById(R.id.tv_tzqh);//投注期号
         TextView tv_ds = (TextView) view.findViewById(R.id.tv_ds);  //大小单双
         TextView tv_xzjf = (TextView) view.findViewById(R.id.tv_xzjf);  //下注积分
@@ -5138,19 +5098,18 @@ public class StartLiveActivity extends BaseActivity implements
         ImageView colse_rule = (ImageView) view.findViewById(R.id.colse_rule);  //关闭弹框
 
         tv_ds.setText("大小单双：" + selectStatus);
-        strJinBi = String.valueOf(jbNumber * tzNumber);
-        tv_xzjf.setText("投注乐票：" + strJinBi);
+        tv_xzjf.setText("投注乐票：" + luckySet);
         intQh = Integer.valueOf(nper) + 1;
         tv_tzqh.setText("投注期号：" + intQh);
 
         sure_tz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (myGoldCoin < Long.parseLong(strJinBi)) {
+                if (myGoldCoin < luckySet) {
                     showToast("您的乐票不足,请充值");
                     rulePop.dismiss();
                 } else {
-                    sureTz(rulePop);
+                    sureTz(rulePop, luckySet);
                 }
             }
         });
@@ -5165,15 +5124,15 @@ public class StartLiveActivity extends BaseActivity implements
     }
 
 
-    private void sureTz(final PopupWindow rulePop) {
+    private void sureTz(final PopupWindow rulePop, final int luckySet) {
         String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.reciveAmount;
         LogUtils.e("countryType :" + countryType);
         OkHttpUtils.get().url(url)
                 .addParams("userId", appUser.getId())
                 .addParams("roomId", room_Id)
                 .addParams("periods", intQh + "")
-                .addParams("amount", tzNumber + "")
-                .addParams("acountTimes", jbNumber + "")
+                .addParams("amount", luckySet + "")
+                .addParams("acountTimes", "1")
                 .addParams("gameType", "1")
                 .addParams("buyType", selectStatus)
                 .addParams("countryType", countryType).build().execute(new StringCallback() {
@@ -5194,7 +5153,7 @@ public class StartLiveActivity extends BaseActivity implements
                             /**
                              * 设置游戏布局的金币数量
                              */
-                            myGoldCoin = myGoldCoin - Long.parseLong(strJinBi);
+                            myGoldCoin = myGoldCoin - luckySet;
                             String myCoin = CountUtils.getCount(myGoldCoin);
                             all_lepiao.setText(myCoin);
                             rulePop.dismiss();
@@ -5203,7 +5162,7 @@ public class StartLiveActivity extends BaseActivity implements
                             map.put("vip", appUser.getVip());
                             map.put("userId", appUser.getId());
                             map.put("level", appUser.getLevel());
-                            map.put("inputMsg", intQh + "期 " + selectStatus + " 投注" + strJinBi + "乐票");
+                            map.put("inputMsg", intQh + "期 " + selectStatus + " 投注" + luckySet + "乐票");
                             SendRoomMessageUtils.onCustomMessagePlay("1818", messageFragment, wy_Id, map);
                         } else {
                             showToast(jsonObject.getString("msg"));
