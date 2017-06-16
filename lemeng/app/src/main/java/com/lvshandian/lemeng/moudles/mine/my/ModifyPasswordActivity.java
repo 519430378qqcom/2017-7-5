@@ -29,10 +29,8 @@ import java.util.Map;
 import butterknife.Bind;
 
 /**
- * Created by gjj on 2016/11/18.
  * 修改密码
  */
-
 public class ModifyPasswordActivity extends BaseActivity {
     @Bind(R.id.et_old_password)
     EditText etOldPassword;
@@ -47,9 +45,8 @@ public class ModifyPasswordActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case RequestCode.MODIFY_PASSWORD:
-                    showToast("修改密码成功");
+                    showToast(getString(R.string.change_password_succeed));
                     String info = msg.getData().getString(HttpDatas.info);
-                    LogUtils.e("修改密码: " + info);
                     quitLogin();
                     break;
             }
@@ -68,7 +65,7 @@ public class ModifyPasswordActivity extends BaseActivity {
 
     @Override
     protected void initialized() {
-        initTitle("", "修改密码", null);
+        initTitle("", getString(R.string.change_password), null);
     }
 
     /**
@@ -109,7 +106,7 @@ public class ModifyPasswordActivity extends BaseActivity {
         Map<String, String> params = new HashMap<>();
         params.put("id", appUser.getId());
         params.put("password", etNewPassword.getText().toString().trim());
-        httpDatas.getDataForJson("修改密码", Request.Method.POST, urlBuilder.modifyPass, params, handler, RequestCode.MODIFY_PASSWORD);
+        httpDatas.getDataForJson("修改密码", Request.Method.POST, urlBuilder.MODIFY_PASSWORD, params, handler, RequestCode.MODIFY_PASSWORD);
     }
 
 
@@ -126,7 +123,7 @@ public class ModifyPasswordActivity extends BaseActivity {
 
             String etOldPass = etOldPassword.getText().toString().trim();
             if (TextUtils.isEmpty(etOldPass)) {
-                showToast("请输入旧密码");
+                showToast(getString(R.string.old_password_hint));
                 return false;
             }
 //            LoginFrom from = (LoginFrom) CacheUtils.readObject(this, CacheUtils.PASSWORD);
@@ -138,29 +135,28 @@ public class ModifyPasswordActivity extends BaseActivity {
                     LogUtils.e("oldPassWord: " + oldPassword);
                     LogUtils.e("etOldPass: " + etOldPass);
                     if (!android.text.TextUtils.equals(oldPassword, etOldPass)) {
-                        showToast("旧密码不正确");
+                        showToast(getString(R.string.old_password_failure));
                         return false;
                     }
                 }
             }
 
-
             String newPass = etNewPassword.getText().toString().trim();
             String repeatPass = etRepeatPassword.getText().toString().trim();
             if (android.text.TextUtils.isEmpty(newPass)) {
-                showToast("请输入新密码");
+                showToast(getString(R.string.new_password_hint));
                 return false;
             }
             if (android.text.TextUtils.isEmpty(repeatPass)) {
-                showToast("请确认新密码");
+                showToast(getString(R.string.again_new_password_hint));
                 return false;
             }
             if (!android.text.TextUtils.equals(repeatPass, newPass)) {
-                showToast("两次输入的密码不一致");
+                showToast(getString(R.string.password_different_twice));
                 return false;
             }
             if (newPass.equals(from.getPassword())) {
-                showToast("新密码不能与旧密码相同");
+                showToast(getString(R.string.new_and_old_password_must_different));
                 return false;
             }
         }

@@ -2426,7 +2426,7 @@ public class StartLiveActivity extends BaseActivity implements
 
     private void request() {
         RequestParams params = new RequestParams(UrlBuilder.CHARGE_SERVER_URL + UrlBuilder
-                .myController);
+                .MY_CONTROLLER);
         params.addQueryStringParameter("page", 1 + "");
         params.addQueryStringParameter("rows", "10");
         params.addQueryStringParameter("userId", appUser.getId());

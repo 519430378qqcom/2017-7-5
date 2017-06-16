@@ -40,7 +40,7 @@
                 android:layout_centerInParent="true"
                 android:gravity="center_vertical"
                 android:textColor="@color/black"
-                android:text="我的场控"
+                android:text="@string/my_field_control"
                 android:textIsSelectable="false"
                 android:textSize="34px" />
 

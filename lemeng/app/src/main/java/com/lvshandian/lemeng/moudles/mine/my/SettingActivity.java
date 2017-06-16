@@ -31,12 +31,9 @@ import org.greenrobot.eventbus.EventBus;
 import butterknife.Bind;
 
 /**
- * Created by gjj on 2016/11/18.
  * 设置页面
  */
-
 public class SettingActivity extends BaseActivity {
-
     @Bind(R.id.copy)
     TextView copy;
     @Bind(R.id.rl_account_safety)
@@ -93,7 +90,7 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     protected void initialized() {
-        initTitle("", "设置", null);
+        initTitle("", getString(R.string.settings), null);
         setCache();
         initQuitDialog();
         initClearCacheDialog();
@@ -120,7 +117,7 @@ public class SettingActivity extends BaseActivity {
                 ClipboardManager copy = (ClipboardManager) mContext
                         .getSystemService(mContext.CLIPBOARD_SERVICE);
                 copy.setText(numstr);
-                showToast("复制成功");
+                showToast(getString(R.string.copy_succeed));
                 break;
             case R.id.rl_account_safety:  //账号安全
                 gotoActivity(ModifyPasswordActivity.class, false);
@@ -273,7 +270,7 @@ public class SettingActivity extends BaseActivity {
         TextView tvTitle = (TextView) view.findViewById(R.id.tv_title);
         TextView tvCancel = (TextView) view.findViewById(R.id.tv_cancel);
         TextView tvSure = (TextView) view.findViewById(R.id.tv_sure);
-        tvTitle.setText("确认清除本地缓存?");
+        tvTitle.setText(getString(R.string.if_clear_cache));
         tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

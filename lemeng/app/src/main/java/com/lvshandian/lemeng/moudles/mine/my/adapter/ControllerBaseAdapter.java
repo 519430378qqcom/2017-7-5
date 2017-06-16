@@ -94,7 +94,7 @@ public class ControllerBaseAdapter extends BaseAdapter {
      */
     private void requestControllerDelete(String userControlId, final int position) {
 
-        RequestParams params = new RequestParams(UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.myControllerDelete);
+        RequestParams params = new RequestParams(UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.MY_CONTROLLER_DELETE);
         params.addQueryStringParameter("userId", appuserid);
         params.addQueryStringParameter("userControlId", userControlId);
         x.http().get(params, new Callback.CommonCallback<String>() {
@@ -113,7 +113,7 @@ public class ControllerBaseAdapter extends BaseAdapter {
                         ToastUtils.showMessageCenter(context, newSdkhttpResult.getMsg());
                     }
                 } else {
-                    ToastUtils.showMessageCenter(context, "操作失败");
+                    ToastUtils.showMessageCenter(context, context.getResources().getString(R.string.operation_failure));
                 }
 
             }

@@ -23,7 +23,6 @@ import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.moudles.mine.my.adapter.ControllerBaseAdapter;
 import com.lvshandian.lemeng.utils.JsonUtil;
-import com.lvshandian.lemeng.utils.LogUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -35,9 +34,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by zhang on 2017/3/13.
+ * 我的场控
  */
-
 public class MyControllerActivity extends BaseActivity {
     @Bind(R.id.lv)
     ListView lv;
@@ -66,7 +64,6 @@ public class MyControllerActivity extends BaseActivity {
             String json = data.getString(HttpDatas.obj);
             switch (msg.what) {
                 case RequestCode.MYCONTROLLER://我的場控
-                    LogUtils.e("json" + json.toString());
                     List<ControllerBean> list = JsonUtil.json2BeanList(json.toString(), ControllerBean.class);
                     if (null == list || list.size() == 0) {
                         if (page == 1) {
@@ -110,7 +107,6 @@ public class MyControllerActivity extends BaseActivity {
     }
 
     private void initView() {
-
         int[] colors = new int[1];
         colors[0] = getResources().getColor(R.color.main);
         refresh.setProgressColors(colors);
@@ -151,7 +147,7 @@ public class MyControllerActivity extends BaseActivity {
         map.put("page", page + "");
         map.put("rows", "10");
         map.put("userId", appUser.getId());
-        httpDatas.getNewDataCharServer("我的场控列表", Request.Method.GET, UrlBuilder.myController, map, mHandler, RequestCode.MYCONTROLLER);
+        httpDatas.getNewDataCharServer("我的场控列表", Request.Method.GET, UrlBuilder.MY_CONTROLLER, map, mHandler, RequestCode.MYCONTROLLER);
 
     }
 

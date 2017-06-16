@@ -66,9 +66,9 @@ public class UserControllerAdapter extends BaseAdapter {
         tv_nick_name.setText(u.getNickName());
         tv_data.setText(u.getSignature());
         if (u.getControllFlag() == 1) {
-            setText(tv_cancle, "取消场控");
+            setText(tv_cancle, context.getResources().getString(R.string.cancel_field_control));
         } else {
-            setText(tv_cancle, "成为场控");
+            setText(tv_cancle, context.getResources().getString(R.string.set_field_control));
         }
         tv_cancle.setOnClickListener(new MyOnclick(position, tv_cancle));
         return convertView;
@@ -76,12 +76,12 @@ public class UserControllerAdapter extends BaseAdapter {
 
 
     public void setText(TextView tv_cancle, String stringText) {
-        if (stringText.equals("取消场控")) {
-            tv_cancle.setText("取消场控");
+        if (stringText.equals(context.getResources().getString(R.string.cancel_field_control))) {
+            tv_cancle.setText(context.getResources().getString(R.string.cancel_field_control));
             tv_cancle.setTextColor(context.getResources().getColor(R.color.black));
             tv_cancle.setBackground(context.getResources().getDrawable(R.drawable.selector_contrler));
         } else {
-            tv_cancle.setText("成为场控");
+            tv_cancle.setText(context.getResources().getString(R.string.set_field_control));
             tv_cancle.setTextColor(context.getResources().getColor(R.color.main));
             tv_cancle.setBackground(context.getResources().getDrawable(R.drawable.selector_contrler_select));
         }
@@ -103,7 +103,7 @@ public class UserControllerAdapter extends BaseAdapter {
         public void onClick(View v) {
 
             String textString = tv.getText().toString();
-            if (textString.equals("成为场控")) {
+            if (textString.equals(context.getResources().getString(R.string.set_field_control))) {
                 requestControllerAdd(users.get(position).getId(), tv);
             } else {
                 requestControllerDelete(users.get(position).getId(), tv);
@@ -116,7 +116,7 @@ public class UserControllerAdapter extends BaseAdapter {
      */
     private void requestControllerDelete(String userControlId, final TextView tv) {
 
-        RequestParams params = new RequestParams(UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.myControllerDelete);
+        RequestParams params = new RequestParams(UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.MY_CONTROLLER_DELETE);
         params.addQueryStringParameter("userId", appuserid);
         params.addQueryStringParameter("userControlId", userControlId);
         x.http().get(params, new Callback.CommonCallback<String>() {
@@ -126,14 +126,14 @@ public class UserControllerAdapter extends BaseAdapter {
                 NewSdkHttpResult newSdkhttpResult = JsonUtil.json2Bean(result.toString(), NewSdkHttpResult.class);
                 if (newSdkhttpResult.isSuccess()) {
                     if (newSdkhttpResult.getCode() == 1) {
-                        setText(tv, "成为场控");
+                        setText(tv, context.getResources().getString(R.string.set_field_control));
                     } else if (newSdkhttpResult.getCode() == 2 || newSdkhttpResult.getCode() == 3) {
                         ToastUtils.showMessageCenter(context, newSdkhttpResult.getMsg());
                     }
                     SearchControllerActivity.getInstance().reflash();
                 } else {
-                    ToastUtils.showMessageCenter(context, "操作失败");
-                    setText(tv, "取消场控");
+                    ToastUtils.showMessageCenter(context, context.getResources().getString(R.string.operation_failure));
+                    setText(tv, context.getResources().getString(R.string.cancel_field_control));
                 }
 
             }
@@ -160,7 +160,7 @@ public class UserControllerAdapter extends BaseAdapter {
      */
     private void requestControllerAdd(String userControlId, final TextView tv) {
 
-        RequestParams params = new RequestParams(UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.myControllerAdd);
+        RequestParams params = new RequestParams(UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.MY_CONTROLLER_ADD);
         params.addQueryStringParameter("userId", appuserid);
         params.addQueryStringParameter("userControlId", userControlId);
         x.http().get(params, new Callback.CommonCallback<String>() {
@@ -169,14 +169,14 @@ public class UserControllerAdapter extends BaseAdapter {
                 NewSdkHttpResult newSdkhttpResult = JsonUtil.json2Bean(result.toString(), NewSdkHttpResult.class);
                 if (newSdkhttpResult.isSuccess()) {
                     if (newSdkhttpResult.getCode() == 1) {
-                        setText(tv, "取消场控");
+                        setText(tv, context.getResources().getString(R.string.cancel_field_control));
                     } else if (newSdkhttpResult.getCode() == 2 || newSdkhttpResult.getCode() == 3) {
                         ToastUtils.showMessageCenter(context, newSdkhttpResult.getMsg());
                     }
                     SearchControllerActivity.getInstance().reflash();
                 } else {
-                    ToastUtils.showMessageCenter(context, "操作失败");
-                    setText(tv, "成为场控");
+                    ToastUtils.showMessageCenter(context, context.getResources().getString(R.string.operation_failure));
+                    setText(tv, context.getResources().getString(R.string.set_field_control));
                 }
             }
 

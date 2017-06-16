@@ -35,7 +35,6 @@
                 android:id="@+id/nick_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="阿楠"
                 android:textColor="@color/action_bar_black_title_color"
                 android:textSize="25px" />
 
@@ -43,7 +42,6 @@
                 android:id="@+id/tv_data"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="你好"
                 android:textColor="@color/color_grey_999999"
                 android:textSize="20px" />
 
@@ -61,7 +59,7 @@
             android:paddingLeft="20px"
             android:paddingRight="20px"
             android:paddingTop="10px"
-            android:text="取消场控"
+            android:text="@string/cancel_field_control"
             android:textColor="@color/black"
             android:textSize="20px" />
     </com.zhy.autolayout.AutoRelativeLayout>

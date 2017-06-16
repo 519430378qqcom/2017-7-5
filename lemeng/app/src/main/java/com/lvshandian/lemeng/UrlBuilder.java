@@ -46,6 +46,8 @@ public class UrlBuilder {
     public static final String SHARE_VIDEO_URL = SERVER_URL_8080 +"videoShare/liveShare.html?roomId=%s&userId=%s&videoPath=%s";//分享直播链接
     public static final String SHARE_DOWNLOAD_URL = SERVER_URL_8080 +"shareNew/share.html";//分享下载链接
 
+    public static final String BAIDU_SONG_SEARCH = "http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.search.catalogSug&query=%s";//搜索
+    public static final String BAIDU_SONG_PLAY = "http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.song.play&songid=%s";//得到下载的url
     public static final String HEAD_DEFAULT = "http://lemeng.oss-ap-southeast-1.aliyuncs.com/lemengImg/1495594583610.png";//默认像地址
     public static final String LOGIN = "/api/v1/login";    //登录
     public static final String OPEN_REGISTER = "/appusers/open/register";//第三方登录
@@ -67,28 +69,25 @@ public class UrlBuilder {
     public static final String MY_VIDEO_UPLOAD = "/api/v1/user/album/video";//我的界面图片上传
     public static final String ALIYUN = "/aliyun/token";    //请求阿里云id、key
     public static final String EDIT_PROFILE = "/appusers/update";    //修改用户信息
-
+    public static final String MY_CONTROLLER = "appUserControl/getUserControlList";//我的场控列表
+    public static final String MY_CONTROLLER_ADD = "appUserControl/add";//我的场控添加
+    public static final String MY_CONTROLLER_DELETE = "appUserControl/delete";//我的场控刪除
+    public static final String IF_ATTENTION = "/appusers/user/info";//请求别人信息
+    public static final String MODIFY_PASSWORD = "/api/v1/user/password";   //修改密码
+    public static final String SEARCH = "/api/v1/user/find";//搜索用户
+    public static final String SEARCH_CONTROLLER = "/appusers/find";//搜索用户场控
 
 
     public static final String appRooms = "/appRooms/getRooms";// type=1热门，type = 2最新，type ==3 地方北京市直播
     public static final String GET_GIFT = "/appGift/findGift";//获取礼物列表
-    public static final String modifyPass = "/api/v1/user/password";   //修改密码
     public static final String selectLevel = "/appLevel/getLevelRate";  //查询当前等级信息
     public static final String START_JOIN_ROOM = "/appRooms/getShareRoom";    //进入直播间
     public static final String selectQuite = "/appusers/getUserById";//主播离开后获取直播信息
     public static final String selectFamilyMember = "/appusers/selectFamilyMember.do";//家族
-    public static final String myController = "appUserControl/getUserControlList";//我的场控列表
-    public static final String myControllerAdd = "appUserControl/add";//我的场控添加
-    public static final String myControllerDelete = "appUserControl/delete";//我的场控刪除
     public static final String appUserControl = "appUserControl/stopUser";//禁言
     public static final String START = "/api/v1/room/create/";//新建直播/api/v1/room/create
-    public static final String SEARCH = "/api/v1/user/find";//搜索用户
-    public static final String SEARCH_CONTROLLER = "/appusers/find";//搜索用户场控
-    public static final String BAIDU_SONG_SEARCH = "http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.search.catalogSug&query=%s";//搜索
-    public static final String BAIDU_SONG_PLAY = "http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.song.play&songid=%s";//得到下载的url
     public static final String getBanner = "/appCarouselFigure/carouselList";//得到banner图
     public static final String room_funse = "/appRooms/findFansOnline";//直播间的粉丝列表
-    public static final String IF_ATTENTION = "/appusers/user/info";//请求别人信息
     public static final String SEND_GIFT = "/appRooms/reward";//送礼物
     public static final String joinRoom = "/api/v1/room/";//加入直播间
     public static final String ifEnter = "/appRooms/ifEnter";//判断是否进入过该房间

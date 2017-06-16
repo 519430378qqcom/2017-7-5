@@ -319,7 +319,7 @@ public class RegisterActivity extends BaseActivity {
             public void onFailed(int code) {
                 onLoginDone();
                 if (code == 302 || code == 404) {
-                    showToast(R.string.login_error);
+                    showToast(R.string.login_failed);
                 } else {
                     showToast(getString(R.string.login_failure) + code);
                 }

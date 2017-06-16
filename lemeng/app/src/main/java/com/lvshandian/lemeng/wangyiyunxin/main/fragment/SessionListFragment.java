@@ -165,7 +165,7 @@ public class SessionListFragment extends MainTabFragment {
 
         if (code == StatusCode.PWD_ERROR) {
             LogUtil.e("Auth", "user password error");
-            Toast.makeText(getActivity(), R.string.login_error, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.login_failed, Toast.LENGTH_SHORT).show();
         } else {
             LogUtil.i("Auth", "Kicked!");
         }

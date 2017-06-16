@@ -47,8 +47,7 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:background="@null"
-                android:hint="请输入ID或者昵称"
-                android:text=""
+                android:hint="@string/input_id_or_nickname"
                 android:textSize="15dp" />
         </com.zhy.autolayout.AutoRelativeLayout>
 

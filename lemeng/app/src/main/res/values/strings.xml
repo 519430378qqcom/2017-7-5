@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name">乐檬直播</string>
     <!--标题栏-->
-    <string name="login">登录</string>
-    <string name="register">注册</string>
     <string name="retrieve_password">找回密码</string>
     <string name="top_up_recharge">乐票充值</string>
     <string name="user_agreement">用户协议</string>
@@ -12,6 +10,7 @@
     <string name="my_lepiao">我的乐票</string>
     <string name="state_code">国家代码</string>
     <string name="edit_profile">编辑资料</string>
+    <string name="change_password">修改密码</string>
     <!--注册登录部分-->
     <string name="agree_term_of_service">登入即代表您同意《服务条款》</string>
     <string name="mobile_terminal">移动端</string>
@@ -59,7 +58,6 @@
     <string name="ljgg">垃圾广告</string>
     <string name="wfxx">违法信息</string>
     <string name="qzpq">欺诈骗钱</string>
-    <string name="other">其他</string>
     <string name="address">地址</string>
     <string name="contribution_lepiao_num">贡献 %1$s 乐票</string>
     <!--提现部分-->
@@ -84,7 +82,6 @@
     <string name="wait_authentication">您的申请已提交,请耐心等待审核</string>
     <string name="real_name">真实姓名</string>
     <string name="please_input_real_name">请输入真实姓名</string>
-    <string name="phone_number">手机号码</string>
     <string name="please_input_phone">请输入手机号码</string>
     <string name="id_number">身份证号</string>
     <string name="please_input_id_number">请输入身份证号</string>
@@ -109,24 +106,37 @@
     <string name="upgrade_need_empirical_value">升级还需经验值:%1$s</string>
     <!--修改资料部分-->
     <string name="save">保存</string>
-    <string name="nickname">昵 称</string>
-    <string name="gender">性 别</string>
-    <string name="signature">签 名</string>
     <string name="constellation">星 座</string>
     <string name="location">所在地</string>
-    <string name="head">头 像</string>
-    <string name="male">男</string>
-    <string name="female">女</string>
     <string name="input_signature">请输入您的签名</string>
-    <string name="input_nickname">请输入您的昵称</string>
-    <string name="done">完成</string>
     <string name="select_location">选择地区</string>
     <string name="look_male">看男神</string>
     <string name="look_female">看女神</string>
     <string name="looks_all">看全部</string>
     <string name="avatar_setting">设为头像</string>
     <string name="picture_delete">删除图片</string>
-
+    <!--设置部分-->
+    <string name="lemeng_account">账户</string>
+    <string name="lemeng_id_tv">乐檬号</string>
+    <string name="copy">复制</string>
+    <string name="account_and_security">账号与安全</string>
+    <string name="my_field_control">我的场控</string>
+    <string name="cancel_field_control">取消场控</string>
+    <string name="set_field_control">设置场控</string>
+    <string name="clear_cache">清理缓存</string>
+    <string name="user_feedback">用户反馈</string>
+    <string name="log_out">退出登录</string>
+    <string name="if_log_out">是否退出登录</string>
+    <string name="if_clear_cache">是否清除缓存</string>
+    <string name="old_password">旧密码</string>
+    <string name="old_password_hint">请输入旧密码</string>
+    <string name="new_password">新密码</string>
+    <string name="new_password_hint">请输入新密码</string>
+    <string name="again_new_password">重复密码</string>
+    <string name="again_new_password_hint">请再次输入新密码</string>
+    <string name="old_password_failure">旧密码输入不正确</string>
+    <string name="password_different_twice">两次输入的密码不一致</string>
+    <string name="new_and_old_password_must_different">新密码不能与旧密码相同</string>
 
     <!--直播部分-->
     <string name="share_live_title">主播%1$s邀你玩游戏啦</string>
@@ -148,7 +158,6 @@
 
     <!--吐司提示-->
     <string name="user_name_error">用户名不正确</string>
-    <string name="register_success">注册成功</string>
     <string name="edit_success">修改成功</string>
     <string name="validate_code_sent">验证码已发送</string>
     <string name="validate_code_sent_failure">验证码发送失败</string>
@@ -174,12 +183,16 @@
     <string name="uploading_id_number_phone_failure">上传身份证正面照失败</string>
     <string name="uploading_take_id_number_phone_failure">上传手持身份证正面照失败</string>
     <string name="uselect_phone_failure">选取照片失败</string>
-    <string name="nickname_empty">昵称不能为空</string>
     <string name="lucky_set_empty">请输入投注金额</string>
     <string name="must_more_10">投注金额必须大于10</string>
     <string name="must_small_160000">投注金额必须小于160000</string>
     <string name="picture_delete_succeed">图片删除成功</string>
     <string name="avatar_setting_succeed">设置头像成功</string>
+    <string name="copy_succeed">复制成功</string>
+    <string name="change_password_succeed">修改密码成功</string>
+    <string name="operation_failure">操作失败</string>
+    <string name="input_id_or_nickname">请输入ID或者昵称</string>
+    <string name="no_search_user">没有搜索到用户</string>
 
     <!--参数-->
     <string name="web_flag">WEB_FLAG</string>
@@ -189,11 +202,14 @@
     <string name="refreshing">正在刷新…</string>
     <string name="complete">刷新完成</string>
 
-    <!--网易云信开始-->
+
+    <!--网易云信-->
     <string name="main_tab_session">会话</string>
     <string name="main_tab_contact">通讯录</string>
     <string name="user_profile">个人名片</string>
+    <string name="login">登录</string>
     <string name="logining">登录中\u2026</string>
+    <string name="register">注册</string>
     <string name="registering">注册中\u2026</string>
     <string name="agree">同意</string>
     <string name="reject">拒绝</string>
@@ -202,11 +218,14 @@
     <string name="login_hint_password">请输入密码</string>
     <string name="input_account">请输入帐号，限20位字母或者数字</string>
     <string name="register_account_tip">帐号限20位字母或者数字</string>
+    <string name="input_nickname">请输入昵称，限10位汉字、字母或者数字</string>
     <string name="register_nick_name_tip">昵称限10位汉字、字母或者数字</string>
     <string name="input_password">请输入密码，6~20位字母或者数字</string>
     <string name="register_password_tip">密码必须为6~20位字母或者数字</string>
+    <string name="register_success">注册成功</string>
     <string name="register_failed">注册失败,错误码%1$s:%2$s</string>
     <string name="login_has_account">已有帐号？直接登录</string>
+    <string name="done">完成</string>
     <string name="latest_message_draft_prefix">[草稿] </string>
     <string name="main_msg_unread_msg_count">[%d条]</string>
     <string name="out_time">超时</string>
@@ -230,7 +249,7 @@
     <string name="delete_system_message">删除该条系统消息？</string>
     <string name="delete_success">删除成功</string>
     <string name="clear_all_success">清空成功</string>
-    <string name="login_error">帐号或密码错误</string>
+    <string name="login_failed">帐号或密码错误</string>
     <string name="login_exception">无效输入</string>
     <string name="kick_out">帐号在其它设备登录</string>
     <string name="edittext_length_tips">你输入的字数已经超过了限制！</string>
@@ -342,14 +361,23 @@
     <string name="birthday">生 日</string>
     <string name="phone">手 机</string>
     <string name="email">邮 箱</string>
+    <string name="signature">签 名</string>
+    <string name="head">头 像</string>
     <string name="user_information">个人信息</string>
+    <string name="nickname">昵 称</string>
     <string name="alias">备注名</string>
+    <string name="gender">性 别</string>
+    <string name="male">男</string>
+    <string name="female">女</string>
+    <string name="other">其他</string>
+    <string name="phone_number">手机号码</string>
     <string name="set_head_image">设置头像</string>
     <string name="user_info_update_success">设置成功</string>
     <string name="user_info_update_cancel">取消更新</string>
     <string name="user_info_update_failed">设置失败，请重试</string>
     <string name="head_update_success">头像设置成功</string>
     <string name="head_update_failed">头像设置失败，请重试</string>
+    <string name="nickname_empty">昵称不能为空</string>
     <string name="province_city">province_city</string>
     <string name="province_gender">province_gender</string>
     <!-- 自定义通知 -->
@@ -361,6 +389,8 @@
     <string name="send_custom_notification_to_buddy">发送给好友</string>
     <string name="send_custom_notification_to_team">发送给群组</string>
     <!--网易云信结束-->
+
+
 
     <!--七牛云开始-->
     <string name="cd_et_input_url">cd_et_input_url</string>
