@@ -5,7 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.android.volley.Request;
 import com.lvshandian.lemeng.R;
@@ -16,10 +16,10 @@ import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.moudles.index.adapter.HotListAadapter;
 import com.lvshandian.lemeng.utils.JsonUtil;
-import com.lvshandian.lemeng.widget.view.FullyLinearLayoutManager;
-import com.lvshandian.lemeng.widget.view.EmptyRecyclerView;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefresh;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout;
+import com.lvshandian.lemeng.widget.view.EmptyRecyclerView;
+import com.lvshandian.lemeng.widget.view.FullyLinearLayoutManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +34,7 @@ public class AttentionFragment extends BaseFragment implements View.OnClickListe
     @Bind(R.id.lv_live_room)
     EmptyRecyclerView attentionRecyclerView;
     @Bind(R.id.iv_empty)
-    ImageView iv_empty;
+    LinearLayout iv_empty;
     @Bind(R.id.mrl_layout)
     SwipeRefreshLayout mrlLayout;
 

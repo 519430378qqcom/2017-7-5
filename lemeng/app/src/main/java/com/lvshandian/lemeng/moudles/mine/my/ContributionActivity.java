@@ -37,7 +37,6 @@ import butterknife.Bind;
  */
 
 public class ContributionActivity extends BaseActivity {
-
     @Bind(R.id.parent_layout)
     LinearLayout parentLayout;
     @Bind(R.id.my_head)
@@ -57,7 +56,7 @@ public class ContributionActivity extends BaseActivity {
     @Bind(R.id.scrollView)
     ScrollView scrollView;
     @Bind(R.id.iv_empty)
-    ImageView iv_empty;
+    LinearLayout iv_empty;
 
     private List<ContributionBeanBack> mDatas = new ArrayList<>();
     private ContributionListAdapter listAdapter;
@@ -207,7 +206,7 @@ public class ContributionActivity extends BaseActivity {
         imglevel.setImageResource(GrademipmapUtils.LevelImg[level - 1]);
         tvName.setText(oneData.getNickName());
 
-        tvDevote.setText(getString(R.string.contribution_lepiao_num,String.valueOf(oneData.getSumAmount())));
+        tvDevote.setText(getString(R.string.contribution_lepiao_num, String.valueOf(oneData.getSumAmount())));
         imgHead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.android.volley.Request;
 import com.lvshandian.lemeng.R;
@@ -21,10 +21,10 @@ import com.lvshandian.lemeng.moudles.index.adapter.RankingListAadapter;
 import com.lvshandian.lemeng.moudles.mine.my.ContributionActivity;
 import com.lvshandian.lemeng.utils.GlideImageLoader;
 import com.lvshandian.lemeng.utils.JsonUtil;
-import com.lvshandian.lemeng.widget.view.FullyLinearLayoutManager;
-import com.lvshandian.lemeng.widget.view.EmptyRecyclerView;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefresh;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout;
+import com.lvshandian.lemeng.widget.view.EmptyRecyclerView;
+import com.lvshandian.lemeng.widget.view.FullyLinearLayoutManager;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -44,7 +44,7 @@ public class HotFragment extends BaseFragment implements SwipeRefresh.OnRefreshL
     @Bind(R.id.rankingList)
     EmptyRecyclerView rankingList;
     @Bind(R.id.iv_empty)
-    ImageView iv_empty;
+    LinearLayout iv_empty;
     @Bind(R.id.banner)
     Banner banner;
     @Bind(R.id.mrl_layout)

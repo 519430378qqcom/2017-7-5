@@ -126,11 +126,28 @@
         </ScrollView>
     </com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout>
 
-    <ImageView
+
+    <com.zhy.autolayout.AutoLinearLayout
         android:id="@+id/iv_empty"
         android:layout_width="350px"
         android:layout_height="350px"
         android:layout_centerInParent="true"
-        android:src="@mipmap/icon_empty_img"
-        android:visibility="gone" />
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_centerInParent="true"
+            android:layout_weight="1"
+            android:src="@mipmap/icon_empty_img" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nothing"
+            android:textColor="@color/tv_color9"
+            android:textSize="25px" />
+    </com.zhy.autolayout.AutoLinearLayout>
 </com.zhy.autolayout.AutoRelativeLayout>

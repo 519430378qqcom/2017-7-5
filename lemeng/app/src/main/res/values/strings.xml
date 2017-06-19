@@ -31,7 +31,10 @@
     <string name="sent_validate">发送验证码</string>
     <!--个人中心部分-->
     <string name="attention">关注</string>
+    <string name="no_attention">您还没有关注的人哦</string>
+    <string name="already_attention">已关注</string>
     <string name="fans">粉丝</string>
+    <string name="no_fans">您还没有粉丝哦</string>
     <string name="contribution">贡献榜</string>
     <string name="lepiao">乐票</string>
     <string name="my_authentication">我的认证</string>
@@ -209,6 +212,7 @@
     <string name="loading">正在加载…</string>
     <string name="refreshing">正在刷新…</string>
     <string name="complete">刷新完成</string>
+    <string name="nothing">什么都没有</string>
 
 
     <!--网易云信-->

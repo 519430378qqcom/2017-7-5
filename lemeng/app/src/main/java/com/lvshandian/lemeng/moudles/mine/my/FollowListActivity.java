@@ -3,7 +3,7 @@ package com.lvshandian.lemeng.moudles.mine.my;
 import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.lvshandian.lemeng.R;
@@ -32,7 +32,7 @@ public class FollowListActivity extends BaseActivity implements SwipeRefresh.OnR
     @Bind(R.id.lv_list)
     ListView lvList;
     @Bind(R.id.iv_empty_1)
-    ImageView iv_empty;
+    LinearLayout iv_empty;
     @Bind(R.id.mrl_layout)
     SwipeRefreshLayout mrlLayout;
 

@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.android.volley.Request;
 import com.lvshandian.lemeng.R;
@@ -17,10 +17,10 @@ import com.lvshandian.lemeng.moudles.index.adapter.HotListAadapter;
 import com.lvshandian.lemeng.utils.Constant;
 import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
-import com.lvshandian.lemeng.widget.view.FullyLinearLayoutManager;
-import com.lvshandian.lemeng.widget.view.EmptyRecyclerView;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefresh;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout;
+import com.lvshandian.lemeng.widget.view.EmptyRecyclerView;
+import com.lvshandian.lemeng.widget.view.FullyLinearLayoutManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class AddressFragment extends BaseFragment implements SwipeRefresh.OnRefr
     @Bind(R.id.lv_live_room)
     EmptyRecyclerView addressRecyclerView;
     @Bind(R.id.iv_empty)
-    ImageView iv_empty;
+    LinearLayout iv_empty;
     @Bind(R.id.mrl_layout)
     SwipeRefreshLayout mrlLayout;
 

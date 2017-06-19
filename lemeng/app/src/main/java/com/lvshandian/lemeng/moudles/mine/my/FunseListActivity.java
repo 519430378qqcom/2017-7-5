@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.lvshandian.lemeng.R;
@@ -38,7 +39,7 @@ public class FunseListActivity extends BaseActivity implements SwipeRefresh.OnRe
     @Bind(R.id.lv_list)
     ListView lvList;
     @Bind(R.id.iv_empty)
-    ImageView iv_empty;
+    LinearLayout iv_empty;
     @Bind(R.id.mrl_layout)
     SwipeRefreshLayout mrlLayout;
 

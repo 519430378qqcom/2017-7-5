@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -46,7 +47,7 @@ public class SearchActivity extends BaseActivity {
     @Bind(R.id.lv_search)
     ListView lvSearch;
     @Bind(R.id.iv_empty)
-    ImageView iv_empty;
+    LinearLayout iv_empty;
 
     private List<UserBean> userlist = new ArrayList<>();
     private UserBaseInfoAdapter infoAdapter;

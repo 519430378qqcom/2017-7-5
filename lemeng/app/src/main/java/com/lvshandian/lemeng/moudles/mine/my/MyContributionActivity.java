@@ -57,7 +57,7 @@ public class MyContributionActivity extends BaseActivity {
     @Bind(R.id.scrollView)
     ScrollView scrollView;
     @Bind(R.id.iv_empty)
-    ImageView iv_empty;
+    LinearLayout iv_empty;
 
     private List<MyContributionBeanBack> mDatas = new ArrayList<>();
     private MyContributionListAdapter listAdapter;

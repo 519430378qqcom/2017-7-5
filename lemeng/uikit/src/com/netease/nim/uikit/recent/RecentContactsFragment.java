@@ -105,7 +105,7 @@ public class RecentContactsFragment extends TFragment implements TAdapterDelegat
     }
 
     @Override
-    public Class<? extends TViewHolder> viewHolderAtPosition(int position,Context context) {
+    public Class<? extends TViewHolder> viewHolderAtPosition(int position, Context context) {
         SessionTypeEnum type = items.get(position).getSessionType();
         if (type == SessionTypeEnum.Team) {
             return TeamRecentViewHolder.class;
@@ -129,6 +129,7 @@ public class RecentContactsFragment extends TFragment implements TAdapterDelegat
         boolean empty = items.isEmpty() && msgLoaded;
         emptyBg.setVisibility(empty ? View.VISIBLE : View.GONE);
 //        emptyHint.setHint("还没有会话，在通讯录中找个人聊聊吧！");
+        emptyHint.setHint(getActivity().getResources().getString(R.string.talk_to_a_good_friend));
     }
 
     @Override
@@ -258,10 +259,12 @@ public class RecentContactsFragment extends TFragment implements TAdapterDelegat
                                     public void onSuccess(Void param) {
                                         Toast.makeText(getActivity(), "delete success", Toast.LENGTH_SHORT).show();
                                     }
+
                                     @Override
                                     public void onFailed(int code) {
                                         Toast.makeText(getActivity(), "delete failed, code:" + code, Toast.LENGTH_SHORT).show();
                                     }
+
                                     @Override
                                     public void onException(Throwable exception) {
                                     }

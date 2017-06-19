@@ -96,6 +96,8 @@ public class OtherPersonHomePageActivity extends BaseActivity {
     RelativeLayout rlTalk;
     @Bind(R.id.iv_focus)
     ImageView iv_focus;
+    @Bind(R.id.tv_focus)
+    TextView tv_focus;
     @Bind(R.id.tv_phone_num)
     TextView tv_phone_num;
     @Bind(R.id.tv_video_num)
@@ -370,8 +372,10 @@ public class OtherPersonHomePageActivity extends BaseActivity {
         String follow = mOtherBean.getFollow();
         if (TextUtils.equals("0", follow)) {
             iv_focus.setImageResource(R.mipmap.icon_unfocus);
+            tv_focus.setText(getString(R.string.attention));
         } else if (TextUtils.equals("1", follow)) {
             iv_focus.setImageResource(R.mipmap.icon_focus);
+            tv_focus.setText(getString(R.string.already_attention));
         }
     }
 
