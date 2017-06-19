@@ -8,7 +8,7 @@ package com.lvshandian.lemeng.moudles.index.live.bullfight;
  * desc   : 牛牛游戏获取庄家金币数的bean类
  */
 
-public class BankerBalance {
+public class BankerBalances {
 
     /**
      * success : true

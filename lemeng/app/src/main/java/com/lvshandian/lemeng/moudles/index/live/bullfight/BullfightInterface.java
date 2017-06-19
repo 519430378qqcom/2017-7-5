@@ -35,7 +35,7 @@ public interface BullfightInterface {
      * 更新庄家余额
      * @param BankerBalance
      */
-    void updataBankerBalance(BankerBalance BankerBalance);
+    void updataBankerBalance(BankerBalances BankerBalance);
 
     /**
      * 返回扑克牌结果

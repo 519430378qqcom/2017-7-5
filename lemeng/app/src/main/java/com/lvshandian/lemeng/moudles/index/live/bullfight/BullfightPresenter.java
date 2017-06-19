@@ -246,11 +246,11 @@ public class BullfightPresenter {
             @Override
             public void onResponse(String response) {
                 LogUtils.e("TAG", "updateBankerBalance" + response);
-                BankerBalance bankerBalance = null;
+                BankerBalances bankerBalance = null;
                 try {
-                    bankerBalance = JSON.parseObject(response, BankerBalance.class);
+                    bankerBalance = JSON.parseObject(response, BankerBalances.class);
                 } catch (Exception e) {
-                    bankerBalance = new BankerBalance();
+                    bankerBalance = new BankerBalances();
                     bankerBalance.setSuccess(false);
                 }
                 if (bullfightInterface != null) {

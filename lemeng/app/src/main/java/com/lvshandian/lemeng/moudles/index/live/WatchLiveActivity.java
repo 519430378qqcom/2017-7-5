@@ -93,7 +93,7 @@ import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.httprequest.SdkHttpResultSuccess;
 import com.lvshandian.lemeng.moudles.index.CustomNotificationType;
-import com.lvshandian.lemeng.moudles.index.live.bullfight.BankerBalance;
+import com.lvshandian.lemeng.moudles.index.live.bullfight.BankerBalances;
 import com.lvshandian.lemeng.moudles.index.live.bullfight.BankerInfo;
 import com.lvshandian.lemeng.moudles.index.live.bullfight.BetResult;
 import com.lvshandian.lemeng.moudles.index.live.bullfight.BullfightAudio;
@@ -129,13 +129,6 @@ import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.utils.ThreadManager;
 import com.lvshandian.lemeng.utils.ToastUtils;
 import com.lvshandian.lemeng.utils.UMUtils;
-import com.lvshandian.lemeng.widget.view.BarrageView;
-import com.lvshandian.lemeng.widget.view.CameraLivePreviewFrameView;
-import com.lvshandian.lemeng.widget.view.CustomPopWindow;
-import com.lvshandian.lemeng.widget.view.LoadingDialog;
-import com.lvshandian.lemeng.widget.view.RotateLayout;
-import com.lvshandian.lemeng.widget.view.RoundDialog;
-import com.lvshandian.lemeng.widget.view.ScrollRelativeLayout;
 import com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragment;
 import com.lvshandian.lemeng.wangyiyunxin.chatroom.helper.ChatRoomMemberCache;
 import com.lvshandian.lemeng.wangyiyunxin.config.preference.Preferences;
@@ -145,11 +138,18 @@ import com.lvshandian.lemeng.wangyiyunxin.main.helper.SystemMessageUnreadManager
 import com.lvshandian.lemeng.wangyiyunxin.main.reminder.ReminderItem;
 import com.lvshandian.lemeng.wangyiyunxin.main.reminder.ReminderManager;
 import com.lvshandian.lemeng.wangyiyunxin.main.reminder.ReminderSettings;
-import com.lvshandian.lemeng.widget.view.AvatarView;
-import com.lvshandian.lemeng.widget.view.TimeCountDownLayout;
 import com.lvshandian.lemeng.widget.myrecycler.RefreshRecyclerView;
 import com.lvshandian.lemeng.widget.myrecycler.manager.RecyclerMode;
 import com.lvshandian.lemeng.widget.myrecycler.manager.RecyclerViewManager;
+import com.lvshandian.lemeng.widget.view.AvatarView;
+import com.lvshandian.lemeng.widget.view.BarrageView;
+import com.lvshandian.lemeng.widget.view.CameraLivePreviewFrameView;
+import com.lvshandian.lemeng.widget.view.CustomPopWindow;
+import com.lvshandian.lemeng.widget.view.LoadingDialog;
+import com.lvshandian.lemeng.widget.view.RotateLayout;
+import com.lvshandian.lemeng.widget.view.RoundDialog;
+import com.lvshandian.lemeng.widget.view.ScrollRelativeLayout;
+import com.lvshandian.lemeng.widget.view.TimeCountDownLayout;
 import com.netease.nim.uikit.NimUIKit;
 import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
 import com.netease.nim.uikit.common.ui.drop.DropFake;
@@ -2182,7 +2182,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     }
 
     @Override
-    public void updataBankerBalance(BankerBalance BankerBalance) {
+    public void updataBankerBalance(BankerBalances BankerBalance) {
         int balance = BankerBalance.getObj();
         String count = CountUtils.getCount(balance);
         tv_bullfight_banker_money.setText(count);

@@ -94,7 +94,7 @@ import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.httprequest.SdkHttpResultSuccess;
 import com.lvshandian.lemeng.moudles.index.CustomNotificationType;
 import com.lvshandian.lemeng.moudles.index.adapter.LianmaiListAadapter;
-import com.lvshandian.lemeng.moudles.index.live.bullfight.BankerBalance;
+import com.lvshandian.lemeng.moudles.index.live.bullfight.BankerBalances;
 import com.lvshandian.lemeng.moudles.index.live.bullfight.BankerInfo;
 import com.lvshandian.lemeng.moudles.index.live.bullfight.BetResult;
 import com.lvshandian.lemeng.moudles.index.live.bullfight.BullfightAudio;
@@ -1747,7 +1747,7 @@ public class StartLiveActivity extends BaseActivity implements
     }
 
     @Override
-    public void updataBankerBalance(BankerBalance BankerBalance) {
+    public void updataBankerBalance(BankerBalances BankerBalance) {
         int balance = BankerBalance.getObj();
         String count = CountUtils.getCount(balance);
         tv_bullfight_banker_money.setText(count);
