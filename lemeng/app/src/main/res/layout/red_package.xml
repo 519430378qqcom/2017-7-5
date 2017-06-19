@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="500px"
+    android:layout_height="680px"
+    android:background="@drawable/bg_red_package">
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/rl_redpackage_container"
+        android:layout_width="500px"
+        android:layout_height="680px">
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="30px"
+            android:layout_marginTop="30px"
+            android:src="@mipmap/colse_rule" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="82px"
+            android:text="@string/drop_a_red_envelope"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <RelativeLayout
+            android:layout_width="312px"
+            android:layout_height="309px"
+            android:layout_marginLeft="128px"
+            android:layout_marginTop="144px">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/redpackage_close" />
+
+            <LinearLayout
+                android:id="@+id/ll_num_container"
+                android:layout_width="234px"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="138px"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_niujinbi1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="80px"
+                android:src="@mipmap/niu_jinbi"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_niujinbi2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="80px"
+                android:src="@mipmap/niu_jinbi"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_niujinbi3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="80px"
+                android:src="@mipmap/niu_jinbi"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_niujinbi4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="80px"
+                android:src="@mipmap/niu_jinbi"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_snatch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="73px"
+            android:background="@mipmap/circle_yellow"
+            android:text="@string/snatch"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btn_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="99px"
+            android:background="@mipmap/rectangle_yellow"
+            android:text="@string/ok"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="46px"
+            android:autoLink="all"
+            android:text="@string/look_other_lucky"
+            android:textColor="@color/yellow"
+            android:textSize="12sp"
+            android:visibility="gone" />
+    </com.zhy.autolayout.AutoRelativeLayout>
+
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/rl_rank_container"
+        android:layout_width="500px"
+        android:layout_height="680px">
+
+        <RelativeLayout
+            android:id="@+id/rl_rank_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="27px">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/redpackage_rank"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rcy_redpackage_rank"
+            android:layout_below="@+id/rl_rank_head"
+            android:layout_marginTop="27px"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+    </com.zhy.autolayout.AutoRelativeLayout>
+</com.zhy.autolayout.AutoRelativeLayout>

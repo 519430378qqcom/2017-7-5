@@ -3946,36 +3946,25 @@ public class StartLiveActivity extends BaseActivity implements
         params.addRule(RelativeLayout.CENTER_IN_PARENT);
         tvNum.setLayoutParams(params);
         ObjectAnimator scaleX = ObjectAnimator.ofFloat(tvNum, "scaleX", 5f, 1f);
+        scaleX.setRepeatCount(2);
         ObjectAnimator scaleY = ObjectAnimator.ofFloat(tvNum, "scaleY", 5f, 1f);
-        AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.playTogether(scaleX, scaleY);
-        animatorSet.addListener(new Animator.AnimatorListener() {
+        scaleY.setRepeatCount(2);
+        scaleY.addListener(new AnimatorListenerAdapter() {
             @Override
-            public void onAnimationStart(Animator animation) {
+            public void onAnimationRepeat(Animator animation) {
+                tvNum.setText(Integer.valueOf(tvNum.getText().toString()) - 1 + "");
             }
-
+        });
+        final AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(scaleX, scaleY);
+        animatorSet.setDuration(1000);
+        animatorSet.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 mRoot.removeView(tvNum);
-                if (num == 1) {
-//                    mStreamer.startStream();
-
-                    return;
-                }
-                startAnimation(num == 3 ? 2 : 1);
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
             }
         });
-        animatorSet.setDuration(1000);
         animatorSet.start();
-
     }
 
 

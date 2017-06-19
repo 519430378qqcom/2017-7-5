@@ -3,13 +3,17 @@ package com.lvshandian.lemeng.moudles.index.live.bullfight;
 import com.alibaba.fastjson.JSON;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.UrlBuilder;
+import com.lvshandian.lemeng.utils.LogUtils;
 import com.squareup.okhttp.Request;
-import com.yixia.camera.util.Log;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 /**
- * Created by dong on 2017/5/26.
+ * author : Cui Dong
+ * e-mail : dgsimle@sina.com
+ * time   : 2017/5/26
+ * version: 1.0
+ * desc   : 牛牛游戏的presenter
  */
 
 public class BullfightPresenter {
@@ -38,7 +42,7 @@ public class BullfightPresenter {
 
             @Override
             public void onResponse(String response) {
-                Log.e("TAG", "startBullGame" + response);
+                LogUtils.e("TAG", "startBullGame" + response);
                 StartResult startResult = null;
                 try {
                     startResult = JSON.parseObject(response, StartResult.class);
@@ -68,7 +72,7 @@ public class BullfightPresenter {
 
             @Override
             public void onResponse(String response) {
-                Log.e("TAG", "getBankerInfo" + response);
+                LogUtils.e("TAG", "getBankerInfo" + response);
                 BankerInfo bankerInfo = null;
                 try {
                     bankerInfo = JSON.parseObject(response, BankerInfo.class);
@@ -100,7 +104,7 @@ public class BullfightPresenter {
 
             @Override
             public void onResponse(String response) {
-                Log.e("TAG", "getTimeAndNper" + response);
+                LogUtils.e("TAG", "getTimeAndNper" + response);
                 TimeAndNper timeAndNper = null;
                 try {
                     timeAndNper = JSON.parseObject(response, TimeAndNper.class);
@@ -128,7 +132,7 @@ public class BullfightPresenter {
 
             @Override
             public void onResponse(String response) {
-                Log.e("TAG", "initGameResult" + response);
+                LogUtils.e("TAG", "initGameResult" + response);
             }
         });
     }
@@ -138,7 +142,6 @@ public class BullfightPresenter {
      */
     public void getPokerResult(String roomId) {
         String url = UrlBuilder.SERVER_URL + UrlBuilder.BULLFIGHT_POKER_RESULT + "?roomId=" + roomId;
-        Log.e("TAG", url);
         OkHttpUtils.get().url(url).build().execute(new StringCallback() {
             @Override
             public void onError(Request request, Exception e) {
@@ -147,7 +150,7 @@ public class BullfightPresenter {
 
             @Override
             public void onResponse(String response) {
-                Log.e("TAG", "getPokerResult" + response);
+                LogUtils.e("TAG", "getPokerResult" + response);
                 PokerResult pokerResult = null;
                 try {
                     pokerResult = JSON.parseObject(response, PokerResult.class);
@@ -185,7 +188,7 @@ public class BullfightPresenter {
 
             @Override
             public void onResponse(String response) {
-                Log.e("TAG", "betSuccess" + response);
+                LogUtils.e("TAG", "betSuccess" + response);
                 BetResult betResult = null;
                 try {
                     betResult = JSON.parseObject(response, BetResult.class);
@@ -205,7 +208,7 @@ public class BullfightPresenter {
      */
     public void getGameResult(String roomId, String perid, String userId) {
         String url = UrlBuilder.SERVER_URL + UrlBuilder.BULLFIGHT_RESULT + "?roomId=" + roomId + "&perid=" + perid + "&userId=" + userId;
-        Log.e("TAG", "getGameResult=" + url);
+        LogUtils.e("TAG", "getGameResult=" + url);
         OkHttpUtils.get().url(url).build().execute(new StringCallback() {
             @Override
             public void onError(Request request, Exception e) {
@@ -214,7 +217,7 @@ public class BullfightPresenter {
 
             @Override
             public void onResponse(String response) {
-                Log.e("TAG", "getGameResult" + response);
+                LogUtils.e("TAG", "getGameResult" + response);
                 GameResult gameResult = null;
                 try {
                     gameResult = JSON.parseObject(response, GameResult.class);
@@ -242,7 +245,7 @@ public class BullfightPresenter {
 
             @Override
             public void onResponse(String response) {
-                Log.e("TAG", "updateBankerBalance" + response);
+                LogUtils.e("TAG", "updateBankerBalance" + response);
                 BankerBalance bankerBalance = null;
                 try {
                     bankerBalance = JSON.parseObject(response, BankerBalance.class);
@@ -269,7 +272,7 @@ public class BullfightPresenter {
 
             @Override
             public void onResponse(String response) {
-                Log.e("TAG", "initGameTimer" + response);
+                LogUtils.e("TAG", "initGameTimer" + response);
                 bullfightInterface.initGameTimer();
             }
         });

@@ -11,8 +11,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by dong on 2017/6/7.
- * 斗牛音效
+ * author : Cui Dong
+ * e-mail : dgsimle@sina.com
+ * time   : 2017/6/7
+ * version: 1.0
+ * desc   : 牛牛游戏音效的管理类
  */
 
 public class BullfightAudio {

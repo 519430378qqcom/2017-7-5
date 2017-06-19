@@ -1,7 +1,11 @@
 package com.lvshandian.lemeng.moudles.index.live.bullfight;
 
 /**
- * Created by dong on 2017/5/26.
+ * author : Cui Dong
+ * e-mail : dgsimle@sina.com
+ * time   : 2017/5/26
+ * version: 1.0
+ * desc   : 牛牛游戏投注返回是否成功的bean类
  */
 
 public class BetResult {
