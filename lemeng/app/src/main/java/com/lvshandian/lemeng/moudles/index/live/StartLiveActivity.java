@@ -378,10 +378,10 @@ public class StartLiveActivity extends BaseActivity implements
     ImageView tv_rule;
     @Bind(R.id.ll_trendOrHistory)
     LinearLayout ll_trendOrHistory;
-    @Bind(R.id.iv_history)
-    ImageView iv_history;
-    @Bind(R.id.iv_trend)
-    ImageView iv_trend;
+    @Bind(R.id.rl_record)
+    RelativeLayout rl_record;
+    @Bind(R.id.rl_trend)
+    RelativeLayout rl_trend;
     @Bind(R.id.all_lepiao)
     TextView all_lepiao;
 
@@ -902,8 +902,8 @@ public class StartLiveActivity extends BaseActivity implements
 
     @Override
     protected void initListener() {
-        iv_trend.setOnClickListener(this);
-        iv_history.setOnClickListener(this);
+        rl_trend.setOnClickListener(this);
+        rl_record.setOnClickListener(this);
         tv_rule.setOnClickListener(this);
         ivTouzhu.setOnClickListener(this);
         recharge.setOnClickListener(this);
@@ -970,10 +970,10 @@ public class StartLiveActivity extends BaseActivity implements
             case R.id.recharge: //幸运28充值
                 showToast("暂不支持充值");
                 break;
-            case R.id.iv_trend: //走势
+            case R.id.rl_trend: //走势
                 showHistoryDialog(1);
                 break;
-            case R.id.iv_history: //记录
+            case R.id.rl_record: //记录
                 showHistoryDialog(2);
                 break;
 
@@ -5020,13 +5020,13 @@ public class StartLiveActivity extends BaseActivity implements
         dialogForSelect.setContentView(view);
         dialogForSelect.show();
         ImageView colse_trend = (ImageView) view.findViewById(R.id.colse_trend);
-        ImageView iv_frame_bg = (ImageView) view.findViewById(R.id.iv_frame_bg);
+        TextView content_type = (TextView) view.findViewById(R.id.content_type);
         if (type == 1) {
-            iv_frame_bg.setImageResource(R.mipmap.trend_frame);
+            content_type.setText(getString(R.string.trend_frame));
         } else if (type == 2) {
-            iv_frame_bg.setImageResource(R.mipmap.history_frame);
+            content_type.setText(getString(R.string.history_frame));
         } else {
-            iv_frame_bg.setImageResource(R.mipmap.rule_frame);
+            content_type.setText(getString(R.string.rule_frame));
         }
 
         colse_trend.setOnClickListener(new View.OnClickListener() {
@@ -5082,7 +5082,7 @@ public class StartLiveActivity extends BaseActivity implements
     private void showTouZhuPop(String selectStatus, final int luckySet) {
         final CustomPopWindow rulePop = new CustomPopWindow(this);
         LayoutInflater inflater = LayoutInflater.from(this);
-        View view = inflater.inflate(R.layout.pop_tou_zhu, null);
+        View view = inflater.inflate(R.layout.pop_bet, null);
         rulePop.setContentView(view);
         rulePop.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
         rulePop.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);

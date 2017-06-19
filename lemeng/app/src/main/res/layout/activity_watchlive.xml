@@ -306,18 +306,47 @@
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <ImageView
-                    android:id="@+id/iv_history"
+                <com.zhy.autolayout.AutoRelativeLayout
+                    android:id="@+id/rl_record"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/history_img" />
+                    android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/iv_trend"
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/icon_record" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="65px"
+                        android:text="@string/record"
+                        android:textColor="@color/main"
+                        android:textStyle="bold" />
+                </com.zhy.autolayout.AutoRelativeLayout>
+
+                <com.zhy.autolayout.AutoRelativeLayout
+                    android:id="@+id/rl_trend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10px"
-                    android:src="@mipmap/trend_img" />
+                    android:layout_marginTop="10px">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/icon_trend" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="65px"
+                        android:text="@string/trend"
+                        android:textColor="@color/main"
+                        android:textStyle="bold" />
+                </com.zhy.autolayout.AutoRelativeLayout>
+
             </com.zhy.autolayout.AutoLinearLayout>
 
 

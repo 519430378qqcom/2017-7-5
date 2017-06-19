@@ -14,7 +14,15 @@
             android:id="@+id/iv_frame_bg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@mipmap/trend_frame" />
+            android:src="@mipmap/live_type_frame" />
+
+        <TextView
+            android:id="@+id/content_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="33px"
+            android:textColor="@color/white" />
 
         <WebView
             android:id="@+id/webView"
@@ -24,16 +32,15 @@
             android:layout_marginLeft="40px"
             android:layout_marginRight="40px"
             android:layout_marginTop="80px"
-            android:scrollbars="none"/>
-
+            android:scrollbars="none" />
 
         <ProgressBar
             android:id="@+id/iv_include_loading"
+            style="@android:style/Widget.ProgressBar.Inverse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            style="@android:style/Widget.ProgressBar.Inverse"
+            android:layout_centerVertical="true"
             android:layout_gravity="center" />
     </com.zhy.autolayout.AutoRelativeLayout>
 

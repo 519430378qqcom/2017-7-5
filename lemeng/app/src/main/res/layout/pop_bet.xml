@@ -23,7 +23,7 @@
             android:layout_width="520px"
             android:layout_height="700px"
             android:layout_centerInParent="true"
-            android:background="@mipmap/touzhu_frame"
+            android:background="@mipmap/live_type_frame"
             android:orientation="vertical">
 
             <TextView
@@ -97,6 +97,15 @@
                 android:layout_marginTop="50px"
                 />
         </com.zhy.autolayout.AutoLinearLayout>
+
+        <TextView
+            android:id="@+id/content_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="75px"
+            android:text="@string/bet"
+            android:textColor="@color/white" />
 
     </com.zhy.autolayout.AutoRelativeLayout>
 </com.zhy.autolayout.AutoLinearLayout>

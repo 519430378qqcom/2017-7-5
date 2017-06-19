@@ -151,6 +151,12 @@
     <string name="newest">最新</string>
     <string name="hot">热门</string>
     <string name="some_people_in_look">%1$s 在看</string>
+    <string name="trend_frame">走势图</string>
+    <string name="history_frame">历史投注</string>
+    <string name="rule_frame">规则</string>
+    <string name="bet">投注</string>
+    <string name="record">记录</string>
+    <string name="trend">走势</string>
 
     <!--牛牛部分-->
     <string name="top_up">充值</string>
