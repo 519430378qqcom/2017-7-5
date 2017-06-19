@@ -46,22 +46,22 @@ android {
         flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
     }
 
-    signingConfigs {
-        release {
-            storeFile file("D:/jks/lemeng.jks")
-            storePassword "123456"
-            keyAlias "lemeng"
-            keyPassword "123456"
-        }
-    }
-    buildTypes {
-        debug {
-            signingConfig signingConfigs.release
-        }
-        release {
-            signingConfig signingConfigs.release
-        }
-    }
+//    signingConfigs {
+//        release {
+//            storeFile file("D:/jks/lemeng.jks")
+//            storePassword "123456"
+//            keyAlias "lemeng"
+//            keyPassword "123456"
+//        }
+//    }
+//    buildTypes {
+//        debug {
+//            signingConfig signingConfigs.release
+//        }
+//        release {
+//            signingConfig signingConfigs.release
+//        }
+//    }
 
 //    sourceSets {
 //        main {
