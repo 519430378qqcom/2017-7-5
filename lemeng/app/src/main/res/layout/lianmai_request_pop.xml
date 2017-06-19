@@ -19,7 +19,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="117px"
             android:gravity="center"
-            android:text="小尚"
             android:textColor="@color/tv_color6"
             android:textSize="30px" />
 
@@ -28,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="35px"
             android:gravity="center"
-            android:text="邀请连麦"
+            android:text="@string/invite_the_mic"
             android:textColor="@color/tv_color6"
             android:textSize="36px" />
 
@@ -46,7 +45,7 @@
                 android:background="@drawable/selector_loginbtn_circle"
                 android:gravity="center"
                 android:inputType="phone"
-                android:text="接受"
+                android:text="@string/accept_session"
                 android:textColor="@color/white"
                 android:textSize="36px" />
 
@@ -58,7 +57,7 @@
                 android:layout_marginRight="40px"
                 android:background="@drawable/selector_loginbtn_circle_gray"
                 android:gravity="center"
-                android:text="拒绝"
+                android:text="@string/reject_session"
                 android:textColor="@color/white"
                 android:textSize="36px" />
         </com.zhy.autolayout.AutoRelativeLayout>

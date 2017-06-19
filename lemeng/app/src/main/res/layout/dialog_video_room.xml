@@ -36,7 +36,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10px"
-                    android:text="举报"
+                    android:text="@string/report"
                     android:textColor="@color/tv_color9"
                     android:textSize="24px"
                     android:visibility="visible" />
@@ -60,7 +60,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10px"
-                    android:text="禁言"
+                    android:text="@string/banned_to_post"
                     android:textColor="@color/tv_color9"
                     android:textSize="24px"
                     android:visibility="visible" />
@@ -79,7 +79,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="小尚"
                 android:textColor="@color/tv_color6"
                 android:textSize="30px" />
 
@@ -103,7 +102,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20px"
-            android:text="乐檬号:10264"
             android:textColor="@color/tv_color9"
             android:textSize="28px" />
 
@@ -117,7 +115,6 @@
             android:paddingLeft="10px"
             android:paddingRight="10px"
             android:singleLine="true"
-            android:text="这家伙很懒,什么都没有留下!"
             android:textColor="@color/tv_color9" />
 
         <com.zhy.autolayout.AutoLinearLayout
@@ -135,7 +132,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="关注"
+                    android:text="@string/attention"
                     android:textColor="@color/tv_color9"
                     android:textSize="28px" />
 
@@ -144,7 +141,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10px"
-                    android:text="0"
                     android:textColor="@color/tv_color3"
                     android:textSize="14sp" />
 
@@ -160,7 +156,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="粉丝"
+                    android:text="@string/fans"
                     android:textColor="@color/tv_color9"
                     android:textSize="28px" />
 
@@ -169,7 +165,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10px"
-                    android:text="0"
                     android:textColor="@color/tv_color3"
                     android:textSize="14sp" />
             </com.zhy.autolayout.AutoLinearLayout>
@@ -185,7 +180,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="送出"
+                    android:text="@string/send_out"
                     android:textColor="@color/tv_color9"
                     android:textSize="28px" />
 
@@ -194,7 +189,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10px"
-                    android:text="0"
                     android:textColor="@color/tv_color3"
                     android:textSize="14sp" />
             </com.zhy.autolayout.AutoLinearLayout>
@@ -209,7 +203,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="收到"
+                    android:text="@string/receive"
                     android:textColor="@color/tv_color9"
                     android:textSize="28px" />
 
@@ -218,7 +212,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10px"
-                    android:text="0"
                     android:textColor="@color/tv_color3"
                     android:textSize="14sp" />
             </com.zhy.autolayout.AutoLinearLayout>
@@ -244,7 +237,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="+ 关注"
+                android:text="@string/add_attention"
                 android:textColor="@color/main"
                 android:textSize="30px" />
 
@@ -259,7 +252,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="TA"
+                android:text="@string/he"
                 android:textColor="@color/tv_color3"
                 android:textSize="30px" />
 
@@ -274,7 +267,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="私信"
+                android:text="@string/private_letter"
                 android:textColor="@color/tv_color3"
                 android:textSize="30px" />
 
@@ -290,7 +283,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="设置场控"
+                android:text="@string/set_field_control"
                 android:textColor="@color/tv_color3"
                 android:textSize="30px" />
 
@@ -302,7 +295,7 @@
             android:layout_height="match_parent"
             android:background="@color/white"
             android:gravity="center"
-            android:text="主页"
+            android:text="@string/homepage"
             android:textColor="@color/main"
             android:textSize="36px"
             android:visibility="gone" />

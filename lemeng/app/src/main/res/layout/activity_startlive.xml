@@ -224,14 +224,12 @@
                         android:ellipsize="end"
                         android:maxEms="10"
                         android:singleLine="true"
-                        android:text="得天独厚"
                         android:textSize="24px" />
 
 
                     <TextView
                         android:id="@+id/live_num"
                         style="@style/WhiteShadowStyle"
-                        android:text="0"
                         android:textSize="24px" />
 
                 </com.zhy.autolayout.AutoLinearLayout>
@@ -405,7 +403,7 @@
                     android:gravity="center"
                     android:paddingLeft="27px"
                     android:paddingRight="27px"
-                    android:text="结束连麦"
+                    android:text="@string/over_the_mic"
                     android:textColor="@color/white"
                     android:textSize="24px"
                     android:visibility="gone" />
@@ -543,7 +541,7 @@
                 <TextView
                     style="@style/WhiteShadowStyle"
                     android:layout_marginLeft="22px"
-                    android:text="乐票:"
+                    android:text="@string/lepiao_live"
                     android:textSize="24px" />
 
 
@@ -552,7 +550,6 @@
                     style="@style/WhiteShadowStyle"
                     android:layout_marginLeft="10px"
                     android:layout_marginRight="12px"
-                    android:text="0"
                     android:textSize="24px" />
 
                 <ImageView
@@ -570,7 +567,6 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="30px"
                 android:gravity="center_vertical"
-                android:text="乐檬号: 100000"
                 android:textSize="28px" />
 
         </com.zhy.autolayout.AutoRelativeLayout>
@@ -601,7 +597,7 @@
             android:paddingLeft="15px"
             android:paddingRight="15px"
             android:paddingTop="5px"
-            android:text="我的场控"
+            android:text="@string/my_field_control"
             android:textColor="@color/white"
             android:textSize="20px"
             android:visibility="gone" />

@@ -16,7 +16,7 @@
             android:layout_height="88px"
             android:background="@color/white"
             android:gravity="center"
-            android:text="邀请连麦"
+            android:text="@string/invite_the_mic"
             android:textColor="@color/black"
             android:textSize="30px" />
 
@@ -37,8 +37,7 @@
                 android:layout_height="match_parent"
                 android:background="@null"
                 android:gravity="center"
-                android:hint="请输入ID或者昵称"
-                android:text=""
+                android:hint="@string/input_id_or_nickname"
                 android:textColorHint="@color/tv_color9"
                 android:textSize="15dp" />
 
@@ -74,7 +73,7 @@
             android:layout_alignParentBottom="true"
             android:background="@color/white"
             android:gravity="center"
-            android:text="邀请连麦"
+            android:text="@string/invite_the_mic"
             android:textColor="@color/tv_color9"
             android:textSize="34px" />
     </com.zhy.autolayout.AutoRelativeLayout>

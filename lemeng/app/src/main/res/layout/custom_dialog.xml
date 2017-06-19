@@ -20,7 +20,6 @@
             android:gravity="center"
             android:padding="10px"
             android:textColor="@color/tv_color3"
-            android:text="描述"
             android:textSize="35px" />
 
         <View
@@ -39,7 +38,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="取消"
+                android:text="@string/cancel"
                 android:textColor="@color/main"
                 android:textSize="35px" />
 
@@ -55,7 +54,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="确定"
+                android:text="@string/confirm"
                 android:textColor="@color/main"
                 android:textSize="35px" />
 

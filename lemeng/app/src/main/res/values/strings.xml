@@ -37,6 +37,7 @@
     <string name="no_fans">您还没有粉丝哦</string>
     <string name="contribution">贡献榜</string>
     <string name="lepiao">乐票</string>
+    <string name="lepiao_live">乐票:</string>
     <string name="my_authentication">我的认证</string>
     <string name="not_authentication">未认证</string>
     <string name="in_authentication">认证中</string>
@@ -147,6 +148,7 @@
     <string name="share_download_title">乐檬直播,共享世界的快乐</string>
     <string name="share_download_content">万人直播室嗨翻天!超火人气,边撩妹纸边玩游戏,赶紧加入吧!</string>
     <string name="live">直播</string>
+    <string name="if_close_live">是否关闭直播</string>
     <string name="video">视频</string>
     <string name="newest">最新</string>
     <string name="hot">热门</string>
@@ -157,7 +159,78 @@
     <string name="bet">投注</string>
     <string name="record">记录</string>
     <string name="trend">走势</string>
+    <string name="invite_the_mic">邀请连麦</string>
+    <string name="over_the_mic">结束连麦</string>
+    <string name="the_mic_succeed">连麦成功</string>
+    <string name="double_hit">连击</string>
+    <string name="no_control">您暂时没有场控</string>
+    <string name="audience_break_the_mic">观众断开连麦</string>
+    <string name="anchor_break_the_mic">主播断开连麦</string>
+    <string name="turn_down_the_mic">%1$s拒绝了您的连麦请求</string>
+    <string name="no_accept_the_mic">%1$s没有接受您的连麦请求</string>
+    <string name="chat_room_kickout_event">被踢出聊天室，原因:%1$s</string>
+    <string name="no_selecte_mic">没有选择连麦的粉丝</string>
+    <string name="waiting">等待中%1$ss</string>
+    <string name="banned_to_post">禁言</string>
+    <string name="banned_to_post_succeed">禁言成功</string>
+    <string name="remove_banned">解除禁言</string>
+    <string name="remove_banned_succeed">解除禁言成功</string>
+    <string name="deny">%1$s被禁言</string>
+    <string name="remove_deny">%1$s被解除禁言</string>
+    <string name="is_deny">您被禁言中,禁止发言</string>
+    <string name="send_out">送出</string>
+    <string name="receive">收到</string>
+    <string name="add_attention">+ 关注</string>
+    <string name="he">TA</string>
+    <string name="homepage">主页</string>
+    <string name="reply">回复%1$s:</string>
+    <string name="intput_report_content">请输入举报内容</string>
+    <string name="face">美颜</string>
+    <string name="refreshingly">粉嫩</string>
+    <string name="blond">白皙</string>
+    <string name="ruddy">红润</string>
+    <string name="skin">美肤</string>
+    <string name="live_is_close">提示\n\n该直播间已关闭,请返回主页</string>
+    <string name="give_gifts">赠送了1个%1$s</string>
+    <string name="no_play_game">主播未开启游戏</string>
+    <string name="give">赠送</string>
 
+    <!--幸运28部分-->
+    <string name="no_info_try_again_later">没有开奖信息,请稍候再试</string>
+    <string name="intput_lucky_bet">最低:10 最高:1600000</string>
+    <string name="start_lucy28_game">主播开启斗牛游戏</string>
+    <string name="big">大</string>
+    <string name="samll">小</string>
+    <string name="singe">单</string>
+    <string name="double_">双</string>
+    <string name="big_sigle">大单</string>
+    <string name="samll_singe">小单</string>
+    <string name="big_double">大双</string>
+    <string name="samll_double">小双</string>
+    <string name="more_big">极大</string>
+    <string name="more_samll">极小</string>
+    <string name="big_info">和值大于14即中奖</string>
+    <string name="samll_info">和值小于14即中奖</string>
+    <string name="singe_info">和值为奇数即中奖</string>
+    <string name="double_info">和值为偶数即中奖</string>
+    <string name="big_sigle_info">和值为15,17,19,21,23,25,27即中奖</string>
+    <string name="samll_singe_info">和值为1,3,5,7,9,11,13即中奖</string>
+    <string name="big_double_info">和值为14,16,18,20,22,24,26即中奖</string>
+    <string name="samll_double_info">和值为0,2,4,6,8,10,12即中奖</string>
+    <string name="more_big_info">和值大于21即中奖</string>
+    <string name="more_samll_info">和值小于6即中奖</string>
+    <string name="lucy_bet_hint">温馨提示：本房间单期最高派奖金为无限制</string>
+    <string name="lucy_bet_type">大小单双：%1$s</string>
+    <string name="affirm_bet">确认投注</string>
+    <string name="lucy_bet_lepiao">投注乐票：%1$s</string>
+    <string name="lucy_bet_date">投注期号：%1$s</string>
+    <string name="bet_succeed">投注成功</string>
+    <string name="bet_info">%1$s期%2$s投注%3$s乐票</string>
+    <string name="bet_date_number">第%1$s期</string>
+    <string name="distance_bet_date_number">距离%1$s期开奖还有</string>
+    <string name="wait_lottery">等待:开奖:中.</string>
+    <string name="winning_hint">提示\n\n您在%1$s期中,获得乐票%2$s</string>
+    <string name="no_winning_hint">提示\n\n您在%1$s期中未中奖</string>
     <!--牛牛部分-->
     <string name="top_up">充值</string>
     <string name="wait_next_start">请等待下一局开始</string>
@@ -169,8 +242,8 @@
     <string name="the_user">本家</string>
     <string name="banker">庄家</string>
     <string name="take_a_rest">休息一下</string>
-    <!--幸运28部分-->
-    <string name="intput_lucky_bet">最低:10 最高:1600000</string>
+    <string name="start_niuniu_game">主播开启斗牛游戏</string>
+
 
     <!--吐司提示-->
     <string name="again_press_quit">再按一次退出应用</string>
@@ -210,6 +283,15 @@
     <string name="operation_failure">操作失败</string>
     <string name="input_id_or_nickname">请输入ID或者昵称</string>
     <string name="no_search_user">没有搜索到用户</string>
+    <string name="winning_failure">请求数据失败</string>
+    <string name="no_more">没有更多了</string>
+    <string name="stay_open">暂缓开通</string>
+    <string name="network_error">网络错误</string>
+    <string name="pay_failure">支付失败</string>
+    <string name="determined_to_leave">确定离开</string>
+    <string name="refresh_failure">刷新失败</string>
+    <string name="load_failure">加载失败</string>
+
 
     <!--参数-->
     <string name="web_flag">WEB_FLAG</string>
@@ -407,7 +489,6 @@
     <string name="send_custom_notification_to_buddy">发送给好友</string>
     <string name="send_custom_notification_to_team">发送给群组</string>
     <!--网易云信结束-->
-
 
 
     <!--七牛云开始-->

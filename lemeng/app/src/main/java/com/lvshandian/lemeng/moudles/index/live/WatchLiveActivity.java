@@ -864,7 +864,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 case RequestCode.START_JOIN_ROOM:
                     if (json == null) {
                         initDialog();
-                        String content = "提示" + "\n" + "\n" + "该直播间已关闭,请返回主页";
+                        String content = getString(R.string.live_is_close);
                         baseDialogTitle.setText(content);
                         baseDialogLeft.setVisibility(View.GONE);
                         baseDialogLine.setVisibility(View.GONE);
@@ -896,6 +896,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         liveName.setText(liveListBean.getNickName());
                     }
                     liveId.setText("乐檬号:" + zhubo_Id);
+                    liveId.setText(getString(R.string.lemeng_id, zhubo_Id));
 
                     timer.schedule(new TimerTask() {
                         @Override
@@ -963,7 +964,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 //赠送礼物
                 case RequestCode.SEND_GIFT:
                     if (!data.getString(HttpDatas.error).equals(getString(R.string.pay_success))) {
-                        showToast("支付失败");
+                        showToast(getString(R.string.pay_failure));
                         return;
                     }
 
@@ -977,7 +978,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         map.put("gift_item_index", mSendGiftItem.getId());
                         map.put("gift_item_number", "1");
                         map.put("gift_coinnumber_index", mSendGiftItem.getAnchorReceive());
-                        map.put("gift_item_message", "赠送了" + "1个" + mSendGiftItem.getName());
+                        map.put("gift_item_message", getString(R.string.give_gifts, mSendGiftItem.getName()));
                         map.put("vip", appUser.getVip());
                         map.put("userId", appUser.getId());
                         map.put("gift_Grand_Prix_number", null);
@@ -1052,7 +1053,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 //                                mWl.acquire();
                                 mMediaStreamingManager.resume();
                             }
-                            Toast.makeText(mContext, "连麦成功", Toast.LENGTH_SHORT).show();
+                            showToast(getString(R.string.the_mic_succeed));
 
                             //发通知别人获取连麦推拉流
                             Map<String, Object> map1 = new HashMap<>();
@@ -1101,7 +1102,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     }
                     break;
                 case RequestCode.SELECT_USER:
-                    LogUtils.e("查询个人信息返回json: " + json);
                     AppUser userZhubo = JsonUtil.json2Bean(json, AppUser.class);
                     String receivedGoldCoin = userZhubo.getReceivedGoldCoin();
 
@@ -1110,7 +1110,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     liveJinpiao.setText(receivedGoldCoin); //显示左上角主播收到乐票数量
                     break;
                 case RequestCode.SELECT_USER_MY:
-                    LogUtils.e("查询个人信息返回json: " + json);
                     AppUser userMy = JsonUtil.json2Bean(json, AppUser.class);
                     SharedPreferenceUtils.saveUserInfo(mContext, userMy);
                     appUser = SharedPreferenceUtils.getUserInfo(mContext);
@@ -1123,7 +1122,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     tv_bullfight_lepiao.setText(myCoin);
                     break;
                 case RequestCode.REQUEST_REPORT:
-                    showToast("已成功举报该用户");
+                    showToast(getString(R.string.report_succeed));
                     break;
                 case 10000:
                     LogUtil.e("mCountDownTotalTime", "mCountDownTotalTime" + mCountDownTotalTime);
@@ -1194,7 +1193,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         requestSystemMessageUnreadCount();
 
         fragmentManager = getSupportFragmentManager();
-        initQuitDialog("确定离开");
+        initQuitDialog(getString(R.string.determined_to_leave));
         dialogForSelect = new Dialog(mContext, R.style.homedialog);
         if (!isLogin)
             return;
@@ -1251,8 +1250,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     private void initSelectStatus() {
         restStatus();
         ivBig.setImageResource(R.mipmap.icon_big_select);
-        selectStatus = "大";
-        tv_hz.setText("和值大于13即中奖");
+        selectStatus = getString(R.string.big);
+        tv_hz.setText(getString(R.string.big_info));
 
     }
 
@@ -1355,7 +1354,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     case MotionEvent.ACTION_UP:
                         float movepX = event.getX() - DownX;//X轴距离
                         float movepY = event.getY() - DownY;//y轴距离
-                        Log.e("homepr", "ACTION_UP------" + "moveX = " + movepX + "moveY  = " + movepY);
 
                         /**
                          * 如果X轴移动绝对值大于Y轴移动绝对值
@@ -1409,7 +1407,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                                         showPlayView(gameType);
                                     }
                                 } else {
-                                    showToast("主播未开启游戏");
+                                    showToast(getString(R.string.no_play_game));
                                 }
                             }
                         }
@@ -1441,7 +1439,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.recharge: //幸运28充值
-                showToast("暂不支持充值");
+                showToast(getString(R.string.stay_open));
                 break;
             case R.id.rl_trend: //走势
                 showHistoryDialog(1);
@@ -1469,82 +1467,74 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     }
                     showTouZhuPop(selectStatus, luckySet);
                 } else {
-                    showToast("没有开奖信息,请稍候再试");
+                    showToast(getString(R.string.no_info_try_again_later));
                 }
                 break;
 
             case R.id.iv_big: //大
                 restStatus();
                 ivBig.setImageResource(R.mipmap.icon_big_select);
-                selectStatus = "大";
-                tv_hz.setText("和值大于13即中奖");
+                selectStatus = getString(R.string.big);
+                tv_hz.setText(getString(R.string.big_info));
                 break;
             case R.id.iv_samll: //小
                 restStatus();
                 ivSamll.setImageResource(R.mipmap.icon_small_select);
-                selectStatus = "小";
-                tv_hz.setText("和值小于14即中奖");
-
+                selectStatus = getString(R.string.samll);
+                tv_hz.setText(getString(R.string.samll_info));
                 break;
             case R.id.iv_singe: //单
                 restStatus();
                 ivSinge.setImageResource(R.mipmap.icon_single_select);
-                selectStatus = "单";
-                tv_hz.setText("和值为奇数即中奖");
-
+                selectStatus = getString(R.string.singe);
+                tv_hz.setText(getString(R.string.singe_info));
                 break;
             case R.id.iv_double: //双
                 restStatus();
                 ivDouble.setImageResource(R.mipmap.icon_double_select);
-                selectStatus = "双";
-                tv_hz.setText("和值为偶数即中奖");
-
+                selectStatus = getString(R.string.double_);
+                tv_hz.setText(getString(R.string.double_info));
                 break;
             case R.id.iv_big_sigle: //大单
                 restStatus();
                 ivBigSigle.setImageResource(R.mipmap.icon_big_single_select);
-                selectStatus = "大单";
-                tv_hz.setText("和值为15,17,19,21,23,25,27即中奖");
-
+                selectStatus = getString(R.string.big_sigle);
+                tv_hz.setText(getString(R.string.big_sigle_info));
                 break;
             case R.id.iv_samll_singe: //小单
                 restStatus();
                 ivSamllSinge.setImageResource(R.mipmap.icon_small_single_select);
-                selectStatus = "小单";
-                tv_hz.setText("和值为1,3,5,7,9,11,13即中奖即中奖");
-
+                selectStatus = getString(R.string.samll_singe);
+                tv_hz.setText(getString(R.string.samll_singe_info));
                 break;
             case R.id.iv_big_double: //大双
                 restStatus();
                 ivBigDouble.setImageResource(R.mipmap.icon_big_double_select);
-                selectStatus = "大双";
-                tv_hz.setText("和值为14,16,18,20,22,24,26即中奖");
-
+                selectStatus = getString(R.string.big_double);
+                tv_hz.setText(getString(R.string.big_double_info));
                 break;
             case R.id.iv_samll_double: //小双
                 restStatus();
                 ivSamllDouble.setImageResource(R.mipmap.icon_small_double_select);
-                selectStatus = "小双";
-                tv_hz.setText("和值为0,2,4,6,8,10,12即中奖");
-
+                selectStatus = getString(R.string.samll_double);
+                tv_hz.setText(getString(R.string.samll_double_info));
                 break;
-            case R.id.iv_more_big: //更大
+            case R.id.iv_more_big: //极大
                 restStatus();
                 ivMoreBig.setImageResource(R.mipmap.icon_big_more_select);
-                selectStatus = "极大";
-                tv_hz.setText("和值大于21即中奖");
-
+                selectStatus = getString(R.string.more_big);
+                tv_hz.setText(getString(R.string.more_big_info));
                 break;
-            case R.id.iv_more_samll: //更小
+            case R.id.iv_more_samll: //极小
                 restStatus();
                 ivMoreSamll.setImageResource(R.mipmap.icon_small_more_select);
-                selectStatus = "极小";
-                tv_hz.setText("和值小于6即中奖");
+                selectStatus = getString(R.string.more_samll);
+                tv_hz.setText(getString(R.string.more_samll_info));
                 break;
 
             case R.id.ruanjianpanW:
                 if (isJinyan) {
-                    showToast("您被禁言中,禁止发言");
+                    showToast(getString(R.string.is_deny));
                 } else {
                     messageFragment.showEditText();
                 }
@@ -1558,7 +1548,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     }
 
                 } else {
-                    showToast("主播未开启游戏");
+                    showToast(getString(R.string.no_play_game));
                 }
                 break;
             /**
@@ -1965,7 +1955,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         if (gameResult.isSuccess()) {
             switch (gameResult.getCode()) {
                 case 0://没用中奖
-                    bullfightResultShow(null, "未中奖", null);
                     break;
                 case 1://中奖
                     int mount = gameResult.getObj().getMount();
@@ -2758,27 +2747,21 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      */
     private void getFamilyMember() {
         String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.SELECT_FAMILY_MEMBER;
-        LogUtils.i("家族url: " + url);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("userId", zhubo_Id);
         String json = new JSONObject(hashMap).toString();
-        LogUtils.i("家族Json:　" + json);
         OkHttpUtils.get().url(url)
                 .params(hashMap)
                 .build()
                 .execute(new StringCallback() {
                     @Override
                     public void onError(com.squareup.okhttp.Request request, Exception e) {
-                        LogUtils.i("家族onError: " + e.toString());
                     }
 
                     @Override
                     public void onResponse(String response) {
-                        LogUtils.i("家族onResponse: " + response);
-
                         SdkHttpResultSuccess sdkHttpResultSuccess = JsonUtil.json2Bean(response
                                 .toString(), SdkHttpResultSuccess.class);
-
 
                         if (!TextUtils.isEmpty(sdkHttpResultSuccess.getObj())) {
                             LiveFamilyMemberBean liveFamilyMember = JsonUtil.json2Bean(response,
@@ -2805,7 +2788,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             if (o.getRooms() != null)
                 mList.add(ChannelToLiveBean.getLiveBeanFromObj(o));
         }
-        LogUtils.e("ChannelToLiveBean" + mList.toString());
         BottomView familySelectView = new BottomView(this, R.style.BottomViewTheme_Transparent, R
                 .layout.view_show_familyr_members);
         familySelectView.setAnimation(R.style.BottomToTopAnim);
@@ -3129,7 +3111,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         break;
                     case 111:
                         LogUtil.e("断开连麦成功", message.getRemoteExtension().toString());
-                        showToast("主播断开连麦");
+                        showToast(getString(R.string.anchor_break_the_mic));
                         roomLiveExit();
                         hindSmallVideo();
                         break;
@@ -3287,13 +3269,12 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         if (appUser != null) {
             url += room_Id;
             url += "/users?pageNum=" + page;
-            LogUtils.i("聊天室头像列表(url):" + url);
             OkHttpUtils.get().url(url).build().execute(new CustomStringCallBack(mContext,
                     HttpDatas.KEY_CODE) {
                 @Override
                 public void onFaild() {
                     finshRefresh();
-                    showToast(isRefresh ? "刷新失败 " : "加载失败");
+                    showToast(isRefresh ? getString(R.string.refresh_failure) : getString(R.string.load_failure));
                     if (isCanStop) {
                         finshRefresh();
                     }
@@ -3301,7 +3282,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
                 @Override
                 public void onSucess(String data) {
-                    LogUtils.i("聊天室头像列表(data):" + data);
                     if (isCanStop) {
                         finshRefresh();
                     }
@@ -3453,7 +3433,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 //                Intent intent = new Intent(mContext, ExplainWebViewActivity.class);
 //                intent.putExtra("flag", 1000);
 //                startActivity(intent);
-                showToast("暂时不支持充值");
+                showToast(getString(R.string.stay_open));
             }
         });
 
@@ -3512,7 +3492,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      */
     private void onClickSendGift() {
         if (myGoldCoin < Long.valueOf(mSendGiftItem.getMemberConsume())) {
-            showToast("您的乐票不足，请充值");
+            showToast(getString(R.string.balance_not_enough));
             return;
         }
         sendGift();
@@ -3888,7 +3868,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * @param twoVideo
      */
     private void WatchLive(final String twoVideo) {
-        LogUtils.e("twoVideo--twoVideo" + twoVideo);
         if (videoLian.getVisibility() == View.INVISIBLE || videoLian.getVisibility() == View.GONE) {
             videoLian.setVisibility(View.VISIBLE);
         }
@@ -4532,7 +4511,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             iv_sex.setImageResource(R.mipmap.male);
         }
 
-        tvID.setText("乐檬号:" + customdateBean.getId());
+        tvID.setText(getString(R.string.lemeng_id, customdateBean.getId()));
 
         if (!TextUtils.isEmpty(customdateBean.getPicUrl())) {
             Picasso.with(mContext).load(customdateBean.getPicUrl()).placeholder(R.mipmap.head_default)
@@ -4554,7 +4533,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
         //签名
         if (TextUtils.isEmpty(customdateBean.getSignature())) {
-            tv_sign.setText("这个家伙很懒，什么都没留下");
+            tv_sign.setText(getString(R.string.default_sign));
         } else {
             tv_sign.setText(customdateBean.getSignature());
         }
@@ -4602,14 +4581,14 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         });
 
         //回复
-        tv_reply.setText("@TA");
+        tv_reply.setText("@" + getString(R.string.he));
         tv_reply.findViewById(R.id.tv_reply).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 messageFragment.showEditText();
                 EditText editContent = (EditText) findViewById(com.netease.nim.uikit.R.id
                         .editTextMessage);
-                String str = "回复" + customdateBean.getNickName() + ":";
+                String str = getString(R.string.reply, customdateBean.getNickName());
                 editContent.setText(str);
                 editContent.setSelection(str.length());
                 otherPop.dismiss();
@@ -4640,7 +4619,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         tv_changkong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showToast("暂缓开通");
+                showToast(getString(R.string.stay_open));
                 otherPop.dismiss();
             }
         });
@@ -4693,7 +4672,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         tv_become_guard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showToast("暂缓开通");
+                showToast(getString(R.string.stay_open));
             }
         });
         dialogForSelect.setCanceledOnTouchOutside(true);
@@ -4714,7 +4693,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         final EditText pwdEdit = (EditText) view.findViewById(R.id.join_secret_pwd_edit);
         final TextView promptText = (TextView) view.findViewById(R.id.dialog_prompt_text);
         promptText.setVisibility(View.GONE);
-        pwdEdit.setHint("请输入举报内容");
+        pwdEdit.setHint(getString(R.string.intput_report_content));
         //取消
         view.findViewById(R.id.join_secret_pwd_cancel).setOnClickListener(new View
                 .OnClickListener() {
@@ -4729,7 +4708,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             @Override
             public void onClick(View v) {
                 if (TextUtils.isEmpty(pwdEdit.getText().toString())) {
-                    showToast("请输入举报内容");
+                    showToast(getString(R.string.intput_report_content));
                 }
                 report(userId, pwdEdit.getText().toString());
                 KeyBoardUtils.closeKeybord(pwdEdit, mContext);
@@ -4780,9 +4759,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             public void onFaild() {
                 String toast;
                 if (TextUtils.equals(follow, "1")) {
-                    toast = "取消关注失败";
+                    toast = getString(R.string.cancel_attention_failure);
                 } else {
-                    toast = "关注失败";
+                    toast = getString(R.string.attention_failure);
                 }
                 showToast(toast);
             }
@@ -4816,10 +4795,10 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     private void focus(TextView tvFouce, CustomdateBean bean) {
         String follow = bean.getFollow();
         if (TextUtils.equals("0", follow)) {
-            tvFouce.setText("+ 关注");
+            tvFouce.setText(getString(R.string.add_attention));
             tvFouce.setTextColor(getResources().getColor(R.color.main));
         } else if (TextUtils.equals("1", follow)) {
-            tvFouce.setText("已关注");
+            tvFouce.setText(getString(R.string.already_attention));
             tvFouce.setTextColor(getResources().getColor(R.color.line_bf));
         }
     }
@@ -5085,13 +5064,13 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         TextView tv_tzqh = (TextView) view.findViewById(R.id.tv_tzqh);//投注期号
         TextView tv_ds = (TextView) view.findViewById(R.id.tv_ds);  //大小单双
         TextView tv_xzjf = (TextView) view.findViewById(R.id.tv_xzjf);  //下注积分
-        ImageView sure_tz = (ImageView) view.findViewById(R.id.sure_tz);  //确定投注
+        TextView sure_tz = (TextView) view.findViewById(R.id.sure_tz);  //确定投注
         ImageView colse_rule = (ImageView) view.findViewById(R.id.colse_rule);  //关闭弹框
 
-        tv_ds.setText("大小单双：" + selectStatus);
-        tv_xzjf.setText("投注乐票：" + luckySet);
+        tv_ds.setText(getString(R.string.lucy_bet_type, selectStatus));
+        tv_xzjf.setText(getString(R.string.lucy_bet_lepiao, String.valueOf(luckySet)));
         intQh = Integer.valueOf(nper) + 1;
-        tv_tzqh.setText("投注期号：" + intQh);
+        tv_tzqh.setText(getString(R.string.lucy_bet_date, String.valueOf(intQh)));
 
         colse_rule.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -5103,7 +5082,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             @Override
             public void onClick(View v) {
                 if (myGoldCoin < luckySet) {
-                    showToast("您的乐票不足,请充值");
+                    showToast(getString(R.string.balance_not_enough));
                     rulePop.dismiss();
                 } else {
                     sureTz(rulePop, luckySet);
@@ -5137,7 +5116,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         JSONObject jsonObject = new JSONObject(response);
                         String code = jsonObject.getString("code");
                         if (code.equals("1")) {
-                            showToast("投注成功");
+                            showToast(getString(R.string.bet_succeed));
                             /**
                              * 设置游戏布局的金币数量
                              */
@@ -5150,7 +5129,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                             map.put("vip", appUser.getVip());
                             map.put("userId", appUser.getId());
                             map.put("level", appUser.getLevel());
-                            map.put("inputMsg", intQh + "期 " + selectStatus + " 投注" + luckySet + "乐票");
+                            map.put("inputMsg", getString(R.string.bet_info, String.valueOf(intQh), selectStatus, String.valueOf(luckySet)));
                             SendRoomMessageUtils.onCustomMessagePlay("1818", messageFragment, wy_Id, map);
                         } else {
                             showToast(jsonObject.getString("msg"));
@@ -5170,11 +5149,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     private void getTimenumber() {
         String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.GET_TIME_NUMBER + "?userId=" + appUser.getId();
         OkHttpUtils.get().url(url).build().execute(new StringCallback() {
-
-
             @Override
             public void onError(com.squareup.okhttp.Request request, Exception e) {
-                showToast("网络错误");
+                showToast(getString(R.string.network_error));
             }
 
             @Override
@@ -5191,19 +5168,19 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                             isTouZhu = true;
                             nper = lastAwardBean.getNper();
                             countryType = lastAwardBean.getCountryType();
-                            tv_periods.setText("第" + lastAwardBean.getNper() + "期");
+                            tv_periods.setText(getString(R.string.bet_date_number, lastAwardBean.getNper()));
                             frist_num.setText(lastAwardBean.getFirstNum() + "");
                             second_num.setText(lastAwardBean.getSecondNum() + "");
                             third_num.setText(lastAwardBean.getThirdNum() + "");
                             all_num.setText(lastAwardBean.getSum() + "");
                             tv_ds.setText(lastAwardBean.getType());
-                            tv_next.setText("距离" + (Integer.parseInt(lastAwardBean.getNper()) + 1) + "期开奖还有");
+                            tv_next.setText(getString(R.string.distance_bet_date_number, String.valueOf((Integer.parseInt(lastAwardBean.getNper()) + 1))));
 
                             long now = System.currentTimeMillis();
                             mCountDownTotalTime = Long.parseLong(lastAwardBean.getDateLine()) - now;
 
                             if (mCountDownTotalTime < 0) {
-                                tv_game_next_open_time.setText("等待:开奖:中.");
+                                tv_game_next_open_time.setText(getString(R.string.wait_lottery));
                                 myHandler.postDelayed(timenNumber, 30000);
                             } else {
                                 myHandler.sendEmptyMessage(10000);
@@ -5231,19 +5208,19 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         if (lastAwardBean != null) {
                             nper = lastAwardBean.getNper();
                             countryType = lastAwardBean.getCountryType();
-                            tv_periods.setText("第" + lastAwardBean.getNper() + "期");
+                            tv_periods.setText(getString(R.string.bet_date_number, lastAwardBean.getNper()));
                             frist_num.setText(lastAwardBean.getFirstNum() + "");
                             second_num.setText(lastAwardBean.getSecondNum() + "");
                             third_num.setText(lastAwardBean.getThirdNum() + "");
                             all_num.setText(lastAwardBean.getSum() + "");
                             tv_ds.setText(lastAwardBean.getType());
-                            tv_next.setText("距离" + (Integer.parseInt(lastAwardBean.getNper()) + 1) + "期开奖还有");
-                            tv_game_next_open_time.setText("等待:开奖:中.");
+                            tv_next.setText(getString(R.string.distance_bet_date_number, String.valueOf((Integer.parseInt(lastAwardBean.getNper()) + 1))));
+                            tv_game_next_open_time.setText(getString(R.string.wait_lottery));
                             myHandler.postDelayed(timenNumber, 30000);
                         }
                     } else {
                         isTouZhu = false;
-                        tv_game_next_open_time.setText("等待:开奖:中.");
+                        tv_game_next_open_time.setText(getString(R.string.wait_lottery));
                         myHandler.postDelayed(timenNumber, 30000);
                     }
                 } catch (JSONException e) {
@@ -5264,9 +5241,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         initDialog();
         String content = "";
         if (type.equals("1")) {
-            content = "提示" + "\n" + "\n" + "您在" + nper + "期中,获得乐票" + winAmountAll;
+            content = getString(R.string.winning_hint, nper, winAmountAll);
         } else {
-            content = "提示" + "\n" + "\n" + "您在" + nper + "期中未中奖";
+            content = getString(R.string.no_winning_hint, nper);
         }
         baseDialogTitle.setText(content);
         baseDialogLeft.setVisibility(View.GONE);

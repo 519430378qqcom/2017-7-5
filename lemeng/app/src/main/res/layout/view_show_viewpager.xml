@@ -41,7 +41,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="充值:"
+                    android:text="@string/recharge"
                     android:textColor="@color/main"
                     android:textSize="@dimen/text_size_15" />
 
@@ -75,7 +75,7 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:background="@color/light_gray2"
-                android:text="赠送"
+                android:text="@string/give"
                 android:enabled="false"
                 android:textColor="@color/white" />
 

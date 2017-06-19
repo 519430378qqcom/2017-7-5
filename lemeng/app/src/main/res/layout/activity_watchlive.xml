@@ -163,14 +163,12 @@
                                 android:ellipsize="end"
                                 android:maxEms="10"
                                 android:singleLine="true"
-                                android:text="得天独厚"
                                 android:textSize="24px" />
 
 
                             <TextView
                                 android:id="@+id/live_num"
                                 style="@style/WhiteShadowStyle"
-                                android:text="0"
                                 android:textSize="23px" />
 
                         </com.zhy.autolayout.AutoLinearLayout>
@@ -182,7 +180,7 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginRight="10px"
                             android:src="@mipmap/ic_live_follow"
-                            android:text="关注"
+                            android:text="@string/attention"
                             android:visibility="gone" />
 
                         <com.zhy.autolayout.AutoRelativeLayout
@@ -249,7 +247,7 @@
                         <TextView
                             style="@style/WhiteShadowStyle"
                             android:layout_marginLeft="22px"
-                            android:text="乐票:"
+                            android:text="@string/lepiao_live"
                             android:textSize="24px" />
 
                         <TextView
@@ -257,7 +255,6 @@
                             style="@style/WhiteShadowStyle"
                             android:layout_marginLeft="10px"
                             android:layout_marginRight="12px"
-                            android:text="0"
                             android:textSize="24px" />
 
                         <ImageView
@@ -275,7 +272,6 @@
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="30px"
                         android:gravity="center_vertical"
-                        android:text="乐檬号:1000000"
                         android:textSize="28px" />
 
                     <com.zhy.autolayout.AutoRelativeLayout
@@ -390,7 +386,7 @@
                         android:gravity="center"
                         android:paddingLeft="27px"
                         android:paddingRight="27px"
-                        android:text="结束连麦"
+                        android:text="@string/over_the_mic"
                         android:textColor="@color/white"
                         android:textSize="24px"
                         android:visibility="gone" />
@@ -499,7 +495,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="连击"
+                        android:text="@string/double_hit"
                         android:textColor="@color/white"
                         android:textSize="24px" />
 

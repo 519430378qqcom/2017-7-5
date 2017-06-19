@@ -32,8 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="60px"
                 android:layout_marginTop="160px"
-                android:textColor="@color/tv_color3"
-                android:text="投注期号：1520" />
+                android:textColor="@color/tv_color3" />
 
                <View
                    android:layout_width="match_parent"
@@ -50,8 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="60px"
                 android:layout_marginTop="60px"
-                android:textColor="@color/tv_color3"
-                android:text="大小单双：小，双" />
+                android:textColor="@color/tv_color3"/>
 
             <View
                 android:layout_width="match_parent"
@@ -68,8 +66,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="60px"
                 android:layout_marginTop="60px"
-                android:textColor="@color/tv_color3"
-                android:text="下注积分：10分" />
+                android:textColor="@color/tv_color3"/>
 
             <View
                 android:layout_width="match_parent"
@@ -83,19 +80,22 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_marginTop="10px"
-                  android:text="温馨提示：本房间单期最高派奖金为无限制"
+                  android:text="@string/lucy_bet_hint"
                   android:layout_marginLeft="60px"
                   android:textSize="10sp"
                   />
 
-            <ImageView
+            <TextView
                 android:id="@+id/sure_tz"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/rectangle_tz"
+                android:layout_width="330px"
+                android:layout_height="70px"
+                android:background="@drawable/bet_circle"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="50px"
-                />
+                android:text="@string/affirm_bet"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="24px"
+                android:layout_marginTop="50px" />
         </com.zhy.autolayout.AutoLinearLayout>
 
         <TextView
