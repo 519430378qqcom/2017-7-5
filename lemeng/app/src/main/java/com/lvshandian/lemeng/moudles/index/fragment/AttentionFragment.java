@@ -130,7 +130,7 @@ public class AttentionFragment extends BaseFragment implements View.OnClickListe
         map.put("page", page + "");
         map.put("userId", appUser.getId());
         map.put("type", "4");
-        httpDatas.getNewDataCharServerRefresh("获取直播关注界面接口列表", Request.Method.GET, UrlBuilder.appRooms, map, mHandler, RequestCode.ATTENTION_LIVE, mrlLayout);
+        httpDatas.getNewDataCharServerRefresh("获取直播关注界面接口列表", Request.Method.GET, UrlBuilder.APP_ROOMS_LIST, map, mHandler, RequestCode.ATTENTION_LIVE, mrlLayout);
     }
 
 

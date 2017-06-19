@@ -43,8 +43,8 @@ public class UrlBuilder {
     public static final String LUCKY28_HISTORY = SERVER_URL_8080 + "gameRecord/luck28.html?roomId=%s&userId=%s";//幸运28历史记录图
     public static final String NIUNIU_TREND = SERVER_URL_8080 + "cow/cowResult.html?roomId=%s";//牛牛走势图
     public static final String NIUNIU_HISTORY = SERVER_URL_8080 + "gameRecord/cowRecord.html?roomId=%s&userId=%s";//牛牛历史记录图
-    public static final String SHARE_VIDEO_URL = SERVER_URL_8080 +"videoShare/liveShare.html?roomId=%s&userId=%s&videoPath=%s";//分享直播链接
-    public static final String SHARE_DOWNLOAD_URL = SERVER_URL_8080 +"shareNew/share.html";//分享下载链接
+    public static final String SHARE_VIDEO_URL = SERVER_URL_8080 + "videoShare/liveShare.html?roomId=%s&userId=%s&videoPath=%s";//分享直播链接
+    public static final String SHARE_DOWNLOAD_URL = SERVER_URL_8080 + "shareNew/share.html";//分享下载链接
 
     public static final String BAIDU_SONG_SEARCH = "http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.search.catalogSug&query=%s";//搜索
     public static final String BAIDU_SONG_PLAY = "http://tingapi.ting.baidu.com/v1/restserver/ting?format=json&calback=&from=webapp_music&method=baidu.ting.song.play&songid=%s";//得到下载的url
@@ -76,29 +76,27 @@ public class UrlBuilder {
     public static final String MODIFY_PASSWORD = "/api/v1/user/password";   //修改密码
     public static final String SEARCH = "/api/v1/user/find";//搜索用户
     public static final String SEARCH_CONTROLLER = "/appusers/find";//搜索用户场控
-
-
-    public static final String appRooms = "/appRooms/getRooms";// type=1热门，type = 2最新，type ==3 地方北京市直播
+    public static final String APP_ROOMS_LIST = "/appRooms/getRooms";// type=1热门，type = 2最新，type ==3 地方北京市直播
     public static final String GET_GIFT = "/appGift/findGift";//获取礼物列表
-    public static final String selectLevel = "/appLevel/getLevelRate";  //查询当前等级信息
+    public static final String SELECT_LEVEL = "/appLevel/getLevelRate";  //查询当前等级信息
     public static final String START_JOIN_ROOM = "/appRooms/getShareRoom";    //进入直播间
-    public static final String selectQuite = "/appusers/getUserById";//主播离开后获取直播信息
-    public static final String selectFamilyMember = "/appusers/selectFamilyMember.do";//家族
-    public static final String appUserControl = "appUserControl/stopUser";//禁言
-    public static final String START = "/api/v1/room/create/";//新建直播/api/v1/room/create
-    public static final String getBanner = "/appCarouselFigure/carouselList";//得到banner图
-    public static final String room_funse = "/appRooms/findFansOnline";//直播间的粉丝列表
     public static final String SEND_GIFT = "/appRooms/reward";//送礼物
-    public static final String joinRoom = "/api/v1/room/";//加入直播间
-    public static final String ifEnter = "/appRooms/ifEnter";//判断是否进入过该房间
-    public static final String updateCoin = "/appRooms/updateCoin";//支付进入
-    public static final String join = "/appRooms/join";//进入直播间
-    public static final String room = "/api/v1/room/";//聊天室头像列表
-    public static final String barrage = "/api/v1/barrage/";//发送弹幕消息扣金币
-    public static final String roomExit = "/api/v1/room/exit";//退出直播间
-    public static final String getTimenumber = "/appusers/gettimenumber";//获取上期开奖数据
-    public static final String reciveAmount = "/appRooms/reciveAmount";//投注
-    public static final String getBl = "/admin/appusers/getCathecticRate";//开游戏、查询投注比例
+    public static final String JOIN_ROOM = "/api/v1/room/";//加入直播间
+    public static final String IF_ENTER = "/appRooms/ifEnter";//判断是否进入过该房间
+    public static final String UPDATE_COIN = "/appRooms/updateCoin";//支付进入
+    public static final String JOIN = "/appRooms/join";//进入直播间
+    public static final String SELECT_QUITE_INFO = "/appusers/getUserById";//主播离开后获取直播信息
+    public static final String SELECT_FAMILY_MEMBER = "/appusers/selectFamilyMember.do";//家族
+    public static final String APP_USER_CONTROL = "appUserControl/stopUser";//禁言
+    public static final String START_LIVE = "/api/v1/room/create/";//新建直播/api/v1/room/create
+    public static final String GET_BANNER = "/appCarouselFigure/carouselList";//得到banner图
+    public static final String ROOM_FUNSE = "/appRooms/findFansOnline";//直播间的粉丝列表
+    public static final String ROOM_HEAD_LIST = "/api/v1/room/";//聊天室头像列表
+    public static final String START_LUCK_GAME = "/admin/appusers/getCathecticRate";//开游戏、查询投注比例
+    public static final String RECIVE_AMOUNT = "/appRooms/reciveAmount";//幸运28投注
+    public static final String GET_TIME_NUMBER = "/appusers/gettimenumber";//获取上期开奖数据
+    public static final String BARRAGE = "/api/v1/barrage/";//发送弹幕消息扣金币
+    public static final String ROOM_EXIT = "/api/v1/room/exit";//退出直播间
 
 
     //------------------------------------斗牛游戏接口----------------------------------------

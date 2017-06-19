@@ -224,7 +224,7 @@ public class HotFragment extends BaseFragment implements SwipeRefresh.OnRefreshL
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("page", page + "");
         map.put("type", "1");
-        httpDatas.getNewDataCharServerRefresh("获取直播热门接口列表", Request.Method.GET, UrlBuilder.appRooms, map, mHandler, RequestCode.HOT_LIVE, mrlLayout);
+        httpDatas.getNewDataCharServerRefresh("获取直播热门接口列表", Request.Method.GET, UrlBuilder.APP_ROOMS_LIST, map, mHandler, RequestCode.HOT_LIVE, mrlLayout);
 
     }
 
@@ -242,7 +242,7 @@ public class HotFragment extends BaseFragment implements SwipeRefresh.OnRefreshL
      * 查询轮播图
      */
     private void getBannerList() {
-        httpDatas.getNewDataCharServerNoLoading("获取轮播图接口列表", Request.Method.GET, UrlBuilder.getBanner, null, mHandler, RequestCode.HOME_BANNER);
+        httpDatas.getNewDataCharServerNoLoading("获取轮播图接口列表", Request.Method.GET, UrlBuilder.GET_BANNER, null, mHandler, RequestCode.HOME_BANNER);
     }
 
     @Override

@@ -254,7 +254,7 @@ public class ChatRoomMessageFragment extends TFragment implements ModuleProxy {
             message.setRemoteExtension(ext);
         }
         ///api/v1/barrage/%@", userId
-        String url = UrlBuilder.SERVER_URL + UrlBuilder.barrage;
+        String url = UrlBuilder.SERVER_URL + UrlBuilder.BARRAGE;
         url += appUser.getId();
         if (inputPanel.getToggleState()) {
             OkHttpUtils.get().url(url).build().execute(new CustomStringCallBack(getActivity(), HttpDatas.KEY_CODE) {

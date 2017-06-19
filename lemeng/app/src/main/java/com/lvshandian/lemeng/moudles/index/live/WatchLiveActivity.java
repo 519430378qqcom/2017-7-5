@@ -1212,7 +1212,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
 
     private void initBlInfos() {
-        String url = UrlBuilder.SERVER_URL + UrlBuilder.getBl;
+        String url = UrlBuilder.SERVER_URL + UrlBuilder.START_LUCK_GAME;
         OkHttpUtils.post().url(url).addParams("roomId", room_Id).addParams("type", "0").build().execute(new StringCallback() {
             @Override
             public void onError(com.squareup.okhttp.Request request, Exception e) {
@@ -2757,7 +2757,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * @time 2016/12/22 16:11
      */
     private void getFamilyMember() {
-        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.selectFamilyMember;
+        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.SELECT_FAMILY_MEMBER;
         LogUtils.i("家族url: " + url);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("userId", zhubo_Id);
@@ -2920,7 +2920,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("userId", appUser.getId());
         map.put("roomId", room_Id);
-        httpDatas.getDataForJsoNoloading("退出直播间", Request.Method.POST, UrlBuilder.roomExit, map,
+        httpDatas.getDataForJsoNoloading("退出直播间", Request.Method.POST, UrlBuilder.ROOM_EXIT, map,
                 myHandler, RequestCode.REQUEST_ROOM_EXIT);
 
         if (null != mMediaStreamingManager) {
@@ -3283,7 +3283,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      */
     private void requestNet() {
         page = isRefresh ? 1 : ++page;
-        String url = UrlBuilder.SERVER_URL + UrlBuilder.room;
+        String url = UrlBuilder.SERVER_URL + UrlBuilder.ROOM_HEAD_LIST;
         if (appUser != null) {
             url += room_Id;
             url += "/users?pageNum=" + page;
@@ -4832,7 +4832,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * @time 2016/12/16 17:14
      */
     private void join() {
-        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.join;
+        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.JOIN;
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("roomId", room_Id);
         hashMap.put("userId", appUser.getId());
@@ -5113,7 +5113,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     }
 
     private void sureTz(final PopupWindow rulePop, final int luckySet) {
-        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.reciveAmount;
+        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.RECIVE_AMOUNT;
 
         OkHttpUtils.get().url(url)
                 .addParams("userId", appUser.getId())
@@ -5168,7 +5168,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * @dw 获取上期开奖数据
      */
     private void getTimenumber() {
-        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.getTimenumber + "?userId=" + appUser.getId();
+        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.GET_TIME_NUMBER + "?userId=" + appUser.getId();
         OkHttpUtils.get().url(url).build().execute(new StringCallback() {
 
 

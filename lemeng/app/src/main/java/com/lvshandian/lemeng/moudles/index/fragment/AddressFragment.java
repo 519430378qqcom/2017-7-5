@@ -143,7 +143,7 @@ public class AddressFragment extends BaseFragment implements SwipeRefresh.OnRefr
         map.put("gender", (Integer) SharedPreferenceUtils.get(getContext(), Constant.GENDER, 2) + "");
         map.put("page", page + "");
         map.put("type", "3");
-        httpDatas.getNewDataCharServerRefresh("获取地区直播接口列表", Request.Method.GET, UrlBuilder.appRooms, map, mHandler, RequestCode.HOT_LIVE, mrlLayout);
+        httpDatas.getNewDataCharServerRefresh("获取地区直播接口列表", Request.Method.GET, UrlBuilder.APP_ROOMS_LIST, map, mHandler, RequestCode.HOT_LIVE, mrlLayout);
     }
 
 

@@ -139,7 +139,7 @@ public class NewsFragment extends BaseFragment implements SwipeRefresh.OnRefresh
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("page", page + "");
         map.put("type", "2");
-        httpDatas.getNewDataCharServerRefresh("获取直播最新界面接口列表", Request.Method.GET, UrlBuilder.appRooms, map, mHandler, RequestCode.HOT_LIVE, mrlLayout);
+        httpDatas.getNewDataCharServerRefresh("获取直播最新界面接口列表", Request.Method.GET, UrlBuilder.APP_ROOMS_LIST, map, mHandler, RequestCode.HOT_LIVE, mrlLayout);
     }
 
     @Override

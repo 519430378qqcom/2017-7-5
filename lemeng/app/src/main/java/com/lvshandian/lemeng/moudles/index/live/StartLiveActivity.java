@@ -240,7 +240,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.lvshandian.lemeng.UrlBuilder.room;
 import static com.lvshandian.lemeng.service.VoiceService.mediaPlayer;
 
 /**
@@ -2299,7 +2298,7 @@ public class StartLiveActivity extends BaseActivity implements
     }
 
     private void showXYGame() {
-        String url = UrlBuilder.SERVER_URL + UrlBuilder.getBl;
+        String url = UrlBuilder.SERVER_URL + UrlBuilder.START_LUCK_GAME;
 
         OkHttpUtils.post().url(url).addParams("roomId", room_Id).addParams("type", "1").build().execute(new StringCallback() {
             @Override
@@ -2361,7 +2360,7 @@ public class StartLiveActivity extends BaseActivity implements
      * @time 2016/12/22 16:11
      */
     private void getFamilyMember() {
-        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.selectFamilyMember;
+        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.SELECT_FAMILY_MEMBER;
         LogUtils.i("家族url: " + url);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("userId", creatReadyBean.getCreator().getId());
@@ -2846,7 +2845,7 @@ public class StartLiveActivity extends BaseActivity implements
      * 聊天室头像列表
      */
     private void requestNet() {
-        String url = UrlBuilder.SERVER_URL + room;
+        String url = UrlBuilder.SERVER_URL + UrlBuilder.ROOM_HEAD_LIST;
         if (appUser != null) {
             url += room_Id;
             if (isRefresh) {
@@ -4390,7 +4389,7 @@ public class StartLiveActivity extends BaseActivity implements
      */
     private void requestFunse(final SwipeRefreshLayout refresh, String content) {
         funsePage = funseIsRefresh ? 1 : ++funsePage;
-        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.room_funse;
+        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.ROOM_FUNSE;
         OkHttpUtils.get().url(url).
                 addParams("page", String.valueOf(funsePage)).
                 addParams("roomId", room_Id).
@@ -4698,7 +4697,7 @@ public class StartLiveActivity extends BaseActivity implements
      */
     private void banned(final String stopUserId, final String nickNane) {
         RequestParams params = new RequestParams(UrlBuilder.CHARGE_SERVER_URL + UrlBuilder
-                .appUserControl);
+                .APP_USER_CONTROL);
 
         params.addQueryStringParameter("userId", appUser.getId());
         params.addQueryStringParameter("stopUserId", stopUserId);
@@ -5125,7 +5124,7 @@ public class StartLiveActivity extends BaseActivity implements
 
 
     private void sureTz(final PopupWindow rulePop, final int luckySet) {
-        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.reciveAmount;
+        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.RECIVE_AMOUNT;
         LogUtils.e("countryType :" + countryType);
         OkHttpUtils.get().url(url)
                 .addParams("userId", appUser.getId())
@@ -5180,7 +5179,7 @@ public class StartLiveActivity extends BaseActivity implements
      * @dw 获取上期开奖数据
      */
     private void getTimenumber() {
-        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.getTimenumber + "?userId=" + appUser.getId();
+        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.GET_TIME_NUMBER + "?userId=" + appUser.getId();
         OkHttpUtils.get().url(url).build().execute(new StringCallback() {
             @Override
             public void onError(Request request, Exception e) {

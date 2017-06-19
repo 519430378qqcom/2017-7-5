@@ -93,7 +93,7 @@ public class MyGradeActivity extends BaseActivity {
     private void queryLevel() {
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("level", level);
-        httpDatas.getNewDataCharServer("查询等级信息", Request.Method.POST, UrlBuilder.selectLevel, map, mHandler, RequestCode.SELECT_LEVEL);
+        httpDatas.getNewDataCharServer("查询等级信息", Request.Method.POST, UrlBuilder.SELECT_LEVEL, map, mHandler, RequestCode.SELECT_LEVEL);
     }
 
     @Override

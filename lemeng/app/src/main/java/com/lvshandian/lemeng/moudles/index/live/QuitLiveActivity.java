@@ -155,7 +155,7 @@ public class QuitLiveActivity extends BaseActivity {
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("userId", appUser.getId());
         map.put("roomId", roomId);
-        httpDatas.getNewDataCharServer("查询主播离开房间信息", Request.Method.GET, UrlBuilder.selectQuite, map, mHandler, RequestCode.SELECTE_QUIT);
+        httpDatas.getNewDataCharServer("查询主播离开房间信息", Request.Method.GET, UrlBuilder.SELECT_QUITE_INFO, map, mHandler, RequestCode.SELECTE_QUIT);
     }
 
     @Override

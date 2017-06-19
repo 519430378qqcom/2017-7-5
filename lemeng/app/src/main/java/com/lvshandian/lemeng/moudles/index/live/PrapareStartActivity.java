@@ -277,7 +277,7 @@ public class PrapareStartActivity extends BaseActivity {
         map.put("privateChat", "1");
         map.put("payForChat", appUser.getPayForVideoChat());
         map.put("livePicUrl", appUser.getPicUrl());
-        httpDatas.getDataForJson("开启直播", Request.Method.POST, UrlBuilder.START, map, mHandler, RequestCode.START_LIVE);
+        httpDatas.getDataForJson("开启直播", Request.Method.POST, UrlBuilder.START_LIVE, map, mHandler, RequestCode.START_LIVE);
     }
 
 
