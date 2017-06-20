@@ -205,7 +205,7 @@ public class ChatRoomMsgListPanel implements TAdapterDelegate {
             if (newMessage != null) {
                 remote = newMessage.getRemoteExtension();
             }
-            if (newMessage != null && remote != null && !TextUtils.isEmpty((String) remote.get("type")) && ((remote.get("type")).equals("109"))) {
+            if (newMessage != null && remote != null && !TextUtils.isEmpty((String) remote.get("type")) && ((remote.get("type")).equals("109")|| remote.get("type").equals("108"))) {
                 //收到 109 礼物消息 发送广播
                 LogUtil.i("WangYi_gift", "发礼物广播");
                 container.activity.sendBroadcast(new Intent().setAction("WatchLiveActivity").putExtra("ChatRoomMessage", newMessage));

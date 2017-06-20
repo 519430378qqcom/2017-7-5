@@ -203,6 +203,13 @@
         <!--我的乐票-->
         <include layout="@layout/my_lepiao_layout" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="30px"
+            android:background="@color/line_df" />
+        <!--我的游戏记录-->
+        <include layout="@layout/my_game_record_layout" />
         <!--我的回放-->
         <!--<include layout="@layout/my_item_huifang_layout" />-->
         <View

@@ -412,8 +412,9 @@ public class InputPanel implements IEmoticonSelectedListener, IAudioRecordCallba
         }
     }
 
-    // 发送文本消息
+    // 发文本消息
     private void onTextMessageSendButtonPressed() {
+//        Toast.makeText(view.getContext(),"不能聊天",Toast.LENGTH_LONG).show();
         String text = messageEditText.getText().toString();
         if (!TextUtils.isEmpty(text)) {
             IMMessage textMessage = createTextMessage(text);

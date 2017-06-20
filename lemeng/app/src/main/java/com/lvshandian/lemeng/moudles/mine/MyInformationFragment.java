@@ -92,6 +92,8 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
     TextView tvCoin;
     @Bind(R.id.ll_coin)
     AutoRelativeLayout llCoin;
+    @Bind(R.id.ll_game_record)
+    AutoRelativeLayout llGameRecord;
     @Bind(R.id.ll_contribution)
     AutoRelativeLayout llContribution;
     @Bind(R.id.ll_myLevel)
@@ -294,6 +296,7 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
     @Override
     protected void initListener() {
         llCoin.setOnClickListener(this);
+        llGameRecord.setOnClickListener(this);
         llEarnest.setOnClickListener(this);
         llContribution.setOnClickListener(this);
         llMylevel.setOnClickListener(this);
@@ -554,6 +557,11 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
             case R.id.ll_coin://我的乐票
                 Intent intentCoins = new Intent(mContext, MyCoinsActicity.class);
                 startActivity(intentCoins);
+                break;
+            case R.id.ll_game_record://我的游戏记录
+//                Intent intentRecord = new Intent(mContext, MyCoinsActicity.class);
+//                startActivity(intentRecord);
+                showToast(getString(R.string.stay_open));
                 break;
             case R.id.ll_earnest://认证
 //                AppUser userInfo = (AppUser) CacheUtils.readObject(mContext, CacheUtils.USERINFO);
