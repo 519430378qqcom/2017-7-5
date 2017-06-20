@@ -357,7 +357,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     @Bind(R.id.watch_room_message_fragment_chat)
     FrameLayout watch_room_message_fragment_chat;
     @Bind(R.id.tv_rule)
-    ImageView tv_rule;
+    TextView tv_rule;
     @Bind(R.id.lucky_bet)
     EditText etLuckyBet;
     @Bind(R.id.recharge)
@@ -1649,6 +1649,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 betBullfight(3);
                 break;
             case R.id.tv_bullfight_top_up:
+                showToast(getString(R.string.stay_open));
                 break;
             case R.id.iv_10:
                 checkBettingBalance(10);

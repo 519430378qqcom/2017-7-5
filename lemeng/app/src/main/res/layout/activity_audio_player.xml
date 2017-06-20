@@ -16,7 +16,7 @@
         android:background="@color/main"
         android:gravity="center"
         android:paddingTop="20px"
-        android:text="点歌"
+        android:text="@string/request_a_song"
         android:textColor="@color/white"
         android:textSize="35px" />
     <!-- 导航标题栏 -->
@@ -61,7 +61,7 @@
                 android:layout_toLeftOf="@+id/delete"
                 android:layout_toRightOf="@id/search"
                 android:background="@null"
-                android:hint="请输入歌曲名称"
+                android:hint="@string/input_song_name"
                 android:singleLine="true"
                 android:text=""
                 android:textColor="@color/main"

@@ -12,6 +12,7 @@
     <string name="edit_profile">编辑资料</string>
     <string name="change_password">修改密码</string>
     <string name="private_letter">私信</string>
+
     <!--注册登录部分-->
     <string name="agree_term_of_service">登入即代表您同意《服务条款》</string>
     <string name="mobile_terminal">移动端</string>
@@ -29,6 +30,7 @@
     <string name="auth_code">验证码</string>
     <string name="agreement_lemeng">同意乐檬</string>
     <string name="sent_validate">发送验证码</string>
+
     <!--个人中心部分-->
     <string name="attention">关注</string>
     <string name="no_attention">您还没有关注的人哦</string>
@@ -65,6 +67,7 @@
     <string name="qzpq">欺诈骗钱</string>
     <string name="address">地址</string>
     <string name="contribution_lepiao_num">贡献 %1$s 乐票</string>
+
     <!--提现部分-->
     <string name="withdraw_money">已提现金额</string>
     <string name="recharge">充值</string>
@@ -83,6 +86,7 @@
     <string name="binding_succeed">绑定成功</string>
     <string name="search_wechat_withdraw">请搜索微信公众号《乐檬LIVE》进行提现</string>
     <string name="rmb">%1$s元</string>
+
     <!--认证部分-->
     <string name="wait_authentication">您的申请已提交,请耐心等待审核</string>
     <string name="real_name">真实姓名</string>
@@ -96,6 +100,7 @@
     <string name="submit_authentication">提交认证</string>
     <string name="select_an_album">选择相册</string>
     <string name="take_pictures">立刻拍照</string>
+
     <!--我的等级部分-->
     <string name="now_level">当前等级</string>
     <string name="what_upgrade">如何提升经验</string>
@@ -109,6 +114,7 @@
     <string name="level">Lv.%1$s</string>
     <string name="my_empirical_value">我的经验值:%1$s</string>
     <string name="upgrade_need_empirical_value">升级还需经验值:%1$s</string>
+
     <!--修改资料部分-->
     <string name="save">保存</string>
     <string name="constellation">星 座</string>
@@ -120,6 +126,7 @@
     <string name="looks_all">看全部</string>
     <string name="avatar_setting">设为头像</string>
     <string name="picture_delete">删除图片</string>
+
     <!--设置部分-->
     <string name="lemeng_account">账户</string>
     <string name="lemeng_id_tv">乐檬号</string>
@@ -142,6 +149,7 @@
     <string name="old_password_failure">旧密码输入不正确</string>
     <string name="password_different_twice">两次输入的密码不一致</string>
     <string name="new_and_old_password_must_different">新密码不能与旧密码相同</string>
+
     <!--直播部分-->
     <string name="share_live_title">主播%1$s邀你玩游戏啦</string>
     <string name="share_live_content">够刺激,主播%1$s带你玩转直播间,一起游戏嗨起来!</string>
@@ -194,11 +202,47 @@
     <string name="give_gifts">赠送了1个%1$s</string>
     <string name="no_play_game">主播未开启游戏</string>
     <string name="give">赠送</string>
+    <string name="focus_on_the_anchor">关注了主播</string>
+    <string name="create_room_success">创建房间成功</string>
+    <string name="join_room">进入房间</string>
+    <string name="light_up">点亮了</string>
+    <string name="anchor_come_back">主播回来啦, 视频即将恢复</string>
+    <string name="anchor_leave">主播离开一下, 精彩不中断, 不要走开哦</string>
+    <string name="write_a_title_for_the_live">给直播写一个标题吧</string>
+    <string name="start_live">开始直播</string>
+    <string name="spark">火星</string>
+    <string name="if_start_live">当前为移动网络,是否开启直播</string>
+    <string name="if_look_live">当前为移动网络,是否继续观看</string>
+    <string name="live_already_end">直播已结束</string>
+    <string name="live_performance">本场直播成就</string>
+    <string name="this_time">本次时长</string>
+    <string name="the_total_time">累计时长</string>
+    <string name="views_number">观看人数</string>
+    <string name="the_new_fan">新增粉丝</string>
+    <string name="obtain_lepiao">获得乐票</string>
+    <string name="add_up_lepiao">累计乐票</string>
+    <string name="quit_live">退出直播间</string>
+    <string name="live_end">·  直播结束  ·</string>
+    <string name="check_the_home_page">查看主页</string>
+    <string name="back_homepage">返回首页</string>
+    <string name="request_a_song">点歌</string>
+    <string name="input_song_name">请输入歌曲名称</string>
+    <string name="pause">暂停</string>
+    <string name="go_on">继续</string>
+    <string name="play">播放</string>
+    <string name="download">下载</string>
+    <string name="download_finish">下载完成</string>
+    <string name="save_failure">存储失败</string>
+    <string name="if_delete_the_song">确定要删除此歌曲吗?</string>
+    <string name="is_playing_no_delete">此歌曲正在播放,不能删除</string>
+    <string name="is_go_on_no_delete">此歌曲正在暂停,不能删除</string>
+    <string name="no_download">此歌曲还没有下载</string>
+    <string name="no_songs_were_found">没有搜索到歌曲</string>
 
     <!--幸运28部分-->
     <string name="no_info_try_again_later">没有开奖信息,请稍候再试</string>
     <string name="intput_lucky_bet">最低:10 最高:1600000</string>
-    <string name="start_lucy28_game">主播开启斗牛游戏</string>
+    <string name="start_lucy28_game">主播开启幸运28游戏</string>
     <string name="big">大</string>
     <string name="samll">小</string>
     <string name="singe">单</string>
@@ -232,7 +276,6 @@
     <string name="winning_hint">提示\n\n您在%1$s期中,获得乐票%2$s</string>
     <string name="no_winning_hint">提示\n\n您在%1$s期中未中奖</string>
     <!--牛牛部分-->
-    <string name="top_up">充值</string>
     <string name="wait_next_start">请等待下一局开始</string>
     <string name="no_select_betbalance">还未选取投注金额</string>
     <string name="balance_not_enough">余额不足</string>
@@ -243,7 +286,7 @@
     <string name="banker">庄家</string>
     <string name="take_a_rest">休息一下</string>
     <string name="start_niuniu_game">主播开启斗牛游戏</string>
-
+    <string name="niuniu_default_banker">荷官</string>
 
     <!--吐司提示-->
     <string name="again_press_quit">再按一次退出应用</string>

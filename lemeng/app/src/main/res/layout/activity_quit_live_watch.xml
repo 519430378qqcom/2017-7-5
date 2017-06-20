@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="180px"
-            android:text="·  直播结束  ·"
+            android:text="@string/live_end"
             android:textColor="@color/main"
             android:textSize="58px"
             android:textStyle="bold" />
@@ -59,7 +59,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40px"
-            android:text="  "
             android:textColor="@color/white"
             android:textSize="36px" />
 
@@ -85,7 +84,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20px"
-                    android:text="查看主页"
+                    android:text="@string/check_the_home_page"
                     android:textColor="@color/white"
                     android:textSize="30px" />
             </com.zhy.autolayout.AutoLinearLayout>
@@ -107,7 +106,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20px"
-                    android:text="返回首页"
+                    android:text="@string/back_homepage"
                     android:textColor="@color/white"
                     android:textSize="30px" />
             </com.zhy.autolayout.AutoLinearLayout>

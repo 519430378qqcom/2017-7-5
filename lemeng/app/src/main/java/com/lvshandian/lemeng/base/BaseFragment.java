@@ -159,9 +159,9 @@ public abstract class BaseFragment extends Fragment {
     public void ifEnter(final String wyRoomId,final String mVideoPath) {
         if (NetWorkUtil.getConnectedType(mContext) == 0) {
             initDialog();
-            baseDialogTitle.setText("当前为移动网络,是否继续观看");
-            baseDialogLeft.setText("取消观看");
-            baseDialogRight.setText("继续观看");
+            baseDialogTitle.setText(getString(R.string.if_look_live));
+            baseDialogLeft.setText(getString(R.string.cancel));
+            baseDialogRight.setText(getString(R.string.confirm));
             baseDialogLeft.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

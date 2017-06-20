@@ -54,20 +54,20 @@ public class AudioPlayerAdapter extends RecyclerView.Adapter<AudioPlayerAdapter
         File file = new File(uri);
         if ((listBean.isDownload() || listBean1.size() > 0) && file.exists()) {
             if (listBean.isPlaying()) {
-                holder.go_player.setText("暂停");
+                holder.go_player.setText(mContext.getResources().getString(R.string.pause));
                 holder.go_player.setTextColor(mContext.getResources().getColor(R.color.main));
                 holder.go_player.setBackground(mContext.getResources().getDrawable(R.drawable.download_bg2));
             } else if (listBean.isPause()) {
-                holder.go_player.setText("继续");
+                holder.go_player.setText(mContext.getResources().getString(R.string.go_on));
                 holder.go_player.setTextColor(mContext.getResources().getColor(R.color.red));
                 holder.go_player.setBackground(mContext.getResources().getDrawable(R.drawable.download_bg3));
             } else {
-                holder.go_player.setText("播放");
+                holder.go_player.setText(mContext.getResources().getString(R.string.play));
                 holder.go_player.setTextColor(mContext.getResources().getColor(R.color.main_66));
                 holder.go_player.setBackground(mContext.getResources().getDrawable(R.drawable.download_bg));
             }
         } else {
-            holder.go_player.setText("下载");
+            holder.go_player.setText(mContext.getResources().getString(R.string.download));
             holder.go_player.setBackground(mContext.getResources().getDrawable(R.drawable.download_bg1));
             holder.go_player.setTextColor(mContext.getResources().getColor(R.color.gray));
         }
@@ -79,14 +79,14 @@ public class AudioPlayerAdapter extends RecyclerView.Adapter<AudioPlayerAdapter
             @Override
             public void onClick(View v) {
                 String str = "";
-                if (holder.go_player.getText().toString().equals("播放")) {
-                    str = "播放";
-                } else  if (holder.go_player.getText().toString().equals("暂停")) {
-                    str = "暂停";
-                } else  if (holder.go_player.getText().toString().equals("继续")) {
-                    str = "继续";
+                if (holder.go_player.getText().toString().equals(mContext.getResources().getString(R.string.play))) {
+                    str = mContext.getResources().getString(R.string.play);
+                } else  if (holder.go_player.getText().toString().equals(mContext.getResources().getString(R.string.pause))) {
+                    str = mContext.getResources().getString(R.string.pause);
+                } else  if (holder.go_player.getText().toString().equals(mContext.getResources().getString(R.string.go_on))) {
+                    str = mContext.getResources().getString(R.string.go_on);
                 } else {
-                    str = "下载";
+                    str = mContext.getResources().getString(R.string.download);
                 }
                 if (onAudioClickListener != null)
                     onAudioClickListener.OnAudioItemClick((int) v.getTag(), str);
@@ -97,14 +97,14 @@ public class AudioPlayerAdapter extends RecyclerView.Adapter<AudioPlayerAdapter
             @Override
             public boolean onLongClick(View v) {
                 String str = "";
-                if (holder.go_player.getText().toString().equals("播放")) {
-                    str = "播放";
-                } else  if (holder.go_player.getText().toString().equals("暂停")) {
-                    str = "暂停";
-                } else  if (holder.go_player.getText().toString().equals("继续")) {
-                    str = "继续";
+                if (holder.go_player.getText().toString().equals(mContext.getResources().getString(R.string.play))) {
+                    str = mContext.getResources().getString(R.string.play);
+                } else  if (holder.go_player.getText().toString().equals(mContext.getResources().getString(R.string.pause))) {
+                    str = mContext.getResources().getString(R.string.pause);
+                } else  if (holder.go_player.getText().toString().equals(mContext.getResources().getString(R.string.go_on))) {
+                    str = mContext.getResources().getString(R.string.go_on);
                 } else {
-                    str = "下载";
+                    str = mContext.getResources().getString(R.string.download);
                 }
                 if (onAudioClickListener != null)
                     onAudioClickListener.OnAudioLongItemClick((int) v.getTag(), str);

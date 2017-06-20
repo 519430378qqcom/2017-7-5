@@ -220,10 +220,10 @@ public class ChatRoomViewHolderCustom extends MsgViewHolderBase {
                         }
                         if (customdate != null && id != null && id.equals(ZhuBoId)) {
                             //如果是主播 "创建房间成功";
-                            text = "创建房间成功";
+                            text = context.getResources().getString(R.string.create_room_success);
                         } else {
                             //"进入房间";
-                            text = "进入房间";
+                            text = context.getResources().getString(R.string.join_room);
                         }
                         break;
 //                    case 106:
@@ -233,7 +233,7 @@ public class ChatRoomViewHolderCustom extends MsgViewHolderBase {
 //                        break;
                     case 107:
                         //点亮
-                        text = "点亮了";
+                        text = context.getResources().getString(R.string.light_up);
                         bodyLightView.setVisibility(View.VISIBLE);
                         break;
                     case 109:
@@ -250,15 +250,15 @@ public class ChatRoomViewHolderCustom extends MsgViewHolderBase {
                         break;
                     case 112:
                         //主播恢复前台拍摄
-                        text = "主播回来啦, 视频即将恢复";
+                        text = context.getResources().getString(R.string.anchor_come_back);
                         break;
                     case 113:
                         //主播切换到后台
-                        text = "主播离开一下, 精彩不中断, 不要走开哦";
+                        text = context.getResources().getString(R.string.anchor_leave);
                         break;
                     case 199:
                         //关注
-                        text = "关注了主播";
+                        text = context.getResources().getString(R.string.focus_on_the_anchor);
                         break;
                     case 200:
                         //关于点播的本地消息

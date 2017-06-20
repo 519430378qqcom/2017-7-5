@@ -70,7 +70,7 @@ public class PrapareStartActivity extends BaseActivity {
     @Bind(R.id.wechat_circle)
     ImageView wechat_circle;
 
-    private String address = "火星";
+    private String address = getString(R.string.spark);
     private boolean isHideAddress;
 
     /**
@@ -150,7 +150,7 @@ public class PrapareStartActivity extends BaseActivity {
             @Override
             public void permissionGranted() {
                 if (TextUtils.isEmpty(MyApplication.city)) {
-                    address = "火星";
+                    address = getString(R.string.spark);
                 } else {
                     address = MyApplication.city;
                 }
@@ -212,7 +212,7 @@ public class PrapareStartActivity extends BaseActivity {
             case R.id.tv_address:
                 isHideAddress = !isHideAddress;
                 if (isHideAddress) {
-                    address = "火星";
+                    address = getString(R.string.spark);
                 } else {
                     address = MyApplication.city;
                 }
@@ -221,9 +221,9 @@ public class PrapareStartActivity extends BaseActivity {
             case R.id.tv_start_live:
                 if (NetWorkUtil.getConnectedType(mContext) == 0) {
                     initDialog();
-                    baseDialogTitle.setText("当前为移动网络,是否开启直播");
-                    baseDialogLeft.setText("取消直播");
-                    baseDialogRight.setText("继续直播");
+                    baseDialogTitle.setText(getString(R.string.if_start_live));
+                    baseDialogLeft.setText(getString(R.string.cancel));
+                    baseDialogRight.setText(getString(R.string.confirm));
                     baseDialogLeft.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

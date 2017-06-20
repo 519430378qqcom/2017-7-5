@@ -3,8 +3,8 @@
     android:id="@+id/live_game_bullfight"
     android:layout_width="match_parent"
     android:layout_height="420px"
-    android:visibility="gone"
-    android:background="@mipmap/game_backgourd">
+    android:background="@mipmap/game_backgourd"
+    android:visibility="gone">
 
     <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/rl_bull_pool"
@@ -26,6 +26,7 @@
                 android:layout_marginLeft="20px"
                 android:layout_weight="1"
                 android:background="@mipmap/bullfight_bg1">
+
                 <TextView
                     android:id="@+id/tv_bullfight_totlanum1"
                     android:layout_width="wrap_content"
@@ -33,8 +34,9 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="8px"
                     android:text="0"
-                    android:textSize="14sp"
-                    android:textColor="#228571"/>
+                    android:textColor="#228571"
+                    android:textSize="14sp" />
+
                 <TextView
                     android:id="@+id/tv_bullfight_minenum1"
                     android:layout_width="wrap_content"
@@ -42,71 +44,80 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="50px"
                     android:text="0"
-                    android:textSize="14sp"
-                    android:textColor="@color/white"/>
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
                 <com.zhy.autolayout.AutoRelativeLayout
                     android:id="@+id/rl_bullfight_betting_container1"
                     android:layout_width="260px"
                     android:layout_height="150px"
-                    android:layout_marginTop="80px"
-                    android:layout_centerHorizontal="true">
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="80px">
 
                 </com.zhy.autolayout.AutoRelativeLayout>
+
                 <com.zhy.autolayout.AutoRelativeLayout
                     android:id="@+id/rl_poker_player_container1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
                     android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginBottom="20px">
+
                     <ImageView
                         android:id="@+id/iv_poker_palyer11"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/bullfight_poker_nagetive"/>
+                        android:src="@mipmap/bullfight_poker_nagetive" />
+
                     <ImageView
                         android:id="@+id/iv_poker_palyer12"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignLeft="@+id/iv_poker_palyer11"
                         android:layout_marginLeft="30px"
-                        android:src="@mipmap/bullfight_poker_nagetive"/>
+                        android:src="@mipmap/bullfight_poker_nagetive" />
+
                     <ImageView
                         android:id="@+id/iv_poker_palyer13"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignLeft="@+id/iv_poker_palyer11"
                         android:layout_marginLeft="60px"
-                        android:src="@mipmap/bullfight_poker_nagetive"/>
+                        android:src="@mipmap/bullfight_poker_nagetive" />
+
                     <ImageView
                         android:id="@+id/iv_poker_palyer14"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignLeft="@+id/iv_poker_palyer11"
                         android:layout_marginLeft="90px"
-                        android:src="@mipmap/bullfight_poker_nagetive"/>
+                        android:src="@mipmap/bullfight_poker_nagetive" />
+
                     <ImageView
                         android:id="@+id/iv_poker_palyer15"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignLeft="@+id/iv_poker_palyer11"
                         android:layout_marginLeft="120px"
-                        android:src="@mipmap/bullfight_poker_nagetive"/>
+                        android:src="@mipmap/bullfight_poker_nagetive" />
                 </com.zhy.autolayout.AutoRelativeLayout>
+
                 <ImageView
                     android:id="@+id/iv_bull_amount1"
-                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
                     android:layout_alignParentBottom="true"
-                    android:src="@mipmap/bullbull"/>
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/bullbull"
+                    android:visibility="gone" />
+
                 <ImageView
                     android:id="@+id/iv_gray_bg1"
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/bg_black_radius"/>
+                    android:background="@drawable/bg_black_radius"
+                    android:visibility="gone" />
             </com.zhy.autolayout.AutoRelativeLayout>
 
             <com.zhy.autolayout.AutoRelativeLayout
@@ -116,6 +127,7 @@
                 android:layout_marginLeft="15px"
                 android:layout_weight="1"
                 android:background="@mipmap/bullfight_bg2">
+
                 <TextView
                     android:id="@+id/tv_bullfight_totlanum2"
                     android:layout_width="wrap_content"
@@ -123,8 +135,9 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="8px"
                     android:text="0"
-                    android:textSize="14sp"
-                    android:textColor="#228571"/>
+                    android:textColor="#228571"
+                    android:textSize="14sp" />
+
                 <TextView
                     android:id="@+id/tv_bullfight_minenum2"
                     android:layout_width="wrap_content"
@@ -132,71 +145,80 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="50px"
                     android:text="0"
-                    android:textSize="14sp"
-                    android:textColor="@color/white"/>
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
                 <com.zhy.autolayout.AutoRelativeLayout
                     android:id="@+id/rl_bullfight_betting_container2"
                     android:layout_width="260px"
                     android:layout_height="150px"
-                    android:layout_marginTop="80px"
-                    android:layout_centerHorizontal="true">
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="80px">
 
                 </com.zhy.autolayout.AutoRelativeLayout>
+
                 <com.zhy.autolayout.AutoRelativeLayout
                     android:id="@+id/rl_poker_player_container2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
                     android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginBottom="20px">
+
                     <ImageView
                         android:id="@+id/iv_poker_palyer21"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/bullfight_poker_nagetive"/>
+                        android:src="@mipmap/bullfight_poker_nagetive" />
+
                     <ImageView
                         android:id="@+id/iv_poker_palyer22"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignLeft="@+id/iv_poker_palyer21"
                         android:layout_marginLeft="30px"
-                        android:src="@mipmap/bullfight_poker_nagetive"/>
+                        android:src="@mipmap/bullfight_poker_nagetive" />
+
                     <ImageView
                         android:id="@+id/iv_poker_palyer23"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignLeft="@+id/iv_poker_palyer21"
                         android:layout_marginLeft="60px"
-                        android:src="@mipmap/bullfight_poker_nagetive"/>
+                        android:src="@mipmap/bullfight_poker_nagetive" />
+
                     <ImageView
                         android:id="@+id/iv_poker_palyer24"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignLeft="@+id/iv_poker_palyer21"
                         android:layout_marginLeft="90px"
-                        android:src="@mipmap/bullfight_poker_nagetive"/>
+                        android:src="@mipmap/bullfight_poker_nagetive" />
+
                     <ImageView
                         android:id="@+id/iv_poker_palyer25"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignLeft="@+id/iv_poker_palyer21"
                         android:layout_marginLeft="120px"
-                        android:src="@mipmap/bullfight_poker_nagetive"/>
+                        android:src="@mipmap/bullfight_poker_nagetive" />
                 </com.zhy.autolayout.AutoRelativeLayout>
+
                 <ImageView
                     android:id="@+id/iv_bull_amount2"
-                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
                     android:layout_alignParentBottom="true"
-                    android:src="@mipmap/bullbull"/>
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/bullbull"
+                    android:visibility="gone" />
+
                 <ImageView
                     android:id="@+id/iv_gray_bg2"
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/bg_black_radius"/>
+                    android:background="@drawable/bg_black_radius"
+                    android:visibility="gone" />
             </com.zhy.autolayout.AutoRelativeLayout>
 
             <com.zhy.autolayout.AutoRelativeLayout
@@ -207,6 +229,7 @@
                 android:layout_marginRight="20px"
                 android:layout_weight="1"
                 android:background="@mipmap/bullfight_bg3">
+
                 <TextView
                     android:id="@+id/tv_bullfight_totlanum3"
                     android:layout_width="wrap_content"
@@ -214,8 +237,9 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="8px"
                     android:text="0"
-                    android:textSize="14sp"
-                    android:textColor="#228571"/>
+                    android:textColor="#228571"
+                    android:textSize="14sp" />
+
                 <TextView
                     android:id="@+id/tv_bullfight_minenum3"
                     android:layout_width="wrap_content"
@@ -223,80 +247,91 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="50px"
                     android:text="0"
-                    android:textSize="14sp"
-                    android:textColor="@color/white"/>
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
                 <com.zhy.autolayout.AutoRelativeLayout
                     android:id="@+id/rl_bullfight_betting_container3"
                     android:layout_width="260px"
                     android:layout_height="150px"
-                    android:layout_marginTop="80px"
-                    android:layout_centerHorizontal="true">
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="80px">
 
                 </com.zhy.autolayout.AutoRelativeLayout>
+
                 <com.zhy.autolayout.AutoRelativeLayout
                     android:id="@+id/rl_poker_player_container3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
                     android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginBottom="20px">
+
                     <ImageView
                         android:id="@+id/iv_poker_palyer31"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/bullfight_poker_nagetive"/>
+                        android:src="@mipmap/bullfight_poker_nagetive" />
+
                     <ImageView
                         android:id="@+id/iv_poker_palyer32"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignLeft="@+id/iv_poker_palyer31"
                         android:layout_marginLeft="30px"
-                        android:src="@mipmap/bullfight_poker_nagetive"/>
+                        android:src="@mipmap/bullfight_poker_nagetive" />
+
                     <ImageView
                         android:id="@+id/iv_poker_palyer33"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignLeft="@+id/iv_poker_palyer31"
                         android:layout_marginLeft="60px"
-                        android:src="@mipmap/bullfight_poker_nagetive"/>
+                        android:src="@mipmap/bullfight_poker_nagetive" />
+
                     <ImageView
                         android:id="@+id/iv_poker_palyer34"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignLeft="@+id/iv_poker_palyer31"
                         android:layout_marginLeft="90px"
-                        android:src="@mipmap/bullfight_poker_nagetive"/>
+                        android:src="@mipmap/bullfight_poker_nagetive" />
+
                     <ImageView
                         android:id="@+id/iv_poker_palyer35"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignLeft="@+id/iv_poker_palyer31"
                         android:layout_marginLeft="120px"
-                        android:src="@mipmap/bullfight_poker_nagetive"/>
+                        android:src="@mipmap/bullfight_poker_nagetive" />
                 </com.zhy.autolayout.AutoRelativeLayout>
+
                 <ImageView
                     android:id="@+id/iv_bull_amount3"
-                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
                     android:layout_alignParentBottom="true"
-                    android:src="@mipmap/bullbull"/>
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/bullbull"
+                    android:visibility="gone" />
+
                 <ImageView
                     android:id="@+id/iv_gray_bg3"
-                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/bg_black_radius"/>
+                    android:background="@drawable/bg_black_radius"
+                    android:visibility="gone" />
             </com.zhy.autolayout.AutoRelativeLayout>
         </com.zhy.autolayout.AutoLinearLayout>
+
         <com.zhy.autolayout.AutoRelativeLayout
             android:id="@+id/rl_timing"
             android:layout_width="138px"
             android:layout_height="138px"
-            android:visibility="gone"
             android:layout_centerInParent="true"
-            android:background="@mipmap/bullfight_timing">
+            android:background="@mipmap/bullfight_timing"
+            android:visibility="gone">
+
             <TextView
                 android:id="@+id/tv_timing"
                 android:layout_width="wrap_content"
@@ -305,46 +340,48 @@
                 android:textColor="@color/white"
                 android:textSize="16sp" />
         </com.zhy.autolayout.AutoRelativeLayout>
+
         <com.zhy.autolayout.AutoLinearLayout
-            android:visibility="invisible"
             android:id="@+id/ll_bullfight_result"
             android:layout_width="500px"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:orientation="vertical"
+            android:background="@mipmap/bullfight_result_bg"
             android:gravity="center"
-            android:background="@mipmap/bullfight_result_bg">
+            android:orientation="vertical"
+            android:visibility="invisible">
+
             <TextView
                 android:id="@+id/tv_bullfight_result1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:layout_marginTop="6px"
                 android:layout_marginBottom="6px"
+                android:layout_marginTop="6px"
                 android:textColor="@color/white"
-                />
+                android:textSize="16sp" />
+
             <TextView
                 android:id="@+id/tv_bullfight_result2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textColor="@color/yellow" />
+                android:textColor="@color/yellow"
+                android:textSize="14sp" />
+
             <TextView
                 android:id="@+id/tv_bullfight_result3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
                 android:layout_marginBottom="6px"
                 android:layout_marginTop="6px"
                 android:textColor="@color/white"
-                />
+                android:textSize="14sp" />
         </com.zhy.autolayout.AutoLinearLayout>
     </com.zhy.autolayout.AutoRelativeLayout>
 
     <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="match_parent"
-        android:layout_below="@+id/rl_bull_pool"
         android:layout_height="99px"
+        android:layout_below="@+id/rl_bull_pool"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -360,17 +397,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10px"
-            android:text="0"
             android:textColor="@color/white" />
 
-        <TextView
-            android:id="@+id/tv_bullfight_top_up"
+        <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15px"
-            android:autoLink="all"
-            android:text="@string/top_up"
-            android:textColor="@color/yellow" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_bullfight_top_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/recharge"
+                android:textColor="@color/yellow" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/main" />
+        </com.zhy.autolayout.AutoLinearLayout>
 
         <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="match_parent"

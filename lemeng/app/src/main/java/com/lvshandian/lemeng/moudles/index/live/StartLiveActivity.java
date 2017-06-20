@@ -373,7 +373,7 @@ public class StartLiveActivity extends BaseActivity implements
     @Bind(R.id.recharge)
     TextView recharge;
     @Bind(R.id.tv_rule)
-    ImageView tv_rule;
+    TextView tv_rule;
     @Bind(R.id.ll_trendOrHistory)
     LinearLayout ll_trendOrHistory;
     @Bind(R.id.rl_record)
@@ -1206,6 +1206,7 @@ public class StartLiveActivity extends BaseActivity implements
                 betBullfight(3);
                 break;
             case R.id.tv_bullfight_top_up:
+                showToast(getString(R.string.stay_open));
                 break;
             case R.id.iv_10:
                 checkBettingBalance(10);

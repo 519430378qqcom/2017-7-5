@@ -5,7 +5,7 @@
     android:layout_height="420px"
     android:background="@mipmap/game_backgourd"
     android:orientation="vertical"
-    android:visibility="visible">
+    android:visibility="gone">
 
     <com.zhy.autolayout.AutoLinearLayout
         android:id="@+id/autoLinearLayout3"
@@ -29,18 +29,30 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/iv_big"
+                <com.zhy.autolayout.AutoRelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="90px"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/icon_big_unselect" />
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_big"
+                        android:layout_width="wrap_content"
+                        android:layout_height="90px"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/icon_big_unselect" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/big"
+                        android:textColor="@color/tv_color6"
+                        android:textSize="20px" />
+                </com.zhy.autolayout.AutoRelativeLayout>
 
                 <TextView
                     android:id="@+id/tv_big"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1：2"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
             </com.zhy.autolayout.AutoLinearLayout>
@@ -52,18 +64,30 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/iv_samll"
+                <com.zhy.autolayout.AutoRelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="90px"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/icon_small_unselect" />
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_samll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="90px"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/icon_small_unselect" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/samll"
+                        android:textColor="@color/tv_color6"
+                        android:textSize="20px" />
+                </com.zhy.autolayout.AutoRelativeLayout>
 
                 <TextView
                     android:id="@+id/tv_samll"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1：2"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
             </com.zhy.autolayout.AutoLinearLayout>
@@ -75,18 +99,30 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/iv_singe"
+                <com.zhy.autolayout.AutoRelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="90px"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/icon_single_unselect" />
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_singe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="90px"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/icon_single_unselect" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/singe"
+                        android:textColor="@color/tv_color6"
+                        android:textSize="20px" />
+                </com.zhy.autolayout.AutoRelativeLayout>
 
                 <TextView
                     android:id="@+id/tv_singe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1：2"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
             </com.zhy.autolayout.AutoLinearLayout>
@@ -98,18 +134,31 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/iv_double"
+                <com.zhy.autolayout.AutoRelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="90px"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/icon_double_unselect" />
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_double"
+                        android:layout_width="wrap_content"
+                        android:layout_height="90px"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/icon_double_unselect" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/double_"
+                        android:textColor="@color/tv_color6"
+                        android:textSize="20px" />
+                </com.zhy.autolayout.AutoRelativeLayout>
+
 
                 <TextView
                     android:id="@+id/tv_double"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1：2"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
             </com.zhy.autolayout.AutoLinearLayout>
@@ -121,18 +170,30 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/iv_big_sigle"
+                <com.zhy.autolayout.AutoRelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="90px"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/icon_big_single_unselect" />
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_big_sigle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="90px"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/icon_big_single_unselect" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/big_sigle"
+                        android:textColor="@color/tv_color6"
+                        android:textSize="20px" />
+                </com.zhy.autolayout.AutoRelativeLayout>
 
                 <TextView
                     android:id="@+id/tv_big_sigle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1：2"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
             </com.zhy.autolayout.AutoLinearLayout>
@@ -152,18 +213,30 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/iv_samll_singe"
+                <com.zhy.autolayout.AutoRelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="90px"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/icon_small_single_unselect" />
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_samll_singe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="90px"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/icon_small_single_unselect" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/samll_singe"
+                        android:textColor="@color/tv_color6"
+                        android:textSize="20px" />
+                </com.zhy.autolayout.AutoRelativeLayout>
 
                 <TextView
                     android:id="@+id/tv_samll_singe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1：2"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
             </com.zhy.autolayout.AutoLinearLayout>
@@ -175,18 +248,30 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/iv_big_double"
+                <com.zhy.autolayout.AutoRelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="90px"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/icon_big_double_unselect" />
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_big_double"
+                        android:layout_width="wrap_content"
+                        android:layout_height="90px"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/icon_big_double_unselect" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/big_double"
+                        android:textColor="@color/tv_color6"
+                        android:textSize="20px" />
+                </com.zhy.autolayout.AutoRelativeLayout>
 
                 <TextView
                     android:id="@+id/tv_big_double"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1：2"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
             </com.zhy.autolayout.AutoLinearLayout>
@@ -198,18 +283,30 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/iv_samll_double"
+                <com.zhy.autolayout.AutoRelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="90px"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/icon_small_double_unselect" />
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_samll_double"
+                        android:layout_width="wrap_content"
+                        android:layout_height="90px"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/icon_small_double_unselect" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/samll_double"
+                        android:textColor="@color/tv_color6"
+                        android:textSize="20px" />
+                </com.zhy.autolayout.AutoRelativeLayout>
 
                 <TextView
                     android:id="@+id/tv_samll_double"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1：2"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
             </com.zhy.autolayout.AutoLinearLayout>
@@ -221,18 +318,30 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/iv_more_big"
+                <com.zhy.autolayout.AutoRelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="90px"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/icon_big_more_unselect" />
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_more_big"
+                        android:layout_width="wrap_content"
+                        android:layout_height="90px"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/icon_big_more_unselect" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/more_big"
+                        android:textColor="@color/tv_color6"
+                        android:textSize="20px" />
+                </com.zhy.autolayout.AutoRelativeLayout>
 
                 <TextView
                     android:id="@+id/tv_more_big"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1：2"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
             </com.zhy.autolayout.AutoLinearLayout>
@@ -244,18 +353,30 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/iv_more_samll"
+                <com.zhy.autolayout.AutoRelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="90px"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/icon_small_more_unselect" />
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_more_samll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="90px"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/icon_small_more_unselect" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/more_samll"
+                        android:textColor="@color/tv_color6"
+                        android:textSize="20px" />
+                </com.zhy.autolayout.AutoRelativeLayout>
 
                 <TextView
                     android:id="@+id/tv_more_samll"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1：2"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
             </com.zhy.autolayout.AutoLinearLayout>
@@ -295,7 +416,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5px"
-            android:text="1000万"
             android:textColor="@color/white" />
 
         <com.zhy.autolayout.AutoLinearLayout
@@ -308,7 +428,7 @@
                 android:id="@+id/recharge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="充值"
+                android:text="@string/recharge"
                 android:textColor="@color/main" />
 
             <View
@@ -345,13 +465,27 @@
                 android:textSize="20px" />
         </com.zhy.autolayout.AutoRelativeLayout>
 
-        <ImageView
-            android:id="@+id/iv_touzhu"
+        <com.zhy.autolayout.AutoRelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10px"
-            android:layout_marginRight="10px"
-            android:src="@mipmap/touzhu" />
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_touzhu"
+                android:layout_width="80px"
+                android:layout_height="80px"
+                android:layout_marginLeft="10px"
+                android:layout_marginRight="10px"
+                android:src="@mipmap/icon_bet" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/bet"
+                android:textColor="@color/white"
+                android:textSize="24px" />
+        </com.zhy.autolayout.AutoRelativeLayout>
+
     </com.zhy.autolayout.AutoLinearLayout>
 
 </com.zhy.autolayout.AutoLinearLayout>

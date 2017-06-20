@@ -5,6 +5,7 @@
     <color name="main_66">#66F6D42C</color><!--主色调 #F6D42C -->
     <color name="global">#F6D42C</color><!--主色调 #F6D42C-->
     <color name="bet">#42D4E7</color>
+    <color name="rule">#FF7B77</color>
     <color name="btn_color">#F6D42C</color>
     <color name="line_df">#dfdfdf</color>
     <color name="line_cf">#CFCFCF</color>

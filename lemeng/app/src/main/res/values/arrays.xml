@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="feed_icons">
+        <item>@drawable/rocket0</item>
         <item>@drawable/rocket1</item>
         <item>@drawable/rocket2</item>
         <item>@drawable/rocket3</item>
@@ -74,6 +75,7 @@
         <item>@drawable/cake18</item>
         <item>@drawable/cake19</item>
         <item>@drawable/cake20</item>
+        <item>@drawable/cake21</item>
         <item>@drawable/cake22</item>
         <item>@drawable/cake23</item>
         <item>@drawable/cake24</item>
@@ -84,6 +86,7 @@
         <item>@drawable/cake29</item>
     </string-array>
     <string-array name="aircraft_icons">
+        <item>@drawable/aircraft00</item>
         <item>@drawable/aircraft01</item>
         <item>@drawable/aircraft02</item>
         <item>@drawable/aircraft03</item>
@@ -104,6 +107,7 @@
         <item>@drawable/aircraft18</item>
         <item>@drawable/aircraft19</item>
         <item>@drawable/aircraft20</item>
+        <item>@drawable/aircraft21</item>
         <item>@drawable/aircraft22</item>
         <item>@drawable/aircraft23</item>
         <item>@drawable/aircraft24</item>
@@ -137,6 +141,7 @@
         <item>@drawable/car05</item>
         <item>@drawable/car06</item>
         <item>@drawable/car07</item>
+        <item>@drawable/car08</item>
         <item>@drawable/car09</item>
         <item>@drawable/car10</item>
         <item>@drawable/car11</item>
@@ -149,6 +154,7 @@
         <item>@drawable/car18</item>
         <item>@drawable/car19</item>
         <item>@drawable/car20</item>
+        <item>@drawable/car21</item>
         <item>@drawable/car22</item>
         <item>@drawable/car23</item>
         <item>@drawable/car24</item>
@@ -167,6 +173,7 @@
         <item>@drawable/fireworks03</item>
         <item>@drawable/fireworks04</item>
         <item>@drawable/fireworks05</item>
+        <item>@drawable/fireworks06</item>
         <item>@drawable/fireworks07</item>
         <item>@drawable/fireworks08</item>
         <item>@drawable/fireworks09</item>
@@ -181,6 +188,7 @@
         <item>@drawable/fireworks18</item>
         <item>@drawable/fireworks19</item>
         <item>@drawable/fireworks20</item>
+        <item>@drawable/fireworks21</item>
         <item>@drawable/fireworks22</item>
         <item>@drawable/fireworks23</item>
         <item>@drawable/fireworks24</item>
@@ -196,6 +204,7 @@
         <item>@drawable/steamer03</item>
         <item>@drawable/steamer04</item>
         <item>@drawable/steamer05</item>
+        <item>@drawable/steamer06</item>
         <item>@drawable/steamer07</item>
         <item>@drawable/steamer08</item>
         <item>@drawable/steamer09</item>
@@ -210,6 +219,7 @@
         <item>@drawable/steamer18</item>
         <item>@drawable/steamer19</item>
         <item>@drawable/steamer20</item>
+        <item>@drawable/steamer21</item>
         <item>@drawable/steamer22</item>
         <item>@drawable/steamer23</item>
         <item>@drawable/steamer24</item>

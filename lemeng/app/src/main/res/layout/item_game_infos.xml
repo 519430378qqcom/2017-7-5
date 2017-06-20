@@ -15,13 +15,16 @@
         android:layout_marginLeft="10px"
         android:layout_marginTop="16px">
 
-        <ImageView
+        <TextView
             android:id="@+id/tv_rule"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60px"
+            android:layout_height="40px"
             android:layout_alignParentRight="true"
-            android:src="@mipmap/guize"
-            android:text="规则" />
+            android:text="@string/rule_frame"
+            android:textColor="@color/white"
+            android:textSize="24px"
+            android:gravity="center"
+            android:background="@drawable/rule_circle"/>
 
         <TextView
             android:id="@+id/tv_periods"
@@ -30,7 +33,6 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:text="第5200期"
             android:textColor="@color/white"
             android:textSize="24px" />
 
@@ -49,7 +51,6 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_weight="1"
-            android:text="1"
             android:textColor="@color/lightgreen" />
 
         <TextView
@@ -58,7 +59,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="2"
             android:textColor="@color/lightgreen" />
 
         <TextView
@@ -67,7 +67,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="3"
             android:textColor="@color/lightgreen" />
 
         <TextView
@@ -76,7 +75,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="6"
             android:textColor="@color/lbg" />
     </com.zhy.autolayout.AutoLinearLayout>
 
@@ -92,7 +90,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="小，双"
             android:textColor="@color/lbg" />
     </com.zhy.autolayout.AutoLinearLayout>
 
@@ -102,7 +99,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10px"
         android:gravity="center"
-        android:text="距离下期开奖还有"
         android:textColor="@color/white"
         android:textSize="19px" />
 

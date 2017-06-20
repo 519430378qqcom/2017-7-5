@@ -69,7 +69,7 @@ public class MyApplication extends LitePalApplication {
     //声明LocationClientOption类对象
     public LocationClientOption option = null;
     public BDLocationListener myListener = new MyLocationListener();
-    public static String city = "北京市";
+    public static String city ;
     public static double latitude = 0;
     public static double longitude = 0;
 

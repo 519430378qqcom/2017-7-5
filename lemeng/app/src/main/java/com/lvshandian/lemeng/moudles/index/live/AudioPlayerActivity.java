@@ -103,9 +103,9 @@ public class AudioPlayerActivity extends BaseActivity implements SwipeRefresh.On
                         @Override
                         public void onFinish(boolean success) {
                             if (success) {
-                                showToast("下载完成");
+                                showToast(getString(R.string.download_finish));
                             } else {
-                                showToast("存储失败");
+                                showToast(getString(R.string.save_failure));
                             }
                         }
                     });
@@ -147,7 +147,7 @@ public class AudioPlayerActivity extends BaseActivity implements SwipeRefresh.On
         audioPlayerAdapter.setOnAudioClickListener(new AudioPlayerAdapter.OnAudioClickListener() {
             @Override
             public void OnAudioItemClick(int position, String str) {
-                if (str.equals("播放")||str.equals("继续")) {
+                if (str.equals(getString(R.string.play))||str.equals(getString(R.string.go_on))) {
                     String sdpath = Environment.getExternalStorageDirectory() + "/lemeng/";
                     String fileUrl = sdpath + "download/";
                     String uri = fileUrl + songList.get(position).getSongid() + ".mp3";
@@ -162,7 +162,7 @@ public class AudioPlayerActivity extends BaseActivity implements SwipeRefresh.On
                     }
                     songList.get(position).setPlaying(true);
                     audioPlayerAdapter.notifyDataSetChanged();
-                } else if (str.equals("暂停")) {
+                } else if (str.equals(getString(R.string.pause))) {
                     String sdpath = Environment.getExternalStorageDirectory() + "/lemeng/";
                     String fileUrl = sdpath + "download/";
                     String uri = fileUrl + songList.get(position).getSongid() + ".mp3";
@@ -185,12 +185,12 @@ public class AudioPlayerActivity extends BaseActivity implements SwipeRefresh.On
 
             @Override
             public void OnAudioLongItemClick(final int position, String str) {
-                if (str.equals("播放")) {
+                if (str.equals(getString(R.string.play))) {
                     final AlertDialog.Builder normalDialog = new AlertDialog.Builder(mContext);
                     normalDialog.setCancelable(true);
-                    normalDialog.setMessage("确定要删除改歌曲吗?");
-                    normalDialog.setTitle("提示");
-                    normalDialog.setPositiveButton("确定",
+                    normalDialog.setMessage(getString(R.string.if_delete_the_song));
+                    normalDialog.setTitle(getString(R.string.hint));
+                    normalDialog.setPositiveButton(getString(R.string.confirm),
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -204,19 +204,19 @@ public class AudioPlayerActivity extends BaseActivity implements SwipeRefresh.On
                                     File file = new File(uri);
                                     if (file.exists())
                                         file.delete();
-                                    showToast("删除成功！");
+                                    showToast(getString(R.string.delete_success));
                                     songList.remove(position);
                                     audioPlayerAdapter.notifyDataSetChanged();
                                 }
                             });
                     normalDialog.show();
 
-                } else if (str.equals("暂停")){
-                    showToast("该歌曲正在播放,不能删除");
-                } else if (str.equals("继续")){
-                    showToast("该歌曲正在暂停,不能删除");
+                } else if (str.equals(getString(R.string.pause))){
+                    showToast(getString(R.string.is_playing_no_delete));
+                } else if (str.equals(getString(R.string.go_on))){
+                    showToast(getString(R.string.is_go_on_no_delete));
                 }else  {
-                    showToast("该歌曲还没有下载");
+                    showToast(getString(R.string.no_download));
                 }
             }
         });
@@ -299,7 +299,7 @@ public class AudioPlayerActivity extends BaseActivity implements SwipeRefresh.On
                 PlayerSearchBean searchBean = JsonUtil.json2Bean(result, PlayerSearchBean.class);
                 final List<Audios> songBeen = searchBean.getSong();
                 if (songBeen == null || songBeen.size() == 0) {
-                    showToast("没有搜索到歌曲");
+                    showToast(getString(R.string.no_songs_were_found));
                     songList.clear();
                     audioPlayerAdapter.notifyDataSetChanged();
                     return;
@@ -340,7 +340,7 @@ public class AudioPlayerActivity extends BaseActivity implements SwipeRefresh.On
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 finishRefresh();
-                showToast("网络错误！");
+                showToast(getString(R.string.network_error));
                 if (mLoading != null && mLoading.isShowing()) {
                     mLoading.dismiss();
                 }
@@ -349,7 +349,7 @@ public class AudioPlayerActivity extends BaseActivity implements SwipeRefresh.On
             @Override
             public void onCancelled(CancelledException cex) {
                 finishRefresh();
-                showToast("网络错误！");
+                showToast(getString(R.string.network_error));
                 if (mLoading != null && mLoading.isShowing()) {
                     mLoading.dismiss();
                 }
@@ -387,12 +387,12 @@ public class AudioPlayerActivity extends BaseActivity implements SwipeRefresh.On
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                showToast("网络错误！");
+                showToast(getString(R.string.network_error));
             }
 
             @Override
             public void onCancelled(CancelledException cex) {
-                showToast("网络错误！");
+                showToast(getString(R.string.network_error));
             }
 
             @Override

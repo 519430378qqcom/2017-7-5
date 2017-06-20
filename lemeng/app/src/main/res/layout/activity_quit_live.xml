@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="200px"
-            android:text="直播已结束"
+            android:text="@string/live_already_end"
             android:textColor="@color/white"
             android:textSize="44px"
             android:textStyle="bold" />
@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20px"
                 android:layout_marginRight="20px"
-                android:text="本场直播成就"
+                android:text="@string/live_performance"
                 android:textColor="@color/white"
                 android:textSize="34px" />
 
@@ -90,7 +90,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10px"
-                    android:text="00:07:59"
+                    android:text="00:00:00"
                     android:textColor="@color/white"
                     android:textSize="30px" />
 
@@ -98,7 +98,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10px"
-                    android:text="本次时长"
+                    android:text="@string/this_time"
                     android:textColor="#AEAEAE"
                     android:textSize="26px" />
             </com.zhy.autolayout.AutoLinearLayout>
@@ -115,7 +115,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10px"
-                    android:text="00:07:59"
+                    android:text="00:00:00"
                     android:textColor="@color/white"
                     android:textSize="30px" />
 
@@ -123,7 +123,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10px"
-                    android:text="累计时长"
+                    android:text="@string/the_total_time"
                     android:textColor="#AEAEAE"
                     android:textSize="26px" />
             </com.zhy.autolayout.AutoLinearLayout>
@@ -148,7 +148,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10px"
-                    android:text="观看人数"
+                    android:text="@string/views_number"
                     android:textColor="#AEAEAE"
                     android:textSize="26px" />
             </com.zhy.autolayout.AutoLinearLayout>
@@ -182,7 +182,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10px"
-                    android:text="新增粉丝"
+                    android:text="@string/the_new_fan"
                     android:textColor="#AEAEAE"
                     android:textSize="26px" />
             </com.zhy.autolayout.AutoLinearLayout>
@@ -207,7 +207,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10px"
-                    android:text="获得乐票"
+                    android:text="@string/obtain_lepiao"
                     android:textColor="#AEAEAE"
                     android:textSize="26px" />
             </com.zhy.autolayout.AutoLinearLayout>
@@ -232,7 +232,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10px"
-                    android:text="累计乐票"
+                    android:text="@string/add_up_lepiao"
                     android:textColor="#AEAEAE"
                     android:textSize="26px" />
             </com.zhy.autolayout.AutoLinearLayout>
@@ -246,7 +246,7 @@
             android:layout_marginTop="260px"
             android:background="@mipmap/ic_quit_live_bt"
             android:gravity="center"
-            android:text="退出直播间"
+            android:text="@string/quit_live"
             android:textColor="@color/white"
             android:textSize="30px" />
     </com.zhy.autolayout.AutoLinearLayout>
