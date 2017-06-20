@@ -70,7 +70,7 @@ public class PrapareStartActivity extends BaseActivity {
     @Bind(R.id.wechat_circle)
     ImageView wechat_circle;
 
-    private String address = getString(R.string.spark);
+    private String address;
     private boolean isHideAddress;
 
     /**

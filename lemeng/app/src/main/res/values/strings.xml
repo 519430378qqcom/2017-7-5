@@ -335,7 +335,6 @@
     <string name="refresh_failure">刷新失败</string>
     <string name="load_failure">加载失败</string>
 
-
     <!--参数-->
     <string name="web_flag">WEB_FLAG</string>
     <string name="register_flag">REGISTER_FLAG</string>
