@@ -736,6 +736,11 @@ public class StartLiveActivity extends BaseActivity implements
      */
     private boolean gameIsStart = false;
 
+    /**
+     * 是否可以开启游戏
+     */
+    private int gameState = 0;  //0不能  1能
+
     private Handler myHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -827,6 +832,8 @@ public class StartLiveActivity extends BaseActivity implements
         startTime = System.currentTimeMillis();
         startAnimation(3);
         creatReadyBean = (CreatReadyBean) getIntent().getSerializableExtra("START");
+        gameState = getIntent().getIntExtra("gameState", 0);
+
         //网易云信房间的id
         wy_Id = creatReadyBean.getRoomId();
         //后台生成房间的Id
@@ -1081,17 +1088,21 @@ public class StartLiveActivity extends BaseActivity implements
                 }
                 break;
             case R.id.game:  //游戏
-                if (gameIsStart == false) {
-                    if (ll_game.getVisibility() == View.VISIBLE) {
-                        ll_game.setVisibility(View.GONE);
-                    } else {
-                        ll_game.setVisibility(View.VISIBLE);
-                    }
+                if (gameState == 1) {
+                    showToast(getString(R.string.close_game_function));
                 } else {
-                    if (!gameHide) {
-                        hidePlayView(gameType);
+                    if (gameIsStart == false) {
+                        if (ll_game.getVisibility() == View.VISIBLE) {
+                            ll_game.setVisibility(View.GONE);
+                        } else {
+                            ll_game.setVisibility(View.VISIBLE);
+                        }
                     } else {
-                        showPlayView(gameType);
+                        if (!gameHide) {
+                            hidePlayView(gameType);
+                        } else {
+                            showPlayView(gameType);
+                        }
                     }
                 }
                 break;
@@ -2769,6 +2780,20 @@ public class StartLiveActivity extends BaseActivity implements
                         }
                         addBettingView(betPosition, amount, false);
                         break;
+                    case 301://关闭直播
+                        showToast(getString(R.string.close_live_function));
+                        closeLive();
+                        break;
+                    case 305://关闭游戏
+                        showToast(getString(R.string.close_game_function));
+                        gameState = 0;
+                        gameIsStart = false;
+                        hidePlayView(gameType);
+                        break;
+                    case 306://开启游戏
+                        showToast(getString(R.string.open_game_function));
+                        gameState = 1;
+                        break;
                     default:
                         break;
                 }
@@ -3442,15 +3467,20 @@ public class StartLiveActivity extends BaseActivity implements
                             /**
                              * 上滑动
                              */
-                            if (gameIsStart) {
-                                if (gameHide) {
-                                    showPlayView(gameType);
-                                }
+                            if (gameState == 1) {
+                                showToast(getString(R.string.close_game_function));
                             } else {
-                                if (ll_game.getVisibility() == View.GONE) {
-                                    ll_game.setVisibility(View.VISIBLE);
+                                if (gameIsStart) {
+                                    if (gameHide) {
+                                        showPlayView(gameType);
+                                    }
+                                } else {
+                                    if (ll_game.getVisibility() == View.GONE) {
+                                        ll_game.setVisibility(View.VISIBLE);
+                                    }
                                 }
                             }
+
                         }
                         break;
                 }
@@ -4876,13 +4906,17 @@ public class StartLiveActivity extends BaseActivity implements
                 if (mQuitDialog != null && mQuitDialog.isShowing()) {
                     mQuitDialog.dismiss();
                 }
-                httpDatas.getDataDialog("关闭直播间", false, urlBuilder.cloesAnchor(room_Id), myHandler,
-                        RequestCode.REQUEST_ROOM_CLOES);
-                finish();
-                startActivity(new Intent(StartLiveActivity.this, QuitLiveActivity.class).putExtra
-                        ("roomId", room_Id).putExtra("startTime", startTime));
+                closeLive();
             }
         });
+    }
+
+    private void closeLive() {
+        httpDatas.getDataDialog("关闭直播间", false, urlBuilder.cloesAnchor(room_Id), myHandler,
+                RequestCode.REQUEST_ROOM_CLOES);
+        finish();
+        startActivity(new Intent(StartLiveActivity.this, QuitLiveActivity.class).putExtra
+                ("roomId", room_Id).putExtra("startTime", startTime));
     }
 
     //直播结束释放资源

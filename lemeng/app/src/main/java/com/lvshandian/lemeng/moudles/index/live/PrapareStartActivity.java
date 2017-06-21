@@ -2,6 +2,7 @@ package com.lvshandian.lemeng.moudles.index.live;
 
 import android.content.Intent;
 import android.hardware.Camera;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,11 +17,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.lvshandian.lemeng.MyApplication;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.UrlBuilder;
 import com.lvshandian.lemeng.base.BaseActivity;
 import com.lvshandian.lemeng.bean.CreatReadyBean;
+import com.lvshandian.lemeng.bean.LiveStatusBean;
 import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.utils.CameraUtil;
@@ -30,6 +36,8 @@ import com.lvshandian.lemeng.utils.MyCamPara;
 import com.lvshandian.lemeng.utils.NetWorkUtil;
 import com.lvshandian.lemeng.utils.PermisionUtils;
 import com.lvshandian.lemeng.utils.UMUtils;
+import com.lvshandian.lemeng.widget.view.CameraPreviewFrameView;
+import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.qiniu.pili.droid.streaming.AVCodecType;
 import com.qiniu.pili.droid.streaming.CameraStreamingSetting;
 import com.qiniu.pili.droid.streaming.MediaStreamingManager;
@@ -38,6 +46,11 @@ import com.qiniu.pili.droid.streaming.StreamingProfile;
 import com.qiniu.pili.droid.streaming.widget.AspectFrameLayout;
 import com.squareup.picasso.Picasso;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.List;
@@ -102,6 +115,8 @@ public class PrapareStartActivity extends BaseActivity {
     private static final int CAMERA_FRONT = 1;
     private static final int CAMERA_BACK = 0;
 
+    private int anchorState = 0;
+    private int gameState = 0;
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -113,6 +128,7 @@ public class PrapareStartActivity extends BaseActivity {
                     CreatReadyBean creatReadyBean = JsonUtil.json2Bean(json, CreatReadyBean.class);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("START", creatReadyBean);
+                    bundle.putInt("gameState", gameState);
                     LogUtils.e("START: " + creatReadyBean.toString());
                     Intent intent = new Intent(mContext, StartLiveActivity.class);
                     intent.putExtras(bundle);
@@ -122,6 +138,11 @@ public class PrapareStartActivity extends BaseActivity {
             }
         }
     };
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected int getLayoutId() {
@@ -187,7 +208,7 @@ public class PrapareStartActivity extends BaseActivity {
         AspectFrameLayout afl = (AspectFrameLayout) findViewById(R.id.cameraPreview_afl);
         afl.setShowMode(AspectFrameLayout.SHOW_MODE.FULL);
         com.lvshandian.lemeng.widget.view.CameraPreviewFrameView cameraPreviewFrameView =
-                (com.lvshandian.lemeng.widget.view.CameraPreviewFrameView) findViewById(R.id
+                (CameraPreviewFrameView) findViewById(R.id
                         .cameraPreview_surfaceView);
 
         mMediaStreamingManager = new MediaStreamingManager(this, afl, cameraPreviewFrameView,
@@ -219,31 +240,8 @@ public class PrapareStartActivity extends BaseActivity {
                 tvAddress.setText(address);
                 break;
             case R.id.tv_start_live:
-                if (NetWorkUtil.getConnectedType(mContext) == 0) {
-                    initDialog();
-                    baseDialogTitle.setText(getString(R.string.if_start_live));
-                    baseDialogLeft.setText(getString(R.string.cancel));
-                    baseDialogRight.setText(getString(R.string.confirm));
-                    baseDialogLeft.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (baseDialog != null && baseDialog.isShowing()) {
-                                baseDialog.dismiss();
-                            }
-                        }
-                    });
-                    baseDialogRight.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (baseDialog != null && baseDialog.isShowing()) {
-                                baseDialog.dismiss();
-                            }
-                            startLive();
-                        }
-                    });
-                } else {
-                    startLive();
-                }
+//                getStatus();
+                getNetWork();
                 break;
             case R.id.wechat:
                 UMUtils.umShareSingle(this, getString(R.string.share_download_title),
@@ -266,6 +264,79 @@ public class PrapareStartActivity extends BaseActivity {
                         UrlBuilder.SHARE_DOWNLOAD_URL, SHARE_MEDIA.QZONE);
                 break;
 
+        }
+    }
+
+
+    private void getStatus() {
+        OkHttpUtils.get().url(UrlBuilder.START_LIVE_STATUS).build().execute(
+                new StringCallback() {
+                    @Override
+                    public void onError(com.squareup.okhttp.Request request, Exception e) {
+                        showToast(getString(R.string.network_error));
+                    }
+
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String code = jsonObject.getString("code");
+                            if (code.equals("0")) {
+                                String obj = jsonObject.getString("obj");
+                                LogUtil.e("开播准备", obj);
+                                List<LiveStatusBean> list = JsonUtil.json2BeanList(obj, LiveStatusBean.class);
+                                if (list != null && list.size() > 0) {
+                                    for (int i = 0, j = list.size(); i < j; i++) {
+                                        if (list.get(i).getFun().equals("anchor")) {
+                                            anchorState = list.get(i).getState();
+                                        }
+                                        if (list.get(i).getFun().equals("game")) {
+                                            gameState = list.get(i).getState();
+                                        }
+                                    }
+                                }
+                                if (anchorState == 1) {
+                                    getNetWork();
+                                } else {
+                                    showToast(getString(R.string.close_live_function));
+                                }
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }
+
+        );
+    }
+
+    private void getNetWork() {
+        if (NetWorkUtil.getConnectedType(mContext) == 0) {
+            initDialog();
+            baseDialogTitle.setText(getString(R.string.if_start_live));
+            baseDialogLeft.setText(getString(R.string.cancel));
+            baseDialogRight.setText(getString(R.string.confirm));
+            baseDialogLeft.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (baseDialog != null && baseDialog.isShowing()) {
+                        baseDialog.dismiss();
+                    }
+                }
+            });
+            baseDialogRight.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (baseDialog != null && baseDialog.isShowing()) {
+                        baseDialog.dismiss();
+                    }
+                    startLive();
+                }
+            });
+        } else {
+            startLive();
         }
     }
 
@@ -413,5 +484,50 @@ public class PrapareStartActivity extends BaseActivity {
         }
 
         return camera;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("PrapareStart Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
     }
 }

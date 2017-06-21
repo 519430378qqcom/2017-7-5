@@ -89,6 +89,7 @@ public class UrlBuilder {
     public static final String SELECT_FAMILY_MEMBER = "/appusers/selectFamilyMember.do";//家族
     public static final String APP_USER_CONTROL = "appUserControl/stopUser";//禁言
     public static final String START_LIVE = "/api/v1/room/create/";//新建直播/api/v1/room/create
+    public static final String START_LIVE_STATUS = "http://10.11.1.192:8080/app/liveswitch/state";//查询是否可以开直播
     public static final String GET_BANNER = "/appCarouselFigure/carouselList";//得到banner图
     public static final String ROOM_FUNSE = "/appRooms/findFansOnline";//直播间的粉丝列表
     public static final String ROOM_HEAD_LIST = "/api/v1/room/";//聊天室头像列表

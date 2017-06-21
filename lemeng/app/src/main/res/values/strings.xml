@@ -346,6 +346,9 @@
 
     <!--6月20日之后添加start-->
     <string name="game_record">游戏记录</string>
+    <string name="close_live_function">平台暂时关闭直播功能</string>
+    <string name="close_game_function">平台暂时关闭游戏功能</string>
+    <string name="open_game_function">平台已打开游戏功能</string>
 
     <!--6月20日之后添加end-->
 

@@ -170,7 +170,8 @@ public class ChatRoomMsgListPanel implements TAdapterDelegate {
                 }
                 if (newMessage != null && remote != null && !TextUtils.isEmpty((String) remote.get("type")) && (remote.get("type").equals("105") || remote.get("type").equals("106") || remote.get("type").equals("107") || remote.get("type").equals("108") || remote.get("type").equals("109")
                         || remote.get("type").equals("110") || remote.get("type").equals("111") || remote.get("type").equals("112") || remote.get("type").equals("113") || remote.get("type").equals("114") || remote.get("type").equals("199") || remote.get("type").equals("202")
-                        || remote.get("type").equals("1818") || remote.get("type").equals("2828") || remote.get("type").equals("2929") || remote.get("type").equals("3030") || remote.get("type").equals("10009")|| "3131".equals(remote.get("type")))) {
+                        || remote.get("type").equals("1818") || remote.get("type").equals("2828") || remote.get("type").equals("2929") || remote.get("type").equals("3030") || remote.get("type").equals("10009") || "3131".equals(remote.get("type")) || "301".equals(remote.get("type"))
+                        || "302".equals(remote.get("type")) || "305".equals(remote.get("type")) || "306".equals(remote.get("type")))) {
                     //收到 以上消息 发送广播
                     LogUtil.i("WangYi_gift", "发礼物广播");
                     container.activity.sendBroadcast(new Intent().setAction("WatchLiveActivity").putExtra("ChatRoomMessage", newMessage));
@@ -205,7 +206,7 @@ public class ChatRoomMsgListPanel implements TAdapterDelegate {
             if (newMessage != null) {
                 remote = newMessage.getRemoteExtension();
             }
-            if (newMessage != null && remote != null && !TextUtils.isEmpty((String) remote.get("type")) && ((remote.get("type")).equals("109")|| remote.get("type").equals("108"))) {
+            if (newMessage != null && remote != null && !TextUtils.isEmpty((String) remote.get("type")) && ((remote.get("type")).equals("109") || remote.get("type").equals("108"))) {
                 //收到 109 礼物消息 发送广播
                 LogUtil.i("WangYi_gift", "发礼物广播");
                 container.activity.sendBroadcast(new Intent().setAction("WatchLiveActivity").putExtra("ChatRoomMessage", newMessage));

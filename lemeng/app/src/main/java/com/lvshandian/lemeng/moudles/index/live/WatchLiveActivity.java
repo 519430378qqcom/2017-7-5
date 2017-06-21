@@ -3170,6 +3170,11 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                             appUser = SharedPreferenceUtils.getUserInfo(mContext);
                         }
                         break;
+                    case 305://关闭游戏
+                        showToast(getString(R.string.close_game_function));
+                        isPlayerRoom = false;
+                        hidePlayView(gameType);
+                        break;
                     default:
                         break;
                 }
