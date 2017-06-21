@@ -1,6 +1,7 @@
 package com.lvshandian.lemeng.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by ssb on 2017/5/11 17:00.
@@ -30,6 +31,7 @@ public class LastAwardBean implements Serializable {
     private int firstNum;
     private String winAmountAll; //中奖金额
     private String winStatus;//1中奖 0未中奖  2未投注
+    private List<RoomRanksBean> roomRanks;
 
     public String getWinAmountAll() {
         return winAmountAll;
@@ -119,5 +121,43 @@ public class LastAwardBean implements Serializable {
 
     public void setFirstNum(int firstNum) {
         this.firstNum = firstNum;
+    }
+
+    public List<RoomRanksBean> getRoomRanks() {
+        return roomRanks;
+    }
+
+    public void setRoomRanks(List<RoomRanksBean> roomRanks) {
+        this.roomRanks = roomRanks;
+    }
+
+    public static class RoomRanksBean implements Serializable {
+        private String nickName;
+        private String picurl;
+        private String amount;
+
+        public String getNickName() {
+            return nickName;
+        }
+
+        public void setNickName(String nickName) {
+            this.nickName = nickName;
+        }
+
+        public String getPicurl() {
+            return picurl;
+        }
+
+        public void setPicurl(String picurl) {
+            this.picurl = picurl;
+        }
+
+        public String getAmount() {
+            return amount;
+        }
+
+        public void setAmount(String amount) {
+            this.amount = amount;
+        }
     }
 }

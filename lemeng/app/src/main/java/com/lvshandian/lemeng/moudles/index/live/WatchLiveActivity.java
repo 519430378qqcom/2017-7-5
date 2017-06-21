@@ -1207,7 +1207,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
 
     private void initBlInfos() {
-        String url = UrlBuilder.SERVER_URL + UrlBuilder.START_LUCK_GAME;
+        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.START_LUCK_GAME;
         OkHttpUtils.post().url(url).addParams("roomId", room_Id).addParams("type", "0").build().execute(new StringCallback() {
             @Override
             public void onError(com.squareup.okhttp.Request request, Exception e) {
@@ -5184,7 +5184,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                             isTouZhu = true;
                             nper = lastAwardBean.getNper();
                             countryType = lastAwardBean.getCountryType();
-                            tv_periods.setText(getString(R.string.bet_date_number, lastAwardBean.getNper()));
+                            tv_periods.setText(getString(R.string.bet_date_number, nper));
                             frist_num.setText(lastAwardBean.getFirstNum() + "");
                             second_num.setText(lastAwardBean.getSecondNum() + "");
                             third_num.setText(lastAwardBean.getThirdNum() + "");
@@ -5224,7 +5224,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         if (lastAwardBean != null) {
                             nper = lastAwardBean.getNper();
                             countryType = lastAwardBean.getCountryType();
-                            tv_periods.setText(getString(R.string.bet_date_number, lastAwardBean.getNper()));
+                            tv_periods.setText(getString(R.string.bet_date_number, nper));
                             frist_num.setText(lastAwardBean.getFirstNum() + "");
                             second_num.setText(lastAwardBean.getSecondNum() + "");
                             third_num.setText(lastAwardBean.getThirdNum() + "");

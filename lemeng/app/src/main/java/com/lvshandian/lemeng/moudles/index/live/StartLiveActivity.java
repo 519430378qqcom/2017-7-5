@@ -93,6 +93,7 @@ import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.httprequest.SdkHttpResultSuccess;
 import com.lvshandian.lemeng.moudles.index.CustomNotificationType;
 import com.lvshandian.lemeng.moudles.index.adapter.LianmaiListAadapter;
+import com.lvshandian.lemeng.moudles.index.adapter.LucyRankingAdapter;
 import com.lvshandian.lemeng.moudles.index.live.bullfight.BankerBalances;
 import com.lvshandian.lemeng.moudles.index.live.bullfight.BankerInfo;
 import com.lvshandian.lemeng.moudles.index.live.bullfight.BetResult;
@@ -149,6 +150,7 @@ import com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout;
 import com.lvshandian.lemeng.widget.view.AvatarView;
 import com.lvshandian.lemeng.widget.view.BarrageView;
 import com.lvshandian.lemeng.widget.view.CustomPopWindow;
+import com.lvshandian.lemeng.widget.view.EmptyRecyclerView;
 import com.lvshandian.lemeng.widget.view.RotateLayout;
 import com.lvshandian.lemeng.widget.view.RoundDialog;
 import com.lvshandian.lemeng.widget.view.TimeCountDownLayout;
@@ -2309,7 +2311,7 @@ public class StartLiveActivity extends BaseActivity implements
     }
 
     private void showXYGame() {
-        String url = UrlBuilder.SERVER_URL + UrlBuilder.START_LUCK_GAME;
+        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.START_LUCK_GAME;
 
         OkHttpUtils.post().url(url).addParams("roomId", room_Id).addParams("type", "1").build().execute(new StringCallback() {
             @Override
@@ -5179,11 +5181,18 @@ public class StartLiveActivity extends BaseActivity implements
         });
     }
 
+    Runnable timenNumber = new Runnable() {
+        @Override
+        public void run() {
+            getTimenumber();
+        }
+    };
+
     /**
      * @dw 获取上期开奖数据
      */
     private void getTimenumber() {
-        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.GET_TIME_NUMBER + "?userId=" + appUser.getId();
+        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.GET_TIME_NUMBER + "?userId=" + appUser.getId() + "&type=1";
         OkHttpUtils.get().url(url).build().execute(new StringCallback() {
             @Override
             public void onError(Request request, Exception e) {
@@ -5204,7 +5213,7 @@ public class StartLiveActivity extends BaseActivity implements
                             isTouZhu = true;
                             nper = lastAwardBean.getNper();
                             countryType = lastAwardBean.getCountryType();
-                            tv_periods.setText(getString(R.string.bet_date_number, lastAwardBean.getNper()));
+                            tv_periods.setText(getString(R.string.bet_date_number, nper));
                             frist_num.setText(lastAwardBean.getFirstNum() + "");
                             second_num.setText(lastAwardBean.getSecondNum() + "");
                             third_num.setText(lastAwardBean.getThirdNum() + "");
@@ -5223,17 +5232,16 @@ public class StartLiveActivity extends BaseActivity implements
                             }
 
                             if (lastAwardBean.getWinStatus().equals("1")) {
-                                getZhongJiangTZ(lastAwardBean.getNper(), lastAwardBean.getWinAmountAll(), "1");
-
                                 /**
                                  * 设置游戏布局的金币数量
                                  */
                                 myGoldCoin = myGoldCoin + Long.parseLong(lastAwardBean.getWinAmountAll());
                                 String myCoin = CountUtils.getCount(myGoldCoin);
                                 all_lepiao.setText(myCoin);
-                            } else if (lastAwardBean.getWinStatus().equals("0")) {
-                                getZhongJiangTZ(lastAwardBean.getNper(), lastAwardBean.getWinAmountAll(), "0");
                             }
+
+                            List<LastAwardBean.RoomRanksBean> ranksBean = lastAwardBean.getRoomRanks();
+                            showRankDialog(ranksBean);
                         }
                     } else if (code.equals("1")) {
                         isTouZhu = false;
@@ -5243,7 +5251,7 @@ public class StartLiveActivity extends BaseActivity implements
                         if (lastAwardBean != null) {
                             nper = lastAwardBean.getNper();
                             countryType = lastAwardBean.getCountryType();
-                            tv_periods.setText(getString(R.string.bet_date_number, lastAwardBean.getNper()));
+                            tv_periods.setText(getString(R.string.bet_date_number, nper));
                             frist_num.setText(lastAwardBean.getFirstNum() + "");
                             second_num.setText(lastAwardBean.getSecondNum() + "");
                             third_num.setText(lastAwardBean.getThirdNum() + "");
@@ -5266,30 +5274,33 @@ public class StartLiveActivity extends BaseActivity implements
         });
     }
 
-    Runnable timenNumber = new Runnable() {
-        @Override
-        public void run() {
-            getTimenumber();
-        }
-    };
 
-    private void getZhongJiangTZ(String nper, String winAmountAll, String type) {
-        initDialog();
-        String content = "";
-        if (type.equals("1")) {
-            content = getString(R.string.winning_hint, nper, winAmountAll);
-        } else {
-            content = getString(R.string.no_winning_hint, nper);
-        }
-        baseDialogTitle.setText(content);
-        baseDialogLeft.setVisibility(View.GONE);
-        baseDialogLine.setVisibility(View.GONE);
-        baseDialogRight.setOnClickListener(new View.OnClickListener() {
+    /**
+     * 显示中奖排行榜
+     */
+    private void showRankDialog(List<LastAwardBean.RoomRanksBean> ranksBean) {
+        View view = getLayoutInflater().inflate(R.layout.pop_ranking, null);
+        dialogForSelect.setCanceledOnTouchOutside(false);
+        dialogForSelect.setContentView(view);
+        dialogForSelect.show();
+        TextView room_rank_title = (TextView) view.findViewById(R.id.room_rank_title);
+        TextView tv_empty = (TextView) view.findViewById(R.id.tv_empty);
+        ImageView colse_rank = (ImageView) view.findViewById(R.id.colse_rank);
+        EmptyRecyclerView room_rank_list = (EmptyRecyclerView) view.findViewById(R.id.room_rank_list);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        room_rank_list.setLayoutManager(layoutManager);
+        room_rank_list.setEmptyView(tv_empty);
+        LucyRankingAdapter rankingAdapter = new LucyRankingAdapter(mContext, ranksBean);
+        room_rank_list.setAdapter(rankingAdapter);
+        room_rank_title.setText(getString(R.string.room_rank, nper));
+        colse_rank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                baseDialog.dismiss();
+                dialogForSelect.dismiss();
             }
         });
+
     }
 
 

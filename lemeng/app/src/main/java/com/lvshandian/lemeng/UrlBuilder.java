@@ -94,7 +94,7 @@ public class UrlBuilder {
     public static final String GET_BANNER = "/appCarouselFigure/carouselList";//得到banner图
     public static final String ROOM_FUNSE = "/appRooms/findFansOnline";//直播间的粉丝列表
     public static final String ROOM_HEAD_LIST = "/api/v1/room/";//聊天室头像列表
-    public static final String START_LUCK_GAME = "/admin/appusers/getCathecticRate";//开游戏、查询投注比例
+    public static final String START_LUCK_GAME = "/appusers/getCathecticRate";//开游戏、查询投注比例
     public static final String RECIVE_AMOUNT = "/appRooms/reciveAmount";//幸运28投注
     public static final String GET_TIME_NUMBER = "/appusers/gettimenumber";//获取上期开奖数据
     public static final String BARRAGE = "/api/v1/barrage/";//发送弹幕消息扣金币

@@ -349,6 +349,8 @@
     <string name="close_live_function">平台暂时关闭直播功能</string>
     <string name="close_game_function">平台暂时关闭游戏功能</string>
     <string name="open_game_function">平台已打开游戏功能</string>
+    <string name="room_rank">%1$s期排行榜</string>
+    <string name="no_one_has_won_this_round">本轮没有人中奖哦</string>
 
     <!--6月20日之后添加end-->
 
