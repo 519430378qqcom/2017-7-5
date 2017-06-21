@@ -3166,7 +3166,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         ChatRoomMessage s = message;
                         Map data = (Map) message.getRemoteExtension().get("data");
                         String redenvelope = (String) data.get("message");
-                        showToast("天降红包");
                         new RedPackageView(mContext, mRoot, redenvelope,WatchLiveActivity.this).show();
                         break;
                     case 10009:

@@ -2798,7 +2798,6 @@ public class StartLiveActivity extends BaseActivity implements
                         ChatRoomMessage s = message;
                         Map data = (Map) message.getRemoteExtension().get("data");
                         String redenvelope = (String) data.get("message");
-                        showToast("天降红包");
                         new RedPackageView(mContext, mRoot, redenvelope,StartLiveActivity.this).show();
                         break;
                     case 301://关闭直播
