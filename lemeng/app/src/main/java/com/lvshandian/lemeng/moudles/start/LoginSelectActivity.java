@@ -28,10 +28,11 @@ import com.lvshandian.lemeng.moudles.mine.bean.LoginFrom;
 import com.lvshandian.lemeng.utils.DESUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
-import com.lvshandian.lemeng.widget.view.LoadingDialog;
+import com.lvshandian.lemeng.utils.UMUtils;
 import com.lvshandian.lemeng.wangyiyunxin.config.DemoCache;
 import com.lvshandian.lemeng.wangyiyunxin.config.preference.Preferences;
 import com.lvshandian.lemeng.wangyiyunxin.config.preference.UserPreferences;
+import com.lvshandian.lemeng.widget.view.LoadingDialog;
 import com.netease.nim.uikit.cache.DataCacheManager;
 import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.netease.nimlib.sdk.AbortableFuture;
@@ -386,7 +387,7 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
      * @author sll
      * @time 2016/11/16 13:39
      */
-    private void loginWangYi(AppUser appUser) {
+    private void loginWangYi(final AppUser appUser) {
         // 云信只提供消息通道，并不包含用户资料逻辑。开发者需要在管理后台或通过服务器接口将用户帐号和token同步到云信服务器。
         // 在这里直接使用同步到云信服务器的帐号和token登录。
         // 这里为了简便起见，demo就直接使用了密码的md5作为token。
@@ -417,6 +418,8 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
                 DataCacheManager.buildDataCacheAsync();
                 // 进入主界面
                 gotoActivity(MainActivity.class, true);
+
+                UMUtils.addExclusiveAlias();
             }
 
             @Override

@@ -18,10 +18,11 @@ import com.lvshandian.lemeng.moudles.start.LoginSelectActivity;
 import com.lvshandian.lemeng.moudles.start.LogoutHelper;
 import com.lvshandian.lemeng.utils.FileCacheUtils;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
-import com.lvshandian.lemeng.widget.view.RoundDialog;
-import com.lvshandian.lemeng.widget.view.ToggleView;
+import com.lvshandian.lemeng.utils.UMUtils;
 import com.lvshandian.lemeng.wangyiyunxin.config.preference.Preferences;
 import com.lvshandian.lemeng.wangyiyunxin.session.SessionHelper;
+import com.lvshandian.lemeng.widget.view.RoundDialog;
+import com.lvshandian.lemeng.widget.view.ToggleView;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.auth.AuthService;
 import com.zhy.autolayout.AutoRelativeLayout;
@@ -181,6 +182,8 @@ public class SettingActivity extends BaseActivity {
         LogoutHelper.logout();
         removeLoginState();
         NIMClient.getService(AuthService.class).logout();
+
+        UMUtils.removeAlias();
     }
 
     /**

@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.lvshandian.lemeng.base.Constant;
 import com.lvshandian.lemeng.bean.AppUser;
+import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UTrack;
@@ -42,6 +43,7 @@ public class UMUtils {
         mContext = Context;
         //初始化友盟推送
         PushAgent mPushAgent = PushAgent.getInstance(mContext);
+
         mPushAgent.register(new IUmengRegisterCallback() {
             @Override
             public void onSuccess(String s) {
@@ -131,17 +133,6 @@ public class UMUtils {
         };
         mPushAgent.setNotificationClickHandler(notificationClickHandler);
 
-//        AppUser appUser = (AppUser) CacheUtils.readObject(mContext, CacheUtils.USERINFO);
-        AppUser appUser = SharedPreferenceUtils.getUserInfo(mContext);
-        if (appUser != null) {
-            mPushAgent.addExclusiveAlias("miu_" + appUser.getId(), "IM",
-                    new UTrack.ICallBack() {
-                        @Override
-                        public void onMessage(boolean isSuccess, String message) {
-
-                        }
-                    });
-        }
         Config.DEBUG = true;
         UMShareAPI.get(mContext);
         PlatformConfig.setTwitter(Constant.TWITTER_APPID, Constant.TWITTER_SECRET);
@@ -207,4 +198,44 @@ public class UMUtils {
         }
     };
 
+    public static void addExclusiveAlias() {
+        PushAgent mPushAgent = PushAgent.getInstance(mContext);
+
+        mPushAgent.register(new IUmengRegisterCallback() {
+            @Override
+            public void onSuccess(String s) {
+
+            }
+
+            @Override
+            public void onFailure(String s, String s1) {
+
+            }
+        });
+
+        AppUser appUser = SharedPreferenceUtils.getUserInfo(mContext);
+        if (appUser != null && appUser.getId() != null) {
+            mPushAgent.addExclusiveAlias("miu_" + appUser.getId(), "IM",
+                    new UTrack.ICallBack() {
+                        @Override
+                        public void onMessage(boolean isSuccess, String message) {
+                            LogUtil.e("友盟别名", "别名：" + "isSuccess=" + isSuccess + "   message=" + message);
+                        }
+                    });
+        }
+    }
+
+    public static void removeAlias(){
+        PushAgent mPushAgent = PushAgent.getInstance(mContext);
+        AppUser appUser = SharedPreferenceUtils.getUserInfo(mContext);
+        if (appUser != null && appUser.getId() != null) {
+            mPushAgent.removeAlias("miu_" + appUser.getId(), "IM",
+                    new UTrack.ICallBack() {
+                        @Override
+                        public void onMessage(boolean isSuccess, String message) {
+                            LogUtil.e("友盟别名","别名："+"isSuccess="+isSuccess+"   message="+message);
+                        }
+                    });
+        }
+    }
 }
