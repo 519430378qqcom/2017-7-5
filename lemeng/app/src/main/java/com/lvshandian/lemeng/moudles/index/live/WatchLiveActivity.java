@@ -60,7 +60,6 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.android.volley.Request;
-import com.bumptech.glide.Glide;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
@@ -105,6 +104,8 @@ import com.lvshandian.lemeng.moudles.index.live.bullfight.StartResult;
 import com.lvshandian.lemeng.moudles.index.live.bullfight.TimeAndNper;
 import com.lvshandian.lemeng.moudles.index.live.gift.GiftFrameLayout;
 import com.lvshandian.lemeng.moudles.index.live.gift.GiftSendModel;
+import com.lvshandian.lemeng.moudles.index.live.redpackage.IGetRedPackage;
+import com.lvshandian.lemeng.moudles.index.live.redpackage.RedPackageView;
 import com.lvshandian.lemeng.moudles.index.live.utils.AnchorVideo;
 import com.lvshandian.lemeng.moudles.index.live.utils.LiveVideo;
 import com.lvshandian.lemeng.moudles.mine.my.ContributionActivity;
@@ -240,7 +241,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         View.OnLayoutChangeListener, StreamStatusCallback,
         StreamingPreviewCallback, SurfaceTextureCallback, AudioSourceCallback,
         StreamingSessionListener, BullfightInterface,
-        StreamingStateChangedListener, CameraLivePreviewFrameView.Listener, RefreshCallBack {
+        StreamingStateChangedListener, CameraLivePreviewFrameView.Listener, RefreshCallBack, IGetRedPackage {
 
     @Bind(R.id.iv_loading)
     ImageView rlLoading;
@@ -992,12 +993,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                                 wy_Id, map);
 
                         myGoldCoin = myGoldCoin - Long.parseLong(mSendGiftItem.getMemberConsume());
-                        String myCoin = CountUtils.getCount(myGoldCoin);
-                        if (gameType == 1) {
-                            all_lepiao.setText(myCoin);
-                        } else if (gameType == 2) {
-                            tv_bullfight_lepiao.setText(myCoin);
-                        }
+                        updateCoin();
 
                     }
                     break;
@@ -2056,7 +2052,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             tv_bullfight_bankername.setText(bankerInfo.getObj().getNickName());
             String count = CountUtils.getCount(bankerInfo.getObj().getGoldCoin());
             tv_bullfight_banker_money.setText(count);
-            Glide.with(this).load(bankerInfo.getObj().getLivePicUrl()).into(iv_bullfight_banker_head);
+            Picasso.with(this).load(bankerInfo.getObj().getLivePicUrl()).into(iv_bullfight_banker_head);
         }
     }
 
@@ -2658,14 +2654,20 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             });
             animator.start();
         }
-
         if (myGoldCoin != null) {
-            String myCoin = CountUtils.getCount(myGoldCoin);
-            if (gameType == 1) {
-                all_lepiao.setText(myCoin);
-            } else if (gameType == 2) {
-                tv_bullfight_lepiao.setText(myCoin);
-            }
+            updateCoin();
+        }
+    }
+
+    /**
+     * 更新金币数
+     */
+    private void updateCoin() {
+        String myCoin = CountUtils.getCount(myGoldCoin);
+        if (gameType == 1) {
+            all_lepiao.setText(myCoin);
+        } else if (gameType == 2) {
+            tv_bullfight_lepiao.setText(myCoin);
         }
     }
 
@@ -3160,6 +3162,13 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                             bullfightPresenter.getTimeAndNper(room_Id);
                         }
                         break;
+                    case 606://天降红包
+                        ChatRoomMessage s = message;
+                        Map data = (Map) message.getRemoteExtension().get("data");
+                        String redenvelope = (String) data.get("message");
+                        showToast("天降红包");
+                        new RedPackageView(mContext, mRoot, redenvelope,WatchLiveActivity.this).show();
+                        break;
                     case 10009:
                         LogUtil.e("升级", message.getRemoteExtension().toString());
                         AppUser mAppUser = JavaBeanMapUtils.mapToBean((Map) message.getRemoteExtension().get("data"),
@@ -3198,12 +3207,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 barrageview.addSentence(barrageDateBean);
                 if (message.getFromAccount().equals("miu_" + appUser.getId())) {
                     myGoldCoin = myGoldCoin - 1;
-                    String myCoin = CountUtils.getCount(myGoldCoin);
-                    if (gameType == 1) {
-                        all_lepiao.setText(myCoin);
-                    } else if (gameType == 2) {
-                        tv_bullfight_lepiao.setText(myCoin);
-                    }
+                    updateCoin();
                 }
             } else if (userId != null && userId.indexOf("miu_") != -1) {
                 userId = userId.substring(4);
@@ -3472,6 +3476,12 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         WindowManager.LayoutParams params = this.getWindow().getAttributes();
         params.alpha = alpha;
         this.getWindow().setAttributes(params);
+    }
+
+    @Override
+    public void getRedPackage(int sum) {
+        myGoldCoin += sum;
+        updateCoin();
     }
 
     /**

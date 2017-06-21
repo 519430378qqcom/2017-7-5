@@ -61,7 +61,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
-import com.bumptech.glide.Glide;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
@@ -106,6 +105,8 @@ import com.lvshandian.lemeng.moudles.index.live.bullfight.StartResult;
 import com.lvshandian.lemeng.moudles.index.live.bullfight.TimeAndNper;
 import com.lvshandian.lemeng.moudles.index.live.gift.GiftFrameLayout;
 import com.lvshandian.lemeng.moudles.index.live.gift.GiftSendModel;
+import com.lvshandian.lemeng.moudles.index.live.redpackage.IGetRedPackage;
+import com.lvshandian.lemeng.moudles.index.live.redpackage.RedPackageView;
 import com.lvshandian.lemeng.moudles.index.live.utils.AnchorVideoOne;
 import com.lvshandian.lemeng.moudles.mine.bean.Funse;
 import com.lvshandian.lemeng.moudles.mine.bean.FunseBean;
@@ -257,7 +258,7 @@ public class StartLiveActivity extends BaseActivity implements
         StreamingStateChangedListener, com.lvshandian.lemeng.widget.view.CameraPreviewFrameView
         .Listener, MediaPlayer.OnCompletionListener
         , SeekBar.OnSeekBarChangeListener
-        , BullfightInterface {
+        , BullfightInterface, IGetRedPackage {
     @Bind(R.id.live_head)
     AvatarView liveHead;
     @Bind(R.id.live_lianmai_head)
@@ -1641,7 +1642,7 @@ public class StartLiveActivity extends BaseActivity implements
             tv_bullfight_bankername.setText(bankerInfo.getObj().getNickName());
             String count = CountUtils.getCount(bankerInfo.getObj().getGoldCoin());
             tv_bullfight_banker_money.setText(count);
-            Glide.with(this).load(bankerInfo.getObj().getLivePicUrl()).into(iv_bullfight_banker_head);
+            Picasso.with(this).load(bankerInfo.getObj().getLivePicUrl()).into(iv_bullfight_banker_head);
         }
     }
 
@@ -1888,7 +1889,11 @@ public class StartLiveActivity extends BaseActivity implements
             animator.start();
         }
     }
-
+    @Override
+    public void getRedPackage(int sum) {
+        myGoldCoin += sum;
+        updateCoin();
+    }
     /**
      * 显示牛牛动画
      */
@@ -2224,6 +2229,13 @@ public class StartLiveActivity extends BaseActivity implements
             });
             animator.start();
         }
+        updateCoin();
+    }
+
+    /**
+     * 更新金币显示
+     */
+    private void updateCoin() {
         String myCoin = CountUtils.getCount(myGoldCoin);
         if (gameType == 1) {
             all_lepiao.setText(myCoin);
@@ -2780,6 +2792,13 @@ public class StartLiveActivity extends BaseActivity implements
                         }
                         addBettingView(betPosition, amount, false);
                         break;
+                    case 606://天降红包
+                        ChatRoomMessage s = message;
+                        Map data = (Map) message.getRemoteExtension().get("data");
+                        String redenvelope = (String) data.get("message");
+                        showToast("天降红包");
+                        new RedPackageView(mContext, mRoot, redenvelope,StartLiveActivity.this).show();
+                        break;
                     case 301://关闭直播
                         showToast(getString(R.string.close_live_function));
                         closeLive();
@@ -2797,7 +2816,7 @@ public class StartLiveActivity extends BaseActivity implements
                     default:
                         break;
                 }
-                LogUtil.i("WangYi_gift", "聊天室，发礼物广播:收到礼物消息" + remote.get("gift_item_message"));
+                LogUtil.i("WangYi_gift", "聊天室，发礼物广播:收到礼物消息" + remote.get("gift_item_message") + type);
             } else if (message != null && remote != null && !TextUtils.isEmpty((String) remote
                     .get("danmu")) && remote.get("danmu").equals("true")) {
                 final UserInfoProvider.UserInfo userInfo = NimUIKit.getUserInfoProvider()
@@ -2815,12 +2834,7 @@ public class StartLiveActivity extends BaseActivity implements
                 barrageview.addSentence(barrageDateBean);
                 if (message.getFromAccount().equals("miu_" + appUser.getId())) {
                     myGoldCoin = myGoldCoin - 1;
-                    String myCoin = CountUtils.getCount(myGoldCoin);
-                    if (gameType == 1) {
-                        all_lepiao.setText(myCoin);
-                    } else if (gameType == 2) {
-                        tv_bullfight_lepiao.setText(myCoin);
-                    }
+                    updateCoin();
 
                 }
             } else if (userId != null && userId.indexOf("miu_") != -1) {

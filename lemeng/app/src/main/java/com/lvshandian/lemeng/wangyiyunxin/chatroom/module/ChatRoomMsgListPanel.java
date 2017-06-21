@@ -149,7 +149,6 @@ public class ChatRoomMsgListPanel implements TAdapterDelegate {
         List<ChatRoomMessage> addedListItems = new ArrayList<>(messages.size());
         Map<String, Object> remote0 = null;
         for (ChatRoomMessage message : messages) {
-
             // 保证显示到界面上的消息，来自同一个聊天室
             if (isMyMessage(message)) {
                 if (message != null) {

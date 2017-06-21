@@ -23,6 +23,7 @@ public class UrlBuilder {
     public static final String CHARGE_SERVER_URL = "http://60.205.114.36:80/admin/";// 充值端口
     public static final String SERVER_URL_8080 = "http://60.205.114.36:8080/";// 服务器网址公网
     public static final String CHARGE_SERVER_URL_8080 = "http://60.205.114.36:8080/admin/";// 充值端口
+    public static final String GAME_BASE = "http://60.205.114.36/admin/";//游戏
 
     //乐檬本地服務器
 //    public static final String SERVER_URL = "http://10.11.1.119:8080/";// 服务器网址公网
@@ -104,25 +105,25 @@ public class UrlBuilder {
     /**
      * 斗牛开始，get;params（roomId）
      */
-    public static final String BULLFIGHT_START = "admin/appusers/openPlay";
+    public static final String BULLFIGHT_START = "appusers/openPlay";
     /**
      * 获取倒计时，get,params(roomId)
      */
-    public static final String BULLFIGHT_TIMER = "admin/appusers/Countdowntime";
+    public static final String BULLFIGHT_TIMER = "appusers/Countdowntime";
     /**
      * 初始化游戏结果25秒调用，get param（roomId）
      */
-    public static final String BULLFIGHT_INITGAME = "admin/appusers/anchor25s";
+    public static final String BULLFIGHT_INITGAME = "appusers/anchor25s";
     /**
      * 获取庄家信息，get
      */
-    public static final String BULLFIGHT_BANKER = "admin/appusers/getbankerUser";
+    public static final String BULLFIGHT_BANKER = "appusers/getbankerUser";
     /**
      * 投注接口，get param（userId，roomId，amount，type
      * ，perid
      * ，status）
      */
-    public static final String BULLFIGHT_BETTING = "admin/appusers/bugtaurus";
+    public static final String BULLFIGHT_BETTING = "appusers/bugtaurus";
 
     /**
      * 生成投注url
@@ -136,31 +137,43 @@ public class UrlBuilder {
      * @return
      */
     public static String betting(int userId, int roomId, int amount, int type, int perid, int status) {
-        return SERVER_URL + BULLFIGHT_BETTING + "?userId=" + userId + "&roomId=" + roomId + "&amount=" + amount + "&type=" + type + "&perid=" + perid + "&status=" + status;
+        return GAME_BASE + BULLFIGHT_BETTING + "?userId=" + userId + "&roomId=" + roomId + "&amount=" + amount + "&type=" + type + "&perid=" + perid + "&status=" + status;
     }
 
     /**
      * 主播（29s）调用重置时间，get,params(roomId,perId)
      */
-    public static final String BULLFIGHT_INITTIME = "admin/appusers/changetime";
+    public static final String BULLFIGHT_INITTIME = "appusers/changetime";
     /**
      * 开牌结果（20s调用），get,params(roomId)
      */
-    public static final String BULLFIGHT_POKER_RESULT = "admin/appusers/cardsresult";
+    public static final String BULLFIGHT_POKER_RESULT = "appusers/cardsresult";
     /**
      * 刷新庄家金币数
      */
-    public static final String BULLFIGHT_BANKER_BALANCE = "admin/appusers/getcontrol";
+    public static final String BULLFIGHT_BANKER_BALANCE = "appusers/getcontrol";
     /**
      * 开奖结果roomId	String 	房间id
      * perid	String	期数
      * userId	String	用户id
      */
-    public static final String BULLFIGHT_RESULT = "admin/appusers/cashprize";
+    public static final String BULLFIGHT_RESULT = "appusers/cashprize";
     /**
      * 所有开奖结果 roomId String perid	String	期数
      */
-    public static final String ALL_RESULT = "admin/appusers/altogetherTaurusBug";
+    public static final String ALL_RESULT = "appusers/altogetherTaurusBug";
+    /**
+     * 抢红包接口
+     * redenvelope String	红包标识
+     * userId   String	用户id
+     */
+    public static final String GRAB_RED_PACKET = "appusers/GrabRedPacket";
+
+    /**
+     * 查看其他人抢红包详情
+     * redenvelope String	红包标识
+     */
+    public static final String OTHERS_RED_PACKETS = "appusers/OthersRedPackets";
 
     public static final String cloesAnchor(String id) {//关闭直播
         return "/api/v1/room/" + id + "/leave";

@@ -33,7 +33,7 @@ public class BullfightPresenter {
      * @param roomId
      */
     public void startBullGame(String roomId) {
-        String url = UrlBuilder.SERVER_URL + UrlBuilder.BULLFIGHT_START + "?roomId=" + roomId;
+        String url = UrlBuilder.GAME_BASE + UrlBuilder.BULLFIGHT_START + "?roomId=" + roomId;
         OkHttpUtils.get().url(url).build().execute(new StringCallback() {
             @Override
             public void onError(Request request, Exception e) {
@@ -63,7 +63,7 @@ public class BullfightPresenter {
      * 获取庄家信息
      */
     public void getBankerInfo() {
-        String url = UrlBuilder.SERVER_URL + UrlBuilder.BULLFIGHT_BANKER;
+        String url = UrlBuilder.GAME_BASE + UrlBuilder.BULLFIGHT_BANKER;
         OkHttpUtils.get().url(url).build().execute(new StringCallback() {
             @Override
             public void onError(Request request, Exception e) {
@@ -95,7 +95,7 @@ public class BullfightPresenter {
      * @param roomId
      */
     public void getTimeAndNper(String roomId) {
-        String url = UrlBuilder.SERVER_URL + UrlBuilder.BULLFIGHT_TIMER + "?roomId=" + roomId;
+        String url = UrlBuilder.GAME_BASE + UrlBuilder.BULLFIGHT_TIMER + "?roomId=" + roomId;
         OkHttpUtils.get().url(url).build().execute(new StringCallback() {
             @Override
             public void onError(Request request, Exception e) {
@@ -123,7 +123,7 @@ public class BullfightPresenter {
      * 生成开奖结果（主播第五秒调用）,
      */
     public void initGameResult(String roomId) {
-        String url = UrlBuilder.SERVER_URL + UrlBuilder.BULLFIGHT_INITGAME + "?roomId=" + roomId;
+        String url = UrlBuilder.GAME_BASE + UrlBuilder.BULLFIGHT_INITGAME + "?roomId=" + roomId;
         OkHttpUtils.get().url(url).build().execute(new StringCallback() {
             @Override
             public void onError(Request request, Exception e) {
@@ -141,7 +141,7 @@ public class BullfightPresenter {
      * 获取扑克结果
      */
     public void getPokerResult(String roomId) {
-        String url = UrlBuilder.SERVER_URL + UrlBuilder.BULLFIGHT_POKER_RESULT + "?roomId=" + roomId;
+        String url = UrlBuilder.GAME_BASE + UrlBuilder.BULLFIGHT_POKER_RESULT + "?roomId=" + roomId;
         OkHttpUtils.get().url(url).build().execute(new StringCallback() {
             @Override
             public void onError(Request request, Exception e) {
@@ -207,7 +207,7 @@ public class BullfightPresenter {
      * 获取游戏结果
      */
     public void getGameResult(String roomId, String perid, String userId) {
-        String url = UrlBuilder.SERVER_URL + UrlBuilder.BULLFIGHT_RESULT + "?roomId=" + roomId + "&perid=" + perid + "&userId=" + userId;
+        String url = UrlBuilder.GAME_BASE + UrlBuilder.BULLFIGHT_RESULT + "?roomId=" + roomId + "&perid=" + perid + "&userId=" + userId;
         LogUtils.e("TAG", "getGameResult=" + url);
         OkHttpUtils.get().url(url).build().execute(new StringCallback() {
             @Override
@@ -236,7 +236,7 @@ public class BullfightPresenter {
      * 刷新庄家账户
      */
     public void updateBankerBalance() {
-        String url = UrlBuilder.SERVER_URL + UrlBuilder.BULLFIGHT_BANKER_BALANCE;
+        String url = UrlBuilder.GAME_BASE + UrlBuilder.BULLFIGHT_BANKER_BALANCE;
         OkHttpUtils.get().url(url).build().execute(new StringCallback() {
             @Override
             public void onError(Request request, Exception e) {
@@ -264,7 +264,7 @@ public class BullfightPresenter {
      * 初始化倒计时
      */
     public void initGameTimer(String roomId, String perId, String userId) {
-        String url = UrlBuilder.SERVER_URL + UrlBuilder.BULLFIGHT_INITTIME + "?roomId=" + roomId + "&perid=" + perId + "&userId=" + userId;
+        String url = UrlBuilder.GAME_BASE + UrlBuilder.BULLFIGHT_INITTIME + "?roomId=" + roomId + "&perid=" + perId + "&userId=" + userId;
         OkHttpUtils.get().url(url).build().execute(new StringCallback() {
             @Override
             public void onError(Request request, Exception e) {
@@ -281,7 +281,7 @@ public class BullfightPresenter {
      * 初始化倒计时
      */
     public void computeAllResult(String roomId, String perId) {
-        String url = UrlBuilder.SERVER_URL + UrlBuilder.ALL_RESULT + "?roomId=" + roomId + "&perid=" + perId;
+        String url = UrlBuilder.GAME_BASE + UrlBuilder.ALL_RESULT + "?roomId=" + roomId + "&perid=" + perId;
         OkHttpUtils.get().url(url).build().execute(new StringCallback() {
             @Override
             public void onError(Request request, Exception e) {
