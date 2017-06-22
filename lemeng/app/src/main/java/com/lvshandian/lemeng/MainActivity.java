@@ -7,13 +7,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -41,6 +39,7 @@ import com.lvshandian.lemeng.moudles.mine.bean.VideoBean;
 import com.lvshandian.lemeng.moudles.start.LoginActivity;
 import com.lvshandian.lemeng.moudles.start.LogoutHelper;
 import com.lvshandian.lemeng.utils.AliYunImageUtils;
+import com.lvshandian.lemeng.utils.DateUtils;
 import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.wangyiyunxin.config.preference.Preferences;
 import com.lvshandian.lemeng.wangyiyunxin.main.helper.SystemMessageUnreadManager;
@@ -131,9 +130,9 @@ public class MainActivity extends BaseActivity implements
     private static final int REQ_CODE = 10001;
 
     /**
-     * 图片路径
+     * 裁剪后的地址
      */
-    private String imagePath = "";
+    protected Uri imageUri;
 
     /**
      * 记录第一次点击返回键的时间
@@ -204,7 +203,6 @@ public class MainActivity extends BaseActivity implements
         registerSystemMessageObservers(true);
         requestSystemMessageUnreadCount();
         initUnreadCover();
-
     }
 
     private void initFragments() {
@@ -325,16 +323,20 @@ public class MainActivity extends BaseActivity implements
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case CHOOSE_PICTURE:
-                if (data == null || data.getData() == null) {
-                    return;
+                if (null != data && null != data.getData()) {
+                    LogUtil.e("相册选择", "data=" + data.toString());
+                    File imageFile = new File(com.lvshandian.lemeng.base.Constant.APP_PATH + "image/");
+                    if (!imageFile.exists()) {
+                        imageFile.mkdirs();
+                    }
+                    imageUri = Uri.fromFile(new File(imageFile, "IMG_" + DateUtils.currentTime() + ".jpg"));
+                    startPhotoZoom(data.getData()); // 开始对图片进行裁剪处理
                 }
-                startPhotoZoom(data.getData());
                 break;
             case CROP_SMALL_PICTURE:
-//                if (data != null) {
-//                    setPicToView(data);
-//                }
-                aliyunIdKey();
+                if (resultCode == RESULT_OK) {
+                    aliyunIdKey();
+                }
                 break;
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -399,10 +401,6 @@ public class MainActivity extends BaseActivity implements
         });
     }
 
-    //    private static final String PATH = Environment.getExternalStorageDirectory() + "/lemeng/" + "image/head.jpeg";
-//    private Uri mOutputUri = Uri.fromFile(new File(PATH));
-    private Uri mOutputUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory().getAbsolutePath(), String.valueOf(System.currentTimeMillis()).substring(8) + ".png"));
-
     /**
      * 开始对图片进行裁剪处理
      *
@@ -411,14 +409,14 @@ public class MainActivity extends BaseActivity implements
     public void startPhotoZoom(Uri uri) {
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
-        intent.putExtra("crop", true);
+        intent.putExtra("crop",  "true");
         intent.putExtra("aspectX", 1);
         intent.putExtra("aspectY", 1);
         intent.putExtra("outputX", 800);
         intent.putExtra("outputY", 800);
         intent.putExtra("return-data", false);
         intent.putExtra("noFaceDetection", true);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, mOutputUri);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(intent, CROP_SMALL_PICTURE);
     }
 
@@ -430,11 +428,9 @@ public class MainActivity extends BaseActivity implements
      * @time 2016/11/15 13:59
      */
     private void aliyunIdKey() {
-//        AliYunImageUtils.newInstance().uploadImage(mContext, imagePath, new ResultListener() {
-        AliYunImageUtils.newInstance().uploadImage(mContext, mOutputUri.getPath(), new ResultListener() {
+        AliYunImageUtils.newInstance().uploadImage(mContext, imageUri.getPath(), new ResultListener() {
             @Override
             public void onSucess(String data) {
-
                 ConcurrentHashMap map = new ConcurrentHashMap<>();
                 map.put("userId", appUser.getId());
                 LogUtils.e("headUrl" + data);
@@ -448,31 +444,6 @@ public class MainActivity extends BaseActivity implements
         });
     }
 
-
-    /**
-     * 让刚才选择裁剪得到的图片显示在界面上
-     *
-     * @param picdata
-     */
-    private void setPicToView(Intent picdata) {
-        Bundle extras = picdata.getExtras();
-        if (extras != null) {
-            Bitmap photo = extras.getParcelable("data");
-            if (photo != null) {
-                String imgpath = savePicture(photo);
-                imagePath = imgpath;
-                Log.e("imagePath", imagePath + "");
-                if (imagePath != null) {
-                    try {
-                        aliyunIdKey();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-
-    }
 
     @SuppressLint("SdCardPath")
 /**

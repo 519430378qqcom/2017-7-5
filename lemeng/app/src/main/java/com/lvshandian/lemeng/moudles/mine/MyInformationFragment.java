@@ -43,9 +43,9 @@ import com.lvshandian.lemeng.utils.CountUtils;
 import com.lvshandian.lemeng.utils.GrademipmapUtils;
 import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
+import com.lvshandian.lemeng.widget.view.AvatarView;
 import com.lvshandian.lemeng.widget.view.ExpandGridView;
 import com.lvshandian.lemeng.widget.view.HeadZoomScrollView;
-import com.lvshandian.lemeng.widget.view.AvatarView;
 import com.maiml.wechatrecodervideolibrary.recoder.WechatRecoderActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.picasso.Picasso;
@@ -188,34 +188,24 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
                             if (list.size() < 4) {
                                 if (position == list.size() - 1) {
                                     //进行头像的上传  调用相册权限
-                                    Intent openAlbumIntent = new Intent(
-                                            Intent.ACTION_GET_CONTENT);
+                                    Intent openAlbumIntent = new Intent(Intent.ACTION_GET_CONTENT);
                                     openAlbumIntent.setType("image/*");
                                     getActivity().startActivityForResult(openAlbumIntent, CHOOSE_PICTURE);
                                     //不对图片进行裁剪
 //                                getActivity().startActivityForResult(openAlbumIntent, CROP_SMALL_PICTURE);
                                 } else {
-//                                    Intent intent = new Intent(getContext(), PhotoDetails.class);
-//                                    intent.putExtra("photo", list.get(position));
-//                                    intent.putExtra("isShow", "isShow");
-//                                    startActivity(intent);
                                     startActivity(new Intent(getActivity(), BigImageActivity.class).putStringArrayListExtra("imageList", (ArrayList<String>) imgList).putExtra("clickPosition", position));
                                 }
                             } else {
                                 if (position == 3) {
                                     //进行头像的上传  调用相册权限
-                                    Intent openAlbumIntent = new Intent(
-                                            Intent.ACTION_GET_CONTENT);
+                                    Intent openAlbumIntent = new Intent(Intent.ACTION_GET_CONTENT);
                                     openAlbumIntent.setType("image/*");
                                     getActivity().startActivityForResult(openAlbumIntent, CHOOSE_PICTURE);
                                     //不对图片进行裁剪
 //                                getActivity().startActivityForResult(openAlbumIntent, CROP_SMALL_PICTURE);
 
                                 } else {
-//                                    Intent intent = new Intent(getContext(), PhotoDetails.class);
-//                                    intent.putExtra("photo", list.get(position));
-//                                    intent.putExtra("isShow", "isShow");
-//                                    startActivity(intent);
                                     startActivity(new Intent(getActivity(), BigImageActivity.class).putStringArrayListExtra("imageList", (ArrayList<String>) imgList).putExtra("clickPosition", position));
                                 }
                             }
@@ -559,8 +549,6 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
                 startActivity(intentCoins);
                 break;
             case R.id.ll_game_record://我的游戏记录
-//                Intent intentRecord = new Intent(mContext, MyCoinsActicity.class);
-//                startActivity(intentRecord);
                 showToast(getString(R.string.stay_open));
                 break;
             case R.id.ll_earnest://认证

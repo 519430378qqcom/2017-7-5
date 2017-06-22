@@ -44,9 +44,9 @@ public class UpdatePersonActivity extends BaseActivity {
         if (qianming.length() > 30) {
             content.setSelection(30);
         } else {
-            content.setSelection(getIntent().getStringExtra("name").length());
+            content.setSelection(qianming.length());
         }
-        int textnum = numbers - getIntent().getStringExtra("name").length();
+        int textnum = numbers - qianming.length();
         tv_num.setText("(" + textnum + ")");
         content.addTextChangedListener(textWatcher);
 //        content.setFilters(new InputFilter[]{new InputFilter.LengthFilter(30)});

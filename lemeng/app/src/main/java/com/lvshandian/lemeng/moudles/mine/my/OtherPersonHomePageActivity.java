@@ -187,10 +187,6 @@ public class OtherPersonHomePageActivity extends BaseActivity {
                     mygrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                            Intent intent = new Intent(getContext(), PhotoDetails.class);
-//                            intent.putExtra("photo", list.get(position));
-//                            intent.putExtra("isShow", "notShow");
-//                            startActivity(intent);
                             startActivity(new Intent(mContext, BigImageActivity.class).putStringArrayListExtra("imageList", (ArrayList<String>) imgList).putExtra("clickPosition", position));
                         }
                     });

@@ -119,23 +119,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80px"
-            android:src="@mipmap/room_timeline" />
+            android:src="@mipmap/room_circle" />
 
         <ImageView
-            android:id="@+id/qq"
+            android:id="@+id/twitter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80px"
-            android:src="@mipmap/room_qq"
-            android:visibility="gone"/>
+            android:src="@mipmap/room_twitter"
+            android:visibility="visible"/>
 
         <ImageView
-            android:id="@+id/qq_zone"
+            android:id="@+id/facebook"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80px"
-            android:src="@mipmap/room_qqzone"
-            android:visibility="gone"/>
+            android:src="@mipmap/room_facebook"
+            android:visibility="visible"/>
+
+        <ImageView
+            android:id="@+id/googleplus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80px"
+            android:src="@mipmap/room_googleplus"
+            android:visibility="visible"/>
     </com.zhy.autolayout.AutoLinearLayout>
 
     <TextView

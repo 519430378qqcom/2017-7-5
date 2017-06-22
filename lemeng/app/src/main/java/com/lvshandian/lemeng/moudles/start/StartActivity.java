@@ -3,11 +3,13 @@ package com.lvshandian.lemeng.moudles.start;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.lvshandian.lemeng.MainActivity;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.base.BaseActivity;
+import com.lvshandian.lemeng.moudles.mine.my.SettingHeadAndNick;
 import com.lvshandian.lemeng.wangyiyunxin.config.preference.Preferences;
 
 
@@ -81,6 +83,8 @@ public class StartActivity extends BaseActivity {
         if (appUser == null) {
             Intent intent = new Intent(StartActivity.this, LoginSelectActivity.class);
             startActivity(intent);
+        } else if (appUser != null && (TextUtils.isEmpty(appUser.getPicUrl()) || TextUtils.isEmpty(appUser.getNickName()))) {
+            gotoActivity(SettingHeadAndNick.class, true);
         } else {
             startActivity(new Intent(StartActivity.this, MainActivity.class));
         }

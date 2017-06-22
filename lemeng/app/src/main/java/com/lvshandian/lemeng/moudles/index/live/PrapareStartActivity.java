@@ -76,10 +76,12 @@ public class PrapareStartActivity extends BaseActivity {
     TextView tvStartLive;
     @Bind(R.id.wechat)
     ImageView wechat;
-    @Bind(R.id.qq)
-    ImageView qq;
-    @Bind(R.id.qq_zone)
-    ImageView qq_zone;
+    @Bind(R.id.twitter)
+    ImageView twitter;
+    @Bind(R.id.facebook)
+    ImageView facebook;
+    @Bind(R.id.googleplus)
+    ImageView googleplus;
     @Bind(R.id.wechat_circle)
     ImageView wechat_circle;
 
@@ -152,9 +154,10 @@ public class PrapareStartActivity extends BaseActivity {
     @Override
     protected void initListener() {
         wechat.setOnClickListener(this);
-        qq.setOnClickListener(this);
-        qq_zone.setOnClickListener(this);
         wechat_circle.setOnClickListener(this);
+        twitter.setOnClickListener(this);
+        facebook.setOnClickListener(this);
+        googleplus.setOnClickListener(this);
         ivColse.setOnClickListener(this);
         tvStartLive.setOnClickListener(this);
         tvAddress.setOnClickListener(this);
@@ -253,15 +256,20 @@ public class PrapareStartActivity extends BaseActivity {
                         getString(R.string.share_download_content), appUser.getPicUrl(),
                         UrlBuilder.SHARE_DOWNLOAD_URL, SHARE_MEDIA.WEIXIN_CIRCLE);
                 break;
-            case R.id.qq:
+            case R.id.twitter:
                 UMUtils.umShareSingle(this, getString(R.string.share_download_title),
                         getString(R.string.share_download_content), appUser.getPicUrl(),
-                        UrlBuilder.SHARE_DOWNLOAD_URL, SHARE_MEDIA.QQ);
+                        UrlBuilder.SHARE_DOWNLOAD_URL, SHARE_MEDIA.TWITTER);
                 break;
-            case R.id.qq_zone:
+            case R.id.facebook:
                 UMUtils.umShareSingle(this, getString(R.string.share_download_title),
                         getString(R.string.share_download_content), appUser.getPicUrl(),
-                        UrlBuilder.SHARE_DOWNLOAD_URL, SHARE_MEDIA.QZONE);
+                        UrlBuilder.SHARE_DOWNLOAD_URL, SHARE_MEDIA.FACEBOOK);
+                break;
+            case R.id.googleplus:
+                UMUtils.umShareSingle(this, getString(R.string.share_download_title),
+                        getString(R.string.share_download_content), appUser.getPicUrl(),
+                        UrlBuilder.SHARE_DOWNLOAD_URL, SHARE_MEDIA.GOOGLEPLUS);
                 break;
 
         }

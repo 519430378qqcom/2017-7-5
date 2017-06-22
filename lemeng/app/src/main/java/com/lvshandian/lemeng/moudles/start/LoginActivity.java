@@ -24,6 +24,7 @@ import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.moudles.mine.activity.ExplainWebViewActivity;
 import com.lvshandian.lemeng.moudles.mine.bean.LoginFrom;
+import com.lvshandian.lemeng.moudles.mine.my.SettingHeadAndNick;
 import com.lvshandian.lemeng.moudles.mine.my.StateCodeActivity;
 import com.lvshandian.lemeng.utils.DESUtil;
 import com.lvshandian.lemeng.utils.MD5Utils;
@@ -242,10 +243,15 @@ public class LoginActivity extends BaseActivity {
                         activity.finish();
                     }
                 }
-                // 进入主界面
-                gotoActivity(MainActivity.class, true);
-
                 UMUtils.addExclusiveAlias();
+
+                if (TextUtils.isEmpty(appUser.getPicUrl()) || TextUtils.isEmpty(appUser.getNickName())) {
+                    // 进入填写昵称和头像界面
+                    gotoActivity(SettingHeadAndNick.class, true);
+                } else {
+                    // 进入主界面
+                    gotoActivity(MainActivity.class, true);
+                }
             }
 
             @Override

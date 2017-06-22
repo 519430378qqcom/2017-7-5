@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ import com.lvshandian.lemeng.bean.AppUser;
 import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.moudles.mine.activity.ExplainWebViewActivity;
 import com.lvshandian.lemeng.moudles.mine.bean.LoginFrom;
+import com.lvshandian.lemeng.moudles.mine.my.SettingHeadAndNick;
 import com.lvshandian.lemeng.utils.DESUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
@@ -234,32 +236,20 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
                 params.put("userName", map.get("openid").toString());
                 params.put("nickName", map.get("screen_name").toString());
                 params.put("picUrl", map.get("profile_image_url").toString());
-                if (map.get("gender").equals("男")) {
-                    params.put("gender", "1");
-                } else {
-                    params.put("gender", "0");
-                }
+                params.put("gender", map.get("gender").equals("男") ? "1" : "0");
             } else if (platForm == SHARE_MEDIA.QQ) {
                 params.put("unionId", map.get("uid").toString());
                 params.put("userName", map.get("uid").toString());
                 params.put("password", map.get("accessToken").toString());
                 params.put("nickName", map.get("screen_name").toString());
                 params.put("picUrl", map.get("profile_image_url").toString());
-                if (map.get("gender").equals("男")) {
-                    params.put("gender", "1");
-                } else {
-                    params.put("gender", "0");
-                }
+                params.put("gender", map.get("gender").equals("男") ? "1" : "0");
             } else if (platForm == SHARE_MEDIA.TWITTER) {
                 params.put("unionId", map.get("uid").toString());
                 params.put("password", map.get("access_token").toString());
                 params.put("userName", map.get("usid").toString());
                 params.put("nickName", map.get("username").toString());
-                if (map.get("iconurl") == null) {
-                    params.put("picUrl", UrlBuilder.HEAD_DEFAULT);
-                } else {
-                    params.put("picUrl", map.get("iconurl").toString());
-                }
+                params.put("picUrl", map.get("iconurl") == null ? "" : map.get("iconurl").toString());
                 params.put("gender", "1");
             }
             thirdLogin(params);
@@ -416,10 +406,15 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
                 NIMClient.updateStatusBarNotificationConfig(UserPreferences.getStatusConfig());
                 // 构建缓存
                 DataCacheManager.buildDataCacheAsync();
-                // 进入主界面
-                gotoActivity(MainActivity.class, true);
-
                 UMUtils.addExclusiveAlias();
+
+                if (TextUtils.isEmpty(appUser.getPicUrl()) || TextUtils.isEmpty(appUser.getNickName())) {
+                    // 进入填写昵称和头像界面
+                    gotoActivity(SettingHeadAndNick.class, true);
+                } else {
+                    // 进入主界面
+                    gotoActivity(MainActivity.class, true);
+                }
             }
 
             @Override

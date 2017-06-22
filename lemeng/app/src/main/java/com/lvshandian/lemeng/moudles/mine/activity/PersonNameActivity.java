@@ -65,9 +65,9 @@ public class PersonNameActivity extends BaseActivity {
         if (nickName.length() > 10) {
             etName.setSelection(10);
         } else {
-            etName.setSelection(getIntent().getStringExtra("nickName").length());
+            etName.setSelection(nickName.length());
         }
-        if (getIntent().getStringExtra("nickName").length() > 0)
+        if (nickName.length() > 0)
             ivDelete.setVisibility(View.VISIBLE);
         new Handler().postDelayed(new Runnable() {
             @Override

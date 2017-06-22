@@ -117,7 +117,7 @@
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".service.VoiceService"
@@ -146,13 +146,17 @@
             android:name=".moudles.start.LoginSelectActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
+
             <!-- 要想在别的App上能成功调起App，必须添加intent过滤器 -->
             <intent-filter>
+
                 <!-- 协议部分，随便设置 -->
                 <data android:scheme="lmlweb" />
                 <!-- 下面这几行也必须得设置 -->
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
         </activity>
@@ -200,6 +204,11 @@
         <!-- 更改签名 -->
         <activity
             android:name=".moudles.mine.activity.UpdatePersonActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!-- 设置头像昵称 -->
+        <activity
+            android:name=".moudles.mine.my.SettingHeadAndNick"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 设置 -->
@@ -328,13 +337,17 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden">
-            <!--要想在别的App上能成功调起App，必须添加intent过滤器-->
+
+            <!-- 要想在别的App上能成功调起App，必须添加intent过滤器 -->
             <intent-filter>
+
                 <!-- 协议部分，随便设置 -->
                 <data android:scheme="lemeng" />
                 <!-- 下面这几行也必须得设置 -->
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
         </activity>

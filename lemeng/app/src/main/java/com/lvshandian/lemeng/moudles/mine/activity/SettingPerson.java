@@ -9,7 +9,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
@@ -37,11 +36,11 @@ import com.lvshandian.lemeng.moudles.index.activity.AddressSelectActivity;
 import com.lvshandian.lemeng.tripartite.OptionPicker;
 import com.lvshandian.lemeng.tripartite.WheelView;
 import com.lvshandian.lemeng.utils.AliYunImageUtils;
+import com.lvshandian.lemeng.utils.DateUtils;
 import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
-import com.lvshandian.lemeng.utils.UpdateImagerUtils;
-import com.lvshandian.lemeng.widget.view.CustomPopWindow;
 import com.lvshandian.lemeng.widget.view.AvatarView;
+import com.lvshandian.lemeng.widget.view.CustomPopWindow;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallbackWrapper;
 import com.netease.nimlib.sdk.ResponseCode;
@@ -100,26 +99,15 @@ public class SettingPerson extends BaseActivity {
     private String headUrl;
 
     /**
-     * 头像名称
-     */
-    private String imageName;
-
-    /**
-     * 头像路径
-     */
-    private String imagePath;
-
-    /**
      * 拍照或相册生成的uri
      */
-    protected Uri destUri = null;
+    protected static Uri imageUri;
 
     /**
      * 选择性别的popupWindow
      */
     private CustomPopWindow popupWindow;
-    protected static Uri tempUri;
-    private Bitmap photo = null;
+
     protected static final int TAKE_PICTURE = 110;
     protected static final int CHOOSE_PICTURE = 120;
     private static final int CROP_SMALL_PICTURE = 123;
@@ -343,7 +331,6 @@ public class SettingPerson extends BaseActivity {
         popupWindow.setFocusable(true);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
         popupWindow.setOutsideTouchable(true);
-
         popupWindow.setAnimationStyle(R.style.mypopwindow_anim_style);
         popupWindow.showAtLocation(tvSex, Gravity.BOTTOM, 0, 0);
 
@@ -360,8 +347,11 @@ public class SettingPerson extends BaseActivity {
      * 选择拍照或者图库选择
      */
     private void selectPhoto() {
-        imageName = String.valueOf(System.currentTimeMillis()).substring(8);
-        destUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory().getAbsolutePath(), imageName + ".png"));
+        File imageFile = new File(com.lvshandian.lemeng.base.Constant.APP_PATH + "image/");
+        if (!imageFile.exists()) {
+            imageFile.mkdirs();
+        }
+        imageUri = Uri.fromFile(new File(imageFile, "IMG_" + DateUtils.currentTime() + ".jpg"));
         final Dialog dialog = new Dialog(this, R.style.homedialog);
         final View view = View.inflate(this, R.layout.dialog_user_head, null);
         final LinearLayout cancelHeadLinear = (LinearLayout) view.findViewById(R.id.cancel_head_linear);
@@ -370,9 +360,8 @@ public class SettingPerson extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                tempUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(), imageName + ".png"));
-                // 指定照片保存路径（SD卡），imageName + ".png"为一个临时文件，每次拍照后这个图片都会被替换
-                openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, tempUri);
+                // 指定照片保存路径
+                openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
                 startActivityForResult(openCameraIntent, TAKE_PICTURE);
                 dialog.dismiss();
             }
@@ -404,7 +393,7 @@ public class SettingPerson extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case TAKE_PICTURE:
-                startPhotoZoom(tempUri); // 开始对图片进行裁剪处理
+                startPhotoZoom(imageUri); // 开始对图片进行裁剪处理
                 break;
             case CHOOSE_PICTURE:
                 if (null != data && null != data.getData()) {
@@ -412,15 +401,11 @@ public class SettingPerson extends BaseActivity {
                 }
                 break;
             case CROP_SMALL_PICTURE:
-                aliyunIdKey();
-                Bitmap photo = BitmapFactory.decodeFile(destUri.getPath());
-                ivHead.setImageBitmap(photo);
-//                try {
-//                    photo = BitmapFactory.decodeStream(getContentResolver().openInputStream(destUri));
-//                    uploadPic(photo);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
+                if (resultCode == RESULT_OK) {
+                    aliyunIdKey();
+                    Bitmap photo = BitmapFactory.decodeFile(imageUri.getPath());
+                    ivHead.setImageBitmap(photo);
+                }
                 break;
             case 2://签名
                 if (data != null) {
@@ -445,10 +430,6 @@ public class SettingPerson extends BaseActivity {
      * @param uri
      */
     protected void startPhotoZoom(Uri uri) {
-        if (uri == null) {
-            LogUtils.i("tag", "The uri is not exist.");
-        }
-        tempUri = uri;
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
         // 设置裁剪
@@ -460,29 +441,15 @@ public class SettingPerson extends BaseActivity {
         intent.putExtra("outputY", 800);
         intent.putExtra("return-data", false);
         intent.putExtra("noFaceDetection", true);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, destUri);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(intent, CROP_SMALL_PICTURE);
     }
-
-    private void uploadPic(Bitmap bitmap) {
-        ivHead.setImageBitmap(bitmap);
-        imagePath = UpdateImagerUtils.savePhoto(bitmap, Environment.getExternalStorageDirectory().getAbsolutePath(), imageName);
-        if (imagePath != null) {
-            try {
-                aliyunIdKey();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
 
     /**
      * 请求阿里云id、key，成功后上传头像
      */
     private void aliyunIdKey() {
-//        AliYunImageUtils.newInstance().uploadImage(mContext, imagePath, new ResultListener() {
-        AliYunImageUtils.newInstance().uploadImage(mContext, destUri.getPath(), new ResultListener() {
+        AliYunImageUtils.newInstance().uploadImage(mContext, imageUri.getPath(), new ResultListener() {
             @Override
             public void onSucess(String data) {
                 headUrl = data;
