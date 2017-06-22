@@ -853,6 +853,11 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * 是否为游戏直播间
      */
     private boolean isPlayerRoom;
+    /**
+     * 点赞间隔是否达到三秒
+     */
+    private boolean untilThreeSeconds = true;
+    private final int UNTIL_THREE_SECONDS = 523;
 
     private Handler myHandler = new Handler() {
         @Override
@@ -1140,6 +1145,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 case WAIT_NEXT_START:
                     bullfightPresenter.getTimeAndNper(room_Id);
                     break;
+                case UNTIL_THREE_SECONDS:
+                    untilThreeSeconds = true;
+                    break;
             }
         }
     };
@@ -1330,17 +1338,20 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                                     .MESSAGE_LIKE_LIGHT, messageFragment, wy_Id, map);
                             isfirstclick = false;
                         } else {
-                            Map<String, Object> map = new HashMap<>();
-                            map.put("red", 0.700000);
-                            map.put("green", 0.400000);
-                            map.put("blue", 0.100000);
-                            map.put("number", 1 + "");
-                            map.put("vip", appUser.getVip());
-                            map.put("userId", appUser.getId());
-                            map.put("level", appUser.getLevel());
-                            SendRoomMessageUtils.onCustomMessageDianzan(SendRoomMessageUtils
-                                    .MESSAGE_LIKE_CLICK, messageFragment, wy_Id, map);
-//                        showLit();
+                            if(untilThreeSeconds) {
+                                Map<String, Object> map = new HashMap<>();
+                                map.put("red", 0.700000);
+                                map.put("green", 0.400000);
+                                map.put("blue", 0.100000);
+                                map.put("number", 1 + "");
+                                map.put("vip", appUser.getVip());
+                                map.put("userId", appUser.getId());
+                                map.put("level", appUser.getLevel());
+                                SendRoomMessageUtils.onCustomMessageDianzan(SendRoomMessageUtils
+                                        .MESSAGE_LIKE_CLICK, messageFragment, wy_Id, map);
+                                untilThreeSeconds = false;
+                                myHandler.sendEmptyMessageDelayed(UNTIL_THREE_SECONDS,3000);
+                            }
                         }
                         break;
 

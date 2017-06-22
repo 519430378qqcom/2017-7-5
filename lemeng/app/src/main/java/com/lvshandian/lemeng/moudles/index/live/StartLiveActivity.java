@@ -1891,11 +1891,13 @@ public class StartLiveActivity extends BaseActivity implements
             animator.start();
         }
     }
+
     @Override
     public void getRedPackage(int sum) {
         myGoldCoin += sum;
         updateCoin();
     }
+
     /**
      * 显示牛牛动画
      */
@@ -2798,7 +2800,7 @@ public class StartLiveActivity extends BaseActivity implements
                         ChatRoomMessage s = message;
                         Map data = (Map) message.getRemoteExtension().get("data");
                         String redenvelope = (String) data.get("message");
-                        new RedPackageView(mContext, mRoot, redenvelope,StartLiveActivity.this).show();
+                        new RedPackageView(mContext, mRoot, redenvelope, StartLiveActivity.this).show();
                         break;
                     case 301://关闭直播
                         showToast(getString(R.string.close_live_function));
@@ -4817,16 +4819,21 @@ public class StartLiveActivity extends BaseActivity implements
         }
     }
 
+    private int screenW;
+    private int screenH;
 
     /**
      * 点赞
      */
     protected void showLit() {
+        //尺寸参数
+        if (screenW == 0) {
+            screenW = getWindowManager().getDefaultDisplay().getWidth();
+            screenH = getWindowManager().getDefaultDisplay().getHeight();
+        }
         ThreadManager.getThreadPool().execute(new Runnable() {
             @Override
             public void run() {
-//                int[] heartImg = new int[]{R.mipmap.plane_heart_cyan, R.mipmap
-// .plane_heart_pink, R.mipmap.plane_heart_red, R.mipmap.plane_heart_yellow};
                 int[] heartImg = new int[]{R.mipmap.plane_heart_1, R.mipmap.plane_heart_2, R
                         .mipmap.plane_heart_3, R.mipmap.plane_heart_4, R.mipmap.plane_heart_5, R
                         .mipmap.plane_heart_6, R.mipmap.plane_heart_7, R.mipmap.plane_heart_8, R
@@ -4834,19 +4841,13 @@ public class StartLiveActivity extends BaseActivity implements
                 final Random ran = new Random();
                 final ImageView heart = new ImageView(StartLiveActivity.this);
                 //点亮的背景图片
-                heart.setBackgroundResource(heartImg[ran.nextInt(9)]);
-                //尺寸参数
-                final int screenW = getWindowManager().getDefaultDisplay().getWidth();
-
+                heart.setImageResource(heartImg[ran.nextInt(9)]);
                 heart.setLayoutParams(new AutoRelativeLayout.LayoutParams(screenW / 10, screenW /
                         10));
-
                 //x位置
-                heart.setX(screenW - screenW / 4);
+                heart.setX(screenW * 3 / 4);
                 //y位置
-                heart.setY(getWindowManager().getDefaultDisplay().getHeight() - getWindowManager
-                        ().getDefaultDisplay().getHeight() / 8);
-
+                heart.setY(screenH * 7 / 8);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -4855,8 +4856,7 @@ public class StartLiveActivity extends BaseActivity implements
                         ObjectAnimator translationX = ObjectAnimator.ofFloat(heart,
                                 "translationX", ran.nextInt(500) + (screenW - 200) - (screenW / 3));
                         ObjectAnimator translationY = ObjectAnimator.ofFloat(heart,
-                                "translationY", ran.nextInt(getWindowManager().getDefaultDisplay
-                                        ().getHeight() / 2) + 200);
+                                "translationY", ran.nextInt(screenH / 2) + 200);
                         //渐变动画
                         ObjectAnimator alpha = ObjectAnimator.ofFloat(heart, "alpha", 0f);
                         //xy放大动画
