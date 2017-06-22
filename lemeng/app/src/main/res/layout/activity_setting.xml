@@ -64,7 +64,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="100px"
-                    android:text="100009"
+                    android:text="100000"
                     android:textSize="30px" />
 
             </com.zhy.autolayout.AutoRelativeLayout>
@@ -258,7 +258,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10px"
-                    android:text="2.5MB"
+                    android:text="0kb"
                     android:textSize="30px" />
 
                 <TextView

@@ -35,7 +35,7 @@
             android:padding="5px"
             android:scaleType="centerCrop"
             android:src="@mipmap/icon_def_facebook"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <ImageView
             android:id="@+id/iv_twitter_login"
@@ -76,15 +76,6 @@
             android:src="@mipmap/icon_def_moble" />
     </com.zhy.autolayout.AutoLinearLayout>
 
-    <!--<ImageView-->
-        <!--android:id="@+id/iv_tiaokuan"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="48px"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:padding="10px"-->
-        <!--android:layout_marginBottom="65px"-->
-        <!--android:src="@mipmap/icon_tiaokuan" />-->
     <TextView
         android:id="@+id/term_of_service"
         android:layout_width="wrap_content"

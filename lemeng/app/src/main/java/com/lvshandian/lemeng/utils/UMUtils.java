@@ -24,6 +24,9 @@ import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 import com.umeng.socialize.utils.Log;
 
+import static com.umeng.socialize.bean.SHARE_MEDIA.FACEBOOK;
+import static com.umeng.socialize.bean.SHARE_MEDIA.GOOGLEPLUS;
+import static com.umeng.socialize.bean.SHARE_MEDIA.TWITTER;
 import static com.umeng.socialize.bean.SHARE_MEDIA.WEIXIN;
 import static com.umeng.socialize.bean.SHARE_MEDIA.WEIXIN_CIRCLE;
 
@@ -149,8 +152,7 @@ public class UMUtils {
         web.setDescription(share_content);//描述
 
         new ShareAction(act).withText(share_title)
-//                .setDisplayList(FACEBOOK, TWITTER, GOOGLEPLUS, WEIXIN, QQ, WEIXIN_CIRCLE, QZONE)
-                .setDisplayList(WEIXIN, WEIXIN_CIRCLE)
+                .setDisplayList(FACEBOOK, TWITTER, GOOGLEPLUS, WEIXIN, WEIXIN_CIRCLE)
                 .withMedia(web)
                 .setCallback(umShareListener).open();
 
@@ -225,7 +227,7 @@ public class UMUtils {
         }
     }
 
-    public static void removeAlias(){
+    public static void removeAlias() {
         PushAgent mPushAgent = PushAgent.getInstance(mContext);
         AppUser appUser = SharedPreferenceUtils.getUserInfo(mContext);
         if (appUser != null && appUser.getId() != null) {
@@ -233,7 +235,7 @@ public class UMUtils {
                     new UTrack.ICallBack() {
                         @Override
                         public void onMessage(boolean isSuccess, String message) {
-                            LogUtil.e("友盟别名","别名："+"isSuccess="+isSuccess+"   message="+message);
+                            LogUtil.e("友盟别名", "别名：" + "isSuccess=" + isSuccess + "   message=" + message);
                         }
                     });
         }
