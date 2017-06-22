@@ -52,5 +52,5 @@ public interface BullfightInterface {
     /**
      * 初始化倒计时成功
      */
-    void initGameTimer();
+    void initGameTimer(Boolean isSuccess);
 }

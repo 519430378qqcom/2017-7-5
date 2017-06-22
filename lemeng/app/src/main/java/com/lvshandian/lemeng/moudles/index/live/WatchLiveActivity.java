@@ -2068,8 +2068,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     }
 
     @Override
-    public void initGameTimer() {
-
+    public void initGameTimer(Boolean isSuccess) {
     }
 
     @Override

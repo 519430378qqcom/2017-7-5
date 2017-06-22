@@ -21,7 +21,6 @@ android {
             abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
         }
     }
-
     productFlavors {
 //        baiduvt {}//百度手机助手
 //        huaweiv {}//华为

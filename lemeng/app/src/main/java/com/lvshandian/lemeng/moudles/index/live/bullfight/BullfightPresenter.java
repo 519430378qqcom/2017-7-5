@@ -37,7 +37,11 @@ public class BullfightPresenter {
         OkHttpUtils.get().url(url).build().execute(new StringCallback() {
             @Override
             public void onError(Request request, Exception e) {
-
+                StartResult startResult = new StartResult();
+                startResult.setSuccess(false);
+                if (bullfightInterface != null) {
+                    bullfightInterface.startBullGame(startResult);
+                }
             }
 
             @Override
@@ -268,12 +272,13 @@ public class BullfightPresenter {
         OkHttpUtils.get().url(url).build().execute(new StringCallback() {
             @Override
             public void onError(Request request, Exception e) {
+                bullfightInterface.initGameTimer(false);
             }
 
             @Override
             public void onResponse(String response) {
                 LogUtils.e("TAG", "initGameTimer" + response);
-                bullfightInterface.initGameTimer();
+                bullfightInterface.initGameTimer(true);
             }
         });
     }

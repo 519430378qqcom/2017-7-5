@@ -1649,14 +1649,18 @@ public class StartLiveActivity extends BaseActivity implements
     }
 
     @Override
-    public void initGameTimer() {
-        bullfightPresenter.getTimeAndNper(room_Id);
-        Map<String, Object> map = new HashMap<>();
-        map.put("vip", appUser.getVip());
-        map.put("userId", appUser.getId());
-        map.put("level", appUser.getLevel());
-        map.put("NIM_CONTER_TIMER_MPER", uper + "");
-        SendRoomMessageUtils.onCustomMessagePlay("3131", messageFragment, wy_Id, map);
+    public void initGameTimer(Boolean isSuccess) {
+        if(isSuccess) {
+            bullfightPresenter.getTimeAndNper(room_Id);
+            Map<String, Object> map = new HashMap<>();
+            map.put("vip", appUser.getVip());
+            map.put("userId", appUser.getId());
+            map.put("level", appUser.getLevel());
+            map.put("NIM_CONTER_TIMER_MPER", uper + "");
+            SendRoomMessageUtils.onCustomMessagePlay("3131", messageFragment, wy_Id, map);
+        }else {//尝试重连
+            bullfightPresenter.initGameTimer(room_Id, uper + "", appUser.getId() + "");
+        }
     }
 
     @Override
@@ -2811,6 +2815,7 @@ public class StartLiveActivity extends BaseActivity implements
                         gameState = 0;
                         gameIsStart = false;
                         hidePlayView(gameType);
+                        myHandler.removeMessages(BULLFIGHT_TIME);
                         break;
                     case 306://开启游戏
                         showToast(getString(R.string.open_game_function));

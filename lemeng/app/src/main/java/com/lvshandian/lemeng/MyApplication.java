@@ -106,7 +106,6 @@ public class MyApplication extends LitePalApplication {
         mLocationClient.registerLocationListener(myListener);    //注册监听函数
         mLocationClient.start();
 
-
         //初始化litepal数据库
         Connector.getDatabase();
         //初始化七牛云

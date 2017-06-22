@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -343,27 +344,43 @@ public class MainActivity extends BaseActivity implements
 
         if (RESULT_OK == resultCode) {
             if (requestCode == REQ_CODE) {
-                mLoading = new LoadingDialog(mContext);
-                mLoading.show();
                 final String videoPath = data.getStringExtra(WechatRecoderActivity.VIDEO_PATH);
-                MediaMetadataRetriever media = new MediaMetadataRetriever();
-                media.setDataSource(videoPath);
-                Bitmap bitmap = media.getFrameAtTime();
-                String bitmapPhth = savePicture(bitmap);
-                //先上传背景图
-                AliYunImageUtils.newInstance().uploadImage(mContext, bitmapPhth, new ResultListener() {
+                new AsyncTask<Void, Void, Void>(){
+
                     @Override
-                    public void onSucess(String data) {
-                        aliyunIdKeyVideo(videoPath, data);
+                    protected void onPreExecute() {
+                        mLoading = new LoadingDialog(mContext);
+                        mLoading.show();
                     }
 
                     @Override
-                    public void onFaild() {
-                        if (mLoading != null && mLoading.isShowing()) {
-                            mLoading.dismiss();
-                        }
+                    protected Void doInBackground(Void... params) {
+                        MediaMetadataRetriever media = new MediaMetadataRetriever();
+                        media.setDataSource(videoPath);
+                        Bitmap bitmap = media.getFrameAtTime();
+                        String bitmapPhth = savePicture(bitmap);
+                        //先上传背景图
+                        AliYunImageUtils.newInstance().uploadImage(mContext, bitmapPhth, new ResultListener() {
+                            @Override
+                            public void onSucess(String data) {
+                                aliyunIdKeyVideo(videoPath, data);
+                            }
+
+                            @Override
+                            public void onFaild() {
+                                if (mLoading != null && mLoading.isShowing()) {
+                                    mLoading.dismiss();
+                                }
+                            }
+                        });
+                        return null;
                     }
-                });
+
+                    @Override
+                    protected void onPostExecute(Void aVoid) {
+
+                    }
+                }.execute();
             }
 
         }
