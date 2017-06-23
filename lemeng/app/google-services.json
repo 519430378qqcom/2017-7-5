@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "709709437983",
+    "project_id": "poised-conduit-167209"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:709709437983:android:7b5404a6edb6b6f0",
+        "android_client_info": {
+          "package_name": "com.lvshandian.lemeng"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "709709437983-89t7o7uj3e1gaovakg262oilb5u7u4tk.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "709709437983-q0oe2211cu1coo0ll6st9qcrnpo5d7sl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lvshandian.lemeng",
+            "certificate_hash": "b0fe37c30431277b03dc7da1324cd3dda0315bee"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBV1WacRLpwCrz2TFnur4liHDbDs8tSEQ4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -2,9 +2,12 @@ package com.lvshandian.lemeng.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Handler;
 import android.widget.Toast;
 
+import com.google.android.gms.plus.PlusShare;
 import com.lvshandian.lemeng.base.Constant;
 import com.lvshandian.lemeng.bean.AppUser;
 import com.netease.nim.uikit.common.util.log.LogUtil;
@@ -22,7 +25,9 @@ import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
+import com.umeng.socialize.shareboard.SnsPlatform;
 import com.umeng.socialize.utils.Log;
+import com.umeng.socialize.utils.ShareBoardlistener;
 
 import static com.umeng.socialize.bean.SHARE_MEDIA.FACEBOOK;
 import static com.umeng.socialize.bean.SHARE_MEDIA.GOOGLEPLUS;
@@ -145,7 +150,7 @@ public class UMUtils {
 
     public static void umShare(Activity act, String share_title, String share_content, final String picUrl, String share_url) {
         mActivity = act;
-        UMWeb web = new UMWeb(share_url);
+        final UMWeb web = new UMWeb(share_url);
         web.setTitle(share_title);//标题
         web.setThumb(new UMImage(act, picUrl));  //缩略图
         web.setDescription(share_content);//描述
@@ -153,7 +158,23 @@ public class UMUtils {
         new ShareAction(act).withText(share_title)
                 .setDisplayList(FACEBOOK, TWITTER, GOOGLEPLUS, WEIXIN, WEIXIN_CIRCLE)
                 .withMedia(web)
-                .setCallback(umShareListener).open();
+                .setCallback(umShareListener).setCallback(umShareListener).setShareboardclickCallback(new ShareBoardlistener() {
+      @Override
+      public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
+                          if(share_media==GOOGLEPLUS){
+                              Intent shareIntent = new PlusShare.Builder(mActivity)
+                                                  .setType("text/plain")
+                                                  .setText("Welcome to the Google+ platform.")
+                                                  .setContentUrl(Uri.parse("https://developers.google.com/+/"))
+                                                  .getIntent();
+                            mActivity.startActivityForResult(shareIntent, 0);
+                              }else{
+                                  new ShareAction(mActivity)
+                            .setPlatform(share_media)
+                                                  .withMedia(web)
+                                                  .setCallback(umShareListener).share();
+                              }
+                      }  }).open();
 
     }
 

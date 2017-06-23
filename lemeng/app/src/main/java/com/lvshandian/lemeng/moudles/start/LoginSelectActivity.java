@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -105,19 +106,19 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
             }
         }
 
-//
-//        GoogleSignInOptions gso = new GoogleSignInOptions
-//                .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                .requestEmail()
-//                .requestId()
-//                .build();
-//
-//        mGoogleApiClient = new GoogleApiClient.Builder(this)
-//                .addConnectionCallbacks(this)
-//                .addOnConnectionFailedListener(this)
-//                .enableAutoManage(this,this)
-//                .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
-//                .build();
+
+        GoogleSignInOptions gso = new GoogleSignInOptions
+                .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .requestId()
+                .build();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .enableAutoManage(this,this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
+                .build();
     }
 
     @Override
@@ -461,11 +462,27 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
             LogUtil.e("robin", "成功");
             GoogleSignInAccount acct = result.getSignInAccount();
             if (acct != null) {
+                LogUtil.e("robin", "用户GrantedScopes是:" + acct.getGrantedScopes().toString());
+                LogUtil.e("robin", "用户GivenName是:" + acct.getGivenName());
+                LogUtil.e("robin", "用户ServerAuthCode是:" + acct.getServerAuthCode());
+                LogUtil.e("robin", "用户PhotoUrl是:" + acct.getPhotoUrl());
+                LogUtil.e("robin", "用户FamilyName是:" + acct.getFamilyName());
+                LogUtil.e("robin", "用户信息是:" + acct.getAccount());
                 LogUtil.e("robin", "用户名是:" + acct.getDisplayName());
                 LogUtil.e("robin", "用户email是:" + acct.getEmail());
                 LogUtil.e("robin", "用户头像是:" + acct.getPhotoUrl());
                 LogUtil.e("robin", "用户Id是:" + acct.getId());//之后就可以更新UI了
                 LogUtil.e("robin", "用户IdToken是:" + acct.getIdToken());
+                Map<String, String> params = new HashMap<>();
+                params.put("unionId", acct.getId());
+                params.put("password", acct.getIdToken()==null?"":acct.getIdToken());
+                params.put("userName", acct.getId());
+                params.put("nickName", acct.getDisplayName());
+                params.put("differentStatus", "0");
+                params.put("picUrl",acct.getPhotoUrl() == null?"":acct.getPhotoUrl().toString());
+
+                params.put("gender", "1");
+                thirdLogin(params);
             }
         } else {
             LogUtil.e("robin", "没有成功" + result.getStatus());
@@ -475,15 +492,15 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
     @Override
     protected void onStart() {
         super.onStart();
-//        mGoogleApiClient.connect();
+        mGoogleApiClient.connect();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-//        if (mGoogleApiClient.isConnected()) {
-//            mGoogleApiClient.disconnect();
-//        }
+        if (mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
     }
 
     @Override
