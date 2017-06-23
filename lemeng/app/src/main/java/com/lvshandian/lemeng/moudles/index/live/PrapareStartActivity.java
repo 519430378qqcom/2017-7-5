@@ -243,8 +243,7 @@ public class PrapareStartActivity extends BaseActivity {
                 tvAddress.setText(address);
                 break;
             case R.id.tv_start_live:
-//                getStatus();
-                getNetWork();
+                getStatus();
                 break;
             case R.id.wechat:
                 UMUtils.umShareSingle(this, getString(R.string.share_download_title),

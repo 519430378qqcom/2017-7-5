@@ -48,6 +48,7 @@ import com.lvshandian.lemeng.utils.NetWorkUtil;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.widget.view.ShowPop;
 import com.lvshandian.lemeng.wangyiyunxin.config.preference.Preferences;
+import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.auth.AuthService;
@@ -146,7 +147,6 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
     protected void onResume() {
         //友盟统计
         MobclickAgent.onResume(this);
-//        registerReceiveCustom(true);
         super.onResume();
 //        appUser = (AppUser) CacheUtils.readObject(this, CacheUtils.USERINFO);
         appUser = SharedPreferenceUtils.getUserInfo(mContext);
@@ -184,21 +184,22 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
 
     /**
      * 隐藏虚拟键盘
+     *
      * @param window
      */
-    public void setHideVirtualKey(Window window){
+    public void setHideVirtualKey(Window window) {
         //保持布局状态
-        int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE|
+        int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
                 //布局位于状态栏下方
-                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION|
+                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
                 //全屏
-                View.SYSTEM_UI_FLAG_FULLSCREEN|
+                View.SYSTEM_UI_FLAG_FULLSCREEN |
                 //隐藏导航栏
-                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION|
+                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
-        if (Build.VERSION.SDK_INT>=19){
+        if (Build.VERSION.SDK_INT >= 19) {
             uiOptions |= 0x00001000;
-        }else{
+        } else {
             uiOptions |= View.SYSTEM_UI_FLAG_LOW_PROFILE;
         }
         window.getDecorView().setSystemUiVisibility(uiOptions);
@@ -215,8 +216,8 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
 
         AppUser appUser = new AppUser();
         LoginFrom loginFrom = new LoginFrom();
-        SharedPreferenceUtils.saveUserInfo(mContext,appUser);
-        SharedPreferenceUtils.saveLoginFrom(mContext,loginFrom);
+        SharedPreferenceUtils.saveUserInfo(mContext, appUser);
+        SharedPreferenceUtils.saveLoginFrom(mContext, loginFrom);
 
         //发送到MainActivity，关闭页面
         EventBus.getDefault().post(new QuitLogin());
@@ -242,7 +243,6 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
 
     @Override
     protected void onStop() {
-//        registerReceiveCustom(false);
         super.onStop();
     }
 
@@ -254,7 +254,7 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
         initialized();
         // 初始化组件
         initListener();
-
+        registerReceiveCustom(true);
     }
 
     /**
@@ -516,6 +516,7 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
     protected void onDestroy() {
         EventBus.getDefault().unregister(this);
         MyApplication.removeListActivity(this);
+        registerReceiveCustom(false);
         super.onDestroy();
     }
 
@@ -579,6 +580,7 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
                  * 获取到关注人直播提醒，点击进入直播间
                  */
                 org.json.JSONObject jsonObject = new org.json.JSONObject(message.getContent());
+                LogUtil.e("自定义通知", jsonObject.toString());
                 String content = jsonObject.getString("content");
                 String roomId = jsonObject.getString("roomId");
                 joinRoom(content, roomId);
@@ -713,7 +715,7 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
                         JoinRoomBean joinRoom = JsonUtil.json2Bean(response, JoinRoomBean.class);
                         if (joinRoom != null && joinRoom.isSuccess() && joinRoom.getCode() != 1) {
                             //第一次进入
-                            if (live!= null && !TextUtils.isEmpty(live.getRooms().getPrivateFlag() + "")
+                            if (live != null && !TextUtils.isEmpty(live.getRooms().getPrivateFlag() + "")
                                     && ((live.getRooms().getPrivateFlag() + "")).equals("1")) {
                                 joinSecret(live);
                             } else {
