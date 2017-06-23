@@ -320,6 +320,8 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
                             @Override
                             public void run() {
                                 AutoRelativeLayout.LayoutParams lp1 = new AutoRelativeLayout.LayoutParams(width, height);
+                                if (lp1 == null)
+                                    return;
                                 myHead.setLayoutParams(lp1);
                             }
                         }, 400);

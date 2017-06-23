@@ -253,6 +253,8 @@ public class OtherPersonHomePageActivity extends BaseActivity {
                             @Override
                             public void run() {
                                 AutoRelativeLayout.LayoutParams lp1 = new AutoRelativeLayout.LayoutParams(width, height);
+                                if (lp1 == null)
+                                    return;
                                 avHeader.setLayoutParams(lp1);
                             }
                         }, 400);

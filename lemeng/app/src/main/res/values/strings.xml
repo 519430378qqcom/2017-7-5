@@ -345,6 +345,9 @@
     <string name="nothing">什么都没有</string>
 
     <!--6月20日之后添加start-->
+    <string name="expand_all">全部展开</string>
+    <string name="partial_display">部分显示</string>
+
     <string name="game_record">游戏记录</string>
     <string name="close_live_function">平台暂时关闭直播功能</string>
     <string name="close_game_function">平台暂时关闭游戏功能</string>
