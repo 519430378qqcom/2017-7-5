@@ -226,4 +226,8 @@
         <item>@color/material_blue</item>
         <item>@color/material_yellow</item>
     </integer-array>
+
+    <string name="close_privatechat_function">平台暂时关闭私信功能</string>
+    <string name="one_lepiao_one_tanmu">1乐票每条弹幕</string>
+    <string name="say_something">说些什么</string>
 </resources>

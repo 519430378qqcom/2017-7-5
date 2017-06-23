@@ -39,6 +39,7 @@ import com.netease.nim.uikit.session.emoji.EmoticonPickerView;
 import com.netease.nim.uikit.session.emoji.IEmoticonSelectedListener;
 import com.netease.nim.uikit.session.emoji.MoonUtil;
 import com.netease.nim.uikit.session.module.Container;
+import com.netease.nim.uikit.util.ToastUtils;
 import com.netease.nim.uikit.view.togglebutton.zcw.togglebutton.ToggleButton;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.media.record.AudioRecorder;
@@ -117,6 +118,10 @@ public class InputPanel implements IEmoticonSelectedListener, IAudioRecordCallba
     private String appUserId;
     private String vip;
 
+    private int isRoomLayout = 0;  //0非直播间左下角  1直播间左下角
+    public static int privateState; //0不可发送  1可发送
+    public static int isService; //0不是客服  1是客服
+
     public InputPanel(Container container, View view, List<BaseAction> actions, boolean isTextAudioSwitchShow) {
         this.container = container;
         this.view = view;
@@ -150,6 +155,7 @@ public class InputPanel implements IEmoticonSelectedListener, IAudioRecordCallba
     public void setInputToggleButtonVisibility(String appUserId, String vip) {
         this.appUserId = appUserId;
         this.vip = vip;
+        isRoomLayout = 1;
 //        toggleButtonLayout.setVisibility(View.VISIBLE);
 //        toggle.setVisibility(View.VISIBLE);
         ivTanmu.setVisibility(View.VISIBLE);
@@ -273,11 +279,11 @@ public class InputPanel implements IEmoticonSelectedListener, IAudioRecordCallba
             public void onClick(View v) {
                 toggleState = !toggleState;
                 if (toggleState) {
-                    messageEditText.setHint("1乐票每条弹幕");
+                    messageEditText.setHint(view.getContext().getString(R.string.one_lepiao_one_tanmu));
                     ivTanmu.setImageResource(R.drawable.laba_lv);
                     rlMessage.setBackgroundResource(R.drawable.message_yellow_bg);
                 } else {
-                    messageEditText.setHint("说些什么...");
+                    messageEditText.setHint(view.getContext().getString(R.string.say_something));
                     ivTanmu.setImageResource(R.drawable.laba_bai);
                     rlMessage.setBackgroundResource(R.drawable.message_black_bg);
                 }
@@ -414,7 +420,10 @@ public class InputPanel implements IEmoticonSelectedListener, IAudioRecordCallba
 
     // 发文本消息
     private void onTextMessageSendButtonPressed() {
-//        Toast.makeText(view.getContext(),"不能聊天",Toast.LENGTH_LONG).show();
+        if (isRoomLayout == 0 && privateState == 0 && isService == 0) {
+            ToastUtils.showMessageDefault(view.getContext(), view.getContext().getString(R.string.close_privatechat_function));
+            return;
+        }
         String text = messageEditText.getText().toString();
         if (!TextUtils.isEmpty(text)) {
             IMMessage textMessage = createTextMessage(text);

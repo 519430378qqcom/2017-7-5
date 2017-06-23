@@ -91,9 +91,9 @@ public class ChatRoomMessageFragment extends TFragment implements ModuleProxy {
 
             boolean toggleState = inputPanel.getToggleState();
             if (toggleState) {
-                editText.setHint("1乐票每条弹幕");
+                editText.setHint(rootView.getContext().getString(com.netease.nim.uikit.R.string.one_lepiao_one_tanmu));
             } else {
-                editText.setHint("说些什么...");
+                editText.setHint(rootView.getContext().getString(com.netease.nim.uikit.R.string.say_something));
             }
             KeyBoardUtils.openKeybord(editText, MyApplication.mContext);
 

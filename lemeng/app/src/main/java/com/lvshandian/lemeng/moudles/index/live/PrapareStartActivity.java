@@ -25,8 +25,8 @@ import com.lvshandian.lemeng.MyApplication;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.UrlBuilder;
 import com.lvshandian.lemeng.base.BaseActivity;
+import com.lvshandian.lemeng.base.Constant;
 import com.lvshandian.lemeng.bean.CreatReadyBean;
-import com.lvshandian.lemeng.bean.LiveStatusBean;
 import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.utils.CameraUtil;
@@ -37,7 +37,6 @@ import com.lvshandian.lemeng.utils.NetWorkUtil;
 import com.lvshandian.lemeng.utils.PermisionUtils;
 import com.lvshandian.lemeng.utils.UMUtils;
 import com.lvshandian.lemeng.widget.view.CameraPreviewFrameView;
-import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.qiniu.pili.droid.streaming.AVCodecType;
 import com.qiniu.pili.droid.streaming.CameraStreamingSetting;
 import com.qiniu.pili.droid.streaming.MediaStreamingManager;
@@ -46,17 +45,14 @@ import com.qiniu.pili.droid.streaming.StreamingProfile;
 import com.qiniu.pili.droid.streaming.widget.AspectFrameLayout;
 import com.squareup.picasso.Picasso;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import butterknife.Bind;
+
+import static com.lvshandian.lemeng.base.Constant.gameState;
 
 public class PrapareStartActivity extends BaseActivity {
 
@@ -117,8 +113,6 @@ public class PrapareStartActivity extends BaseActivity {
     private static final int CAMERA_FRONT = 1;
     private static final int CAMERA_BACK = 0;
 
-    private int anchorState = 0;
-    private int gameState = 0;
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -243,7 +237,11 @@ public class PrapareStartActivity extends BaseActivity {
                 tvAddress.setText(address);
                 break;
             case R.id.tv_start_live:
-                getStatus();
+                if (Constant.anchorState == 1){
+                    getNetWork();
+                }else {
+                    showToast(getString(R.string.close_live_function));
+                }
                 break;
             case R.id.wechat:
                 UMUtils.umShareSingle(this, getString(R.string.share_download_title),
@@ -272,51 +270,6 @@ public class PrapareStartActivity extends BaseActivity {
                 break;
 
         }
-    }
-
-
-    private void getStatus() {
-        OkHttpUtils.get().url(UrlBuilder.START_LIVE_STATUS).build().execute(
-                new StringCallback() {
-                    @Override
-                    public void onError(com.squareup.okhttp.Request request, Exception e) {
-                        showToast(getString(R.string.network_error));
-                    }
-
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String code = jsonObject.getString("code");
-                            if (code.equals("0")) {
-                                String obj = jsonObject.getString("obj");
-                                LogUtil.e("开播准备", obj);
-                                List<LiveStatusBean> list = JsonUtil.json2BeanList(obj, LiveStatusBean.class);
-                                if (list != null && list.size() > 0) {
-                                    for (int i = 0, j = list.size(); i < j; i++) {
-                                        if (list.get(i).getFun().equals("anchor")) {
-                                            anchorState = list.get(i).getState();
-                                        }
-                                        if (list.get(i).getFun().equals("game")) {
-                                            gameState = list.get(i).getState();
-                                        }
-                                    }
-                                }
-                                if (anchorState == 1) {
-                                    getNetWork();
-                                } else {
-                                    showToast(getString(R.string.close_live_function));
-                                }
-
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                }
-
-        );
     }
 
     private void getNetWork() {

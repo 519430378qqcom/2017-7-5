@@ -2,7 +2,9 @@ package com.netease.nim.uikit.session.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +16,7 @@ import com.netease.nim.uikit.model.ToolBarOptions;
 import com.netease.nim.uikit.session.SessionCustomization;
 import com.netease.nim.uikit.session.constant.Extras;
 import com.netease.nim.uikit.session.fragment.MessageFragment;
+import com.netease.nim.uikit.session.module.input.InputPanel;
 import com.netease.nim.uikit.uinfo.UserInfoHelper;
 import com.netease.nim.uikit.uinfo.UserInfoObservable;
 import com.netease.nimlib.sdk.NIMClient;
@@ -50,6 +53,7 @@ public class P2PMessageActivity extends BaseMessageActivity {
         context.startActivity(intent);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,10 +85,12 @@ public class P2PMessageActivity extends BaseMessageActivity {
     private void requestBuddyInfo() {
         title = (TextView) findViewById(R.id.p2p_message_title);
         if (contactId.equals("miu_1")) {
+            InputPanel.isService = 1;
             title.setText("客服");
             setTitle("");
         } else {
             title.setText(UserInfoHelper.getUserTitleName(sessionId, SessionTypeEnum.P2P));
+            InputPanel.isService = 0;
             setTitle("");
         }
 

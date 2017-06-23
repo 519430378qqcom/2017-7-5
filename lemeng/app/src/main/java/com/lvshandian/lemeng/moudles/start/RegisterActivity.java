@@ -21,6 +21,7 @@ import com.lvshandian.lemeng.bean.AppUser;
 import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.moudles.mine.activity.ExplainWebViewActivity;
+import com.lvshandian.lemeng.moudles.mine.my.SettingHeadAndNick;
 import com.lvshandian.lemeng.moudles.mine.my.StateCodeActivity;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.utils.TextPhoneNumber;
@@ -87,8 +88,6 @@ public class RegisterActivity extends BaseActivity {
 //                    CacheUtils.saveObject(RegisterActivity.this, appUser, CacheUtils.USERINFO);
                     SharedPreferenceUtils.saveUserInfo(mContext, appUser);
                     loginWangYi(appUser);
-
-//                    startActivity(new Intent(RegisterActivity.this, SettingPerson.class).putExtra("isRegister", "register"));
                     break;
                 case RequestCode.FORGETPSWD_TAG:
                     showToast(getString(R.string.edit_success));
@@ -311,8 +310,15 @@ public class RegisterActivity extends BaseActivity {
                 DataCacheManager.buildDataCacheAsync();
                 // 进入主界面
                 MyApplication.finishActivity();
-                gotoActivity(MainActivity.class, true);
                 sendUserToWangYi(appUser);
+
+                if (TextUtils.isEmpty(appUser.getPicUrl()) || TextUtils.isEmpty(appUser.getNickName())) {
+                    // 进入填写昵称和头像界面
+                    gotoActivity(SettingHeadAndNick.class, true);
+                } else {
+                    // 进入主界面
+                    gotoActivity(MainActivity.class, true);
+                }
             }
 
             @Override

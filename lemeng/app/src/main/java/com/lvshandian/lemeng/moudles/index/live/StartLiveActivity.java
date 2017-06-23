@@ -70,6 +70,7 @@ import com.lvshandian.lemeng.UrlBuilder;
 import com.lvshandian.lemeng.adapter.FamilyMemberAdapter;
 import com.lvshandian.lemeng.base.BarrageDateBean;
 import com.lvshandian.lemeng.base.BaseActivity;
+import com.lvshandian.lemeng.base.Constant;
 import com.lvshandian.lemeng.base.CustomStringCallBack;
 import com.lvshandian.lemeng.bean.AppUser;
 import com.lvshandian.lemeng.bean.BlBean;
@@ -242,6 +243,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.lvshandian.lemeng.base.Constant.gameState;
 import static com.lvshandian.lemeng.service.VoiceService.mediaPlayer;
 
 /**
@@ -739,11 +741,6 @@ public class StartLiveActivity extends BaseActivity implements
      */
     private boolean gameIsStart = false;
 
-    /**
-     * 是否可以开启游戏
-     */
-    private int gameState = 0;  //0不能  1能
-
     private Handler myHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -835,7 +832,6 @@ public class StartLiveActivity extends BaseActivity implements
         startTime = System.currentTimeMillis();
         startAnimation(3);
         creatReadyBean = (CreatReadyBean) getIntent().getSerializableExtra("START");
-        gameState = getIntent().getIntExtra("gameState", 0);
 
         //网易云信房间的id
         wy_Id = creatReadyBean.getRoomId();
@@ -1091,7 +1087,7 @@ public class StartLiveActivity extends BaseActivity implements
                 }
                 break;
             case R.id.game:  //游戏
-                if (gameState == 1) {
+                if (Constant.gameState == 0) {
                     showToast(getString(R.string.close_game_function));
                 } else {
                     if (gameIsStart == false) {
@@ -3489,7 +3485,7 @@ public class StartLiveActivity extends BaseActivity implements
                             /**
                              * 上滑动
                              */
-                            if (gameState == 1) {
+                            if (gameState == 0) {
                                 showToast(getString(R.string.close_game_function));
                             } else {
                                 if (gameIsStart) {

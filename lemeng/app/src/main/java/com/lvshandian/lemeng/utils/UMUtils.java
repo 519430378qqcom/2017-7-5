@@ -140,7 +140,6 @@ public class UMUtils {
         UMShareAPI.get(mContext);
         PlatformConfig.setTwitter(Constant.TWITTER_APPID, Constant.TWITTER_SECRET);
         PlatformConfig.setWeixin(Constant.WX_APPID, Constant.WX_SECRET);
-        PlatformConfig.setQQZone(Constant.QQ_APPID, Constant.QQ_SECRET);
 
     }
 

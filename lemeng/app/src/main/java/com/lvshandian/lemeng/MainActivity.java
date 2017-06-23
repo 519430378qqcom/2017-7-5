@@ -25,6 +25,8 @@ import android.widget.TabHost;
 
 import com.android.volley.Request;
 import com.lvshandian.lemeng.base.BaseActivity;
+import com.lvshandian.lemeng.base.Constant;
+import com.lvshandian.lemeng.bean.LiveStatusBean;
 import com.lvshandian.lemeng.bean.QuitApp;
 import com.lvshandian.lemeng.bean.QuitLogin;
 import com.lvshandian.lemeng.httprequest.HttpDatas;
@@ -41,6 +43,7 @@ import com.lvshandian.lemeng.moudles.start.LoginActivity;
 import com.lvshandian.lemeng.moudles.start.LogoutHelper;
 import com.lvshandian.lemeng.utils.AliYunImageUtils;
 import com.lvshandian.lemeng.utils.DateUtils;
+import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.wangyiyunxin.config.preference.Preferences;
 import com.lvshandian.lemeng.wangyiyunxin.main.helper.SystemMessageUnreadManager;
@@ -54,6 +57,7 @@ import com.netease.nim.uikit.common.ui.drop.DropCover;
 import com.netease.nim.uikit.common.ui.drop.DropFake;
 import com.netease.nim.uikit.common.ui.drop.DropManager;
 import com.netease.nim.uikit.common.util.log.LogUtil;
+import com.netease.nim.uikit.session.module.input.InputPanel;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.StatusCode;
@@ -65,9 +69,13 @@ import com.netease.nimlib.sdk.msg.SystemMessageService;
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 import com.netease.nimlib.sdk.msg.model.IMMessage;
 import com.netease.nimlib.sdk.msg.model.RecentContact;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -204,6 +212,7 @@ public class MainActivity extends BaseActivity implements
         registerSystemMessageObservers(true);
         requestSystemMessageUnreadCount();
         initUnreadCover();
+        getStatus();
     }
 
     private void initFragments() {
@@ -345,7 +354,7 @@ public class MainActivity extends BaseActivity implements
         if (RESULT_OK == resultCode) {
             if (requestCode == REQ_CODE) {
                 final String videoPath = data.getStringExtra(WechatRecoderActivity.VIDEO_PATH);
-                new AsyncTask<Void, Void, Void>(){
+                new AsyncTask<Void, Void, Void>() {
 
                     @Override
                     protected void onPreExecute() {
@@ -426,7 +435,7 @@ public class MainActivity extends BaseActivity implements
     public void startPhotoZoom(Uri uri) {
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
-        intent.putExtra("crop",  "true");
+        intent.putExtra("crop", "true");
         intent.putExtra("aspectX", 1);
         intent.putExtra("aspectY", 1);
         intent.putExtra("outputX", 800);
@@ -753,4 +762,51 @@ public class MainActivity extends BaseActivity implements
         });
     }
 
+    /**
+     * 获取直播、私信、游戏开关状态
+     */
+    private void getStatus() {
+        OkHttpUtils.get().url(UrlBuilder.START_LIVE_STATUS).build().execute(
+                new StringCallback() {
+                    @Override
+                    public void onError(com.squareup.okhttp.Request request, Exception e) {
+                        showToast(getString(R.string.network_error));
+                    }
+
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String code = jsonObject.getString("code");
+                            if (code.equals("0")) {
+                                String obj = jsonObject.getString("obj");
+                                LogUtil.e("开播准备", obj);
+                                List<LiveStatusBean> list = JsonUtil.json2BeanList(obj, LiveStatusBean.class);
+                                if (list != null && list.size() > 0) {
+                                    for (int i = 0, j = list.size(); i < j; i++) {
+                                        if (list.get(i).getFun().equals("anchor")) {
+                                            int anchorState = list.get(i).getState();
+                                            Constant.anchorState = anchorState;
+                                        }
+                                        if (list.get(i).getFun().equals("privateChat")) {
+                                            int privateState = list.get(i).getState();
+                                            Constant.privateState = privateState;
+                                            InputPanel.privateState = privateState;
+                                        }
+                                        if (list.get(i).getFun().equals("game")) {
+                                            int gameState = list.get(i).getState();
+                                            Constant.gameState = gameState;
+                                        }
+                                    }
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }
+
+        );
+    }
 }
