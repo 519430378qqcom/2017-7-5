@@ -234,6 +234,11 @@
             android:name=".moudles.mine.activity.MyCoinsActicity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
+        <!-- 充值界面 -->
+        <activity
+            android:name=".moudles.mine.activity.ChargeCoinsActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <!-- 公共webView界面 -->
         <activity
             android:name=".moudles.mine.activity.ExplainWebViewActivity"

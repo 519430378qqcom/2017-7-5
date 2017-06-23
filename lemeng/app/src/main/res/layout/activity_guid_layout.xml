@@ -16,7 +16,7 @@
         android:layout_height="150px"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="300px"
+        android:layout_marginTop="240px"
         android:src="@mipmap/ic_lang" />
 
 </com.zhy.autolayout.AutoRelativeLayout>

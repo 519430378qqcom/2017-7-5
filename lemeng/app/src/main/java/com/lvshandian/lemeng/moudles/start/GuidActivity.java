@@ -5,9 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.base.BaseActivity;
@@ -36,7 +37,7 @@ public class GuidActivity extends BaseActivity {
     /**
      * 引导图片资源
      */
-    private final int[] pics = {R.mipmap.welcome_1, R.mipmap.welcome_2, R.mipmap.welcome_3};
+    private final int[] pics = {R.layout.guid_item_1, R.layout.guid_item_2, R.layout.guid_item_3};
 
     private ObjectAnimator anim;
 
@@ -44,15 +45,11 @@ public class GuidActivity extends BaseActivity {
     protected void initialized() {
         views = new ArrayList<>();
 
-        LinearLayout.LayoutParams mParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
         //初始化引导图片列表
         for (int i = 0; i < pics.length; i++) {
-            ImageView iv = new ImageView(this);
-            iv.setLayoutParams(mParams);
-            iv.setScaleType(ImageView.ScaleType.FIT_XY);
-            iv.setImageResource(pics[i]);
-            views.add(iv);
+            LayoutInflater inflater = LayoutInflater.from(this);
+            View view = inflater.inflate(pics[i], null);
+            views.add(view);
 
         }
         contentPager.setAdapter(new ViewPagerAdapter(views));
@@ -67,8 +64,9 @@ public class GuidActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                if (position == 2) {
-                    views.get(position).setOnClickListener(new View.OnClickListener() {
+               if (position == 2) {
+                   TextView tv = (TextView) views.get(position).findViewById(R.id.enter_into);
+                   tv.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             SharedPreferenceUtils.put(GuidActivity.this, "is_first", false);

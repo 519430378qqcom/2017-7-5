@@ -352,6 +352,21 @@
     <string name="room_rank">%1$s期排行榜</string>
     <string name="no_one_has_won_this_round">本轮没有人中奖哦</string>
     <string name="please_uploading_avatar">请设置头像</string>
+    <string name="lepiao_6">6 乐票</string>
+    <string name="lepiao_30">30 乐票</string>
+    <string name="lepiao_98">98 乐票</string>
+    <string name="lepiao_298">298 乐票</string>
+    <string name="lepiao_588">588 乐票</string>
+    <string name="lepiao_1598">1598 乐票</string>
+    <string name="rmb_6">￥6.00</string>
+    <string name="rmb_30">￥30.00</string>
+    <string name="rmb_98">￥98.00</string>
+    <string name="rmb_298">￥298.00</string>
+    <string name="rmb_588">￥588.00</string>
+    <string name="rmb_1598">￥1598.00</string>
+    <string name="guid_item_1">生活大爆炸,谁来拯救生活</string>
+    <string name="guid_item_2">工作大爆炸,谁来拯救工作</string>
+    <string name="enter_into">立即体验</string>
 
     <!--6月20日之后添加end-->
 

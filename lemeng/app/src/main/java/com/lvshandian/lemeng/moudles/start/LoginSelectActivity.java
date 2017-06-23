@@ -231,6 +231,7 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
             params.clear();
             LogUtils.e("授权登录返回数据: ", map.toString());
             if (platForm == SHARE_MEDIA.WEIXIN) {
+                params.put("differentStatus", "0");
                 params.put("unionId", map.get("unionid").toString());
                 params.put("password", map.get("accessToken").toString());
                 params.put("userName", map.get("openid").toString());
@@ -238,6 +239,7 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
                 params.put("picUrl", map.get("profile_image_url").toString());
                 params.put("gender", map.get("gender").equals("男") ? "1" : "0");
             } else if (platForm == SHARE_MEDIA.QQ) {
+                params.put("differentStatus", "0");
                 params.put("unionId", map.get("uid").toString());
                 params.put("userName", map.get("uid").toString());
                 params.put("password", map.get("accessToken").toString());
@@ -245,6 +247,7 @@ public class LoginSelectActivity extends BaseActivity implements GoogleApiClient
                 params.put("picUrl", map.get("profile_image_url").toString());
                 params.put("gender", map.get("gender").equals("男") ? "1" : "0");
             } else if (platForm == SHARE_MEDIA.TWITTER) {
+                params.put("differentStatus", "0");
                 params.put("unionId", map.get("uid").toString());
                 params.put("password", map.get("access_token").toString());
                 params.put("userName", map.get("usid").toString());

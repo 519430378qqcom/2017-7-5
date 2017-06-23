@@ -178,6 +178,7 @@ public class LoginActivity extends BaseActivity {
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("userName", name);
         map.put("password", pass);
+        map.put("differentStatus", "0");
         httpDatas.getDataForJson("登录", Request.Method.POST, UrlBuilder.LOGIN, map, mHandler2, RequestCode.LOGIN_TAG);
     }
 
