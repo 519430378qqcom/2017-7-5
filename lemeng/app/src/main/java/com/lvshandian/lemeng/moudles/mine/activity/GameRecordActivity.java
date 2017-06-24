@@ -2,9 +2,11 @@ package com.lvshandian.lemeng.moudles.mine.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lvshandian.lemeng.R;
@@ -41,10 +43,16 @@ public class GameRecordActivity extends BaseActivity {
     @Bind(R.id.line_withwraw_record)
     View line_withwraw_record;
 
+    @Bind(R.id.iv_back)
+    ImageView iv_back;
     @Bind(R.id.tv_recharge)
     TextView tv_recharge;
+    @Bind(R.id.text_account_balance)
+    TextView text_account_balance;
 
-    private int index = 0;
+    @Bind(R.id.my_pager)
+    ViewPager my_pager;
+    private Fragment[] fragments = {new FloatingRecordFragment(), new DepositRecordFragment(), new WithdrawRecordFragment()};
 
     @Override
     protected int getLayoutId() {
@@ -54,8 +62,7 @@ public class GameRecordActivity extends BaseActivity {
 
     @Override
     protected void initialized() {
-        initFragments();
-
+        text_account_balance.setText(appUser.getGoldCoin());
     }
 
     @Override
@@ -64,45 +71,70 @@ public class GameRecordActivity extends BaseActivity {
         ll_deposit_record.setOnClickListener(this);
         ll_withwraw_record.setOnClickListener(this);
         tv_recharge.setOnClickListener(this);
+        iv_back.setOnClickListener(this);
+
+        my_pager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                for (int i = 0; i < fragments.length; i++) {
+                    if (position == i) {
+                        return fragments[i];
+                    }
+                }
+                return null;
+            }
+
+            @Override
+            public int getCount() {
+                return fragments.length;
+            }
+        });
+
+        my_pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int
+                    positionOffsetPixels) {
+
+            }
+
+            /**
+             * pager页数发生变化后执行
+             * @param position 最后停留的位置
+             */
+            @Override
+            public void onPageSelected(int position) {
+                restStatus();
+                updateBottom(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
     public void onClick(View view) {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         switch (view.getId()) {
             case R.id.ll_floating_record:
-                if (index == 0)
-                    return;
-                index = 0;
-                ft.replace(R.id.game_frame, new FloatingRecordFragment());
+                my_pager.setCurrentItem(0);
                 break;
             case R.id.ll_deposit_record:
-                if (index == 1)
-                    return;
-                index = 1;
-                ft.replace(R.id.game_frame, new DepositRecordFragment());
+                my_pager.setCurrentItem(1);
                 break;
             case R.id.ll_withwraw_record:
-                if (index == 2)
-                    return;
-                index = 2;
-                ft.replace(R.id.game_frame, new WithdrawRecordFragment());
+                my_pager.setCurrentItem(2);
                 break;
             case R.id.tv_recharge:
                 startActivity(new Intent(mContext, ChargeCoinsActivity.class));
                 break;
+            case R.id.iv_back:
+                finish();
+                break;
         }
-        ft.commit();
-        updateBottom(index);
     }
 
-    private void initFragments() {
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.game_frame, new FloatingRecordFragment());
-        ft.commit();
-        updateBottom(index);
-    }
 
     private void updateBottom(int position) {
         restStatus();
