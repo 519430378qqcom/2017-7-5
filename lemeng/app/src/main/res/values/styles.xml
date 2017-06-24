@@ -134,7 +134,13 @@
         <item name="android:windowBackground">@android:color/transparent</item><!-- 背景透明 -->
         <item name="android:backgroundDimEnabled">true</item><!--模糊-->
     </style>
-
+    <!-- 弹出框动画 由下至上 -->
+    <style name="dialogstyle_vertical" parent="@android:style/Animation.Dialog">
+        <item name="@android:windowEnterAnimation">@anim/slide_in_from_bottom</item>
+        <!-- 进入时的动画 -->
+        <item name="@android:windowExitAnimation">@anim/slide_out_to_bottom</item>
+        <!-- 退出时的动画 -->
+    </style>
     <!--显示性别图片-->
     <style name="SexImageStyle">
         <item name="android:layout_width">36px</item>
