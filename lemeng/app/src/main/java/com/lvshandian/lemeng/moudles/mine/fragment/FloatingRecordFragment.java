@@ -20,8 +20,6 @@ import com.lvshandian.lemeng.moudles.mine.adapter.FloatingRecordAdapter;
 import com.lvshandian.lemeng.moudles.mine.bean.FloatingRecordBean;
 import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
-import com.zhy.autolayout.AutoLinearLayout;
-import com.zhy.autolayout.AutoRelativeLayout;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -29,8 +27,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -39,19 +39,14 @@ import butterknife.Bind;
  * 盈亏记录
  */
 public class FloatingRecordFragment extends BaseFragment implements View.OnClickListener {
-
-    @Bind(R.id.linear_floating_fragment_first_gray)
-    AutoLinearLayout linear_floating_fragment_first_gray;
-    @Bind(R.id.floating_record_listview_fragment)
+    @Bind(R.id.recyclerView)
     RecyclerView recyclerView;
-    @Bind(R.id.fragment_date_floating_record)
-    TextView fragment_date_floating_record;
-    @Bind(R.id.fragment_lepiao_floating_record)
-    TextView fragment_lepiao_floating_record;
-    @Bind(R.id.calendar_floating_fragment)
-    ImageView calendar_floating_fragment;
-    @Bind(R.id.activity_personal_center_floating_linear)
-    AutoRelativeLayout autoRelativeLayout_floating;
+    @Bind(R.id.fragment_date)
+    TextView fragment_date;
+    @Bind(R.id.floating_statistics)
+    TextView floating_statistics;
+    @Bind(R.id.floating_calendar)
+    ImageView floating_calendar;
 
 
     private List<FloatingRecordBean.DataBean> floatingRecorcList = new ArrayList<>();
@@ -70,7 +65,7 @@ public class FloatingRecordFragment extends BaseFragment implements View.OnClick
 
     @Override
     protected void initListener() {
-        calendar_floating_fragment.setOnClickListener(this);
+        floating_calendar.setOnClickListener(this);
     }
 
     @Override
@@ -80,14 +75,22 @@ public class FloatingRecordFragment extends BaseFragment implements View.OnClick
         recyclerView.setLayoutManager(layoutManager);
         recordAdapter = new FloatingRecordAdapter(mContext, floatingRecorcList);
         recyclerView.setAdapter(recordAdapter);
+        initDate();
         selecteFloating();
+    }
+
+    private void initDate() {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM");
+        Date date = new Date(System.currentTimeMillis());
+        String str = df.format(date);
+
     }
 
     @Override
     public void onClick(View view) {
 
         switch (view.getId()) {
-            case R.id.calendar_floating_fragment:
+            case R.id.floating_calendar:
                 showPopupWindow();
                 break;
         }
@@ -112,7 +115,7 @@ public class FloatingRecordFragment extends BaseFragment implements View.OnClick
                         totalPage = floatingRecord.getPageCount();
                         inputMoney = floatingRecord.getInputMoney();
                         incomeMoney = floatingRecord.getIncomeMoney();
-                        fragment_lepiao_floating_record.setText(getString(R.string.floating_lepiao_hint, String.valueOf(inputMoney), String.valueOf(incomeMoney)));
+                        floating_statistics.setText(getString(R.string.floating_lepiao_hint, String.valueOf(inputMoney), String.valueOf(incomeMoney)));
                         List<FloatingRecordBean.DataBean> list = floatingRecord.getData();
                         floatingRecorcList.addAll(list);
                         recordAdapter.notifyDataSetChanged();
@@ -271,7 +274,6 @@ public class FloatingRecordFragment extends BaseFragment implements View.OnClick
                 currentSet_month = month;
                 currentSet_day = day;
                 popupWindow.dismiss();
-                linear_floating_fragment_first_gray.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -279,12 +281,11 @@ public class FloatingRecordFragment extends BaseFragment implements View.OnClick
             @Override
             public void onClick(View view) {
                 popupWindow.dismiss();
-                linear_floating_fragment_first_gray.setVisibility(View.INVISIBLE);
-                fragment_date_floating_record.setText(currentSet_year + mContext.getResources().getString(R.string.text_year) + currentSet_month + mContext.getResources().getString(R.string.text_month));
+                fragment_date.setText(currentSet_year + mContext.getResources().getString(R.string.text_year) + currentSet_month + mContext.getResources().getString(R.string.text_month));
             }
         });
 
-        popupWindow.showAtLocation(autoRelativeLayout_floating, Gravity.BOTTOM, 0, 0);
+        popupWindow.showAtLocation(floating_calendar, Gravity.BOTTOM, 0, 0);
 
     }
 

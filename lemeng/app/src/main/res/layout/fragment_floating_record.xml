@@ -1,28 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/activity_personal_center_floating_linear"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical">
 
-    <com.zhy.autolayout.AutoLinearLayout
-        android:id="@+id/linear_floating_record_fragment"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="9px"
-        android:background="#E7E7E7"
-        android:orientation="horizontal">
+        android:layout_height="15px"
+        android:background="@color/line_fa" />
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100px"
+        android:background="@color/line_df"
+        android:orientation="horizontal"
+        android:paddingBottom="10px"
+        android:paddingTop="10px">
 
         <com.zhy.autolayout.AutoLinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/fragment_date_floating_record"
+                android:id="@+id/fragment_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24px"
@@ -30,7 +34,7 @@
                 android:textSize="25.5px" />
 
             <TextView
-                android:id="@+id/fragment_lepiao_floating_record"
+                android:id="@+id/floating_statistics"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="9px"
@@ -39,29 +43,20 @@
                 android:textColor="@color/gray"
                 android:textSize="21px" />
 
-
         </com.zhy.autolayout.AutoLinearLayout>
 
-        <com.zhy.autolayout.AutoLinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/calendar_floating_fragment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right|center_vertical"
-                android:layout_marginRight="22.5px"
-                android:src="@mipmap/calendar" />
-        </com.zhy.autolayout.AutoLinearLayout>
+        <ImageView
+            android:id="@+id/floating_calendar"
+            android:layout_width="50px"
+            android:layout_height="50px"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="30px"
+            android:src="@mipmap/calendar" />
 
     </com.zhy.autolayout.AutoLinearLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/floating_record_listview_fragment"
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </com.zhy.autolayout.AutoLinearLayout>
