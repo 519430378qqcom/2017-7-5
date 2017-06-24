@@ -3,12 +3,12 @@ package com.lvshandian.lemeng.moudles.mine.fragment;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -20,6 +20,9 @@ import com.lvshandian.lemeng.moudles.mine.adapter.FloatingRecordAdapter;
 import com.lvshandian.lemeng.moudles.mine.bean.FloatingRecordBean;
 import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
+import com.lvshandian.lemeng.widget.refresh.SwipeRefresh;
+import com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout;
+import com.lvshandian.lemeng.widget.view.EmptyRecyclerView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -38,9 +41,13 @@ import butterknife.Bind;
 /**
  * 盈亏记录
  */
-public class FloatingRecordFragment extends BaseFragment implements View.OnClickListener {
+public class FloatingRecordFragment extends BaseFragment implements View.OnClickListener, SwipeRefresh.OnRefreshListener, SwipeRefreshLayout.OnPullUpRefreshListener {
+    @Bind(R.id.ll_empty)
+    LinearLayout ll_empty;
+    @Bind(R.id.refreshLayout)
+    SwipeRefreshLayout refreshLayout;
     @Bind(R.id.recyclerView)
-    RecyclerView recyclerView;
+    EmptyRecyclerView recyclerView;
     @Bind(R.id.fragment_date)
     TextView fragment_date;
     @Bind(R.id.floating_statistics)
@@ -57,6 +64,10 @@ public class FloatingRecordFragment extends BaseFragment implements View.OnClick
     private String endtime;
     private int inputMoney; //支出乐票
     private int incomeMoney;//收入乐票
+    /**
+     * 判断是刷新还是加载
+     */
+    private boolean isRefresh = true;
 
     @Override
     protected int getLayoutId() {
@@ -70,11 +81,18 @@ public class FloatingRecordFragment extends BaseFragment implements View.OnClick
 
     @Override
     protected void initialized() {
+        //设置刷新逻辑
+        refreshLayout.setMode(SwipeRefreshLayout.Mode.BOTH);
+        refreshLayout.setOnRefreshListener(this);
+        refreshLayout.setOnPullUpRefreshListener(this);
+        refreshLayout.setColorSchemeColors(getResources().getColor(R.color.main));
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recordAdapter = new FloatingRecordAdapter(mContext, floatingRecorcList);
         recyclerView.setAdapter(recordAdapter);
+        recyclerView.setEmptyView(ll_empty);
         initDate();
         selecteFloating();
     }
@@ -88,7 +106,6 @@ public class FloatingRecordFragment extends BaseFragment implements View.OnClick
 
     @Override
     public void onClick(View view) {
-
         switch (view.getId()) {
             case R.id.floating_calendar:
                 showPopupWindow();
@@ -98,6 +115,7 @@ public class FloatingRecordFragment extends BaseFragment implements View.OnClick
     }
 
     private void selecteFloating() {
+        page = isRefresh ? 1 : ++page;
         String url = UrlBuilder.GAME_BASE + String.format(UrlBuilder.PROFIT_AND_LOSS_RECORD, "100018", String.valueOf(page), starttime, endtime);
         OkHttpUtils.get().url(url).build().execute(new StringCallback() {
             @Override
@@ -117,8 +135,16 @@ public class FloatingRecordFragment extends BaseFragment implements View.OnClick
                         incomeMoney = floatingRecord.getIncomeMoney();
                         floating_statistics.setText(getString(R.string.floating_lepiao_hint, String.valueOf(inputMoney), String.valueOf(incomeMoney)));
                         List<FloatingRecordBean.DataBean> list = floatingRecord.getData();
+                        if (isRefresh) {
+                            floatingRecorcList.clear();
+                        } else {
+                            if (list == null && list.size() == 0) {
+                                page--;
+                            }
+                        }
                         floatingRecorcList.addAll(list);
                         recordAdapter.notifyDataSetChanged();
+                        finishRefresh();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -315,5 +341,25 @@ public class FloatingRecordFragment extends BaseFragment implements View.OnClick
         }
     }
 
+    @Override
+    public void onRefresh() {
+        isRefresh = true;
+        selecteFloating();
+    }
 
+    @Override
+    public void onPullUpRefresh() {
+        isRefresh = false;
+        if (page < totalPage) {
+            selecteFloating();
+        } else {
+            finishRefresh();
+            showToast(getString(R.string.no_more));
+        }
+    }
+
+    private void finishRefresh() {
+        refreshLayout.setRefreshing(false);
+        refreshLayout.setPullUpRefreshing(false);
+    }
 }

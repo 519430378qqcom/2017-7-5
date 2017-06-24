@@ -380,7 +380,7 @@
     <string name="enchashment_record">提现记录</string>
     <string name="floating_lepiao_hint">支出%1$s乐票，收入%2$s乐票</string>
     <string name="floating_moneny">%1$s金币</string>
-    <string name="text_balance_record_hint_fragment">您还没有相关记录</string>
+    <string name="no_balance_record">您还没有相关记录</string>
     <string name="text_year">年</string>
     <string name="text_month">月</string>
     <string name="text_day">日</string>

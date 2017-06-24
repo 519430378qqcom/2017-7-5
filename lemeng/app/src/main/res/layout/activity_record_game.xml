@@ -209,6 +209,11 @@
 
         </com.zhy.autolayout.AutoLinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="15px"
+            android:background="@color/line_fa" />
+
         <FrameLayout
             android:id="@+id/game_frame"
             android:layout_width="match_parent"

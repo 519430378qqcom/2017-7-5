@@ -1,12 +1,13 @@
 package com.lvshandian.lemeng.moudles.mine.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Administrator on 2017/6/22 0022.
  */
 
-public class FloatingRecordBean {
+public class FloatingRecordBean implements Serializable{
 
 
     /**
