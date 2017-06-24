@@ -100,6 +100,9 @@ public class UrlBuilder {
     public static final String BARRAGE = "/api/v1/barrage/";//发送弹幕消息扣金币
     public static final String ROOM_EXIT = "/api/v1/room/exit";//退出直播间
 
+    public static final String PROFIT_AND_LOSS_RECORD = "/appusers/GameProfitLoss?userId=%s&page=%s&starttime=%s&endtime=%s";//盈亏记录
+    public static final String WITHDRAWAL_RECORD = "/appthird/getUserExchangeAccounts?page=%s&rows=%s&userId=%s&transType=%s";//存款取款记录 transType=0存 transType=1取
+
 
     //------------------------------------斗牛游戏接口----------------------------------------
     /**

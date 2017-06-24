@@ -23,13 +23,14 @@ import com.lvshandian.lemeng.bean.MyContributionBeanBack;
 import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.moudles.mine.activity.BigImageActivity;
+import com.lvshandian.lemeng.moudles.mine.activity.GameRecordActivity;
 import com.lvshandian.lemeng.moudles.mine.activity.MyCoinsActicity;
 import com.lvshandian.lemeng.moudles.mine.activity.MyGradeActivity;
 import com.lvshandian.lemeng.moudles.mine.activity.SettingPerson;
+import com.lvshandian.lemeng.moudles.mine.adapter.PhotoAdapter;
+import com.lvshandian.lemeng.moudles.mine.adapter.VideoAdapter;
 import com.lvshandian.lemeng.moudles.mine.bean.PhotoBean;
 import com.lvshandian.lemeng.moudles.mine.bean.VideoBean;
-import com.lvshandian.lemeng.moudles.mine.fragment.adapter.PhotoAdapter;
-import com.lvshandian.lemeng.moudles.mine.fragment.adapter.VideoAdapter;
 import com.lvshandian.lemeng.moudles.mine.my.AllPhoneActivity;
 import com.lvshandian.lemeng.moudles.mine.my.AllVideoActivity;
 import com.lvshandian.lemeng.moudles.mine.my.AuthenticationActivity;
@@ -274,6 +275,8 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (myHead == null)
+            return;
         myHead.post(new Runnable() {
             @Override
             public void run() {
@@ -320,8 +323,6 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
                             @Override
                             public void run() {
                                 AutoRelativeLayout.LayoutParams lp1 = new AutoRelativeLayout.LayoutParams(width, height);
-                                if (lp1 == null)
-                                    return;
                                 myHead.setLayoutParams(lp1);
                             }
                         }, 400);
@@ -551,7 +552,7 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
                 startActivity(intentCoins);
                 break;
             case R.id.ll_game_record://我的游戏记录
-                showToast(getString(R.string.stay_open));
+                startActivity(new Intent(mContext, GameRecordActivity.class));
                 break;
             case R.id.ll_earnest://认证
 //                AppUser userInfo = (AppUser) CacheUtils.readObject(mContext, CacheUtils.USERINFO);

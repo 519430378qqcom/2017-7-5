@@ -1,4 +1,4 @@
-package com.lvshandian.lemeng.moudles.mine.fragment.adapter;
+package com.lvshandian.lemeng.moudles.mine.adapter;
 
 import android.content.Context;
 import android.graphics.Color;

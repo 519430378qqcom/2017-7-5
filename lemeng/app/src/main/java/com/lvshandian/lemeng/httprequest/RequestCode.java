@@ -56,6 +56,7 @@ public interface RequestCode {
     int ROOMLIVEEXIT = 2025;//客户退出连线
     int REQUEST_LIANMAI_LIVE_AAL = 2026;//观众同意连麦获取推拉流地址
     int BIND_WEICHAT = 2027;//绑定微信公众号
+    int SELECTE_FLOATING = 2028;//查询盈亏记录
 
 
 }

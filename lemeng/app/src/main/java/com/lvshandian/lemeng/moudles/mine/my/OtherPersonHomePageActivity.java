@@ -30,8 +30,8 @@ import com.lvshandian.lemeng.moudles.mine.activity.BigImageActivity;
 import com.lvshandian.lemeng.moudles.mine.bean.OtherPersonBean;
 import com.lvshandian.lemeng.moudles.mine.bean.PhotoBean;
 import com.lvshandian.lemeng.moudles.mine.bean.VideoBean;
-import com.lvshandian.lemeng.moudles.mine.fragment.adapter.PhotoAdapter;
-import com.lvshandian.lemeng.moudles.mine.fragment.adapter.VideoAdapter;
+import com.lvshandian.lemeng.moudles.mine.adapter.PhotoAdapter;
+import com.lvshandian.lemeng.moudles.mine.adapter.VideoAdapter;
 import com.lvshandian.lemeng.utils.GrademipmapUtils;
 import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
@@ -253,8 +253,6 @@ public class OtherPersonHomePageActivity extends BaseActivity {
                             @Override
                             public void run() {
                                 AutoRelativeLayout.LayoutParams lp1 = new AutoRelativeLayout.LayoutParams(width, height);
-                                if (lp1 == null)
-                                    return;
                                 avHeader.setLayoutParams(lp1);
                             }
                         }, 400);
@@ -281,6 +279,8 @@ public class OtherPersonHomePageActivity extends BaseActivity {
         adaptervideo = new VideoAdapter(mContext, listvideo, "notShow");
         mygrid_samll_video.setAdapter(adaptervideo);
 
+        if (avHeader == null)
+            return;
         avHeader.post(new Runnable() {
             @Override
             public void run() {
