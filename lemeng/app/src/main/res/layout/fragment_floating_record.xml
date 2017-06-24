@@ -9,7 +9,7 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="100px"
-        android:background="@color/line_df"
+        android:background="@color/line_eb"
         android:orientation="horizontal"
         android:paddingBottom="10px"
         android:paddingTop="10px">

@@ -57,7 +57,7 @@ public class IndexPagerFragment extends BaseFragment implements View.OnClickList
     private int[] ids = {R.id.tv_new, R.id.tv_hot, R.id.tv_address};
     private Fragment[] fragments = {new NewsFragment(), new HotFragment(), new AddressFragment()};
 
-    private int current_index = 1;
+    private int current_index = 0;
     private static int linewidth = 0;//移动距离
 
     @Override
@@ -123,9 +123,9 @@ public class IndexPagerFragment extends BaseFragment implements View.OnClickList
                                 .color.tv_color6));
                     }
 
-                    if (position == 2){
+                    if (position == 2) {
                         iv_address.setVisibility(View.VISIBLE);
-                    }else {
+                    } else {
                         iv_address.setVisibility(View.GONE);
                     }
                 }
@@ -157,8 +157,7 @@ public class IndexPagerFragment extends BaseFragment implements View.OnClickList
      * @param index
      */
     private void anim(int index) {
-        int one = linewidth;
-        Animation animation = new TranslateAnimation(one * current_index, one * index, 0, 0);
+        Animation animation = new TranslateAnimation(linewidth * current_index, linewidth * index, 0, 0);
         animation.setFillAfter(true);
         animation.setDuration(200);
         first_line.startAnimation(animation);
