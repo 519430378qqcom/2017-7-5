@@ -103,6 +103,7 @@ public class FloatingRecordFragment extends BaseFragment implements View.OnClick
      */
     private String initDate(Date data) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM");
+        fragment_date.setText(df.format(data));
         String str = df.format(data) + "-01 00:00:00";
         return str;
     }
@@ -223,6 +224,7 @@ public class FloatingRecordFragment extends BaseFragment implements View.OnClick
         String month2 = month.length() == 2 ? month : "0" + month;
         String day2 = day.length() == 2 ? day : "0" + day;
         String s = year + "-" + month2 + "-" + day2;
+        fragment_date.setText(s);
         starttime = s + " 00:00:00";
         endtime = s + " 23:59:59";
         isRefresh = true;
