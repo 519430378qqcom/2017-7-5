@@ -90,7 +90,7 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
     @Override
     protected void initialized() {
         initTitle("", getString(R.string.top_up_recharge), null);
-        lepiao = getIntent().getStringExtra("lepiao");
+        lepiao = appUser.getGoldCoin();
         tvLp.setText(lepiao);
 
         String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjU9OdrUnKqI1+g/LsOLLnHQnI8m0OsLxfeD8I6aeGxCgalcFHEaBXxG+UsaIC1qqtwqZOHGhRAs+BaykuTafqmgxDaOMVAh8dDRfNesvx9NhkR/Gd8dgduonceHHK93H4ybzVUTUyyzpc32rVh3ogMn6ee00G4fWohZIHel3KzhlCCN/1oGD4mS26lfK/aAyerK5cL/wwkfYjzVjPO/8dug3NMJI5EanLmZ8dZAps4yZpAPDUyv6WOPqzzTRLkMJf7KoZ5cefqK5bVFPQkbFnC5TAt5imgljVuHe+vBlMRMPV02Vwp9Rs6qMEHNYuxbRXkuuWiIul++REFPIbaxMjwIDAQAB";

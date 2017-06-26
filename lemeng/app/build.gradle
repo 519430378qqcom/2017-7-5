@@ -13,8 +13,8 @@ android {
         applicationId "com.lvshandian.lemeng"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 3
-        versionName "1.0.3"
+        versionCode 11
+        versionName "1.1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         ndk {

@@ -373,17 +373,17 @@
 
     <string name="personal_center">个人中心</string>
     <string name="account_balance">账户余额（乐票）:</string>
-    <string name="lock_balance">锁定余额（乐票）:  </string>
-    <string name="personal_center_hint">锁定余额为支付/提现时待审核的金额</string>
     <string name="profit_and_loss_record">盈亏记录</string>
     <string name="deposit_record">存款记录</string>
     <string name="enchashment_record">提现记录</string>
-    <string name="floating_lepiao_hint">支出%1$s乐票，收入%2$s乐票</string>
+    <string name="floating_lepiao_hint">支出%1$s乐票 收入%2$s乐票</string>
     <string name="floating_moneny">%1$s金币</string>
     <string name="no_balance_record">您还没有相关记录</string>
     <string name="text_year">年</string>
     <string name="text_month">月</string>
     <string name="text_day">日</string>
+    <string name="ten_thousand">万</string>
+    <string name="a_hundred_million">亿</string>
 
     <!--6月20日之后添加end-->
 

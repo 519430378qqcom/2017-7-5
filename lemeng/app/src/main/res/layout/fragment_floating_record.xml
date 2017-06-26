@@ -8,7 +8,7 @@
     <com.zhy.autolayout.AutoLinearLayout
         android:id="@+id/title"
         android:layout_width="match_parent"
-        android:layout_height="100px"
+        android:layout_height="90px"
         android:background="@color/line_eb"
         android:orientation="horizontal"
         android:paddingBottom="10px"
@@ -19,32 +19,30 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
+            android:layout_marginLeft="32px"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/fragment_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="24px"
-                android:layout_marginTop="9px"
-                android:textSize="25.5px" />
+                android:layout_marginTop="6px"
+                android:textSize="28px" />
 
             <TextView
                 android:id="@+id/floating_statistics"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="9px"
-                android:layout_marginLeft="24px"
-                android:layout_marginTop="7.5px"
+                android:layout_marginTop="10px"
                 android:textColor="@color/gray"
-                android:textSize="21px" />
+                android:textSize="24px" />
 
         </com.zhy.autolayout.AutoLinearLayout>
 
         <ImageView
             android:id="@+id/floating_calendar"
-            android:layout_width="50px"
-            android:layout_height="50px"
+            android:layout_width="40px"
+            android:layout_height="40px"
             android:layout_gravity="right|center_vertical"
             android:layout_marginRight="30px"
             android:src="@mipmap/calendar" />

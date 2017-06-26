@@ -106,7 +106,7 @@ public class MyCoinsActicity extends BaseActivity {
 //                Intent intent = new Intent(mContext, ExplainWebViewActivity.class);
 //                intent.putExtra(getString(R.string.web_intent_flag), 1000);
 //                startActivity(intent);
-                startActivity(new Intent(mContext, ChargeCoinsActivity.class).putExtra("lepiao", appUser.getGoldCoin()));
+                startActivity(new Intent(mContext, ChargeCoinsActivity.class));
 //                showToast("暂时不支持充值");
                 break;
             case R.id.tv_titlebar_left:
