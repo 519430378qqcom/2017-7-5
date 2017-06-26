@@ -17,6 +17,7 @@ import com.lvshandian.lemeng.utils.billingutils.IabHelper.IabAsyncInProgressExce
 import com.lvshandian.lemeng.utils.billingutils.IabResult;
 import com.lvshandian.lemeng.utils.billingutils.Inventory;
 import com.lvshandian.lemeng.utils.billingutils.Purchase;
+import com.lvshandian.lemeng.utils.billingutils.SkuDetails;
 import com.zhy.autolayout.AutoLinearLayout;
 
 import butterknife.Bind;
@@ -60,7 +61,7 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
 
     // (arbitrary) request code for the purchase flow
     static final int RC_REQUEST = 10001;
-    static final String SKU_PREMIUM = "lemeng.test01";
+    static final String SKU_PREMIUM = "lemeng.test02";
     static final String SKU_GAS = "lemeng.test01";
 
     // The helper object
@@ -266,7 +267,15 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
              */
 
             // Do we have the premium upgrade?
-            inventory.getSkuDetails("lemeng.test01");
+            Log.d(ChargeCoinsActivity.class.getSimpleName(), "Query inventory was successful.");
+            // Do we have the premium upgrade?
+            SkuDetails skuDetails=inventory.getSkuDetails("lemeng.test01");
+            String test01Price = skuDetails==null?"null":skuDetails.getPrice();
+            skuDetails=inventory.getSkuDetails("lemeng.test02");
+            String test02Price =skuDetails==null?"null":skuDetails.getPrice();
+
+
+            Log.d(TAG, "query test01Price:"+test01Price+" test02Price"+test02Price);
 
         }
     };
@@ -281,9 +290,9 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
             if (result.isFailure()) {
 //                complain("Error purchasing: " + result);
 //                setWaitScreen(false);
+                Log.d(TAG, "Purchase isFailure: ");
                 return;
             }
-
 
             Log.d(TAG, "Purchase successful.");
 
@@ -343,4 +352,19 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
             Log.d(TAG, "End consumption flow.");
         }
     };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mBroadcastReceiver != null) {
+            unregisterReceiver(mBroadcastReceiver);
+        }
+        // very important:
+        Log.d(TAG, "Destroying google billing helper.");
+        if (mHelper != null) {
+            mHelper.disposeWhenFinished();
+            mHelper = null;
+        }
+
+    }
 }

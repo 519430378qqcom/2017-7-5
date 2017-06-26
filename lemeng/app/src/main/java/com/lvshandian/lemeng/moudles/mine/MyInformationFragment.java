@@ -280,8 +280,10 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
         myHead.post(new Runnable() {
             @Override
             public void run() {
-                width = myHead.getWidth();
-                height = myHead.getHeight();
+                if(myHead!=null) {
+                    width = myHead.getWidth();
+                    height = myHead.getHeight();
+                }
             }
         });
     }
