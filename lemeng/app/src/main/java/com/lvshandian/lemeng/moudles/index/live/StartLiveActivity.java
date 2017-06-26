@@ -746,7 +746,7 @@ public class StartLiveActivity extends BaseActivity implements
      * 是否为游戏直播间
      */
     private boolean gameIsStart = false;
-
+    public static final int LUCY_28_TIMER = 10000;
     private Handler myHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -795,7 +795,7 @@ public class StartLiveActivity extends BaseActivity implements
                     receivedGoldCoin = CountUtils.getCount(Long.parseLong(receivedGoldCoin));
                     liveJinpiao.setText(receivedGoldCoin); //显示左上角主播收到乐票数量
                     break;
-                case 10000:
+                case LUCY_28_TIMER:
                     LogUtil.e("mCountDownTotalTime", "mCountDownTotalTime" + mCountDownTotalTime);
                     mCountDownTotalTime = mCountDownTotalTime - 1000;
                     String time = DateUtils.millisToDateString(mCountDownTotalTime > 0 ? mCountDownTotalTime : 0, "mm:ss");
@@ -803,7 +803,7 @@ public class StartLiveActivity extends BaseActivity implements
                         tv_game_next_open_time.setText("00:" + time);
                     }
                     if (mCountDownTotalTime > 1000) {
-                        myHandler.sendEmptyMessageDelayed(10000, 1000);
+                        myHandler.sendEmptyMessageDelayed(LUCY_28_TIMER, 1000);
                     } else {
                         //获取近期开奖数据
                         getTimenumber();
@@ -2607,8 +2607,6 @@ public class StartLiveActivity extends BaseActivity implements
         if (bullfightAudio != null) {
             bullfightAudio.release();
         }
-//        myHandler.removeMessages(10000);
-//        myHandler.removeCallbacks(timenNumber);
         myHandler.removeCallbacksAndMessages(null);
     }
 
@@ -2808,21 +2806,6 @@ public class StartLiveActivity extends BaseActivity implements
                         String redenvelope = (String) data.get("message");
                         new RedPackageView(mContext, mRoot, redenvelope, StartLiveActivity.this).show();
                         break;
-//                    case 301://关闭直播
-//                        showToast(getString(R.string.close_live_function));
-//                        closeLive();
-//                        break;
-//                    case 305://关闭游戏
-//                        showToast(getString(R.string.close_game_function));
-//                        gameState = 0;
-//                        gameIsStart = false;
-//                        hidePlayView(gameType);
-//                        myHandler.removeMessages(BULLFIGHT_TIME);
-//                        break;
-//                    case 306://开启游戏
-//                        showToast(getString(R.string.open_game_function));
-//                        gameState = 1;
-//                        break;
                     default:
                         break;
                 }
@@ -2879,6 +2862,7 @@ public class StartLiveActivity extends BaseActivity implements
             gameIsStart = false;
             hidePlayView(gameType);
             myHandler.removeMessages(BULLFIGHT_TIME);
+            myHandler.removeMessages(LUCY_28_TIMER);
         }
         //游戏权限开启
         if (Constant.gameState == 1 && !gameSwitch) {
@@ -5268,7 +5252,7 @@ public class StartLiveActivity extends BaseActivity implements
                                 tv_game_next_open_time.setText(getString(R.string.wait_lottery));
                                 myHandler.postDelayed(timenNumber, 30000);
                             } else {
-                                myHandler.sendEmptyMessage(10000);
+                                myHandler.sendEmptyMessage(LUCY_28_TIMER);
                             }
 
                             if (lastAwardBean.getWinStatus().equals("1")) {

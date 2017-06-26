@@ -233,6 +233,8 @@ import xiao.free.horizontalrefreshlayout.HorizontalRefreshLayout;
 import xiao.free.horizontalrefreshlayout.RefreshCallBack;
 import xiao.free.horizontalrefreshlayout.refreshhead.LoadingRefreshHeader;
 
+import static com.lvshandian.lemeng.moudles.index.live.StartLiveActivity.LUCY_28_TIMER;
+
 /**
  * 观看直播页面
  * Created by 张振 on 2016/11/13.
@@ -1132,7 +1134,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 case RequestCode.REQUEST_REPORT:
                     showToast(getString(R.string.report_succeed));
                     break;
-                case 10000:
+                case LUCY_28_TIMER:
                     LogUtil.e("mCountDownTotalTime", "mCountDownTotalTime" + mCountDownTotalTime);
                     mCountDownTotalTime = mCountDownTotalTime - 1000;
                     String time = DateUtils.millisToDateString(mCountDownTotalTime > 0 ? mCountDownTotalTime : 0, "mm:ss");
@@ -1140,7 +1142,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         tv_game_next_open_time.setText("00:" + time);
                     }
                     if (mCountDownTotalTime > 1000) {
-                        myHandler.sendEmptyMessageDelayed(10000, 1000);
+                        myHandler.sendEmptyMessageDelayed(LUCY_28_TIMER, 1000);
                     } else {
                         //获取近期开奖数据
                         getTimenumber();
@@ -2950,8 +2952,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         if (bullfightAudio != null) {
             bullfightAudio.release();
         }
-        myHandler.removeMessages(10000);
-        myHandler.removeCallbacks(timenNumber);
+        myHandler.removeCallbacksAndMessages(null);
     }
 
     @Override
@@ -3246,6 +3247,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             isPlayerRoom = false;
             hidePlayView(gameType);
             myHandler.removeMessages(BULLFIGHT_TIME);
+            myHandler.removeMessages(LUCY_28_TIMER);
         }
     }
 
@@ -5237,7 +5239,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                                 tv_game_next_open_time.setText(getString(R.string.wait_lottery));
                                 myHandler.postDelayed(timenNumber, 30000);
                             } else {
-                                myHandler.sendEmptyMessage(10000);
+                                myHandler.sendEmptyMessage(LUCY_28_TIMER);
                             }
 
                             if (lastAwardBean.getWinStatus().equals("1")) {
