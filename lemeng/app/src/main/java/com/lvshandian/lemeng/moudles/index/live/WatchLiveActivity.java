@@ -229,7 +229,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.hdodenhof.circleimageview.CircleImageView;
 import xiao.free.horizontalrefreshlayout.HorizontalRefreshLayout;
 import xiao.free.horizontalrefreshlayout.RefreshCallBack;
 import xiao.free.horizontalrefreshlayout.refreshhead.LoadingRefreshHeader;
@@ -409,7 +408,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     @Bind(R.id.rl_bullfight_banker)
     AutoRelativeLayout rl_bullfight_banker;
     @Bind(R.id.iv_bullfight_banker_head)
-    CircleImageView iv_bullfight_banker_head;
+    AvatarView iv_bullfight_banker_head;
     @Bind(R.id.tv_bullfight_bankername)
     TextView tv_bullfight_bankername;
     @Bind(R.id.tv_bullfight_banker_money)
@@ -849,6 +848,11 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * 连麦人信息
      */
     private CustomLianmaiBean customLianmaiBean;
+
+    /**
+     * 游客详细信息pop
+     */
+    private CustomPopWindow otherPop;
 
     private int luckySet;
 
@@ -4495,13 +4499,18 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     }
 
 
+
     /**
      * 展示游客详情
      *
      * @param customdateBean
      */
     public void showDialogForCallOther(final CustomdateBean customdateBean) {
-        final CustomPopWindow otherPop = new CustomPopWindow(this);
+        if (otherPop == null) {
+            otherPop = new CustomPopWindow(this);
+        }
+        if (otherPop.isShowing())
+            return;
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.dialog_video_room, null);
         otherPop.setContentView(view);
@@ -4511,7 +4520,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         otherPop.setBackgroundDrawable(new BitmapDrawable());
         otherPop.setOutsideTouchable(true);
         otherPop.setAnimationStyle(R.style.mypopwindow_anim_style);
-        otherPop.showAtLocation(liveHead, Gravity.BOTTOM, 0, 0);
+        if (!otherPop.isShowing()) {
+            otherPop.showAtLocation(liveHead, Gravity.BOTTOM, 0, 0);
+        }
 
         AvatarView civ_image = (AvatarView) view.findViewById(R.id.civ_image);
         LinearLayout buttom_layout = (LinearLayout) view.findViewById(R.id.buttom_layout);

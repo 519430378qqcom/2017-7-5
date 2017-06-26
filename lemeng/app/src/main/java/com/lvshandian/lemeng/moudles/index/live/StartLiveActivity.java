@@ -243,7 +243,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.lvshandian.lemeng.base.Constant.gameState;
 import static com.lvshandian.lemeng.service.VoiceService.mediaPlayer;
@@ -422,7 +421,7 @@ public class StartLiveActivity extends BaseActivity implements
     @Bind(R.id.rl_bullfight_banker)
     AutoRelativeLayout rl_bullfight_banker;
     @Bind(R.id.iv_bullfight_banker_head)
-    CircleImageView iv_bullfight_banker_head;
+    AvatarView iv_bullfight_banker_head;
     @Bind(R.id.tv_bullfight_bankername)
     TextView tv_bullfight_bankername;
     @Bind(R.id.tv_bullfight_banker_money)
@@ -734,6 +733,11 @@ public class StartLiveActivity extends BaseActivity implements
      * 连麦人信息
      */
     private CustomLianmaiBean customLianmaiBean;
+
+    /**
+     * 游客详细信息pop
+     */
+    private CustomPopWindow otherPop;
 
 
     private long mCountDownTotalTime;
@@ -2854,6 +2858,7 @@ public class StartLiveActivity extends BaseActivity implements
      * 记录游戏开关的变化
      */
     private boolean gameSwitch = true;
+
     /**
      * 接收直播开关状态
      *
@@ -2862,27 +2867,23 @@ public class StartLiveActivity extends BaseActivity implements
     @Subscribe
     public void onEventMainThread(GlobalSwitch globalSwitch) {
         LogUtils.e("globalSwitch=" + globalSwitch);
-        if (globalSwitch.playSwitch) {
-            //直播权限关闭
-            if (Constant.anchorState == 0) {
-                showToast(getString(R.string.close_live_function));
-                closeLive();
-            }
+        //直播权限关闭
+        if (Constant.anchorState == 0) {
+            showToast(getString(R.string.close_live_function));
+            closeLive();
         }
-        if (globalSwitch.gameSwitch) {
-            //游戏权限关闭
-            if (Constant.gameState == 0 && gameSwitch) {
-                showToast(getString(R.string.close_game_function));
-                gameSwitch = false;
-                gameIsStart = false;
-                hidePlayView(gameType);
-                myHandler.removeMessages(BULLFIGHT_TIME);
-            }
-            //游戏权限开启
-            if (Constant.gameState == 1 && !gameSwitch) {
-                gameSwitch = true;
-                showToast(getString(R.string.open_game_function));
-            }
+        //游戏权限关闭
+        if (Constant.gameState == 0 && gameSwitch) {
+            showToast(getString(R.string.close_game_function));
+            gameSwitch = false;
+            gameIsStart = false;
+            hidePlayView(gameType);
+            myHandler.removeMessages(BULLFIGHT_TIME);
+        }
+        //游戏权限开启
+        if (Constant.gameState == 1 && !gameSwitch) {
+            gameSwitch = true;
+            showToast(getString(R.string.open_game_function));
         }
     }
     // **************************** 头像列表开始****************************************** //
@@ -4492,7 +4493,11 @@ public class StartLiveActivity extends BaseActivity implements
      * @param customdateBean
      */
     public void showDialogForCallOther(final CustomdateBean customdateBean) {
-        final CustomPopWindow otherPop = new CustomPopWindow(this);
+        if (otherPop == null) {
+            otherPop = new CustomPopWindow(this);
+        }
+        if (otherPop.isShowing())
+            return;
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.dialog_video_room, null);
         otherPop.setContentView(view);

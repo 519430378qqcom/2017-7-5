@@ -8,14 +8,7 @@ package com.lvshandian.lemeng.bean;
  * desc   : 全局开关EvenBus发送的bean
  */
 public class GlobalSwitch {
-    public GlobalSwitch(boolean playSwitch, boolean gameSwitch) {
-        this.playSwitch = playSwitch;
-        this.gameSwitch = gameSwitch;
-    }
 
     public GlobalSwitch() {
     }
-
-    public boolean playSwitch;
-    public boolean gameSwitch;
 }

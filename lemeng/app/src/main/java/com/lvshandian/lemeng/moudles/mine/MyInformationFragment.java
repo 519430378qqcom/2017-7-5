@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -280,9 +281,16 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
         myHead.post(new Runnable() {
             @Override
             public void run() {
-                if(myHead!=null) {
+                if (myHead != null) {
                     width = myHead.getWidth();
                     height = myHead.getHeight();
+                } else {
+                    DisplayMetrics dm = new DisplayMetrics();
+                    if (getActivity().getWindowManager() == null)
+                        return;
+                    getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+                    width = dm.widthPixels;
+                    height = width * 520 / 750;
                 }
             }
         });

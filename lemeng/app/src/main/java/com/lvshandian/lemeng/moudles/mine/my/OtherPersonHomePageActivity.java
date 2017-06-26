@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -284,8 +285,17 @@ public class OtherPersonHomePageActivity extends BaseActivity {
         avHeader.post(new Runnable() {
             @Override
             public void run() {
-                width = avHeader.getWidth();
-                height = avHeader.getHeight();
+                if (avHeader != null) {
+                    width = avHeader.getWidth();
+                    height = avHeader.getHeight();
+                } else {
+                    DisplayMetrics dm = new DisplayMetrics();
+                    if (getWindowManager() == null)
+                        return;
+                    getWindowManager().getDefaultDisplay().getMetrics(dm);
+                    width = dm.widthPixels;
+                    height = width * 520 / 750;
+                }
             }
         });
     }

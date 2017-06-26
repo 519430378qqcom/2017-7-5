@@ -21,6 +21,7 @@ import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefresh;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout;
 import com.lvshandian.lemeng.widget.view.EmptyRecyclerView;
+import com.lvshandian.lemeng.widget.view.FullyLinearLayoutManager;
 import com.lvshandian.lemeng.widget.view.LWheelDialog;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -85,8 +86,9 @@ public class FloatingRecordFragment extends BaseFragment implements View.OnClick
         refreshLayout.setOnPullUpRefreshListener(this);
         refreshLayout.setColorSchemeColors(getResources().getColor(R.color.main));
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
+        FullyLinearLayoutManager layoutManager = new FullyLinearLayoutManager(mContext);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(layoutManager);
         recordAdapter = new FloatingRecordAdapter(mContext, floatingRecorcList);
         recyclerView.setAdapter(recordAdapter);

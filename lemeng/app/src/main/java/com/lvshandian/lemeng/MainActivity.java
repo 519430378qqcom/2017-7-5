@@ -796,7 +796,6 @@ public class MainActivity extends BaseActivity implements
                                             int anchorState = list.get(i).getState();
                                             LogUtils.e("anchorState==" + anchorState);
                                             Constant.anchorState = anchorState;
-                                            EventBus.getDefault().post(new GlobalSwitch(true, false));
                                         }
                                         if (list.get(i).getFun().equals("privateChat")) {
                                             int privateState = list.get(i).getState();
@@ -807,11 +806,11 @@ public class MainActivity extends BaseActivity implements
                                         if (list.get(i).getFun().equals("game")) {
                                             int gameState = list.get(i).getState();
                                             LogUtils.e("gameState==" + gameState);
-                                            EventBus.getDefault().post(new GlobalSwitch(false, true));
                                             Constant.gameState = gameState;
                                         }
                                     }
                                 }
+                                EventBus.getDefault().post(new GlobalSwitch());
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

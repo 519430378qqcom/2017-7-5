@@ -13,8 +13,8 @@ android {
         applicationId "com.lvshandian.lemeng"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 11
-        versionName "1.1.1"
+        versionCode 12
+        versionName "1.1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         ndk {
@@ -151,5 +151,4 @@ dependencies {
     compile files('src/main/jniLibs/SocialSDK_twitter.jar')
     compile files('src/main/jniLibs/umeng_social_shareview.jar')
     compile 'com.google.android.gms:play-services:10.2.0'
-    compile 'de.hdodenhof:circleimageview:2.1.0'
 }

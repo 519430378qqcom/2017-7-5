@@ -12,6 +12,7 @@ import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefresh;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout;
 import com.lvshandian.lemeng.widget.view.EmptyRecyclerView;
+import com.lvshandian.lemeng.widget.view.FullyLinearLayoutManager;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -56,8 +57,9 @@ public class DepositRecordFragment extends BaseFragment implements SwipeRefresh.
         refreshLayout.setOnPullUpRefreshListener(this);
         refreshLayout.setColorSchemeColors(getResources().getColor(R.color.main));
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
+        FullyLinearLayoutManager layoutManager = new FullyLinearLayoutManager(mContext);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(layoutManager);
         withdrawRecordAdapter = new WithdrawRecordAdapter(mContext, rowsList);
         recyclerView.setAdapter(withdrawRecordAdapter);
