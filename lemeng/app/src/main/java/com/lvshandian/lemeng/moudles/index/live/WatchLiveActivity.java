@@ -72,6 +72,7 @@ import com.lvshandian.lemeng.adapter.GridViewAdapter;
 import com.lvshandian.lemeng.adapter.ViewPageGridViewAdapter;
 import com.lvshandian.lemeng.base.BarrageDateBean;
 import com.lvshandian.lemeng.base.BaseActivity;
+import com.lvshandian.lemeng.base.Constant;
 import com.lvshandian.lemeng.base.CustomStringCallBack;
 import com.lvshandian.lemeng.bean.AppUser;
 import com.lvshandian.lemeng.bean.BlBean;
@@ -80,6 +81,7 @@ import com.lvshandian.lemeng.bean.CustomLianmaiBean;
 import com.lvshandian.lemeng.bean.CustomdateBean;
 import com.lvshandian.lemeng.bean.DianBoDateBean;
 import com.lvshandian.lemeng.bean.GiftBean;
+import com.lvshandian.lemeng.bean.GlobalSwitch;
 import com.lvshandian.lemeng.bean.IfAttentionBean;
 import com.lvshandian.lemeng.bean.LastAwardBean;
 import com.lvshandian.lemeng.bean.LiveEven;
@@ -207,6 +209,7 @@ import com.zhy.autolayout.AutoRelativeLayout;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -1338,7 +1341,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                                     .MESSAGE_LIKE_LIGHT, messageFragment, wy_Id, map);
                             isfirstclick = false;
                         } else {
-                            if(untilThreeSeconds) {
+                            if (untilThreeSeconds) {
                                 Map<String, Object> map = new HashMap<>();
                                 map.put("red", 0.700000);
                                 map.put("green", 0.400000);
@@ -1350,7 +1353,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                                 SendRoomMessageUtils.onCustomMessageDianzan(SendRoomMessageUtils
                                         .MESSAGE_LIKE_CLICK, messageFragment, wy_Id, map);
                                 untilThreeSeconds = false;
-                                myHandler.sendEmptyMessageDelayed(UNTIL_THREE_SECONDS,3000);
+                                myHandler.sendEmptyMessageDelayed(UNTIL_THREE_SECONDS, 3000);
                             }
                         }
                         break;
@@ -3176,7 +3179,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         ChatRoomMessage s = message;
                         Map data = (Map) message.getRemoteExtension().get("data");
                         String redenvelope = (String) data.get("message");
-                        new RedPackageView(mContext, mRoot, redenvelope,WatchLiveActivity.this).show();
+                        new RedPackageView(mContext, mRoot, redenvelope, WatchLiveActivity.this).show();
                         break;
                     case 10009:
                         LogUtil.e("升级", message.getRemoteExtension().toString());
@@ -3188,11 +3191,11 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                             appUser = SharedPreferenceUtils.getUserInfo(mContext);
                         }
                         break;
-                    case 305://关闭游戏
-                        showToast(getString(R.string.close_game_function));
-                        isPlayerRoom = false;
-                        hidePlayView(gameType);
-                        break;
+//                    case 305://关闭游戏
+//                        showToast(getString(R.string.close_game_function));
+//                        isPlayerRoom = false;
+//                        hidePlayView(gameType);
+//                        break;
                     default:
                         break;
                 }
@@ -3226,6 +3229,21 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         }
     };
 
+    /**
+     * 接收直播开关状态
+     *
+     * @param globalSwitch
+     */
+    @Subscribe
+    public void onEventMainThread(GlobalSwitch globalSwitch) {
+        //游戏权限关闭
+        if (Constant.gameState == 0) {
+            showToast(getString(R.string.close_game_function));
+            isPlayerRoom = false;
+            hidePlayView(gameType);
+            myHandler.removeMessages(BULLFIGHT_TIME);
+        }
+    }
 
 // **************************** 头像列表开始****************************************** //
 

@@ -81,6 +81,7 @@ import com.lvshandian.lemeng.bean.CustomLianmaiBean;
 import com.lvshandian.lemeng.bean.CustomdateBean;
 import com.lvshandian.lemeng.bean.DianBoDateBean;
 import com.lvshandian.lemeng.bean.GiftBean;
+import com.lvshandian.lemeng.bean.GlobalSwitch;
 import com.lvshandian.lemeng.bean.LastAwardBean;
 import com.lvshandian.lemeng.bean.LianMaiDateBean;
 import com.lvshandian.lemeng.bean.LiveFamilyMemberBean;
@@ -213,6 +214,7 @@ import com.zhy.autolayout.AutoRelativeLayout;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
@@ -1489,7 +1491,7 @@ public class StartLiveActivity extends BaseActivity implements
      * 斗牛结果显示 参数为空不显示
      *
      * @param arg1 第一条
-     * @param arg2 第二天
+     * @param arg2 第二条
      * @param arg3 第三条
      */
     private void bullfightResultShow(String arg1, String arg2, String arg3) {
@@ -1646,7 +1648,7 @@ public class StartLiveActivity extends BaseActivity implements
 
     @Override
     public void initGameTimer(Boolean isSuccess) {
-        if(isSuccess) {
+        if (isSuccess) {
             bullfightPresenter.getTimeAndNper(room_Id);
             Map<String, Object> map = new HashMap<>();
             map.put("vip", appUser.getVip());
@@ -1654,7 +1656,7 @@ public class StartLiveActivity extends BaseActivity implements
             map.put("level", appUser.getLevel());
             map.put("NIM_CONTER_TIMER_MPER", uper + "");
             SendRoomMessageUtils.onCustomMessagePlay("3131", messageFragment, wy_Id, map);
-        }else {//尝试重连
+        } else {//尝试重连
             bullfightPresenter.initGameTimer(room_Id, uper + "", appUser.getId() + "");
         }
     }
@@ -2802,21 +2804,21 @@ public class StartLiveActivity extends BaseActivity implements
                         String redenvelope = (String) data.get("message");
                         new RedPackageView(mContext, mRoot, redenvelope, StartLiveActivity.this).show();
                         break;
-                    case 301://关闭直播
-                        showToast(getString(R.string.close_live_function));
-                        closeLive();
-                        break;
-                    case 305://关闭游戏
-                        showToast(getString(R.string.close_game_function));
-                        gameState = 0;
-                        gameIsStart = false;
-                        hidePlayView(gameType);
-                        myHandler.removeMessages(BULLFIGHT_TIME);
-                        break;
-                    case 306://开启游戏
-                        showToast(getString(R.string.open_game_function));
-                        gameState = 1;
-                        break;
+//                    case 301://关闭直播
+//                        showToast(getString(R.string.close_live_function));
+//                        closeLive();
+//                        break;
+//                    case 305://关闭游戏
+//                        showToast(getString(R.string.close_game_function));
+//                        gameState = 0;
+//                        gameIsStart = false;
+//                        hidePlayView(gameType);
+//                        myHandler.removeMessages(BULLFIGHT_TIME);
+//                        break;
+//                    case 306://开启游戏
+//                        showToast(getString(R.string.open_game_function));
+//                        gameState = 1;
+//                        break;
                     default:
                         break;
                 }
@@ -2848,8 +2850,41 @@ public class StartLiveActivity extends BaseActivity implements
 
         }
     };
-
-
+    /**
+     * 记录游戏开关的变化
+     */
+    private boolean gameSwitch = true;
+    /**
+     * 接收直播开关状态
+     *
+     * @param globalSwitch
+     */
+    @Subscribe
+    public void onEventMainThread(GlobalSwitch globalSwitch) {
+        LogUtils.e("globalSwitch=" + globalSwitch);
+        if (globalSwitch.playSwitch) {
+            //直播权限关闭
+            if (Constant.anchorState == 0) {
+                showToast(getString(R.string.close_live_function));
+                closeLive();
+            }
+        }
+        if (globalSwitch.gameSwitch) {
+            //游戏权限关闭
+            if (Constant.gameState == 0 && gameSwitch) {
+                showToast(getString(R.string.close_game_function));
+                gameSwitch = false;
+                gameIsStart = false;
+                hidePlayView(gameType);
+                myHandler.removeMessages(BULLFIGHT_TIME);
+            }
+            //游戏权限开启
+            if (Constant.gameState == 1 && !gameSwitch) {
+                gameSwitch = true;
+                showToast(getString(R.string.open_game_function));
+            }
+        }
+    }
     // **************************** 头像列表开始****************************************** //
 
     /**

@@ -26,6 +26,7 @@ import android.widget.TabHost;
 import com.android.volley.Request;
 import com.lvshandian.lemeng.base.BaseActivity;
 import com.lvshandian.lemeng.base.Constant;
+import com.lvshandian.lemeng.bean.GlobalSwitch;
 import com.lvshandian.lemeng.bean.LiveStatusBean;
 import com.lvshandian.lemeng.bean.QuitApp;
 import com.lvshandian.lemeng.bean.QuitLogin;
@@ -82,6 +83,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 
 import butterknife.Bind;
@@ -213,6 +216,12 @@ public class MainActivity extends BaseActivity implements
         requestSystemMessageUnreadCount();
         initUnreadCover();
         getStatus();
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                getStatus();
+            }
+        }, 1000, 30000);
     }
 
     private void initFragments() {
@@ -559,7 +568,6 @@ public class MainActivity extends BaseActivity implements
         defaultFinish();
     }
 
-
     /**
      * 自定义通知接收
      *
@@ -786,15 +794,20 @@ public class MainActivity extends BaseActivity implements
                                     for (int i = 0, j = list.size(); i < j; i++) {
                                         if (list.get(i).getFun().equals("anchor")) {
                                             int anchorState = list.get(i).getState();
+                                            LogUtils.e("anchorState==" + anchorState);
                                             Constant.anchorState = anchorState;
+                                            EventBus.getDefault().post(new GlobalSwitch(true, false));
                                         }
                                         if (list.get(i).getFun().equals("privateChat")) {
                                             int privateState = list.get(i).getState();
+                                            LogUtils.e("privateState==" + privateState);
                                             Constant.privateState = privateState;
                                             InputPanel.privateState = privateState;
                                         }
                                         if (list.get(i).getFun().equals("game")) {
                                             int gameState = list.get(i).getState();
+                                            LogUtils.e("gameState==" + gameState);
+                                            EventBus.getDefault().post(new GlobalSwitch(false, true));
                                             Constant.gameState = gameState;
                                         }
                                     }

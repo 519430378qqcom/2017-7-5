@@ -17,13 +17,13 @@ public class Constant {
     /**
      * 是否可以开直播
      */
-    public static int anchorState; //0不可  1可
+    public static int anchorState = 1; //0不可  1可
     /**
      * 是否可以开私信
      */
-    public static int privateState; //0不可  1可
+    public static int privateState = 1; //0不可  1可
     /**
      * 是否可以开游戏
      */
-    public static int gameState; //0不可  1可
+    public static int gameState = 1; //0不可  1可
 }
