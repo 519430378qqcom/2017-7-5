@@ -6,7 +6,7 @@
     android:gravity="center_vertical"
     android:padding="10px">
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <com.lvshandian.lemeng.widget.view.AvatarView
         android:id="@+id/iv_rank_head"
         android:layout_width="70px"
         android:layout_height="70px"
