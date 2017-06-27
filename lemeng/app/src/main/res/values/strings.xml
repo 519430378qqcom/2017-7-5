@@ -344,49 +344,6 @@
     <string name="complete">刷新完成</string>
     <string name="nothing">什么都没有</string>
 
-    <!--6月20日之后添加start-->
-    <string name="expand_all">全部展开</string>
-    <string name="partial_display">部分显示</string>
-
-    <string name="game_record">游戏记录</string>
-    <string name="close_live_function">平台暂时关闭直播功能</string>
-    <string name="close_game_function">平台暂时关闭游戏功能</string>
-    <string name="open_game_function">平台已打开游戏功能</string>
-    <string name="room_rank">%1$s期排行榜</string>
-    <string name="no_one_has_won_this_round">本轮没有人中奖哦</string>
-    <string name="please_uploading_avatar">请设置头像</string>
-    <string name="lepiao_6">6 乐票</string>
-    <string name="lepiao_30">30 乐票</string>
-    <string name="lepiao_98">98 乐票</string>
-    <string name="lepiao_298">298 乐票</string>
-    <string name="lepiao_588">588 乐票</string>
-    <string name="lepiao_1598">1598 乐票</string>
-    <string name="rmb_6">￥6.00</string>
-    <string name="rmb_30">￥30.00</string>
-    <string name="rmb_98">￥98.00</string>
-    <string name="rmb_298">￥298.00</string>
-    <string name="rmb_588">￥588.00</string>
-    <string name="rmb_1598">￥1598.00</string>
-    <string name="guid_item_1">生活大爆炸,谁来拯救生活</string>
-    <string name="guid_item_2">工作大爆炸,谁来拯救工作</string>
-    <string name="enter_into">立即体验</string>
-
-    <string name="personal_center">个人中心</string>
-    <string name="account_balance">账户余额（乐票）:</string>
-    <string name="profit_and_loss_record">盈亏记录</string>
-    <string name="deposit_record">存款记录</string>
-    <string name="enchashment_record">提现记录</string>
-    <string name="floating_lepiao_hint">支出%1$s乐票 收入%2$s乐票</string>
-    <string name="floating_moneny">%1$s金币</string>
-    <string name="no_balance_record">您还没有相关记录</string>
-    <string name="text_year">年</string>
-    <string name="text_month">月</string>
-    <string name="text_day">日</string>
-    <string name="ten_thousand">万</string>
-    <string name="a_hundred_million">亿</string>
-
-    <!--6月20日之后添加end-->
-
     <!--网易云信-->
     <string name="main_tab_session">会话</string>
     <string name="main_tab_contact">通讯录</string>
@@ -604,10 +561,51 @@
     <string name="string_state_streaming">STREAMING</string>
     <string name="string_state_netblocking">NETBLOCKING, STOPPING</string>
     <string name="string_state_con_timeout">CONNECTION TIMEOUT</string>
+    <!--七牛云结束-->
+    <!--6月20日之后添加start-->
+    <string name="expand_all">全部展开</string>
+    <string name="partial_display">部分显示</string>
+
+    <string name="game_record">游戏记录</string>
+    <string name="close_live_function">平台暂时关闭直播功能</string>
+    <string name="close_game_function">平台暂时关闭游戏功能</string>
+    <string name="open_game_function">平台已打开游戏功能</string>
+    <string name="room_rank">%1$s期排行榜</string>
+    <string name="no_one_has_won_this_round">本轮没有人中奖哦</string>
+    <string name="please_uploading_avatar">请设置头像</string>
+    <string name="lepiao_6">6 乐票</string>
+    <string name="lepiao_30">30 乐票</string>
+    <string name="lepiao_98">98 乐票</string>
+    <string name="lepiao_298">298 乐票</string>
+    <string name="lepiao_588">588 乐票</string>
+    <string name="lepiao_1598">1598 乐票</string>
+    <string name="rmb_6">￥6.00</string>
+    <string name="rmb_30">￥30.00</string>
+    <string name="rmb_98">￥98.00</string>
+    <string name="rmb_298">￥298.00</string>
+    <string name="rmb_588">￥588.00</string>
+    <string name="rmb_1598">￥1598.00</string>
+    <string name="guid_item_1">生活大爆炸,谁来拯救生活</string>
+    <string name="guid_item_2">工作大爆炸,谁来拯救工作</string>
+    <string name="enter_into">立即体验</string>
+
+    <string name="personal_center">个人中心</string>
+    <string name="account_balance">账户余额（乐票）:</string>
+    <string name="profit_and_loss_record">盈亏记录</string>
+    <string name="deposit_record">存款记录</string>
+    <string name="enchashment_record">提现记录</string>
+    <string name="floating_lepiao_hint">支出%1$s乐票 收入%2$s乐票</string>
+    <string name="floating_moneny">%1$s金币</string>
+    <string name="no_balance_record">您还没有相关记录</string>
+    <string name="text_year">年</string>
+    <string name="text_month">月</string>
+    <string name="text_day">日</string>
+    <string name="ten_thousand">万</string>
+    <string name="a_hundred_million">亿</string>
+
     <string name="drop_a_red_envelope">天降宝箱</string>
     <string name="snatch">抢</string>
     <string name="look_other_lucky">查看其他人运气</string>
     <string name="redpackage_rank">红包排行</string>
-    <!--七牛云结束-->
-
+    <!--6月20日之后添加end-->
 </resources>
