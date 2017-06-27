@@ -246,7 +246,9 @@ public class OtherPersonHomePageActivity extends BaseActivity {
                         break;
                     case MotionEvent.ACTION_MOVE:
                         AutoRelativeLayout.LayoutParams lp = new AutoRelativeLayout.LayoutParams(AutoRelativeLayout.LayoutParams.MATCH_PARENT, AutoRelativeLayout.LayoutParams.MATCH_PARENT);
-                        avHeader.setLayoutParams(lp);
+                        if (avHeader!=null) {
+                            avHeader.setLayoutParams(lp);
+                        }
                         break;
                     case MotionEvent.ACTION_UP:
 
@@ -254,7 +256,9 @@ public class OtherPersonHomePageActivity extends BaseActivity {
                             @Override
                             public void run() {
                                 AutoRelativeLayout.LayoutParams lp1 = new AutoRelativeLayout.LayoutParams(width, height);
-                                avHeader.setLayoutParams(lp1);
+                                if (avHeader!=null) {
+                                    avHeader.setLayoutParams(lp1);
+                                }
                             }
                         }, 400);
 

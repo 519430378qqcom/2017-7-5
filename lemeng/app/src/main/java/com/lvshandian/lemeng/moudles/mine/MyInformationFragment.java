@@ -286,7 +286,7 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
                     height = myHead.getHeight();
                 } else {
                     DisplayMetrics dm = new DisplayMetrics();
-                    if (getActivity().getWindowManager() == null)
+                    if (getActivity() == null || getActivity().getWindowManager() == null)
                         return;
                     getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
                     width = dm.widthPixels;
@@ -324,8 +324,9 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
                         break;
                     case MotionEvent.ACTION_MOVE:
                         AutoRelativeLayout.LayoutParams lp = new AutoRelativeLayout.LayoutParams(AutoRelativeLayout.LayoutParams.MATCH_PARENT, AutoRelativeLayout.LayoutParams.MATCH_PARENT);
-                        myHead.setLayoutParams(lp);
-
+                        if (myHead != null){
+                            myHead.setLayoutParams(lp);
+                        }
                         break;
                     case MotionEvent.ACTION_UP:
 
@@ -333,7 +334,9 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
                             @Override
                             public void run() {
                                 AutoRelativeLayout.LayoutParams lp1 = new AutoRelativeLayout.LayoutParams(width, height);
-                                myHead.setLayoutParams(lp1);
+                                if (myHead != null){
+                                    myHead.setLayoutParams(lp1);
+                                }
                             }
                         }, 400);
 
