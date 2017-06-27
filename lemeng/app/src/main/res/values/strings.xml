@@ -608,4 +608,8 @@
     <string name="look_other_lucky">查看其他人运气</string>
     <string name="redpackage_rank">红包排行</string>
     <!--6月20日之后添加end-->
+
+    <!--Facebook 登录-->
+    <string name="facebook_app_id">1817075578608439</string>
+    <string name="fb_login_protocol_scheme">fb1817075578608439</string>
 </resources>

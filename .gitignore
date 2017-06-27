@@ -12,6 +12,7 @@
 bin/
 gen/
 .idea/
+lemeng/.idea/*
 
 # Gradle files
 .gradle/
@@ -26,3 +27,4 @@ proguard/
 
 # Log Files
 *.log
+/.idea

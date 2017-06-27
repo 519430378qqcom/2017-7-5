@@ -15,6 +15,8 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 import com.lvshandian.lemeng.utils.ImageLoaderUtils;
 import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
@@ -169,6 +171,9 @@ public class MyApplication extends LitePalApplication {
         VCamera.setDebugMode(true);
         // 初始化拍摄SDK，必须
         VCamera.initialize(this);
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
     }
 
     public class MyLocationListener implements BDLocationListener {

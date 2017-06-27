@@ -163,8 +163,12 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
                 llSex.setBackground(getResources().getDrawable(R.drawable.selector_loginbtn_bai));
                 money = "6";
             {
-                String payload = "";
+                if(!mHelper.ismSetupDone()) {
+                    Log.d(TAG, "mHelper is not setup done");
+                    return;
+                }
 
+                String payload = "";
                 try {
                     mHelper.launchPurchaseFlow(this, SKU_GAS, RC_REQUEST,
                             mPurchaseFinishedListener, payload);
@@ -295,6 +299,10 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
             }
 
             Log.d(TAG, "Purchase successful.");
+            if(!mHelper.ismSetupDone()) {
+                Log.d(TAG, "mHelper is not setup done");
+                return;
+            }
 
             if (purchase.getSku().equals(SKU_GAS)) {
                 // bought 1/4 tank of gas. So consume it.
