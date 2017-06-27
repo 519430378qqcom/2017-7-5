@@ -4,15 +4,22 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical">
+
     <include layout="@layout/title_bar" />
 
-    <com.lvshandian.lemeng.widget.view.ExpandGridView
-        android:id="@+id/mygrid"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_vertical"
-        android:horizontalSpacing="8px"
-        android:numColumns="4"
-        android:padding="8px"
-        android:verticalSpacing="8px" />
+        android:layout_height="match_parent">
+
+        <com.lvshandian.lemeng.widget.view.ExpandGridView
+            android:id="@+id/mygrid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:horizontalSpacing="8px"
+            android:numColumns="4"
+            android:padding="8px"
+            android:verticalSpacing="8px" />
+    </RelativeLayout>
+
 </com.zhy.autolayout.AutoLinearLayout>

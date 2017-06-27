@@ -28,18 +28,18 @@ import com.lvshandian.lemeng.base.CustomStringCallBack;
 import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.moudles.mine.activity.BigImageActivity;
+import com.lvshandian.lemeng.moudles.mine.adapter.PhotoAdapter;
+import com.lvshandian.lemeng.moudles.mine.adapter.VideoAdapter;
 import com.lvshandian.lemeng.moudles.mine.bean.OtherPersonBean;
 import com.lvshandian.lemeng.moudles.mine.bean.PhotoBean;
 import com.lvshandian.lemeng.moudles.mine.bean.VideoBean;
-import com.lvshandian.lemeng.moudles.mine.adapter.PhotoAdapter;
-import com.lvshandian.lemeng.moudles.mine.adapter.VideoAdapter;
 import com.lvshandian.lemeng.utils.GrademipmapUtils;
 import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
+import com.lvshandian.lemeng.wangyiyunxin.session.SessionHelper;
 import com.lvshandian.lemeng.widget.view.CustomPopWindow;
 import com.lvshandian.lemeng.widget.view.ExpandGridView;
 import com.lvshandian.lemeng.widget.view.HeadZoomScrollView;
-import com.lvshandian.lemeng.wangyiyunxin.session.SessionHelper;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.friend.FriendService;
@@ -385,9 +385,11 @@ public class OtherPersonHomePageActivity extends BaseActivity {
         if (TextUtils.equals("0", follow)) {
             iv_focus.setImageResource(R.mipmap.icon_unfocus);
             tv_focus.setText(getString(R.string.attention));
+            tvFanse.setText(String.valueOf(Integer.parseInt(tvFanse.getText().toString()) - 1));
         } else if (TextUtils.equals("1", follow)) {
             iv_focus.setImageResource(R.mipmap.icon_focus);
             tv_focus.setText(getString(R.string.already_attention));
+            tvFanse.setText(String.valueOf(Integer.parseInt(tvFanse.getText().toString()) + 1));
         }
     }
 
@@ -660,6 +662,4 @@ public class OtherPersonHomePageActivity extends BaseActivity {
                 break;
         }
     }
-
-
 }

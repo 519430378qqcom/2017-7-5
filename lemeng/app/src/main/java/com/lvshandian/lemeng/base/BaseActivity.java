@@ -523,7 +523,7 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
         /**
          * 当界面关闭的时候取消联网
          */
-        MyApplication.requestQueueiInstance().cancelAll(TAG);
+//        MyApplication.requestQueueiInstance().cancelAll(TAG);
         super.onDestroy();
     }
 

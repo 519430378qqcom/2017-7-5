@@ -65,6 +65,7 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.lvshandian.lemeng.MainActivity;
+import com.lvshandian.lemeng.MyApplication;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.UrlBuilder;
 import com.lvshandian.lemeng.adapter.FamilyMemberAdapter;
@@ -2952,6 +2953,11 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             bullfightAudio.release();
         }
         myHandler.removeCallbacksAndMessages(null);
+
+        /**
+         * 当界面关闭的时候取消联网
+         */
+        MyApplication.requestQueueiInstance().cancelAll(TAG);
     }
 
     @Override
