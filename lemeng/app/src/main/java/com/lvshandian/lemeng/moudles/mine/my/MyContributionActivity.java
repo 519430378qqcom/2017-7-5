@@ -153,7 +153,7 @@ public class MyContributionActivity extends BaseActivity {
         map.put("userId", appUser.getId());
         map.put("rows", "10");
         map.put("page", String.valueOf(page));
-        httpDatas.getNewDataCharServerRefresh("查询排我的贡献榜", Request.Method.GET, UrlBuilder.MY_CONTRIBUTION, map, mHandler, RequestCode.REQUEST_RANK, refreshLayout);
+        httpDatas.getNewDataCharServerRefresh("查询排我的贡献榜", Request.Method.GET, UrlBuilder.MY_CONTRIBUTION, map, mHandler, RequestCode.REQUEST_RANK, refreshLayout, TAG);
     }
 
 
@@ -207,7 +207,7 @@ public class MyContributionActivity extends BaseActivity {
         int level = oneData.getLevel();
         imglevel.setImageResource(GrademipmapUtils.LevelImg[level - 1]);
         tvName.setText(oneData.getNickName());
-        tvDevote.setText(getString(R.string.contribution_lepiao_num,String.valueOf(oneData.getContributeCoin())));
+        tvDevote.setText(getString(R.string.contribution_lepiao_num, String.valueOf(oneData.getContributeCoin())));
         imgHead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

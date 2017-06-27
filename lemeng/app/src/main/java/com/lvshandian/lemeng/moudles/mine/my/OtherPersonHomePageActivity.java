@@ -246,7 +246,7 @@ public class OtherPersonHomePageActivity extends BaseActivity {
                         break;
                     case MotionEvent.ACTION_MOVE:
                         AutoRelativeLayout.LayoutParams lp = new AutoRelativeLayout.LayoutParams(AutoRelativeLayout.LayoutParams.MATCH_PARENT, AutoRelativeLayout.LayoutParams.MATCH_PARENT);
-                        if (avHeader!=null) {
+                        if (avHeader != null) {
                             avHeader.setLayoutParams(lp);
                         }
                         break;
@@ -256,7 +256,7 @@ public class OtherPersonHomePageActivity extends BaseActivity {
                             @Override
                             public void run() {
                                 AutoRelativeLayout.LayoutParams lp1 = new AutoRelativeLayout.LayoutParams(width, height);
-                                if (avHeader!=null) {
+                                if (avHeader != null) {
                                     avHeader.setLayoutParams(lp1);
                                 }
                             }
@@ -399,7 +399,7 @@ public class OtherPersonHomePageActivity extends BaseActivity {
             ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
             map.put("userId", userId);
             map.put("currentUserId", appUser.getId());
-            httpDatas.getNewDataCharServerNoLoading("查询个人主页", Request.Method.POST, UrlBuilder.IF_ATTENTION, map, mHandler, RequestCode.REQUEST_USER_INFO);
+            httpDatas.getNewDataCharServer("查询个人主页", false, Request.Method.POST, UrlBuilder.IF_ATTENTION, map, mHandler, RequestCode.REQUEST_USER_INFO, TAG);
         }
 
     }
@@ -410,7 +410,7 @@ public class OtherPersonHomePageActivity extends BaseActivity {
      */
     private void requestPhoto() {
         ConcurrentHashMap map = new ConcurrentHashMap<>();
-        httpDatas.getDataForJsoNoloading("图片请求列表", Request.Method.GET, UrlBuilder.myPhoto(userId), map, mHandler, RequestCode.MY_PHOTO_LOAD);
+        httpDatas.getDataForJson("图片请求列表", false, Request.Method.GET, UrlBuilder.myPhoto(userId), map, mHandler, RequestCode.MY_PHOTO_LOAD, TAG);
     }
 
 
@@ -419,7 +419,7 @@ public class OtherPersonHomePageActivity extends BaseActivity {
      */
     private void requestVideo() {
         ConcurrentHashMap map = new ConcurrentHashMap<>();
-        httpDatas.getDataForJsoNoloading("视频图片请求列表", Request.Method.GET, UrlBuilder.myVideo(userId), map, mHandler, RequestCode.MY_VIDEO_LOAD);
+        httpDatas.getDataForJson("视频图片请求列表", false, Request.Method.GET, UrlBuilder.myVideo(userId), map, mHandler, RequestCode.MY_VIDEO_LOAD, TAG);
 
     }
 
@@ -433,7 +433,7 @@ public class OtherPersonHomePageActivity extends BaseActivity {
         map.put("reportUserId", appUser.getId());
         map.put("userId", userId);
         map.put("content", str);
-        httpDatas.getDataForJson("举报信息", Request.Method.POST, UrlBuilder.REPORT, map, mHandler, RequestCode.REQUEST_REPORT);
+        httpDatas.getDataForJson("举报信息", true, Request.Method.POST, UrlBuilder.REPORT, map, mHandler, RequestCode.REQUEST_REPORT, TAG);
     }
 
 

@@ -106,7 +106,7 @@ public class ModifyPasswordActivity extends BaseActivity {
         Map<String, String> params = new HashMap<>();
         params.put("id", appUser.getId());
         params.put("password", etNewPassword.getText().toString().trim());
-        httpDatas.getDataForJson("修改密码", Request.Method.POST, urlBuilder.MODIFY_PASSWORD, params, handler, RequestCode.MODIFY_PASSWORD);
+        httpDatas.getDataForJson("修改密码", true, Request.Method.POST, urlBuilder.MODIFY_PASSWORD, params, handler, RequestCode.MODIFY_PASSWORD, TAG);
     }
 
 

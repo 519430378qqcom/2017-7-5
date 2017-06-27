@@ -237,9 +237,9 @@ public class PrapareStartActivity extends BaseActivity {
                 tvAddress.setText(address);
                 break;
             case R.id.tv_start_live:
-                if (Constant.anchorState == 1){
+                if (Constant.anchorState == 1) {
                     getNetWork();
-                }else {
+                } else {
                     showToast(getString(R.string.close_live_function));
                 }
                 break;
@@ -308,7 +308,7 @@ public class PrapareStartActivity extends BaseActivity {
         map.put("privateChat", "1");
         map.put("payForChat", appUser.getPayForVideoChat());
         map.put("livePicUrl", appUser.getPicUrl());
-        httpDatas.getDataForJson("开启直播", Request.Method.POST, UrlBuilder.START_LIVE, map, mHandler, RequestCode.START_LIVE);
+        httpDatas.getDataForJson("开启直播", true, Request.Method.POST, UrlBuilder.START_LIVE, map, mHandler, RequestCode.START_LIVE, TAG);
     }
 
 

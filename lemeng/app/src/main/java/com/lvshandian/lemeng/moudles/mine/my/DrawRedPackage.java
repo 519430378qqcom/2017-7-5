@@ -137,7 +137,7 @@ public class DrawRedPackage extends BaseActivity {
      * 查询提现比例
      */
     private void drawMoneyRatio() {
-        httpDatas.getNewDataCharServer("查询提现比例", Request.Method.GET, UrlBuilder.WITHDRAW_RATIO, null, mHandler, RequestCode.DRAW_MONEY_RATIO);
+        httpDatas.getNewDataCharServer("查询提现比例", true, Request.Method.GET, UrlBuilder.WITHDRAW_RATIO, null, mHandler, RequestCode.DRAW_MONEY_RATIO, TAG);
     }
 
     /**
@@ -148,7 +148,7 @@ public class DrawRedPackage extends BaseActivity {
         map.put("id", appUser.getId());
         map.put("exchangeCash", etWantDraw.getText().toString().trim());
         map.put("account", etAlipayNumber.getText().toString().trim());
-        httpDatas.getNewDataCharServer("提现信息", Request.Method.GET, UrlBuilder.WITHDRAW, map, mHandler, RequestCode.DRAW_MONEY);
+        httpDatas.getNewDataCharServer("提现信息", true, Request.Method.GET, UrlBuilder.WITHDRAW, map, mHandler, RequestCode.DRAW_MONEY, TAG);
     }
 
 }

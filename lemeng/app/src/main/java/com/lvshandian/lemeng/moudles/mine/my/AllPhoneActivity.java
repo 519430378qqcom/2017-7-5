@@ -137,7 +137,7 @@ public class AllPhoneActivity extends BaseActivity {
      */
     private void requestPhoto() {
         ConcurrentHashMap map = new ConcurrentHashMap<>();
-        httpDatas.getDataForJsoNoloading("图片请求列表", Request.Method.GET, UrlBuilder.myPhoto(userId), map, mHandler, RequestCode.MY_PHOTO_LOAD);
+        httpDatas.getDataForJson("图片请求列表", false, Request.Method.GET, UrlBuilder.myPhoto(userId), map, mHandler, RequestCode.MY_PHOTO_LOAD, TAG);
     }
 
     @Override
@@ -191,7 +191,7 @@ public class AllPhoneActivity extends BaseActivity {
                 ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
                 map.put("id", appUser.getId());
                 map.put("picUrl", picUrl);
-                httpDatas.getNewDataCharServer("设置头像信息", Request.Method.POST, UrlBuilder.EDIT_PROFILE, map, mHandler, RequestCode.USER_TAG);
+                httpDatas.getNewDataCharServer("设置头像信息", true, Request.Method.POST, UrlBuilder.EDIT_PROFILE, map, mHandler, RequestCode.USER_TAG, TAG);
                 editPopup.dismiss();
             }
         });
@@ -200,7 +200,7 @@ public class AllPhoneActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 ConcurrentHashMap map = new ConcurrentHashMap<>();
-                httpDatas.getDataForJson("删除图片", Request.Method.DELETE, UrlBuilder.photoDelete(list.get(position).getId()), map, mHandler, RequestCode.MY_PHOTO_DELETE_CODE);
+                httpDatas.getDataForJson("删除图片", true, Request.Method.DELETE, UrlBuilder.photoDelete(list.get(position).getId()), map, mHandler, RequestCode.MY_PHOTO_DELETE_CODE, TAG);
                 editPopup.dismiss();
             }
         });

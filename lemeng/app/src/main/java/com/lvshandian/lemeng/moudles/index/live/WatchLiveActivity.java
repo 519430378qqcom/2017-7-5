@@ -592,8 +592,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     //<end------------斗牛游戏部分-------------->
 
 
-    private static final String TAG = "WatchLiveActivity";
-
     private boolean isCanStop = false;//是否可以停止刷新
 
     /**
@@ -898,6 +896,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     liveListBean = JsonUtil.json2Bean(json.toString(), LiveListBean.class);
                     room_Id = liveListBean.getRoomId() + "";
                     zhubo_Id = liveListBean.getId() + "";
+                    myGoldCoin = Long.parseLong(appUser.getGoldCoin());
                     liveHead.setAvatarUrl(liveListBean.getPicUrl());
                     liveHeadImg.setAvatarUrl(liveListBean.getPicUrl());
                     String picUrl = liveListBean.getPicUrl();
@@ -1039,8 +1038,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     break;
                 case 10001:
                     httpDatas.getDataDialog("观众隔一段时间刷新状态", false, urlBuilder.TimerUserLive
-                                    (room_Id, appUser.getId())
-                            , myHandler, RequestCode.TIMERLIVE);
+                            (room_Id, appUser.getId()), myHandler, RequestCode.TIMERLIVE, TAG);
                     break;
                 //主播请求与观众连麦，观众同意后，生成推拉流地址，并向所有人发送推拉流
                 case RequestCode.REQUEST_LIANMAI_LIVE:
@@ -1219,7 +1217,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     private void startJoinRoom() {
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("roomId", wy_Id);
-        httpDatas.getNewDataCharServerCodeNoLoading("进入直播间接口", Request.Method.GET, UrlBuilder.START_JOIN_ROOM, map, myHandler, RequestCode.START_JOIN_ROOM);
+        httpDatas.getNewDataCharServerCode1("进入直播间接口", false, Request.Method.GET, UrlBuilder.START_JOIN_ROOM, map, myHandler, RequestCode.START_JOIN_ROOM, TAG);
     }
 
 
@@ -1640,8 +1638,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 ConcurrentHashMap<String, String> map1 = new ConcurrentHashMap<>();
                 map1.put("followUserId", zhubo_Id);
                 map1.put("userId", appUser.getId());
-                httpDatas.getDataForJsoNoloading("关注用户", Request.Method.POST, UrlBuilder
-                        .ATTENTION_USER, map1, myHandler, RequestCode.ATTENTION_USER);
+                httpDatas.getDataForJson("关注用户", false, Request.Method.POST, UrlBuilder
+                        .ATTENTION_USER, map1, myHandler, RequestCode.ATTENTION_USER, TAG);
                 break;
             //家族
             case R.id.watch_room_jiaZu:
@@ -2924,8 +2922,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("userId", appUser.getId());
         map.put("roomId", room_Id);
-        httpDatas.getDataForJsoNoloading("退出直播间", Request.Method.POST, UrlBuilder.ROOM_EXIT, map,
-                myHandler, RequestCode.REQUEST_ROOM_EXIT);
+        httpDatas.getDataForJson("退出直播间", false, Request.Method.POST, UrlBuilder.ROOM_EXIT, map,
+                myHandler, RequestCode.REQUEST_ROOM_EXIT, TAG);
 
         if (null != mMediaStreamingManager) {
             mMediaStreamingManager.destroy();
@@ -3454,7 +3452,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 mSendGiftLian.setVisibility(View.GONE);
             }
         }, 200);
-        if(popupWindow == null) {
+        if (popupWindow == null) {
             popupWindow = new CustomPopWindow(this);
         }
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -3481,10 +3479,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 showToast(getString(R.string.stay_open));
             }
         });
-        if(myGoldCoin > 0) {
-            String myCoin = CountUtils.getCount(myGoldCoin);
-            mUserCoin.setText(myCoin);
-        }
+        String myCoin = CountUtils.getCount(myGoldCoin);
+        mUserCoin.setText(myCoin);
         mVpGiftView = (ViewPager) view.findViewById(R.id.vp_gift_page);
         mSendGiftBtn = (Button) view.findViewById(R.id.btn_show_send_gift);
         mSendGiftBtn.setOnClickListener(new View.OnClickListener() {
@@ -3579,8 +3575,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         map.put("giftId", mSendGiftItem.getId());
         map.put("toUserId", zhubo_Id);
         map.put("goldAmount", myGoldCoin + "");
-        httpDatas.DataNoloadingAdmin("赠送礼物", Request.Method.POST,
-                UrlBuilder.SEND_GIFT, map, myHandler, RequestCode.SEND_GIFT);
+        httpDatas.DataNoloadingAdmin("赠送礼物", false, Request.Method.POST,
+                UrlBuilder.SEND_GIFT, map, myHandler, RequestCode.SEND_GIFT, TAG);
     }
 
     /**
@@ -4405,9 +4401,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      */
     private void requstLianPush() {
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
-        httpDatas.getDataForJsoNoloading("主播连麦请求推拉流信息", Request.Method.GET, UrlBuilder.roomLive
-                        (room_Id, appUser.getId()), map, myHandler,
-                RequestCode.REQUEST_LIANMAI_LIVE);
+        httpDatas.getDataForJson("主播连麦请求推拉流信息", false, Request.Method.GET, UrlBuilder.roomLive
+                (room_Id, appUser.getId()), map, myHandler, RequestCode.REQUEST_LIANMAI_LIVE, TAG);
     }
 
 
@@ -4418,9 +4413,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      */
     private void iSrequstLiveValid() {
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
-        httpDatas.getDataForJsoNoloading("是否有被连麦的观众", Request.Method.GET, UrlBuilder
-                .roomLiveValid(room_Id), map, myHandler, RequestCode
-                .IS_REQUEST_LIANMAI_LIVE);
+        httpDatas.getDataForJson("是否有被连麦的观众", false, Request.Method.GET, UrlBuilder
+                .roomLiveValid(room_Id), map, myHandler, RequestCode.IS_REQUEST_LIANMAI_LIVE, TAG);
     }
 
 
@@ -4450,9 +4444,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         }
 
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
-        httpDatas.getDataForJsoNoloading("观众退出连线", Request.Method.GET, UrlBuilder.roomLiveExit
-                        (room_Id, appUser.getId()), map, myHandler,
-                RequestCode.ROOMLIVEEXIT);
+        httpDatas.getDataForJson("观众退出连线", false, Request.Method.GET, UrlBuilder.roomLiveExit
+                (room_Id, appUser.getId()), map, myHandler, RequestCode.ROOMLIVEEXIT, TAG);
     }
 
     // *********************************** 连麦内容结束 ********************************** //
@@ -4462,8 +4455,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * @dw 获取礼物列表
      */
     private void getGiftList() {
-        httpDatas.getNewDataCharServerCode("礼物列表", Request.Method.GET, UrlBuilder.GET_GIFT, null,
-                myHandler, RequestCode.GET_GIFT);
+        httpDatas.getNewDataCharServerCode("礼物列表", false, Request.Method.GET, UrlBuilder.GET_GIFT, null,
+                myHandler, RequestCode.GET_GIFT, TAG);
     }
 
 
@@ -4473,8 +4466,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     private void initUser() {
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("id", zhubo_Id);
-        httpDatas.getNewDataCharServerCodeNoLoading("查询用户信息", Request.Method
-                .POST, UrlBuilder.SELECT_USER_INFO, map, myHandler, RequestCode.SELECT_USER);
+        httpDatas.getNewDataCharServerCode1("查询用户信息", false, Request.Method
+                .POST, UrlBuilder.SELECT_USER_INFO, map, myHandler, RequestCode.SELECT_USER, TAG);
     }
 
     /**
@@ -4483,8 +4476,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
     private void initMyInfo() {
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("id", appUser.getId() + "");
-        httpDatas.getNewDataCharServerCodeNoLoading("查询用户信息", Request.Method
-                .POST, UrlBuilder.SELECT_USER_INFO, map, myHandler, RequestCode.SELECT_USER_MY);
+        httpDatas.getNewDataCharServerCode1("查询用户信息", false, Request.Method
+                .POST, UrlBuilder.SELECT_USER_INFO, map, myHandler, RequestCode.SELECT_USER_MY, TAG);
     }
 
     /**
@@ -4498,10 +4491,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("currentUserId", appUser.getId());
         map.put("userId", liveid);
-        httpDatas.getNewDataCharServerNoLoading(details, Request.Method.POST, UrlBuilder.IF_ATTENTION,
-                map, myHandler, handlerCode);
+        httpDatas.getNewDataCharServer(details, false, Request.Method.POST, UrlBuilder.IF_ATTENTION,
+                map, myHandler, handlerCode, TAG);
     }
-
 
 
     /**
@@ -4792,8 +4784,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         map.put("reportUserId", appUser.getId());
         map.put("userId", userId);
         map.put("content", content);
-        httpDatas.getDataForJsoNoloading("举报", Request.Method.POST, UrlBuilder.REPORT, map,
-                myHandler, RequestCode.REQUEST_REPORT);
+        httpDatas.getDataForJson("举报", false, Request.Method.POST, UrlBuilder.REPORT, map,
+                myHandler, RequestCode.REQUEST_REPORT, TAG);
 
     }
 

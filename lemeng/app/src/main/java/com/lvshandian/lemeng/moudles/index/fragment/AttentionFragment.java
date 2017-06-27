@@ -118,7 +118,7 @@ public class AttentionFragment extends BaseFragment implements View.OnClickListe
             @Override
             public void onRecyclerClick(int position) {
 //              进入直播间
-                ifEnter(liveListBeen.get(position).getRooms().getRoomId() + "",liveListBeen.get(position).getRooms().getBroadcastUrl());
+                ifEnter(liveListBeen.get(position).getRooms().getRoomId() + "", liveListBeen.get(position).getRooms().getBroadcastUrl());
             }
         });
 
@@ -130,7 +130,7 @@ public class AttentionFragment extends BaseFragment implements View.OnClickListe
         map.put("page", page + "");
         map.put("userId", appUser.getId());
         map.put("type", "4");
-        httpDatas.getNewDataCharServerRefresh("获取直播关注界面接口列表", Request.Method.GET, UrlBuilder.APP_ROOMS_LIST, map, mHandler, RequestCode.ATTENTION_LIVE, mrlLayout);
+        httpDatas.getNewDataCharServerRefresh("获取直播关注界面接口列表", Request.Method.GET, UrlBuilder.APP_ROOMS_LIST, map, mHandler, RequestCode.ATTENTION_LIVE, mrlLayout, TAG);
     }
 
 

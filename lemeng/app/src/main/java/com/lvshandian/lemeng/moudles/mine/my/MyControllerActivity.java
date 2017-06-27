@@ -147,7 +147,7 @@ public class MyControllerActivity extends BaseActivity {
         map.put("page", page + "");
         map.put("rows", "10");
         map.put("userId", appUser.getId());
-        httpDatas.getNewDataCharServer("我的场控列表", Request.Method.GET, UrlBuilder.MY_CONTROLLER, map, mHandler, RequestCode.MYCONTROLLER);
+        httpDatas.getNewDataCharServer("我的场控列表", true, Request.Method.GET, UrlBuilder.MY_CONTROLLER, map, mHandler, RequestCode.MYCONTROLLER, TAG);
 
     }
 

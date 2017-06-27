@@ -329,7 +329,6 @@ public class StartLiveActivity extends BaseActivity implements
     @Bind(R.id.watch_room_message_fragment_chat)
     FrameLayout watch_room_message_fragment_chat;
     public static LrcView mLrcView;
-    private static final String TAG = "StartLiveActivity";
     @Bind(R.id.song_LrcView)
     LrcView songLrcView;
     @Bind(R.id.iv_big)
@@ -782,7 +781,7 @@ public class StartLiveActivity extends BaseActivity implements
                 case 1000:
                     LogUtils.i("主播隔一段时间刷新状态");
                     httpDatas.getDataDialog("主播隔一段时间刷新状态", false, urlBuilder.TimerLive(room_Id),
-                            myHandler, RequestCode.TIMERLIVE);
+                            myHandler, RequestCode.TIMERLIVE, TAG);
                     break;
                 case RequestCode.SELECT_USER:
                     LogUtils.e("查询个人信息返回json: " + json);
@@ -3370,9 +3369,8 @@ public class StartLiveActivity extends BaseActivity implements
         hideLianmaiView();
         if (!TextUtils.isEmpty(lianId) && lmFm.getVisibility() == View.VISIBLE) {
             ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
-            httpDatas.getDataForJsoNoloading("主播退出连线", com.android.volley.Request.Method.GET, UrlBuilder.roomLiveExit
-                            (room_Id, lianId.substring(4)), map, myHandler,
-                    RequestCode.ROOMLIVEEXIT);
+            httpDatas.getDataForJson("主播退出连线", false, com.android.volley.Request.Method.GET, UrlBuilder.roomLiveExit
+                    (room_Id, lianId.substring(4)), map, myHandler, RequestCode.ROOMLIVEEXIT, TAG);
         }
 
         if (liveVideo != null) {
@@ -4255,16 +4253,16 @@ public class StartLiveActivity extends BaseActivity implements
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("currentUserId", appUser.getId());
         map.put("userId", liveid);
-        httpDatas.getNewDataCharServer(details, com.android.volley.Request.Method.POST,
-                UrlBuilder.IF_ATTENTION, map, myHandler, handlerCode);
+        httpDatas.getNewDataCharServer(details, false, com.android.volley.Request.Method.POST,
+                UrlBuilder.IF_ATTENTION, map, myHandler, handlerCode, TAG);
     }
 
     /**
      * @dw 获取礼物列表
      */
     private void getGiftList() {
-        httpDatas.getNewDataCharServerCode("礼物列表", com.android.volley.Request.Method.GET,
-                UrlBuilder.GET_GIFT, null, myHandler, RequestCode.GET_GIFT);
+        httpDatas.getNewDataCharServerCode("礼物列表", false, com.android.volley.Request.Method.GET,
+                UrlBuilder.GET_GIFT, null, myHandler, RequestCode.GET_GIFT, TAG);
     }
 
     /**
@@ -4273,8 +4271,8 @@ public class StartLiveActivity extends BaseActivity implements
     private void initUser() {
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("id", appUser.getId() + "");
-        httpDatas.getNewDataCharServerCodeNoLoading("查询用户信息", com.android.volley.Request.Method
-                .POST, UrlBuilder.SELECT_USER_INFO, map, myHandler, RequestCode.SELECT_USER);
+        httpDatas.getNewDataCharServerCode1("查询用户信息", false, com.android.volley.Request.Method
+                .POST, UrlBuilder.SELECT_USER_INFO, map, myHandler, RequestCode.SELECT_USER, TAG);
     }
 
 
@@ -4717,8 +4715,8 @@ public class StartLiveActivity extends BaseActivity implements
         map.put("reportUserId", appUser.getId());
         map.put("userId", userId);
         map.put("content", content);
-        httpDatas.getDataForJsoNoloading("举报", com.android.volley.Request.Method.POST, UrlBuilder.REPORT, map,
-                myHandler, RequestCode.REQUEST_REPORT);
+        httpDatas.getDataForJson("举报", false, com.android.volley.Request.Method.POST, UrlBuilder.REPORT, map,
+                myHandler, RequestCode.REQUEST_REPORT, TAG);
 
     }
 
@@ -4954,7 +4952,7 @@ public class StartLiveActivity extends BaseActivity implements
 
     private void closeLive() {
         httpDatas.getDataDialog("关闭直播间", false, urlBuilder.cloesAnchor(room_Id), myHandler,
-                RequestCode.REQUEST_ROOM_CLOES);
+                RequestCode.REQUEST_ROOM_CLOES, TAG);
         finish();
         startActivity(new Intent(StartLiveActivity.this, QuitLiveActivity.class).putExtra
                 ("roomId", room_Id).putExtra("startTime", startTime));

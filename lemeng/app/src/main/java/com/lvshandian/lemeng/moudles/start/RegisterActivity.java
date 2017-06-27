@@ -190,7 +190,7 @@ public class RegisterActivity extends BaseActivity {
         map.put("userName", name);
         map.put("password", pass);
         map.put("identityCode", code);
-        httpDatas.getNewDataCharServer("注册", Request.Method.POST, UrlBuilder.REGISTER, map, mHandler2, RequestCode.REGISTER_TAG);
+        httpDatas.getNewDataCharServer("注册", true, Request.Method.POST, UrlBuilder.REGISTER, map, mHandler2, RequestCode.REGISTER_TAG, TAG);
     }
 
     /**
@@ -201,7 +201,7 @@ public class RegisterActivity extends BaseActivity {
         map.put("userName", name);
         map.put("password", pass);
         map.put("identityCode", code);
-        httpDatas.DataJsonAdmin("修改密码", Request.Method.POST, UrlBuilder.FORGET_PASSWORD, map, mHandler2, RequestCode.FORGETPSWD_TAG);
+        httpDatas.DataJsonAdmin("修改密码", true, Request.Method.POST, UrlBuilder.FORGET_PASSWORD, map, mHandler2, RequestCode.FORGETPSWD_TAG, TAG);
     }
 
 
@@ -223,7 +223,7 @@ public class RegisterActivity extends BaseActivity {
 
             ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
             map.put("mobile", phone);
-            httpDatas.getNewDataCharServer("获取验证码", Request.Method.GET, UrlBuilder.GET_CODE, map, mHandler2, RequestCode.GET_CODE);
+            httpDatas.getNewDataCharServer("获取验证码", true, Request.Method.GET, UrlBuilder.GET_CODE, map, mHandler2, RequestCode.GET_CODE, TAG);
 
         } else {
             showToast(getString(R.string.input_right_phone));

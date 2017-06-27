@@ -179,7 +179,7 @@ public class LoginActivity extends BaseActivity {
         map.put("userName", name);
         map.put("password", pass);
         map.put("differentStatus", "0");
-        httpDatas.getDataForJson("登录", Request.Method.POST, UrlBuilder.LOGIN, map, mHandler2, RequestCode.LOGIN_TAG);
+        httpDatas.getDataForJson("登录", true, Request.Method.POST, UrlBuilder.LOGIN, map, mHandler2, RequestCode.LOGIN_TAG, TAG);
     }
 
 

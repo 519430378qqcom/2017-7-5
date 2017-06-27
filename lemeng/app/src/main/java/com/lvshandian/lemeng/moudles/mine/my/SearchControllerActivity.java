@@ -138,7 +138,7 @@ public class SearchControllerActivity extends BaseActivity {
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("id", user);
         map.put("userId", appUser.getId());
-        httpDatas.getNewDataCharServer("搜索用户", Request.Method.GET, UrlBuilder.SEARCH_CONTROLLER, map, mHandler, RequestCode.SEACH_USER);
+        httpDatas.getNewDataCharServer("搜索用户", true, Request.Method.GET, UrlBuilder.SEARCH_CONTROLLER, map, mHandler, RequestCode.SEACH_USER, TAG);
     }
 
     private void fillUI() {

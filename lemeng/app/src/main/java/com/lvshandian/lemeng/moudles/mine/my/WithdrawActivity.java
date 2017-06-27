@@ -68,7 +68,7 @@ public class WithdrawActivity extends BaseActivity {
                 case RequestCode.SELECT_USER:
                     AppUser mAppUser = JsonUtil.json2Bean(json, AppUser.class);
 //                    CacheUtils.saveObject(mContext, mAppUser, CacheUtils.USERINFO);
-                    SharedPreferenceUtils.saveUserInfo(mContext,mAppUser);
+                    SharedPreferenceUtils.saveUserInfo(mContext, mAppUser);
                     exchangeStatus = mAppUser.getExchangeStatus();
                     break;
             }
@@ -128,7 +128,7 @@ public class WithdrawActivity extends BaseActivity {
     private void initUser() {
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("id", appUser.getId());
-        httpDatas.getNewDataCharServerCodeNoLoading("查询用户信息", Request.Method.POST, UrlBuilder.SELECT_USER_INFO, map, mHandler, RequestCode.SELECT_USER);
+        httpDatas.getNewDataCharServerCode1("查询用户信息", false, Request.Method.POST, UrlBuilder.SELECT_USER_INFO, map, mHandler, RequestCode.SELECT_USER, TAG);
     }
 
     /**
@@ -180,10 +180,11 @@ public class WithdrawActivity extends BaseActivity {
                 mLoading.setText(getString(R.string.is_authorized_to));
             }
         }
+
         @Override
         public void onComplete(SHARE_MEDIA platForm, int action, Map<String, String> map) {
 
-            if (map==null||map.size()==0){
+            if (map == null || map.size() == 0) {
                 if (mLoading != null && mLoading.isShowing()) {
                     mLoading.dismiss();
                 }
@@ -223,7 +224,6 @@ public class WithdrawActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
     }
-
 
 
     /**

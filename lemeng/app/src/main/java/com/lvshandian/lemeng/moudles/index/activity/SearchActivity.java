@@ -129,7 +129,7 @@ public class SearchActivity extends BaseActivity {
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("id", user);
         map.put("userId", appUser.getId());
-        httpDatas.getData("搜索用户", Request.Method.GET, UrlBuilder.SEARCH, map, mHandler, RequestCode.SEACH_USER);
+        httpDatas.getData("搜索用户", Request.Method.GET, UrlBuilder.SEARCH, map, mHandler, RequestCode.SEACH_USER, TAG);
     }
 
 }

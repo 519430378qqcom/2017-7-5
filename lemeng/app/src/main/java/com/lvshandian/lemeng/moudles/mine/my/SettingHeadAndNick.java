@@ -262,7 +262,7 @@ public class SettingHeadAndNick extends BaseActivity {
         map.put("id", appUser.getId());
         map.put("picUrl", picUrl);
         map.put("nickName", nickName);
-        httpDatas.getNewDataCharServer("修改用户信息", Request.Method.POST, UrlBuilder.EDIT_PROFILE, map, mHandler, RequestCode.USER_TAG);
+        httpDatas.getNewDataCharServer("修改用户信息", true, Request.Method.POST, UrlBuilder.EDIT_PROFILE, map, mHandler, RequestCode.USER_TAG, TAG);
     }
 
 
@@ -314,7 +314,7 @@ public class SettingHeadAndNick extends BaseActivity {
      * 注销
      */
     private void logout() {
-       LogoutHelper.logout();
+        LogoutHelper.logout();
         removeLoginState();
         NIMClient.getService(AuthService.class).logout();
         UMUtils.removeAlias();

@@ -362,7 +362,7 @@ public class AuthenticationActivity extends BaseActivity {
         }
         params.put("IDbackPic", handIdImageNetPath);
 
-        httpDatas.getNewDataCharServer("上传认证信息", Request.Method.POST, UrlBuilder.AUTHENTICATION, params, mHandler, RequestCode.REAL_NAME_VERTIFY);
+        httpDatas.getNewDataCharServer("上传认证信息", true, Request.Method.POST, UrlBuilder.AUTHENTICATION, params, mHandler, RequestCode.REAL_NAME_VERTIFY, TAG);
     }
 
     /**

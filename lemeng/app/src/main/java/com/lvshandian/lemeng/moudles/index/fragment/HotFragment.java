@@ -197,7 +197,7 @@ public class HotFragment extends BaseFragment implements SwipeRefresh.OnRefreshL
             @Override
             public void onRecyclerClick(int position) {
 //              进入直播间
-                ifEnter(liveListBeen.get(position).getRooms().getRoomId() + "",liveListBeen.get(position).getRooms().getBroadcastUrl());
+                ifEnter(liveListBeen.get(position).getRooms().getRoomId() + "", liveListBeen.get(position).getRooms().getBroadcastUrl());
             }
         });
 
@@ -224,7 +224,7 @@ public class HotFragment extends BaseFragment implements SwipeRefresh.OnRefreshL
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("page", page + "");
         map.put("type", "1");
-        httpDatas.getNewDataCharServerRefresh("获取直播热门接口列表", Request.Method.GET, UrlBuilder.APP_ROOMS_LIST, map, mHandler, RequestCode.HOT_LIVE, mrlLayout);
+        httpDatas.getNewDataCharServerRefresh("获取直播热门接口列表", Request.Method.GET, UrlBuilder.APP_ROOMS_LIST, map, mHandler, RequestCode.HOT_LIVE, mrlLayout, TAG);
 
     }
 
@@ -235,14 +235,14 @@ public class HotFragment extends BaseFragment implements SwipeRefresh.OnRefreshL
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("rows", "50");
         map.put("page", "1");
-        httpDatas.getNewDataCharServerNoLoading("查询周榜排行榜", Request.Method.GET, UrlBuilder.WEEK_CONTRIBUTION, map, mHandler, RequestCode.REQUEST_RANK);
+        httpDatas.getNewDataCharServer("查询周榜排行榜", false, Request.Method.GET, UrlBuilder.WEEK_CONTRIBUTION, map, mHandler, RequestCode.REQUEST_RANK, TAG);
     }
 
     /**
      * 查询轮播图
      */
     private void getBannerList() {
-        httpDatas.getNewDataCharServerNoLoading("获取轮播图接口列表", Request.Method.GET, UrlBuilder.GET_BANNER, null, mHandler, RequestCode.HOME_BANNER);
+        httpDatas.getNewDataCharServer("获取轮播图接口列表", false, Request.Method.GET, UrlBuilder.GET_BANNER, null, mHandler, RequestCode.HOME_BANNER, TAG);
     }
 
     @Override

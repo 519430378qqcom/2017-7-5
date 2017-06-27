@@ -123,7 +123,7 @@ public class Videotails extends BaseActivity {
                                     //调用相册
                                     case 2:
                                         ConcurrentHashMap map = new ConcurrentHashMap<>();
-                                        httpDatas.getDataForJson("删除视频", Request.Method.DELETE, UrlBuilder.photoDelete(videoBean.getId()), map, mHandler, RequestCode.MY_PHOTO_DELETE_CODE);
+                                        httpDatas.getDataForJson("删除视频", true, Request.Method.DELETE, UrlBuilder.photoDelete(videoBean.getId()), map, mHandler, RequestCode.MY_PHOTO_DELETE_CODE, TAG);
                                         break;
                                     //取消
                                     case 3:

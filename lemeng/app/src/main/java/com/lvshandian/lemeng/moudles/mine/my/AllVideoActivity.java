@@ -98,7 +98,7 @@ public class AllVideoActivity extends BaseActivity {
      */
     private void requestVideo() {
         ConcurrentHashMap map = new ConcurrentHashMap<>();
-        httpDatas.getDataForJsoNoloading("视频图片请求列表", Request.Method.GET, UrlBuilder.myVideo(userId), map, mHandler, RequestCode.MY_VIDEO_LOAD);
+        httpDatas.getDataForJson("视频图片请求列表", false, Request.Method.GET, UrlBuilder.myVideo(userId), map, mHandler, RequestCode.MY_VIDEO_LOAD, TAG);
     }
 
     @Override

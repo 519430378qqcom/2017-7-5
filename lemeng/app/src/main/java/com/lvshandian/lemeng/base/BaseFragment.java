@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.lvshandian.lemeng.MyApplication;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.UrlBuilder;
 import com.lvshandian.lemeng.bean.AppUser;
@@ -47,9 +48,11 @@ public abstract class BaseFragment extends Fragment {
     protected UrlBuilder urlBuilder;
     protected AppUser appUser;
 
+    public String TAG;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         int layoutId = getLayoutId();
+        TAG = getClass().getName();
         view = inflater.inflate(layoutId, null);
         ButterKnife.bind(this, view);
         mContext = this.getActivity();
@@ -123,8 +126,11 @@ public abstract class BaseFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+        /**
+         * 当界面关闭的时候取消联网
+         */
+        MyApplication.requestQueueiInstance().cancelAll(TAG);
     }
-
 
     public void gotoActivity(Class<? extends Activity> clazz, boolean finish) {
         Intent intent = new Intent(getActivity(), clazz);

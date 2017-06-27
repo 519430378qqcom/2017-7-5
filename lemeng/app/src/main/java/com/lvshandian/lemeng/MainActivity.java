@@ -424,7 +424,7 @@ public class MainActivity extends BaseActivity implements
                 map.put("userId", appUser.getId());
                 map.put("thumbnailUrl", photo);//视频封面
                 map.put("url", data);//视频路径
-                httpDatas.getDataForJsoNoloading("上传视频", Request.Method.POST, UrlBuilder.MY_VIDEO_UPLOAD, map, mHandler, RequestCode.MY_VIDEO_UPLOAD);
+                httpDatas.getDataForJson("上传视频", false, Request.Method.POST, UrlBuilder.MY_VIDEO_UPLOAD, map, mHandler, RequestCode.MY_VIDEO_UPLOAD, TAG);
             }
 
             @Override
@@ -470,7 +470,7 @@ public class MainActivity extends BaseActivity implements
                 map.put("userId", appUser.getId());
                 LogUtils.e("headUrl" + data);
                 map.put("url", data);
-                httpDatas.getDataForJson("上传图库图片", Request.Method.POST, UrlBuilder.MY_PHOTO_UPLOAD, map, mHandler, RequestCode.MY_PHOTO_UPLOAD_CODE);
+                httpDatas.getDataForJson("上传图库图片", true, Request.Method.POST, UrlBuilder.MY_PHOTO_UPLOAD, map, mHandler, RequestCode.MY_PHOTO_UPLOAD_CODE, TAG);
             }
 
             @Override

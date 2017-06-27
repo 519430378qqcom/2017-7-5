@@ -152,7 +152,7 @@ public class ContributionActivity extends BaseActivity {
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("rows", "10");
         map.put("page", String.valueOf(page));
-        httpDatas.getNewDataCharServerRefresh("查询周榜排行榜", Request.Method.GET, UrlBuilder.WEEK_CONTRIBUTION, map, mHandler, RequestCode.REQUEST_RANK, refreshLayout);
+        httpDatas.getNewDataCharServerRefresh("查询周榜排行榜", Request.Method.GET, UrlBuilder.WEEK_CONTRIBUTION, map, mHandler, RequestCode.REQUEST_RANK, refreshLayout, TAG);
     }
 
 

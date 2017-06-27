@@ -13,8 +13,8 @@ import com.lvshandian.lemeng.MyApplication;
 import com.lvshandian.lemeng.UrlBuilder;
 import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.ToastUtils;
-import com.lvshandian.lemeng.widget.view.LoadingDialog;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout;
+import com.lvshandian.lemeng.widget.view.LoadingDialog;
 
 import org.json.JSONObject;
 
@@ -38,8 +38,6 @@ public class HttpDatas {
     LoadingDialog mDialog;
     private Context context;
 
-    private boolean isDialog = true;
-
     public HttpDatas(Context context, View view) {
         this.view = view;
         this.context = context;
@@ -49,23 +47,58 @@ public class HttpDatas {
 
     private FastJsonRequest<SdkHttpResult> fastJsonRequest;
     private FastJsonRequest<NewSdkHttpResult> newfastJsonRequest;
+    private BaseJsonRequest baseJsonRequest;
+
 
     /**
      * @param details     接口名
+     * @param method      请求方式
      * @param url         接口地址
+     * @param map         参数
      * @param handler
      * @param handlerCode
      */
-    public void getData(String details, String url, final Handler handler, final int handlerCode) {
-        url = urlBuilder.SERVER_URL + url;
+    public void getData(final String details, int method, String url, Map<String, String> map, final Handler handler, final int handlerCode, String tag) {
+        url = urlBuilder.build(url, map);
         LogUtils.i(details + ":" + url);
         if (!mDialog.isShowing()) {
             mDialog.show();
+        }
+        fastJsonRequest = new FastJsonRequest<SdkHttpResult>(method, url, SdkHttpResult.class, map, new Response.Listener<SdkHttpResult>() {
+            @Override
+            public void onResponse(SdkHttpResult response) {
+
+                String s = response.toString();
+                if (response.getCode().equals(SUCCESS_CODE)) {
+                    Message message = new Message();
+                    Bundle data = new Bundle();
+                    LogUtils.i(details + "返回内容:" + response.toString());
+                    data.putString(info, response.getData());
+                    message.setData(data);
+                    message.what = handlerCode;
+                    handler.sendMessage(message);
+                } else if (response.getCode().equals(SERVERS_CODE)) {
+                    LogUtils.i(details + "请求错误:" + response.getMessage());
+                }
+                if (mDialog.isShowing()) {
+                    mDialog.dismiss();
+                }
+            }
+        }, errorListener);
+        addRequestQueue(tag);
+    }
+
+    public void getDataDialog(final String details, boolean isDialog, String url, final Handler handler, final int handlerCode, String tag) {
+        url = urlBuilder.SERVER_URL + url;
+        LogUtils.i(details + ":" + url);
+        if (isDialog) {
+            if (!mDialog.isShowing()) {
+                mDialog.show();
+            }
         }
         fastJsonRequest = new FastJsonRequest<SdkHttpResult>(url, SdkHttpResult.class, new Response.Listener<SdkHttpResult>() {
             @Override
             public void onResponse(SdkHttpResult response) {
-
                 if (response.getCode().equals(SUCCESS_CODE)) {
                     Message message = new Message();
                     Bundle data = new Bundle();
@@ -74,103 +107,15 @@ public class HttpDatas {
                     message.what = handlerCode;
                     handler.sendMessage(message);
                 } else if (response.getCode().equals(SERVERS_CODE)) {
-                    ToastUtils.showMessageDefault(context, "服务器内部错误");
+                    LogUtils.i(details + "请求错误:" + response.getMessage());
                 }
                 if (mDialog.isShowing()) {
                     mDialog.dismiss();
                 }
             }
         }, errorListener);
-        addRequestQueue();
+        addRequestQueue(tag);
     }
-
-    /**
-     * @param details     接口名
-     * @param method      请求方式
-     * @param url         接口地址
-     * @param map         参数
-     * @param handler
-     * @param handlerCode
-     */
-    public void getData(final String details, int method, String url, Map<String, String> map, final Handler handler, final int handlerCode) {
-        url = urlBuilder.build(url, map);
-        LogUtils.i(details + ":" + url);
-        if (!mDialog.isShowing()) {
-            mDialog.show();
-        }
-        fastJsonRequest = new FastJsonRequest<SdkHttpResult>(method, url, SdkHttpResult.class, map, new Response.Listener<SdkHttpResult>() {
-            @Override
-            public void onResponse(SdkHttpResult response) {
-
-                String s = response.toString();
-                LogUtils.i(details + "返回内容:" + response.toString());
-                if (response.getCode().equals(SUCCESS_CODE)) {
-                    Message message = new Message();
-                    Bundle data = new Bundle();
-                    LogUtils.i(details + "返回内容:" + response.toString());
-                    data.putString(info, response.getData());
-                    message.setData(data);
-                    message.what = handlerCode;
-                    handler.sendMessage(message);
-                } else if (response.getCode().equals(SERVERS_CODE)) {
-                    LogUtils.i("服务器内部错误:" + response.getMessage());
-                }
-                if (mDialog.isShowing()) {
-                    mDialog.dismiss();
-                }
-            }
-        }, errorListener);
-        addRequestQueue();
-    }
-
-    /**
-     * @param details     接口名
-     * @param method      请求方式
-     * @param url         接口地址
-     * @param map         参数
-     * @param handler
-     * @param handlerCode
-     */
-    public void getDataNoLoading(final String details, int method, String url, Map<String, String> map, final Handler handler, final int handlerCode, final SwipeRefreshLayout refreshLayout) {
-        url = urlBuilder.build(url, map);
-        LogUtils.i(details + ":" + url);
-        fastJsonRequest = new FastJsonRequest<SdkHttpResult>(method, url, SdkHttpResult.class, map, new Response.Listener<SdkHttpResult>() {
-            @Override
-            public void onResponse(SdkHttpResult response) {
-
-                String s = response.toString();
-                LogUtils.e("WXPAY： " + s);
-                if (response.getCode().equals(SUCCESS_CODE)) {
-                    Message message = new Message();
-                    Bundle data = new Bundle();
-                    LogUtils.i(details + "返回内容:" + response.toString());
-                    data.putString(info, response.getData());
-                    message.setData(data);
-                    message.what = handlerCode;
-                    handler.sendMessage(message);
-                } else if (response.getCode().equals(SERVERS_CODE)) {
-                    LogUtils.i("服务器内部错误:" + response.getMessage());
-                    refreshLayout.setRefreshing(false);
-                    refreshLayout.setPullUpRefreshing(false);
-                    ToastUtils.showMessageDefault(context, "查询失败");
-                } else {
-                    refreshLayout.setRefreshing(false);
-                    refreshLayout.setPullUpRefreshing(false);
-                    ToastUtils.showMessageDefault(context, "查询失败");
-
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                refreshLayout.setRefreshing(false);
-                refreshLayout.setPullUpRefreshing(false);
-                ToastUtils.showMessageDefault(context, "网络错误");
-            }
-        });
-        addRequestQueue();
-    }
-
 
     /**
      * 拼接json字符串作为参数上传
@@ -182,20 +127,22 @@ public class HttpDatas {
      * @param handler
      * @param handlerCode
      */
-    public void getDataForJson(final String details, int method, String url, Map<String, String> map, final Handler handler, final int handlerCode) {
+    public void getDataForJson(final String details, boolean isDialog, int method, String url, Map<String, String> map, final Handler handler, final int handlerCode, String tag) {
         LogUtils.i(details + ":" + url);
-        if (!mDialog.isShowing()) {
-            mDialog.show();
+        if (isDialog) {
+            if (!mDialog.isShowing()) {
+                mDialog.show();
+            }
         }
         map.put("type", "0");
         // map.put("Charset", "UTF-8");
-        //  map.put("Content-Type", "application/json");
-//        map.put("Accept-Encoding", "gzip,deflate");
+        // map.put("Content-Type", "application/json");
+        // map.put("Accept-Encoding", "gzip,deflate");
         JSONObject params = new JSONObject(map);
         //第二个参数我们传了user=zhangqi。则请求方法就为post
         String url1 = UrlBuilder.SERVER_URL + url;
         LogUtils.e("url1: " + url1);
-        BaseJsonRequest objRequest = new BaseJsonRequest(method, url1, params,
+        baseJsonRequest = new BaseJsonRequest(method, url1, params,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject obj) {
@@ -210,12 +157,9 @@ public class HttpDatas {
                             message.what = handlerCode;
                             handler.sendMessage(message);
                         } else if (response.getCode().equals(SERVERS_CODE)) {
-//                            ToastUtils.showSnackBar(view, response.getMessage());
                             ToastUtils.showMessageDefault(context, response.getMessage());
-//                            AppMsg.makeText((Activity) context, response.getMessage(), new AppMsg.Style(1000, R.mipmap.toast_background)).show();
-                            LogUtils.i("服务器内部错误:" + response.getMessage());
+                            LogUtils.i(details + "请求错误:" + response.getMessage());
                         } else {
-//                            AppMsg.makeText((Activity) context, response.getMessage(), new AppMsg.Style(1000, R.mipmap.toast_background)).show();
                             ToastUtils.showMessageDefault(context, response.getMessage());
                         }
                         if (mDialog.isShowing()) {
@@ -223,53 +167,7 @@ public class HttpDatas {
                         }
                     }
                 }, errorListener);
-        // 将这个request加入到requestQueue中，就可以执行了
-        MyApplication.requestQueueiInstance().add(objRequest);
-    }
-
-
-    /**
-     * 拼接json字符串作为参数上传  noloading
-     *
-     * @param details     接口名
-     * @param method      请求方式
-     * @param url         接口地址
-     * @param map         参数
-     * @param handler
-     * @param handlerCode
-     */
-    public void getDataForJsoNoloading(final String details, int method, String url, Map<String, String> map, final Handler handler, final int handlerCode) {
-        LogUtils.i(details + ":" + url);
-
-        map.put("type", "0");
-        JSONObject params = new JSONObject(map);
-        LogUtils.i("JSONObject:" + params.toString());
-        //第二个参数我们传了user=zhangqi。则请求方法就为post
-        BaseJsonRequest objRequest = new BaseJsonRequest(method, UrlBuilder.SERVER_URL + url, params,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject obj) {
-                        SdkHttpResult response = JSON.parseObject(obj.toString(), SdkHttpResult.class);
-                        LogUtils.i(details + ":" + response.toString());
-
-                        if (response.getCode().equals(SUCCESS_CODE)) {
-                            Message message = new Message();
-                            Bundle data = new Bundle();
-                            data.putString(info, response.getData());
-                            message.setData(data);
-                            message.what = handlerCode;
-                            handler.sendMessage(message);
-                        } else if (response.getCode().equals(SERVERS_CODE)) {
-                            ToastUtils.showMessageDefault(context, response.getMessage());
-                            LogUtils.i("服务器内部错误:" + response.getMessage());
-                        }
-                        if (mDialog.isShowing()) {
-                            mDialog.dismiss();
-                        }
-                    }
-                }, errorListener);
-        // 将这个request加入到requestQueue中，就可以执行了
-        MyApplication.requestQueueiInstance().add(objRequest);
+        addBaseRequestQueue(tag);
     }
 
 
@@ -283,15 +181,17 @@ public class HttpDatas {
      * @param handler
      * @param handlerCode
      */
-    public void DataJsonAdmin(final String details, int method, String url, Map<String, String> map, final Handler handler, final int handlerCode) {
+    public void DataJsonAdmin(final String details, boolean isDialog, int method, String url, Map<String, String> map, final Handler handler, final int handlerCode, String tag) {
         LogUtils.i(details + ":" + url);
-        if (!mDialog.isShowing()) {
-            mDialog.show();
+        if (isDialog) {
+            if (!mDialog.isShowing()) {
+                mDialog.show();
+            }
         }
         JSONObject params = new JSONObject(map);
         LogUtils.i("JSONObject:" + params.toString());
         //第二个参数我们传了user=zhangqi。则请求方法就为post
-        BaseJsonRequest objRequest = new BaseJsonRequest(method, UrlBuilder.CHARGE_SERVER_URL + url, params,
+        baseJsonRequest = new BaseJsonRequest(method, UrlBuilder.CHARGE_SERVER_URL + url, params,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject obj) {
@@ -314,12 +214,11 @@ public class HttpDatas {
                         }
                     }
                 }, errorListener);
-        // 将这个request加入到requestQueue中，就可以执行了
-        MyApplication.requestQueueiInstance().add(objRequest);
+        addBaseRequestQueue(tag);
     }
 
     /**
-     * 拼接json字符串作为参数上传  noloading
+     * 拼接json字符串作为参数上传
      *
      * @param details     接口名
      * @param method      请求方式
@@ -328,12 +227,16 @@ public class HttpDatas {
      * @param handler
      * @param handlerCode
      */
-    public void DataNoloadingAdmin(final String details, int method, String url, Map<String, String> map, final Handler handler, final int handlerCode) {
-        LogUtils.i(details + ":" + url);
+    public void DataNoloadingAdmin(final String details, boolean isDialog, int method, String url, Map<String, String> map, final Handler handler, final int handlerCode, String tag) {
         JSONObject params = new JSONObject(map);
         LogUtils.i("JSONObject:" + params.toString());
+        if (isDialog) {
+            if (!mDialog.isShowing()) {
+                mDialog.show();
+            }
+        }
         //第二个参数我们传了user=zhangqi。则请求方法就为post
-        BaseJsonRequest objRequest = new BaseJsonRequest(method, UrlBuilder.CHARGE_SERVER_URL + url, params,
+        baseJsonRequest = new BaseJsonRequest(method, UrlBuilder.CHARGE_SERVER_URL + url, params,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject obj) {
@@ -356,95 +259,7 @@ public class HttpDatas {
                         }
                     }
                 }, errorListener);
-        // 将这个request加入到requestQueue中，就可以执行了
-        MyApplication.requestQueueiInstance().add(objRequest);
-    }
-
-
-    public Response.ErrorListener errorListener = new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            LogUtils.i("返回内容:" + "请求失败");
-            LogUtils.i("error:" + error.toString());
-            if (mDialog.isShowing()) {
-                mDialog.dismiss();
-            }
-        }
-    };
-
-    private void addRequestQueue() {
-        if (fastJsonRequest != null) {
-            MyApplication.requestQueueiInstance().add(fastJsonRequest);
-        }
-    }
-
-    //多加一个tag参数，用于指定取消
-    public void getData(String details, String url, final Handler handler, final int handlerCode, String tag) {
-        LogUtils.e(details + ":" + url);
-        if (!mDialog.isShowing()) {
-            mDialog.show();
-        }
-        fastJsonRequest = new FastJsonRequest<SdkHttpResult>(url, SdkHttpResult.class, new Response.Listener<SdkHttpResult>() {
-            @Override
-            public void onResponse(SdkHttpResult response) {
-                if (response.getCode().equals(SUCCESS_CODE)) {
-                    Message message = new Message();
-                    Bundle data = new Bundle();
-                    data.putString(info, response.getData());
-                    message.setData(data);
-                    message.what = handlerCode;
-                    handler.sendMessage(message);
-                } else if (response.getCode().equals(SERVERS_CODE)) {
-                    ToastUtils.showMessageDefault(context, "服务器内部错误");
-                }
-                if (mDialog.isShowing()) {
-                    mDialog.dismiss();
-                }
-            }
-        }, errorListener);
-        addRequestQueue(tag);
-    }
-
-    private void addRequestQueue(String tag) {
-        if (fastJsonRequest != null) {
-            fastJsonRequest.setTag(tag);
-            MyApplication.requestQueueiInstance().add(fastJsonRequest);
-        }
-    }
-
-
-    public void getDataDialog(String details, final boolean isDialog, String url, final Handler handler, final int handlerCode) {
-        url = urlBuilder.SERVER_URL + url;
-        LogUtils.i(details + ":" + url);
-        this.isDialog = isDialog;
-        if (isDialog) {
-            if (!mDialog.isShowing()) {
-                mDialog.show();
-            }
-        }
-        fastJsonRequest = new FastJsonRequest<SdkHttpResult>(url, SdkHttpResult.class, new Response.Listener<SdkHttpResult>() {
-            @Override
-            public void onResponse(SdkHttpResult response) {
-                if (response.getCode().equals(SUCCESS_CODE)) {
-                    Message message = new Message();
-                    Bundle data = new Bundle();
-                    data.putString(info, response.getData());
-                    message.setData(data);
-                    message.what = handlerCode;
-                    handler.sendMessage(message);
-                } else if (response.getCode().equals(SERVERS_CODE)) {
-                    ToastUtils.showMessageDefault(context, "服务器内部错误");
-                }
-
-                if (isDialog) {
-                    if (mDialog.isShowing()) {
-                        mDialog.dismiss();
-                    }
-                }
-
-            }
-        }, errorListener);
-        addRequestQueue();
+        addBaseRequestQueue(tag);
     }
 
 
@@ -456,11 +271,13 @@ public class HttpDatas {
      * @param handler
      * @param handlerCode
      */
-    public void getNewDataCharServer(final String details, int method, String url, Map<String, String> map, final Handler handler, final int handlerCode) {
+    public void getNewDataCharServer(final String details, boolean isDialog, int method, String url, Map<String, String> map, final Handler handler, final int handlerCode, String tag) {
         url = urlBuilder.buildChaServer(url, map);
         LogUtils.i(details + ":" + url);
-        if (!mDialog.isShowing()) {
-            mDialog.show();
+        if (isDialog) {
+            if (!mDialog.isShowing()) {
+                mDialog.show();
+            }
         }
         newfastJsonRequest = new FastJsonRequest<NewSdkHttpResult>(method, url, NewSdkHttpResult.class, map, new Response.Listener<NewSdkHttpResult>() {
             @Override
@@ -476,17 +293,16 @@ public class HttpDatas {
                     handler.sendMessage(message);
                 } else if (response.getCode() == 0 || response.getCode() == 401) {
                     ToastUtils.showMessageDefault(context, response.getMsg());
-                    ToastUtils.showMessageDefault(context, response.getMsg());
-                    LogUtils.i("服务器内部错误:" + response.getMsg());
-                    LogUtils.i("服务器内部错误:" + response.toString());
+                    LogUtils.i(details + "请求错误:" + response.getMsg());
                 }
                 if (mDialog.isShowing()) {
                     mDialog.dismiss();
                 }
             }
         }, errorListener);
-        newaddRequestQueue();
+        newaddRequestQueue(tag);
     }
+
 
     /**
      * @param details     接口名
@@ -496,7 +312,7 @@ public class HttpDatas {
      * @param handler
      * @param handlerCode
      */
-    public void getNewDataCharServerNoLoading(final String details, int method, String url, Map<String, String> map, final Handler handler, final int handlerCode) {
+    public void getNewDataCharServerRefresh(final String details, int method, String url, Map<String, String> map, final Handler handler, final int handlerCode, final SwipeRefreshLayout refreshLayout, String tag) {
         url = urlBuilder.buildChaServer(url, map);
         LogUtils.i(details + ":" + url);
         newfastJsonRequest = new FastJsonRequest<NewSdkHttpResult>(method, url, NewSdkHttpResult.class, map, new Response.Listener<NewSdkHttpResult>() {
@@ -512,45 +328,10 @@ public class HttpDatas {
                     message.what = handlerCode;
                     handler.sendMessage(message);
                 } else if (response.getCode() == 0) {
-//                    ToastUtils.showMessageDefault(context, response.getMsg());
-                    LogUtils.i("服务器内部错误:" + response.getMsg());
-                    LogUtils.i("服务器内部错误:" + response.toString());
-                }
-            }
-        }, errorListener);
-        newaddRequestQueue();
-    }
-
-    /**
-     * @param details     接口名
-     * @param method      请求方式
-     * @param url         接口地址
-     * @param map         参数
-     * @param handler
-     * @param handlerCode
-     */
-    public void getNewDataCharServerRefresh(final String details, int method, String url, Map<String, String> map, final Handler handler, final int handlerCode, final SwipeRefreshLayout refreshLayout) {
-        url = urlBuilder.buildChaServer(url, map);
-        LogUtils.i(details + ":" + url);
-        newfastJsonRequest = new FastJsonRequest<NewSdkHttpResult>(method, url, NewSdkHttpResult.class, map, new Response.Listener<NewSdkHttpResult>() {
-            @Override
-            public void onResponse(NewSdkHttpResult response) {
-                if (response.getCode() == 1) {
-                    Message message = new Message();
-                    Bundle data = new Bundle();
-                    LogUtils.i(details + "返回内容:" + response.toString());
-                    data.putString(info, response.getObj());
-                    data.putString(obj, response.getObj());
-                    message.setData(data);
-                    message.what = handlerCode;
-                    handler.sendMessage(message);
-                } else if (response.getCode() == 0) {
-//                    ToastUtils.showMessageDefault(context, response.getMsg());
-                    LogUtils.i("服务器内部错误:" + response.getMsg());
-                    LogUtils.i("服务器内部错误:" + response.toString());
+                    ToastUtils.showMessageDefault(context, response.getMsg());
+                    LogUtils.i(details + "请求错误:" + response.getMsg());
                     refreshLayout.setRefreshing(false);
                     refreshLayout.setPullUpRefreshing(false);
-                    ToastUtils.showMessageDefault(context, "查询失败");
                 }
             }
         }, new Response.ErrorListener() {
@@ -561,7 +342,7 @@ public class HttpDatas {
                 ToastUtils.showMessageDefault(context, "网络错误");
             }
         });
-        newaddRequestQueue();
+        newaddRequestQueue(tag);
     }
 
 
@@ -573,9 +354,14 @@ public class HttpDatas {
      * @param handler
      * @param handlerCode
      */
-    public void getNewDataCharServerCode(final String details, int method, String url, Map<String, String> map, final Handler handler, final int handlerCode) {
+    public void getNewDataCharServerCode(final String details, boolean isDialog, int method, String url, Map<String, String> map, final Handler handler, final int handlerCode, String tag) {
         url = urlBuilder.buildChaServer(url, map);
         LogUtils.i(details + ":" + url);
+        if (isDialog) {
+            if (!mDialog.isShowing()) {
+                mDialog.show();
+            }
+        }
         newfastJsonRequest = new FastJsonRequest<NewSdkHttpResult>(method, url, NewSdkHttpResult.class, map, new Response.Listener<NewSdkHttpResult>() {
             @Override
             public void onResponse(NewSdkHttpResult response) {
@@ -590,11 +376,14 @@ public class HttpDatas {
                     handler.sendMessage(message);
                 } else if (response.getCode() == 1) {
                     ToastUtils.showMessageDefault(context, response.getMsg());
-                    LogUtils.i("服务器内部错误:" + response.getMsg());
+                    LogUtils.i(details + "请求错误:" + response.getMsg());
+                }
+                if (mDialog.isShowing()) {
+                    mDialog.dismiss();
                 }
             }
         }, errorListener);
-        newaddRequestQueue();
+        newaddRequestQueue(tag);
     }
 
     /**
@@ -605,16 +394,21 @@ public class HttpDatas {
      * @param handler
      * @param handlerCode
      */
-    public void getNewDataCharServerCodeNoLoading(final String details, int method, String url, Map<String, String> map, final Handler handler, final int handlerCode) {
+    public void getNewDataCharServerCode1(final String details, boolean isDialog, int method, String url, Map<String, String> map, final Handler handler, final int handlerCode, String tag) {
         url = urlBuilder.buildChaServer(url, map);
         LogUtils.i(details + ":" + url);
+        if (isDialog) {
+            if (!mDialog.isShowing()) {
+                mDialog.show();
+            }
+        }
         newfastJsonRequest = new FastJsonRequest<NewSdkHttpResult>(method, url, NewSdkHttpResult.class, map, new Response.Listener<NewSdkHttpResult>() {
             @Override
             public void onResponse(NewSdkHttpResult response) {
+                LogUtils.i(details + "返回内容:" + response.toString());
                 if (response.getCode() == 1) {
                     Message message = new Message();
                     Bundle data = new Bundle();
-                    LogUtils.i(details + "返回内容:" + response.toString());
                     data.putString(info, response.getObj());
                     data.putString(obj, response.getObj());
                     message.setData(data);
@@ -622,20 +416,46 @@ public class HttpDatas {
                     handler.sendMessage(message);
                 } else if (response.getCode() == 0) {
                     ToastUtils.showMessageDefault(context, response.getMsg());
-                    LogUtils.i("服务器内部错误:" + response.getMsg());
+                    LogUtils.i(details + "请求错误:" + response.getMsg());
                 }
                 if (mDialog.isShowing()) {
                     mDialog.dismiss();
                 }
             }
         }, errorListener);
-        newaddRequestQueue();
+        newaddRequestQueue(tag);
     }
 
 
-    private void newaddRequestQueue() {
+    public Response.ErrorListener errorListener = new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            LogUtils.i("error:" + error.toString());
+            if (mDialog.isShowing()) {
+                mDialog.dismiss();
+            }
+        }
+    };
+
+
+    private void newaddRequestQueue(String tag) {
         if (newfastJsonRequest != null) {
+            newfastJsonRequest.setTag(tag);
             MyApplication.requestQueueiInstance().add(newfastJsonRequest);
+        }
+    }
+
+    private void addRequestQueue(String tag) {
+        if (fastJsonRequest != null) {
+            fastJsonRequest.setTag(tag);
+            MyApplication.requestQueueiInstance().add(fastJsonRequest);
+        }
+    }
+
+    private void addBaseRequestQueue(String tag) {
+        if (baseJsonRequest != null) {
+            baseJsonRequest.setTag(tag);
+            MyApplication.requestQueueiInstance().add(baseJsonRequest);
         }
     }
 }

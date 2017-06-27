@@ -324,7 +324,7 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
                         break;
                     case MotionEvent.ACTION_MOVE:
                         AutoRelativeLayout.LayoutParams lp = new AutoRelativeLayout.LayoutParams(AutoRelativeLayout.LayoutParams.MATCH_PARENT, AutoRelativeLayout.LayoutParams.MATCH_PARENT);
-                        if (myHead != null){
+                        if (myHead != null) {
                             myHead.setLayoutParams(lp);
                         }
                         break;
@@ -334,7 +334,7 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
                             @Override
                             public void run() {
                                 AutoRelativeLayout.LayoutParams lp1 = new AutoRelativeLayout.LayoutParams(width, height);
-                                if (myHead != null){
+                                if (myHead != null) {
                                     myHead.setLayoutParams(lp1);
                                 }
                             }
@@ -373,7 +373,7 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
     private void initUser() {
         ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
         map.put("id", appUser.getId());
-        httpDatas.getNewDataCharServerCodeNoLoading("查询用户信息", Request.Method.POST, UrlBuilder.SELECT_USER_INFO, map, mHandler, RequestCode.SELECT_USER);
+        httpDatas.getNewDataCharServerCode1("查询用户信息", false, Request.Method.POST, UrlBuilder.SELECT_USER_INFO, map, mHandler, RequestCode.SELECT_USER, TAG);
     }
 
     /**
@@ -384,7 +384,7 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
         map.put("userId", appUser.getId());
         map.put("rows", "10");
         map.put("page", "1");
-        httpDatas.getNewDataCharServerNoLoading("查询排我的贡献榜", Request.Method.GET, UrlBuilder.MY_CONTRIBUTION, map, mHandler, RequestCode.REQUEST_RANK);
+        httpDatas.getNewDataCharServer("查询排我的贡献榜", false, Request.Method.GET, UrlBuilder.MY_CONTRIBUTION, map, mHandler, RequestCode.REQUEST_RANK, TAG);
     }
 
     /**
@@ -392,7 +392,7 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
      */
     private void requestPhoto() {
         ConcurrentHashMap map = new ConcurrentHashMap<>();
-        httpDatas.getDataForJsoNoloading("图片请求列表", Request.Method.GET, UrlBuilder.myPhoto(appUser.getId()), map, mHandler, RequestCode.MY_PHOTO_LOAD);
+        httpDatas.getDataForJson("图片请求列表", false, Request.Method.GET, UrlBuilder.myPhoto(appUser.getId()), map, mHandler, RequestCode.MY_PHOTO_LOAD, TAG);
     }
 
     /**
@@ -400,7 +400,7 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
      */
     private void requestVideo() {
         ConcurrentHashMap map = new ConcurrentHashMap<>();
-        httpDatas.getDataForJsoNoloading("视频图片请求列表", Request.Method.GET, UrlBuilder.myVideo(appUser.getId()), map, mHandler, RequestCode.MY_VIDEO_LOAD);
+        httpDatas.getDataForJson("视频图片请求列表", false, Request.Method.GET, UrlBuilder.myVideo(appUser.getId()), map, mHandler, RequestCode.MY_VIDEO_LOAD, TAG);
     }
 
 

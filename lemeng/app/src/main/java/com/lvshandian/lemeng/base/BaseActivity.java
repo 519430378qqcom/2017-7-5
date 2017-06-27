@@ -46,8 +46,8 @@ import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.NetWorkUtil;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
-import com.lvshandian.lemeng.widget.view.ShowPop;
 import com.lvshandian.lemeng.wangyiyunxin.config.preference.Preferences;
+import com.lvshandian.lemeng.widget.view.ShowPop;
 import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
@@ -93,11 +93,14 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
     protected AppUser appUser;
     private LayoutInflater mInflator;
     private LiveListBean live;
+    public String TAG;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LogUtils.e("BaseActivity", getClass().getSimpleName());
+        LogUtils.e("BaseActivity", getClass().getName());
+
+        TAG = getClass().getName();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(true);
@@ -254,7 +257,7 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
         initialized();
         // 初始化组件
         initListener();
-        registerReceiveCustom(true);
+//        registerReceiveCustom(true);
     }
 
     /**
@@ -516,7 +519,11 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
     protected void onDestroy() {
         EventBus.getDefault().unregister(this);
         MyApplication.removeListActivity(this);
-        registerReceiveCustom(false);
+//        registerReceiveCustom(false);
+        /**
+         * 当界面关闭的时候取消联网
+         */
+        MyApplication.requestQueueiInstance().cancelAll(TAG);
         super.onDestroy();
     }
 
