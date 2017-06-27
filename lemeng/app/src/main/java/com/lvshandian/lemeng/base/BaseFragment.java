@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.lvshandian.lemeng.MyApplication;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.UrlBuilder;
 import com.lvshandian.lemeng.bean.AppUser;
@@ -129,7 +128,7 @@ public abstract class BaseFragment extends Fragment {
         /**
          * 当界面关闭的时候取消联网
          */
-        MyApplication.requestQueueiInstance().cancelAll(TAG);
+//        MyApplication.requestQueueiInstance().cancelAll(TAG);
     }
 
     public void gotoActivity(Class<? extends Activity> clazz, boolean finish) {

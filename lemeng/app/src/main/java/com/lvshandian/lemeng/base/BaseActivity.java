@@ -962,8 +962,9 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
         params.width = WindowManager.LayoutParams.WRAP_CONTENT;
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         baseDialog.getWindow().setAttributes(params);
-        baseDialog.show();
-
+        if (!isFinishing()) {
+            baseDialog.show();
+        }
         baseDialogTitle = (TextView) view.findViewById(R.id.tvTitle);
         baseDialogLeft = (TextView) view.findViewById(R.id.btnLeft);
         baseDialogRight = (TextView) view.findViewById(R.id.btnRight);
