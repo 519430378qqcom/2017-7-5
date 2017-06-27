@@ -2585,6 +2585,7 @@ public class StartLiveActivity extends BaseActivity implements
             bullfightPresenter.detach();
         }
         timer.cancel();
+        timer.purge();
         if (lianmaiTimer != null) {
             lianmaiTimer.cancel();
         }

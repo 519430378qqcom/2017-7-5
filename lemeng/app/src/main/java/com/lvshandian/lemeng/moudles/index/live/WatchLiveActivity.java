@@ -2946,6 +2946,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         unregisterReceiver(broadcastReceiver);
         barrageview.setSentenceList(new ArrayList<BarrageDateBean>());
         timer.cancel();
+        timer.purge();
         if (bullfightPresenter != null) {
             bullfightPresenter.detach();
         }
@@ -3453,8 +3454,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 mSendGiftLian.setVisibility(View.GONE);
             }
         }, 200);
-
-        popupWindow = new CustomPopWindow(this);
+        if(popupWindow == null) {
+            popupWindow = new CustomPopWindow(this);
+        }
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.view_show_viewpager, null);
         popupWindow.setContentView(view);
@@ -3479,10 +3481,10 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 showToast(getString(R.string.stay_open));
             }
         });
-
-        String myCoin = CountUtils.getCount(myGoldCoin);
-        mUserCoin.setText(myCoin);
-
+        if(myGoldCoin > 0) {
+            String myCoin = CountUtils.getCount(myGoldCoin);
+            mUserCoin.setText(myCoin);
+        }
         mVpGiftView = (ViewPager) view.findViewById(R.id.vp_gift_page);
         mSendGiftBtn = (Button) view.findViewById(R.id.btn_show_send_gift);
         mSendGiftBtn.setOnClickListener(new View.OnClickListener() {
