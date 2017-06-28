@@ -197,7 +197,7 @@ public class OtherPersonHomePageActivity extends BaseActivity {
                 case RequestCode.MY_VIDEO_LOAD://视频请求列表
                     final List<VideoBean> listAdds = JsonUtil.json2BeanList(json.toString(), VideoBean.class);
 
-                    tv_phone_num.setText(getString(R.string.small_video_amount, String.valueOf(listAdds.size())));
+                    tv_video_num.setText(getString(R.string.small_video_amount, String.valueOf(listAdds.size())));
                     listvideo.clear();
                     listvideo.addAll(listAdds);
                     adaptervideo.notifyDataSetChanged();

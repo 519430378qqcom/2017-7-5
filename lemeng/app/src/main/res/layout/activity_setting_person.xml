@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_gravity="left"
-            android:text="@string/gender"
+            android:text="@string/head"
             android:textColor="@color/backgeragd_head"
             android:textSize="30px" />
 

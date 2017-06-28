@@ -5269,8 +5269,8 @@ public class StartLiveActivity extends BaseActivity implements
                                 all_lepiao.setText(myCoin);
                             }
 
-//                            List<LastAwardBean.RoomRanksBean> ranksBean = lastAwardBean.getRoomRanks();
-//                            showRankDialog(ranksBean);
+                            List<LastAwardBean.RoomRanksBean> ranksBean = lastAwardBean.getRoomRanks();
+                            showRankDialog(ranksBean);
                         }
                     } else if (code.equals("1")) {
                         isTouZhu = false;

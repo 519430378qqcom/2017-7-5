@@ -895,7 +895,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                     }
 
                     liveListBean = JsonUtil.json2Bean(json.toString(), LiveListBean.class);
-                    room_Id = liveListBean.getRoomId() + "";
+                    room_Id = liveListBean.getRooms().getId() + "";
                     zhubo_Id = liveListBean.getId() + "";
                     myGoldCoin = Long.parseLong(appUser.getGoldCoin());
                     liveHead.setAvatarUrl(liveListBean.getPicUrl());
