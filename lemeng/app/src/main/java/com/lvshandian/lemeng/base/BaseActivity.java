@@ -56,7 +56,6 @@ import com.netease.nimlib.sdk.msg.MsgService;
 import com.netease.nimlib.sdk.msg.MsgServiceObserve;
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 import com.netease.nimlib.sdk.msg.model.CustomNotification;
-import com.netease.nimlib.sdk.msg.model.IMMessage;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.tandong.sa.activity.SmartFragmentActivity;
 import com.umeng.analytics.MobclickAgent;
@@ -75,7 +74,6 @@ import org.json.JSONException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.ButterKnife;
@@ -153,27 +151,27 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
         super.onResume();
 //        appUser = (AppUser) CacheUtils.readObject(this, CacheUtils.USERINFO);
         appUser = SharedPreferenceUtils.getUserInfo(mContext);
-        /**
-         * 废除用户：根据姓名和发送的消息进行废除用户强制退出；
-         */
-        Observer<List<IMMessage>> incomingMessageObserver =
-                new Observer<List<IMMessage>>() {
-                    @Override
-                    public void onEvent(List<IMMessage> messages) {
-                        // 处理新收到的消息，为了上传处理方便，SDK 保证参数 messages 全部来自同一个聊天对象。
-                        IMMessage imMessage = messages.get(0);
-                        if (imMessage.getSessionId().equals("miu_1") && imMessage.getContent()
-                                .equals("exit")) {
-                            LogUtils.e("退出拉黑客戶端" + imMessage.getFromNick() + imMessage.getContent
-                                    ());
-                            quitLogin();
-                        }
-                        LogUtils.e("messages: " + imMessage.getSessionId() + imMessage.getContent
-                                ());
-                    }
-                };
-        NIMClient.getService(MsgServiceObserve.class)
-                .observeReceiveMessage(incomingMessageObserver, true);
+//        /**
+//         * 废除用户：根据姓名和发送的消息进行废除用户强制退出；
+//         */
+//        Observer<List<IMMessage>> incomingMessageObserver =
+//                new Observer<List<IMMessage>>() {
+//                    @Override
+//                    public void onEvent(List<IMMessage> messages) {
+//                        // 处理新收到的消息，为了上传处理方便，SDK 保证参数 messages 全部来自同一个聊天对象。
+//                        IMMessage imMessage = messages.get(0);
+//                        if (imMessage.getSessionId().equals("miu_1") && imMessage.getContent()
+//                                .equals("exit")) {
+//                            LogUtils.e("退出拉黑客戶端" + imMessage.getFromNick() + imMessage.getContent
+//                                    ());
+//                            quitLogin();
+//                        }
+//                        LogUtils.e("messages: " + imMessage.getSessionId() + imMessage.getContent
+//                                ());
+//                    }
+//                };
+//        NIMClient.getService(MsgServiceObserve.class)
+//                .observeReceiveMessage(incomingMessageObserver, true);
 
     }
 
@@ -238,6 +236,7 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
     }
 
     /**
+     *
      * 清除登陆状态
      */
     private void removeLoginState() {

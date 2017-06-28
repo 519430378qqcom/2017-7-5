@@ -23,7 +23,7 @@
         android:layout_toRightOf="@+id/iv_rank_head"
         android:textColor="@color/white"
         android:textSize="14sp"
-        tools:text="NAME" />
+        tools:text="NAME"/>
 
     <TextView
         android:id="@+id/tv_rank_sum"

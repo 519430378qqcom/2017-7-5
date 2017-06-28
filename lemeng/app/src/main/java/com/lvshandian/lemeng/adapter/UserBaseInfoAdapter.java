@@ -85,7 +85,13 @@ public class UserBaseInfoAdapter extends BaseAdapter {
 
         viewHolder.mUSex.setImageResource(Integer.parseInt(u.getGender()) == 1 ? R.mipmap.male : R.mipmap.female);
         viewHolder.mIsFollow.setImageResource(Integer.parseInt(u.getFollow()) == 1 ? R.mipmap.me_following : R.mipmap.me_follow);
-        viewHolder.mULevel.setImageResource(GrademipmapUtils.LevelImg[Integer.parseInt(u.getLevel()) - 1]);
+        int level = 1;
+        try {
+            level = Integer.parseInt(u.getLevel());
+        } catch (NumberFormatException ex) {
+
+        }
+        viewHolder.mULevel.setImageResource(GrademipmapUtils.LevelImg[level - 1]);
         viewHolder.mUNice.setText(u.getNickName());
         viewHolder.mUSign.setText(u.getSignature());
         viewHolder.mIsFollow.setOnClickListener(new View.OnClickListener() {
@@ -129,7 +135,7 @@ public class UserBaseInfoAdapter extends BaseAdapter {
                     @Override
                     public void onResponse(JSONObject obj) {
                         SdkHttpResult response = JSON.parseObject(obj.toString(), SdkHttpResult.class);
-                        ToastUtils.showMessageDefault(context,context.getResources().getString(R.string.attention_succeed));
+                        ToastUtils.showMessageDefault(context, context.getResources().getString(R.string.attention_succeed));
                         LogUtils.i(response.toString());
                     }
                 }, errorListener);

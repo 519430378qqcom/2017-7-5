@@ -3020,6 +3020,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 int type = Integer.parseInt((String) remote.get("type"));
                 switch (type) {
                     case 105://进入房间
+                        if(message.getRemoteExtension().get("data") == null){
+                            return;
+                        }
                         RoomUserBean roomUserBean = JavaBeanMapUtils.mapToBean((Map) message.
                                 getRemoteExtension().get("data"), RoomUserBean.class);
                         liveNum.setText(++liveOnLineNums + "");
@@ -3029,6 +3032,9 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         }
                         break;
                     case 106://离开房间
+                        if(message.getRemoteExtension().get("data") == null){
+                            return;
+                        }
                         LogUtil.e("有人离开直播间", message.getRemoteExtension().get("data").toString());
                         RoomUserBean leaveRoom = JavaBeanMapUtils.mapToBean((Map) message.
                                 getRemoteExtension().get("data"), RoomUserBean.class);

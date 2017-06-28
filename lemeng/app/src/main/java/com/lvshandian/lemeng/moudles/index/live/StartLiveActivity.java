@@ -2670,6 +2670,9 @@ public class StartLiveActivity extends BaseActivity implements
                 switch (type) {
                     case 105://进入房间
 //                        requestNet();
+                        if(message.getRemoteExtension().get("data") == null){
+                            return;
+                        }
                         LogUtil.e("有人进入直播间", message.getRemoteExtension().get("data").toString());
                         RoomUserBean enterRoom = JavaBeanMapUtils.mapToBean((Map) message.
                                 getRemoteExtension().get("data"), RoomUserBean.class);
@@ -2680,6 +2683,9 @@ public class StartLiveActivity extends BaseActivity implements
                         }
                         break;
                     case 106://离开房间
+                        if(message.getRemoteExtension().get("data") == null){
+                            return;
+                        }
                         LogUtil.e("有人离开直播间", message.getRemoteExtension().get("data").toString());
                         RoomUserBean leaveRoom = JavaBeanMapUtils.mapToBean((Map) message.
                                 getRemoteExtension().get("data"), RoomUserBean.class);
