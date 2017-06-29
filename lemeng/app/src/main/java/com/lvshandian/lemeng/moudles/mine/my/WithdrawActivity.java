@@ -14,6 +14,7 @@ import com.lvshandian.lemeng.base.BaseActivity;
 import com.lvshandian.lemeng.bean.AppUser;
 import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.httprequest.RequestCode;
+import com.lvshandian.lemeng.moudles.mine.activity.WithdrawalActivity;
 import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.widget.view.LoadingDialog;
@@ -119,7 +120,7 @@ public class WithdrawActivity extends BaseActivity {
                 showToast(getString(R.string.stay_open));
                 break;
             case R.id.ll_unionpay:
-//                startActivity(new Intent(mContext, ));
+                startActivity(new Intent(mContext, WithdrawalActivity.class));
                 break;
             case R.id.tv_titlebar_left:
                 defaultFinish();

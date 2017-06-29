@@ -3,6 +3,7 @@ package com.lvshandian.lemeng.moudles.mine.activity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.base.BaseActivity;
@@ -21,7 +22,7 @@ public class AddBankCardActivity extends BaseActivity {
     @Bind(R.id.phone_number)
     EditText phone_number;
     @Bind(R.id.confirm)
-    EditText confirm;
+    TextView confirm;
 
     @Override
     protected int getLayoutId() {
@@ -58,6 +59,8 @@ public class AddBankCardActivity extends BaseActivity {
                 }
 
                 break;
+            case R.id.tv_titlebar_left:
+                defaultFinish();
         }
     }
 }

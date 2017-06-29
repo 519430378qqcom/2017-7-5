@@ -324,6 +324,16 @@
             android:name=".moudles.mine.activity.WeichatDraw"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
+        <!-- 银行卡提现 -->
+        <activity
+            android:name=".moudles.mine.activity.WithdrawalActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!-- 添加银行卡 -->
+        <activity
+            android:name=".moudles.mine.activity.AddBankCardActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <!-- 我的场控 -->
         <activity
             android:name=".moudles.mine.my.MyControllerActivity"
@@ -612,7 +622,6 @@
             android:value="@integer/google_play_services_version" />
         <!-- 网易云信配置结束 -->
 
-        <activity android:name=".moudles.mine.activity.AddBankCardActivity"></activity>
     </application>
 
 </manifest>
