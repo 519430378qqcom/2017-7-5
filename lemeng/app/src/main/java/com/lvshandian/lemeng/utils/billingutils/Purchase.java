@@ -62,5 +62,5 @@ public class Purchase {
     public boolean isAutoRenewing() { return mIsAutoRenewing; }
 
     @Override
-    public String toString() { return "PurchaseInfo(type:" + mItemType + "):" + mOriginalJson; }
+    public String toString() { return "PurchaseInfo(type:" + mItemType + "):" + mOriginalJson+" mSignature:"+mSignature; }
 }

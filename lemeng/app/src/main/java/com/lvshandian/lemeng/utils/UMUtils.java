@@ -148,7 +148,7 @@ public class UMUtils {
 
     }
 
-    public static void umShare(Activity act, String share_title, String share_content, final String picUrl, String share_url) {
+    public static void umShare(Activity act, final String share_title, String share_content, final String picUrl, String share_url) {
         mActivity = act;
         final UMWeb web = new UMWeb(share_url);
         web.setTitle(share_title);//标题
@@ -164,8 +164,8 @@ public class UMUtils {
                           if(share_media==GOOGLEPLUS){
                               Intent shareIntent = new PlusShare.Builder(mActivity)
                                                   .setType("text/plain")
-                                                  .setText("Welcome to the Google+ platform.")
-                                                  .setContentUrl(Uri.parse("https://developers.google.com/+/"))
+                                                  .setText(share_title.subSequence(0,share_title.length()))
+                                                  .setContentUrl(Uri.parse(picUrl))
                                                   .getIntent();
                             mActivity.startActivityForResult(shareIntent, 0);
                               }else{
