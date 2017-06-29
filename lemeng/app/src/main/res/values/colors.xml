@@ -214,4 +214,5 @@
     <color name="redpackage_color_start">#B3AC3DDF</color>
     <color name="redpackage_color_center">#B3735EE9</color>
     <color name="redpackage_color_end">#B31C93FB</color>
+    <color name="bankcard_green">#319585</color>
 </resources>

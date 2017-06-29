@@ -622,4 +622,6 @@
     <string name="not_update">暂不更新</string>
     <string name="background_updates">已切换至后台更新</string>
     <string name="is_mobile_network_if_updates">当前为移动网络,是否继续下载</string>
+    <string name="change_balance">零钱总额￥</string>
+    <string name="add_bank_card">+添加银行卡</string>
 </resources>
