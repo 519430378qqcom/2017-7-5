@@ -55,13 +55,13 @@ public class RoomUsersDataAdapter extends RecyclerView.Adapter<RoomUsersDataAdap
             }
         });
 
-        holder.ivHeader.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                mLongClickListener.onItemLongClickListener(v, position);
-                return true;
-            }
-        });
+//        holder.ivHeader.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                mLongClickListener.onItemLongClickListener(v, position);
+//                return true;
+//            }
+//        });
 
     }
 
@@ -78,11 +78,11 @@ public class RoomUsersDataAdapter extends RecyclerView.Adapter<RoomUsersDataAdap
     }
 
 
-    private OnItemLongClickListener mLongClickListener;
-
-    public void setOnItemLongClickListener(OnItemLongClickListener longClickListener) {
-        mLongClickListener = longClickListener;
-    }
+//    private OnItemLongClickListener mLongClickListener;
+//
+//    public void setOnItemLongClickListener(OnItemLongClickListener longClickListener) {
+//        mLongClickListener = longClickListener;
+//    }
 
     class RoomUserHolder extends RecyclerView.ViewHolder {
         private ImageView ivHeader;

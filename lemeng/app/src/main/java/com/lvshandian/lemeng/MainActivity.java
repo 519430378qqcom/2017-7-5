@@ -42,6 +42,7 @@ import com.lvshandian.lemeng.moudles.mine.bean.PhotoBean;
 import com.lvshandian.lemeng.moudles.mine.bean.VideoBean;
 import com.lvshandian.lemeng.moudles.start.LoginActivity;
 import com.lvshandian.lemeng.moudles.start.LogoutHelper;
+import com.lvshandian.lemeng.service.UpdateApkService;
 import com.lvshandian.lemeng.utils.AliYunImageUtils;
 import com.lvshandian.lemeng.utils.DateUtils;
 import com.lvshandian.lemeng.utils.JsonUtil;
@@ -207,6 +208,7 @@ public class MainActivity extends BaseActivity implements
 
     @Override
     protected void initialized() {
+//        startAppVersionUpdate();
         initFragments();
         registerObservers(true);
         //注册监听自定义通知
@@ -720,8 +722,8 @@ public class MainActivity extends BaseActivity implements
     public void onBackPressed() {
         long now = System.currentTimeMillis();
         if ((now - firstPressed <= dowableClick) && firstPressed != 0) {
-            EventBus.getDefault().post(new QuitApp());
             super.onBackPressed();
+            EventBus.getDefault().post(new QuitApp());
             System.exit(0);
         } else {
             showToast(getString(R.string.again_press_quit));
@@ -820,5 +822,14 @@ public class MainActivity extends BaseActivity implements
                 }
 
         );
+    }
+
+    /**
+     * 启动应用版本更新服务
+     */
+    private void startAppVersionUpdate() {
+        // 启动应用静默下载安装服务
+        Intent intent = new Intent(this, UpdateApkService.class);
+        this.startService(intent);
     }
 }

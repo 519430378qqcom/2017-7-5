@@ -107,9 +107,9 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_lang"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:largeHeap="true"
         tools:replace="android:icon, android:theme">
         <meta-data
             android:name="design_width"
@@ -125,6 +125,11 @@
 
         <service
             android:name=".service.VoiceService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <service
+            android:name=".service.UpdateApkService"
             android:enabled="true"
             android:exported="true" />
 
@@ -535,17 +540,20 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
 
         <!--<meta-data-->
-            <!--android:name="com.facebook.sdk.ApplicationId"-->
-            <!--android:value="487692214752558" />-->
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
+        <!--android:name="com.facebook.sdk.ApplicationId"-->
+        <!--android:value="487692214752558" />-->
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
         <!-- Twitter -->
         <activity
             android:name="com.umeng.socialize.handler.TwitterWebActivity"

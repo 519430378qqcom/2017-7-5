@@ -30,6 +30,7 @@ public class UrlBuilder {
 //    public static final String CHARGE_SERVER_URL = "http://10.11.1.119:8081/admin/";// 充值端口
 //    public static final String SERVER_URL_8080 = "http://10.11.1.119:8080/";// 服务器网址公网
 //    public static final String CHARGE_SERVER_URL_8080 = "http://10.11.1.119:8080/admin/";// 充值端口
+//    public static final String GAME_BASE = "http://10.11.1.119/admin/";//游戏
 
     //阿里云
     public static final String ALIYUN_IMG = "http://lemeng.oss-ap-southeast-1.aliyuncs.com/";//阿里云图片視頻生成地址
@@ -99,6 +100,7 @@ public class UrlBuilder {
     public static final String GET_TIME_NUMBER = "/appusers/gettimenumber";//获取上期开奖数据
     public static final String BARRAGE = "/api/v1/barrage/";//发送弹幕消息扣金币
     public static final String ROOM_EXIT = "/api/v1/room/exit";//退出直播间
+    public static final String VERSION_UPDATE = "/appAndroidVersion/searchAndroidVersion";//版本更新
 
     public static final String PROFIT_AND_LOSS_RECORD = "/appusers/GameProfitLoss?userId=%s&rows=%s&page=%s&starttime=%s";//盈亏记录
     public static final String WITHDRAWAL_RECORD = "/appthird/getUserExchangeAccounts?page=%s&rows=%s&userId=%s&transType=%s";//存款取款记录 transType=0存 transType=1取

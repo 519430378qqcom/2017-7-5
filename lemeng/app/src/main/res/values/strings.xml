@@ -613,4 +613,13 @@
     <string name="facebook_app_id">1754771504538287</string>
     <string name="fb_login_protocol_scheme">fb1754771504538287</string>
     <string name="google_billing_notsetup">您还没有登陆谷歌服务框架</string>
+
+    <!--6月29日之后添加start-->
+    <string name="download_is_in_progress">正在下载...</string>
+    <string name="the_new_version_is_detected">检测到新版本</string>
+    <string name="update_notification">更新通知</string>
+    <string name="update_now">立即更新</string>
+    <string name="not_update">暂不更新</string>
+    <string name="background_updates">已切换至后台更新</string>
+    <string name="is_mobile_network_if_updates">当前为移动网络,是否继续下载</string>
 </resources>
