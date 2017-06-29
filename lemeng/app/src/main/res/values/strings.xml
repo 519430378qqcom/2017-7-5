@@ -624,4 +624,16 @@
     <string name="is_mobile_network_if_updates">当前为移动网络,是否继续下载</string>
     <string name="change_balance">零钱总额￥</string>
     <string name="add_bank_card">+添加银行卡</string>
+    <string name="unionpay_withdraw">银行卡提现</string>
+    <string name="bind_self_bank_card">请绑定持卡人本人银行卡</string>
+    <string name="cardholder">持卡人</string>
+    <string name="input_cardholder_name">请输入持卡人姓名</string>
+    <string name="credit_card_numbers">银行卡号</string>
+    <string name="input_credit_card_numbers">请输入银行卡号</string>
+    <string name="card_type">卡类型</string>
+    <string name="input_card_type">请输入卡类型(如:中国银行)</string>
+    <string name="bank_address">开户行地址</string>
+    <string name="input_bank_address">请输入开户行地址</string>
+    <string name="incomplete_information">资料填写不完整</string>
+    <string name="add_bank_card">银行卡</string>
 </resources>

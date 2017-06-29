@@ -1,0 +1,205 @@
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grayF1"
+    android:orientation="vertical">
+
+    <!--绑定银行卡-->
+    <include layout="@layout/title_bar" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="74px"
+        android:gravity="center_vertical"
+        android:paddingLeft="30px"
+        android:text="@string/bind_self_bank_card"
+        android:textColor="@color/tv_color6"
+        android:textSize="28px" />
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="130px"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="30px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cardholder"
+            android:textColor="@color/tv_color3"
+            android:textSize="30px" />
+
+        <EditText
+            android:id="@+id/cardholder_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100px"
+            android:background="@null"
+            android:hint="@string/input_cardholder_name"
+            android:textColor="@color/black"
+            android:textSize="30px" />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1.5px"
+        android:background="@color/white"
+        android:paddingLeft="30px">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/grayF1" />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="130px"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="30px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/credit_card_numbers"
+            android:textColor="@color/tv_color3"
+            android:textSize="30px" />
+
+        <EditText
+            android:id="@+id/card_numbers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100px"
+            android:background="@null"
+            android:hint="@string/input_credit_card_numbers"
+            android:textColor="@color/black"
+            android:textSize="30px" />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1.5px"
+        android:background="@color/white"
+        android:paddingLeft="30px">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/grayF1" />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="130px"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="30px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/card_type"
+            android:textColor="@color/tv_color3"
+            android:textSize="30px" />
+
+        <EditText
+            android:id="@+id/card_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100px"
+            android:background="@null"
+            android:hint="@string/input_card_type"
+            android:textColor="@color/black"
+            android:textSize="30px" />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1.5px"
+        android:background="@color/white"
+        android:paddingLeft="30px">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/grayF1" />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="130px"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="30px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bank_address"
+            android:textColor="@color/tv_color3"
+            android:textSize="30px" />
+
+        <EditText
+            android:id="@+id/bank_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100px"
+            android:background="@null"
+            android:hint="@string/input_bank_address"
+            android:textColor="@color/black"
+            android:textSize="30px" />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1.5px"
+        android:background="@color/white"
+        android:paddingLeft="30px">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/grayF1" />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="130px"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="30px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/phone_number"
+            android:textColor="@color/tv_color3"
+            android:textSize="30px" />
+
+        <EditText
+            android:id="@+id/phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100px"
+            android:background="@null"
+            android:hint="@string/please_input_phone"
+            android:textColor="@color/black"
+            android:textSize="30px" />
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <TextView
+        android:id="@+id/confirm"
+        android:layout_width="match_parent"
+        android:layout_height="90px"
+        android:layout_marginLeft="112px"
+        android:layout_marginRight="112px"
+        android:layout_marginTop="80px"
+        android:background="@drawable/selector_loginbtn_circle"
+        android:gravity="center"
+        android:text="@string/confirm"
+        android:textColor="@android:color/white"
+        android:textSize="34px" />
+
+</com.zhy.autolayout.AutoLinearLayout>

@@ -14,7 +14,6 @@ import com.lvshandian.lemeng.base.BaseActivity;
 import com.lvshandian.lemeng.bean.AppUser;
 import com.lvshandian.lemeng.httprequest.HttpDatas;
 import com.lvshandian.lemeng.httprequest.RequestCode;
-import com.lvshandian.lemeng.moudles.mine.activity.WeichatDraw;
 import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.widget.view.LoadingDialog;
@@ -45,6 +44,8 @@ public class WithdrawActivity extends BaseActivity {
     AutoLinearLayout ll_ali;
     @Bind(R.id.ll_wchat)
     AutoLinearLayout ll_wchat;
+    @Bind(R.id.ll_unionpay)
+    AutoLinearLayout ll_unionpay;
 
     private String exchangeStatus;//1 绑定微信公众号  0未绑定
     /**
@@ -85,7 +86,7 @@ public class WithdrawActivity extends BaseActivity {
     protected void initListener() {
         ll_ali.setOnClickListener(this);
         ll_wchat.setOnClickListener(this);
-
+        ll_unionpay.setOnClickListener(this);
     }
 
     @Override
@@ -102,18 +103,23 @@ public class WithdrawActivity extends BaseActivity {
                 /**
                  * 支付宝提现
                  */
-                startActivity(new Intent(mContext, DrawRedPackage.class));
+//                startActivity(new Intent(mContext, DrawRedPackage.class));
+                showToast(getString(R.string.stay_open));
                 break;
             case R.id.ll_wchat:
                 /**
                  * 微信公众号提现
                  */
-                if (exchangeStatus != null && exchangeStatus.equals("1")) {
-                    //前去
-                    startActivity(new Intent(mContext, WeichatDraw.class));
-                } else {
-                    initBindDialog();
-                }
+//                if (exchangeStatus != null && exchangeStatus.equals("1")) {
+//                    //前去
+//                    startActivity(new Intent(mContext, WeichatDraw.class));
+//                } else {
+//                    initBindDialog();
+//                }
+                showToast(getString(R.string.stay_open));
+                break;
+            case R.id.ll_unionpay:
+//                startActivity(new Intent(mContext, ));
                 break;
             case R.id.tv_titlebar_left:
                 defaultFinish();

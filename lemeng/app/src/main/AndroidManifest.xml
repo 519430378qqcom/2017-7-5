@@ -94,7 +94,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-    <!--谷歌内购权限-->
+    <!-- 谷歌内购权限 -->
     <uses-permission android:name="com.android.vending.BILLING" />
 
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -127,7 +127,6 @@
             android:name=".service.VoiceService"
             android:enabled="true"
             android:exported="true" />
-
         <service
             android:name=".service.UpdateApkService"
             android:enabled="true"
@@ -548,9 +547,9 @@
             </intent-filter>
         </activity>
 
-        <!--<meta-data-->
-        <!--android:name="com.facebook.sdk.ApplicationId"-->
-        <!--android:value="487692214752558" />-->
+        <!-- <meta-data -->
+        <!-- android:name="com.facebook.sdk.ApplicationId" -->
+        <!-- android:value="487692214752558" /> -->
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -613,6 +612,7 @@
             android:value="@integer/google_play_services_version" />
         <!-- 网易云信配置结束 -->
 
+        <activity android:name=".moudles.mine.activity.AddBankCardActivity"></activity>
     </application>
 
 </manifest>
