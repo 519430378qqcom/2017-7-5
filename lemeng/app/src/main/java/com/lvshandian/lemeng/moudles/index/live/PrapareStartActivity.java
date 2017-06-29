@@ -21,6 +21,7 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.plus.PlusShare;
 import com.lvshandian.lemeng.MyApplication;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.UrlBuilder;
@@ -264,9 +265,15 @@ public class PrapareStartActivity extends BaseActivity {
                         UrlBuilder.SHARE_DOWNLOAD_URL, SHARE_MEDIA.FACEBOOK);
                 break;
             case R.id.googleplus:
-                UMUtils.umShareSingle(this, getString(R.string.share_download_title),
-                        getString(R.string.share_download_content), appUser.getPicUrl(),
-                        UrlBuilder.SHARE_DOWNLOAD_URL, SHARE_MEDIA.GOOGLEPLUS);
+//                UMUtils.umShareSingle(this, getString(R.string.share_download_title),
+//                        getString(R.string.share_download_content), appUser.getPicUrl(),
+//                        UrlBuilder.SHARE_DOWNLOAD_URL, SHARE_MEDIA.GOOGLEPLUS);
+                Intent shareIntent = new PlusShare.Builder(this)
+                        .setType("text/plain")
+                        .setText(getString(R.string.share_download_content))
+                        .setContentUrl(Uri.parse(UrlBuilder.SHARE_DOWNLOAD_URL))
+                        .getIntent();
+                startActivityForResult(shareIntent, 0);
                 break;
 
         }

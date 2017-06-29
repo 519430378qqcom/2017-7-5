@@ -17,8 +17,9 @@ import com.lvshandian.lemeng.utils.billingutils.IabHelper.IabAsyncInProgressExce
 import com.lvshandian.lemeng.utils.billingutils.IabResult;
 import com.lvshandian.lemeng.utils.billingutils.Inventory;
 import com.lvshandian.lemeng.utils.billingutils.Purchase;
-import com.lvshandian.lemeng.utils.billingutils.SkuDetails;
 import com.zhy.autolayout.AutoLinearLayout;
+
+import java.util.List;
 
 import butterknife.Bind;
 
@@ -187,6 +188,20 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
                 llFive.setBackground(getResources().getDrawable(R.drawable.selector_loginbtn_bai));
                 llSex.setBackground(getResources().getDrawable(R.drawable.selector_loginbtn_bai));
                 money = "30";
+            {
+                if(!mHelper.ismSetupDone()) {
+                    Log.d(TAG, "mHelper is not setup done");
+                    return;
+                }
+
+                String payload = "";
+                try {
+                    mHelper.launchPurchaseFlow(this, SKU_PREMIUM, RC_REQUEST,
+                            mPurchaseFinishedListener, payload);
+                } catch (IabAsyncInProgressException e) {
+                    Log.d(TAG, "Error launching purchase flow. Another async operation in progress.");
+                }
+            }
                 break;
             case R.id.ll_three:
                 llThree.setBackground(getResources().getDrawable(R.drawable.selector_loginbtn_sloidmain));
@@ -245,7 +260,7 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
         try {
             mHelper.queryInventoryAsync(mGotInventoryListener);
         } catch (IabAsyncInProgressException e) {
-//            complain("Error querying inventory. Another async operation in progress.");
+            Log.d(TAG,"Error querying inventory. Another async operation in progress.");
         }
     }
 
@@ -258,11 +273,9 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
 
             // Is it a failure?
             if (result.isFailure()) {
-//                complain("Failed to query inventory: " + result);
+                Log.d(TAG,"Failed to query inventory: " + result);
                 return;
             }
-
-            Log.d(ChargeCoinsActivity.class.getName(), "Query inventory was successful.");
 
             /*
              * Check for items we own. Notice that for each purchase, we check
@@ -271,16 +284,42 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
              */
 
             // Do we have the premium upgrade?
-            Log.d(ChargeCoinsActivity.class.getSimpleName(), "Query inventory was successful.");
+            Log.d(TAG, "Query inventory was successful.");
+
+            List<Purchase> ownedProducts= inventory.getAllPurchases();
+            if(ownedProducts!=null&&ownedProducts.size()>0) {
+                for (Purchase pur:ownedProducts){
+                    Log.d(TAG, "user has purchased ："+pur.toString());
+                }
+                try {
+                    mHelper.consumeAsync(ownedProducts,mConsumeMultiFinishedListener);
+                }catch (IabAsyncInProgressException e){
+                    e.printStackTrace();
+                }
+
+            }
             // Do we have the premium upgrade?
-            SkuDetails skuDetails=inventory.getSkuDetails("lemeng.test01");
-            String test01Price = skuDetails==null?"null":skuDetails.getPrice();
-            skuDetails=inventory.getSkuDetails("lemeng.test02");
-            String test02Price =skuDetails==null?"null":skuDetails.getPrice();
 
 
-            Log.d(TAG, "query test01Price:"+test01Price+" test02Price"+test02Price);
+        }
+    };
 
+    IabHelper.OnConsumeMultiFinishedListener mConsumeMultiFinishedListener= new IabHelper.OnConsumeMultiFinishedListener() {
+        @Override
+        public void onConsumeMultiFinished(List<Purchase> purchases, List<IabResult> results) {
+
+            Log.d(TAG,"-----onConsumeMultiFinished called");
+            if(purchases!=null&&purchases.size()>0){
+                for (Purchase pc:purchases){
+                    Log.d(TAG,"-----onConsumeMultiFinished purchase:"+pc.toString());
+                }
+            }
+
+            if(results!=null&&results.size()>0) {
+                for (IabResult re:results){
+                    Log.d(TAG,"-----onConsumeMultiFinished purchase:"+re.toString());
+                }
+            }
         }
     };
 
@@ -290,21 +329,25 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
 
             // if we were disposed of in the meantime, quit.
             if (mHelper == null) return;
-
             if (result.isFailure()) {
-//                complain("Error purchasing: " + result);
-//                setWaitScreen(false);
+
                 Log.d(TAG, "Purchase isFailure: ");
+                try {
+                    mHelper.queryInventoryAsync(mGotInventoryListener);
+                } catch (IabAsyncInProgressException e) {
+                    Log.d(TAG,"Error querying inventory. Another async operation in progress.");
+                }
                 return;
             }
 
             Log.d(TAG, "Purchase successful.");
             if(!mHelper.ismSetupDone()) {
                 Log.d(TAG, "mHelper is not setup done");
+                showToast(R.string.google_billing_notsetup);
                 return;
             }
 
-            if (purchase.getSku().equals(SKU_GAS)) {
+            if (purchase.getSku()!=null) {
                 // bought 1/4 tank of gas. So consume it.
                 Log.d(TAG, "Purchase is gas. Starting gas consumption.");
                 try {
@@ -313,17 +356,6 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
 
                     return;
                 }
-            } else if (purchase.getSku().equals(SKU_PREMIUM)) {
-                // bought the premium upgrade!
-                Log.d(TAG, "Purchase is premium upgrade. Congratulating user.");
-                alert("Thank you for upgrading to premium!");
-
-            } else if (purchase.getSku().equals(SKU_INFINITE_GAS_MONTHLY)
-                    || purchase.getSku().equals(SKU_INFINITE_GAS_YEARLY)) {
-                // bought the infinite gas subscription
-                Log.d(TAG, "Infinite gas subscription purchased.");
-                alert("Thank you for subscribing to infinite gas!");
-
             }
         }
     };
@@ -346,17 +378,16 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
             // We know this is the "gas" sku because it's the only one we consume,
             // so we don't check which sku was consumed. If you have more than one
             // sku, you probably should check...
+            Log.d(TAG,"-----onConsumeFinished purchase:"+purchase.toString());
+
             if (result.isSuccess()) {
                 // successfully consumed, so we apply the effects of the item in our
                 // game world's logic, which in our case means filling the gas tank a bit
                 Log.d(TAG, "Consumption successful. Provisioning.");
-
-//                alert("You filled 1/4 tank. Your tank is now " + String.valueOf(mTank) + "/4 full!");
             } else {
-//                complain("Error while consuming: " + result);
+                Log.d(TAG,"Error while consuming: " + result);
             }
-//            updateUi();
-//            setWaitScreen(false);
+
             Log.d(TAG, "End consumption flow.");
         }
     };
@@ -370,8 +401,10 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
         // very important:
         Log.d(TAG, "Destroying google billing helper.");
         if (mHelper != null) {
-            mHelper.disposeWhenFinished();
             mHelper = null;
+            if(mHelper.ismSetupDone()) {
+                mHelper.disposeWhenFinished();
+            }
         }
 
     }
