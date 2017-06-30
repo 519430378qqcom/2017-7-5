@@ -3,17 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:clipToPadding="true"
-    android:fitsSystemWindows="false"
-    tools:context="com.lvshandian.lemeng.moudles.mine.MyInformationActivity">
+    android:background="@color/white">
     <!--我的个人中心-->
     <FrameLayout
         android:id="@+id/my_information"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/line"
-        android:fillViewport="true"
-        android:fitsSystemWindows="true" />
+        android:layout_marginTop="-60px"/>
+
 
 </com.zhy.autolayout.AutoRelativeLayout>
