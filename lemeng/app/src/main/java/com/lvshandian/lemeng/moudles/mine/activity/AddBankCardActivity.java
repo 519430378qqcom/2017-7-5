@@ -62,6 +62,10 @@ public class AddBankCardActivity extends BaseActivity {
                         TextUtils.isEmpty(tv_phone_number)) {
                     showToast(getString(R.string.incomplete_information));
                 } else {
+                    if(card_numbers.length()<12) {
+                        showToast(getString(R.string.card_number_error));
+                        return;
+                    }
                     addbankcard(tv_cardholder_name, tv_card_numbers, tv_card_type, tv_bank_address, tv_phone_number);
                 }
 

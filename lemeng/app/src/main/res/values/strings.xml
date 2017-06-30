@@ -652,5 +652,6 @@
     <string name="game_luck_28">幸运28</string>
     <string name="game_niuniu">乐檬牛牛</string>
     <string name="input_withdraw_failure">提现金额输入有误</string>
+    <string name="card_number_error">卡号填写有误</string>
 
 </resources>
