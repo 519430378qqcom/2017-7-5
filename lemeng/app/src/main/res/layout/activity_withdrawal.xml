@@ -7,7 +7,7 @@
 
     <include layout="@layout/title_bar" />
 
-    <LinearLayout
+    <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/grayF1">
@@ -21,8 +21,8 @@
             android:layout_marginTop="30px"
             android:text="@string/change_balance"
             android:textColor="@color/agray"
-            android:textSize="30px" />
-    </LinearLayout>
+            android:textSize="28px" />
+    </com.zhy.autolayout.AutoLinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rcy_bank_card"

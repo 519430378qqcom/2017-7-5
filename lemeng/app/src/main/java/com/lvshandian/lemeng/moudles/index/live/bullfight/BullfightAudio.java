@@ -35,7 +35,7 @@ public class BullfightAudio {
     public final String Bull7 = "bull7";
     public final String Bull8 = "bull8";
     public final String Bull9 = "bull9";
-    public final String Bull10 = "bull10";
+    public final String Bull10 = "bullbull";
     public final String WIN = "win";
     public final String FAIL = "fail";
     public final String BET = "bet";
