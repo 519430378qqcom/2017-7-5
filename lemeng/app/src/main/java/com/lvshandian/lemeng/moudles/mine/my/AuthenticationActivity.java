@@ -14,7 +14,6 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -71,7 +70,7 @@ public class AuthenticationActivity extends BaseActivity {
     @Bind(R.id.iv_hand_card)
     ImageView ivHandCard;
     @Bind(R.id.btn_submit)
-    Button btnSubmit;
+    TextView btnSubmit;
     @Bind(R.id.ll_phone_code)
     LinearLayout ll_quhao;
     @Bind(R.id.tv_phone_code)

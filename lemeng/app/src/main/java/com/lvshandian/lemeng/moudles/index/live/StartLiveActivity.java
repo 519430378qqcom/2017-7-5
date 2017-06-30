@@ -4607,10 +4607,11 @@ public class StartLiveActivity extends BaseActivity implements
 
         focus((TextView) view.findViewById(R.id.tv_attention), customdateBean);
         //关注
+        final TextView finalTv_funs_num = tv_funs_num;
         view.findViewById(R.id.tv_attention).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeFollow((TextView) view.findViewById(R.id.tv_attention), customdateBean);
+                changeFollow((TextView) view.findViewById(R.id.tv_attention), finalTv_funs_num, customdateBean);
             }
         });
 
@@ -4811,7 +4812,7 @@ public class StartLiveActivity extends BaseActivity implements
     /**
      * 关注(取消关注)
      */
-    private void changeFollow(final TextView tvFoucs, final CustomdateBean customdateBean) {
+    private void changeFollow(final TextView tvFoucs, final TextView tv_funs_num, final CustomdateBean customdateBean) {
         final String follow = customdateBean.getFollow();
         Map<String, String> params = new HashMap<>();
         params.put("userId", appUser.getId());
@@ -4836,10 +4837,13 @@ public class StartLiveActivity extends BaseActivity implements
 
             @Override
             public void onSucess(String data) {
+                int tvFuns = Integer.valueOf(tv_funs_num.getText().toString());
                 if (TextUtils.equals(follow, "1")) {
                     customdateBean.setFollow("0");
+                    tv_funs_num.setText(String.valueOf(tvFuns - 1));
                 } else {
                     customdateBean.setFollow("1");
+                    tv_funs_num.setText(String.valueOf(tvFuns + 1));
                 }
                 focus(tvFoucs, customdateBean);
             }

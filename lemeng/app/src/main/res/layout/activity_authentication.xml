@@ -2,263 +2,300 @@
 <com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
     <!--实名认证-->
     <include layout="@layout/title_bar" />
 
-    <com.zhy.autolayout.AutoLinearLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30px"
-        android:background="@color/white"
-        android:paddingBottom="15px"
-        android:paddingLeft="20px"
-        android:paddingRight="30px"
-        android:paddingTop="15px">
+        android:layout_height="15px"
+        android:background="@color/line_eb" />
 
-        <TextView
-            android:layout_width="180px"
-            android:layout_height="wrap_content"
-            android:text="@string/real_name"
-            android:textColor="@color/backgeragd_head"
-            android:textSize="30px" />
+    <com.lvshandian.lemeng.widget.view.ReboundScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/et_name"
+        <com.zhy.autolayout.AutoLinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:hint="@string/please_input_real_name"
-            android:maxLines="1"
-            android:textSize="30px" />
-    </com.zhy.autolayout.AutoLinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/line_df" />
-
-    <com.zhy.autolayout.AutoLinearLayout
-        android:id="@+id/ll_phone_code"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:paddingBottom="15px"
-        android:paddingLeft="20px"
-        android:paddingRight="30px"
-        android:paddingTop="15px">
-
-        <TextView
-            android:id="@+id/tv_phone_code"
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/china_phone_code"
-            android:textColor="@color/main"
-            android:textSize="30px" />
-
-        <ImageView
-            android:layout_width="33px"
-            android:layout_height="33px"
-            android:layout_marginRight="10px"
-            android:src="@mipmap/donw_hui" />
-
-    </com.zhy.autolayout.AutoLinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/line_df" />
-
-    <com.zhy.autolayout.AutoLinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:paddingBottom="15px"
-        android:paddingLeft="20px"
-        android:paddingRight="30px"
-        android:paddingTop="15px">
-
-        <TextView
-            android:layout_width="180px"
-            android:layout_height="wrap_content"
-            android:text="@string/phone_number"
-            android:textColor="@color/backgeragd_head"
-            android:textSize="30px" />
-
-        <EditText
-            android:id="@+id/et_phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:hint="@string/please_input_phone"
-            android:inputType="number"
-            android:maxLines="1"
-            android:textSize="30px" />
-    </com.zhy.autolayout.AutoLinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/line_df" />
-
-
-    <com.zhy.autolayout.AutoLinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:paddingBottom="10px"
-        android:paddingLeft="20px"
-        android:paddingRight="30px"
-        android:paddingTop="10px">
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="180px"
-            android:layout_height="wrap_content"
-            android:text="@string/auth_code"
-            android:textColor="@color/backgeragd_head"
-            android:textSize="30px" />
-
-        <EditText
-            android:id="@+id/et_verify_code"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@null"
-            android:hint="@string/please_input_code"
-            android:inputType="number"
-            android:maxLines="1"
-            android:textSize="30px" />
-
-        <TextView
-            android:id="@+id/tv_get_verify_code"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_bg_btn"
-            android:gravity="center"
-            android:paddingBottom="5px"
-            android:paddingLeft="15px"
-            android:paddingRight="15px"
-            android:paddingTop="5px"
-            android:text="@string/sent_validate"
-            android:textColor="@color/white"
-            android:textSize="25px" />
-    </com.zhy.autolayout.AutoLinearLayout>
-
-
-    <com.zhy.autolayout.AutoLinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30px"
-        android:background="@color/white"
-        android:paddingBottom="15px"
-        android:paddingLeft="20px"
-        android:paddingRight="30px"
-        android:paddingTop="15px">
-
-        <TextView
-            android:layout_width="180px"
-            android:layout_height="wrap_content"
-            android:text="@string/id_number"
-            android:textColor="@color/backgeragd_head"
-            android:textSize="30px" />
-
-        <EditText
-            android:id="@+id/et_idcard_num"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:hint="@string/please_input_id_number"
-            android:inputType="number"
-            android:maxLines="1"
-            android:textSize="30px" />
-    </com.zhy.autolayout.AutoLinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/line_df" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:drawableLeft="@mipmap/id_card"
-        android:drawablePadding="5px"
-        android:paddingBottom="15px"
-        android:paddingLeft="20px"
-        android:paddingTop="15px"
-        android:text="@string/uploading_id_number"
-        android:textColor="@color/backgeragd_head"
-        android:textSize="30px" />
-
-    <com.zhy.autolayout.AutoLinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="280px"
-        android:background="@color/white">
-
-        <ImageView
-            android:id="@+id/iv_id_card"
-            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1"
-            android:padding="8px"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/add_id_card" />
+            android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/iv_hand_card"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1"
-            android:padding="8px"
-            android:paddingBottom="15px"
-            android:paddingTop="15px"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/add_id_card" />
-    </com.zhy.autolayout.AutoLinearLayout>
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="112px"
+                android:layout_marginTop="15px"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="30px">
 
-    <com.zhy.autolayout.AutoLinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:paddingBottom="15px"
-        android:paddingTop="15px">
+                <TextView
+                    android:layout_width="200px"
+                    android:layout_height="wrap_content"
+                    android:text="@string/real_name"
+                    android:textColor="@color/tv_color3"
+                    android:textSize="30px" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:text="@string/id_number_phone"
-            android:textColor="@color/backgeragd_head"
-            android:textSize="30px" />
+                <EditText
+                    android:id="@+id/et_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="@string/please_input_real_name"
+                    android:maxLines="1"
+                    android:textSize="30px" />
+            </com.zhy.autolayout.AutoLinearLayout>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:text="@string/take_id_number_phone"
-            android:textColor="@color/backgeragd_head"
-            android:textSize="30px" />
-    </com.zhy.autolayout.AutoLinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="30px"
+                android:background="@color/line_df" />
 
-    <Button
-        android:id="@+id/btn_submit"
-        android:layout_width="match_parent"
-        android:layout_height="80px"
-        android:layout_marginLeft="50px"
-        android:layout_marginRight="50px"
-        android:layout_marginTop="50px"
-        android:background="@drawable/shape_bg_btn"
-        android:text="@string/submit_authentication"
-        android:textColor="@color/white"
-        android:textSize="30px" />
+            <com.zhy.autolayout.AutoLinearLayout
+                android:id="@+id/ll_phone_code"
+                android:layout_width="match_parent"
+                android:layout_height="112px"
+                android:layout_marginTop="15px"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="30px">
+
+                <TextView
+                    android:id="@+id/tv_phone_code"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/china_phone_code"
+                    android:textColor="@color/tv_color3"
+                    android:textSize="30px" />
+
+                <ImageView
+                    android:layout_width="33px"
+                    android:layout_height="33px"
+                    android:layout_marginRight="30px"
+                    android:src="@mipmap/donw_hui" />
+
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="30px"
+                android:background="@color/line_df" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="112px"
+                android:layout_marginTop="15px"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="30px">
+
+                <TextView
+                    android:layout_width="200px"
+                    android:layout_height="wrap_content"
+                    android:text="@string/phone_number"
+                    android:textColor="@color/tv_color3"
+                    android:textSize="30px" />
+
+                <EditText
+                    android:id="@+id/et_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="@string/please_input_phone"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:textSize="30px" />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="30px"
+                android:background="@color/line_df" />
+
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="112px"
+                android:layout_marginTop="15px"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="30px">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="200px"
+                    android:layout_height="wrap_content"
+                    android:text="@string/auth_code"
+                    android:textColor="@color/tv_color3"
+                    android:textSize="30px" />
+
+                <EditText
+                    android:id="@+id/et_verify_code"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="@string/please_input_code"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:textSize="30px" />
+
+                <TextView
+                    android:id="@+id/tv_get_verify_code"
+                    android:layout_width="166px"
+                    android:layout_height="60px"
+                    android:layout_marginRight="30px"
+                    android:background="@drawable/authentication_shape_bg"
+                    android:gravity="center"
+                    android:text="@string/sent_validate"
+                    android:textColor="@color/white"
+                    android:textSize="24px" />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="30px"
+                android:background="@color/line_df" />
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="112px"
+                android:layout_marginTop="15px"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="30px">
+
+                <TextView
+                    android:layout_width="180px"
+                    android:layout_height="wrap_content"
+                    android:text="@string/id_number"
+                    android:textColor="@color/tv_color3"
+                    android:textSize="30px" />
+
+                <EditText
+                    android:id="@+id/et_idcard_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="@string/please_input_id_number"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:textSize="30px" />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="15px"
+                android:background="@color/line_eb" />
+
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30px"
+                android:layout_marginTop="35px"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="40px"
+                    android:layout_height="33px"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/id_card" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20px"
+                    android:background="@color/white"
+                    android:text="@string/uploading_id_number"
+                    android:textColor="@color/tv_color3"
+                    android:textSize="30px" />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200px"
+                android:layout_marginTop="64px"
+                android:background="@color/white">
+
+                <ImageView
+                    android:id="@+id/iv_id_card"
+                    android:layout_width="310px"
+                    android:layout_height="200px"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="40px"
+                    android:background="@mipmap/add_id_card"
+                    android:scaleType="centerCrop" />
+
+                <View
+                    android:layout_width="0px"
+                    android:layout_height="1px"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:id="@+id/iv_hand_card"
+                    android:layout_width="310px"
+                    android:layout_height="200px"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginRight="40px"
+                    android:background="@mipmap/add_id_card"
+                    android:scaleType="centerCrop" />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="35px"
+                android:layout_marginTop="20px">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/id_number_phone"
+                    android:textColor="@color/tv_color3"
+                    android:textSize="24px" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/take_id_number_phone"
+                    android:textColor="@color/tv_color3"
+                    android:textSize="24px" />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+            <com.zhy.autolayout.AutoLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/line_eb">
+
+                <TextView
+                    android:id="@+id/btn_submit"
+                    android:layout_width="match_parent"
+                    android:layout_height="100px"
+                    android:layout_marginBottom="150px"
+                    android:layout_marginLeft="65px"
+                    android:layout_marginRight="65px"
+                    android:layout_marginTop="58px"
+                    android:background="@drawable/selector_loginbtn_circle"
+                    android:gravity="center"
+                    android:text="@string/submit_authentication"
+                    android:textColor="@color/white"
+                    android:textSize="30px" />
+            </com.zhy.autolayout.AutoLinearLayout>
+
+        </com.zhy.autolayout.AutoLinearLayout>
+    </com.lvshandian.lemeng.widget.view.ReboundScrollView>
 
 </com.zhy.autolayout.AutoLinearLayout>
