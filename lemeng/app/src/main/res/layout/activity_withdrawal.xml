@@ -2,20 +2,28 @@
 <com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grayF1"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <include layout="@layout/title_bar" />
 
-    <TextView
-        android:id="@+id/tv_change_balance"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30px"
-        android:layout_marginTop="30px"
-        android:layout_marginBottom="30px"
-        android:textColor="@color/agray"
-        android:textSize="28px"/>
+        android:background="@color/grayF1">
+
+        <TextView
+            android:id="@+id/tv_change_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30px"
+            android:layout_marginLeft="30px"
+            android:layout_marginTop="30px"
+            android:text="@string/change_balance"
+            android:textColor="@color/agray"
+            android:textSize="30px" />
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rcy_bank_card"
         android:layout_width="match_parent"

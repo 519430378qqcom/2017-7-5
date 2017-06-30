@@ -1,5 +1,6 @@
 package com.lvshandian.lemeng.moudles.mine.activity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,6 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -179,7 +183,26 @@ public class WithdrawalActivity extends BaseActivity {
      * @param position
      */
     private void selectBankCard(int position) {
+        View contentView = View.inflate(this,R.layout.dialog_withdrawal,null);
+        ImageView iv_back = (ImageView) contentView.findViewById(R.id.iv_back);
+        EditText et_withdrawal_amount = (EditText) contentView.findViewById(R.id.et_withdrawal_amount);
+        TextView tv_change_balance_dialog = (TextView) contentView.findViewById(R.id.tv_change_balance_dialog);
+        Button btn_confirm_withdrawal = (Button) contentView.findViewById(R.id.btn_confirm_withdrawal);
+        final AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setView(contentView)
+                .show();
+        iv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+        btn_confirm_withdrawal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
     }
 
     /**
