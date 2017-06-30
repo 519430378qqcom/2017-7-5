@@ -71,7 +71,7 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
     /**
      * 商品ID
      */
-    private String productId="";
+    private String productId=mContext.getString(R.string.google_billing_lepiao06);
     /**
      * 颜票数量
      */
