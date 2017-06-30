@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +64,7 @@ public class WithdrawalActivity extends BaseActivity {
     @Override
     protected void initialized() {
         initTitle("", getString(R.string.unionpay_withdraw), null);
-        tvChangeBalance.setText(SharedPreferenceUtils.getGoldCoin(mContext));
+        tvChangeBalance.setText(getString(R.string.change_balance, SharedPreferenceUtils.getGoldCoin(mContext)));
         rcyBankCard.setLayoutManager(new LinearLayoutManager(mContext));
         bankCardAdapter = new BankCardAdapter();
         rcyBankCard.setAdapter(bankCardAdapter);
@@ -182,12 +183,13 @@ public class WithdrawalActivity extends BaseActivity {
      *
      * @param position
      */
-    private void selectBankCard(int position) {
-        View contentView = View.inflate(this,R.layout.dialog_withdrawal,null);
+    private void selectBankCard(final int position) {
+        View contentView = View.inflate(this, R.layout.dialog_withdrawal, null);
         ImageView iv_back = (ImageView) contentView.findViewById(R.id.iv_back);
-        EditText et_withdrawal_amount = (EditText) contentView.findViewById(R.id.et_withdrawal_amount);
+        final EditText et_withdrawal_amount = (EditText) contentView.findViewById(R.id.et_withdrawal_amount);
         TextView tv_change_balance_dialog = (TextView) contentView.findViewById(R.id.tv_change_balance_dialog);
         Button btn_confirm_withdrawal = (Button) contentView.findViewById(R.id.btn_confirm_withdrawal);
+        tv_change_balance_dialog.setText(getString(R.string.change_balance, SharedPreferenceUtils.getGoldCoin(mContext)));
         final AlertDialog alertDialog = new AlertDialog.Builder(this)
                 .setView(contentView)
                 .show();
@@ -200,7 +202,14 @@ public class WithdrawalActivity extends BaseActivity {
         btn_confirm_withdrawal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String amount = et_withdrawal_amount.getText().toString().trim();
+                if (TextUtils.isEmpty(amount)) {
+                    showToast(getString(R.string.please_input_withdraw_num));
+                } else if (Integer.valueOf(amount) > Integer.valueOf(SharedPreferenceUtils.getGoldCoin(mContext))) {
+                    showToast(getString(R.string.input_withdraw_failure));
+                } else {
+                    withdraw(position, amount);
+                }
             }
         });
     }
@@ -224,6 +233,39 @@ public class WithdrawalActivity extends BaseActivity {
                     JSONObject obj = new JSONObject(response);
                     if ("1".equals(obj.getString("code"))) {
                         queryBankCard();
+                    }
+                    showToast(obj.getString("msg"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    /**
+     * 提现
+     *
+     * @param position
+     * @param amount
+     */
+    private void withdraw(int position, final String amount) {
+        String url = UrlBuilder.CHARGE_SERVER_URL_8080 + UrlBuilder.BANK_CARD_WITHDRAW;
+        OkHttpUtils.post().url(url).addParams("cardId", String.valueOf(bankCardList.get(position).getId()))
+                .addParams("userId", String.valueOf(appUser.getId()))
+                .addParams("amount", amount)
+                .build().execute(new StringCallback() {
+            @Override
+            public void onError(Request request, Exception e) {
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    if ("1".equals(obj.getString("code"))) {
+                        String goldCoin = String.valueOf(Long.valueOf(SharedPreferenceUtils.getGoldCoin(mContext)) - Integer.valueOf(amount));
+                        SharedPreferenceUtils.saveGoldCoin(mContext, goldCoin);
+                        tvChangeBalance.setText(getString(R.string.change_balance, SharedPreferenceUtils.getGoldCoin(mContext)));
                     }
                     showToast(obj.getString("msg"));
                 } catch (JSONException e) {

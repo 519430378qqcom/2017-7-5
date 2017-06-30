@@ -53,7 +53,7 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
      */
     private String lepiao;
 
-    private  final  static  String TAG="ChargeCoinsActivity";
+    private final static String TAG = "ChargeCoinsActivity";
 
 
     // SKU for our subscription (infinite gas)
@@ -164,7 +164,7 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
                 llSex.setBackground(getResources().getDrawable(R.drawable.selector_loginbtn_bai));
                 money = "6";
             {
-                if(!mHelper.ismSetupDone()) {
+                if (!mHelper.ismSetupDone()) {
                     Log.d(TAG, "mHelper is not setup done");
                     return;
                 }
@@ -179,7 +179,7 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
                 }
 
             }
-                break;
+            break;
             case R.id.ll_two:
                 llTwo.setBackground(getResources().getDrawable(R.drawable.selector_loginbtn_sloidmain));
                 llOne.setBackground(getResources().getDrawable(R.drawable.selector_loginbtn_bai));
@@ -189,7 +189,7 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
                 llSex.setBackground(getResources().getDrawable(R.drawable.selector_loginbtn_bai));
                 money = "30";
             {
-                if(!mHelper.ismSetupDone()) {
+                if (!mHelper.ismSetupDone()) {
                     Log.d(TAG, "mHelper is not setup done");
                     return;
                 }
@@ -202,7 +202,7 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
                     Log.d(TAG, "Error launching purchase flow. Another async operation in progress.");
                 }
             }
-                break;
+            break;
             case R.id.ll_three:
                 llThree.setBackground(getResources().getDrawable(R.drawable.selector_loginbtn_sloidmain));
                 llOne.setBackground(getResources().getDrawable(R.drawable.selector_loginbtn_bai));
@@ -250,9 +250,6 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
     }
 
 
-
-
-
     @Override
     public void receivedBroadcast() {
         // Received a broadcast notification that the inventory of items has changed
@@ -260,7 +257,7 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
         try {
             mHelper.queryInventoryAsync(mGotInventoryListener);
         } catch (IabAsyncInProgressException e) {
-            Log.d(TAG,"Error querying inventory. Another async operation in progress.");
+            Log.d(TAG, "Error querying inventory. Another async operation in progress.");
         }
     }
 
@@ -273,7 +270,7 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
 
             // Is it a failure?
             if (result.isFailure()) {
-                Log.d(TAG,"Failed to query inventory: " + result);
+                Log.d(TAG, "Failed to query inventory: " + result);
                 return;
             }
 
@@ -286,14 +283,14 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
             // Do we have the premium upgrade?
             Log.d(TAG, "Query inventory was successful.");
 
-            List<Purchase> ownedProducts= inventory.getAllPurchases();
-            if(ownedProducts!=null&&ownedProducts.size()>0) {
-                for (Purchase pur:ownedProducts){
-                    Log.d(TAG, "user has purchased ："+pur.toString());
+            List<Purchase> ownedProducts = inventory.getAllPurchases();
+            if (ownedProducts != null && ownedProducts.size() > 0) {
+                for (Purchase pur : ownedProducts) {
+                    Log.d(TAG, "user has purchased ：" + pur.toString());
                 }
                 try {
-                    mHelper.consumeAsync(ownedProducts,mConsumeMultiFinishedListener);
-                }catch (IabAsyncInProgressException e){
+                    mHelper.consumeAsync(ownedProducts, mConsumeMultiFinishedListener);
+                } catch (IabAsyncInProgressException e) {
                     e.printStackTrace();
                 }
 
@@ -304,20 +301,20 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
         }
     };
 
-    IabHelper.OnConsumeMultiFinishedListener mConsumeMultiFinishedListener= new IabHelper.OnConsumeMultiFinishedListener() {
+    IabHelper.OnConsumeMultiFinishedListener mConsumeMultiFinishedListener = new IabHelper.OnConsumeMultiFinishedListener() {
         @Override
         public void onConsumeMultiFinished(List<Purchase> purchases, List<IabResult> results) {
 
-            Log.d(TAG,"-----onConsumeMultiFinished called");
-            if(purchases!=null&&purchases.size()>0){
-                for (Purchase pc:purchases){
-                    Log.d(TAG,"-----onConsumeMultiFinished purchase:"+pc.toString());
+            Log.d(TAG, "-----onConsumeMultiFinished called");
+            if (purchases != null && purchases.size() > 0) {
+                for (Purchase pc : purchases) {
+                    Log.d(TAG, "-----onConsumeMultiFinished purchase:" + pc.toString());
                 }
             }
 
-            if(results!=null&&results.size()>0) {
-                for (IabResult re:results){
-                    Log.d(TAG,"-----onConsumeMultiFinished purchase:"+re.toString());
+            if (results != null && results.size() > 0) {
+                for (IabResult re : results) {
+                    Log.d(TAG, "-----onConsumeMultiFinished purchase:" + re.toString());
                 }
             }
         }
@@ -335,19 +332,19 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
                 try {
                     mHelper.queryInventoryAsync(mGotInventoryListener);
                 } catch (IabAsyncInProgressException e) {
-                    Log.d(TAG,"Error querying inventory. Another async operation in progress.");
+                    Log.d(TAG, "Error querying inventory. Another async operation in progress.");
                 }
                 return;
             }
 
             Log.d(TAG, "Purchase successful.");
-            if(!mHelper.ismSetupDone()) {
+            if (!mHelper.ismSetupDone()) {
                 Log.d(TAG, "mHelper is not setup done");
                 showToast(R.string.google_billing_notsetup);
                 return;
             }
 
-            if (purchase.getSku()!=null) {
+            if (purchase.getSku() != null) {
                 // bought 1/4 tank of gas. So consume it.
                 Log.d(TAG, "Purchase is gas. Starting gas consumption.");
                 try {
@@ -378,14 +375,14 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
             // We know this is the "gas" sku because it's the only one we consume,
             // so we don't check which sku was consumed. If you have more than one
             // sku, you probably should check...
-            Log.d(TAG,"-----onConsumeFinished purchase:"+purchase.toString());
+            Log.d(TAG, "-----onConsumeFinished purchase:" + purchase.toString());
 
             if (result.isSuccess()) {
                 // successfully consumed, so we apply the effects of the item in our
                 // game world's logic, which in our case means filling the gas tank a bit
                 Log.d(TAG, "Consumption successful. Provisioning.");
             } else {
-                Log.d(TAG,"Error while consuming: " + result);
+                Log.d(TAG, "Error while consuming: " + result);
             }
 
             Log.d(TAG, "End consumption flow.");
@@ -401,10 +398,10 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
         // very important:
         Log.d(TAG, "Destroying google billing helper.");
         if (mHelper != null) {
-            mHelper = null;
-            if(mHelper.ismSetupDone()) {
+            if (mHelper.ismSetupDone()) {
                 mHelper.disposeWhenFinished();
             }
+            mHelper = null;
         }
 
     }

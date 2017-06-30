@@ -3,55 +3,63 @@
     android:layout_width="607px"
     android:layout_height="423px"
     android:background="@color/white">
+
     <ImageView
         android:id="@+id/iv_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:src="@mipmap/colse_rule"/>
+        android:src="@mipmap/colse_rule" />
+
     <LinearLayout
         android:id="@+id/ll_withdrawal"
-        android:layout_marginTop="61px"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="61px"
         android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/withdrawal_amount"
             android:textColor="@color/black"
-            android:textSize="40px"/>
+            android:textSize="40px" />
+
         <EditText
             android:id="@+id/et_withdrawal_amount"
             android:layout_width="186px"
             android:layout_height="70px"
-            android:background="@drawable/bg_yellow_ring"/>
+            android:inputType="number"
+            android:background="@drawable/bg_yellow_ring" />
     </LinearLayout>
+
     <TextView
         android:id="@+id/tv_change_balance_dialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ll_withdrawal"
         android:layout_alignLeft="@+id/ll_withdrawal"
-        android:text="@string/change_balance"
+        android:layout_below="@+id/ll_withdrawal"
         android:textColor="@color/agray"
         android:textSize="30px" />
+
     <RelativeLayout
         android:id="@+id/rl_withdrawal_statement"
         android:layout_width="415px"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_change_balance_dialog"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40px"
-        android:layout_below="@+id/tv_change_balance_dialog">
+        android:layout_marginTop="40px">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:text="@string/withdrawal_statement"
             android:textColor="@color/black"
-            android:textSize="30px"
-            android:text="@string/withdrawal_statement"/>
+            android:textSize="30px" />
     </RelativeLayout>
+
     <Button
         android:id="@+id/btn_confirm_withdrawal"
         android:layout_width="186px"
@@ -59,8 +67,8 @@
         android:layout_below="@+id/rl_withdrawal_statement"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="45px"
+        android:background="@drawable/selector_loginbtn_circle"
         android:text="@string/ok"
         android:textColor="@color/white"
-        android:textSize="30px"
-        android:background="@drawable/selector_loginbtn_circle"/>
+        android:textSize="30px" />
 </com.zhy.autolayout.AutoRelativeLayout>

@@ -324,8 +324,8 @@ public class StartLiveActivity extends BaseActivity implements
     TextView tv_lianmai;
     @Bind(R.id.ll_game)
     LinearLayout ll_game;
-    @Bind(R.id.iv_xy)
-    ImageView iv_xy;
+    @Bind(R.id.game_luck_28)
+    LinearLayout game_luck_28;
     @Bind(R.id.live_game)
     AutoLinearLayout live_game;
     @Bind(R.id.watch_room_message_fragment_chat)
@@ -413,8 +413,8 @@ public class StartLiveActivity extends BaseActivity implements
     //<start------------斗牛游戏部分-------------->
     @Bind(R.id.rl_game_container)
     RelativeLayout rl_game_container;
-    @Bind(R.id.iv_bullfight)
-    ImageView iv_bullfight;
+    @Bind(R.id.game_niuniu)
+    LinearLayout game_niuniu;
     @Bind(R.id.live_game_bullfight)
     RelativeLayout live_game_bullfight;
     @Bind(R.id.rl_game_info)
@@ -940,7 +940,7 @@ public class StartLiveActivity extends BaseActivity implements
         room_lianmai.setOnClickListener(this);
         tv_lianmai.setOnClickListener(this);
         ll_game.setOnClickListener(this);
-        iv_xy.setOnClickListener(this);
+        game_luck_28.setOnClickListener(this);
         liveClose.setOnClickListener(this);
         ivLiveSwitch.setOnClickListener(this);
         ivLivePrivatechat.setOnClickListener(this);
@@ -1071,7 +1071,7 @@ public class StartLiveActivity extends BaseActivity implements
                 selectStatus = getString(R.string.more_samll);
                 tv_hz.setText(getString(R.string.more_samll_info));
                 break;
-            case R.id.iv_xy:
+            case R.id.game_luck_28:
                 showXYGame();
                 break;
             case R.id.ruanjianpan:
@@ -1206,11 +1206,11 @@ public class StartLiveActivity extends BaseActivity implements
     /**
      * 牛牛点击事件
      */
-    @OnClick({R.id.iv_bullfight, R.id.rl_bullfight1, R.id.rl_bullfight2, R.id.rl_bullfight3,
+    @OnClick({R.id.game_niuniu, R.id.rl_bullfight1, R.id.rl_bullfight2, R.id.rl_bullfight3,
             R.id.tv_bullfight_top_up, R.id.iv_10, R.id.iv_50, R.id.iv_100, R.id.iv_1000, R.id.iv_10000})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.iv_bullfight:
+            case R.id.game_niuniu:
                 startBullfightGame();
                 break;
             case R.id.rl_bullfight1:
@@ -2552,7 +2552,7 @@ public class StartLiveActivity extends BaseActivity implements
         mWl.acquire();
         mMediaStreamingManager.resume();
 
-        if (!isFirstJoin) {
+        if (!isFirstJoin && messageFragment != null) {
             Map<String, Object> map = new HashMap<>();
             map.put("level", appUser.getLevel());
             SendRoomMessageUtils.onCustomMessageQiehuan("112", messageFragment, wy_Id + "",
@@ -2571,11 +2571,12 @@ public class StartLiveActivity extends BaseActivity implements
         mHandler.removeCallbacksAndMessages(null);
         mMediaStreamingManager.pause();
 
-        Map<String, Object> map = new HashMap<>();
-        map.put("level", appUser.getLevel());
-        SendRoomMessageUtils.onCustomMessageQiehuan("113", messageFragment, wy_Id + "",
-                map);
-
+        if (messageFragment != null) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("level", appUser.getLevel());
+            SendRoomMessageUtils.onCustomMessageQiehuan("113", messageFragment, wy_Id + "",
+                    map);
+        }
     }
 
     @Override
@@ -2671,7 +2672,7 @@ public class StartLiveActivity extends BaseActivity implements
                 switch (type) {
                     case 105://进入房间
 //                        requestNet();
-                        if(message.getRemoteExtension().get("data") == null){
+                        if (message.getRemoteExtension().get("data") == null) {
                             return;
                         }
                         LogUtil.e("有人进入直播间", message.getRemoteExtension().get("data").toString());
@@ -2684,7 +2685,7 @@ public class StartLiveActivity extends BaseActivity implements
                         }
                         break;
                     case 106://离开房间
-                        if(message.getRemoteExtension().get("data") == null){
+                        if (message.getRemoteExtension().get("data") == null) {
                             return;
                         }
                         LogUtil.e("有人离开直播间", message.getRemoteExtension().get("data").toString());

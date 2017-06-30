@@ -106,6 +106,7 @@ public class UrlBuilder {
     public static final String ADD_BANK_CARD = "/appuserCard/saveUserCard";//绑定银行卡
     public static final String DELETE_BANK_CARD = "/appuserCard/deleteUserCard";//解绑银行卡
     public static final String QUERY_BANK_CARD = "/appuserCard/getUserCards?userId=%s";//查询银行卡列表
+    public static final String BANK_CARD_WITHDRAW = "/appuserCard/applyWithdrawDeposit";//银行卡提现
 
     //------------------------------------斗牛游戏接口----------------------------------------
     /**
