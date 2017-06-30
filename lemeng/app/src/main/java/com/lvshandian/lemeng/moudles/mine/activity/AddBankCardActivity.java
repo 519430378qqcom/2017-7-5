@@ -8,7 +8,6 @@ import android.widget.TextView;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.UrlBuilder;
 import com.lvshandian.lemeng.base.BaseActivity;
-import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.squareup.okhttp.Request;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -73,13 +72,12 @@ public class AddBankCardActivity extends BaseActivity {
     }
 
     private void addbankcard(String s1, String s2, String s3, String s4, String s5) {
-        String url = UrlBuilder.CHARGE_SERVER_URL_8080 + UrlBuilder.ADD_BANK_CARD;
+        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.ADD_BANK_CARD;
         OkHttpUtils.post().url(url).addParams("userId", appUser.getId()).addParams("username", s1)
                 .addParams("cardNum", s2).addParams("cardType", s3).addParams("mobile", s5)
                 .addParams("bankAddress", s4).build().execute(new StringCallback() {
             @Override
             public void onError(Request request, Exception e) {
-                LogUtil.e("addbankcard", "request=" + request.toString() + "   e=" + e.toString());
             }
 
             @Override

@@ -10,7 +10,7 @@ import com.lvshandian.lemeng.adapter.CommonAdapter;
 import com.lvshandian.lemeng.adapter.ViewHolder;
 import com.lvshandian.lemeng.bean.MyContributionBeanBack;
 import com.lvshandian.lemeng.utils.GrademipmapUtils;
-import com.lvshandian.lemeng.utils.PicassoUtil;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -64,7 +64,7 @@ public class MyContributionListAdapter extends CommonAdapter<MyContributionBeanB
         tv_gong_xian.setText(mContext.getResources().getString(R.string.contribution_lepiao_num,String.valueOf(bean.getContributeCoin())));
 
         String picUrl = bean.getPicUrl();
-        PicassoUtil.newInstance().onRoundnessImage(mContext, picUrl, iv_header);
+        Picasso.with(mContext).load(picUrl).into(iv_header);
 
         tv_no.setText("No." + (position + 2));
     }

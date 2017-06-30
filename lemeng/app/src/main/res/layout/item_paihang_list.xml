@@ -40,7 +40,7 @@
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="20px">
 
-        <com.lvshandian.lemeng.widget.view.AvatarView
+        <com.lvshandian.lemeng.widget.view.CircleImageView
             android:id="@+id/iv_header"
             android:layout_width="80px"
             android:layout_height="80px"

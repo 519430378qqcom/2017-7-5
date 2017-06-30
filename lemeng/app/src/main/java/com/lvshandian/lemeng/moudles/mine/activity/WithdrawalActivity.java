@@ -22,6 +22,7 @@ import com.lvshandian.lemeng.moudles.mine.bean.BankCardInfo;
 import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.widget.view.RoundDialog;
+import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.squareup.okhttp.Request;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -154,7 +155,7 @@ public class WithdrawalActivity extends BaseActivity {
      * 查询银行卡列表
      */
     private void queryBankCard() {
-        String url = UrlBuilder.CHARGE_SERVER_URL_8080 + String.format(UrlBuilder.QUERY_BANK_CARD, appUser.getId());
+        String url = UrlBuilder.CHARGE_SERVER_URL + String.format(UrlBuilder.QUERY_BANK_CARD, appUser.getId());
         OkHttpUtils.get().url(url).build().execute(new StringCallback() {
             @Override
             public void onError(Request request, Exception e) {
@@ -205,9 +206,10 @@ public class WithdrawalActivity extends BaseActivity {
                 String amount = et_withdrawal_amount.getText().toString().trim();
                 if (TextUtils.isEmpty(amount)) {
                     showToast(getString(R.string.please_input_withdraw_num));
-                } else if (Integer.valueOf(amount) > Integer.valueOf(SharedPreferenceUtils.getGoldCoin(mContext))) {
+                } else if (Long.valueOf(amount) > Long.valueOf(SharedPreferenceUtils.getGoldCoin(mContext))) {
                     showToast(getString(R.string.input_withdraw_failure));
                 } else {
+                    alertDialog.dismiss();
                     withdraw(position, amount);
                 }
             }
@@ -220,7 +222,7 @@ public class WithdrawalActivity extends BaseActivity {
      * @param position
      */
     private void deleteBankCard(int position) {
-        String url = UrlBuilder.CHARGE_SERVER_URL_8080 + UrlBuilder.DELETE_BANK_CARD;
+        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.DELETE_BANK_CARD;
         OkHttpUtils.post().url(url).addParams("cardId", String.valueOf(bankCardList.get(position).getId()))
                 .build().execute(new StringCallback() {
             @Override
@@ -249,13 +251,14 @@ public class WithdrawalActivity extends BaseActivity {
      * @param amount
      */
     private void withdraw(int position, final String amount) {
-        String url = UrlBuilder.CHARGE_SERVER_URL_8080 + UrlBuilder.BANK_CARD_WITHDRAW;
+        String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.BANK_CARD_WITHDRAW;
         OkHttpUtils.post().url(url).addParams("cardId", String.valueOf(bankCardList.get(position).getId()))
                 .addParams("userId", String.valueOf(appUser.getId()))
                 .addParams("amount", amount)
                 .build().execute(new StringCallback() {
             @Override
             public void onError(Request request, Exception e) {
+                LogUtil.e("deleteBankCard", "request=" + request.toString() + "   e=" + e.toString());
             }
 
             @Override
@@ -263,7 +266,7 @@ public class WithdrawalActivity extends BaseActivity {
                 try {
                     JSONObject obj = new JSONObject(response);
                     if ("1".equals(obj.getString("code"))) {
-                        String goldCoin = String.valueOf(Long.valueOf(SharedPreferenceUtils.getGoldCoin(mContext)) - Integer.valueOf(amount));
+                        String goldCoin = String.valueOf(Long.valueOf(SharedPreferenceUtils.getGoldCoin(mContext)) - Long.valueOf(amount));
                         SharedPreferenceUtils.saveGoldCoin(mContext, goldCoin);
                         tvChangeBalance.setText(getString(R.string.change_balance, SharedPreferenceUtils.getGoldCoin(mContext)));
                     }

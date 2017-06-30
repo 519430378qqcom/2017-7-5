@@ -392,11 +392,11 @@
                         android:visibility="gone" />
 
                     <ImageView
-                        android:id="@+id/iv_live_gift"
+                        android:id="@+id/iv_game"
                         android:layout_width="80px"
                         android:layout_height="80px"
                         android:layout_centerHorizontal="true"
-                        android:background="@mipmap/mg_room_btn_li" />
+                        android:background="@mipmap/game_hui" />
 
                     <com.zhy.autolayout.AutoLinearLayout
                         android:layout_width="wrap_content"
@@ -449,12 +449,12 @@
                             android:background="@mipmap/mg_room_btn_fen" />
 
                         <ImageView
-                            android:id="@+id/iv_game"
+                            android:id="@+id/iv_live_gift"
                             android:layout_width="80px"
                             android:layout_height="80px"
                             android:layout_marginBottom="19px"
                             android:layout_marginLeft="19px"
-                            android:background="@mipmap/game_hui" />
+                            android:background="@mipmap/mg_room_btn_li" />
 
 
                     </com.zhy.autolayout.AutoLinearLayout>

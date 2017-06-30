@@ -45,7 +45,6 @@ import com.lvshandian.lemeng.utils.CountUtils;
 import com.lvshandian.lemeng.utils.GrademipmapUtils;
 import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
-import com.lvshandian.lemeng.widget.view.AvatarView;
 import com.lvshandian.lemeng.widget.view.ExpandGridView;
 import com.lvshandian.lemeng.widget.view.HeadZoomScrollView;
 import com.maiml.wechatrecodervideolibrary.recoder.WechatRecoderActivity;
@@ -115,11 +114,11 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
     @Bind(R.id.ll_fans)
     LinearLayout llFans;
     @Bind(R.id.iv_1)
-    AvatarView iv_1;
+    ImageView iv_1;
     @Bind(R.id.iv_2)
-    AvatarView iv_2;
+    ImageView iv_2;
     @Bind(R.id.iv_3)
-    AvatarView iv_3;
+    ImageView iv_3;
     @Bind(R.id.tv_watch_all_phone)
     TextView tv_watch_all_phone;
     @Bind(R.id.tv_watch_all_video)
@@ -309,9 +308,6 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
         llFans.setOnClickListener(this);
         llAttention.setOnClickListener(this);
         setting.setOnClickListener(this);
-        iv_1.setOnClickListener(this);
-        iv_2.setOnClickListener(this);
-        iv_3.setOnClickListener(this);
 
         parent_scrollView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -585,9 +581,6 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
                 gotoActivity(MyGradeActivity.class, false);
                 break;
             case R.id.ll_contribution://我的贡献榜
-            case R.id.iv_1:
-            case R.id.iv_2:
-            case R.id.iv_3:
                 Intent intent = new Intent(mContext, MyContributionActivity.class);
                 startActivity(intent);
                 break;

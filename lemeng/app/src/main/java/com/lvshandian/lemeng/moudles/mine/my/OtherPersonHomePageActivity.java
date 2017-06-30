@@ -364,7 +364,7 @@ public class OtherPersonHomePageActivity extends BaseActivity {
                 tvAttention.setText(String.valueOf(0));
             }
 
-            focus();
+            focus(false);
             final String finalPicUrl = picUrl;
             avHeader.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -379,17 +379,21 @@ public class OtherPersonHomePageActivity extends BaseActivity {
 
     /**
      * 显示关注(未关注)
+     *
+     * @param attention 是否是点击关注/取消关注
      */
-    private void focus() {
+    private void focus(boolean attention) {
         String follow = mOtherBean.getFollow();
         if (TextUtils.equals("0", follow)) {
             iv_focus.setImageResource(R.mipmap.icon_unfocus);
             tv_focus.setText(getString(R.string.attention));
-            tvFanse.setText(String.valueOf(Integer.parseInt(tvFanse.getText().toString()) - 1));
+            if (attention)
+                tvFanse.setText(String.valueOf(Integer.parseInt(tvFanse.getText().toString()) - 1));
         } else if (TextUtils.equals("1", follow)) {
             iv_focus.setImageResource(R.mipmap.icon_focus);
             tv_focus.setText(getString(R.string.already_attention));
-            tvFanse.setText(String.valueOf(Integer.parseInt(tvFanse.getText().toString()) + 1));
+            if (attention)
+                tvFanse.setText(String.valueOf(Integer.parseInt(tvFanse.getText().toString()) + 1));
         }
     }
 
@@ -527,7 +531,7 @@ public class OtherPersonHomePageActivity extends BaseActivity {
                 } else {
                     mOtherBean.setFollow("1");
                 }
-                focus();
+                focus(true);
             }
         });
     }

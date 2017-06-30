@@ -3021,7 +3021,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 int type = Integer.parseInt((String) remote.get("type"));
                 switch (type) {
                     case 105://进入房间
-                        if(message.getRemoteExtension().get("data") == null){
+                        if (message.getRemoteExtension().get("data") == null) {
                             return;
                         }
                         RoomUserBean roomUserBean = JavaBeanMapUtils.mapToBean((Map) message.
@@ -3033,7 +3033,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         }
                         break;
                     case 106://离开房间
-                        if(message.getRemoteExtension().get("data") == null){
+                        if (message.getRemoteExtension().get("data") == null) {
                             return;
                         }
                         LogUtil.e("有人离开直播间", message.getRemoteExtension().get("data").toString());
@@ -4583,9 +4583,14 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         civ_image_bg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
-                intent.putExtra(getString(R.string.visit_person), customdateBean.getId());
-                startActivity(intent);
+                if (!TextUtils.isEmpty(customdateBean.getId()) && customdateBean.getId().equals(appUser.getId())) {
+                    Intent intent = new Intent(mContext, MyInformationActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
+                    intent.putExtra(getString(R.string.visit_person), customdateBean.getId());
+                    startActivity(intent);
+                }
                 otherPop.dismiss();
             }
         });

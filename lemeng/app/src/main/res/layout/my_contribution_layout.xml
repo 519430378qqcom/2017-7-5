@@ -31,13 +31,13 @@
         android:layout_marginRight="60px"
         android:orientation="horizontal">
 
-        <com.lvshandian.lemeng.widget.view.AvatarView
+        <com.lvshandian.lemeng.widget.view.CircleImageView
             android:id="@+id/iv_1"
             android:layout_width="60px"
             android:layout_height="match_parent"
             android:src="@mipmap/head_default" />
 
-        <com.lvshandian.lemeng.widget.view.AvatarView
+        <com.lvshandian.lemeng.widget.view.CircleImageView
             android:id="@+id/iv_2"
             android:layout_width="60px"
             android:layout_height="match_parent"
@@ -45,7 +45,7 @@
             android:src="@mipmap/head_default"
             android:visibility="visible" />
 
-        <com.lvshandian.lemeng.widget.view.AvatarView
+        <com.lvshandian.lemeng.widget.view.CircleImageView
             android:id="@+id/iv_3"
             android:layout_width="60px"
             android:layout_height="match_parent"

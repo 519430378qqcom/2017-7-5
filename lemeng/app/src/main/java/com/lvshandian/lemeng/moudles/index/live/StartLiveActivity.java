@@ -4561,9 +4561,14 @@ public class StartLiveActivity extends BaseActivity implements
         civ_image_bg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
-                intent.putExtra(getString(R.string.visit_person), customdateBean.getId());
-                startActivity(intent);
+                if (!TextUtils.isEmpty(customdateBean.getId()) && customdateBean.getId().equals(appUser.getId())) {
+                    Intent intent = new Intent(mContext, MyInformationActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
+                    intent.putExtra(getString(R.string.visit_person), customdateBean.getId());
+                    startActivity(intent);
+                }
                 otherPop.dismiss();
             }
         });
