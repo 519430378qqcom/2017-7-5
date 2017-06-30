@@ -43,7 +43,6 @@ import com.netease.nimlib.sdk.team.model.Team;
 import com.netease.nimlib.sdk.uinfo.UserInfoProvider;
 import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 import com.qiniu.pili.droid.streaming.StreamingEnv;
-import com.squareup.leakcanary.LeakCanary;
 import com.yixia.camera.VCamera;
 import com.yixia.camera.util.DeviceUtils;
 import com.zhy.autolayout.config.AutoLayoutConifg;
@@ -152,7 +151,6 @@ public class MyApplication extends LitePalApplication {
             // 注册语言变化监听
 //            registerLocaleReceiver(true);
 
-            LeakCanary.install(this);
         }
 
         // 设置拍摄视频缓存路径

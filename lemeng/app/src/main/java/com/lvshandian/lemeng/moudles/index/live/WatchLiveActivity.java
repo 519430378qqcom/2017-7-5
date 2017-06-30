@@ -111,6 +111,7 @@ import com.lvshandian.lemeng.moudles.index.live.redpackage.IGetRedPackage;
 import com.lvshandian.lemeng.moudles.index.live.redpackage.RedPackageView;
 import com.lvshandian.lemeng.moudles.index.live.utils.AnchorVideo;
 import com.lvshandian.lemeng.moudles.index.live.utils.LiveVideo;
+import com.lvshandian.lemeng.moudles.mine.MyInformationActivity;
 import com.lvshandian.lemeng.moudles.mine.my.ContributionActivity;
 import com.lvshandian.lemeng.moudles.mine.my.OtherPersonHomePageActivity;
 import com.lvshandian.lemeng.moudles.mine.my.adapter.OnItemClickListener;
@@ -4670,8 +4671,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         mySelf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
-                intent.putExtra(getString(R.string.visit_person), customdateBean.getId());
+                Intent intent = new Intent(mContext, MyInformationActivity.class);
                 startActivity(intent);
                 otherPop.dismiss();
             }

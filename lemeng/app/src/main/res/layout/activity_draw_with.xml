@@ -13,14 +13,11 @@
         android:layout_height="120px"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="20px">
+        android:paddingLeft="30px">
 
         <ImageView
-            android:layout_width="60px"
-            android:layout_height="60px"
-            android:layout_marginLeft="10px"
-            android:scaleType="centerInside"
+            android:layout_width="80px"
+            android:layout_height="80px"
             android:src="@mipmap/ali_pay" />
 
         <TextView
@@ -34,7 +31,6 @@
         <ImageView
             android:layout_width="40px"
             android:layout_height="40px"
-            android:layout_gravity="center_vertical"
             android:layout_marginRight="30px"
             android:src="@mipmap/back_me" />
 
@@ -47,13 +43,11 @@
         android:layout_marginTop="2px"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="20px">
+        android:paddingLeft="30px">
 
         <ImageView
             android:layout_width="80px"
             android:layout_height="80px"
-            android:scaleType="centerInside"
             android:src="@mipmap/weixin" />
 
         <TextView
@@ -61,14 +55,12 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_weight="1"
-            android:gravity="left"
             android:text="@string/wechat_withdraw"
             android:textSize="30px" />
 
         <ImageView
             android:layout_width="40px"
             android:layout_height="40px"
-            android:layout_gravity="center_vertical"
             android:layout_marginRight="30px"
             android:src="@mipmap/back_me" />
 
@@ -81,13 +73,11 @@
         android:layout_marginTop="2px"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="20px">
+        android:paddingLeft="30px">
 
         <ImageView
             android:layout_width="80px"
             android:layout_height="80px"
-            android:scaleType="centerInside"
             android:src="@mipmap/unionpay" />
 
         <TextView
@@ -95,14 +85,12 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_weight="1"
-            android:gravity="left"
             android:text="@string/unionpay_withdraw"
             android:textSize="30px" />
 
         <ImageView
             android:layout_width="40px"
             android:layout_height="40px"
-            android:layout_gravity="center_vertical"
             android:layout_marginRight="30px"
             android:src="@mipmap/back_me" />
 

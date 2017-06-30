@@ -193,7 +193,11 @@
             android:name=".moudles.index.activity.CityListActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
+        <!-- 我的个人主页 -->
+        <activity
+            android:name=".moudles.mine.MyInformationActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <!-- 所有照片 -->
         <activity
             android:name=".moudles.mine.my.AllPhoneActivity"

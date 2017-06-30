@@ -15,7 +15,6 @@
         android:layout_marginTop="30px"
         android:layout_marginBottom="30px"
         android:textColor="@color/agray"
-        android:text="@string/change_balance"
         android:textSize="28px"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rcy_bank_card"

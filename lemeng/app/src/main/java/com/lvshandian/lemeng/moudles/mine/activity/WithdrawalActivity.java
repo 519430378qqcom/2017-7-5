@@ -11,15 +11,28 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lvshandian.lemeng.R;
+import com.lvshandian.lemeng.UrlBuilder;
 import com.lvshandian.lemeng.base.BaseActivity;
 import com.lvshandian.lemeng.moudles.mine.bean.BankCardInfo;
+import com.lvshandian.lemeng.utils.JsonUtil;
+import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
+import com.lvshandian.lemeng.widget.view.RoundDialog;
+import com.squareup.okhttp.Request;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 
+import static com.lvshandian.lemeng.R.style.dialog;
+
 /**
- * 提现界面
+ * 银行卡提现界面
  */
 public class WithdrawalActivity extends BaseActivity {
 
@@ -29,7 +42,9 @@ public class WithdrawalActivity extends BaseActivity {
     TextView tvChangeBalance;
     @Bind(R.id.rcy_bank_card)
     RecyclerView rcyBankCard;
-    private ArrayList<BankCardInfo> list;
+    private List<BankCardInfo> bankCardList = new ArrayList<>();
+    private BankCardAdapter bankCardAdapter;
+    private RoundDialog deleteDialog;
 
     @Override
     protected int getLayoutId() {
@@ -44,13 +59,16 @@ public class WithdrawalActivity extends BaseActivity {
     @Override
     protected void initialized() {
         initTitle("", getString(R.string.unionpay_withdraw), null);
-        list = new ArrayList();
-        list.add(new BankCardInfo("农业银行", "储蓄卡", "3838"));
-        list.add(new BankCardInfo("建设银行", "储蓄卡", "2250"));
-        list.add(new BankCardInfo("北京银行", "信用卡", "4356"));
-        list.add(new BankCardInfo("瑞士银行", "储蓄卡", "4567"));
+        tvChangeBalance.setText(SharedPreferenceUtils.getGoldCoin(mContext));
         rcyBankCard.setLayoutManager(new LinearLayoutManager(mContext));
-        rcyBankCard.setAdapter(new BankCardAdapter());
+        bankCardAdapter = new BankCardAdapter();
+        rcyBankCard.setAdapter(bankCardAdapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        queryBankCard();
     }
 
     @Override
@@ -63,8 +81,6 @@ public class WithdrawalActivity extends BaseActivity {
     }
 
     class BankCardAdapter extends RecyclerView.Adapter<BankCardAdapter.BankCardHolder> {
-        int BANK_CARD = 0;
-        int BANK_CARD_ADD = 1;
 
         @Override
         public BankCardHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -72,14 +88,10 @@ public class WithdrawalActivity extends BaseActivity {
             return bankCardHolder;
         }
 
-        @Override
-        public int getItemViewType(int position) {
-            return list.size() == position ? BANK_CARD_ADD : BANK_CARD;
-        }
 
         @Override
         public void onBindViewHolder(BankCardHolder holder, final int position) {
-            if (position == list.size()) {
+            if (position == bankCardList.size()) {
                 holder.cardview.setVisibility(View.GONE);
                 holder.rl_add_card.setVisibility(View.VISIBLE);
                 holder.rl_add_card.setOnClickListener(new View.OnClickListener() {
@@ -91,14 +103,22 @@ public class WithdrawalActivity extends BaseActivity {
             } else {
                 holder.cardview.setVisibility(View.VISIBLE);
                 holder.rl_add_card.setVisibility(View.GONE);
-                BankCardInfo bankCardInfo = list.get(position);
-                holder.tv_bankcard_name.setText(bankCardInfo.getCardName());
+                BankCardInfo bankCardInfo = bankCardList.get(position);
+                holder.tv_bankcard_name.setText(bankCardInfo.getUsername());
                 holder.tv_bankcard_type.setText(bankCardInfo.getCardType());
-                holder.tv_bank_num.setText(bankCardInfo.getCardNum());
+                String bankNum = bankCardInfo.getCardNum();
+                holder.tv_bank_num.setText(bankNum.substring((bankNum.length() - 4)));
                 holder.cardview.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         selectBankCard(position);
+                    }
+                });
+                holder.cardview.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        isDeleteBankCard(position);
+                        return true;
                     }
                 });
             }
@@ -106,7 +126,7 @@ public class WithdrawalActivity extends BaseActivity {
 
         @Override
         public int getItemCount() {
-            return list.size() + 1;
+            return bankCardList.size() + 1;
         }
 
         class BankCardHolder extends RecyclerView.ViewHolder {
@@ -126,6 +146,34 @@ public class WithdrawalActivity extends BaseActivity {
     }
 
     /**
+     * 查询银行卡列表
+     */
+    private void queryBankCard() {
+        String url = UrlBuilder.CHARGE_SERVER_URL_8080 + String.format(UrlBuilder.QUERY_BANK_CARD, appUser.getId());
+        OkHttpUtils.get().url(url).build().execute(new StringCallback() {
+            @Override
+            public void onError(Request request, Exception e) {
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    if ("1".equals(obj.getString("code"))) {
+                        String str = obj.getString("obj");
+                        List<BankCardInfo> list = JsonUtil.json2BeanList(str, BankCardInfo.class);
+                        bankCardList.clear();
+                        bankCardList.addAll(list);
+                        bankCardAdapter.notifyDataSetChanged();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    /**
      * 点击选择银行卡
      *
      * @param position
@@ -135,9 +183,69 @@ public class WithdrawalActivity extends BaseActivity {
     }
 
     /**
+     * 长按解绑银行卡
+     *
+     * @param position
+     */
+    private void deleteBankCard(int position) {
+        String url = UrlBuilder.CHARGE_SERVER_URL_8080 + UrlBuilder.DELETE_BANK_CARD;
+        OkHttpUtils.post().url(url).addParams("cardId", String.valueOf(bankCardList.get(position).getId()))
+                .build().execute(new StringCallback() {
+            @Override
+            public void onError(Request request, Exception e) {
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    if ("1".equals(obj.getString("code"))) {
+                        queryBankCard();
+                    }
+                    showToast(obj.getString("msg"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    /**
      * 点击跳转添加银行卡
      */
     private void addBankCard() {
         startActivity(new Intent(mContext, AddBankCardActivity.class));
+    }
+
+    /**
+     * 删除对话框
+     */
+    private void isDeleteBankCard(final int position) {
+        View view = getLayoutInflater().inflate(R.layout.dialog_quit_login, null);
+        if (deleteDialog == null) {
+            deleteDialog = new RoundDialog(this, view, dialog, 0.66f, 0.2f);
+        }
+        deleteDialog.setCanceledOnTouchOutside(true);
+        TextView tvTitle = (TextView) view.findViewById(R.id.tv_title);
+        TextView tvCancel = (TextView) view.findViewById(R.id.tv_cancel);
+        TextView tvSure = (TextView) view.findViewById(R.id.tv_sure);
+        tvTitle.setText(mContext.getString(R.string.if_delete_bank_card));
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteDialog.dismiss();
+            }
+        });
+        tvSure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteBankCard(position);
+                deleteDialog.dismiss();
+            }
+        });
+        if (!deleteDialog.isShowing()) {
+            deleteDialog.show();
+        }
+
     }
 }

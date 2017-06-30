@@ -112,6 +112,7 @@ import com.lvshandian.lemeng.moudles.index.live.gift.GiftSendModel;
 import com.lvshandian.lemeng.moudles.index.live.redpackage.IGetRedPackage;
 import com.lvshandian.lemeng.moudles.index.live.redpackage.RedPackageView;
 import com.lvshandian.lemeng.moudles.index.live.utils.AnchorVideoOne;
+import com.lvshandian.lemeng.moudles.mine.MyInformationActivity;
 import com.lvshandian.lemeng.moudles.mine.bean.Funse;
 import com.lvshandian.lemeng.moudles.mine.bean.FunseBean;
 import com.lvshandian.lemeng.moudles.mine.my.ContributionActivity;
@@ -4656,8 +4657,7 @@ public class StartLiveActivity extends BaseActivity implements
         mySelf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
-                intent.putExtra(getString(R.string.visit_person), customdateBean.getId());
+                Intent intent = new Intent(mContext, MyInformationActivity.class);
                 startActivity(intent);
                 otherPop.dismiss();
             }
@@ -5385,19 +5385,6 @@ public class StartLiveActivity extends BaseActivity implements
                 }
             }
             break;
-            case R.id.seek_soften: {
-                if (fromUser) {
-//                    mPinkValue = progress / 100f;
-
-                    CameraStreamingSetting.FaceBeautySetting fbSetting = mCameraStreamingSetting.getFaceBeautySetting();
-                    fbSetting.beautyLevel = mPinkValue;
-                    fbSetting.whiten = mWhitenValue;
-                    fbSetting.redden = mReddenValue;
-
-                    mMediaStreamingManager.updateFaceBeautySetting(fbSetting);
-                }
-            }
-            break;
         }
     }
 
@@ -5439,9 +5426,6 @@ public class StartLiveActivity extends BaseActivity implements
         m_Seekredden.setOnSeekBarChangeListener(this);
         m_Seekredden.setProgress((int) (mReddenValue * 100));
 
-        SeekBar m_Seeksoften = (SeekBar) view.findViewById(R.id.seek_soften);
-        m_Seeksoften.setOnSeekBarChangeListener(this);
-        m_Seeksoften.setProgress((int) (mPinkValue * 100));
     }
 
     private void showLianmaiView() {
