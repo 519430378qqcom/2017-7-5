@@ -143,7 +143,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="80px"
             android:src="@mipmap/room_googleplus"
-            android:visibility="visible"/>
+            android:visibility="gone"/>
     </com.zhy.autolayout.AutoLinearLayout>
 
     <TextView

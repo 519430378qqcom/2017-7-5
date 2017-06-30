@@ -156,7 +156,7 @@ public class UMUtils {
         web.setDescription(share_content);//描述
 
         new ShareAction(act).withText(share_title)
-                .setDisplayList(FACEBOOK, TWITTER, GOOGLEPLUS, WEIXIN, WEIXIN_CIRCLE)
+                .setDisplayList(FACEBOOK,TWITTER,WEIXIN,WEIXIN_CIRCLE)
                 .withMedia(web)
                 .setCallback(umShareListener).setCallback(umShareListener).setShareboardclickCallback(new ShareBoardlistener() {
       @Override

@@ -613,6 +613,13 @@
     <string name="facebook_app_id">1754771504538287</string>
     <string name="fb_login_protocol_scheme">fb1754771504538287</string>
     <string name="google_billing_notsetup">您还没有登陆谷歌服务框架</string>
+    <!--谷歌支付商品ID-->
+    <string name="google_billing_lepiao06">com.lvshandian.lemeng.ticket6</string>
+    <string name="google_billing_lepiao30">com.lvshandian.lemeng.ticket30</string>
+    <string name="google_billing_lepiao98">com.lvshandian.lemeng.ticket98</string>
+    <string name="google_billing_lepiao298">com.lvshandian.lemeng.ticket298</string>
+    <string name="google_billing_lepiao588">com.lvshandian.lemeng.ticket588</string>
+    <string name="google_billing_lepiao1598">com.lvshandian.lemeng.ticket1598</string>
 
     <!--6月29日之后添加start-->
     <string name="download_is_in_progress">正在下载...</string>

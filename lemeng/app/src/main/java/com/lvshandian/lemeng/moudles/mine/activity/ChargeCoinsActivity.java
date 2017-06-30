@@ -3,13 +3,25 @@ package com.lvshandian.lemeng.moudles.mine.activity;
 import android.app.AlertDialog;
 import android.content.IntentFilter;
 import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.lvshandian.lemeng.R;
+import com.lvshandian.lemeng.UrlBuilder;
 import com.lvshandian.lemeng.base.BaseActivity;
+import com.lvshandian.lemeng.bean.AppUser;
+import com.lvshandian.lemeng.httprequest.HttpDatas;
+import com.lvshandian.lemeng.httprequest.RequestCode;
+import com.lvshandian.lemeng.utils.JsonUtil;
+import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.utils.billingutils.IabBroadcastReceiver;
 import com.lvshandian.lemeng.utils.billingutils.IabBroadcastReceiver.IabBroadcastListener;
 import com.lvshandian.lemeng.utils.billingutils.IabHelper;
@@ -18,10 +30,18 @@ import com.lvshandian.lemeng.utils.billingutils.IabResult;
 import com.lvshandian.lemeng.utils.billingutils.Inventory;
 import com.lvshandian.lemeng.utils.billingutils.Purchase;
 import com.zhy.autolayout.AutoLinearLayout;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import butterknife.Bind;
+
+import static com.lvshandian.lemeng.UrlBuilder.CHARGE_SERVER_URL;
 
 /**
  * 颜票充值界面
@@ -49,11 +69,15 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
      */
     private String money = "6";
     /**
+     * 商品ID
+     */
+    private String productId="";
+    /**
      * 颜票数量
      */
     private String lepiao;
 
-    private final static String TAG = "ChargeCoinsActivity";
+    private  final  static  String TAG="ChargeCoinsActivity";
 
 
     // SKU for our subscription (infinite gas)
@@ -62,8 +86,6 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
 
     // (arbitrary) request code for the purchase flow
     static final int RC_REQUEST = 10001;
-    static final String SKU_PREMIUM = "lemeng.test02";
-    static final String SKU_GAS = "lemeng.test01";
 
     // The helper object
     IabHelper mHelper;
@@ -97,45 +119,25 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
 
         String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjU9OdrUnKqI1+g/LsOLLnHQnI8m0OsLxfeD8I6aeGxCgalcFHEaBXxG+UsaIC1qqtwqZOHGhRAs+BaykuTafqmgxDaOMVAh8dDRfNesvx9NhkR/Gd8dgduonceHHK93H4ybzVUTUyyzpc32rVh3ogMn6ee00G4fWohZIHel3KzhlCCN/1oGD4mS26lfK/aAyerK5cL/wwkfYjzVjPO/8dug3NMJI5EanLmZ8dZAps4yZpAPDUyv6WOPqzzTRLkMJf7KoZ5cefqK5bVFPQkbFnC5TAt5imgljVuHe+vBlMRMPV02Vwp9Rs6qMEHNYuxbRXkuuWiIul++REFPIbaxMjwIDAQAB";
 
-        // Some sanity checks to see if the developer (that's you!) really followed the
-        // instructions to run this sample (don't put these checks on your app!)
-        if (base64EncodedPublicKey.contains("CONSTRUCT_YOUR")) {
-            throw new RuntimeException("Please put your app's public key in MainActivity.java. See README.");
-        }
-        if (getPackageName().startsWith("com.example")) {
-            throw new RuntimeException("Please change the sample's package name! See README.");
-        }
-
         // Create the helper, passing it our context and the public key to verify signatures with
         Log.d(TAG, "Creating IAB helper.");
         mHelper = new IabHelper(this, base64EncodedPublicKey);
-
         // enable debug logging (for a production application, you should set this to false).
         mHelper.enableDebugLogging(true);
-
         // Start setup. This is asynchronous and the specified listener
         // will be called once setup completes.
         Log.d(TAG, "Starting setup.");
         mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
             public void onIabSetupFinished(IabResult result) {
                 Log.d(TAG, "Setup finished.");
-
                 if (!result.isSuccess()) {
                     // Oh noes, there was a problem.
-//                    complain("Problem setting up in-app billing: " + result);
+                    Log.d(TAG,"Problem setting up in-app billing: " + result);
                     return;
                 }
 
                 // Have we been disposed of in the meantime? If so, quit.
                 if (mHelper == null) return;
-
-                // Important: Dynamically register for broadcast messages about updated purchases.
-                // We register the receiver here instead of as a <receiver> in the Manifest
-                // because we always call getPurchases() at startup, so therefore we can ignore
-                // any broadcasts sent while the app isn't running.
-                // Note: registering this listener in an Activity is a bad idea, but is done here
-                // because this is a SAMPLE. Regardless, the receiver must be registered after
-                // IabHelper is setup, but before first call to getPurchases().
                 mBroadcastReceiver = new IabBroadcastReceiver(ChargeCoinsActivity.this);
                 IntentFilter broadcastFilter = new IntentFilter(IabBroadcastReceiver.ACTION);
                 registerReceiver(mBroadcastReceiver, broadcastFilter);
@@ -145,7 +147,7 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
                 try {
                     mHelper.queryInventoryAsync(mGotInventoryListener);
                 } catch (IabAsyncInProgressException e) {
-//                    complain("Error querying inventory. Another async operation in progress.");
+                    Log.e(TAG,"Error querying inventory. Another async operation in progress.");
                 }
             }
         });
@@ -163,23 +165,8 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
                 llFive.setBackground(getResources().getDrawable(R.drawable.selector_loginbtn_bai));
                 llSex.setBackground(getResources().getDrawable(R.drawable.selector_loginbtn_bai));
                 money = "6";
-            {
-                if (!mHelper.ismSetupDone()) {
-                    Log.d(TAG, "mHelper is not setup done");
-                    return;
-                }
-
-                String payload = "";
-                try {
-                    mHelper.launchPurchaseFlow(this, SKU_GAS, RC_REQUEST,
-                            mPurchaseFinishedListener, payload);
-                } catch (IabAsyncInProgressException e) {
-//                    complain("Error launching purchase flow. Another async operation in progress.");
-//                    setWaitScreen(false);
-                }
-
-            }
-            break;
+                productId=mContext.getString(R.string.google_billing_lepiao06);
+                break;
             case R.id.ll_two:
                 llTwo.setBackground(getResources().getDrawable(R.drawable.selector_loginbtn_sloidmain));
                 llOne.setBackground(getResources().getDrawable(R.drawable.selector_loginbtn_bai));
@@ -188,21 +175,8 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
                 llFive.setBackground(getResources().getDrawable(R.drawable.selector_loginbtn_bai));
                 llSex.setBackground(getResources().getDrawable(R.drawable.selector_loginbtn_bai));
                 money = "30";
-            {
-                if (!mHelper.ismSetupDone()) {
-                    Log.d(TAG, "mHelper is not setup done");
-                    return;
-                }
-
-                String payload = "";
-                try {
-                    mHelper.launchPurchaseFlow(this, SKU_PREMIUM, RC_REQUEST,
-                            mPurchaseFinishedListener, payload);
-                } catch (IabAsyncInProgressException e) {
-                    Log.d(TAG, "Error launching purchase flow. Another async operation in progress.");
-                }
-            }
-            break;
+                productId=mContext.getString(R.string.google_billing_lepiao30);
+                break;
             case R.id.ll_three:
                 llThree.setBackground(getResources().getDrawable(R.drawable.selector_loginbtn_sloidmain));
                 llOne.setBackground(getResources().getDrawable(R.drawable.selector_loginbtn_bai));
@@ -211,6 +185,7 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
                 llFive.setBackground(getResources().getDrawable(R.drawable.selector_loginbtn_bai));
                 llSex.setBackground(getResources().getDrawable(R.drawable.selector_loginbtn_bai));
                 money = "98";
+                productId=mContext.getString(R.string.google_billing_lepiao98);
                 break;
             case R.id.ll_for:
                 llFor.setBackground(getResources().getDrawable(R.drawable.selector_loginbtn_sloidmain));
@@ -220,6 +195,7 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
                 llFive.setBackground(getResources().getDrawable(R.drawable.selector_loginbtn_bai));
                 llSex.setBackground(getResources().getDrawable(R.drawable.selector_loginbtn_bai));
                 money = "298";
+                productId=mContext.getString(R.string.google_billing_lepiao298);
                 break;
             case R.id.ll_five:
                 llFive.setBackground(getResources().getDrawable(R.drawable.selector_loginbtn_sloidmain));
@@ -229,6 +205,7 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
                 llTwo.setBackground(getResources().getDrawable(R.drawable.selector_loginbtn_bai));
                 llSex.setBackground(getResources().getDrawable(R.drawable.selector_loginbtn_bai));
                 money = "588";
+                productId=mContext.getString(R.string.google_billing_lepiao588);
                 break;
             case R.id.ll_sex:
                 llFive.setBackground(getResources().getDrawable(R.drawable.selector_loginbtn_bai));
@@ -238,16 +215,20 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
                 llTwo.setBackground(getResources().getDrawable(R.drawable.selector_loginbtn_bai));
                 llSex.setBackground(getResources().getDrawable(R.drawable.selector_loginbtn_sloidmain));
                 money = "1598";
+                productId=mContext.getString(R.string.google_billing_lepiao1598);
                 break;
             //充值
             case R.id.btn_cz:
-                showToast(getString(R.string.stay_open));
+//                showToast(R.string.stay_open);
+                googleBuyTicket();
+
                 break;
             case R.id.tv_titlebar_left:
                 defaultFinish();
                 break;
         }
     }
+
 
 
     @Override
@@ -257,20 +238,18 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
         try {
             mHelper.queryInventoryAsync(mGotInventoryListener);
         } catch (IabAsyncInProgressException e) {
-            Log.d(TAG, "Error querying inventory. Another async operation in progress.");
+            Log.d(TAG,"Error querying inventory. Another async operation in progress.");
         }
     }
 
     IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
         public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
             Log.d(TAG, "Query inventory finished.");
-
             // Have we been disposed of in the meantime? If so, quit.
             if (mHelper == null) return;
-
             // Is it a failure?
             if (result.isFailure()) {
-                Log.d(TAG, "Failed to query inventory: " + result);
+                Log.d(TAG,"Failed to query inventory: " + result);
                 return;
             }
 
@@ -279,42 +258,35 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
              * the developer payload to see if it's correct! See
              * verifyDeveloperPayload().
              */
-
-            // Do we have the premium upgrade?
             Log.d(TAG, "Query inventory was successful.");
-
-            List<Purchase> ownedProducts = inventory.getAllPurchases();
-            if (ownedProducts != null && ownedProducts.size() > 0) {
-                for (Purchase pur : ownedProducts) {
-                    Log.d(TAG, "user has purchased ：" + pur.toString());
+            List<Purchase> ownedProducts= inventory.getAllPurchases();
+            if(ownedProducts!=null&&ownedProducts.size()>0) {
+                for (Purchase pur:ownedProducts){
+                    Log.d(TAG, "user has purchased ："+pur.toString());
                 }
                 try {
-                    mHelper.consumeAsync(ownedProducts, mConsumeMultiFinishedListener);
-                } catch (IabAsyncInProgressException e) {
+                    mHelper.consumeAsync(ownedProducts,mConsumeMultiFinishedListener);
+                }catch (IabAsyncInProgressException e){
                     e.printStackTrace();
                 }
-
             }
-            // Do we have the premium upgrade?
-
-
         }
     };
 
-    IabHelper.OnConsumeMultiFinishedListener mConsumeMultiFinishedListener = new IabHelper.OnConsumeMultiFinishedListener() {
+    IabHelper.OnConsumeMultiFinishedListener mConsumeMultiFinishedListener= new IabHelper.OnConsumeMultiFinishedListener() {
         @Override
         public void onConsumeMultiFinished(List<Purchase> purchases, List<IabResult> results) {
 
-            Log.d(TAG, "-----onConsumeMultiFinished called");
-            if (purchases != null && purchases.size() > 0) {
-                for (Purchase pc : purchases) {
-                    Log.d(TAG, "-----onConsumeMultiFinished purchase:" + pc.toString());
+            Log.d(TAG,"-----onConsumeMultiFinished called");
+            if(purchases!=null&&purchases.size()>0){
+                for (Purchase pc:purchases){
+                    googlePay(pc);
                 }
             }
 
-            if (results != null && results.size() > 0) {
-                for (IabResult re : results) {
-                    Log.d(TAG, "-----onConsumeMultiFinished purchase:" + re.toString());
+            if(results!=null&&results.size()>0) {
+                for (IabResult re:results){
+                    Log.d(TAG,"-----onConsumeMultiFinished purchase:"+re.toString());
                 }
             }
         }
@@ -332,26 +304,30 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
                 try {
                     mHelper.queryInventoryAsync(mGotInventoryListener);
                 } catch (IabAsyncInProgressException e) {
-                    Log.d(TAG, "Error querying inventory. Another async operation in progress.");
+                    Log.d(TAG,"Error querying inventory. Another async operation in progress.");
                 }
                 return;
             }
 
             Log.d(TAG, "Purchase successful.");
-            if (!mHelper.ismSetupDone()) {
+            if(!mHelper.ismSetupDone()) {
                 Log.d(TAG, "mHelper is not setup done");
                 showToast(R.string.google_billing_notsetup);
                 return;
             }
 
-            if (purchase.getSku() != null) {
-                // bought 1/4 tank of gas. So consume it.
-                Log.d(TAG, "Purchase is gas. Starting gas consumption.");
+            if (purchase!=null) {
                 try {
                     mHelper.consumeAsync(purchase, mConsumeFinishedListener);
                 } catch (IabAsyncInProgressException e) {
 
                     return;
+                }
+            }else{
+                try {
+                    mHelper.queryInventoryAsync(mGotInventoryListener);
+                } catch (IabAsyncInProgressException e) {
+                    Log.d(TAG,"Error querying inventory. Another async operation in progress.");
                 }
             }
         }
@@ -368,21 +344,14 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
     IabHelper.OnConsumeFinishedListener mConsumeFinishedListener = new IabHelper.OnConsumeFinishedListener() {
         public void onConsumeFinished(Purchase purchase, IabResult result) {
             Log.d(TAG, "Consumption finished. Purchase: " + purchase + ", result: " + result);
-
-            // if we were disposed of in the meantime, quit.
             if (mHelper == null) return;
-
-            // We know this is the "gas" sku because it's the only one we consume,
-            // so we don't check which sku was consumed. If you have more than one
-            // sku, you probably should check...
-            Log.d(TAG, "-----onConsumeFinished purchase:" + purchase.toString());
-
+            Log.d(TAG,"-----onConsumeFinished purchase:"+purchase.toString());
             if (result.isSuccess()) {
                 // successfully consumed, so we apply the effects of the item in our
-                // game world's logic, which in our case means filling the gas tank a bit
+                googlePay(purchase);
                 Log.d(TAG, "Consumption successful. Provisioning.");
             } else {
-                Log.d(TAG, "Error while consuming: " + result);
+                Log.d(TAG,"Error while consuming: " + result);
             }
 
             Log.d(TAG, "End consumption flow.");
@@ -394,15 +363,111 @@ public class ChargeCoinsActivity extends BaseActivity implements IabBroadcastLis
         super.onDestroy();
         if (mBroadcastReceiver != null) {
             unregisterReceiver(mBroadcastReceiver);
+            mBroadcastReceiver=null;
         }
         // very important:
         Log.d(TAG, "Destroying google billing helper.");
         if (mHelper != null) {
-            if (mHelper.ismSetupDone()) {
+            if(mHelper.ismSetupDone()) {
                 mHelper.disposeWhenFinished();
             }
             mHelper = null;
         }
 
     }
+
+
+    private Response.ErrorListener errorListener = new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            Log.d(TAG, "googlePay onErrorResponse :"+error);
+        }
+    };
+
+    private void googleBuyTicket(){
+        if(!mHelper.ismSetupDone()) {
+            Log.d(TAG, "mHelper is not setup done");
+            return;
+        }
+        try {
+            mHelper.launchPurchaseFlow(this, productId, RC_REQUEST,
+                    mPurchaseFinishedListener, "");
+        } catch (IabAsyncInProgressException e) {
+            Log.d(TAG,"Error launching purchase flow. Another async operation in progress.");
+        }
+    }
+    private void googlePay( Purchase purchase) {
+        if(purchase==null){
+//            String sigdata="{\"orderId\":\"GPA.3388-8327-8706-42888\",\"packageName\":\"com.lvshandian.lemeng\",\"productId\":\"lemeng.test01\",\"purchaseTime\":1498717889599,\"purchaseState\":0,\"purchaseToken\":\"bcdhmhahngngjahpcjchcfpi.AO-J1OyLdd6Hl4t5kpGsNQ46AB0CK582KztWaRIeEj0vVjd8r1xduYVrEGo7RaexaGx-sbHtTV1LqzSUNdtEJfU0SsNGKct8EW84OsVx6Skhe-qQ5zrwAnQaQLSw3ewYE-Wxh4wmV69N\"}";
+//            String sigure="CDPpGkl/nWLtXltE7H/MZWMZo86Dke6Ec9h3uvTIlBNdtYQJf2azdDqUPJRbmHWQIfFNx1gjlrOUAl8KCXQnUkuN2+TZPJtRrKRu76iz+LFxoOXJeV9UnZkcVXZ8ebSbVz25kmwrpG4zc4W47myasW/s/3rkI39qADyPPykGMpP7eg6OYACmzY3J2OrqkEhnYU3XmPcMoj8n5IMGCYKo02wGh5wnlQhsdD8hO3fIq0/pyNOJce+kbfeX3Pl5yQ2gtwN1d30ncLtbbW7wl/lY+R6+NiSgNEg/4W7SBMwZcw1JXxYjNMj6CKO9J5Rr6/fcDZ8qVb/TuX2pPiA5hO2LNw==";
+//            try {
+//                purchase = new Purchase(IabHelper.ITEM_TYPE_INAPP, sigdata, sigure);
+//            }catch (JSONException e){
+//                Log.d(TAG,"purchase==null"+e.toString());
+//            }
+            return;
+        }
+//        final String chargeUrl="http://10.11.1.192:8080/app/google-pay/recharge.html";
+        final String chargeUrl=CHARGE_SERVER_URL+"app/google-pay/recharge.html";
+        ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
+        map.put("userId", appUser.getId());
+        map.put("productId", purchase.getSku());
+        map.put("transactionId", purchase.getOrderId());
+        map.put("amount", money);
+        map.put("inappPurchaseData", purchase.getOriginalJson());
+        map.put("inappDataSignature", purchase.getSignature());
+
+        JSONObject params = new JSONObject(map);
+//        Log.d(TAG,"JSONObject:" + params.toString());
+        OkHttpUtils.post().url(chargeUrl).params(map).build().execute(new StringCallback() {
+            @Override
+            public void onError(com.squareup.okhttp.Request request, Exception e) {
+                Log.d(TAG, "onError" + e.toString());
+            }
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if(jsonObject!=null) {
+
+                        if(jsonObject.getInt("code")==1) {
+                            updateTicket();
+                        }
+                        showToast(jsonObject.getString("msg"));
+                    }
+                    Log.d(TAG, "onResponse" + jsonObject.toString());
+                }catch (JSONException e){
+                    Log.d(TAG, "JSONException" + e.toString());
+                }
+            }
+        });
+    }
+
+    /**
+     * 请求用户信息
+     */
+    private void updateTicket() {
+        ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
+        map.put("id", appUser.getId());
+        httpDatas.getNewDataCharServerCode1("查询用户信息", false, Request.Method.POST, UrlBuilder.SELECT_USER_INFO, map, mHandler, RequestCode.SELECT_USER, TAG);
+    }
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Bundle data = msg.getData();
+            String json = data.getString(HttpDatas.info);
+
+            switch (msg.what) {
+                case RequestCode.SELECT_USER:
+                    AppUser mAppUser = JsonUtil.json2Bean(json, AppUser.class);
+                    SharedPreferenceUtils.saveUserInfo(mContext, mAppUser);
+                    tvLp.setText(mAppUser.getGoldCoin());
+
+                    break;
+            }
+        }
+    };
 }
