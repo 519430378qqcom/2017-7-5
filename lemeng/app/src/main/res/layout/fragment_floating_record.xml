@@ -39,10 +39,11 @@
 
         <ImageView
             android:id="@+id/floating_calendar"
-            android:layout_width="40px"
-            android:layout_height="40px"
+            android:layout_width="80px"
+            android:layout_height="80px"
             android:layout_gravity="right|center_vertical"
-            android:layout_marginRight="30px"
+            android:layout_marginRight="10px"
+            android:padding="20px"
             android:src="@mipmap/calendar" />
 
     </com.zhy.autolayout.AutoLinearLayout>

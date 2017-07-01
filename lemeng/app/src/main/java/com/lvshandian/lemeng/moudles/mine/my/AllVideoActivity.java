@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.GridView;
 
 import com.android.volley.Request;
 import com.lvshandian.lemeng.R;
@@ -16,7 +17,6 @@ import com.lvshandian.lemeng.httprequest.RequestCode;
 import com.lvshandian.lemeng.moudles.mine.bean.VideoBean;
 import com.lvshandian.lemeng.moudles.mine.my.adapter.AllVideoAdapter;
 import com.lvshandian.lemeng.utils.JsonUtil;
-import com.lvshandian.lemeng.widget.view.ExpandGridView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ import butterknife.Bind;
 public class AllVideoActivity extends BaseActivity {
 
     @Bind(R.id.mygrid)
-    ExpandGridView mygrid;
+    GridView mygrid;
     private AllVideoAdapter allVideoAdapter;
     public List<VideoBean> listvideo = new ArrayList<VideoBean>();
 
@@ -84,12 +84,12 @@ public class AllVideoActivity extends BaseActivity {
         initTitle("", getString(R.string.small_video), null);
         userId = getIntent().getStringExtra("userId");
         isShow = getIntent().getStringExtra("isShow");
+        requestVideo();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        requestVideo();
     }
 
 

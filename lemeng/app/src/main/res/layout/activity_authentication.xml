@@ -7,11 +7,6 @@
     <!--实名认证-->
     <include layout="@layout/title_bar" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="15px"
-        android:background="@color/line_eb" />
-
     <com.lvshandian.lemeng.widget.view.ReboundScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -20,6 +15,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="15px"
+                android:background="@color/line_eb" />
 
             <com.zhy.autolayout.AutoLinearLayout
                 android:layout_width="match_parent"
@@ -171,7 +170,7 @@
                 android:paddingLeft="30px">
 
                 <TextView
-                    android:layout_width="180px"
+                    android:layout_width="200px"
                     android:layout_height="wrap_content"
                     android:text="@string/id_number"
                     android:textColor="@color/tv_color3"

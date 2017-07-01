@@ -34,9 +34,7 @@ import com.lvshandian.lemeng.utils.ImageCompressUtils;
 import com.lvshandian.lemeng.utils.MiPictureHelper;
 import com.lvshandian.lemeng.utils.PermisionUtils;
 import com.lvshandian.lemeng.utils.PicassoUtil;
-import com.lvshandian.lemeng.utils.RegexUtils;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
-import com.lvshandian.lemeng.utils.TextPhoneNumber;
 import com.lvshandian.lemeng.widget.view.CustomPopWindow;
 import com.zhy.http.okhttp.OkHttpUtils;
 
@@ -284,10 +282,14 @@ public class AuthenticationActivity extends BaseActivity {
      */
     private void getVerifyCode() {
         String phoneNum = etPhone.getText().toString().trim();
-        if (!TextPhoneNumber.isPhone(phoneNum)) {
+        if (TextUtils.isEmpty(phoneNum)) {
             showToast(getString(R.string.input_right_phone));
             return;
         }
+//        if (!TextPhoneNumber.isPhone(phoneNum)) {
+//            showToast(getString(R.string.input_right_phone));
+//            return;
+//        }
 
         String str = tv_quhao.getText().toString();
         str = str.substring(str.lastIndexOf("+") + 1, str.length());
@@ -324,7 +326,11 @@ public class AuthenticationActivity extends BaseActivity {
         params.put("realName", name);
 
         String phone = etPhone.getText().toString().trim();
-        if (!TextPhoneNumber.isPhone(phone)) {
+//        if (!TextPhoneNumber.isPhone(phone)) {
+//            showToast(getString(R.string.input_right_phone));
+//            return;
+//        }
+        if (TextUtils.isEmpty(phone)) {
             showToast(getString(R.string.input_right_phone));
             return;
         }
@@ -343,7 +349,11 @@ public class AuthenticationActivity extends BaseActivity {
         params.put("verCode", verCode);
 
         String idNo = etIdcardNum.getText().toString().trim();
-        if (!RegexUtils.isIDCard15(idNo) && !RegexUtils.isIDCard18(idNo)) {
+//        if (!RegexUtils.isIDCard15(idNo) && !RegexUtils.isIDCard18(idNo)) {
+//            showToast(getString(R.string.input_right_id_number));
+//            return;
+//        }
+        if (TextUtils.isEmpty(idNo)) {
             showToast(getString(R.string.input_right_id_number));
             return;
         }

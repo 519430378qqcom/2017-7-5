@@ -38,6 +38,11 @@ public class FloatingRecordAdapter extends RecyclerView.Adapter<FloatingRecordAd
         FloatingRecordBean.DataBean floatingRecord = floatingRecords.get(position);
         holder.floating_type.setText(floatingRecord.getState());
         holder.floating_time.setText(floatingRecord.getRefreshTimes());
+        if (Long.parseLong(floatingRecord.getAmount())<0){
+            holder.floating_number.setTextColor(context.getResources().getColor(R.color.gray));
+        }else {
+            holder.floating_number.setTextColor(context.getResources().getColor(R.color.main));
+        }
         holder.floating_number.setText(context.getString(R.string.floating_moneny, floatingRecord.getAmount()));
     }
 

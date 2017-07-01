@@ -340,7 +340,7 @@
                 android:id="@+id/rl_trend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10px">
+                android:layout_marginTop="20px">
 
                 <ImageView
                     android:layout_width="80px"

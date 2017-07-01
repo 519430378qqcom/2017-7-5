@@ -24,7 +24,6 @@ import com.lvshandian.lemeng.moudles.mine.activity.ExplainWebViewActivity;
 import com.lvshandian.lemeng.moudles.mine.my.SettingHeadAndNick;
 import com.lvshandian.lemeng.moudles.mine.my.StateCodeActivity;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
-import com.lvshandian.lemeng.utils.TextPhoneNumber;
 import com.lvshandian.lemeng.wangyiyunxin.config.DemoCache;
 import com.lvshandian.lemeng.wangyiyunxin.config.preference.Preferences;
 import com.lvshandian.lemeng.wangyiyunxin.config.preference.UserPreferences;
@@ -160,7 +159,8 @@ public class RegisterActivity extends BaseActivity {
 
                 String registerCode = edRegisterCode.getText().toString();
                 String pwd = edRegisterPassword.getText().toString();
-                if (TextUtils.isEmpty(edRegisterPhone.getText().toString()) || edRegisterPhone.getText().toString().length() != 11 || !TextPhoneNumber.isPhone(edRegisterPhone.getText().toString())) {
+//                if (TextUtils.isEmpty(edRegisterPhone.getText().toString()) || edRegisterPhone.getText().toString().length() != 11 || !TextPhoneNumber.isPhone(edRegisterPhone.getText().toString())) {
+                if (TextUtils.isEmpty(edRegisterPhone.getText().toString())) {
                     showToast(getString(R.string.input_right_phone));
                     return;
                 }
@@ -211,7 +211,8 @@ public class RegisterActivity extends BaseActivity {
     private void sendCode() {
         // 给request赋一个TAG，以便于取消时候使用
         String phone = edRegisterPhone.getText().toString();
-        if (!phone.equals("") && phone.length() == 11 && TextPhoneNumber.isPhone(phone)) {
+//        if (!phone.equals("") && phone.length() == 11 && TextPhoneNumber.isPhone(phone)) {
+        if (!phone.equals("")) {
             tvSendCode.setEnabled(false);
             tvSendCode.setTextColor(getContext().getResources().getColor(R.color.gray));
             tvSendCode.setText(waitTime + "s");

@@ -19,10 +19,17 @@
                 android:layout_height="match_parent"
                 android:background="@color/bg_f0">
 
+                <View
+                    android:id="@+id/banner_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="10px"
+                    android:background="@color/bg_f0" />
+
                 <com.youth.banner.Banner
                     android:id="@+id/banner"
                     android:layout_width="match_parent"
                     android:layout_height="250px"
+                    android:layout_below="@id/banner_line"
                     android:background="@color/white"
                     app:indicator_drawable_selected="@mipmap/dot_selected"
                     app:indicator_drawable_unselected="@mipmap/dot_normal"

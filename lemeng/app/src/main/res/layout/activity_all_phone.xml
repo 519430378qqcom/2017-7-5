@@ -7,19 +7,15 @@
 
     <include layout="@layout/title_bar" />
 
-    <RelativeLayout
+    <GridView
+        android:id="@+id/mygrid"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.lvshandian.lemeng.widget.view.ExpandGridView
-            android:id="@+id/mygrid"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:horizontalSpacing="8px"
-            android:numColumns="4"
-            android:padding="8px"
-            android:verticalSpacing="8px" />
-    </RelativeLayout>
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:horizontalSpacing="10px"
+        android:numColumns="4"
+        android:scrollbars="none"
+        android:padding="20px"
+        android:verticalSpacing="10px" />
 
 </com.zhy.autolayout.AutoLinearLayout>

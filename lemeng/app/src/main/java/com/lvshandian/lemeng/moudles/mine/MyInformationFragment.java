@@ -11,6 +11,7 @@ import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -45,7 +46,6 @@ import com.lvshandian.lemeng.utils.CountUtils;
 import com.lvshandian.lemeng.utils.GrademipmapUtils;
 import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
-import com.lvshandian.lemeng.widget.view.ExpandGridView;
 import com.lvshandian.lemeng.widget.view.HeadZoomScrollView;
 import com.maiml.wechatrecodervideolibrary.recoder.WechatRecoderActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -127,12 +127,12 @@ public class MyInformationFragment extends BaseFragment implements View.OnClickL
      * 用于展示小视频的GridView
      */
     @Bind(R.id.mygrid_samll_video)
-    ExpandGridView mygrid_samll_video;
+    GridView mygrid_samll_video;
     /**
      * 用于展示图片的GridView
      */
     @Bind(R.id.mygrid)
-    ExpandGridView mygrid;
+    GridView mygrid;
 
     /**
      * 展示图片适配器

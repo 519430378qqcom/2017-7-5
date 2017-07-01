@@ -27,14 +27,14 @@
               android:layout_marginRight="24px"/>
 
     </com.zhy.autolayout.AutoRelativeLayout>
-    <com.lvshandian.lemeng.widget.view.ExpandGridView
+    <GridView
         android:id="@+id/mygrid_samll_video"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
         android:horizontalSpacing="8px"
         android:numColumns="4"
-        android:padding="6px"
+        android:padding="30px"
         android:background="@color/backgroudcolor"
         android:verticalSpacing="8px" />
     <View

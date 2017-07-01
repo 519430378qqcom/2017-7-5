@@ -29,7 +29,6 @@ import com.lvshandian.lemeng.moudles.mine.my.StateCodeActivity;
 import com.lvshandian.lemeng.utils.DESUtil;
 import com.lvshandian.lemeng.utils.MD5Utils;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
-import com.lvshandian.lemeng.utils.TextPhoneNumber;
 import com.lvshandian.lemeng.utils.UMUtils;
 import com.lvshandian.lemeng.wangyiyunxin.config.DemoCache;
 import com.lvshandian.lemeng.wangyiyunxin.config.preference.Preferences;
@@ -147,7 +146,8 @@ public class LoginActivity extends BaseActivity {
                 startActivity(new Intent(mContext, RegisterActivity.class).putExtra(getString(R.string.register_flag), getString(R.string.register)));
                 break;
             case R.id.btn_login:
-                if (TextUtils.isEmpty(etLoginPhone.getText().toString().trim()) || !TextPhoneNumber.isPhone(etLoginPhone.getText().toString())) {
+//                if (TextUtils.isEmpty(etLoginPhone.getText().toString().trim()) || !TextPhoneNumber.isPhone(etLoginPhone.getText().toString())) {
+                if (TextUtils.isEmpty(etLoginPhone.getText().toString().trim())) {
                     showToast(getString(R.string.user_name_error));
                     return;
                 }

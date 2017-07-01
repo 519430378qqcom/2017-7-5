@@ -7,7 +7,7 @@
     <com.zhy.autolayout.AutoRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="828px"
-        android:background="@color/line_fa"
+        android:background="@color/line_eb"
         android:orientation="vertical">
 
         <TextView

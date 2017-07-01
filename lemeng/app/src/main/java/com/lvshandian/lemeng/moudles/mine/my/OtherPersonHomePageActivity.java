@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -38,7 +39,6 @@ import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.wangyiyunxin.session.SessionHelper;
 import com.lvshandian.lemeng.widget.view.CustomPopWindow;
-import com.lvshandian.lemeng.widget.view.ExpandGridView;
 import com.lvshandian.lemeng.widget.view.HeadZoomScrollView;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
@@ -111,12 +111,12 @@ public class OtherPersonHomePageActivity extends BaseActivity {
      * 用于展示小视频的GridView
      */
     @Bind(R.id.mygrid_samll_video)
-    ExpandGridView mygrid_samll_video;
+    GridView mygrid_samll_video;
     /**
      * 用于展示图片的GridView
      */
     @Bind(R.id.mygrid)
-    ExpandGridView mygrid;
+    GridView mygrid;
 
     /**
      * 别人主页的id

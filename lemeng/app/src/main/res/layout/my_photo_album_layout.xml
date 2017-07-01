@@ -31,14 +31,14 @@
 
     </com.zhy.autolayout.AutoRelativeLayout>
 
-    <com.lvshandian.lemeng.widget.view.ExpandGridView
+    <GridView
         android:id="@+id/mygrid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
         android:horizontalSpacing="8px"
         android:numColumns="4"
-        android:padding="6px"
+        android:padding="30px"
         android:verticalSpacing="8px" />
 
     <View

@@ -46,20 +46,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="20px"
-                    android:layout_marginTop="50px"
+                    android:layout_marginTop="40px"
                     android:drawableLeft="@mipmap/setting"
                     android:gravity="center_vertical"
-                    android:padding="10px"
+                    android:padding="30px"
                     android:textColor="@color/black"
-                    android:textIsSelectable="false"
-                    android:textSize="30px" />
+                    android:textIsSelectable="false"/>
             </com.zhy.autolayout.AutoRelativeLayout>
 
 
             <com.zhy.autolayout.AutoRelativeLayout
                 android:layout_width="750px"
-                android:layout_height="180px"
+                android:layout_height="200px"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true">
 
@@ -95,7 +93,7 @@
                         android:id="@+id/iv_edit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15px"
+                        android:padding="10px"
                         android:src="@mipmap/bianji" />
                 </com.zhy.autolayout.AutoLinearLayout>
 

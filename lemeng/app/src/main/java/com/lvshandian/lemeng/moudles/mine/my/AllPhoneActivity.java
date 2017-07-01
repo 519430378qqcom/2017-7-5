@@ -145,6 +145,7 @@ public class AllPhoneActivity extends BaseActivity {
         initTitle("", getString(R.string.photo_album), null);
         userId = getIntent().getStringExtra("userId");
         isShow = getIntent().getStringExtra("isShow");
+        requestPhoto();
     }
 
     @Override
@@ -159,7 +160,6 @@ public class AllPhoneActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        requestPhoto();
     }
 
 
