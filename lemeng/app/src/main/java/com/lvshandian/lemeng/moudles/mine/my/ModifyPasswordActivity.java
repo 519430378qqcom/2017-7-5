@@ -3,8 +3,8 @@ package com.lvshandian.lemeng.moudles.mine.my;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.lvshandian.lemeng.MyApplication;
@@ -39,7 +39,7 @@ public class ModifyPasswordActivity extends BaseActivity {
     @Bind(R.id.et_repeat_password)
     EditText etRepeatPassword;
     @Bind(R.id.btn_save)
-    Button btnSave;
+    TextView btnSave;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {

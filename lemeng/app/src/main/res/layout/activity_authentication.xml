@@ -282,17 +282,10 @@
 
                 <TextView
                     android:id="@+id/btn_submit"
-                    android:layout_width="match_parent"
-                    android:layout_height="100px"
+                    style="@style/WhiteButtonStyle"
                     android:layout_marginBottom="150px"
-                    android:layout_marginLeft="65px"
-                    android:layout_marginRight="65px"
                     android:layout_marginTop="58px"
-                    android:background="@drawable/selector_loginbtn_circle"
-                    android:gravity="center"
-                    android:text="@string/submit_authentication"
-                    android:textColor="@color/white"
-                    android:textSize="30px" />
+                    android:text="@string/submit_authentication" />
             </com.zhy.autolayout.AutoLinearLayout>
 
         </com.zhy.autolayout.AutoLinearLayout>

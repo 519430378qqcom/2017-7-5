@@ -36,6 +36,7 @@ import com.netease.nim.uikit.recent.viewholder.TeamRecentViewHolder;
 import com.netease.nim.uikit.session.helper.MessageHelper;
 import com.netease.nim.uikit.uinfo.UserInfoHelper;
 import com.netease.nim.uikit.uinfo.UserInfoObservable;
+import com.netease.nim.uikit.util.ToastUtils;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.RequestCallback;
@@ -223,72 +224,90 @@ public class RecentContactsFragment extends TFragment implements TAdapterDelegat
 //                openItem1.setTitleColor(Color.WHITE);
 //                // add to menu
 //                menu.addMenuItem(openItem1);
+
+                //默认让客服置顶
+//                for (int i = 0, j = items.size(); i < j; i++) {
+//                    if (adapter.getItem(i).getContactId().equals("miu_1")) {
+//                        addTag(adapter.getItem(i), RECENT_TAG_STICKY);
+//                        NIMClient.getService(MsgService.class).updateRecent(adapter.getItem(i));
+//                        refreshMessages(false);
+//                    }
+//                }
+
             }
         };
         listView.setMenuCreator(creator);
 
-        listView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-                RecentContact recent = adapter.getItem(position);
-                switch (index) {
-                    case 0:
-                        NIMClient.getService(MsgService.class).deleteRecentContact(recent);
-                        NIMClient.getService(MsgService.class).clearChattingHistory(recent.getContactId(), recent.getSessionType());
-                        items.remove(recent);
-                        if (recent.getUnreadCount() > 0) {
-                            refreshMessages(true);
-                        } else {
-                            notifyDataSetChanged();
-                        }
-                        break;
-                    case 1:
-                        if (isTagSet(recent, RECENT_TAG_STICKY)) {
-                            removeTag(recent, RECENT_TAG_STICKY);
-                        } else {
-                            addTag(recent, RECENT_TAG_STICKY);
-                        }
-                        NIMClient.getService(MsgService.class).updateRecent(recent);
-                        refreshMessages(false);
-                        break;
-                    case 2:
-                        NIMClient.getService(MsgService.class)
-                                .deleteRoamingRecentContact(recent.getContactId(), recent.getSessionType())
-                                .setCallback(new RequestCallback<Void>() {
-                                    @Override
-                                    public void onSuccess(Void param) {
-                                        Toast.makeText(getActivity(), "delete success", Toast.LENGTH_SHORT).show();
-                                    }
+        listView.setOnMenuItemClickListener(
+                new SwipeMenuListView.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
+                        RecentContact recent = adapter.getItem(position);
+                        switch (index) {
+                            case 0:
+                                if (recent.getContactId().equals("miu_1")) {
+                                    ToastUtils.showMessageDefault(getActivity(), "不能删除客服");
+                                    break;
+                                }
 
-                                    @Override
-                                    public void onFailed(int code) {
-                                        Toast.makeText(getActivity(), "delete failed, code:" + code, Toast.LENGTH_SHORT).show();
-                                    }
+                                NIMClient.getService(MsgService.class).deleteRecentContact(recent);
+                                NIMClient.getService(MsgService.class).clearChattingHistory(recent.getContactId(), recent.getSessionType());
+                                items.remove(recent);
+                                if (recent.getUnreadCount() > 0) {
+                                    refreshMessages(true);
+                                } else {
+                                    notifyDataSetChanged();
+                                }
+                                break;
+                            case 1:
+                                if (isTagSet(recent, RECENT_TAG_STICKY)) {
+                                    removeTag(recent, RECENT_TAG_STICKY);
+                                } else {
+                                    addTag(recent, RECENT_TAG_STICKY);
+                                }
+                                NIMClient.getService(MsgService.class).updateRecent(recent);
+                                refreshMessages(false);
+                                break;
+                            case 2:
+                                NIMClient.getService(MsgService.class)
+                                        .deleteRoamingRecentContact(recent.getContactId(), recent.getSessionType())
+                                        .setCallback(new RequestCallback<Void>() {
+                                            @Override
+                                            public void onSuccess(Void param) {
+                                                Toast.makeText(getActivity(), "delete success", Toast.LENGTH_SHORT).show();
+                                            }
 
-                                    @Override
-                                    public void onException(Throwable exception) {
-                                    }
-                                });
-                        break;
+                                            @Override
+                                            public void onFailed(int code) {
+                                                Toast.makeText(getActivity(), "delete failed, code:" + code, Toast.LENGTH_SHORT).show();
+                                            }
+
+                                            @Override
+                                            public void onException(Throwable exception) {
+                                            }
+                                        });
+                                break;
+                        }
+                        // false : close the menu; true : not close the menu
+                        return false;
+                    }
                 }
-                // false : close the menu; true : not close the menu
-                return false;
-            }
-        });
+
+        );
 
 
-        listView.setOnScrollListener(new OnScrollListener() {
+        listView.setOnScrollListener
+                (new OnScrollListener() {
+                    @Override
+                    public void onScrollStateChanged(AbsListView view, int scrollState) {
+                        adapter.onMutable(scrollState == SCROLL_STATE_FLING);
+                    }
 
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                adapter.onMutable(scrollState == SCROLL_STATE_FLING);
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
-            }
-        });
+                    @Override
+                    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount,
+                                         int totalItemCount) {
+                    }
+                });
     }
 
     private void showLongClickMenu(final RecentContact recent) {
@@ -321,7 +340,6 @@ public class RecentContactsFragment extends TFragment implements TAdapterDelegat
                     addTag(recent, RECENT_TAG_STICKY);
                 }
                 NIMClient.getService(MsgService.class).updateRecent(recent);
-
                 refreshMessages(false);
             }
         });

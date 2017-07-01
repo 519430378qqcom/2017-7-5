@@ -100,7 +100,7 @@ public class DrawRedPackage extends BaseActivity {
                         btnConfirm.setBackgroundColor(Color.parseColor("#999999"));
                     } else {
                         btnConfirm.setEnabled(true);
-                        btnConfirm.setBackgroundResource(R.drawable.shape_bg_btn);
+                        btnConfirm.setBackgroundResource(R.drawable.selector_loginbtn_circle);
                     }
                 }
             }

@@ -3,14 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:paddingBottom="30px"
-    android:paddingTop="30px">
+    android:padding="30px">
 
     <com.lvshandian.lemeng.widget.view.CircleImageView
         android:id="@+id/cv_userHead"
         android:layout_width="80px"
         android:layout_height="80px"
-        android:layout_marginLeft="20px"
         android:src="@mipmap/head_default" />
 
     <com.zhy.autolayout.AutoLinearLayout
@@ -64,6 +62,5 @@
         android:layout_width="80px"
         android:layout_height="80px"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="20px"
         android:src="@mipmap/me_following" />
 </com.zhy.autolayout.AutoLinearLayout>

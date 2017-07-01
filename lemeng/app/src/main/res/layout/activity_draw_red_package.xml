@@ -98,12 +98,7 @@
 
     <Button
         android:id="@+id/btn_confirm"
-        android:layout_width="match_parent"
-        android:layout_height="80px"
-        android:layout_marginLeft="50px"
-        android:layout_marginRight="50px"
+        style="@style/WhiteButtonStyle"
         android:layout_marginTop="20px"
-        android:background="@drawable/shape_bg_btn"
-        android:text="@string/withdraw"
-        android:textColor="@color/white" />
+        android:text="@string/withdraw" />
 </com.zhy.autolayout.AutoLinearLayout>

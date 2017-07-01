@@ -3,7 +3,6 @@ package com.lvshandian.lemeng.moudles.mine.my;
 import android.content.ClipboardManager;
 import android.content.Intent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -56,7 +55,7 @@ public class SettingActivity extends BaseActivity {
     @Bind(R.id.all_clear_cache)
     AutoRelativeLayout allClearCache;
     @Bind(R.id.btn_quit)
-    Button btnQuit;
+    TextView btnQuit;
     @Bind(R.id.number)
     TextView number;
     @Bind(R.id.ll_account_safety)

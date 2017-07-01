@@ -126,15 +126,11 @@
 
         <TextView
             android:id="@+id/btn_register"
-            android:layout_width="match_parent"
-            android:layout_height="100px"
+            style="@style/WhiteButtonStyle"
             android:layout_marginTop="144px"
-            android:background="@drawable/selector_loginbtn_circle"
-            android:gravity="center"
-            android:inputType="phone"
-            android:text="@string/register"
-            android:textColor="@android:color/white"
-            android:textSize="36px" />
+            android:layout_marginLeft="0px"
+            android:layout_marginRight="0px"
+            android:text="@string/register"/>
 
         <com.zhy.autolayout.AutoLinearLayout
             android:id="@+id/user_agreement"

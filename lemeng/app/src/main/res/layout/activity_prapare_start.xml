@@ -148,15 +148,8 @@
 
     <TextView
         android:id="@+id/tv_start_live"
-        android:layout_width="match_parent"
-        android:layout_height="100px"
+        style="@style/WhiteButtonStyle"
         android:layout_below="@id/ll_share"
-        android:layout_marginLeft="40px"
-        android:layout_marginRight="40px"
         android:layout_marginTop="35px"
-        android:background="@drawable/selector_loginbtn_circle"
-        android:gravity="center"
-        android:text="@string/start_live"
-        android:textColor="@android:color/white"
-        android:textSize="36px" />
+        android:text="@string/start_live"/>
 </com.zhy.autolayout.AutoRelativeLayout>
