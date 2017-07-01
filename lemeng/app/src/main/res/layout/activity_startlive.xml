@@ -311,6 +311,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginRight="20px"
             android:orientation="vertical"
             android:visibility="gone">
 
@@ -320,15 +321,16 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="80px"
+                    android:layout_height="80px"
                     android:src="@mipmap/icon_record" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="65px"
+                    android:layout_marginTop="50px"
+                    android:textSize="22px"
                     android:text="@string/record"
                     android:textColor="@color/main"
                     android:textStyle="bold" />
@@ -341,15 +343,16 @@
                 android:layout_marginTop="10px">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="80px"
+                    android:layout_height="80px"
                     android:src="@mipmap/icon_trend" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="65px"
+                    android:layout_marginTop="50px"
+                    android:textSize="22px"
                     android:text="@string/trend"
                     android:textColor="@color/main"
                     android:textStyle="bold" />

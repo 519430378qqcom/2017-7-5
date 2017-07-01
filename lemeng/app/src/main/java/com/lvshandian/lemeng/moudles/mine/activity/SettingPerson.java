@@ -264,25 +264,25 @@ public class SettingPerson extends BaseActivity {
                                 "Leo", "Virgo", "Libra", "Scorpio", "Sagittarius", "Capricorn"
                         });
                 picker.setCycleDisable(false);//不禁用循环
-                picker.setTopBackgroundColor(0xFFEEEEEE);
+                picker.setTopBackgroundColor(0xFFFFFFFF);
                 picker.setTopHeight(50);
-                picker.setTopLineColor(0xFF33B5E5);
+                picker.setTopLineColor(0xFFE4E4E4);  //顶部线颜色
                 picker.setTopLineHeight(1);
                 picker.setTitleText(isChinese ? "请选择" : "Please pick");
                 picker.setTitleTextColor(0xFF999999);
                 picker.setTitleTextSize(12);
-                picker.setCancelTextColor(0xFF33B5E5);
+                picker.setCancelTextColor(0xFF000000);
                 picker.setCancelTextSize(13);
-                picker.setSubmitTextColor(0xFF33B5E5);
+                picker.setSubmitTextColor(0xFF000000);
                 picker.setSubmitTextSize(13);
-                picker.setTextColor(0xFFEE0000, 0xFF999999);
+                picker.setTextColor(0xFF000000, 0xFF999999);  //选中，未选中
                 WheelView.LineConfig config = new WheelView.LineConfig();
-                config.setColor(0xFFEE0000);//线颜色
-                config.setAlpha(140);//线透明度
-                config.setRatio((float) (1.0 / 8.0));//线比率
+                config.setColor(0xFFE5E5E5);//滚轮分割线颜色
+                config.setAlpha(255);//线透明度
+                config.setRatio(0);//线比率
                 picker.setLineConfig(config);
-                picker.setItemWidth(200);
-                picker.setBackgroundColor(0xFFE1E1E1);
+                picker.setItemWidth(400);
+                picker.setBackgroundColor(0xFFFFFFFF);
                 picker.setSelectedIndex(7);
                 picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
                     @Override

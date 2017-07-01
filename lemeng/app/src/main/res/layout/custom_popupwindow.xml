@@ -19,7 +19,6 @@
             android:layout_height="100px"
             android:text="@string/male"
             android:background="@null"
-            android:textColor="#0079FF"
             android:textSize="35px"/>
 
         <TextView
@@ -34,7 +33,6 @@
             android:layout_height="100px"
             android:text="@string/female"
             android:background="@null"
-            android:textColor="#0079FF"
             android:textSize="35px"/>
     </com.zhy.autolayout.AutoLinearLayout>
 
@@ -49,7 +47,6 @@
         android:layout_height="100px"
         android:background="@drawable/custom_popupwindow_border"
         android:text="@string/cancel"
-        android:textColor="#0079FF"
         android:textSize="35px"/>
 
 

@@ -29,8 +29,8 @@
             android:paddingBottom="35px"
             android:paddingTop="35px"
             android:text="@string/take_pictures"
-            android:textColor="@color/dodgerblue"
-            android:textSize="18sp" />
+            android:textColor="@color/tv_color3"
+            android:textSize="30px" />
 
         <View
             android:layout_width="match_parent"
@@ -45,8 +45,8 @@
             android:paddingBottom="35px"
             android:paddingTop="35px"
             android:text="@string/select_an_album"
-            android:textColor="@color/dodgerblue"
-            android:textSize="18sp" />
+            android:textColor="@color/tv_color3"
+            android:textSize="30px" />
     </com.zhy.autolayout.AutoLinearLayout>
 
     <TextView
@@ -63,6 +63,6 @@
         android:paddingBottom="35px"
         android:paddingTop="35px"
         android:text="@string/cancel"
-        android:textColor="@color/dodgerblue"
-        android:textSize="18sp" />
+        android:textColor="@color/tv_color3"
+        android:textSize="30px" />
 </com.zhy.autolayout.AutoLinearLayout>

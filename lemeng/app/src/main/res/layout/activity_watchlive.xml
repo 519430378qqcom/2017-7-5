@@ -299,13 +299,14 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_marginRight="20px"
                 android:orientation="vertical"
                 android:visibility="gone">
 
                 <com.zhy.autolayout.AutoRelativeLayout
                     android:id="@+id/rl_record"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_width="80px"
+                    android:layout_height="80px">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -316,7 +317,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="65px"
+                        android:layout_marginTop="50px"
+                        android:textSize="22px"
                         android:text="@string/record"
                         android:textColor="@color/main"
                         android:textStyle="bold" />
@@ -326,18 +328,19 @@
                     android:id="@+id/rl_trend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10px">
+                    android:layout_marginTop="20px">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="80px"
+                        android:layout_height="80px"
                         android:src="@mipmap/icon_trend" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="65px"
+                        android:layout_marginTop="50px"
+                        android:textSize="22px"
                         android:text="@string/trend"
                         android:textColor="@color/main"
                         android:textStyle="bold" />
@@ -396,7 +399,7 @@
                         android:layout_width="80px"
                         android:layout_height="80px"
                         android:layout_centerHorizontal="true"
-                        android:background="@mipmap/game_hui" />
+                        android:background="@mipmap/game" />
 
                     <com.zhy.autolayout.AutoLinearLayout
                         android:layout_width="wrap_content"
@@ -454,7 +457,7 @@
                             android:layout_height="80px"
                             android:layout_marginBottom="19px"
                             android:layout_marginLeft="19px"
-                            android:background="@mipmap/mg_room_btn_li" />
+                            android:background="@mipmap/gift_gray" />
 
 
                     </com.zhy.autolayout.AutoLinearLayout>
