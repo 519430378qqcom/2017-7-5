@@ -33,6 +33,6 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="15px"
         android:src="@mipmap/audio_player"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
 </com.zhy.autolayout.AutoLinearLayout>

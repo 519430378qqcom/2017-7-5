@@ -273,7 +273,7 @@ public class SettingPerson extends BaseActivity {
                 picker.setTitleTextSize(12);
                 picker.setCancelTextColor(0xFF000000);
                 picker.setCancelTextSize(13);
-                picker.setSubmitTextColor(0xFF000000);
+                picker.setSubmitTextColor(0xFFF6D42C);
                 picker.setSubmitTextSize(13);
                 picker.setTextColor(0xFF000000, 0xFF999999);  //选中，未选中
                 WheelView.LineConfig config = new WheelView.LineConfig();
