@@ -1010,7 +1010,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
                         myGoldCoin = myGoldCoin - Long.parseLong(mSendGiftItem.getMemberConsume());
                         updateCoin();
-
                     }
                     break;
                 //获取主播的信息,是否关注主播
@@ -2011,6 +2010,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
     /**
      * 金币掉落的动画
+     *
      * @param isFalling true为掉落动画false反动画
      * @param delay     动画延迟执行
      */

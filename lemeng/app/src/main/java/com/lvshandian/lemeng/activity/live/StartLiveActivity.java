@@ -3124,6 +3124,10 @@ public class StartLiveActivity extends BaseActivity implements
                 * Integer.parseInt(customGiftBean.getGift_coinnumber_index()));
         String receivedGoldCoin = CountUtils.getCount(zhuboReceve);
         liveJinpiao.setText(receivedGoldCoin); //显示主播乐票数量
+
+        myGoldCoin += (Integer.parseInt(customGiftBean.getGift_item_number())
+                * Integer.parseInt(customGiftBean.getGift_coinnumber_index()));
+        updateCoin();
     }
 
     // ***************************** 礼物相关结束 **************************************//
