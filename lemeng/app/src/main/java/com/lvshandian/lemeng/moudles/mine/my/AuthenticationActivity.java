@@ -3,6 +3,7 @@ package com.lvshandian.lemeng.moudles.mine.my;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,9 +14,11 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -88,21 +91,6 @@ public class AuthenticationActivity extends BaseActivity {
      * 计时器
      */
     private CountDownTimer mTimer;
-
-    /**
-     * popupWindow拍照按钮
-     */
-    private TextView tvCamera;
-
-    /**
-     * popupWindow取消按钮
-     */
-    private TextView tvCancel;
-
-    /**
-     * popupWindow选择图库图片按钮
-     */
-    private TextView tvPhonePicture;
 
     /**
      * popupWindow
@@ -186,7 +174,6 @@ public class AuthenticationActivity extends BaseActivity {
     protected void initialized() {
         initTitle("", getString(R.string.my_authentication), null);
         initCutDonwTime();
-        initPop();
         File file = new File(SDPATH);
         if (!file.exists()) {
             file.mkdirs();
@@ -194,29 +181,32 @@ public class AuthenticationActivity extends BaseActivity {
 
     }
 
-    /**
-     * 选取图片pop
-     */
-    private void initPop() {
-        View popView = View.inflate(this, R.layout.pop_header_address, null);
-        tvCamera = (TextView) popView.findViewById(R.id.tv_camera);
-        tvCancel = (TextView) popView.findViewById(R.id.tv_cancel);
-        tvPhonePicture = (TextView) popView.findViewById(R.id.tv_phone_picture);
-        if (tvCamera != null) {
-            tvCamera.setOnClickListener(this);
-        }
 
-        if (tvPhonePicture != null) {
-            tvPhonePicture.setOnClickListener(this);
-        }
-        if (tvCancel != null) {
-            tvCancel.setOnClickListener(this);
-        }
-        int width = FrameLayout.LayoutParams.MATCH_PARENT;
-        int height = FrameLayout.LayoutParams.MATCH_PARENT;
-        popupWindow = new CustomPopWindow(popView, width, height, this);
-        popupWindow.setAnimationStyle(R.style.mypopwindow_anim_style);
+
+    /**
+     * 拍照和选择相册的PopupWindow
+     */
+    public void getPopupWindow() {
+        popupWindow = new CustomPopWindow(this);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View view = inflater.inflate(R.layout.custom_popupwindow, null);
+        popupWindow.setContentView(view);
+        popupWindow.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
+        popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
         popupWindow.setFocusable(true);
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setAnimationStyle(R.style.mypopwindow_anim_style);
+        popupWindow.showAtLocation(btnSubmit, Gravity.BOTTOM, 0, 0);
+
+        Button btn_man = (Button) view.findViewById(R.id.btn_man);
+        Button btn_womanto = (Button) view.findViewById(R.id.btn_womanto);
+        Button btn_cancel = (Button) view.findViewById(R.id.btn_cancel);
+        btn_man.setText(getString(R.string.take_pictures));
+        btn_womanto.setText(getString(R.string.select_an_album));
+        btn_man.setOnClickListener(this);
+        btn_womanto.setOnClickListener(this);
+        btn_cancel.setOnClickListener(this);
     }
 
     /**
@@ -252,24 +242,24 @@ public class AuthenticationActivity extends BaseActivity {
                 break;
             case R.id.iv_id_card:
                 mFlag = PICTURE_FLAG.ID_CARD;
-                showPop(v);
+                getPopupWindow();
                 break;
             case R.id.iv_hand_card:
                 mFlag = PICTURE_FLAG.HAND_ID_CARD;
-                showPop(v);
+                getPopupWindow();
                 break;
-            case R.id.tv_camera:
+            case R.id.btn_man:
                 //拍照
                 camera();
-                popDismiss();
+                popupWindow.dismiss();
                 break;
-            case R.id.tv_phone_picture:
+            case R.id.btn_womanto:
                 //手机图库
-                popDismiss();
                 takeLocalImage();
+                popupWindow.dismiss();
                 break;
-            case R.id.tv_cancel:
-                popDismiss();
+            case R.id.btn_cancel:
+                popupWindow.dismiss();
                 break;
             case R.id.btn_submit:
                 subRenZhengInfo();
@@ -390,25 +380,6 @@ public class AuthenticationActivity extends BaseActivity {
         });
     }
 
-    /**
-     * 选取图片POP消失
-     */
-    private void popDismiss() {
-        if (popupWindow != null && popupWindow.isShowing()) {
-            popupWindow.dismiss();
-        }
-    }
-
-    /**
-     * 选取图片POP显示
-     *
-     * @param v
-     */
-    private void showPop(View v) {
-        if (popupWindow != null && !popupWindow.isShowing()) {
-            popupWindow.showAtLocation(v, Gravity.BOTTOM, 0, 0);
-        }
-    }
 
 
     /**
