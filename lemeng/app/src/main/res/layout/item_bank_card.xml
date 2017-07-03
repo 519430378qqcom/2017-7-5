@@ -92,6 +92,7 @@
         android:layout_width="630px"
         android:layout_height="106px"
         android:layout_marginTop="31px"
+        android:layout_marginBottom="31px"
         android:layout_centerHorizontal="true"
         android:background="@drawable/bg_yellow_line">
 

@@ -2010,7 +2010,6 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
 
     /**
      * 金币掉落的动画
-     *
      * @param isFalling true为掉落动画false反动画
      * @param delay     动画延迟执行
      */
