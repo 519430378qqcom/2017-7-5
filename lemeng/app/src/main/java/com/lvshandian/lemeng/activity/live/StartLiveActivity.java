@@ -263,7 +263,7 @@ public class StartLiveActivity extends BaseActivity implements
         AudioSourceCallback,
         CameraPreviewFrameView.Listener,
         StreamingSessionListener,
-        StreamingStateChangedListener,MediaPlayer.OnCompletionListener
+        StreamingStateChangedListener, MediaPlayer.OnCompletionListener
         , SeekBar.OnSeekBarChangeListener
         , BullfightInterface, IGetRedPackage {
     @Bind(R.id.live_head)
@@ -1244,6 +1244,24 @@ public class StartLiveActivity extends BaseActivity implements
     }
 
     /**
+     * 每局的投注的最大数，用于限制投注时异步出现的金币数为负
+     */
+    private long betMax;
+
+    /**
+     * 判断投注之后是否可能出现负值
+     * @return
+     */
+    private boolean isBet() {
+        if (betMax > betBalance) {
+            betMax -= betBalance;
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    /**
      * 投注斗牛
      *
      * @param position 位置（1，2，3）
@@ -1251,10 +1269,10 @@ public class StartLiveActivity extends BaseActivity implements
     private void betBullfight(int position) {
         betPosition = position;
         if (betBalance > 0) {
-            if (betBalance > myGoldCoin) {
-                showToast(getString(R.string.balance_not_enough));
-            } else {
+            if (isBet()) {
                 bullfightPresenter.betSuccess(Integer.parseInt(appUser.getId()), Integer.parseInt(room_Id), betBalance, position, uper, 0);
+            } else {
+                showToast(getString(R.string.balance_not_enough));
             }
         } else {
             showToast(getString(R.string.no_select_betbalance));
@@ -1439,11 +1457,12 @@ public class StartLiveActivity extends BaseActivity implements
      * 启动游戏中，防止多次点击
      */
     private boolean startGaming;
+
     /**
      * 开启斗牛游戏
      */
     private void startBullfightGame() {
-        if(!startGaming) {
+        if (!startGaming) {
             startGaming = true;
             bullfightPresenter = new BullfightPresenter(this);
             bullfightPresenter.startBullGame(room_Id);
@@ -1715,6 +1734,7 @@ public class StartLiveActivity extends BaseActivity implements
             if (betBalance < 10 && myGoldCoin >= 10) {
                 checkBettingBalance(10);
             }
+            betMax = myGoldCoin;
         } else {
         }
     }
