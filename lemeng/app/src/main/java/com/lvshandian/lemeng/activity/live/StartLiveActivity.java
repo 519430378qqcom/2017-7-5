@@ -1435,13 +1435,19 @@ public class StartLiveActivity extends BaseActivity implements
         valueAnimator.start();
     }
 
-
+    /**
+     * 启动游戏中，防止多次点击
+     */
+    private boolean startGaming;
     /**
      * 开启斗牛游戏
      */
     private void startBullfightGame() {
-        bullfightPresenter = new BullfightPresenter(this);
-        bullfightPresenter.startBullGame(room_Id);
+        if(!startGaming) {
+            startGaming = true;
+            bullfightPresenter = new BullfightPresenter(this);
+            bullfightPresenter.startBullGame(room_Id);
+        }
     }
 
     /**
@@ -1638,6 +1644,7 @@ public class StartLiveActivity extends BaseActivity implements
             SendRoomMessageUtils.onCustomMessagePlay("2929", messageFragment, wy_Id, map);
         } else {
             Toast.makeText(StartLiveActivity.this, R.string.game_start_fail, Toast.LENGTH_SHORT).show();
+            startGaming = false;
         }
     }
 

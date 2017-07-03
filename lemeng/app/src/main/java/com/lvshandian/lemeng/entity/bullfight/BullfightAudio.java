@@ -22,9 +22,12 @@ public class BullfightAudio {
 
     private SoundPool soundPool;
     /**
-     * 音效id对应关系
+     * 音效名和音效资源id对应关系
      */
     private Map<String, Integer> soundMap;
+    /**
+     * 牛0音效的key
+     */
     public final String Bull0 = "bull0";
     public final String Bull1 = "bull1";
     public final String Bull2 = "bull2";
@@ -36,10 +39,22 @@ public class BullfightAudio {
     public final String Bull8 = "bull8";
     public final String Bull9 = "bull9";
     public final String Bull10 = "bullbull";
+    /**
+     * 赢钱音效的key
+     */
     public final String WIN = "win";
+    /**
+     * 输钱音效key
+     */
     public final String FAIL = "fail";
+    /**
+     * 投注音效key
+     */
     public final String BET = "bet";
     public final String BET_COIN = "coin";
+    /**
+     * 牛牛结算金币散落的音效key
+     */
     public final String FALLING_COIN = "coin";
 
     public BullfightAudio(Context context) {
@@ -85,6 +100,11 @@ public class BullfightAudio {
         soundMap.put(BET_COIN,load14);
         soundMap.put(FALLING_COIN,load15);
     }
+
+    /**
+     * 斗牛音效播放
+     * @param audioName 音效名
+     */
     public void play(String audioName){
         soundPool.play(soundMap.get(audioName),1,1,0,0,1);
     }

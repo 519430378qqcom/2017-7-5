@@ -62,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="20px">
+                    android:layout_marginBottom="35px">
 
                     <ImageView
                         android:id="@+id/iv_poker_palyer11"
@@ -163,7 +163,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="20px">
+                    android:layout_marginBottom="35px">
 
                     <ImageView
                         android:id="@+id/iv_poker_palyer21"
@@ -265,7 +265,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="20px">
+                    android:layout_marginBottom="35px">
 
                     <ImageView
                         android:id="@+id/iv_poker_palyer31"
@@ -423,6 +423,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="30px"
             android:layout_marginRight="20px"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageView

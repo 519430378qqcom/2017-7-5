@@ -153,7 +153,7 @@ public class FloatingRecordFragment extends BaseFragment implements View.OnClick
                         totalPage = floatingRecord.getPageCount();
                         inputMoney = floatingRecord.getInputMoney();
                         incomeMoney = floatingRecord.getIncomeMoney();
-                        if(floating_statistics != null) {
+                        if (floating_statistics != null) {
                             floating_statistics.setText(getString(R.string.floating_lepiao_hint, String.valueOf(inputMoney), String.valueOf(incomeMoney)));
                         }
                         List<FloatingRecordBean.DataBean> list = floatingRecord.getData();

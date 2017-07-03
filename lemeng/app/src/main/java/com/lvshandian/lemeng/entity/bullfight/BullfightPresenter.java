@@ -283,7 +283,7 @@ public class BullfightPresenter {
         });
     }
     /**
-     * 初始化倒计时
+     * 计算直播间所有牛牛游戏结果
      */
     public void computeAllResult(String roomId, String perId) {
         String url = UrlBuilder.GAME_BASE + UrlBuilder.ALL_RESULT + "?roomId=" + roomId + "&perid=" + perId;
@@ -298,7 +298,7 @@ public class BullfightPresenter {
         });
     }
     /**
-     * 获取牛几的id
+     * 获取牛几的图片id
      *
      * @return
      */
