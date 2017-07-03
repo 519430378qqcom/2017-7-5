@@ -7,9 +7,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.lvshandian.lemeng.R;
-import com.lvshandian.lemeng.bean.GiftBean;
+import com.lvshandian.lemeng.entity.GiftBean;
 import com.lvshandian.lemeng.widget.view.LoadUrlImageView;
-
 
 import java.util.List;
 

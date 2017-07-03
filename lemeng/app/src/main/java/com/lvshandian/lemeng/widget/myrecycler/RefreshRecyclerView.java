@@ -7,16 +7,15 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.lvshandian.lemeng.widget.myrecycler.listener.LoadMoreRecyclerListener;
-
-import in.srain.cube.views.ptr.PtrDefaultHandler;
-import in.srain.cube.views.ptr.PtrFrameLayout;
-import in.srain.cube.views.ptr.PtrHandler;
-
 import com.lvshandian.lemeng.widget.myrecycler.listener.OnBothRefreshListener;
 import com.lvshandian.lemeng.widget.myrecycler.listener.OnLoadMoreListener;
 import com.lvshandian.lemeng.widget.myrecycler.listener.OnPullDownListener;
 import com.lvshandian.lemeng.widget.myrecycler.manager.RecyclerMode;
 import com.lvshandian.lemeng.widget.myrecycler.widget.RefreshHeader;
+
+import in.srain.cube.views.ptr.PtrDefaultHandler;
+import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrHandler;
 
 /**
  * Created by Syehunter on 2015/11/22.
@@ -25,7 +24,7 @@ public class RefreshRecyclerView extends PtrFrameLayout {
 
     private Context mContext;
     private RecyclerView mRecyclerView;
-    private PtrFrameLayout.LayoutParams params;
+    private LayoutParams params;
     private LoadMoreRecyclerListener mOnScrollListener;
     private RecyclerMode mode;
     private RefreshHeader mHeaderView;
@@ -51,8 +50,8 @@ public class RefreshRecyclerView extends PtrFrameLayout {
 
     private void init() {
         mRecyclerView = new RecyclerView(mContext);
-        params = new PtrFrameLayout.LayoutParams(
-                PtrFrameLayout.LayoutParams.MATCH_PARENT, PtrFrameLayout.LayoutParams.MATCH_PARENT);
+        params = new LayoutParams(
+                LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         mRecyclerView.setLayoutParams(params);
         addView(mRecyclerView);
 

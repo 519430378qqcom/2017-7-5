@@ -147,7 +147,7 @@ public class HeadZoomScrollView extends ScrollView {
 
     /**滑动监听*/
     public  interface OnScrollListener{
-        void onScroll(int scrollX,int scrollY,int oldScrollX, int oldScrollY);
+        void onScroll(int scrollX, int scrollY, int oldScrollX, int oldScrollY);
     }
 
 

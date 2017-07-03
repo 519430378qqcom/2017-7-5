@@ -13,7 +13,7 @@ import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.alibaba.sdk.android.oss.internal.OSSAsyncTask;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
-import com.lvshandian.lemeng.UrlBuilder;
+import com.lvshandian.lemeng.net.UrlBuilder;
 
 import java.io.FileNotFoundException;
 

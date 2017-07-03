@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
-import com.lvshandian.lemeng.bean.AppUser;
-import com.lvshandian.lemeng.moudles.mine.bean.LoginFrom;
+import com.lvshandian.lemeng.entity.AppUser;
+import com.lvshandian.lemeng.entity.mine.LoginFrom;
 
 import java.util.Map;
 

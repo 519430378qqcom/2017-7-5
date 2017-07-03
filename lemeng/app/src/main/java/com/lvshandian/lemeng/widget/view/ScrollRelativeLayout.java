@@ -58,7 +58,7 @@ public class ScrollRelativeLayout extends RelativeLayout {
             @Override
             public void onAnimationEnd(Animation animation) {
                 // TODO Auto-generated method stub
-                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) getLayoutParams();
+                LayoutParams params = (LayoutParams) getLayoutParams();
                 params.rightMargin = 0;
                 setLayoutParams(params);
             }
@@ -90,7 +90,7 @@ public class ScrollRelativeLayout extends RelativeLayout {
             @Override
             public void onAnimationEnd(Animation animation) {
                 // TODO Auto-generated method stub
-                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) getLayoutParams();
+                LayoutParams params = (LayoutParams) getLayoutParams();
                 params.rightMargin = -getWidth();
                 setLayoutParams(params);
             }
@@ -123,7 +123,7 @@ public class ScrollRelativeLayout extends RelativeLayout {
             @Override
             public void onAnimationEnd(Animation animation) {
                 // TODO Auto-generated method stub
-                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) getLayoutParams();
+                LayoutParams params = (LayoutParams) getLayoutParams();
                 params.leftMargin = 0;
                 setLayoutParams(params);
             }
@@ -155,7 +155,7 @@ public class ScrollRelativeLayout extends RelativeLayout {
             @Override
             public void onAnimationEnd(Animation animation) {
                 // TODO Auto-generated method stub
-                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) getLayoutParams();
+                LayoutParams params = (LayoutParams) getLayoutParams();
                 params.leftMargin = -getWidth();
                 setLayoutParams(params);
             }
@@ -187,7 +187,7 @@ public class ScrollRelativeLayout extends RelativeLayout {
             @Override
             public void onAnimationEnd(Animation animation) {
                 // TODO Auto-generated method stub
-                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) getLayoutParams();
+                LayoutParams params = (LayoutParams) getLayoutParams();
                 params.bottomMargin = 0;
                 setLayoutParams(params);
             }
@@ -219,7 +219,7 @@ public class ScrollRelativeLayout extends RelativeLayout {
             @Override
             public void onAnimationEnd(Animation animation) {
                 // TODO Auto-generated method stub
-                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) getLayoutParams();
+                LayoutParams params = (LayoutParams) getLayoutParams();
                 params.bottomMargin = -getHeight();
                 setLayoutParams(params);
             }
@@ -251,7 +251,7 @@ public class ScrollRelativeLayout extends RelativeLayout {
             @Override
             public void onAnimationEnd(Animation animation) {
                 // TODO Auto-generated method stub
-                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) getLayoutParams();
+                LayoutParams params = (LayoutParams) getLayoutParams();
                 params.topMargin = 0;
                 setLayoutParams(params);
             }
@@ -283,7 +283,7 @@ public class ScrollRelativeLayout extends RelativeLayout {
             @Override
             public void onAnimationEnd(Animation animation) {
                 // TODO Auto-generated method stub
-                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) getLayoutParams();
+                LayoutParams params = (LayoutParams) getLayoutParams();
                 params.topMargin = -getHeight();
                 setLayoutParams(params);
             }

@@ -38,14 +38,14 @@ public class LWheelDialog extends Dialog implements LWheelView.LWheelViewListene
 	private String year, month, day, hour, minute, second;
 
 	private View esc,enter;
-	
+
 	public enum LWheelDialogType {
 		ALL, TIME, DATE
 	}
 
 	/**
 	 * 数据类型
-	 * 
+	 *
 	 * @author Administrator
 	 *
 	 */
@@ -127,7 +127,7 @@ public class LWheelDialog extends Dialog implements LWheelView.LWheelViewListene
 			break;
 		}
 	}
-	
+
 	private void initDate(){
 		year = calendar.get(Calendar.YEAR) + "";
 		changeData(DataType.YEAR);
@@ -139,7 +139,7 @@ public class LWheelDialog extends Dialog implements LWheelView.LWheelViewListene
 		changeData(DataType.DAY);
 		wheel3.selected(Integer.parseInt(day)-1);
 	}
-	
+
 	private void initTime(){
 		changeData(DataType.HOUR);
 		wheel4.selected(calendar.get(Calendar.HOUR_OF_DAY));

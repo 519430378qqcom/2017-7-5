@@ -5,7 +5,7 @@ import android.content.Context;
 import android.os.Debug;
 import android.os.Handler;
 
-import com.lvshandian.lemeng.moudles.index.live.utils.AnchorVideo;
+import com.lvshandian.lemeng.widget.AnchorVideo;
 
 
 /**

@@ -42,7 +42,7 @@
     </FrameLayout>
 
 
-    <com.lvshandian.lemeng.wangyiyunxin.common.ui.viewpager.PagerSlidingTabStrip
+    <com.lvshandian.lemeng.third.wangyiyunxin.common.ui.viewpager.PagerSlidingTabStrip
         android:id="@+id/chat_room_tabs"
         android:layout_width="match_parent"
         android:layout_height="@dimen/pager_sliding_tab_strip_height"

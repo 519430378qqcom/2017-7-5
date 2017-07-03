@@ -103,8 +103,8 @@ public class SwipeRefreshLayout extends SwipeRefresh {
         if (childCount != 3) {
             throw new RuntimeException("child count must be == 3");
         }
-        mBottomCircleView.measure(View.MeasureSpec.makeMeasureSpec(mCircleWidth, View.MeasureSpec.EXACTLY),
-                View.MeasureSpec.makeMeasureSpec(mCircleHeight, View.MeasureSpec.EXACTLY));
+        mBottomCircleView.measure(MeasureSpec.makeMeasureSpec(mCircleWidth, MeasureSpec.EXACTLY),
+                MeasureSpec.makeMeasureSpec(mCircleHeight, MeasureSpec.EXACTLY));
         mCircleViewIndexForBottom = -1;
         mTargetIndex = -1;
         mCircleViewIndex = -1;

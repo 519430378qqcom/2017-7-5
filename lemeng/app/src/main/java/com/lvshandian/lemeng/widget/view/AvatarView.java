@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
-
 import com.lvshandian.lemeng.R;
 
 import org.kymjs.kjframe.Core;

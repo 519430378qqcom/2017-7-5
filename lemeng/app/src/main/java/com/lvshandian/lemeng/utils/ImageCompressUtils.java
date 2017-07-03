@@ -2,7 +2,6 @@ package com.lvshandian.lemeng.utils;
 
 import android.app.Activity;
 
-
 import com.lvshandian.lemeng.widget.view.LoadingDialog;
 
 import java.io.File;

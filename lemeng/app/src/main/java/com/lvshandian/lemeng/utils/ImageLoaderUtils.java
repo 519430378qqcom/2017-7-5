@@ -20,7 +20,7 @@ public class ImageLoaderUtils {
 	 * 初始化imageLoader
 	 */
 	public static void init(Context context) {
-		File cacheDirFile = new File(com.lvshandian.lemeng.base.Constant.APP_PATH + "cacheDir/");
+		File cacheDirFile = new File(com.lvshandian.lemeng.interfaces.Constant.APP_PATH + "cacheDir/");
 		if (!cacheDirFile.exists()) {
 			cacheDirFile.mkdirs();
 		}

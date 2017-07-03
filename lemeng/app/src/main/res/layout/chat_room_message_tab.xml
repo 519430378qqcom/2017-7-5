@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <fragment
-        android:name="com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragment"
+        android:name="com.lvshandian.lemeng.third.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragment"
         android:id="@+id/chat_room_message_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

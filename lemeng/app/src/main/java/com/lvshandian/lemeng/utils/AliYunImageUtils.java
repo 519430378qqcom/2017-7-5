@@ -6,11 +6,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSFederationCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSFederationToken;
-import com.lvshandian.lemeng.UrlBuilder;
-import com.lvshandian.lemeng.base.CustomStringCallBack;
-import com.lvshandian.lemeng.httprequest.HttpDatas;
-import com.lvshandian.lemeng.interf.ResultListener;
-import com.lvshandian.lemeng.moudles.start.bean.AliYunBean;
+import com.lvshandian.lemeng.net.UrlBuilder;
+import com.lvshandian.lemeng.interfaces.CustomStringCallBack;
+import com.lvshandian.lemeng.net.HttpDatas;
+import com.lvshandian.lemeng.interfaces.ResultListener;
+import com.lvshandian.lemeng.entity.AliYunBean;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 /**

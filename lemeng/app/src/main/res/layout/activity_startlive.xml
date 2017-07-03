@@ -368,7 +368,7 @@
 
             <fragment
                 android:id="@+id/watch_room_message_fragment"
-                android:name="com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragment"
+                android:name="com.lvshandian.lemeng.third.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragment"
                 android:layout_width="match_parent"
                 android:layout_height="300px"
                 android:layout_gravity="bottom"
@@ -674,7 +674,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="550px" />
 
-        <com.lvshandian.lemeng.moudles.index.live.gift.GiftFrameLayout
+        <com.lvshandian.lemeng.widget.GiftFrameLayout
             android:id="@+id/gift_layout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -684,7 +684,7 @@
             android:visibility="gone" />
 
 
-        <com.lvshandian.lemeng.moudles.index.live.gift.GiftFrameLayout
+        <com.lvshandian.lemeng.widget.GiftFrameLayout
             android:id="@+id/gift_layout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

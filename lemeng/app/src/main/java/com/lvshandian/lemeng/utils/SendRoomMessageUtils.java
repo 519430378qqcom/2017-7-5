@@ -2,7 +2,7 @@ package com.lvshandian.lemeng.utils;
 
 import android.util.Log;
 
-import com.lvshandian.lemeng.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragment;
+import com.lvshandian.lemeng.third.wangyiyunxin.chatroom.fragment.ChatRoomMessageFragment;
 import com.netease.nim.uikit.session.module.Container;
 import com.netease.nimlib.sdk.chatroom.ChatRoomMessageBuilder;
 import com.netease.nimlib.sdk.chatroom.model.ChatRoomMessage;

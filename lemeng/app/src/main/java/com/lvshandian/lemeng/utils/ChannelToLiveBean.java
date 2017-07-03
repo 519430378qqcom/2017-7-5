@@ -5,8 +5,8 @@ package com.lvshandian.lemeng.utils;
  * Created by sll on 2016/12/22.
  */
 
-import com.lvshandian.lemeng.bean.LiveFamilyMemberBean;
-import com.lvshandian.lemeng.bean.LiveListBean;
+import com.lvshandian.lemeng.entity.LiveFamilyMemberBean;
+import com.lvshandian.lemeng.entity.LiveListBean;
 
 /**
  * 将频道等里的网络请求返回类转成liveBean

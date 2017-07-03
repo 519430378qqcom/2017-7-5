@@ -20,7 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lvshandian.lemeng.R;
-import com.lvshandian.lemeng.base.BarrageDateBean;
+import com.lvshandian.lemeng.entity.BarrageDateBean;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -41,7 +41,7 @@ public class BarrageView extends FrameLayout {
     int height;  //控件高
     float scale;    //像素密度
     FrameLayout frameLayout;
-    FrameLayout.LayoutParams tvParams;
+    LayoutParams tvParams;
 
     static boolean IS_START = false;    //判断是否开始
 
@@ -220,7 +220,7 @@ public class BarrageView extends FrameLayout {
         scale = this.getResources().getDisplayMetrics().density;
         //获得自身实例
         frameLayout = (FrameLayout) findViewById(R.id.barrageview);
-        tvParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+        tvParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
         if (IS_START) {
             //开始动画线程

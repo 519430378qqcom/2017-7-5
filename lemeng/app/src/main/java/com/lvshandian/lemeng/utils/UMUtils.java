@@ -8,8 +8,8 @@ import android.os.Handler;
 import android.widget.Toast;
 
 import com.google.android.gms.plus.PlusShare;
-import com.lvshandian.lemeng.base.Constant;
-import com.lvshandian.lemeng.bean.AppUser;
+import com.lvshandian.lemeng.interfaces.Constant;
+import com.lvshandian.lemeng.entity.AppUser;
 import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;

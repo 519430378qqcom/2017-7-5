@@ -1,7 +1,7 @@
 package com.lvshandian.lemeng.utils;
 
 import com.alibaba.fastjson.JSON;
-import com.lvshandian.lemeng.bean.AppUser;
+import com.lvshandian.lemeng.entity.AppUser;
 import com.tandong.sa.json.Gson;
 import com.tandong.sa.json.GsonBuilder;
 

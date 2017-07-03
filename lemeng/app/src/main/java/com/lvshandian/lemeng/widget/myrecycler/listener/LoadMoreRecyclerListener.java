@@ -56,7 +56,7 @@ public class LoadMoreRecyclerListener extends RecyclerView.OnScrollListener {
         super.onScrolled(recyclerView, dx, dy);
 
         hasCompleted = false;
-        
+
         isLoadingMoreEnabled = dy > 0;
 
         RecyclerView.LayoutManager mLayoutManager = recyclerView.getLayoutManager();

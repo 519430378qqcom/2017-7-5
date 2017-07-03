@@ -3,9 +3,9 @@ package com.lvshandian.lemeng.utils;
 import android.Manifest;
 import android.content.Context;
 
-import com.lvshandian.lemeng.lib.acp.Acp;
-import com.lvshandian.lemeng.lib.acp.AcpListener;
-import com.lvshandian.lemeng.lib.acp.AcpOptions;
+import com.lvshandian.lemeng.third.acp.Acp;
+import com.lvshandian.lemeng.third.acp.AcpListener;
+import com.lvshandian.lemeng.third.acp.AcpOptions;
 
 import java.util.List;
 

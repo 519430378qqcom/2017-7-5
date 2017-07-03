@@ -13,12 +13,12 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.lvshandian.lemeng.widget.myrecycler.RefreshRecyclerView;
 import com.lvshandian.lemeng.widget.myrecycler.adapter.RefreshRecyclerViewAdapter;
 import com.lvshandian.lemeng.widget.myrecycler.listener.LoadMoreRecyclerListener;
+import com.lvshandian.lemeng.widget.myrecycler.listener.OnBothRefreshListener;
 import com.lvshandian.lemeng.widget.myrecycler.listener.OnLoadMoreListener;
 import com.lvshandian.lemeng.widget.myrecycler.listener.OnPullDownListener;
-import com.lvshandian.lemeng.widget.myrecycler.listener.OnBothRefreshListener;
-import com.lvshandian.lemeng.widget.myrecycler.RefreshRecyclerView;
 
 /**
  * The Management Class for RefreshRecyclerViewAdapter

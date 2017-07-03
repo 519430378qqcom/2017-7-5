@@ -9,7 +9,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 
 
-import com.lvshandian.lemeng.interf.ResultListener;
+import com.lvshandian.lemeng.interfaces.ResultListener;
 
 import java.io.IOException;
 import java.util.List;

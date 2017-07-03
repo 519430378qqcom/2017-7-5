@@ -5,6 +5,6 @@
     <version value="1"></version>
 
     <list>
-        <mapping class="com.lvshandian.lemeng.db.Audios"></mapping>
+        <mapping class="com.lvshandian.lemeng.entity.db.Audios"></mapping>
     </list>
 </litepal>

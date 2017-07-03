@@ -119,22 +119,22 @@
             android:value="1334" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 
         <service
-            android:name=".service.VoiceService"
+            android:name=".engine.service.VoiceService"
             android:enabled="true"
             android:exported="true" />
         <service
-            android:name=".service.UpdateApkService"
+            android:name=".engine.service.UpdateApkService"
             android:enabled="true"
             android:exported="true" />
 
         <!-- 开机引导页面 -->
         <activity
-            android:name=".moudles.start.GuidActivity"
+            android:name=".activity.start.GuidActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -146,12 +146,12 @@
         <!-- 开机启动页 -->
 
         <activity
-            android:name=".moudles.start.StartActivity"
+            android:name=".activity.start.StartActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 登录选择页面 -->
         <activity
-            android:name=".moudles.start.LoginSelectActivity"
+            android:name=".activity.start.LoginSelectActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
 
@@ -170,202 +170,197 @@
         </activity>
         <!-- 登录页面 -->
         <activity
-            android:name=".moudles.start.LoginActivity"
+            android:name=".activity.start.LoginActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 注册页面 -->
         <activity
-            android:name=".moudles.start.RegisterActivity"
+            android:name=".activity.start.RegisterActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 编辑资料 -->
         <activity
-            android:name=".moudles.mine.activity.SettingPerson"
+            android:name=".activity.mine.SettingPerson"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 地址列表 -->
         <activity
-            android:name=".moudles.index.activity.AddressSelectActivity"
+            android:name=".activity.AddressSelectActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 地址 -->
         <activity
-            android:name=".moudles.index.activity.CityListActivity"
+            android:name=".activity.CityListActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 我的个人主页 -->
         <activity
-            android:name=".moudles.mine.MyInformationActivity"
+            android:name=".activity.MyInformationActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 所有照片 -->
         <activity
-            android:name=".moudles.mine.my.AllPhoneActivity"
+            android:name=".activity.mine.AllPhoneActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 所有小视频 -->
         <activity
-            android:name=".moudles.mine.my.AllVideoActivity"
+            android:name=".activity.mine.AllVideoActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 更改昵称 -->
         <activity
-            android:name=".moudles.mine.activity.PersonNameActivity"
+            android:name=".activity.mine.PersonNameActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 更改签名 -->
         <activity
-            android:name=".moudles.mine.activity.UpdatePersonActivity"
+            android:name=".activity.mine.UpdatePersonActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 设置头像昵称 -->
         <activity
-            android:name=".moudles.mine.my.SettingHeadAndNick"
+            android:name=".activity.mine.SettingHeadAndNick"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 设置 -->
         <activity
-            android:name=".moudles.mine.my.SettingActivity"
+            android:name=".activity.mine.SettingActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 国家代码 -->
         <activity
-            android:name=".moudles.mine.my.StateCodeActivity"
+            android:name=".activity.mine.StateCodeActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 修改密码 -->
         <activity
-            android:name=".moudles.mine.my.ModifyPasswordActivity"
+            android:name=".activity.mine.ModifyPasswordActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 我的乐票 -->
         <activity
-            android:name=".moudles.mine.activity.MyCoinsActicity"
+            android:name=".activity.mine.MyCoinsActicity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 我的游戏记录 -->
         <activity
-            android:name=".moudles.mine.activity.GameRecordActivity"
+            android:name=".activity.mine.GameRecordActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 充值界面 -->
         <activity
-            android:name=".moudles.mine.activity.ChargeCoinsActivity"
+            android:name=".activity.mine.ChargeCoinsActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 公共webView界面 -->
         <activity
-            android:name=".moudles.mine.activity.ExplainWebViewActivity"
+            android:name=".activity.mine.ExplainWebViewActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 搜索场控界面 -->
         <activity
-            android:name=".moudles.mine.my.SearchControllerActivity"
+            android:name=".activity.mine.SearchControllerActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 
         <!-- 我的等级 -->
         <activity
-            android:name=".moudles.mine.activity.MyGradeActivity"
+            android:name=".activity.mine.MyGradeActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 黑名单 -->
         <activity
-            android:name=".wangyiyunxin.contact.activity.BlackListActivity"
+            android:name=".third.wangyiyunxin.contact.activity.BlackListActivity"
             android:configChanges="orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <!-- 关注列表用于创建高级群邀请用户 -->
-        <activity
-            android:name=".moudles.group.activity.FollowListForGroupActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- 系统消息 -->
         <activity
-            android:name=".moudles.mine.my.SystemMessageActivity"
+            android:name=".activity.mine.SystemMessageActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 实名认证 -->
         <activity
-            android:name=".moudles.mine.my.AuthenticationActivity"
+            android:name=".activity.mine.AuthenticationActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 排行榜 -->
         <activity
-            android:name=".moudles.mine.my.ContributionActivity"
+            android:name=".activity.mine.ContributionActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 贡献榜 -->
         <activity
-            android:name=".moudles.mine.my.MyContributionActivity"
+            android:name=".activity.mine.MyContributionActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 其他人主页 -->
         <activity
-            android:name=".moudles.mine.my.OtherPersonHomePageActivity"
+            android:name=".activity.mine.OtherPersonHomePageActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 图片放大 -->
         <activity
-            android:name=".moudles.mine.activity.BigImageActivity"
+            android:name=".activity.mine.BigImageActivity"
             android:exported="true"
             android:launchMode="singleTop" />
         <!-- 选择提现 -->
         <activity
-            android:name=".moudles.mine.my.WithdrawActivity"
+            android:name=".activity.mine.WithdrawActivity"
             android:exported="true"
             android:launchMode="singleTop" />
         <!-- 支付宝提现 -->
         <activity
-            android:name=".moudles.mine.my.DrawRedPackage"
+            android:name=".activity.mine.DrawRedPackage"
             android:exported="true"
             android:launchMode="singleTop" />
         <!-- 微信公众号提现提示 -->
         <activity
-            android:name=".moudles.mine.activity.WeichatDraw"
+            android:name=".activity.mine.WeichatDraw"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 银行卡提现 -->
         <activity
-            android:name=".moudles.mine.activity.WithdrawalActivity"
+            android:name=".activity.mine.WithdrawalActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 添加银行卡 -->
         <activity
-            android:name=".moudles.mine.activity.AddBankCardActivity"
+            android:name=".activity.mine.AddBankCardActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 我的场控 -->
         <activity
-            android:name=".moudles.mine.my.MyControllerActivity"
+            android:name=".activity.mine.MyControllerActivity"
             android:exported="true"
             android:launchMode="singleTop" />
 
         <!-- 开启直播准备 -->
         <activity
-            android:name=".moudles.index.live.PrapareStartActivity"
+            android:name=".activity.live.PrapareStartActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- 粉丝列表 -->
         <activity
-            android:name=".moudles.mine.my.FunseListActivity"
+            android:name=".activity.mine.FunseListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- 关注列表 -->
         <activity
-            android:name=".moudles.mine.my.FollowListActivity"
+            android:name=".activity.mine.FollowListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- 观看直播 -->
         <activity
-            android:name=".moudles.index.live.WatchLiveActivity"
+            android:name=".activity.live.WatchLiveActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden">
@@ -386,31 +381,31 @@
 
         <!-- 开启直播 -->
         <activity
-            android:name=".moudles.index.live.StartLiveActivity"
+            android:name=".activity.live.StartLiveActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <!-- 退出直播 -->
         <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar" -->
         <activity
-            android:name=".moudles.index.live.QuitLiveActivity"
+            android:name=".activity.live.QuitLiveActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
-            android:name=".moudles.index.live.WatchQuitLiveActivity"
+            android:name=".activity.live.WatchQuitLiveActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <!-- 搜索页面 -->
         <activity
-            android:name=".moudles.index.activity.SearchActivity"
+            android:name=".activity.SearchActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <!-- 照片详情 -->
         <activity
-            android:name=".moudles.mine.my.PhotoDetails"
+            android:name=".activity.mine.PhotoDetails"
             android:clipToPadding="true"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
@@ -418,7 +413,7 @@
             android:windowSoftInputMode="stateUnchanged|adjustResize" />
         <!-- 短视频详情 -->
         <activity
-            android:name=".moudles.mine.my.Videotails"
+            android:name=".activity.mine.Videotails"
             android:clipToPadding="true"
             android:fitsSystemWindows="true"
             android:screenOrientation="portrait"
@@ -426,62 +421,62 @@
             android:windowSoftInputMode="stateUnchanged|adjustResize" />
         <!-- 消息中心 -->
         <activity
-            android:name=".moudles.mine.my.MessageCenterActivity"
+            android:name=".activity.mine.MessageCenterActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- 点歌播放 -->
         <activity
-            android:name=".moudles.index.live.AudioPlayerActivity"
+            android:name=".activity.live.AudioPlayerActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
 
         <!-- 第三方权限检验使用 -->
         <activity
-            android:name=".lib.acp.AcpActivity"
+            android:name=".third.acp.AcpActivity"
             android:launchMode="singleTask" />
         <!-- 网易云信通知消息 -->
         <activity
-            android:name=".wangyiyunxin.main.activity.WYYXSystemMessageActivity"
+            android:name=".third.wangyiyunxin.main.activity.WYYXSystemMessageActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- 聊天室 -->
         <activity
-            android:name=".wangyiyunxin.chatroom.activity.ChatRoomActivity"
+            android:name=".third.wangyiyunxin.chatroom.activity.ChatRoomActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- 消息历史查询界面 -->
         <activity
-            android:name=".wangyiyunxin.session.activity.MessageHistoryActivity"
+            android:name=".third.wangyiyunxin.session.activity.MessageHistoryActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".wangyiyunxin.session.activity.MessageInfoActivity"
+            android:name=".third.wangyiyunxin.session.activity.MessageInfoActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".moudles.mine.my.RealNameVertifyActivity"
+            android:name=".activity.mine.RealNameVertifyActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- 消息会话列表 -->
         <activity
-            android:name=".wangyiyunxin.main.activity.SessionListActivity"
+            android:name=".third.wangyiyunxin.main.activity.SessionListActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <!-- 消息历史搜索 -->
         <activity
-            android:name=".wangyiyunxin.session.search.SearchMessageActivity"
+            android:name=".third.wangyiyunxin.session.search.SearchMessageActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/global_search_bg"
@@ -509,12 +504,6 @@
             android:value="${UMENG_CHANNEL_VALUE}" />
 
         <!-- 微信平台 -->
-        <activity
-            android:name=".wxapi.WXEntryActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <!-- 腾讯 -->
         <activity

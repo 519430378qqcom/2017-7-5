@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.lvshandian.lemeng.R;
-import com.lvshandian.lemeng.bean.CustomGiftBean;
+import com.lvshandian.lemeng.entity.CustomGiftBean;
 import com.zhy.autolayout.AutoRelativeLayout;
 
 import java.util.ArrayList;

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-
 import com.lvshandian.lemeng.R;
 
 import org.kymjs.kjframe.Core;

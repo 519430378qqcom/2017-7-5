@@ -38,7 +38,7 @@
 
     <fragment
         android:id="@+id/session_list_fragment"
-        android:name="com.lvshandian.lemeng.wangyiyunxin.main.fragment.SessionListFragment"
+        android:name="com.lvshandian.lemeng.third.wangyiyunxin.main.fragment.SessionListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
