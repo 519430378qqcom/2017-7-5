@@ -1490,20 +1490,23 @@ public class StartLiveActivity extends BaseActivity implements
      */
     private void bullfightTimer() {
         myHandler.sendEmptyMessageDelayed(BULLFIGHT_TIME, 1000);
+        //前20秒执行switchTimer();倒计时动画
         if (nextTime >= 15) {
             switchTimer();
         }
+        //后五秒显示休息时间
         if (nextTime <= 5 && nextTime > 0) {
             bullfightResultShow(null, null, getString(R.string.take_a_rest) + nextTime + "S");
         }
         switch (nextTime) {
-            case 30://主播初始化游戏结果
+            case 30://主播初始化游戏结果，调用此接口服务器才会生成4 副牌型
                 bullfightPresenter.initGameResult(room_Id);
                 break;
             case 15://获取扑克牌结果
                 setBetPoolEnable(false);
                 rl_timing.setVisibility(View.GONE);
                 bullfightPresenter.getPokerResult(room_Id);
+                //并告诉服务端计算直播间所有牛牛游戏结果（只有主播端会调用）
                 bullfightPresenter.computeAllResult(room_Id, uper + "");
                 break;
             case 8://开奖
@@ -1696,7 +1699,9 @@ public class StartLiveActivity extends BaseActivity implements
     @Override
     public void initGameTimer(Boolean isSuccess) {
         if (isSuccess) {
+            //重新获取下一局的倒计时和期数
             bullfightPresenter.getTimeAndNper(room_Id);
+            //主播端发送type为3131的消息，观众端接收到后才去请求下一局的数据，保持时间数据同步，
             Map<String, Object> map = new HashMap<>();
             map.put("vip", appUser.getVip());
             map.put("userId", appUser.getId());

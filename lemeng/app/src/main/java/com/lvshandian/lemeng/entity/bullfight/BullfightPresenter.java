@@ -124,7 +124,7 @@ public class BullfightPresenter {
     }
 
     /**
-     * 生成开奖结果（主播第五秒调用）,
+     * 主播初始化游戏结果，调用此接口服务器才会生成4 副牌型
      */
     public void initGameResult(String roomId) {
         String url = UrlBuilder.GAME_BASE + UrlBuilder.BULLFIGHT_INITGAME + "?roomId=" + roomId;
@@ -208,7 +208,7 @@ public class BullfightPresenter {
     }
 
     /**
-     * 获取游戏结果
+     * 获取游戏金币结果
      */
     public void getGameResult(String roomId, String perid, String userId) {
         String url = UrlBuilder.GAME_BASE + UrlBuilder.BULLFIGHT_RESULT + "?roomId=" + roomId + "&perid=" + perid + "&userId=" + userId;
