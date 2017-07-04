@@ -80,13 +80,13 @@ public class VideoAdapter extends BaseAdapter {
                             .build();
                     Picasso.with(mContext)
                             .load(list.get(position).getThumbnailUrl())
+                            .placeholder(R.mipmap.head_default)
                             .fit()
                             .transform(transformation)
                             .into(viewHolder.img_gridview);
                 }
                 return view;
             } else {
-//            ImageLoader.getInstance().displayImage("drawable://" + R.mipmap.app_icon, viewHolder.img_gridview);
                 viewHolder.video_start.setVisibility(View.VISIBLE);
                 viewHolder.img_add_touming.setVisibility(View.GONE);
                 Transformation transformation = new RoundedTransformationBuilder()
@@ -97,10 +97,10 @@ public class VideoAdapter extends BaseAdapter {
                         .build();
                 Picasso.with(mContext)
                         .load(list.get(position).getThumbnailUrl())
+                        .placeholder(R.mipmap.head_default)
                         .fit()
                         .transform(transformation)
                         .into(viewHolder.img_gridview);
-//            ImageLoader.getInstance().displayImage(list.get(position).getThumbnailUrl(), viewHolder.img_gridview);
             }
         } else {
             viewHolder.video_start.setVisibility(View.VISIBLE);

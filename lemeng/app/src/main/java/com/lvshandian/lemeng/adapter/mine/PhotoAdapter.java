@@ -67,7 +67,6 @@ public class PhotoAdapter extends BaseAdapter {
         view.setTag(viewHolder);
         if (isShowAdd.equals("isShow")) {
             if (position == 3 || position == list.size() - 1) {
-//            ImageLoader.getInstance().displayImage("drawable://" + R.mipmap.add, viewHolder.img_gridview);
                 viewHolder.img_add_touming.setVisibility(View.VISIBLE);
                 if (position == 3){
                     Transformation transformation = new RoundedTransformationBuilder()
@@ -78,6 +77,7 @@ public class PhotoAdapter extends BaseAdapter {
                             .build();
                     Picasso.with(mContext)
                             .load(list.get(position).getUrl())
+                            .placeholder(R.mipmap.head_default)
                             .fit()
                             .transform(transformation)
                             .into(viewHolder.img_gridview);
@@ -93,6 +93,7 @@ public class PhotoAdapter extends BaseAdapter {
                         .build();
                 Picasso.with(mContext)
                         .load(list.get(position).getUrl())
+                        .placeholder(R.mipmap.head_default)
                         .fit()
                         .transform(transformation)
                         .into(viewHolder.img_gridview);
