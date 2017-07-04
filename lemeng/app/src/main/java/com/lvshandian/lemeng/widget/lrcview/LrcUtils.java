@@ -5,7 +5,7 @@ import android.content.Context;
 /**
  * Created by hzwangchenyan on 2016/11/17.
  */
-class LrcUtils {
+public class LrcUtils {
     public static int dp2px(Context context, float dpValue) {
         float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);

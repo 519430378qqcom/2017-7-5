@@ -17,17 +17,17 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
-import com.lvshandian.lemeng.utils.ImageLoaderUtils;
-import com.lvshandian.lemeng.utils.LogUtils;
-import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
-import com.lvshandian.lemeng.utils.UMUtils;
-import com.lvshandian.lemeng.utils.XUtils;
 import com.lvshandian.lemeng.third.wangyiyunxin.common.util.crash.AppCrashHandler;
 import com.lvshandian.lemeng.third.wangyiyunxin.common.util.sys.SystemUtil;
 import com.lvshandian.lemeng.third.wangyiyunxin.config.DemoCache;
 import com.lvshandian.lemeng.third.wangyiyunxin.config.ExtraOptions;
 import com.lvshandian.lemeng.third.wangyiyunxin.config.preference.Preferences;
 import com.lvshandian.lemeng.third.wangyiyunxin.config.preference.UserPreferences;
+import com.lvshandian.lemeng.utils.ImageLoaderUtils;
+import com.lvshandian.lemeng.utils.LogUtils;
+import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
+import com.lvshandian.lemeng.utils.UMUtils;
+import com.lvshandian.lemeng.utils.XUtils;
 import com.netease.nim.uikit.ImageLoaderKit;
 import com.netease.nim.uikit.NimUIKit;
 import com.netease.nim.uikit.cache.FriendDataCache;
@@ -43,6 +43,8 @@ import com.netease.nimlib.sdk.team.model.Team;
 import com.netease.nimlib.sdk.uinfo.UserInfoProvider;
 import com.netease.nimlib.sdk.uinfo.model.NimUserInfo;
 import com.qiniu.pili.droid.streaming.StreamingEnv;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 import com.yixia.camera.VCamera;
 import com.yixia.camera.util.DeviceUtils;
 import com.zhy.autolayout.config.AutoLayoutConifg;
@@ -107,7 +109,7 @@ public class MyApplication extends LitePalApplication {
         mLocationClient.setLocOption(option);
         mLocationClient.registerLocationListener(myListener);    //注册监听函数
         mLocationClient.start();
-
+        refWatcher = LeakCanary.install(this);
         //初始化litepal数据库
         Connector.getDatabase();
         //初始化七牛云
@@ -397,5 +399,13 @@ public class MyApplication extends LitePalApplication {
         }
         return null;
     }
+    //在自己的Application中添加如下代码
+    public static RefWatcher getRefWatcher(Context context) {
+        MyApplication application = (MyApplication) context
+                .getApplicationContext();
+        return application.refWatcher;
+    }
 
+    //在自己的Application中添加如下代码
+    private RefWatcher refWatcher;
 }

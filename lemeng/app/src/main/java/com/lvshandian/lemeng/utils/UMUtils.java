@@ -45,7 +45,7 @@ public class UMUtils {
 
 
     private static Context mContext;
-    private static Activity mActivity;
+//    private static Activity mActivity;
 
     public static void init(Context Context) {
         mContext = Context;
@@ -148,8 +148,8 @@ public class UMUtils {
 
     }
 
-    public static void umShare(Activity act, final String share_title, String share_content, final String picUrl, String share_url) {
-        mActivity = act;
+    public static void umShare(final Activity act, final String share_title, String share_content, final String picUrl, String share_url) {
+//        mActivity = act;
         final UMWeb web = new UMWeb(share_url);
         web.setTitle(share_title);//标题
         web.setThumb(new UMImage(act, picUrl));  //缩略图
@@ -162,14 +162,14 @@ public class UMUtils {
       @Override
       public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
                           if(share_media==GOOGLEPLUS){
-                              Intent shareIntent = new PlusShare.Builder(mActivity)
+                              Intent shareIntent = new PlusShare.Builder(act)
                                                   .setType("text/plain")
                                                   .setText(share_title.subSequence(0,share_title.length()))
                                                   .setContentUrl(Uri.parse(picUrl))
                                                   .getIntent();
-                            mActivity.startActivityForResult(shareIntent, 0);
+                              act.startActivityForResult(shareIntent, 0);
                               }else{
-                                  new ShareAction(mActivity)
+                                  new ShareAction(act)
                             .setPlatform(share_media)
                                                   .withMedia(web)
                                                   .setCallback(umShareListener).share();
@@ -179,7 +179,7 @@ public class UMUtils {
     }
 
     public static void umShareSingle(final Activity act, String share_title, String share_content, final String picUrl, String share_url, SHARE_MEDIA shareMedia) {
-        mActivity = act;
+//        mActivity = act;
         UMWeb web = new UMWeb(share_url);
         web.setTitle(share_title);//标题
         web.setThumb(new UMImage(act, picUrl));  //缩略图

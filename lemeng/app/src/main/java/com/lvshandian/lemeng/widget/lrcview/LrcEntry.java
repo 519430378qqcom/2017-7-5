@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 /**
  * Created by hzwangchenyan on 2016/10/19.
  */
-class LrcEntry implements Comparable<LrcEntry> {
+public class LrcEntry implements Comparable<LrcEntry> {
     private long time;
     private String text;
     private StaticLayout staticLayout;
@@ -59,7 +59,7 @@ class LrcEntry implements Comparable<LrcEntry> {
         return (int) (time - entry.getTime());
     }
 
-    static List<LrcEntry> parseLrc(File lrcFile) {
+    public static List<LrcEntry> parseLrc(File lrcFile) {
         if (lrcFile == null || !lrcFile.exists()) {
             return null;
         }
@@ -83,7 +83,7 @@ class LrcEntry implements Comparable<LrcEntry> {
         return entryList;
     }
 
-    static List<LrcEntry> parseLrc(String lrcText) {
+    public static List<LrcEntry> parseLrc(String lrcText) {
         if (TextUtils.isEmpty(lrcText)) {
             return null;
         }

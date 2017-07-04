@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.FrameLayout;
 
+import com.lvshandian.lemeng.utils.ScreenUtils;
+
 /**
  * 弹窗基类
  *

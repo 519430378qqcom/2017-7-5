@@ -1,4 +1,4 @@
-package com.lvshandian.lemeng.widget.tripartite;
+package com.lvshandian.lemeng.utils;
 
 import android.app.Activity;
 import android.content.Context;

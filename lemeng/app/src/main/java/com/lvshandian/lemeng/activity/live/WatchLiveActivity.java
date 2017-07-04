@@ -608,7 +608,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
      * 乐檬开始动画
      */
     private FramesSequenceAnimation framesSequenceAnimation;
-    public static LoadingDialog mLoading;//进入直播间loading
+    public LoadingDialog mLoading;//进入直播间loading
 
     /**
      * 网易云信消息

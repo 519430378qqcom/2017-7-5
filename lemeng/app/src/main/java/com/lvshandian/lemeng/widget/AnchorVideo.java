@@ -79,12 +79,12 @@ public class AnchorVideo {
     private LoadingDialog mLoading;//进入直播间loading
 
     //初始化播放器
-    public void initLive(String mVideoPath, Activity mContext, SurfaceView mSurfaceView, ImageView rlLoading) {
-        this.mContext = mContext;
+    public void initLive(String mVideoPath, Activity context, SurfaceView mSurfaceView, ImageView rlLoading) {
+        this.mContext = context;
         this.mSurfaceView = mSurfaceView;
         this.mVideoPath = mVideoPath;
         this.rlLoading = rlLoading;
-        this.mLoading = WatchLiveActivity.mLoading;
+        this.mLoading = ((WatchLiveActivity)mContext).mLoading;
         mHandler = new UIHandler((WatchLiveActivity) mContext);
         try {
             PLNetworkManager.getInstance().startDnsCacheService(mContext, DEFAULT_PLAYBACK_DOMAIN_ARRAY);
