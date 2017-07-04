@@ -330,9 +330,9 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="50px"
-                    android:textSize="22px"
                     android:text="@string/record"
                     android:textColor="@color/main"
+                    android:textSize="22px"
                     android:textStyle="bold" />
             </com.zhy.autolayout.AutoRelativeLayout>
 
@@ -352,9 +352,9 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="50px"
-                    android:textSize="22px"
                     android:text="@string/trend"
                     android:textColor="@color/main"
+                    android:textSize="22px"
                     android:textStyle="bold" />
             </com.zhy.autolayout.AutoRelativeLayout>
         </com.zhy.autolayout.AutoLinearLayout>
@@ -484,53 +484,117 @@
                 android:id="@+id/ll_game"
                 android:layout_width="match_parent"
                 android:layout_height="300px"
-                android:background="@mipmap/game_background"
                 android:layout_centerVertical="true"
+                android:background="@mipmap/game_background"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:visibility="gone">
 
-                <com.zhy.autolayout.AutoLinearLayout
-                    android:id="@+id/game_luck_28"
+
+                <com.zhy.autolayout.AutoRelativeLayout
+                    android:id="@+id/game_niuniu"
                     android:layout_width="0px"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10px"
                     android:layout_weight="1"
-                    android:gravity="center"
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/img_niuniu"
                         android:layout_width="150px"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/game_luck_28" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/game_luck_28"
-                        android:textColor="@color/white" />
-                </com.zhy.autolayout.AutoLinearLayout>
-
-
-                <com.zhy.autolayout.AutoLinearLayout
-                    android:id="@+id/game_niuniu"
-                    android:layout_width="0px"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="150px"
-                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10px"
                         android:src="@mipmap/game_niuniu" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@id/img_niuniu"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center_horizontal"
+                        android:layout_marginTop="-10px"
+                        android:textSize="28px"
                         android:text="@string/game_niuniu"
                         android:textColor="@color/white" />
-                </com.zhy.autolayout.AutoLinearLayout>
+                </com.zhy.autolayout.AutoRelativeLayout>
+
+                <com.zhy.autolayout.AutoRelativeLayout
+                    android:id="@+id/game_luck_28"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/img_luck_28"
+                        android:layout_width="150px"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10px"
+                        android:src="@mipmap/game_luck_28" />
+
+                    <TextView
+                        android:id="@+id/tv_luck_28"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/img_luck_28"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="-10px"
+                        android:textSize="28px"
+                        android:text="@string/game_luck_28"
+                        android:gravity="center_horizontal"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_luck_28"
+                        android:layout_centerHorizontal="true"
+                        android:textSize="24px"
+                        android:text="@string/game_luck_28_time"
+                        android:gravity="center_horizontal"
+                        android:textColor="@color/white" />
+                </com.zhy.autolayout.AutoRelativeLayout>
+
+                <com.zhy.autolayout.AutoRelativeLayout
+                    android:id="@+id/game_luck_28_canada"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10px"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/img_luck_28_canada"
+                        android:layout_width="150px"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10px"
+                        android:src="@mipmap/game_luck_28_canada" />
+
+                    <TextView
+                        android:id="@+id/tv_luck_28_canada"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/img_luck_28_canada"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="-10px"
+                        android:textSize="28px"
+                        android:text="@string/game_luck_28_canada"
+                        android:gravity="center_horizontal"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_luck_28_canada"
+                        android:layout_centerHorizontal="true"
+                        android:textSize="24px"
+                        android:text="@string/game_luck_28_canada_time"
+                        android:gravity="center_horizontal"
+                        android:textColor="@color/white" />
+                </com.zhy.autolayout.AutoRelativeLayout>
 
 
                 <com.zhy.autolayout.AutoLinearLayout
@@ -538,13 +602,13 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="150px"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/icon_shuiguoji"
-                        android:visibility="invisible" />
+                        android:src="@mipmap/icon_shuiguoji" />
 
                     <TextView
                         android:layout_width="wrap_content"

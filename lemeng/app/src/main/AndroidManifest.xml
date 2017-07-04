@@ -504,6 +504,12 @@
             android:value="${UMENG_CHANNEL_VALUE}" />
 
         <!-- 微信平台 -->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <!-- 腾讯 -->
         <activity

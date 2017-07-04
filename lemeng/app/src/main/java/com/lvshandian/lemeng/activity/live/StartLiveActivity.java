@@ -325,7 +325,9 @@ public class StartLiveActivity extends BaseActivity implements
     @Bind(R.id.ll_game)
     LinearLayout ll_game;
     @Bind(R.id.game_luck_28)
-    LinearLayout game_luck_28;
+    RelativeLayout game_luck_28;
+    @Bind(R.id.game_luck_28_canada)
+    RelativeLayout game_luck_28_canada;
     @Bind(R.id.live_game)
     AutoLinearLayout live_game;
     @Bind(R.id.watch_room_message_fragment_chat)
@@ -414,7 +416,7 @@ public class StartLiveActivity extends BaseActivity implements
     @Bind(R.id.rl_game_container)
     RelativeLayout rl_game_container;
     @Bind(R.id.game_niuniu)
-    LinearLayout game_niuniu;
+    RelativeLayout game_niuniu;
     @Bind(R.id.live_game_bullfight)
     RelativeLayout live_game_bullfight;
     @Bind(R.id.rl_game_info)
@@ -941,6 +943,7 @@ public class StartLiveActivity extends BaseActivity implements
         tv_lianmai.setOnClickListener(this);
         ll_game.setOnClickListener(this);
         game_luck_28.setOnClickListener(this);
+        game_luck_28_canada.setOnClickListener(this);
         liveClose.setOnClickListener(this);
         ivLiveSwitch.setOnClickListener(this);
         ivLivePrivatechat.setOnClickListener(this);
@@ -1073,6 +1076,9 @@ public class StartLiveActivity extends BaseActivity implements
                 break;
             case R.id.game_luck_28:
                 showXYGame();
+                break;
+            case R.id.game_luck_28_canada:
+                showToast("不能开启");
                 break;
             case R.id.ruanjianpan:
                 messageFragment.showEditText();

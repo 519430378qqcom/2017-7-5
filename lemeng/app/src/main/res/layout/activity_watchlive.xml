@@ -540,7 +540,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="550px" />
 
-            <com.lvshandian.lemeng.moudles.index.live.gift.GiftFrameLayout
+            <com.lvshandian.lemeng.widget.GiftFrameLayout
                 android:id="@+id/gift_layout1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -550,7 +550,7 @@
                 android:visibility="gone" />
 
 
-            <com.lvshandian.lemeng.moudles.index.live.gift.GiftFrameLayout
+            <com.lvshandian.lemeng.widget.GiftFrameLayout
                 android:id="@+id/gift_layout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

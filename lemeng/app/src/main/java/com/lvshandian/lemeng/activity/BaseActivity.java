@@ -32,8 +32,6 @@ import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.activity.live.WatchLiveActivity;
 import com.lvshandian.lemeng.activity.start.LoginActivity;
 import com.lvshandian.lemeng.activity.start.LogoutHelper;
-import com.lvshandian.lemeng.interfaces.CustomStringCallBack;
-import com.lvshandian.lemeng.engine.UserController;
 import com.lvshandian.lemeng.entity.AppUser;
 import com.lvshandian.lemeng.entity.JoinRoomBean;
 import com.lvshandian.lemeng.entity.LiveBean;
@@ -41,14 +39,16 @@ import com.lvshandian.lemeng.entity.LiveListBean;
 import com.lvshandian.lemeng.entity.QuitApp;
 import com.lvshandian.lemeng.entity.QuitLogin;
 import com.lvshandian.lemeng.entity.mine.LoginFrom;
+import com.lvshandian.lemeng.interfaces.CustomStringCallBack;
 import com.lvshandian.lemeng.net.HttpDatas;
 import com.lvshandian.lemeng.net.UrlBuilder;
-import com.lvshandian.lemeng.widget.view.ShowPop;
+import com.lvshandian.lemeng.third.wangyiyunxin.config.preference.Preferences;
 import com.lvshandian.lemeng.utils.DESUtil;
 import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.NetWorkUtil;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
+import com.lvshandian.lemeng.widget.view.ShowPop;
 import com.netease.nim.uikit.common.util.log.LogUtil;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
@@ -78,7 +78,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.ButterKnife;
-import com.lvshandian.lemeng.third.wangyiyunxin.config.preference.Preferences;
 
 /**
  * Activity 基类  zhang 2016/11/07
@@ -121,7 +120,8 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
             ButterKnife.bind(this);
         }
 //        appUser = (AppUser) CacheUtils.readObject(this, CacheUtils.USERINFO);
-        appUser = UserController.getInstance().getAppUser();
+//        appUser = UserController.getInstance().getAppUser();
+        appUser = SharedPreferenceUtils.getUserInfo(mContext);
         mContext = this;
         snackView = getWindow().getDecorView().getRootView();
         httpDatas = new HttpDatas(this, snackView);
@@ -152,7 +152,8 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
         MobclickAgent.onResume(this);
         super.onResume();
 //        appUser = (AppUser) CacheUtils.readObject(this, CacheUtils.USERINFO);
-        appUser = UserController.getInstance().getAppUser();
+//        appUser = UserController.getInstance().getAppUser();
+        appUser = SharedPreferenceUtils.getUserInfo(mContext);
 //        /**
 //         * 废除用户：根据姓名和发送的消息进行废除用户强制退出；
 //         */

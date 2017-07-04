@@ -105,6 +105,28 @@ public class PermisionUtils {
     }
 
     /**
+     * CallPhone权限检查
+     *
+     * @param lintener
+     */
+    public void audioPermission(final Context context, final OnPermissionGrantedLintener lintener) {
+        Acp.getInstance(context).request(new AcpOptions.Builder().setPermissions(Manifest.permission.RECORD_AUDIO).build(), new AcpListener() {
+            @Override
+            public void onGranted() {
+                if (lintener != null) {
+
+                    lintener.permissionGranted();
+                }
+            }
+
+            @Override
+            public void onDenied(List<String> permissions) {
+                com.lvshandian.lemeng.utils.ToastUtils.showMessageCenter(context,"录音权限拒绝");
+            }
+        });
+    }
+
+    /**
      * 写入sdk权限
      *
      * @param lintener
