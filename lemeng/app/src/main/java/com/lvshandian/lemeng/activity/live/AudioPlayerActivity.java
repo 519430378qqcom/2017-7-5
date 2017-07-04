@@ -1,11 +1,8 @@
 package com.lvshandian.lemeng.activity.live;
 
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -18,19 +15,21 @@ import android.widget.TextView;
 
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.activity.BaseActivity;
+import com.lvshandian.lemeng.adapter.AudioPlayerAdapter;
 import com.lvshandian.lemeng.engine.service.VoiceService;
 import com.lvshandian.lemeng.entity.AudioPlayInfo;
 import com.lvshandian.lemeng.entity.PlayerSearchBean;
+import com.lvshandian.lemeng.entity.PlayerStatus;
 import com.lvshandian.lemeng.entity.db.Audios;
-import com.lvshandian.lemeng.adapter.AudioPlayerAdapter;
 import com.lvshandian.lemeng.net.UrlBuilder;
+import com.lvshandian.lemeng.utils.PermisionUtils;
+import com.lvshandian.lemeng.utils.TextUtils;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefresh;
 import com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout;
 import com.lvshandian.lemeng.widget.view.LoadingDialog;
-import com.lvshandian.lemeng.utils.PermisionUtils;
-import com.lvshandian.lemeng.utils.TextUtils;
 import com.netease.nim.uikit.team.activity.JsonUtil;
 
+import org.greenrobot.eventbus.Subscribe;
 import org.litepal.crud.DataSupport;
 import org.litepal.crud.callback.FindMultiCallback;
 import org.litepal.crud.callback.SaveCallback;
@@ -52,7 +51,7 @@ import java.util.List;
  * 歌曲播放界面
  * Created by shang on 2017/3/27.
  */
-public class AudioPlayerActivity extends BaseActivity implements SwipeRefresh.OnRefreshListener, SwipeRefreshLayout.OnPullUpRefreshListener  {
+public class AudioPlayerActivity extends BaseActivity implements SwipeRefresh.OnRefreshListener, SwipeRefreshLayout.OnPullUpRefreshListener {
     private AudioPlayerAdapter audioPlayerAdapter;
     private RecyclerView audioRecyclerView;
     private ImageView iv_back;
@@ -88,8 +87,6 @@ public class AudioPlayerActivity extends BaseActivity implements SwipeRefresh.On
      */
     private LoadingDialog mLoading;
 
-    private PlayingEndBroadcastReceiver receiver;
-
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -119,15 +116,11 @@ public class AudioPlayerActivity extends BaseActivity implements SwipeRefresh.On
     @Override
     protected void onResume() {
         super.onResume();
-        IntentFilter filter = new IntentFilter("SONG_PLAYING_END");
-        receiver = new PlayingEndBroadcastReceiver();
-        registerReceiver(receiver, filter);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(receiver);
     }
 
     @Override
@@ -148,7 +141,7 @@ public class AudioPlayerActivity extends BaseActivity implements SwipeRefresh.On
         audioPlayerAdapter.setOnAudioClickListener(new AudioPlayerAdapter.OnAudioClickListener() {
             @Override
             public void OnAudioItemClick(int position, String str) {
-                if (str.equals(getString(R.string.play))||str.equals(getString(R.string.go_on))) {
+                if (str.equals(getString(R.string.play)) || str.equals(getString(R.string.go_on))) {
                     String sdpath = Environment.getExternalStorageDirectory() + "/lemeng/";
                     String fileUrl = sdpath + "download/";
                     String uri = fileUrl + songList.get(position).getSongid() + ".mp3";
@@ -178,7 +171,7 @@ public class AudioPlayerActivity extends BaseActivity implements SwipeRefresh.On
                     }
                     songList.get(position).setPause(true);
                     audioPlayerAdapter.notifyDataSetChanged();
-                }else {
+                } else {
                     Audios audios = songList.get(position);
                     getSongDownloadUrl(audios.getSongid(), position);
                 }
@@ -212,11 +205,11 @@ public class AudioPlayerActivity extends BaseActivity implements SwipeRefresh.On
                             });
                     normalDialog.show();
 
-                } else if (str.equals(getString(R.string.pause))){
+                } else if (str.equals(getString(R.string.pause))) {
                     showToast(getString(R.string.is_playing_no_delete));
-                } else if (str.equals(getString(R.string.go_on))){
+                } else if (str.equals(getString(R.string.go_on))) {
                     showToast(getString(R.string.is_go_on_no_delete));
-                }else  {
+                } else {
                     showToast(getString(R.string.no_download));
                 }
             }
@@ -539,22 +532,24 @@ public class AudioPlayerActivity extends BaseActivity implements SwipeRefresh.On
         }
     }
 
-    public class PlayingEndBroadcastReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
+    @Subscribe
+    public void onEventMainThread(PlayerStatus playerStatus) {
+        if (playerStatus != null && playerStatus.getIsPlayer().equals("2")) {
             for (int i = 0, j = songList.size(); i < j; i++) {
                 songList.get(i).setPlaying(false);
                 songList.get(i).setPause(false);
             }
             audioPlayerAdapter.notifyDataSetChanged();
         }
+
     }
+
 
     @Override
     public void onRefresh() {
-        if (isSearch){
+        if (isSearch) {
             getSearchSongList(et_search_input.getText().toString().trim());
-        }else {
+        } else {
             finishRefresh();
         }
 
@@ -562,12 +557,12 @@ public class AudioPlayerActivity extends BaseActivity implements SwipeRefresh.On
 
     @Override
     public void onPullUpRefresh() {
-        if (isSearch){
+        if (isSearch) {
             getSearchSongList(et_search_input.getText().toString().trim());
-        }else {
+        } else {
             finishRefresh();
         }
-}
+    }
 
     private void finishRefresh() {
         mrlLayout.setRefreshing(false);

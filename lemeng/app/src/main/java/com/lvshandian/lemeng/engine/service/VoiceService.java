@@ -6,10 +6,11 @@ import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.View;
 
 import com.lvshandian.lemeng.activity.live.AudioPlayerActivity;
-import com.lvshandian.lemeng.activity.live.StartLiveActivity;
+import com.lvshandian.lemeng.entity.PlayerStatus;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 
@@ -51,12 +52,9 @@ public class VoiceService extends Service {
             mUrl = "";
             AudioPlayerActivity.playingId = "";
             AudioPlayerActivity.pauseingId = "";
-            StartLiveActivity.mLrcView.setVisibility(View.GONE);
-            //发送广播通知歌曲播完,改变界面
-            Intent intent = new Intent();
-            intent.setAction("SONG_PLAYING_END");
-            sendBroadcast(intent);
-            next();
+            PlayerStatus playerStatus = new PlayerStatus();
+            playerStatus.setIsPlayer("2");
+            EventBus.getDefault().post(playerStatus);
         }
     };
 
@@ -73,11 +71,15 @@ public class VoiceService extends Service {
         String lrc = intent.getStringExtra("LRC");
         if (url.equals(mUrl)) {
             if (mediaPlayer.isPlaying()){
+                PlayerStatus playerStatus = new PlayerStatus();
+                playerStatus.setIsPlayer("2");
+                EventBus.getDefault().post(playerStatus);
                 mediaPlayer.pause();
-                StartLiveActivity.mLrcView.setVisibility(View.GONE);
             }else{
+                PlayerStatus playerStatus = new PlayerStatus();
+                playerStatus.setIsPlayer("1");
+                EventBus.getDefault().post(playerStatus);
                 mediaPlayer.start();
-                StartLiveActivity.mLrcView.setVisibility(View.VISIBLE);
             }
         } else {
             openAudio(url,lrc);
@@ -134,8 +136,11 @@ public class VoiceService extends Service {
             mediaPlayer.setDataSource(url);
             mediaPlayer.prepareAsync();
             mediaPlayer.start();
-            StartLiveActivity.mLrcView.setVisibility(View.VISIBLE);
-            StartLiveActivity.showLrc(lrc);
+
+            PlayerStatus playerStatus = new PlayerStatus();
+            playerStatus.setIsPlayer("1");
+            playerStatus.setLrc(lrc);
+            EventBus.getDefault().post(playerStatus);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -94,6 +94,7 @@ import com.lvshandian.lemeng.entity.LastAwardBean;
 import com.lvshandian.lemeng.entity.LianMaiDateBean;
 import com.lvshandian.lemeng.entity.LiveFamilyMemberBean;
 import com.lvshandian.lemeng.entity.LiveListBean;
+import com.lvshandian.lemeng.entity.PlayerStatus;
 import com.lvshandian.lemeng.entity.RoomUserBean;
 import com.lvshandian.lemeng.entity.RoomUserDataBean;
 import com.lvshandian.lemeng.entity.bullfight.BankerBalances;
@@ -331,9 +332,8 @@ public class StartLiveActivity extends BaseActivity implements
     AutoLinearLayout live_game;
     @Bind(R.id.watch_room_message_fragment_chat)
     FrameLayout watch_room_message_fragment_chat;
-    public static LrcView mLrcView;
     @Bind(R.id.song_LrcView)
-    LrcView songLrcView;
+    LrcView mLrcView;
     @Bind(R.id.iv_big)
     ImageView ivBig;
     @Bind(R.id.tv_big)
@@ -851,7 +851,6 @@ public class StartLiveActivity extends BaseActivity implements
 
     @Override
     protected void initialized() {
-        mLrcView = (LrcView) findViewById(R.id.song_LrcView);
         startTime = System.currentTimeMillis();
         startAnimation(3);
         creatReadyBean = (CreatReadyBean) getIntent().getSerializableExtra("START");
@@ -2930,6 +2929,23 @@ public class StartLiveActivity extends BaseActivity implements
             showToast(getString(R.string.open_game_function));
         }
     }
+
+    @Subscribe
+    public void onEventMainThread(PlayerStatus playerStatus) {
+        LogUtils.e("playerStatus=" + playerStatus);
+        if (playerStatus != null && playerStatus.getIsPlayer().equals("1")) {
+            mLrcView.setVisibility(View.VISIBLE);
+            if (!TextUtils.isEmpty(playerStatus.getLrc())) {
+                showLrc(playerStatus.getLrc());
+            }
+        }
+
+        if (playerStatus != null && playerStatus.getIsPlayer().equals("2")) {
+            mLrcView.setVisibility(View.GONE);
+        }
+
+    }
+
     // **************************** 头像列表开始****************************************** //
 
     /**
@@ -5062,9 +5078,9 @@ public class StartLiveActivity extends BaseActivity implements
         mLrcView.onDrag(0);
     }
 
-    private static Handler lrcHandler = new Handler();
+    private Handler lrcHandler = new Handler();
 
-    public static void showLrc(String lrc) {
+    public void showLrc(String lrc) {
         mLrcView.loadLrc(getLrcText(lrc));
         if (!mediaPlayer.isPlaying()) {
             lrcHandler.post(runnable);
@@ -5088,7 +5104,7 @@ public class StartLiveActivity extends BaseActivity implements
         return lrcText;
     }
 
-    private static Runnable runnable = new Runnable() {
+    private Runnable runnable = new Runnable() {
         @Override
         public void run() {
             if (mediaPlayer.isPlaying()) {
