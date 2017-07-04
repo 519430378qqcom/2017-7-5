@@ -57,11 +57,11 @@ public class MyGradeActivity extends BaseActivity {
 
             switch (msg.what) {
                 case RequestCode.SELECT_USER:
-                    AppUser appUser = JSON.parseObject(json, AppUser.class);
+                    AppUser tappUser = JSON.parseObject(json, AppUser.class);
 //                    CacheUtils.saveObject(MyGradeActivity.this, appUser, CacheUtils.USERINFO);
                     SharedPreferenceUtils.saveUserInfo(mContext, appUser);
-                    startPoints = appUser.getPoints();
-                    level = appUser.getLevel();
+                    startPoints = tappUser.getPoints();
+                    level = tappUser.getLevel();
                     queryLevel();
                     break;
                 case RequestCode.SELECT_LEVEL:

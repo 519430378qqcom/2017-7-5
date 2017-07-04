@@ -32,6 +32,7 @@ import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.activity.live.WatchLiveActivity;
 import com.lvshandian.lemeng.activity.start.LoginActivity;
 import com.lvshandian.lemeng.activity.start.LogoutHelper;
+import com.lvshandian.lemeng.engine.UserController;
 import com.lvshandian.lemeng.entity.AppUser;
 import com.lvshandian.lemeng.entity.JoinRoomBean;
 import com.lvshandian.lemeng.entity.LiveBean;
@@ -99,7 +100,7 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
         super.onCreate(savedInstanceState);
         LogUtils.e("BaseActivity", getClass().getName());
 
-        TAG = getClass().getName();
+        TAG = getClass().getSimpleName();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(true);
@@ -120,8 +121,8 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
             ButterKnife.bind(this);
         }
 //        appUser = (AppUser) CacheUtils.readObject(this, CacheUtils.USERINFO);
-//        appUser = UserController.getInstance().getAppUser();
-        appUser = SharedPreferenceUtils.getUserInfo(mContext);
+        appUser = UserController.getInstance().getAppUser();
+//        appUser = SharedPreferenceUtils.getUserInfo(mContext);
         mContext = this;
         snackView = getWindow().getDecorView().getRootView();
         httpDatas = new HttpDatas(this, snackView);
@@ -152,8 +153,8 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
         MobclickAgent.onResume(this);
         super.onResume();
 //        appUser = (AppUser) CacheUtils.readObject(this, CacheUtils.USERINFO);
-//        appUser = UserController.getInstance().getAppUser();
-        appUser = SharedPreferenceUtils.getUserInfo(mContext);
+        appUser = UserController.getInstance().getAppUser();
+//        appUser = SharedPreferenceUtils.getUserInfo(mContext);
 //        /**
 //         * 废除用户：根据姓名和发送的消息进行废除用户强制退出；
 //         */
@@ -218,9 +219,9 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
 //        CacheUtils.saveObject(this, null, CacheUtils.PASSWORD);
 //        CacheUtils.saveObject(mContext, null, CacheUtils.USERINFO);
 
-        AppUser appUser = new AppUser();
+        AppUser tappUser = new AppUser();
         LoginFrom loginFrom = new LoginFrom();
-        SharedPreferenceUtils.saveUserInfo(mContext, appUser);
+        SharedPreferenceUtils.saveUserInfo(mContext, tappUser);
         SharedPreferenceUtils.saveLoginFrom(mContext, loginFrom);
 
         //发送到MainActivity，关闭页面

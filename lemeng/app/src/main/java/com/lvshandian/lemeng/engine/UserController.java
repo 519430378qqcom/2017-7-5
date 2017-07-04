@@ -31,6 +31,10 @@ public class UserController {
         return mAppUser;
     }
 
+    public void resetAppUser(){
+        mAppUser=null;
+    }
+
 
 
 }

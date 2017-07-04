@@ -16,6 +16,7 @@ import com.lvshandian.lemeng.entity.QuitLogin;
 import com.lvshandian.lemeng.entity.mine.LoginFrom;
 import com.lvshandian.lemeng.net.HttpDatas;
 import com.lvshandian.lemeng.net.RequestCode;
+import com.lvshandian.lemeng.third.wangyiyunxin.config.preference.Preferences;
 import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.utils.TextUtils;
@@ -26,7 +27,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.Bind;
-import com.lvshandian.lemeng.third.wangyiyunxin.config.preference.Preferences;
 
 /**
  * 修改密码
@@ -74,8 +74,9 @@ public class ModifyPasswordActivity extends BaseActivity {
     private void quitLogin() {
         //清空已保存的用户信息
 //        CacheUtils.saveObject(mContext, null, CacheUtils.USERINFO);
-        AppUser appUser = new AppUser();
-        SharedPreferenceUtils.saveUserInfo(mContext, appUser);
+        AppUser tappUser = new AppUser();
+        SharedPreferenceUtils.saveUserInfo(mContext, tappUser);
+
         //发送到MainActivity，关闭页面
         EventBus.getDefault().post(new QuitLogin());
         Preferences.saveAppLogin("0");

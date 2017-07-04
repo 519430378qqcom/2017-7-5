@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+import com.lvshandian.lemeng.engine.UserController;
 import com.lvshandian.lemeng.entity.AppUser;
 import com.lvshandian.lemeng.entity.mine.LoginFrom;
 
@@ -93,6 +94,7 @@ public class SharedPreferenceUtils {
 
 
     public static void saveUserInfo(Context context, AppUser appUser) {
+        UserController.getInstance().resetAppUser();
         editor.putString("shareCode", appUser.getShareCode());
         editor.putString("spendGoldCoin", appUser.getSpendGoldCoin());
         editor.putString("gender", appUser.getGender());

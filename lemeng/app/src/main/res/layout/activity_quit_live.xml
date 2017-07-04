@@ -4,7 +4,7 @@
     android:id="@+id/activity_quit_live"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.lvshandian.lemeng.moudles.index.live.QuitLiveActivity">
+    tools:context="com.lvshandian.lemeng.activity.live.QuitLiveActivity">
     <!--主播退出直播-->
     <ImageView
         android:id="@+id/img_bg"
