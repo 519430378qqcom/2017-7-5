@@ -170,7 +170,7 @@ public class AppUser implements Serializable {
     }
 
     public String getGoldCoin() {
-        return goldCoin;
+        return "".equals(goldCoin)?"0":goldCoin;
     }
 
     public void setGoldCoin(String goldCoin) {

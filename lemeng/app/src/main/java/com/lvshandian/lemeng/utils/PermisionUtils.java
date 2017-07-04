@@ -69,7 +69,7 @@ public class PermisionUtils {
 
             @Override
             public void onDenied(List<String> permissions) {
-                com.lvshandian.lemeng.utils.ToastUtils.showMessageCenter(context,"摄像权限拒绝");
+                com.lvshandian.lemeng.utils.ToastUtils.showMessageCenter(context, "摄像权限拒绝");
             }
         });
     }
@@ -99,7 +99,7 @@ public class PermisionUtils {
 
             @Override
             public void onDenied(List<String> permissions) {
-                com.lvshandian.lemeng.utils.ToastUtils.showMessageCenter(context,"拨打电话权限拒绝");
+                com.lvshandian.lemeng.utils.ToastUtils.showMessageCenter(context, "拨打电话权限拒绝");
             }
         });
     }
@@ -142,7 +142,7 @@ public class PermisionUtils {
 
             @Override
             public void onDenied(List<String> permissions) {
-                com.lvshandian.lemeng.utils.ToastUtils.showMessageDefault(context,"读写SDK权限拒绝");
+                com.lvshandian.lemeng.utils.ToastUtils.showMessageDefault(context, "读写SDK权限拒绝");
             }
         });
     }
@@ -164,8 +164,9 @@ public class PermisionUtils {
 
             @Override
             public void onDenied(List<String> permissions) {
-                com.lvshandian.lemeng.utils.ToastUtils.showMessageCenter(context,"定位权限拒绝");
+                com.lvshandian.lemeng.utils.ToastUtils.showMessageCenter(context, "定位权限拒绝");
             }
         });
     }
+
 }

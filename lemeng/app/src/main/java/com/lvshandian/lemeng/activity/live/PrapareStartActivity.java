@@ -238,17 +238,11 @@ public class PrapareStartActivity extends BaseActivity {
                 tvAddress.setText(address);
                 break;
             case R.id.tv_start_live:
-                PermisionUtils.newInstance().audioPermission(this, new PermisionUtils.OnPermissionGrantedLintener() {
-                    @Override
-                    public void permissionGranted() {
-                        if (Constant.anchorState == 1) {
-                            getNetWork();
-                        } else {
-                            showToast(getString(R.string.close_live_function));
-                        }
-                    }
-                });
-
+                if (Constant.anchorState == 1) {
+                    getNetWork();
+                } else {
+                    showToast(getString(R.string.close_live_function));
+                }
                 break;
             case R.id.wechat:
                 UMUtils.umShareSingle(this, getString(R.string.share_download_title),

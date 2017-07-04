@@ -1256,13 +1256,14 @@ public class StartLiveActivity extends BaseActivity implements
 
     /**
      * 判断投注之后是否可能出现负值
+     *
      * @return
      */
     private boolean isBet() {
         if (betMax > betBalance) {
             betMax -= betBalance;
             return true;
-        }else {
+        } else {
             return false;
         }
     }
@@ -2353,7 +2354,7 @@ public class StartLiveActivity extends BaseActivity implements
     }
 
     private void showXYGame() {
-        if(startGaming) {
+        if (startGaming) {
             return;
         }
         String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.START_LUCK_GAME;
@@ -4112,8 +4113,18 @@ public class StartLiveActivity extends BaseActivity implements
 
     @Override
     public boolean onRecordAudioFailedHandled(int i) {
-        mMediaStreamingManager.updateEncodingType(AVCodecType.SW_VIDEO_CODEC);
-        mMediaStreamingManager.startStreaming();
+        try {
+            mMediaStreamingManager.updateEncodingType(AVCodecType.SW_VIDEO_CODEC);
+            mMediaStreamingManager.startStreaming();
+        } catch (Exception e) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    showToast(getString(R.string.please_granted_record_audio));
+
+                }
+            });
+        }
         return true;
     }
 
