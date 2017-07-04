@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply from: 'tinkerpatch.gradle'
 android {
     signingConfigs {
 
@@ -14,7 +15,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 14
-        versionName "1.1.4"
+        versionName "1.1.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         ndk {
@@ -157,4 +158,9 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3'
+
+    // 若使用annotation需要单独引用,对于tinker的其他库都无需再引用
+    provided("com.tinkerpatch.tinker:tinker-android-anno:1.7.11")
+    compile("com.tinkerpatch.sdk:tinkerpatch-android-sdk:1.1.7")
+
 }

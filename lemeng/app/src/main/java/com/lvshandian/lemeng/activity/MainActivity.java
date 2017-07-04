@@ -323,6 +323,7 @@ public class MainActivity extends BaseActivity implements
     protected void onResume() {
         super.onResume();
         enableMsgNotification(false);
+        showToast("我是热更新");
     }
 
     @Override
