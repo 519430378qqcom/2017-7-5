@@ -68,7 +68,6 @@ import com.lvshandian.lemeng.MyApplication;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.activity.BaseActivity;
 import com.lvshandian.lemeng.activity.MainActivity;
-import com.lvshandian.lemeng.activity.MyInformationActivity;
 import com.lvshandian.lemeng.activity.mine.ContributionActivity;
 import com.lvshandian.lemeng.activity.mine.OtherPersonHomePageActivity;
 import com.lvshandian.lemeng.activity.start.LoginSelectActivity;
@@ -121,22 +120,6 @@ import com.lvshandian.lemeng.third.wangyiyunxin.main.helper.SystemMessageUnreadM
 import com.lvshandian.lemeng.third.wangyiyunxin.main.reminder.ReminderItem;
 import com.lvshandian.lemeng.third.wangyiyunxin.main.reminder.ReminderManager;
 import com.lvshandian.lemeng.third.wangyiyunxin.main.reminder.ReminderSettings;
-import com.lvshandian.lemeng.widget.AnchorVideo;
-import com.lvshandian.lemeng.widget.GiftFrameLayout;
-import com.lvshandian.lemeng.widget.LiveVideo;
-import com.lvshandian.lemeng.widget.RedPackageView;
-import com.lvshandian.lemeng.widget.myrecycler.RefreshRecyclerView;
-import com.lvshandian.lemeng.widget.myrecycler.manager.RecyclerMode;
-import com.lvshandian.lemeng.widget.myrecycler.manager.RecyclerViewManager;
-import com.lvshandian.lemeng.widget.view.AvatarView;
-import com.lvshandian.lemeng.widget.view.BarrageView;
-import com.lvshandian.lemeng.widget.view.CameraLivePreviewFrameView;
-import com.lvshandian.lemeng.widget.view.CustomPopWindow;
-import com.lvshandian.lemeng.widget.view.LoadingDialog;
-import com.lvshandian.lemeng.widget.view.RotateLayout;
-import com.lvshandian.lemeng.widget.view.RoundDialog;
-import com.lvshandian.lemeng.widget.view.ScrollRelativeLayout;
-import com.lvshandian.lemeng.widget.view.TimeCountDownLayout;
 import com.lvshandian.lemeng.utils.AnimationUtils;
 import com.lvshandian.lemeng.utils.ChannelToLiveBean;
 import com.lvshandian.lemeng.utils.Config;
@@ -155,6 +138,22 @@ import com.lvshandian.lemeng.utils.ThreadManager;
 import com.lvshandian.lemeng.utils.ToastUtils;
 import com.lvshandian.lemeng.utils.UMUtils;
 import com.lvshandian.lemeng.utils.gles.FBO;
+import com.lvshandian.lemeng.widget.AnchorVideo;
+import com.lvshandian.lemeng.widget.GiftFrameLayout;
+import com.lvshandian.lemeng.widget.LiveVideo;
+import com.lvshandian.lemeng.widget.RedPackageView;
+import com.lvshandian.lemeng.widget.myrecycler.RefreshRecyclerView;
+import com.lvshandian.lemeng.widget.myrecycler.manager.RecyclerMode;
+import com.lvshandian.lemeng.widget.myrecycler.manager.RecyclerViewManager;
+import com.lvshandian.lemeng.widget.view.AvatarView;
+import com.lvshandian.lemeng.widget.view.BarrageView;
+import com.lvshandian.lemeng.widget.view.CameraLivePreviewFrameView;
+import com.lvshandian.lemeng.widget.view.CustomPopWindow;
+import com.lvshandian.lemeng.widget.view.LoadingDialog;
+import com.lvshandian.lemeng.widget.view.RotateLayout;
+import com.lvshandian.lemeng.widget.view.RoundDialog;
+import com.lvshandian.lemeng.widget.view.ScrollRelativeLayout;
+import com.lvshandian.lemeng.widget.view.TimeCountDownLayout;
 import com.netease.nim.uikit.NimUIKit;
 import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
 import com.netease.nim.uikit.common.ui.drop.DropFake;
@@ -235,7 +234,7 @@ import xiao.free.horizontalrefreshlayout.HorizontalRefreshLayout;
 import xiao.free.horizontalrefreshlayout.RefreshCallBack;
 import xiao.free.horizontalrefreshlayout.refreshhead.LoadingRefreshHeader;
 
-import static com.lvshandian.lemeng.activity.live.StartLiveActivity.LUCY_28_TIMER;
+import static com.lvshandian.lemeng.activity.live.StartLiveActivity.LUCK_28_TIMER;
 
 
 /**
@@ -1134,7 +1133,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                 case RequestCode.REQUEST_REPORT:
                     showToast(getString(R.string.report_succeed));
                     break;
-                case LUCY_28_TIMER:
+                case LUCK_28_TIMER:
                     LogUtil.e("mCountDownTotalTime", "mCountDownTotalTime" + mCountDownTotalTime);
                     mCountDownTotalTime = mCountDownTotalTime - 1000;
                     String time = DateUtils.millisToDateString(mCountDownTotalTime > 0 ? mCountDownTotalTime : 0, "mm:ss");
@@ -1142,7 +1141,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                         tv_game_next_open_time.setText("00:" + time);
                     }
                     if (mCountDownTotalTime > 1000) {
-                        myHandler.sendEmptyMessageDelayed(LUCY_28_TIMER, 1000);
+                        myHandler.sendEmptyMessageDelayed(LUCK_28_TIMER, 1000);
                     } else {
                         //获取近期开奖数据
                         getTimenumber();
@@ -3259,7 +3258,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             isPlayerRoom = false;
             hidePlayView(gameType);
             myHandler.removeMessages(BULLFIGHT_TIME);
-            myHandler.removeMessages(LUCY_28_TIMER);
+            myHandler.removeMessages(LUCK_28_TIMER);
         }
     }
 
@@ -4584,8 +4583,8 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
             @Override
             public void onClick(View v) {
                 if (!TextUtils.isEmpty(customdateBean.getId()) && customdateBean.getId().equals(appUser.getId())) {
-                    Intent intent = new Intent(mContext, MyInformationActivity.class);
-                    startActivity(intent);
+//                    Intent intent = new Intent(mContext, MyInformationActivity.class);
+//                    startActivity(intent);
                 } else {
                     Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
                     intent.putExtra(getString(R.string.visit_person), customdateBean.getId());
@@ -4674,14 +4673,14 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
         });
 
         //我的主页
-        mySelf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, MyInformationActivity.class);
-                startActivity(intent);
-                otherPop.dismiss();
-            }
-        });
+//        mySelf.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(mContext, MyInformationActivity.class);
+//                startActivity(intent);
+//                otherPop.dismiss();
+//            }
+//        });
 
         //我的场控
         tv_changkong.setOnClickListener(new View.OnClickListener() {
@@ -5254,7 +5253,7 @@ public class WatchLiveActivity extends BaseActivity implements ReminderManager
                                 tv_game_next_open_time.setText(getString(R.string.wait_lottery));
                                 myHandler.postDelayed(timenNumber, 30000);
                             } else {
-                                myHandler.sendEmptyMessage(LUCY_28_TIMER);
+                                myHandler.sendEmptyMessage(LUCK_28_TIMER);
                             }
 
                             if (lastAwardBean.getWinStatus().equals("1")) {

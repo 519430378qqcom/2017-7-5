@@ -8,6 +8,7 @@ import android.widget.ListView;
 
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.activity.BaseActivity;
+import com.lvshandian.lemeng.activity.MyInformationActivity;
 import com.lvshandian.lemeng.adapter.mine.FunseListAdapter;
 import com.lvshandian.lemeng.interfaces.CustomStringCallBack;
 import com.lvshandian.lemeng.entity.mine.Funse;
@@ -94,9 +95,15 @@ public class FollowListActivity extends BaseActivity implements SwipeRefresh.OnR
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 FunseBean funseBean = mDatas.get(position);
                 String userId = funseBean.getUserId();
-                Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
-                intent.putExtra(getString(R.string.visit_person), userId);
-                startActivity(intent);
+                if (userId.equals(appUser.getId())) {
+                    Intent intent = new Intent(mContext, MyInformationActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
+                    intent.putExtra(getString(R.string.visit_person), userId);
+                    startActivity(intent);
+                }
+
             }
         });
     }
@@ -135,7 +142,7 @@ public class FollowListActivity extends BaseActivity implements SwipeRefresh.OnR
             List<FunseBean> result = funse.getResult();
             appUser.setFollowNum(String.valueOf(result.size()));
 //            CacheUtils.saveObject(FollowListActivity.this, appUser, CacheUtils.USERINFO);
-            SharedPreferenceUtils.saveUserInfo(mContext,appUser);
+            SharedPreferenceUtils.saveUserInfo(mContext, appUser);
             if (isRefresh) {
                 mDatas.clear();
             } else {

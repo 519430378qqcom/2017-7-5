@@ -10,15 +10,16 @@ import android.widget.ListView;
 
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.activity.BaseActivity;
+import com.lvshandian.lemeng.activity.MyInformationActivity;
 import com.lvshandian.lemeng.adapter.mine.FunseListAdapter;
-import com.lvshandian.lemeng.interfaces.CustomStringCallBack;
 import com.lvshandian.lemeng.entity.mine.Funse;
+import com.lvshandian.lemeng.interfaces.CustomStringCallBack;
 import com.lvshandian.lemeng.net.HttpDatas;
 import com.lvshandian.lemeng.net.UrlBuilder;
-import com.lvshandian.lemeng.widget.refresh.SwipeRefresh;
-import com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout;
 import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
+import com.lvshandian.lemeng.widget.refresh.SwipeRefresh;
+import com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout;
 import com.netease.nim.uikit.team.activity.FunseBean;
 import com.squareup.okhttp.MediaType;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -102,9 +103,14 @@ public class FunseListActivity extends BaseActivity implements SwipeRefresh.OnRe
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 FunseBean funseBean = mDatas.get(position);
                 String userId = funseBean.getUserId();
-                Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
-                intent.putExtra(getString(R.string.visit_person), userId);
-                startActivity(intent);
+                if (userId.equals(appUser.getId())){
+                    Intent intent = new Intent(mContext, MyInformationActivity.class);
+                    startActivity(intent);
+                }else {
+                    Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
+                    intent.putExtra(getString(R.string.visit_person), userId);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -118,7 +124,11 @@ public class FunseListActivity extends BaseActivity implements SwipeRefresh.OnRe
                     intent.putExtra(getString(R.string.visit_person), userId);
                     startActivity(intent);
                 } else {
-                    changeFollow(bean);
+                    if (bean.getUserId().equals(appUser.getId())){
+                        showToast(getString(R.string.not_attention_muself));
+                    }else {
+                        changeFollow(bean);
+                    }
                 }
             }
         });

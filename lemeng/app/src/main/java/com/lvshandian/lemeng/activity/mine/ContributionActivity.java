@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.android.volley.Request;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.activity.BaseActivity;
+import com.lvshandian.lemeng.activity.MyInformationActivity;
 import com.lvshandian.lemeng.adapter.mine.ContributionListAdapter;
 import com.lvshandian.lemeng.entity.ContributionBeanBack;
 import com.lvshandian.lemeng.net.HttpDatas;
@@ -135,9 +136,14 @@ public class ContributionActivity extends BaseActivity {
             myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
-                    intent.putExtra(getString(R.string.visit_person), mDatas.get(position).getId());
-                    startActivity(intent);
+                    if (mDatas.get(position).getId().equals(appUser.getId())) {
+                        Intent intent = new Intent(mContext, MyInformationActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
+                        intent.putExtra(getString(R.string.visit_person), mDatas.get(position).getId());
+                        startActivity(intent);
+                    }
                 }
             });
         }
@@ -210,9 +216,14 @@ public class ContributionActivity extends BaseActivity {
         imgHead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
-                intent.putExtra(getString(R.string.visit_person), oneData.getId());
-                startActivity(intent);
+                if (oneData.getId().equals(appUser.getId())) {
+                    Intent intent = new Intent(mContext, MyInformationActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
+                    intent.putExtra(getString(R.string.visit_person), oneData.getId());
+                    startActivity(intent);
+                }
             }
         });
     }

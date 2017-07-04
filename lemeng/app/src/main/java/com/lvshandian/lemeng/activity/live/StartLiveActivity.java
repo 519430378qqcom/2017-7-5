@@ -68,7 +68,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.lvshandian.lemeng.MyApplication;
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.activity.BaseActivity;
-import com.lvshandian.lemeng.activity.MyInformationActivity;
 import com.lvshandian.lemeng.activity.mine.ContributionActivity;
 import com.lvshandian.lemeng.activity.mine.OtherPersonHomePageActivity;
 import com.lvshandian.lemeng.adapter.FamilyMemberAdapter;
@@ -124,23 +123,6 @@ import com.lvshandian.lemeng.third.wangyiyunxin.main.helper.SystemMessageUnreadM
 import com.lvshandian.lemeng.third.wangyiyunxin.main.reminder.ReminderItem;
 import com.lvshandian.lemeng.third.wangyiyunxin.main.reminder.ReminderManager;
 import com.lvshandian.lemeng.third.wangyiyunxin.main.reminder.ReminderSettings;
-import com.lvshandian.lemeng.widget.AnchorVideoOne;
-import com.lvshandian.lemeng.widget.GiftFrameLayout;
-import com.lvshandian.lemeng.widget.RedPackageView;
-import com.lvshandian.lemeng.widget.lrcview.LrcView;
-import com.lvshandian.lemeng.widget.myrecycler.RefreshRecyclerView;
-import com.lvshandian.lemeng.widget.myrecycler.manager.RecyclerMode;
-import com.lvshandian.lemeng.widget.myrecycler.manager.RecyclerViewManager;
-import com.lvshandian.lemeng.widget.refresh.SwipeRefresh;
-import com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout;
-import com.lvshandian.lemeng.widget.view.AvatarView;
-import com.lvshandian.lemeng.widget.view.BarrageView;
-import com.lvshandian.lemeng.widget.view.CameraPreviewFrameView;
-import com.lvshandian.lemeng.widget.view.CustomPopWindow;
-import com.lvshandian.lemeng.widget.view.EmptyRecyclerView;
-import com.lvshandian.lemeng.widget.view.RotateLayout;
-import com.lvshandian.lemeng.widget.view.RoundDialog;
-import com.lvshandian.lemeng.widget.view.TimeCountDownLayout;
 import com.lvshandian.lemeng.utils.AnimationUtils;
 import com.lvshandian.lemeng.utils.ChannelToLiveBean;
 import com.lvshandian.lemeng.utils.Config;
@@ -158,6 +140,23 @@ import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.lvshandian.lemeng.utils.ThreadManager;
 import com.lvshandian.lemeng.utils.UMUtils;
 import com.lvshandian.lemeng.utils.gles.FBO;
+import com.lvshandian.lemeng.widget.AnchorVideoOne;
+import com.lvshandian.lemeng.widget.GiftFrameLayout;
+import com.lvshandian.lemeng.widget.RedPackageView;
+import com.lvshandian.lemeng.widget.lrcview.LrcView;
+import com.lvshandian.lemeng.widget.myrecycler.RefreshRecyclerView;
+import com.lvshandian.lemeng.widget.myrecycler.manager.RecyclerMode;
+import com.lvshandian.lemeng.widget.myrecycler.manager.RecyclerViewManager;
+import com.lvshandian.lemeng.widget.refresh.SwipeRefresh;
+import com.lvshandian.lemeng.widget.refresh.SwipeRefreshLayout;
+import com.lvshandian.lemeng.widget.view.AvatarView;
+import com.lvshandian.lemeng.widget.view.BarrageView;
+import com.lvshandian.lemeng.widget.view.CameraPreviewFrameView;
+import com.lvshandian.lemeng.widget.view.CustomPopWindow;
+import com.lvshandian.lemeng.widget.view.EmptyRecyclerView;
+import com.lvshandian.lemeng.widget.view.RotateLayout;
+import com.lvshandian.lemeng.widget.view.RoundDialog;
+import com.lvshandian.lemeng.widget.view.TimeCountDownLayout;
 import com.netease.nim.uikit.NimUIKit;
 import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
 import com.netease.nim.uikit.common.ui.drop.DropFake;
@@ -743,13 +742,28 @@ public class StartLiveActivity extends BaseActivity implements
     private CustomPopWindow otherPop;
 
 
+    /**
+     * 幸运28倒计时时间(毫秒)
+     */
     private long mCountDownTotalTime;
+
+    /**
+     * 启动游戏中，防止多次点击
+     */
+    private boolean startGaming;
 
     /**
      * 是否为游戏直播间
      */
     private boolean gameIsStart = false;
-    public static final int LUCY_28_TIMER = 10000;
+
+    /**
+     * 是否首次开启幸运28，判断是否显示排行榜
+     */
+    private boolean luck28_first = true;
+
+    public static final int LUCK_28_TIMER = 10000;
+
     private Handler myHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -798,7 +812,7 @@ public class StartLiveActivity extends BaseActivity implements
                     receivedGoldCoin = CountUtils.getCount(Long.parseLong(receivedGoldCoin));
                     liveJinpiao.setText(receivedGoldCoin); //显示左上角主播收到乐票数量
                     break;
-                case LUCY_28_TIMER:
+                case LUCK_28_TIMER:
                     LogUtil.e("mCountDownTotalTime", "mCountDownTotalTime" + mCountDownTotalTime);
                     mCountDownTotalTime = mCountDownTotalTime - 1000;
                     String time = DateUtils.millisToDateString(mCountDownTotalTime > 0 ? mCountDownTotalTime : 0, "mm:ss");
@@ -806,7 +820,7 @@ public class StartLiveActivity extends BaseActivity implements
                         tv_game_next_open_time.setText("00:" + time);
                     }
                     if (mCountDownTotalTime > 1000) {
-                        myHandler.sendEmptyMessageDelayed(LUCY_28_TIMER, 1000);
+                        myHandler.sendEmptyMessageDelayed(LUCK_28_TIMER, 1000);
                     } else {
                         //获取近期开奖数据
                         getTimenumber();
@@ -1460,10 +1474,6 @@ public class StartLiveActivity extends BaseActivity implements
         valueAnimator.start();
     }
 
-    /**
-     * 启动游戏中，防止多次点击
-     */
-    private boolean startGaming;
 
     /**
      * 开启斗牛游戏
@@ -2912,7 +2922,7 @@ public class StartLiveActivity extends BaseActivity implements
             gameIsStart = false;
             hidePlayView(gameType);
             myHandler.removeMessages(BULLFIGHT_TIME);
-            myHandler.removeMessages(LUCY_28_TIMER);
+            myHandler.removeMessages(LUCK_28_TIMER);
         }
         //游戏权限开启
         if (Constant.gameState == 1 && !gameSwitch) {
@@ -4612,8 +4622,8 @@ public class StartLiveActivity extends BaseActivity implements
             @Override
             public void onClick(View v) {
                 if (!TextUtils.isEmpty(customdateBean.getId()) && customdateBean.getId().equals(appUser.getId())) {
-                    Intent intent = new Intent(mContext, MyInformationActivity.class);
-                    startActivity(intent);
+//                    Intent intent = new Intent(mContext, MyInformationActivity.class);
+//                    startActivity(intent);
                 } else {
                     Intent intent = new Intent(mContext, OtherPersonHomePageActivity.class);
                     intent.putExtra(getString(R.string.visit_person), customdateBean.getId());
@@ -4711,14 +4721,14 @@ public class StartLiveActivity extends BaseActivity implements
         });
 
         //我的主页
-        mySelf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, MyInformationActivity.class);
-                startActivity(intent);
-                otherPop.dismiss();
-            }
-        });
+//        mySelf.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(mContext, MyInformationActivity.class);
+//                startActivity(intent);
+//                otherPop.dismiss();
+//            }
+//        });
 
         //我的场控
         tv_changkong.setOnClickListener(new View.OnClickListener() {
@@ -5323,7 +5333,7 @@ public class StartLiveActivity extends BaseActivity implements
                                 tv_game_next_open_time.setText(getString(R.string.wait_lottery));
                                 myHandler.postDelayed(timenNumber, 30000);
                             } else {
-                                myHandler.sendEmptyMessage(LUCY_28_TIMER);
+                                myHandler.sendEmptyMessage(LUCK_28_TIMER);
                             }
 
                             if (lastAwardBean.getWinStatus().equals("1")) {
@@ -5335,8 +5345,11 @@ public class StartLiveActivity extends BaseActivity implements
                                 all_lepiao.setText(myCoin);
                             }
 
-                            List<LastAwardBean.RoomRanksBean> ranksBean = lastAwardBean.getRoomRanks();
-                            showRankDialog(ranksBean);
+                            if (!luck28_first) {
+                                List<LastAwardBean.RoomRanksBean> ranksBean = lastAwardBean.getRoomRanks();
+                                showRankDialog(ranksBean);
+                            }
+                            luck28_first = false;
                         }
                     } else if (code.equals("1")) {
                         isTouZhu = false;

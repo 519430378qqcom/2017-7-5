@@ -9,32 +9,34 @@ import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
  */
 
 public class UserController {
-    private static  UserController mInstance=null;
-    private AppUser mAppUser=null;
+    private static UserController mInstance = null;
+    private AppUser mAppUser = null;
 
-    private UserController(){}
-    public static synchronized UserController getInstance(){
-        if(mInstance==null) {
-            mInstance=new UserController();
+    private UserController() {
+    }
+
+    public static synchronized UserController getInstance() {
+        if (mInstance == null) {
+            mInstance = new UserController();
         }
-        return  mInstance;
+        return mInstance;
     }
 
     /**
      * 获取当前用户信息
+     *
      * @return
      */
-    public AppUser getAppUser(){
-        if(mAppUser==null) {
+    public AppUser getAppUser() {
+        if (mAppUser == null) {
             mAppUser = SharedPreferenceUtils.getUserInfo(MyApplication.mContext);
         }
         return mAppUser;
     }
 
-    public void resetAppUser(){
-        mAppUser=null;
+    public void resetAppUser() {
+        mAppUser = null;
     }
-
 
 
 }

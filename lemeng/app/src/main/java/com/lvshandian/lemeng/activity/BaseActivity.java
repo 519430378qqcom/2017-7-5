@@ -122,7 +122,6 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
         }
 //        appUser = (AppUser) CacheUtils.readObject(this, CacheUtils.USERINFO);
         appUser = UserController.getInstance().getAppUser();
-//        appUser = SharedPreferenceUtils.getUserInfo(mContext);
         mContext = this;
         snackView = getWindow().getDecorView().getRootView();
         httpDatas = new HttpDatas(this, snackView);
@@ -154,7 +153,6 @@ public abstract class BaseActivity extends SmartFragmentActivity implements View
         super.onResume();
 //        appUser = (AppUser) CacheUtils.readObject(this, CacheUtils.USERINFO);
         appUser = UserController.getInstance().getAppUser();
-//        appUser = SharedPreferenceUtils.getUserInfo(mContext);
 //        /**
 //         * 废除用户：根据姓名和发送的消息进行废除用户强制退出；
 //         */

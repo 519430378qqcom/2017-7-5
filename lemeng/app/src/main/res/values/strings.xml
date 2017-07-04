@@ -657,6 +657,7 @@
     <string name="game_luck_28_time">(09:00-24:00)</string>
     <string name="game_luck_28_canada">加拿大幸运28</string>
     <string name="game_luck_28_canada_time">(00:00-24:00)</string>
+    <string name="not_attention_muself">不能关注自己</string>
     <string name="please_granted_record_audio">请手动开启录音权限</string>
 
 </resources>

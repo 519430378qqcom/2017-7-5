@@ -26,18 +26,19 @@ import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.activity.BaseActivity;
 import com.lvshandian.lemeng.adapter.mine.PhotoAdapter;
 import com.lvshandian.lemeng.adapter.mine.VideoAdapter;
-import com.lvshandian.lemeng.interfaces.CustomStringCallBack;
 import com.lvshandian.lemeng.entity.mine.OtherPersonBean;
 import com.lvshandian.lemeng.entity.mine.PhotoBean;
 import com.lvshandian.lemeng.entity.mine.VideoBean;
+import com.lvshandian.lemeng.interfaces.CustomStringCallBack;
 import com.lvshandian.lemeng.net.HttpDatas;
 import com.lvshandian.lemeng.net.RequestCode;
 import com.lvshandian.lemeng.net.UrlBuilder;
-import com.lvshandian.lemeng.widget.view.CustomPopWindow;
-import com.lvshandian.lemeng.widget.view.HeadZoomScrollView;
+import com.lvshandian.lemeng.third.wangyiyunxin.session.SessionHelper;
 import com.lvshandian.lemeng.utils.GrademipmapUtils;
 import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
+import com.lvshandian.lemeng.widget.view.CustomPopWindow;
+import com.lvshandian.lemeng.widget.view.HeadZoomScrollView;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.friend.FriendService;
@@ -55,7 +56,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import butterknife.Bind;
-import com.lvshandian.lemeng.third.wangyiyunxin.session.SessionHelper;
 
 /**
  * Created by gjj on 2016/11/23.
@@ -106,6 +106,8 @@ public class OtherPersonHomePageActivity extends BaseActivity {
     TextView tv_watch_all_phone;
     @Bind(R.id.tv_watch_all_video)
     TextView tv_watch_all_video;
+    @Bind(R.id.ll_other)
+    LinearLayout ll_other;
     /**
      * 用于展示小视频的GridView
      */
@@ -337,10 +339,12 @@ public class OtherPersonHomePageActivity extends BaseActivity {
             String gender = mOtherBean.getGender();
             ivSex.setImageResource(TextUtils.equals(gender, "1") ? R.mipmap.male : R.mipmap.female);
 
-            String gradeSatisfied = mOtherBean.getGradeSatisfied();
-            int i = Integer.parseInt(gradeSatisfied);
-            ivGrade.setImageResource(GrademipmapUtils.LevelImg[i]);
-
+            String gradeSatisfied = mOtherBean.getLevel();
+            if (!com.lvshandian.lemeng.utils.TextUtils.isEmpty(gradeSatisfied)) {
+                ivGrade.setImageResource(GrademipmapUtils.LevelImg[Integer.valueOf(gradeSatisfied) - 1]);
+            } else {
+                ivGrade.setImageResource(GrademipmapUtils.LevelImg[0]);
+            }
 
             String signature = mOtherBean.getSignature();
             if (!com.lvshandian.lemeng.utils.TextUtils.isEmpty(signature)) {

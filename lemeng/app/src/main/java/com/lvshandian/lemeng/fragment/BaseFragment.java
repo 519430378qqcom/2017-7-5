@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.lvshandian.lemeng.R;
 import com.lvshandian.lemeng.activity.live.WatchLiveActivity;
+import com.lvshandian.lemeng.engine.UserController;
 import com.lvshandian.lemeng.entity.AppUser;
 import com.lvshandian.lemeng.entity.JoinRoomBean;
 import com.lvshandian.lemeng.entity.LiveListBean;
@@ -25,7 +26,6 @@ import com.lvshandian.lemeng.net.UrlBuilder;
 import com.lvshandian.lemeng.utils.JsonUtil;
 import com.lvshandian.lemeng.utils.LogUtils;
 import com.lvshandian.lemeng.utils.NetWorkUtil;
-import com.lvshandian.lemeng.utils.SharedPreferenceUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -56,8 +56,7 @@ public abstract class BaseFragment extends Fragment {
         ButterKnife.bind(this, view);
         mContext = this.getActivity();
 //        appUser = (AppUser) CacheUtils.readObject(mContext, CacheUtils.USERINFO);
-//        appUser = UserController.getInstance().getAppUser();
-        appUser = SharedPreferenceUtils.getUserInfo(mContext);
+        appUser = UserController.getInstance().getAppUser();
         httpDatas = new HttpDatas(mContext, view);
         urlBuilder = new UrlBuilder();
         preliminary();
@@ -72,8 +71,7 @@ public abstract class BaseFragment extends Fragment {
 //        MobclickAgent.onResume(mContext);
         super.onResume();
 //        appUser = (AppUser) CacheUtils.readObject(mContext, CacheUtils.USERINFO);
-//        appUser = UserController.getInstance().getAppUser();
-        appUser = SharedPreferenceUtils.getUserInfo(mContext);
+        appUser = UserController.getInstance().getAppUser();
     }
 
     @Override
