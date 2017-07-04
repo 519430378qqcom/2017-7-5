@@ -1662,8 +1662,8 @@ public class StartLiveActivity extends BaseActivity implements
             map.put("NIM_BEGIN_GAME_NIUNIU", getString(R.string.start_niuniu_game));
             SendRoomMessageUtils.onCustomMessagePlay("2929", messageFragment, wy_Id, map);
         } else {
-            Toast.makeText(StartLiveActivity.this, R.string.game_start_fail, Toast.LENGTH_SHORT).show();
             startGaming = false;
+            Toast.makeText(StartLiveActivity.this, R.string.game_start_fail, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -2347,12 +2347,15 @@ public class StartLiveActivity extends BaseActivity implements
     }
 
     private void showXYGame() {
+        if(startGaming) {
+            return;
+        }
         String url = UrlBuilder.CHARGE_SERVER_URL + UrlBuilder.START_LUCK_GAME;
-
+        startGaming = true;
         OkHttpUtils.post().url(url).addParams("roomId", room_Id).addParams("type", "1").build().execute(new StringCallback() {
             @Override
             public void onError(Request request, Exception e) {
-
+                startGaming = false;
             }
 
             @Override
@@ -2377,7 +2380,6 @@ public class StartLiveActivity extends BaseActivity implements
                         ll_game.setVisibility(View.GONE);
                         showPlayView(1);
                         gameIsStart = true;
-
                         getTimenumber();
 
                         Map<String, Object> map = new HashMap<>();
