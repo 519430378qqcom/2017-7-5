@@ -19,7 +19,7 @@ import java.util.Map;
  */
 
 public class BullfightAudio {
-
+    private static BullfightAudio bullfightAudio;
     private SoundPool soundPool;
     /**
      * 音效名和音效资源id对应关系
@@ -28,36 +28,49 @@ public class BullfightAudio {
     /**
      * 牛0音效的key
      */
-    public final String Bull0 = "bull0";
-    public final String Bull1 = "bull1";
-    public final String Bull2 = "bull2";
-    public final String Bull3 = "bull3";
-    public final String Bull4 = "bull4";
-    public final String Bull5 = "bull5";
-    public final String Bull6 = "bull6";
-    public final String Bull7 = "bull7";
-    public final String Bull8 = "bull8";
-    public final String Bull9 = "bull9";
-    public final String Bull10 = "bullbull";
+    public static final String Bull0 = "bull0";
+    public static final String Bull1 = "bull1";
+    public static final String Bull2 = "bull2";
+    public static final String Bull3 = "bull3";
+    public static final String Bull4 = "bull4";
+    public static final String Bull5 = "bull5";
+    public static final String Bull6 = "bull6";
+    public static final String Bull7 = "bull7";
+    public static final String Bull8 = "bull8";
+    public static final String Bull9 = "bull9";
+    public static final String Bull10 = "bullbull";
     /**
      * 赢钱音效的key
      */
-    public final String WIN = "win";
+    public static final String WIN = "win";
     /**
      * 输钱音效key
      */
-    public final String FAIL = "fail";
+    public static final String FAIL = "fail";
     /**
      * 投注音效key
      */
-    public final String BET = "bet";
-    public final String BET_COIN = "coin";
+    public static final String BET = "bet";
+    public static final String BET_COIN = "coin";
     /**
      * 牛牛结算金币散落的音效key
      */
-    public final String FALLING_COIN = "coin";
-
-    public BullfightAudio(Context context) {
+    public static final String FALLING_COIN = "coin";
+    /**
+     * 红包音效的key
+     */
+    public static final String REDPACKAGE_COMING = "redpackagecoming";
+    public static BullfightAudio getInstance(Context context){
+        if(bullfightAudio == null) {
+            synchronized (BullfightAudio.class){
+                if(bullfightAudio == null) {
+                    bullfightAudio = new BullfightAudio(context);
+                }
+            }
+        }
+        return bullfightAudio;
+    }
+    private BullfightAudio(Context context) {
         SoundPool.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder = new SoundPool.Builder();
@@ -83,6 +96,7 @@ public class BullfightAudio {
         int load13 = soundPool.load(context, R.raw.bull_lose, 1);
         int load14 = soundPool.load(context, R.raw.win_coin, 1);
         int load15 = soundPool.load(context, R.raw.falling_coin, 1);
+        int load16 = soundPool.load(context, R.raw.redpackage_coming, 1);
         soundMap.put(BET, load);
         soundMap.put(Bull0,load1);
         soundMap.put(Bull1,load2);
@@ -99,6 +113,7 @@ public class BullfightAudio {
         soundMap.put(FAIL,load13);
         soundMap.put(BET_COIN,load14);
         soundMap.put(FALLING_COIN,load15);
+        soundMap.put(REDPACKAGE_COMING,load16);
     }
 
     /**
@@ -108,6 +123,11 @@ public class BullfightAudio {
     public void play(String audioName){
         soundPool.play(soundMap.get(audioName),1,1,0,0,1);
     }
+
+    /**
+     * 播放牛数的音效
+     * @param bullSum
+     */
     public void play(int bullSum){
         String audioName = "";
         switch (bullSum){
@@ -147,7 +167,16 @@ public class BullfightAudio {
         }
         play(audioName);
     }
-    public void release(){
-        soundPool.release();
+
+    /**
+     * 释放音效资源
+     */
+    public static void release(){
+        if(bullfightAudio != null) {
+            bullfightAudio.soundPool.release();
+            bullfightAudio.soundPool = null;
+            bullfightAudio.soundMap = null;
+            bullfightAudio = null;
+        }
     }
 }

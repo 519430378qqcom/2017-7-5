@@ -576,10 +576,6 @@ public class StartLiveActivity extends BaseActivity implements
      * 投注位置
      */
     private int betPosition;
-    /**
-     * 斗牛音效
-     */
-    private BullfightAudio bullfightAudio;
     //<end------------斗牛游戏部分-------------->
 
     private int luckySet;
@@ -916,6 +912,7 @@ public class StartLiveActivity extends BaseActivity implements
         initQuitDialog();
 
         initSelectStatus();
+        BullfightAudio.getInstance(mContext);
     }
 
     private void initSelectStatus() {
@@ -1587,8 +1584,8 @@ public class StartLiveActivity extends BaseActivity implements
                     bullfightResultShow(getString(R.string.the_result), getString(R.string.the_user) +
                             mine, getString(R.string.banker) + banker);
                     if (mount > 0) {
-                        bullfightAudio.play(bullfightAudio.WIN);
-                        bullfightAudio.play(bullfightAudio.FALLING_COIN);
+                        BullfightAudio.getInstance(mContext).play(BullfightAudio.WIN);
+                        BullfightAudio.getInstance(mContext).play(BullfightAudio.FALLING_COIN);
                         fallingCoinAnimation(true, 0);
                         fallingCoinAnimation(true, 100);
                         fallingCoinAnimation(true, 200);
@@ -1596,8 +1593,8 @@ public class StartLiveActivity extends BaseActivity implements
                         fallingCoinAnimation(true, 400);
                         fallingCoinAnimation(true, 500);
                     } else if (mount < 0) {
-                        bullfightAudio.play(bullfightAudio.FAIL);
-                        bullfightAudio.play(bullfightAudio.FALLING_COIN);
+                        BullfightAudio.getInstance(mContext).play(BullfightAudio.FAIL);
+                        BullfightAudio.getInstance(mContext).play(BullfightAudio.FALLING_COIN);
                         fallingCoinAnimation(false, 0);
                         fallingCoinAnimation(false, 100);
                         fallingCoinAnimation(false, 200);
@@ -1749,9 +1746,6 @@ public class StartLiveActivity extends BaseActivity implements
             myHandler.sendEmptyMessage(BULLFIGHT_TIME);
             switchAllPoker(false, -1);
             sendPokerAnimator();
-            if (bullfightAudio == null) {
-                bullfightAudio = new BullfightAudio(getApplicationContext());
-            }
             if (betBalance < 10 && myGoldCoin >= 10) {
                 checkBettingBalance(10);
             }
@@ -1772,7 +1766,7 @@ public class StartLiveActivity extends BaseActivity implements
                 showToast(getString(R.string.bet_fail));
                 break;
             case 1://为成功
-                bullfightAudio.play(bullfightAudio.BET);
+                BullfightAudio.getInstance(mContext).play(BullfightAudio.BET);
                 myGoldCoin -= amount;
                 tv_bullfight_lepiao.setText(CountUtils.getCount(myGoldCoin));
                 updateBettingEnable(myGoldCoin);
@@ -1848,7 +1842,7 @@ public class StartLiveActivity extends BaseActivity implements
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
-                    bullfightAudio.play(result3);
+                    BullfightAudio.getInstance(mContext).play(result3);
                     iv_bull_amount3.setImageResource(bullfightPresenter.getBullSumId(result3));
                     switchBullNum(true, 3);
                     if (result >= result3) {
@@ -1877,7 +1871,7 @@ public class StartLiveActivity extends BaseActivity implements
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
                     animator3.start();
-                    bullfightAudio.play(result2);
+                    BullfightAudio.getInstance(mContext).play(result2);
                     iv_bull_amount2.setImageResource(bullfightPresenter.getBullSumId(result2));
                     switchBullNum(true, 2);
                     if (result >= result2) {
@@ -1906,7 +1900,7 @@ public class StartLiveActivity extends BaseActivity implements
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
                     animator2.start();
-                    bullfightAudio.play(result1);
+                    BullfightAudio.getInstance(mContext).play(result1);
                     iv_bull_amount1.setImageResource(bullfightPresenter.getBullSumId(result1));
                     switchBullNum(true, 1);
                     if (result >= result1) {
@@ -1935,7 +1929,7 @@ public class StartLiveActivity extends BaseActivity implements
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
                     animator1.start();
-                    bullfightAudio.play(result);
+                    BullfightAudio.getInstance(mContext).play(result);
                     iv_bull_amount0.setImageResource(bullfightPresenter.getBullSumId(result));
                     switchBullNum(true, 0);
                     if (result == 10) {
@@ -2657,9 +2651,7 @@ public class StartLiveActivity extends BaseActivity implements
         lrcHandler.removeCallbacks(runnable);
         Intent intent = new Intent(mContext, VoiceService.class);
         stopService(intent);
-        if (bullfightAudio != null) {
-            bullfightAudio.release();
-        }
+        BullfightAudio.release();
         myHandler.removeCallbacksAndMessages(null);
 
         /**
@@ -2868,6 +2860,7 @@ public class StartLiveActivity extends BaseActivity implements
                         ChatRoomMessage s = message;
                         Map data = (Map) message.getRemoteExtension().get("data");
                         String redenvelope = (String) data.get("message");
+                        BullfightAudio.getInstance(mContext).play(BullfightAudio.REDPACKAGE_COMING);
                         new RedPackageView(mContext, mRoot, redenvelope, StartLiveActivity.this).show();
                         break;
                     default:
